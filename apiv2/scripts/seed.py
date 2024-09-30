@@ -7,6 +7,7 @@ import factory.random
 from platformics.database.connect import init_sync_db
 from platformics.settings import CLISettings
 from platformics.test_infra.factories.base import FileFactory, SessionStorage
+from test_infra.factories.alignment import AlignmentFactory
 from test_infra.factories.annotation import AnnotationFactory
 from test_infra.factories.annotation_author import AnnotationAuthorFactory
 from test_infra.factories.annotation_file import AnnotationFileFactory
@@ -88,6 +89,60 @@ def use_factoryboy() -> None:
         s3_prefix="s3://test-public-bucket/20002/RUN002/",
         https_prefix="http://localhost:4444/20002/RUN002/",
     )
+
+    ts1 = TiltseriesFactory.create(
+        run=r1,
+        deposition=dep1,
+        s3_mrc_file="s3://test-public-bucket/20001/RUN1/TiltSeries/RUN1_bin1.mrc",
+        s3_omezarr_dir="s3://test-public-bucket/20001/RUN1/TiltSeries/RUN1.zarr",
+        https_mrc_file="http://localhost:4444/20001/RUN1/TiltSeries/RUN1_bin1.mrc",
+        https_omezarr_dir="http://localhost:4444/20001/RUN1/TiltSeries/RUN1.zarr",
+        s3_collection_metadata="s3://test-public-bucket/20001/RUN1/TiltSeries/RUN1.mdoc",
+        https_collection_metadata="http://localhost:4444/20001/RUN1/TiltSeries/RUN1.mdoc",
+        s3_angle_list="s3://test-public-bucket/20001/RUN1/TiltSeries/RUN1.rawtlt",
+        https_angle_list="http://localhost:4444/20001/RUN1/TiltSeries/RUN1.rawtlt",
+    )
+    ts2 = TiltseriesFactory.create(
+        run=r2,
+        deposition=dep1,
+        s3_mrc_file="s3://test-public-bucket/20001/RUN2/TiltSeries/RUN2.mrc",
+        s3_omezarr_dir="s3://test-public-bucket/20001/RUN2/TiltSeries/RUN2.zarr",
+        https_mrc_file="http://localhost:4444/20001/RUN2/TiltSeries/RUN2.mrc",
+        https_omezarr_dir="http://localhost:4444/20001/RUN2/TiltSeries/RUN2.zarr",
+        s3_collection_metadata="s3://test-public-bucket/20001/RUN2/TiltSeries/RUN2.mdoc",
+        https_collection_metadata="http://localhost:4444/20001/RUN2/TiltSeries/RUN2.mdoc",
+        s3_angle_list="s3://test-public-bucket/20001/RUN2/TiltSeries/RUN2.rawtlt",
+        https_angle_list="http://localhost:4444/20001/RUN2/TiltSeries/RUN2.rawtlt",
+    )
+    ts3 = TiltseriesFactory.create(
+        run=r3,
+        deposition=dep2,
+        s3_mrc_file="s3://test-public-bucket/20002/RUN001/TiltSeries/RUN001.mrc",
+        s3_omezarr_dir="s3://test-public-bucket/20002/RUN001/TiltSeries/RUN001.zarr",
+        https_mrc_file="http://localhost:4444/20002/RUN001/TiltSeries/RUN001.mrc",
+        https_omezarr_dir="http://localhost:4444/20002/RUN001/TiltSeries/RUN001.zarr",
+        s3_collection_metadata="s3://test-public-bucket/20002/RUN001/TiltSeries/RUN001.mdoc",
+        https_collection_metadata="http://localhost:4444/20002/RUN001/TiltSeries/RUN001.mdoc",
+        s3_angle_list="s3://test-public-bucket/20002/RUN001/TiltSeries/RUN001.rawtlt",
+        https_angle_list="http://localhost:4444/20002/RUN001/TiltSeries/RUN001.rawtlt",
+    )
+    ts4 = TiltseriesFactory.create(
+        run=r4,
+        deposition=dep2,
+        s3_mrc_file="s3://test-public-bucket/20002/RUN002/TiltSeries/RUN002.mrc",
+        s3_omezarr_dir="s3://test-public-bucket/20002/RUN002/TiltSeries/RUN002.zarr",
+        https_mrc_file="http://localhost:4444/20002/RUN002/TiltSeries/RUN002.mrc",
+        https_omezarr_dir="http://localhost:4444/20002/RUN002/TiltSeries/RUN002.zarr",
+        s3_collection_metadata="s3://test-public-bucket/20002/RUN002/TiltSeries/RUN002.mdoc",
+        https_collection_metadata="http://localhost:4444/20002/RUN002/TiltSeries/RUN002.mdoc",
+        s3_angle_list="s3://test-public-bucket/20002/RUN002/TiltSeries/RUN002.rawtlt",
+        https_angle_list="http://localhost:4444/20002/RUN002/TiltSeries/RUN002.rawtlt",
+    )
+
+    al1 = AlignmentFactory.create(deposition=dep1, run=r1, tiltseries=ts1)
+    al2 = AlignmentFactory.create(deposition=dep1, run=r2, tiltseries=ts2)
+    al3 = AlignmentFactory.create(deposition=dep1, run=r3, tiltseries=ts3)
+    al4 = AlignmentFactory.create(deposition=dep1, run=r4, tiltseries=ts4)
 
     tvs4 = TomogramVoxelSpacingFactory.create(
         run=r1,
@@ -217,21 +272,24 @@ def use_factoryboy() -> None:
 
     AnnotationFileFactory.create(
         annotation_shape=as40op,
-        tomogram_voxel_spacing_id=tvs4,
+        alignment=al1,
+        tomogram_voxel_spacing=tvs4,
         format="ndjson",
         https_path="http://localhost:4444/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/mitochondria.ndjson",
         s3_path="s3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/mitochondria.ndjson",
     )
     AnnotationFileFactory.create(
         annotation_shape=as40sm,
-        tomogram_voxel_spacing_id=tvs4,
+        alignment=al1,
+        tomogram_voxel_spacing=tvs4,
         format="mrc",
         https_path="http://localhost:4444/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/mitochondria.mrc",
         s3_path="s3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/mitochondria.mrc",
     )
     AnnotationFileFactory.create(
         annotation_shape=as40sm,
-        tomogram_voxel_spacing_id=tvs4,
+        alignment=al1,
+        tomogram_voxel_spacing=tvs4,
         format="zarr",
         https_path="http://localhost:4444/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/mitochondria.zarr",
         s3_path="s3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/mitochondria.zarr",
@@ -239,21 +297,24 @@ def use_factoryboy() -> None:
 
     AnnotationFileFactory.create(
         annotation_shape=as41pt,
-        tomogram_voxel_spacing_id=tvs4,
+        alignment=al1,
+        tomogram_voxel_spacing=tvs4,
         format="ndjson",
         https_path="http://localhost:4444/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/ribosome.ndjson",
         s3_path="s3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/ribosome.ndjson",
     )
     AnnotationFileFactory.create(
         annotation_shape=as41sm,
-        tomogram_voxel_spacing_id=tvs4,
+        alignment=al1,
+        tomogram_voxel_spacing=tvs4,
         format="mrc",
         https_path="http://localhost:4444/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/ribosome.mrc",
         s3_path="s3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/ribosome.mrc",
     )
     AnnotationFileFactory.create(
         annotation_shape=as41sm,
-        tomogram_voxel_spacing_id=tvs4,
+        alignment=al1,
+        tomogram_voxel_spacing=tvs4,
         format="zarr",
         https_path="http://localhost:4444/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/ribosome.zarr",
         s3_path="s3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/ribosome.zarr",
@@ -261,21 +322,24 @@ def use_factoryboy() -> None:
 
     AnnotationFileFactory.create(
         annotation_shape=as42op,
-        tomogram_voxel_spacing_id=tvs5,
+        alignment=al2,
+        tomogram_voxel_spacing=tvs5,
         format="ndjson",
         https_path="http://localhost:4444/20001/RUN2/TomogramVoxelSpacing7.56/Annotations/ribosome.ndjson",
         s3_path="s3://test-public-bucket/20001/RUN2/TomogramVoxelSpacing7.56/Annotations/ribosome.ndjson",
     )
     AnnotationFileFactory.create(
         annotation_shape=as42sm,
-        tomogram_voxel_spacing_id=tvs5,
+        alignment=al2,
+        tomogram_voxel_spacing=tvs5,
         format="mrc",
         https_path="http://localhost:4444/20001/RUN2/TomogramVoxelSpacing7.56/Annotations/ribosome.mrc",
         s3_path="s3://test-public-bucket/20001/RUN2/TomogramVoxelSpacing7.56/Annotations/ribosome.mrc",
     )
     AnnotationFileFactory.create(
         annotation_shape=as42sm,
-        tomogram_voxel_spacing_id=tvs5,
+        alignment=al2,
+        tomogram_voxel_spacing=tvs5,
         format="zarr",
         https_path="http://localhost:4444/20001/RUN2/TomogramVoxelSpacing7.56/Annotations/ribosome.zarr",
         s3_path="s3://test-public-bucket/20001/RUN2/TomogramVoxelSpacing7.56/Annotations/ribosome.zarr",
@@ -283,7 +347,8 @@ def use_factoryboy() -> None:
 
     AnnotationFileFactory.create(
         annotation_shape=as43op,
-        tomogram_voxel_spacing_id=tvs6,
+        alignment=al3,
+        tomogram_voxel_spacing=tvs6,
         format="ndjson",
         https_path="http://localhost:4444/20002/RUN001/TomogramVoxelSpacing7.56/Annotations/ribosome.ndjson",
         s3_path="s3://test-public-bucket/20002/RUN001/TomogramVoxelSpacing13.48/Annotations/ribosome.ndjson",
@@ -291,14 +356,16 @@ def use_factoryboy() -> None:
 
     AnnotationFileFactory.create(
         annotation_shape=as44sm,
-        tomogram_voxel_spacing_id=tvs7,
+        alignment=al4,
+        tomogram_voxel_spacing=tvs7,
         format="zarr",
         https_path="http://localhost:4444/20002/RUN002/TomogramVoxelSpacing7.56/Annotations/ribosome.zarr",
         s3_path="s3://test-public-bucket/20002/RUN002/TomogramVoxelSpacing13.48/Annotations/ribosome.zarr",
     )
     AnnotationFileFactory.create(
-        annotation_shape_id=as44sm,
-        tomogram_voxel_spacing_id=tvs7,
+        annotation_shape=as44sm,
+        alignment=al4,
+        tomogram_voxel_spacing=tvs7,
         format="mrc",
         https_path="http://localhost:4444/20002/RUN002/TomogramVoxelSpacing7.56/Annotations/ribosome.mrc",
         s3_path="s3://test-public-bucket/20002/RUN002/TomogramVoxelSpacing13.48/Annotations/ribosome.mrc",
@@ -306,60 +373,17 @@ def use_factoryboy() -> None:
 
     AnnotationFileFactory.create(
         annotation_shape=as45pt,
-        tomogram_voxel_spacing_id=tvs7,
+        alignment=al4,
+        tomogram_voxel_spacing=tvs7,
         format="ndjson",
         https_path="http://localhost:4444/20002/RUN002/TomogramVoxelSpacing7.56/Annotations/ribosome.json",
         s3_path="s3://test-public-bucket/20002/RUN002/TomogramVoxelSpacing13.48/Annotations/ribosome.json",
     )
 
-    TiltseriesFactory.create(
-        run=r1,
-        s3_mrc_file="s3://test-public-bucket/20001/RUN1/TiltSeries/RUN1_bin1.mrc",
-        s3_omezarr_dir="s3://test-public-bucket/20001/RUN1/TiltSeries/RUN1.zarr",
-        https_mrc_file="http://localhost:4444/20001/RUN1/TiltSeries/RUN1_bin1.mrc",
-        https_omezarr_dir="http://localhost:4444/20001/RUN1/TiltSeries/RUN1.zarr",
-        s3_collection_metadata="s3://test-public-bucket/20001/RUN1/TiltSeries/RUN1.mdoc",
-        https_collection_metadata="http://localhost:4444/20001/RUN1/TiltSeries/RUN1.mdoc",
-        s3_angle_list="s3://test-public-bucket/20001/RUN1/TiltSeries/RUN1.rawtlt",
-        https_angle_list="http://localhost:4444/20001/RUN1/TiltSeries/RUN1.rawtlt",
-    )
-    TiltseriesFactory.create(
-        run=r2,
-        s3_mrc_file="s3://test-public-bucket/20001/RUN2/TiltSeries/RUN2.mrc",
-        s3_omezarr_dir="s3://test-public-bucket/20001/RUN2/TiltSeries/RUN2.zarr",
-        https_mrc_file="http://localhost:4444/20001/RUN2/TiltSeries/RUN2.mrc",
-        https_omezarr_dir="http://localhost:4444/20001/RUN2/TiltSeries/RUN2.zarr",
-        s3_collection_metadata="s3://test-public-bucket/20001/RUN2/TiltSeries/RUN2.mdoc",
-        https_collection_metadata="http://localhost:4444/20001/RUN2/TiltSeries/RUN2.mdoc",
-        s3_angle_list="s3://test-public-bucket/20001/RUN2/TiltSeries/RUN2.rawtlt",
-        https_angle_list="http://localhost:4444/20001/RUN2/TiltSeries/RUN2.rawtlt",
-    )
-    TiltseriesFactory.create(
-        run=r3,
-        s3_mrc_file="s3://test-public-bucket/20002/RUN001/TiltSeries/RUN001.mrc",
-        s3_omezarr_dir="s3://test-public-bucket/20002/RUN001/TiltSeries/RUN001.zarr",
-        https_mrc_file="http://localhost:4444/20002/RUN001/TiltSeries/RUN001.mrc",
-        https_omezarr_dir="http://localhost:4444/20002/RUN001/TiltSeries/RUN001.zarr",
-        s3_collection_metadata="s3://test-public-bucket/20002/RUN001/TiltSeries/RUN001.mdoc",
-        https_collection_metadata="http://localhost:4444/20002/RUN001/TiltSeries/RUN001.mdoc",
-        s3_angle_list="s3://test-public-bucket/20002/RUN001/TiltSeries/RUN001.rawtlt",
-        https_angle_list="http://localhost:4444/20002/RUN001/TiltSeries/RUN001.rawtlt",
-    )
-    TiltseriesFactory.create(
-        run=r4,
-        s3_mrc_file="s3://test-public-bucket/20002/RUN002/TiltSeries/RUN002.mrc",
-        s3_omezarr_dir="s3://test-public-bucket/20002/RUN002/TiltSeries/RUN002.zarr",
-        https_mrc_file="http://localhost:4444/20002/RUN002/TiltSeries/RUN002.mrc",
-        https_omezarr_dir="http://localhost:4444/20002/RUN002/TiltSeries/RUN002.zarr",
-        s3_collection_metadata="s3://test-public-bucket/20002/RUN002/TiltSeries/RUN002.mdoc",
-        https_collection_metadata="http://localhost:4444/20002/RUN002/TiltSeries/RUN002.mdoc",
-        s3_angle_list="s3://test-public-bucket/20002/RUN002/TiltSeries/RUN002.rawtlt",
-        https_angle_list="http://localhost:4444/20002/RUN002/TiltSeries/RUN002.rawtlt",
-    )
-
     tomo1 = TomogramFactory.create(
         name="RUN1",
         run=r1,
+        alignment=al1,
         tomogram_voxel_spacing=tvs4,
         deposition=dep1,
         s3_omezarr_dir="s3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/CanonicalTomogram/RUN1.zarr",
@@ -370,6 +394,7 @@ def use_factoryboy() -> None:
     tomo2 = TomogramFactory.create(
         name="RUN2",
         run=r2,
+        alignment=al2,
         tomogram_voxel_spacing=tvs5,
         deposition=dep1,
         s3_omezarr_dir="s3://test-public-bucket/20001/RUN2/TomogramVoxelSpacing7.56/CanonicalTomogram/RUN2.zarr",
@@ -380,6 +405,7 @@ def use_factoryboy() -> None:
     tomo3 = TomogramFactory.create(
         name="RUN001",
         run=r3,
+        alignment=al3,
         tomogram_voxel_spacing=tvs6,
         deposition=dep2,
         s3_omezarr_dir="s3://test-public-bucket/20002/RUN001/TomogramVoxelSpacing7.56/CanonicalTomogram/RUN001.zarr",
@@ -390,6 +416,7 @@ def use_factoryboy() -> None:
     tomo4 = TomogramFactory.create(
         name="RUN002",
         run=r4,
+        alignment=al4,
         tomogram_voxel_spacing=tvs7,
         deposition=dep2,
         s3_omezarr_dir="s3://test-public-bucket/20002/RUN002/TomogramVoxelSpacing13.48/CanonicalTomogram/RUN002.zarr",
