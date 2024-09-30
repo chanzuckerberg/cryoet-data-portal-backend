@@ -34,7 +34,7 @@ class TomogramIdentifierHelper(IdentifierHelper):
         return "-".join(
             [
                 container_key,
-                metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path")),
+                metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path", "")),
                 metadata.get("reconstruction_method", ""),
                 metadata.get("processing", ""),
                 str(metadata.get("deposition_id", int(parents["deposition"].name))),

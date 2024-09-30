@@ -1,5 +1,5 @@
 import os.path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from common.alignment_converter import alignment_converter_factory
 from common.config import DepositionImportConfig
@@ -10,8 +10,6 @@ from importers.base_importer import BaseFileImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 
 if TYPE_CHECKING:
-    TomogramImporter = "TomogramImporter"
-else:
     from importers.tomogram import TomogramImporter
 
 
@@ -134,7 +132,9 @@ class AlignmentImporter(BaseFileImporter):
         volume_dim = self.metadata.get("volume_dimension", {})
         return all(volume_dim.get(dim) for dim in "xyz") or self.get_tomogram() is not None
 
-    def get_tomogram(self) -> TomogramImporter | None:
+    def get_tomogram(self) -> Optional["TomogramImporter"]:
+        from importers.tomogram import TomogramImporter
+
         for voxel_spacing in VoxelSpacingImporter.finder(self.config, **self.parents):
             parents = {**self.parents, "voxel_spacing": voxel_spacing}
             for tomogram in TomogramImporter.finder(self.config, **parents):

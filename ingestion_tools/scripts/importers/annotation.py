@@ -13,6 +13,7 @@ from common.fs import FileSystemApi
 from common.id_helper import IdentifierHelper
 from common.image import check_mask_for_label, make_pyramids
 from common.metadata import AnnotationMetadata
+from importers.alignment import AlignmentImporter
 from importers.base_importer import BaseImporter
 
 
@@ -36,6 +37,8 @@ class AnnotationIdentifierHelper(IdentifierHelper):
                 metadata["annotation_object"].get("description") or "",
                 metadata["annotation_object"]["name"],
                 metadata["annotation_method"],
+                metadata["annotation_object"].get("state") or "",
+                metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path")),
             ],
         )
 
@@ -71,13 +74,18 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         parents: dict[str, Any] | None,
     ):
         source_args = {k: v for k, v in self.source.items() if k not in {"shape", "glob_string", "glob_strings"}}
+        alignment_path = self._get_alignment_metadata_path(config, parents)
+        identifier = AnnotationIdentifierHelper.get_identifier(
+            config, metadata, parents, alignment_metadata_path=alignment_path,
+        )
         instance_args = {
-            "identifier": AnnotationIdentifierHelper.get_identifier(config, metadata, parents),
+            "identifier": identifier,
             "config": config,
             "metadata": metadata,
             "name": name,
             "path": path,
             "parents": parents,
+            "alignment_metadata_path": alignment_path,
             **source_args,
         }
         shape = self.source["shape"]
@@ -101,6 +109,12 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         if anno.is_valid():
             return anno
 
+    @classmethod
+    def _get_alignment_metadata_path(cls, config: DepositionImportConfig, parents: dict[str, Any]) -> str:
+        for alignment in AlignmentImporter.finder(config, **parents):
+            return alignment.get_metadata_path()
+        return ""
+
 
 class AnnotationImporter(BaseImporter):
     type_key = "annotation"
@@ -112,12 +126,17 @@ class AnnotationImporter(BaseImporter):
     def __init__(
         self,
         identifier: int,
+        alignment_metadata_path: str,
         *args,
         **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)
         self.identifier: int = identifier
-        self.local_metadata = {"object_count": 0, "files": []}
+        self.local_metadata = {
+            "object_count": 0,
+            "files": [],
+            "alignment_metadata_path": alignment_metadata_path,
+        }
         self.annotation_metadata = AnnotationMetadata(self.config.fs, self.get_deposition().name, self.metadata)
 
     # Functions to support writing annotation data
