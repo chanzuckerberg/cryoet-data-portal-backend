@@ -171,7 +171,7 @@ def use_factoryboy() -> None:
 
     a40 = AnnotationFactory.create(
         run=r1,
-        deposition=dep1,
+        deposition=None,  # Explicitly testing empty deposition_id!
         s3_metadata_path="s3://test-public-bucket/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/author1-mitochondria-1.0.json",
         https_metadata_path="http://localhost:4444/20001/RUN1/TomogramVoxelSpacing13.48/Annotations/author1-mitochondria-1.0.json",
         deposition_date="2023-04-01",
@@ -179,7 +179,7 @@ def use_factoryboy() -> None:
         annotation_publication="EMPIAR-77777",
         annotation_method="Manual",
         is_curator_recommended=True,
-        object_name="Mitochondria",
+        object_name="Test Annotation Object Name",
         object_id="GO:0000000",
     )
     a41 = AnnotationFactory.create(
