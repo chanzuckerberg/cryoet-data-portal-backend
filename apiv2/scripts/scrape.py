@@ -11,7 +11,7 @@ from support.enums import tomogram_reconstruction_method_enum as reconstruction_
 from platformics.database.connect import init_sync_db
 
 # cleanup:
-# delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;
+# delete from deposition_type; delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;
 
 # CLIENT_URL="https://graphql-cryoet-api.cryoet.staging.si.czi.technology/v1/graphql"
 CLIENT_URL = "https://graphql.cryoetdataportal.cziscience.com/v1/graphql"
@@ -61,13 +61,15 @@ def add(session, model, item, parents):
         }
     if model == models.Deposition:
         local_item_data = {
-            "deposition_title": remote_item["title"],
-            "deposition_description": remote_item["description"],
-            "publications": remote_item["deposition_publications"],
+            "title": remote_item["title"],
+            "description": remote_item["description"],
+            "deposition_publications": remote_item["deposition_publications"],
             "related_database_entries": remote_item["related_database_entries"],
             "deposition_date": remote_item["deposition_date"],
             "release_date": remote_item["release_date"],
             "last_modified_date": remote_item["last_modified_date"],
+            "key_photo_url": remote_item["key_photo_url"],
+            "key_photo_thumbnail_url": remote_item["key_photo_thumbnail_url"],
         }
     if model == models.Annotation:
         local_item_data = {
@@ -79,6 +81,7 @@ def add(session, model, item, parents):
             "https_metadata_path": remote_item["https_metadata_path"],
             "annotation_publication": remote_item["annotation_publication"],
             "annotation_method": remote_item["annotation_method"],
+            "method_links": remote_item["method_links"],
             "ground_truth_status": remote_item["ground_truth_status"],
             "object_id": remote_item["object_id"],
             "object_name": remote_item["object_name"],
@@ -168,7 +171,7 @@ def add(session, model, item, parents):
             "deposition_date": remote_item["deposition_date"],
             "release_date": remote_item["release_date"],
             "last_modified_date": remote_item["last_modified_date"],
-            "publications": remote_item["dataset_publications"],  # Field name change
+            "dataset_publications": remote_item["dataset_publications"],  # Field name change
             "related_database_entries": remote_item["related_database_entries"],
             "s3_prefix": remote_item["s3_prefix"],
             "https_prefix": remote_item["https_prefix"],

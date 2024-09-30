@@ -35,6 +35,7 @@ annotations:
       file_format: relion3_star
       filter_value: '{mapped_tomo_name}.tomostar'
       glob_string: run_ct17_it034_data.star
+
       is_visualization_default: true
       order: xyz
 dataset_keyphotos:
@@ -176,7 +177,9 @@ tomograms:
       - 1
     authors: *id002
     ctf_corrected: true
+    dates: *id001
     fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

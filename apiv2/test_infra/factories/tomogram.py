@@ -45,9 +45,9 @@ class TomogramFactory(CommonFactory):
         TomogramVoxelSpacingFactory,
     )
     name = fuzzy.FuzzyText()
-    size_x = fuzzy.FuzzyFloat(1, 100)
-    size_y = fuzzy.FuzzyFloat(1, 100)
-    size_z = fuzzy.FuzzyFloat(1, 100)
+    size_x = fuzzy.FuzzyInteger(1, 1000)
+    size_y = fuzzy.FuzzyInteger(1, 1000)
+    size_z = fuzzy.FuzzyInteger(1, 1000)
     voxel_spacing = fuzzy.FuzzyFloat(1, 100)
     fiducial_alignment_status = fuzzy.FuzzyChoice(["FIDUCIAL", "NON_FIDUCIAL"])
     reconstruction_method = fuzzy.FuzzyChoice(["SART", "Fourier Space", "SIRT", "WBP", "Unknown"])

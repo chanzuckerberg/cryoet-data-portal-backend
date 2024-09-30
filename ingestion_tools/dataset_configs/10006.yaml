@@ -56,6 +56,7 @@ annotations:
       file_format: relion4_star
       filter_value: '{run_name}'
       glob_string: motl_star/czii-remapped-points.star
+
       is_visualization_default: true
       order: xyz
 dataset_keyphotos:
@@ -197,9 +198,28 @@ tiltseries:
       list_glob: validation_placeholder/for_unavailable_ts.st
 tomograms:
 - metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     authors: *id002
     ctf_corrected: true
+    dates: *id001
     fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

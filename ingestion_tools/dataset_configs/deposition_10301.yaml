@@ -32,11 +32,13 @@ annotations:
       binning: 1
       file_format: tardis
       glob_string: '{dataset_name}/{run_name}/{run_name}_instance.csv'
+
       is_visualization_default: false
       order: xyz
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: '{dataset_name}/{run_name}/{run_name}_semantic.mrc'
+
       is_visualization_default: false
 datasets:
 - sources:

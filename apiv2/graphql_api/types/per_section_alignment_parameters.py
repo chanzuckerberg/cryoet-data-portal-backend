@@ -154,7 +154,7 @@ class PerSectionAlignmentParameters(EntityInterface):
     )
     beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -275,7 +275,7 @@ class PerSectionAlignmentParametersCreateInput:
     )
     beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
@@ -293,7 +293,7 @@ class PerSectionAlignmentParametersUpdateInput:
     )
     beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """

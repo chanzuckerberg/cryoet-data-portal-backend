@@ -123,6 +123,7 @@ def expected_dataset(http_prefix: str) -> dict[str, Any]:
         "cell_strain_name": "test value",
         "cell_type_id": "4321",
         "cell_name": "foo",
+        "other_setup": "Other Setup",
         "organism_taxid": "1111",
         "organism_name": "Foo Bar",
         "tissue_id": "1234",

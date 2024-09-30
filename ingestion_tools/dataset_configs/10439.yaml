@@ -1,3 +1,11 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/TiltSeries/*.tlt'
+      - '{run_name}/TiltSeries/*.xf'
 annotations:
 - metadata:
     annotation_method: polnet-simulated ground truth
@@ -30,6 +38,7 @@ annotations:
       file_format: mrc
       glob_strings: &id004
       - '{run_name}/Segmentations/ground_truth.mrc'
+
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -50,6 +59,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_strings: *id004
+
       is_visualization_default: true
       mask_label: 2
   - OrientedPoint:
@@ -57,6 +67,7 @@ annotations:
       file_format: relion3_star
       glob_strings:
       - '{run_name}/Picks/adp-mitochondrial.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -77,6 +88,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_strings: *id004
+
       is_visualization_default: true
       mask_label: 3
   - OrientedPoint:
@@ -84,6 +96,7 @@ annotations:
       file_format: relion3_star
       glob_strings:
       - '{run_name}/Picks/alkaline-phosphatase.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -104,6 +117,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_strings: *id004
+
       is_visualization_default: true
       mask_label: 4
   - OrientedPoint:
@@ -111,6 +125,7 @@ annotations:
       file_format: relion3_star
       glob_strings:
       - '{run_name}/Picks/nucleosome.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -131,6 +146,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_strings: *id004
+
       is_visualization_default: true
       mask_label: 5
   - OrientedPoint:
@@ -138,6 +154,7 @@ annotations:
       file_format: relion3_star
       glob_strings:
       - '{run_name}/Picks/ribosome.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -158,6 +175,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_strings: *id004
+
       is_visualization_default: true
       mask_label: 6
   - OrientedPoint:
@@ -165,6 +183,7 @@ annotations:
       file_format: relion3_star
       glob_strings:
       - '{run_name}/Picks/vault.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -186,6 +205,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_strings: *id004
+
       is_visualization_default: true
       mask_label: 7
   - OrientedPoint:
@@ -193,6 +213,7 @@ annotations:
       file_format: relion3_star
       glob_strings:
       - '{run_name}/Picks/virus-like-particle.star'
+
       is_visualization_default: true
       order: xyz
 dataset_keyphotos:
@@ -243,18 +264,10 @@ depositions:
   - literal:
       value:
       - 10309
-frames: []
-gains: []
 key_images:
 - sources:
   - source_glob:
       list_glob: .*\.jpg
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/TiltSeries/*.tlt'
-      - '{run_name}/TiltSeries/*.xf'
 runs:
 - sources:
   - source_glob:
@@ -313,7 +326,9 @@ tomograms:
       - 1
     authors: *id001
     ctf_corrected: true
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

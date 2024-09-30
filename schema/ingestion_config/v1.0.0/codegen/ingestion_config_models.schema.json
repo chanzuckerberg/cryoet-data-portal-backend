@@ -1,5 +1,388 @@
 {
     "$defs": {
+        "Alignment": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "affine_transformation_matrix": {
+                    "items": {
+                        "additionalProperties": true,
+                        "type": [
+                            "null",
+                            "boolean",
+                            "object",
+                            "number",
+                            "string",
+                            "array"
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "alignment_type": {
+                    "$ref": "#/$defs/AlignmentTypeEnum",
+                    "description": "The type of alignment.",
+                    "pattern": "(^LOCAL$)|(^GLOBAL$)"
+                },
+                "format": {
+                    "$ref": "#/$defs/AlignmentFormatEnum",
+                    "description": "The format of the alignment.",
+                    "pattern": "(^IMOD$)|(^ARETOMO3$)"
+                },
+                "is_canonical": {
+                    "description": "Whether the alignment is canonical.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "offset": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentOffset"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram."
+                },
+                "tilt_offset": {
+                    "description": "The tilt offset relative to the tomogram.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "volume_dimesion": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentSize"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The size of an alignment in voxels in each dimension."
+                },
+                "x_rotation_offset": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The x rotation offset relative to the tomogram.",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "format"
+            ],
+            "title": "Alignment",
+            "type": "object"
+        },
+        "AlignmentEntity": {
+            "additionalProperties": false,
+            "description": "An alignment entity.",
+            "properties": {
+                "metadata": {
+                    "$ref": "#/$defs/Alignment",
+                    "description": "The metadata for the alignment."
+                },
+                "sources": {
+                    "description": "An alignment source.",
+                    "items": {
+                        "$ref": "#/$defs/AlignmentSource"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "metadata",
+                "sources"
+            ],
+            "title": "AlignmentEntity",
+            "type": "object"
+        },
+        "AlignmentFormatEnum": {
+            "description": "Used to determine what alignment alogrithm to use.",
+            "enum": [
+                "IMOD",
+                "ARETOMO3"
+            ],
+            "title": "AlignmentFormatEnum",
+            "type": "string"
+        },
+        "AlignmentOffset": {
+            "additionalProperties": false,
+            "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram.",
+            "properties": {
+                "x": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "x offset relative to the canonical tomogram in pixels",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "y": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "y offset relative to the canonical tomogram in pixels",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "z": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "z offset relative to the canonical tomogram in pixels",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "AlignmentOffset",
+            "type": "object"
+        },
+        "AlignmentParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "AlignmentParent",
+            "type": "object"
+        },
+        "AlignmentParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for an alignment source.",
+            "properties": {
+                "exclude": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentParent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentParent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "AlignmentParentFilters",
+            "type": "object"
+        },
+        "AlignmentSize": {
+            "additionalProperties": false,
+            "description": "The size of an alignment in voxels in each dimension.",
+            "properties": {
+                "x": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Number of pixels in the 3D data fast axis",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "y": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Number of pixels in the 3D data medium axis",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                },
+                "z": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt",
+                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "AlignmentSize",
+            "type": "object"
+        },
+        "AlignmentSource": {
+            "additionalProperties": false,
+            "description": "An alignment source.",
+            "properties": {
+                "destination_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "literal": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/StandardLiteral"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentParentFilters"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Types of parent filters for an alignment source."
+                },
+                "source_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMultiGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "AlignmentSource",
+            "type": "object"
+        },
+        "AlignmentTypeEnum": {
+            "description": "Type of alignment",
+            "enum": [
+                "LOCAL",
+                "GLOBAL"
+            ],
+            "title": "AlignmentTypeEnum",
+            "type": "string"
+        },
         "Annotation": {
             "additionalProperties": false,
             "description": "Metadata describing an annotation.",
@@ -225,6 +608,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -382,6 +772,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -528,6 +925,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -567,6 +971,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -603,6 +1014,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -758,6 +1176,13 @@
                         "null"
                     ]
                 },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "is_visualization_default": {
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
@@ -794,6 +1219,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -841,6 +1273,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -1247,6 +1686,16 @@
             "additionalProperties": false,
             "description": "Class that models the ingestion config file.",
             "properties": {
+                "alignments": {
+                    "description": "An alignment entity.",
+                    "items": {
+                        "$ref": "#/$defs/AlignmentEntity"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "annotations": {
                     "description": "An annotation entity.",
                     "items": {
@@ -2363,10 +2812,51 @@
             "title": "FiducialAlignmentStatusEnum",
             "type": "string"
         },
+        "Frame": {
+            "additionalProperties": false,
+            "description": "A frame entity.",
+            "properties": {
+                "astigmatic_angle": {
+                    "description": "The astigmatic angle.",
+                    "type": "number"
+                },
+                "astigmatism": {
+                    "description": "The astigmatism.",
+                    "type": "number"
+                },
+                "defocus": {
+                    "description": "The defocus.",
+                    "type": "number"
+                },
+                "dose": {
+                    "description": "The dose.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "dose",
+                "defocus",
+                "astigmatism",
+                "astigmatic_angle"
+            ],
+            "title": "Frame",
+            "type": "object"
+        },
         "FrameEntity": {
             "additionalProperties": false,
             "description": "A frame entity.",
             "properties": {
+                "metadata": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Frame"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A frame entity."
+                },
                 "sources": {
                     "description": "A frame source.",
                     "items": {
@@ -4076,12 +4566,27 @@
                     "minItems": 1,
                     "type": "array"
                 },
+                "cross_references": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CrossReferences"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A set of cross-references to other databases and publications."
+                },
                 "ctf_corrected": {
                     "description": "Whether this tomogram is CTF corrected",
                     "type": [
                         "boolean",
                         "null"
                     ]
+                },
+                "dates": {
+                    "$ref": "#/$defs/DateStamp",
+                    "description": "A set of dates at which a data item was deposited, published and last modified."
                 },
                 "fiducial_alignment_status": {
                     "$ref": "#/$defs/Any",
@@ -4097,6 +4602,10 @@
                     ],
                     "description": "Whether the tomographic alignment was computed based on fiducial markers.",
                     "pattern": "(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
+                },
+                "is_visualization_default": {
+                    "description": "Whether the tomogram is the default for visualization.",
+                    "type": "boolean"
                 },
                 "offset": {
                     "$ref": "#/$defs/TomogramOffset",
@@ -4175,6 +4684,8 @@
                 "processing",
                 "tomogram_version",
                 "offset",
+                "is_visualization_default",
+                "dates",
                 "authors"
             ],
             "title": "Tomogram",
@@ -4689,6 +5200,16 @@
     "description": "Class that models the ingestion config file.",
     "metamodel_version": "1.7.0",
     "properties": {
+        "alignments": {
+            "description": "An alignment entity.",
+            "items": {
+                "$ref": "#/$defs/AlignmentEntity"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
         "annotations": {
             "description": "An annotation entity.",
             "items": {

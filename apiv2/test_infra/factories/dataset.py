@@ -55,7 +55,7 @@ class DatasetFactory(CommonFactory):
     deposition_date = factory.Faker("date")
     release_date = factory.Faker("date")
     last_modified_date = factory.Faker("date")
-    publications = fuzzy.FuzzyText()
+    dataset_publications = fuzzy.FuzzyText()
     related_database_entries = fuzzy.FuzzyText()
     s3_prefix = fuzzy.FuzzyText()
     https_prefix = fuzzy.FuzzyText()

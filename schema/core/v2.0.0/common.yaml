@@ -727,6 +727,14 @@ slots:
     range: integer
     description: The mask label for a semantic segmentation mask annotation file.
     ifabsent: 'int(1)'
+  annotation_source_file_scale_factor:
+    range: float
+    description: The scale factor for a mesh annotation file.
+    ifabsent: 'float(1)'
+    minimum_value: 0
+  annotation_source_file_mesh_name:
+    range: string
+    description: The name that identifies to a single annotation mesh among multiple meshes.
 
   # ============================================================================
   # Per Section Parameters fields
@@ -972,6 +980,22 @@ enums:
   # ============================================================================
   # Controlled vocabularies
   # ============================================================================
+  alignment_type_enum:
+    description: Type of alignment
+    permissible_values:
+      LOCAL:
+        description: per-section non-rigid alignment available
+      GLOBAL:
+        description: only per-section rigid alignment available
+
+  alignment_format_enum:
+    description: Used to determine what alignment alogrithm to use.
+    permissible_values:
+      IMOD:
+        description: formats (xf, tlt, com)
+      ARETOMO3:
+        description: formats (aln)
+
   annotation_file_source_enum:
     description: How the annotation file was acquired
     permissible_values:
@@ -1112,14 +1136,6 @@ enums:
         description: Canonical tomogram (basis geometry for all annotations)
       UNKNOWN:
         description: Tomogram's was not submitted by the dataset author
-
-  alignment_type_enum:
-    description: Type of alignment
-    permissible_values:
-      LOCAL:
-        description: per-section non-rigid alignment available
-      GLOBAL:
-        description: only per-section rigid alignment available
 
 types:
   StringFormattedString:

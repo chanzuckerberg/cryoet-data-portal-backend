@@ -1,3 +1,11 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
 annotations:
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -46,6 +54,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: subtomo/hdcr/hdcr_tm_bin2_motl_12.star
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -67,6 +76,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: subtomo/ribo/ribo_tm_bin1_motl_12.star
+
       is_visualization_default: true
       order: xyz
 collection_metadata:
@@ -162,12 +172,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: tomo/raw_stacks/{mapped_ts_name}/frames/*{mapped_frame_name}_*.tif
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
 runs:
 - sources:
   - source_glob:
@@ -229,7 +233,9 @@ tomograms:
       - 1
     authors: *id003
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

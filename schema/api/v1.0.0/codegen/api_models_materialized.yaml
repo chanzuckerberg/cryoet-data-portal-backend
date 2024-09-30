@@ -367,6 +367,30 @@ enums:
       UNKNOWN:
         text: UNKNOWN
         description: Tomogram's was not submitted by the dataset author
+  alignment_type_enum:
+    name: alignment_type_enum
+    description: Type of alignment
+    from_schema: cdp-api-models
+    permissible_values:
+      LOCAL:
+        text: LOCAL
+        description: Local alignment
+      GLOBAL:
+        text: GLOBAL
+        description: Global alignment
+  alignment_format_enum:
+    name: alignment_format_enum
+    description: Used to determine what alignment alogrithm to use.
+    from_schema: cdp-api-models
+    permissible_values:
+      IMOD:
+        text: IMOD
+        description: IMOD was used for the alignment. Supported file formats are (xf,
+          tlt, tilt.com, news.com, xtilt)
+      ARETOMO3:
+        text: ARETOMO3
+        description: ARETOMO3 was used for the alignment. Supported file formats are
+          (aln, txt, csv)
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.

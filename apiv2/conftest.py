@@ -54,7 +54,6 @@ test_db: NoopExecutor = factories.postgresql_noproc(
 
 
 def get_db_uri(
-    protocol: typing.Optional[str],
     db_user: typing.Optional[str],
     db_pass: typing.Optional[str],
     db_host: typing.Optional[str],
@@ -64,57 +63,40 @@ def get_db_uri(
     """
     Utility function to generate database URI
     """
-    db_uri = f"{protocol}://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
+    db_uri = f"{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}"
     return db_uri
 
 
 @pytest.fixture()
-def sync_db(test_db: NoopExecutor) -> typing.Generator[SyncDB, None, None]:
+def test_db_uri(test_db: NoopExecutor) -> str:
+
+    return get_db_uri(
+        db_host=test_db.host,
+        db_port=test_db.port,
+        db_user=test_db.user,
+        db_pass=test_db.password,
+        db_name=test_db.dbname,
+    )
+
+
+@pytest.fixture()
+def sync_db(test_db: NoopExecutor, test_db_uri: str) -> typing.Generator[SyncDB, None, None]:
     """
     Fixture to create a synchronous database connection
     """
-    pg_host = test_db.host
-    pg_port = test_db.port
-    pg_user = test_db.user
-    pg_password = test_db.password
-    pg_db = test_db.dbname
 
-    with DatabaseJanitor(pg_user, pg_host, pg_port, pg_db, test_db.version, pg_password):
-        db: SyncDB = init_sync_db(
-            get_db_uri(
-                "postgresql+psycopg",
-                db_host=pg_host,
-                db_port=pg_port,
-                db_user=pg_user,
-                db_pass=pg_password,
-                db_name=pg_db,
-            ),
-        )
+    with DatabaseJanitor(test_db.user, test_db.host, test_db.port, test_db.dbname, test_db.version, test_db.password):
+        db: SyncDB = init_sync_db(f"postgresql+psycopg://{test_db_uri}")
         Base.metadata.create_all(db.engine)
         yield db
 
 
 @pytest_asyncio.fixture()
-async def async_db(sync_db: SyncDB, test_db: NoopExecutor) -> typing.AsyncGenerator[AsyncDB, None]:
+async def async_db(sync_db: SyncDB, test_db: NoopExecutor, test_db_uri: str) -> typing.AsyncGenerator[AsyncDB, None]:
     """
     Fixture to create an asynchronous database connection
     """
-    pg_host = test_db.host
-    pg_port = test_db.port
-    pg_user = test_db.user
-    pg_password = test_db.password
-    pg_db = test_db.dbname
-
-    db = init_async_db(
-        get_db_uri(
-            "postgresql+asyncpg",  # "postgresql+asyncpg
-            db_host=pg_host,
-            db_port=pg_port,
-            db_user=pg_user,
-            db_pass=pg_password,
-            db_name=pg_db,
-        ),
-    )
+    db = init_async_db(f"postgresql+asyncpg://{test_db_uri}")
     yield db
 
 
