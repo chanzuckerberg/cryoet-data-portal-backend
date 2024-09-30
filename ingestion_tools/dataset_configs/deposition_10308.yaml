@@ -6,16 +6,6 @@ annotations:
       id: GO:0033172
       name: gas vesicle shell
     annotation_publications: 10.1101/2024.01.05.574336
-    method_links:
-      - link: https://github.com/teamtomo/membrain-seg
-        link_type: source_code
-        custom_name: membrain-seg on GitHub
-      - link: https://pypi.org/project/membrain-seg/
-        link_type: other
-        custom_name: membrain-seg on PyPI
-      - link: https://github.com/uermel/remotebrain
-        link_type: source_code
-        custom_name: remotebrain on GitHub
     annotation_software: membrain-seg 0.0.1
     authors: &id001
     - ORCID: 0000-0003-4685-037X
@@ -32,12 +22,23 @@ annotations:
       release_date: '2024-06-04'
     ground_truth_status: false
     is_curator_recommended: false
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    - custom_name: remotebrain on GitHub
+      link: https://github.com/uermel/remotebrain
+      link_type: source_code
     method_type: automated
     version: 1.0
   sources:
   - SegmentationMask:
       file_format: zarr
       glob_string: '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr'
+
       is_visualization_default: true
 datasets:
 - sources:
@@ -48,13 +49,13 @@ datasets:
 depositions:
 - metadata:
     authors: *id001
-    dates: *id002
-    deposition_description: Gas vesicle shell segmentations predicted using membrain-seg without rescaling and weights
-      MemBrain_seg_v10_alpha.ckpt
-    deposition_identifier: 10308
-    deposition_title: membrain-seg gas vesicle shell predictions
     cross_references:
       publications: 10.1101/2024.01.05.574336
+    dates: *id002
+    deposition_description: Gas vesicle shell segmentations predicted using membrain-seg
+      without rescaling and weights MemBrain_seg_v10_alpha.ckpt
+    deposition_identifier: 10308
+    deposition_title: membrain-seg gas vesicle shell predictions
     deposition_types:
     - annotation
   sources:
@@ -70,6 +71,7 @@ runs:
 standardization_config:
   deposition_id: 10308
   source_prefix: membrain/outputs/
+version: 1.1.0
 voxel_spacings:
 - sources:
   - destination_glob:

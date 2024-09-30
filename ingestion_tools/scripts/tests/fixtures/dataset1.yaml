@@ -129,11 +129,6 @@ gains:
       list_globs:
       - VPP/frames/CountRef_{run_name}.dm4
       - VPP/frames/CountRef_{run_name}.gain
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:

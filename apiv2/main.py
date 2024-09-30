@@ -9,8 +9,13 @@ import uvicorn
 from graphql_api.mutations import Mutation
 from graphql_api.queries import Query
 from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
 
-from platformics.graphql_api.core.deps import get_auth_principal
+from platformics.database.connect import AsyncDB, init_async_db
+from platformics.graphql_api.core.deps import (
+    get_auth_principal,
+    get_engine,
+)
 from platformics.graphql_api.core.error_handler import HandleErrors
 from platformics.graphql_api.setup import get_app, get_strawberry_config
 from platformics.security.authorization import Principal
@@ -22,6 +27,9 @@ schema = strawberry.Schema(query=Query, mutation=Mutation, config=get_strawberry
 
 # Create and run app
 app = get_app(settings, schema)
+
+engine = init_async_db(settings.DB_URI, echo=settings.DB_ECHO, pool_size=5, max_overflow=5)
+app.state.engine = engine
 
 
 def get_allowed_origins() -> list[str] | None:
@@ -64,6 +72,11 @@ def override_auth_principal():
     )
 
 
+def override_get_engine(request: Request) -> AsyncDB:
+    return request.app.state.engine
+
+
+app.dependency_overrides[get_engine] = override_get_engine
 app.dependency_overrides[get_auth_principal] = override_auth_principal
 
 if __name__ == "__main__":

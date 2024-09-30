@@ -380,7 +380,7 @@ class Alignment(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: Optional[int]
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None,
+        description="Whether this a LOCAL or GLOBAL alignment", default=None,
     )
     volume_x_dimension: Optional[float] = strawberry.field(
         description="X dimension of the reconstruction volume in angstrom", default=None,
@@ -408,7 +408,7 @@ class Alignment(EntityInterface):
     affine_transformation_matrix: Optional[str] = strawberry.field(
         description="A placeholder for the affine transformation matrix.", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -534,7 +534,7 @@ class AlignmentCreateInput:
     tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None,
+        description="Whether this a LOCAL or GLOBAL alignment", default=None,
     )
     volume_x_dimension: Optional[float] = strawberry.field(
         description="X dimension of the reconstruction volume in angstrom", default=None,
@@ -562,7 +562,7 @@ class AlignmentCreateInput:
     affine_transformation_matrix: Optional[str] = strawberry.field(
         description="A placeholder for the affine transformation matrix.", default=None,
     )
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
@@ -571,7 +571,7 @@ class AlignmentUpdateInput:
     tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Type of alignment included, i.e. is a non-rigid alignment included?", default=None,
+        description="Whether this a LOCAL or GLOBAL alignment", default=None,
     )
     volume_x_dimension: Optional[float] = strawberry.field(
         description="X dimension of the reconstruction volume in angstrom", default=None,
@@ -599,7 +599,7 @@ class AlignmentUpdateInput:
     affine_transformation_matrix: Optional[str] = strawberry.field(
         description="A placeholder for the affine transformation matrix.", default=None,
     )
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """

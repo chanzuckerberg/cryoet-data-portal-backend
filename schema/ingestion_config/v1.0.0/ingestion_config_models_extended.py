@@ -12,6 +12,9 @@ import aiohttp
 import numpy
 from async_lru import alru_cache
 from codegen.ingestion_config_models import (
+    Alignment,
+    AlignmentEntity,
+    AlignmentSource,
     Annotation,
     AnnotationConfidence,
     AnnotationEntity,
@@ -532,6 +535,47 @@ def validate_sources(source_list: List[StandardSource] | List[VoxelSpacingSource
 
 
 # ==============================================================================
+# Alignment Entity Validation
+# ==============================================================================
+class ExtendedValidationAlignmentEntity(AlignmentEntity):
+    @field_validator("sources")
+    @classmethod
+    def valid_sources(cls: Self, source_list: List[AlignmentSource]) -> List[AlignmentSource]:
+        return validate_sources(source_list)
+
+# ==============================================================================
+# Alignment Validation
+# ==============================================================================
+class ExtendValidationAlignment(Alignment):
+    @field_validator("affine_transformation_matrix")
+    @classmethod
+    def valid_affine_transformation_matrix(
+        cls: Self,
+        affine_transformation_matrix: Optional[List[List[float]]],
+    ) -> Optional[List[List[float]]]:
+        if affine_transformation_matrix is None:
+            return None
+
+        errors = []
+        # Bottom row of the matrix should be [0, 0, 0, 1]
+        if affine_transformation_matrix[3] != [0, 0, 0, 1]:
+            errors.append(ValueError("Bottom row of the affine transformation matrix must be [0, 0, 0, 1]"))
+
+        # Check that top left 3x3 matrix is an invertible matrix
+        top_left_matrix = numpy.array(
+            [
+                affine_transformation_matrix[0][0:3],
+                affine_transformation_matrix[1][0:3],
+                affine_transformation_matrix[2][0:3],
+            ],
+        )
+        if numpy.linalg.det(top_left_matrix) == 0:
+            errors.append(ValueError("Top left 3x3 matrix of the affine transformation matrix must be invertible"))
+
+        return affine_transformation_matrix
+
+
+# ==============================================================================
 # Annotation Object Validation
 # ==============================================================================
 class ExtendedValidationAnnotationObject(AnnotationObject):
@@ -617,7 +661,10 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                 else:
                     used_shapes.add(shape)
 
-        # For verifying that all source entries each only have one shape entry and that there is only one of glob_string and glob_strings
+        # For verifying that all source entries:
+        # - each only have one shape entry
+        # - that there is only one of glob_string and glob_strings
+        # - cannot have only a filter entry without a shape
         for i, source_element in enumerate(source_list):
             shapes_in_source_entry = []
             for shape in source_element.model_fields:
@@ -917,33 +964,6 @@ class ExtendedValidationTiltSeriesEntity(TiltSeriesEntity):
 # Tomogram Validation
 # ==============================================================================
 class ExtendedValidationTomogram(Tomogram):
-    @field_validator("affine_transformation_matrix")
-    @classmethod
-    def valid_affine_transformation_matrix(
-        cls: Self,
-        affine_transformation_matrix: Optional[List[List[float]]],
-    ) -> Optional[List[List[float]]]:
-        if affine_transformation_matrix is None:
-            return None
-
-        errors = []
-        # Bottom row of the matrix should be [0, 0, 0, 1]
-        if affine_transformation_matrix[3] != [0, 0, 0, 1]:
-            errors.append(ValueError("Bottom row of the affine transformation matrix must be [0, 0, 0, 1]"))
-
-        # Check that top left 3x3 matrix is an invertible matrix
-        top_left_matrix = numpy.array(
-            [
-                affine_transformation_matrix[0][0:3],
-                affine_transformation_matrix[1][0:3],
-                affine_transformation_matrix[2][0:3],
-            ],
-        )
-        if numpy.linalg.det(top_left_matrix) == 0:
-            errors.append(ValueError("Top left 3x3 matrix of the affine transformation matrix must be invertible"))
-
-        return affine_transformation_matrix
-
     @field_validator("authors")
     @classmethod
     def valid_tomogram_authors(cls: Self, authors: List[Author]) -> List[Author]:

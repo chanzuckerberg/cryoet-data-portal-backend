@@ -10,7 +10,7 @@ from typing import Any, Callable, Optional, Union
 
 import click
 import yaml
-from transform_ingestion_configs import update_config
+from schema_migration.upgrade import upgrade_config
 
 from common.fs import LocalFilesystem
 from common.normalize_fields import normalize_fiducial_alignment
@@ -540,7 +540,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         print(f"Writing file for {dataset_id}")
         dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
         with open(dataset_config_file_path, "w") as outfile:
-            updated_dataset_config = update_config(dataset_config)
+            updated_dataset_config = upgrade_config(dataset_config)
             # Remove empty tiltseries when all tiltseries have no metadata
             if all(not ts.get("metadata") for ts in updated_dataset_config.get("tiltseries", [])):
                 updated_dataset_config.pop("tiltseries")

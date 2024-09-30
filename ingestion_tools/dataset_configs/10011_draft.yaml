@@ -1,3 +1,10 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/{run_name}.xf
 annotations:
 - metadata:
     annotation_method: REQUIRED
@@ -92,17 +99,11 @@ gains:
 - sources:
   - source_glob:
       list_glob: frames/CountRef.dm4
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
       - metadata/{run_name}.rawtlt
-      - metadata/{run_name}.xf
 runs:
 - sources:
   - source_glob:
@@ -163,6 +164,7 @@ tomograms:
       - 1
     ctf_corrected: REQUIRED
     fiducial_alignment_status: null
+    is_visualization_default: true
     offset:
       x: 0
       y: 0
@@ -176,6 +178,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms/*.rec
       match_regex: .*
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

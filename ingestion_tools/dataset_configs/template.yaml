@@ -44,6 +44,7 @@ annotations: OPTIONAL
       glob_strings:
         - OPTIONAL, STRING (REGEX)
       is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT FALSE)
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       filter_value: OPTIONAL, STRING
       order: OPTIONAL, STRING (DEFAULT xyz)
@@ -54,6 +55,7 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       binning: see InstanceSegmentation.binning
       filter_value: see InstanceSegmentation.filter_value
       order: see InstanceSegmentation.order
@@ -64,6 +66,7 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       binning: see InstanceSegmentation.binning
       columns: OPTIONAL, STRING (DEFAULT xyz)
       delimiter: OPTIONAL, STRING (DEFAULT ',')
@@ -74,6 +77,7 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
   - SemanticSegmentationMask:
@@ -81,6 +85,7 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
@@ -89,6 +94,7 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       scale_factor: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
@@ -97,6 +103,7 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       scale_factor: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
       name: REQUIRED, STRING
     parent_filters: see InstanceSegmentation.parent_filters
@@ -175,7 +182,12 @@ depositions: REQUIRED
       - STRING (ENUM [annotation, dataset, tomogram])
     sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
 frames: OPTIONAL
-- sources: SEE datasets.sources and runs.sources.parent_filters
+- metadata: OPTIONAL
+    dose: REQUIRED, FLOAT
+    defocus: REQUIRED, FLOAT
+    astigmatism: REQUIRED, FLOAT
+    astigmatic_angle: REQUIRED, FLOAT
+  sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 key_images: OPTIONAL
@@ -268,6 +280,10 @@ tomograms: OPTIONAL
     tomogram_type: OPTIONAL, STRING (ENUM [CANONICAL])
     tomogram_version: REQUIRED, FLOAT
     voxel_spacing: REQUIRED, FLOAT (POSITIVE)
+    is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT TRUE)
+    is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
+    cross_references: SEE datasets.cross_references
+    dates: SEE annotations.dates
   sources: SEE tiltseries.sources
 voxel_spacings: REQUIRED
 - sources: REQUIRED

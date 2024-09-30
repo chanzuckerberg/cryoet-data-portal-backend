@@ -243,6 +243,9 @@ enums:
       hybrid:
         text: hybrid
         description: Annotations were generated semi-automatically.
+      simulated:
+        text: simulated
+        description: Annotations were simulated
   annotation_file_shape_type_enum:
     name: annotation_file_shape_type_enum
     description: Describes the shape of the annotation
@@ -360,6 +363,9 @@ enums:
       JEOL:
         text: JEOL
         description: JEOL Ltd.
+      SIMULATED:
+        text: SIMULATED
+        description: JEOL Ltd.
   fiducial_alignment_status_enum:
     name: fiducial_alignment_status_enum
     description: Fiducial Alignment method
@@ -425,7 +431,7 @@ classes:
       id:
         name: id
         identifier: true
-        description: An identifier to refer to a specific instance of this type
+        description: Numeric identifier (May change!)
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_sequential_identifier
@@ -467,7 +473,7 @@ classes:
     attributes:
       author_list_order:
         name: author_list_order
-        description: The order that the author is listed as in the associated publication
+        description: The order in which the author appears in the publication
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_author_list_order
@@ -475,7 +481,7 @@ classes:
         required: true
       orcid:
         name: orcid
-        description: The ORCID identifier for the author.
+        description: A unique, persistent identifier for researchers, provided by ORCID.
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_orcid
@@ -484,7 +490,7 @@ classes:
         pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
       name:
         name: name
-        description: The full name of the author.
+        description: Full name of an author (e.g. Jane Doe).
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_name
@@ -492,28 +498,28 @@ classes:
         required: true
       email:
         name: email
-        description: The email address of the author.
+        description: Email address for this author
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_email
         range: string
       affiliation_name:
         name: affiliation_name
-        description: The name of the author's affiliation.
+        description: Name of the institutions an author is affiliated with. Comma separated
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_affiliation_name
         range: string
       affiliation_address:
         name: affiliation_address
-        description: The address of the author's affiliation.
+        description: Address of the institution an author is affiliated with.
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_affiliation_address
         range: string
       affiliation_identifier:
         name: affiliation_identifier
-        description: A Research Organization Registry (ROR) identifier.
+        description: A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_affiliation_identifier
@@ -521,7 +527,7 @@ classes:
         recommended: true
       corresponding_author_status:
         name: corresponding_author_status
-        description: Whether the author is a corresponding author.
+        description: Indicates whether an author is the corresponding author
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_corresponding_author_status
@@ -553,6 +559,8 @@ classes:
         multivalued: true
         inverse: AnnotationFile.alignment
         range: AnnotationFile
+        annotations:
+          cascade_delete: true
       per_section_alignments:
         name: per_section_alignments
         description: Map alignment parameters to tilt series frames
@@ -560,6 +568,8 @@ classes:
         multivalued: true
         inverse: PerSectionAlignmentParameters.alignment
         range: PerSectionAlignmentParameters
+        annotations:
+          cascade_delete: true
       deposition:
         name: deposition
         from_schema: cdp-dataset-config
@@ -577,6 +587,8 @@ classes:
         multivalued: true
         inverse: Tomogram.alignment
         range: Tomogram
+        annotations:
+          cascade_delete: true
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -584,7 +596,7 @@ classes:
         range: Run
       alignment_type:
         name: alignment_type
-        description: Type of alignment included, i.e. is a non-rigid alignment included?
+        description: Whether this a LOCAL or GLOBAL alignment
         from_schema: cdp-dataset-config
         exact_mappings:
         - alignment_alignment_type
@@ -693,7 +705,7 @@ classes:
       plural:
         tag: plural
         value: AnnotationAuthors
-    description: Author of an annotation
+    description: Metadata for an annotation's authors
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
@@ -701,17 +713,28 @@ classes:
     attributes:
       annotation:
         name: annotation
-        description: Metadata about an annotation for a run
+        description: Reference to the annotation this author contributed to
         from_schema: cdp-dataset-config
         inverse: Annotation.authors
         range: Annotation
+    slot_usage:
+      primary_author_status:
+        description: Indicates whether an author is the main person executing the annotation, especially on manual annotation
+      affiliation_address:
+        description: Address of the institution an annotator is affiliated with.
+      affiliation_name:
+        description: Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.
+      name:
+        description: Full name of an annotation author (e.g. Jane Doe).
+      corresponding_author_status:
+        description: Indicates whether an annotator is the corresponding author
   AnnotationFile:
     name: AnnotationFile
     annotations:
       plural:
         tag: plural
         value: AnnotationFiles
-    description: Files associated with an annotation
+    description: Metadata for files associated with an annotation
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
@@ -729,13 +752,13 @@ classes:
         range: AnnotationShape
       tomogram_voxel_spacing:
         name: tomogram_voxel_spacing
-        description: Voxel spacings for a run
+        description: Voxel spacing that this annotation file is associated with
         from_schema: cdp-dataset-config
         inverse: TomogramVoxelSpacing.annotation_files
         range: TomogramVoxelSpacing
       format:
         name: format
-        description: File format label
+        description: File format for this file
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_file_format
@@ -743,7 +766,7 @@ classes:
         required: true
       s3_path:
         name: s3_path
-        description: Path to the file in s3
+        description: s3 path of the annotation file
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_s3_path
@@ -751,7 +774,7 @@ classes:
         required: true
       https_path:
         name: https_path
-        description: Path to the file as an https url
+        description: HTTPS path for this annotation file
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_https_path
@@ -759,7 +782,7 @@ classes:
         required: true
       is_visualization_default:
         name: is_visualization_default
-        description: This annotation will be rendered in neuroglancer by default.
+        description: Data curator’s subjective choice of default annotation to display in visualization for an object
         from_schema: cdp-dataset-config
         exact_mappings:
         - annotation_source_file_is_visualization_default
@@ -767,7 +790,7 @@ classes:
         range: boolean
       source:
         name: source
-        description: The source type for the annotation file
+        description: The source type for the annotation file (dataset_author, community, or portal_standard)
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_annotation_file_source
@@ -786,7 +809,7 @@ classes:
     attributes:
       annotation:
         name: annotation
-        description: Metadata about an annotation for a run
+        description: Metadata about an shapes for an annotation
         from_schema: cdp-dataset-config
         inverse: Annotation.annotation_shapes
         range: Annotation
@@ -797,7 +820,10 @@ classes:
         multivalued: true
         inverse: AnnotationFile.annotation_shape
         range: AnnotationFile
+        annotations:
+          cascade_delete: true
       shape_type:
+        description: The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)
         name: shape_type
         from_schema: cdp-dataset-config
         range: annotation_file_shape_type_enum
@@ -808,7 +834,7 @@ classes:
       plural:
         tag: plural
         value: Annotations
-    description: Metadata about an annotation for a run
+    description: Metadata for an annotation
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
@@ -826,6 +852,8 @@ classes:
         multivalued: true
         inverse: AnnotationShape.annotation
         range: AnnotationShape
+        annotations:
+          cascade_delete: true
       authors:
         name: authors
         description: Author of an annotation
@@ -833,6 +861,8 @@ classes:
         multivalued: true
         inverse: AnnotationAuthor.annotation
         range: AnnotationAuthor
+        annotations:
+          cascade_delete: true
       deposition:
         name: deposition
         from_schema: cdp-dataset-config
@@ -840,7 +870,7 @@ classes:
         range: Deposition
       s3_metadata_path:
         name: s3_metadata_path
-        description: Path to the file in s3
+        description: S3 path for the metadata json file for this annotation
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_s3_path
@@ -848,7 +878,7 @@ classes:
         required: true
       https_metadata_path:
         name: https_metadata_path
-        description: Path to the file as an https url
+        description: HTTPS path for the metadata json file for this annotation
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_https_path
@@ -856,8 +886,7 @@ classes:
         required: true
       annotation_publication:
         name: annotation_publication
-        description: List of publication IDs (EMPIAR, EMDB, DOI) that describe this
-          annotation method. Comma separated.
+        description: DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.
         from_schema: cdp-dataset-config
         exact_mappings:
         - annotation_publications
@@ -872,6 +901,9 @@ classes:
         - annotation_method
         range: string
         required: true
+      method_links:
+        description: Provides links to information on the method used for generating annotation, comma separated
+        range: string
       ground_truth_status:
         name: ground_truth_status
         description: Whether an annotation is considered ground truth, as determined
@@ -884,8 +916,7 @@ classes:
         recommended: true
       object_id:
         name: object_id
-        description: Gene Ontology Cellular Component identifier for the annotation
-          object
+        description: Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
         from_schema: cdp-dataset-config
         exact_mappings:
         - annotation_object_id
@@ -967,8 +998,7 @@ classes:
         recommended: true
       is_curator_recommended:
         name: is_curator_recommended
-        description: This annotation is recommended by the curator to be preferred
-          for this object type.
+        description: Data curator’s subjective choice as the best annotation of the same annotation object ID
         from_schema: cdp-dataset-config
         exact_mappings:
         - annotation_is_curator_recommended
@@ -976,7 +1006,7 @@ classes:
         range: boolean
       method_type:
         name: method_type
-        description: Classification of the annotation method based on supervision.
+        description: The method type for generating the annotation (e.g. manual, hybrid, automated)
         from_schema: cdp-dataset-config
         exact_mappings:
         - annotation_method_type
@@ -985,7 +1015,7 @@ classes:
         pattern: (^manual$)|(^automated$)|(^hybrid$)
       deposition_date:
         name: deposition_date
-        description: The date a data item was received by the cryoET data portal.
+        description: Date when an annotation set is initially received by the Data Portal.
         from_schema: cdp-dataset-config
         exact_mappings:
         - deposition_date
@@ -993,7 +1023,7 @@ classes:
         required: true
       release_date:
         name: release_date
-        description: The date a data item was received by the cryoET data portal.
+        description: Date when annotation data is made public by the Data Portal.
         from_schema: cdp-dataset-config
         exact_mappings:
         - release_date
@@ -1001,8 +1031,7 @@ classes:
         required: true
       last_modified_date:
         name: last_modified_date
-        description: The date a piece of data was last modified on the cryoET data
-          portal.
+        description: Date when an annotation was last modified in the Data Portal
         from_schema: cdp-dataset-config
         exact_mappings:
         - last_modified_date
@@ -1022,30 +1051,35 @@ classes:
     attributes:
       dataset:
         name: dataset
-        description: An author of a dataset
+        description: Dataset authored by this person
         from_schema: cdp-dataset-config
         inverse: Dataset.authors
         range: Dataset
+    slot_usage:
+      primary_author_status:
+        description: Indicates whether an author is the main person associated with the corresponding dataset
+      name::
+        description: Full name of a dataset author (e.g. Jane Doe).
   DatasetFunding:
     name: DatasetFunding
     annotations:
       plural:
         tag: plural
         value: DatasetFunding
-    description: Information about how a dataset was funded
+    description: Metadata for a dataset's funding sources
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
     attributes:
       dataset:
         name: dataset
-        description: An author of a dataset
+        description: The dataset this dataset funding is a part of
         from_schema: cdp-dataset-config
         inverse: Dataset.funding_sources
         range: Dataset
       funding_agency_name:
         name: funding_agency_name
-        description: The name of the funding source.
+        description: Name of the funding agency.
         from_schema: cdp-dataset-config
         exact_mappings:
         - funding_agency_name
@@ -1053,7 +1087,7 @@ classes:
         recommended: true
       grant_id:
         name: grant_id
-        description: Grant identifier provided by the funding agency
+        description: Grant identifier provided by the funding agency.
         from_schema: cdp-dataset-config
         exact_mappings:
         - funding_grant_id
@@ -1065,12 +1099,11 @@ classes:
       plural:
         tag: plural
         value: Datasets
-    description: An author of a dataset
+    description: A collection of imaging experiments on the same organism
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
     - DateStampedEntityMixin
-    - CrossReferencesMixin
     - S3PrefixedEntityMixin
     attributes:
       deposition:
@@ -1078,6 +1111,8 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.datasets
         range: Deposition
+        description: Reference to the deposition this dataset is associated with
+        required: true
       funding_sources:
         name: funding_sources
         description: Information about how a dataset was funded
@@ -1085,6 +1120,8 @@ classes:
         multivalued: true
         inverse: DatasetFunding.dataset
         range: DatasetFunding
+        annotations:
+          cascade_delete: true
       authors:
         name: authors
         description: An author of a dataset
@@ -1092,15 +1129,19 @@ classes:
         multivalued: true
         inverse: DatasetAuthor.dataset
         range: DatasetAuthor
+        annotations:
+          cascade_delete: true
       runs:
         name: runs
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Run.dataset
         range: Run
+        annotations:
+          cascade_delete: true
       title:
         name: title
-        description: Title of a CryoET dataset.
+        description: Title of a CryoET dataset
         from_schema: cdp-dataset-config
         exact_mappings:
         - dataset_title
@@ -1117,13 +1158,13 @@ classes:
         required: true
       organism_name:
         name: organism_name
-        description: Name of the organism from which a biological sample used in a
-          CryoET study is derived from, e.g. homo sapiens.
+        description: Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
         from_schema: cdp-dataset-config
         exact_mappings:
         - organism_name
         range: string
-        required: true
+        recommended: true
+        required: false
       organism_taxid:
         name: organism_taxid
         description: NCBI taxonomy identifier for the organism, e.g. 9606
@@ -1141,7 +1182,7 @@ classes:
         required: false
       tissue_id:
         name: tissue_id
-        description: The UBERON identifier for the tissue.
+        description: UBERON identifier for the tissue
         from_schema: cdp-dataset-config
         exact_mappings:
         - tissue_id
@@ -1150,8 +1191,7 @@ classes:
         pattern: ^BTO:[0-9]{7}$
       cell_name:
         name: cell_name
-        description: Name of the cell type from which a biological sample used in
-          a CryoET study is derived from.
+        description: Name of the cell from which a biological sample used in a CryoET study is derived from.
         range: string
         # TODO THIS SHOULD BE REQUIRED
         required: false
@@ -1171,7 +1211,7 @@ classes:
         required: false
       cell_strain_id:
         name: cell_strain_id
-        description: Link to more information about the cell strain.
+        description: Link to more information about the cell strain
         from_schema: cdp-dataset-config
         exact_mappings:
         - cell_strain_id
@@ -1180,12 +1220,12 @@ classes:
         range: string
       sample_type:
         name: sample_type
-        description: Type of sample imaged in a CryoET study
+        description: Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)
         range: sample_type_enum
         recommended: true
       sample_preparation:
         name: sample_preparation
-        description: Describes how the sample was prepared.
+        description: Describe how the sample was prepared.
         from_schema: cdp-dataset-config
         exact_mappings:
         - sample_preparation
@@ -1193,7 +1233,7 @@ classes:
         recommended: true
       grid_preparation:
         name: grid_preparation
-        description: Describes Cryo-ET grid preparation.
+        description: Describe Cryo-ET grid preparation.
         from_schema: cdp-dataset-config
         exact_mappings:
         - grid_preparation
@@ -1201,8 +1241,7 @@ classes:
         recommended: true
       other_setup:
         name: other_setup
-        description: Describes other setup not covered by sample preparation or grid
-          preparation that may make this dataset unique in the same publication.
+        description: Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication
         from_schema: cdp-dataset-config
         exact_mappings:
         - preparation_other_setup
@@ -1224,19 +1263,19 @@ classes:
         range: string
       cell_component_name:
         name: cell_component_name
-        description: Name of the cellular component.
+        description: Name of the cellular component
         range: string
         # TODO THIS SHOULD BE REQUIRED
         required: false
       cell_component_id:
         name: cell_component_id
-        description: The GO identifier for the cellular component.
+        description: If the dataset focuses on a specific part of a cell, the subset is included here
         range: string
         recommended: true
         pattern: ^GO:[0-9]{7}$
       deposition_date:
         name: deposition_date
-        description: The date a data item was received by the cryoET data portal.
+        description: Date when a dataset is initially received by the Data Portal.
         from_schema: cdp-dataset-config
         exact_mappings:
         - deposition_date
@@ -1244,7 +1283,7 @@ classes:
         required: true
       release_date:
         name: release_date
-        description: The date a data item was received by the cryoET data portal.
+        description: Date when a dataset is made available on the Data Portal.
         from_schema: cdp-dataset-config
         exact_mappings:
         - release_date
@@ -1252,15 +1291,14 @@ classes:
         required: true
       last_modified_date:
         name: last_modified_date
-        description: The date a piece of data was last modified on the cryoET data
-          portal.
+        description: Date when a released dataset is last modified.
         from_schema: cdp-dataset-config
         exact_mappings:
         - last_modified_date
         range: date
         required: true
-      publications:
-        name: publications
+      dataset_publications:
+        name: dataset_publications
         description: Comma-separated list of DOIs for publications associated with
           the dataset.
         from_schema: cdp-dataset-config
@@ -1269,15 +1307,14 @@ classes:
         pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
       related_database_entries:
         name: related_database_entries
-        description: Comma-separated list of related database entries for the dataset.
+        description: If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.
         from_schema: cdp-dataset-config
         range: string
         recommended: true
         pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
       s3_prefix:
         name: s3_prefix
-        description: Path to a directory containing data for this entity as an S3
-          url
+        description: The S3 public bucket path where this dataset is contained
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_s3_prefix
@@ -1285,20 +1322,22 @@ classes:
         required: true
       https_prefix:
         name: https_prefix
-        description: Path to a directory containing data for this entity as an HTTPS
-          url
+        description: The https directory path where this dataset is contained
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_https_prefix
         range: string
         required: true
+    slot_usage:
+      id:
+        description: An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
   DepositionAuthor:
     name: DepositionAuthor
     annotations:
       plural:
         tag: plural
         value: DepositionAuthors
-    description: Author of a deposition
+    description: Authors for a deposition
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
@@ -1309,8 +1348,15 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.authors
         range: Deposition
+        required: true
+    slot_usage:
+      name:
+        description: Full name of a deposition author (e.g. Jane Doe).
+      primary_author_status:
+        description: Indicates whether an author is the main person creating the deposition
   Deposition:
     name: Deposition
+    description: Deposition metadata
     annotations:
       plural:
         tag: plural
@@ -1318,7 +1364,6 @@ classes:
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
-    - CrossReferencesMixin
     - DateStampedEntityMixin
     attributes:
       authors:
@@ -1328,6 +1373,8 @@ classes:
         multivalued: true
         inverse: DepositionAuthor.deposition
         range: DepositionAuthor
+        annotations:
+          cascade_delete: true
       alignments:
         name: alignments
         description: Tiltseries Alignment
@@ -1335,50 +1382,61 @@ classes:
         multivalued: true
         inverse: Alignment.deposition
         range: Alignment
+        annotations:
+          cascade_delete: true
       annotations:
         name: annotations
-        description: Metadata about an annotation for a run
+        description: Metadata about annotations within a dataset
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Annotation.deposition
         range: Annotation
+        annotations:
+          cascade_delete: true
       datasets:
         name: datasets
-        description: An author of a dataset
+        description: Datasets submitted in this deposition
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Dataset.deposition
         range: Dataset
+        annotations:
+          cascade_delete: true
       frames:
         name: frames
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Frame.deposition
         range: Frame
+        annotations:
+          cascade_delete: true
       tiltseries:
         name: tiltseries
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Tiltseries.deposition
         range: Tiltseries
+        annotations:
+          cascade_delete: true
       tomograms:
         name: tomograms
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Tomogram.deposition
         range: Tomogram
-      deposition_title:
-        name: deposition_title
-        description: Title of a CryoET deposition.
+        annotations:
+          cascade_delete: true
+      title:
+        name: title
+        description:  Title for the deposition
         from_schema: cdp-dataset-config
         exact_mappings:
         - deposition_title
         range: string
         required: true
-      deposition_description:
-        name: deposition_description
-        description: A short description of the deposition, similar to an abstract
-          for a journal article or dataset.
+      description:
+        name: description
+        description: Description for the deposition
         from_schema: cdp-dataset-config
         exact_mappings:
         - deposition_description
@@ -1390,24 +1448,26 @@ classes:
         multivalued: true
         inverse: DepositionType.deposition
         range: DepositionType
-      publications:
-        name: publications
-        description: Comma-separated list of DOIs for publications associated with
-          the dataset.
+        description: The types of data submitted as a part of this deposition
+        annotations:
+          cascade_delete: true
+      deposition_publications:
+        name: deposition_publications
+        description: The publications related to this deposition
         from_schema: cdp-dataset-config
         range: string
         recommended: true
         pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
       related_database_entries:
         name: related_database_entries
-        description: Comma-separated list of related database entries for the dataset.
+        description: The related database entries to this deposition
         from_schema: cdp-dataset-config
         range: string
         recommended: true
         pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
       deposition_date:
         name: deposition_date
-        description: The date a data item was received by the cryoET data portal.
+        description: The date the deposition was deposited
         from_schema: cdp-dataset-config
         exact_mappings:
         - deposition_date
@@ -1415,7 +1475,7 @@ classes:
         required: true
       release_date:
         name: release_date
-        description: The date a data item was received by the cryoET data portal.
+        description: The date the deposition was released
         from_schema: cdp-dataset-config
         exact_mappings:
         - release_date
@@ -1423,13 +1483,20 @@ classes:
         required: true
       last_modified_date:
         name: last_modified_date
-        description: The date a piece of data was last modified on the cryoET data
-          portal.
+        description: The date the deposition was last modified
         from_schema: cdp-dataset-config
         exact_mappings:
         - last_modified_date
         range: date
         required: true
+      key_photo_url:
+        name: key_photo_url
+        description: URL for the deposition preview image.
+        range: string
+      key_photo_thumbnail_url:
+        name: key_photo_thumbnail_url
+        description: URL for the deposition thumbnail image.
+        range: string
   DepositionType:
     name: DepositionType
     annotations:
@@ -1445,8 +1512,10 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.deposition_types
         range: Deposition
+        required: true
       type:
         name: type
+        description: The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
         from_schema: cdp-dataset-config
         range: deposition_types_enum
   Frame:
@@ -1467,11 +1536,13 @@ classes:
         range: Deposition
       per_section_parameters:
         name: per_section_parameters
-        description: Record how frames get mapped to TiltSeries
+        description: Record how frames get mapped to Tiltseries
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: PerSectionParameters.frame
         range: PerSectionParameters
+        annotations:
+          cascade_delete: true
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -1551,7 +1622,7 @@ classes:
       plural:
         tag: plural
         value: PerSectionParameters
-    description: Record how frames get mapped to TiltSeries
+    description: Record how frames get mapped to Tiltseries
     from_schema: cdp-dataset-config
     mixins:
     - IDMixin
@@ -1703,6 +1774,8 @@ classes:
         multivalued: true
         inverse: Alignment.run
         range: Alignment
+        annotations:
+          cascade_delete: true
       annotations:
         name: annotations
         description: Metadata about an annotation for a run
@@ -1710,9 +1783,11 @@ classes:
         multivalued: true
         inverse: Annotation.run
         range: Annotation
+        annotations:
+          cascade_delete: true
       dataset:
         name: dataset
-        description: An author of a dataset
+        description: Dataset that this run is a part of
         from_schema: cdp-dataset-config
         inverse: Dataset.runs
         range: Dataset
@@ -1723,12 +1798,16 @@ classes:
         multivalued: true
         inverse: Frame.run
         range: Frame
+        annotations:
+          cascade_delete: true
       tiltseries:
         name: tiltseries
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: Tiltseries.run
         range: Tiltseries
+        annotations:
+          cascade_delete: true
       tomogram_voxel_spacings:
         name: tomogram_voxel_spacings
         description: Voxel spacings for a run
@@ -1736,6 +1815,8 @@ classes:
         multivalued: true
         inverse: TomogramVoxelSpacing.run
         range: TomogramVoxelSpacing
+        annotations:
+          cascade_delete: true
       tomograms:
         name: tomograms
         description: Metadata describing a tomogram.
@@ -1743,9 +1824,11 @@ classes:
         multivalued: true
         inverse: Tomogram.run
         range: Tomogram
+        annotations:
+          cascade_delete: true
       name:
         name: name
-        description: Name of a run
+        description: Short name for this experiment run
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_run_name
@@ -1753,8 +1836,7 @@ classes:
         required: true
       s3_prefix:
         name: s3_prefix
-        description: Path to a directory containing data for this entity as an S3
-          url
+        description: The S3 public bucket path where this run is contained
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_s3_prefix
@@ -1762,7 +1844,7 @@ classes:
         required: true
       https_prefix:
         name: https_prefix
-        description: Path to a directory containing data for this entity as an HTTPS
+        description: The HTTPS directory path where this run is contained
           url
         from_schema: cdp-dataset-config
         exact_mappings:
@@ -1785,13 +1867,17 @@ classes:
         inverse: Alignment.tiltseries
         range: Alignment
         multivalued: true
+        annotations:
+          cascade_delete: true
       per_section_parameters:
         name: per_section_parameters
-        description: Record how frames get mapped to TiltSeries
+        description: Record how frames get mapped to Tiltseries
         from_schema: cdp-dataset-config
         multivalued: true
         inverse: PerSectionParameters.tiltseries
         range: PerSectionParameters
+        annotations:
+          cascade_delete: true
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -1880,7 +1966,7 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - tiltseries_acceleration_voltage
-        range: float
+        range: integer
         required: true
         minimum_value: 20000
         unit:
@@ -1896,7 +1982,7 @@ classes:
           descriptive_name: millimeters
       microscope_manufacturer:
         name: microscope_manufacturer
-        description: Name of the microscope manufacturer
+        description: Name of the microscope manufacturer (FEI, TFS, JEOL)
         from_schema: cdp-dataset-config
         exact_mappings:
         - tiltseries_microscope_manufacturer
@@ -1985,7 +2071,7 @@ classes:
           descriptive_name: degrees
       tilt_range:
         name: tilt_range
-        description: Total tilt range from min to max in degrees
+        description: Total tilt range in degrees
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_tiltseries_tilt_range
@@ -2089,7 +2175,7 @@ classes:
         required: true
       pixel_spacing:
         name: pixel_spacing
-        description: Pixel spacing for the tilt series
+        description: Pixel spacing equal in both axes in angstroms
         from_schema: cdp-dataset-config
         exact_mappings:
         - tiltseries_pixel_spacing
@@ -2105,14 +2191,14 @@ classes:
         from_schema: cdp-dataset-config
         exact_mappings:
         - tiltseries_aligned_tiltseries_binning
-        range: float
+        range: integer
         minimum_value: 0
-      tiltseries_frames_count:
-        name: tiltseries_frames_count
+      frames_count:
+        name: frames_count
         description: Number of frames associated with this tiltseries
         from_schema: cdp-dataset-config
         exact_mappings:
-        - tiltseries_frames_count
+        - frames_count
         range: integer
   TomogramAuthor:
     name: TomogramAuthor
@@ -2128,10 +2214,13 @@ classes:
     attributes:
       tomogram:
         name: tomogram
-        description: Metadata describing a tomogram.
+        description: The tomogram this tomogram author is a part of
         from_schema: cdp-dataset-config
         inverse: Tomogram.authors
         range: Tomogram
+    slot_usage:
+      primary_author_status:
+        description: Indicates whether an author is the main person creating the tomogram
   TomogramVoxelSpacing:
     name: TomogramVoxelSpacing
     annotations:
@@ -2151,11 +2240,14 @@ classes:
         multivalued: true
         inverse: AnnotationFile.tomogram_voxel_spacing
         range: AnnotationFile
+        annotations:
+          cascade_delete: true
       run:
         name: run
         from_schema: cdp-dataset-config
         inverse: run.tomogram_voxel_spacings
         range: Run
+        description: The the run this tomogram voxel spacing is a part of
       tomograms:
         name: tomograms
         description: Metadata describing a tomogram.
@@ -2163,9 +2255,11 @@ classes:
         multivalued: true
         inverse: Tomogram.tomogram_voxel_spacing
         range: Tomogram
+        annotations:
+          cascade_delete: true
       voxel_spacing:
         name: voxel_spacing
-        description: Voxel spacing equal in all three axes in angstroms
+        description: The voxel spacing for the tomograms in this set in angstroms
         from_schema: cdp-dataset-config
         exact_mappings:
         - tomogram_voxel_spacing
@@ -2177,8 +2271,7 @@ classes:
           descriptive_name: Angstroms per voxel
       s3_prefix:
         name: s3_prefix
-        description: Path to a directory containing data for this entity as an S3
-          url
+        description: The S3 public bucket path where this tomogram voxel spacing is contained
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_s3_prefix
@@ -2186,8 +2279,7 @@ classes:
         required: true
       https_prefix:
         name: https_prefix
-        description: Path to a directory containing data for this entity as an HTTPS
-          url
+        description: The HTTPS directory path where this tomogram voxel spacing is contained
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_https_prefix
@@ -2217,11 +2309,15 @@ classes:
         multivalued: true
         inverse: TomogramAuthor.tomogram
         range: TomogramAuthor
+        annotations:
+          cascade_delete: true
       deposition:
         name: deposition
         from_schema: cdp-dataset-config
         inverse: Deposition.tomograms
         range: Deposition
+        description: If the tomogram is part of a deposition, the related deposition
+        required: true
       run:
         name: run
         from_schema: cdp-dataset-config
@@ -2242,11 +2338,11 @@ classes:
         range: string
       size_x:
         name: size_x
-        description: Tomogram voxels in the x dimension
+        description: Number of pixels in the 3D data fast axis
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_tomogram_size_x
-        range: float
+        range: integer
         required: true
         minimum_value: 0
         unit:
@@ -2254,11 +2350,11 @@ classes:
           descriptive_name: voxels
       size_y:
         name: size_y
-        description: Tomogram voxels in the y dimension
+        description: Number of pixels in the 3D data medium axis
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_tomogram_size_y
-        range: float
+        range: integer
         required: true
         minimum_value: 0
         unit:
@@ -2266,11 +2362,11 @@ classes:
           descriptive_name: voxels
       size_z:
         name: size_z
-        description: Tomogram voxels in the z dimension
+        description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
         from_schema: cdp-dataset-config
         exact_mappings:
         - api_tomogram_size_z
-        range: float
+        range: integer
         required: true
         minimum_value: 0
         unit:
@@ -2290,8 +2386,7 @@ classes:
           descriptive_name: Angstroms per voxel
       fiducial_alignment_status:
         name: fiducial_alignment_status
-        description: Whether the tomographic alignment was computed based on fiducial
-          markers.
+        description: 'Fiducial Alignment status: True = aligned with fiducial False = aligned without fiducial'
         from_schema: cdp-dataset-config
         exact_mappings:
         - tomogram_fiducial_alignment_status
@@ -2324,7 +2419,7 @@ classes:
         description: Name of software used for reconstruction
       is_canonical:
         name: is_canonical
-        description: whether this tomogram is canonical for the run
+        description: Is this tomogram considered the canonical tomogram for the run experiment? True=Yes
         from_schema: cdp-dataset-config
         range: boolean
       s3_omezarr_dir:
@@ -2470,27 +2565,6 @@ classes:
         - last_modified_date
         range: date
         required: true
-  CrossReferencesMixin:
-    name: CrossReferencesMixin
-    description: A set of cross-references to other databases and publications.
-    from_schema: cdp-dataset-config
-    mixin: true
-    attributes:
-      publications:
-        name: publications
-        description: Comma-separated list of DOIs for publications associated with
-          the dataset.
-        from_schema: cdp-dataset-config
-        range: string
-        recommended: true
-        pattern: (^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)
-      related_database_entries:
-        name: related_database_entries
-        description: Comma-separated list of related database entries for the dataset.
-        from_schema: cdp-dataset-config
-        range: string
-        recommended: true
-        pattern: (^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)
   AuthorMixin:
     name: AuthorMixin
     description: An entity with author data
@@ -2499,7 +2573,7 @@ classes:
     attributes:
       name:
         name: name
-        description: The full name of the author.
+        description: Full name of a deposition author (e.g. Jane Doe).
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_name
@@ -2507,28 +2581,28 @@ classes:
         required: true
       email:
         name: email
-        description: The email address of the author.
+        description: Email address for this author
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_email
         range: string
       affiliation_name:
         name: affiliation_name
-        description: The name of the author's affiliation.
+        description: Name of the institutions an author is affiliated with. Comma separated
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_affiliation_name
         range: string
       affiliation_address:
         name: affiliation_address
-        description: The address of the author's affiliation.
+        description: Address of the institution an author is affiliated with.
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_affiliation_address
         range: string
       affiliation_identifier:
         name: affiliation_identifier
-        description: A Research Organization Registry (ROR) identifier.
+        description: A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).
         from_schema: cdp-dataset-config
         exact_mappings:
         - author_affiliation_identifier

@@ -403,6 +403,26 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-ingestion-config/',
                               'repr': 'str',
                               'uri': 'xsd:anyURI'}}} )
 
+class AlignmentTypeEnum(str, Enum):
+    """
+    Type of alignment
+    """
+    # Local alignment
+    LOCAL = "LOCAL"
+    # Global alignment
+    GLOBAL = "GLOBAL"
+
+
+class AlignmentFormatEnum(str, Enum):
+    """
+    Used to determine what alignment alogrithm to use.
+    """
+    # IMOD was used for the alignment. Supported file formats are (xf, tlt, tilt.com, news.com, xtilt)
+    IMOD = "IMOD"
+    # ARETOMO3 was used for the alignment. Supported file formats are (aln, txt, csv)
+    ARETOMO3 = "ARETOMO3"
+
+
 class AnnotationMethodTypeEnum(str, Enum):
     """
     Describes how the annotations were generated.
@@ -623,7 +643,11 @@ class DateStampedEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
-         'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
 
 
 class AuthoredEntity(ConfiguredBaseModel):
@@ -660,7 +684,7 @@ class CrossReferencedEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixin': True})
 
     cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references',
-         'domain_of': ['CrossReferencedEntity', 'Dataset', 'Deposition']} })
+         'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
 
 
 class PicturedEntity(ConfiguredBaseModel):
@@ -913,7 +937,11 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
          'domain_of': ['Dataset'],
          'exact_mappings': ['cdp-common:dataset_description']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
-         'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
     authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity',
                        'Dataset',
@@ -926,7 +954,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
          'list_elements_ordered': True,
          'recommended': True} })
     cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references',
-         'domain_of': ['CrossReferencedEntity', 'Dataset', 'Deposition']} })
+         'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
     sample_type: SampleTypeEnum = Field(..., description="""Type of sample imaged in a CryoET study.""", json_schema_extra = { "linkml_meta": {'alias': 'sample_type',
          'domain_of': ['ExperimentMetadata', 'Dataset'],
          'exact_mappings': ['cdp-common:preparation_sample_type']} })
@@ -981,7 +1009,11 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
          'domain_of': ['Deposition'],
          'exact_mappings': ['cdp-common:deposition_types']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
-         'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
     authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity',
                        'Dataset',
@@ -990,7 +1022,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                        'Annotation'],
          'list_elements_ordered': True} })
     cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references',
-         'domain_of': ['CrossReferencedEntity', 'Dataset', 'Deposition']} })
+         'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
 
     @field_validator('deposition_types')
     def pattern_deposition_types(cls, v):
@@ -1373,13 +1405,22 @@ class TomogramSize(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     x: int = Field(..., description="""Number of pixels in the 3D data fast axis""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     y: int = Field(..., description="""Number of pixels in the 3D data medium axis""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     z: int = Field(..., description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
 
 
@@ -1391,15 +1432,24 @@ class TomogramOffset(ConfiguredBaseModel):
 
     x: Union[int, str] = Field(..., description="""x offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
-         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     y: Union[int, str] = Field(..., description="""y offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
-         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     z: Union[int, str] = Field(..., description="""z offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
-         'domain_of': ['TomogramSize', 'TomogramOffset'],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
 
     @field_validator('x')
@@ -1498,9 +1548,28 @@ class Tomogram(AuthoredEntity):
     affine_transformation_matrix: Optional[conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))] = Field(None, description="""The flip or rotation transformation of this author submitted tomogram is indicated here""", json_schema_extra = { "linkml_meta": {'alias': 'affine_transformation_matrix',
          'array': {'dimensions': [{'exact_cardinality': 4}, {'exact_cardinality': 4}],
                    'exact_number_dimensions': 2},
-         'domain_of': ['Tomogram']} })
+         'domain_of': ['Tomogram', 'Alignment']} })
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'size', 'domain_of': ['Tomogram']} })
-    offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram']} })
+    offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
+    is_visualization_default: bool = Field(True, description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'ifabsent': 'True'} })
+    cross_references: Optional[CrossReferences] = Field(None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_references',
+         'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
+    dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
     authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity',
                        'Dataset',
@@ -1689,7 +1758,8 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1698,6 +1768,17 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
 
@@ -1753,7 +1834,8 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1762,6 +1844,17 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
 
@@ -1817,7 +1910,8 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1826,6 +1920,17 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
 
@@ -1880,7 +1985,8 @@ class AnnotationPointFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1889,6 +1995,17 @@ class AnnotationPointFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
 
@@ -1929,7 +2046,8 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1938,6 +2056,17 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
 
@@ -1982,7 +2111,8 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1991,6 +2121,17 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
 
@@ -2036,7 +2177,8 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2045,6 +2187,17 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
 
@@ -2101,7 +2254,8 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
-         'domain_of': ['AnnotationSourceFile',
+         'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2110,6 +2264,17 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
 
@@ -2149,10 +2314,14 @@ class Annotation(AuthoredEntity, DateStampedEntity):
          'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_object_count']} })
     version: Optional[float] = Field(None, description="""Version of annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'version',
-         'domain_of': ['Annotation'],
+         'domain_of': ['Annotation', 'Container'],
          'exact_mappings': ['cdp-common:annotation_version']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
-         'domain_of': ['DateStampedEntity', 'Dataset', 'Deposition', 'Annotation']} })
+         'domain_of': ['DateStampedEntity',
+                       'Tomogram',
+                       'Dataset',
+                       'Deposition',
+                       'Annotation']} })
     authors: List[Author] = Field(..., description="""Author of a scientific data entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'authors',
          'domain_of': ['AuthoredEntity',
                        'Dataset',
@@ -2184,6 +2353,206 @@ class Annotation(AuthoredEntity, DateStampedEntity):
             if not pattern.match(v):
                 raise ValueError(f"Invalid method_type format: {v}")
         return v
+
+
+class AlignmentSize(ConfiguredBaseModel):
+    """
+    The size of an alignment in voxels in each dimension.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    x: Union[int, str] = Field(..., description="""Number of pixels in the 3D data fast axis""", json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+    y: Union[int, str] = Field(..., description="""Number of pixels in the 3D data medium axis""", json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+    z: Union[int, str] = Field(..., description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""", json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+
+    @field_validator('x')
+    def pattern_x(cls, v):
+        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid x format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid x format: {v}")
+        return v
+
+    @field_validator('y')
+    def pattern_y(cls, v):
+        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid y format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid y format: {v}")
+        return v
+
+    @field_validator('z')
+    def pattern_z(cls, v):
+        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid z format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid z format: {v}")
+        return v
+
+
+class AlignmentOffset(ConfiguredBaseModel):
+    """
+    The offset of a alignment in voxels in each dimension relative to the canonical tomogram.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    x: Union[int, str] = Field(0, description="""x offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'ifabsent': 'int(0)',
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+    y: Union[int, str] = Field(0, description="""y offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'ifabsent': 'int(0)',
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+    z: Union[int, str] = Field(0, description="""z offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'domain_of': ['TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'ifabsent': 'int(0)',
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+
+    @field_validator('x')
+    def pattern_x(cls, v):
+        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid x format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid x format: {v}")
+        return v
+
+    @field_validator('y')
+    def pattern_y(cls, v):
+        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid y format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid y format: {v}")
+        return v
+
+    @field_validator('z')
+    def pattern_z(cls, v):
+        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid z format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid z format: {v}")
+        return v
+
+
+class Alignment(ConfiguredBaseModel):
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    alignment_type: Optional[AlignmentTypeEnum] = Field(None, description="""The type of alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'alignment_type', 'domain_of': ['Alignment']} })
+    offset: Optional[AlignmentOffset] = Field(None, description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
+    volume_dimesion: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimesion', 'domain_of': ['Alignment']} })
+    x_rotation_offset: Optional[Union[int, str]] = Field(0, description="""The x rotation offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
+         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'domain_of': ['Alignment'],
+         'ifabsent': 'int(0)'} })
+    tilt_offset: Optional[float] = Field(0.0, description="""The tilt offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_offset', 'domain_of': ['Alignment'], 'ifabsent': 'float(0.0)'} })
+    affine_transformation_matrix: Optional[conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))] = Field(None, description="""The flip or rotation transformation of this author submitted tomogram is indicated here. The default value if not present, is an identity matrix.""", json_schema_extra = { "linkml_meta": {'alias': 'affine_transformation_matrix',
+         'array': {'dimensions': [{'exact_cardinality': 4}, {'exact_cardinality': 4}],
+                   'exact_number_dimensions': 2},
+         'domain_of': ['Tomogram', 'Alignment']} })
+    is_canonical: Optional[bool] = Field(True, description="""Whether the alignment is canonical.""", json_schema_extra = { "linkml_meta": {'alias': 'is_canonical', 'domain_of': ['Alignment'], 'ifabsent': 'True'} })
+    format: AlignmentFormatEnum = Field(..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment']} })
+
+    @field_validator('alignment_type')
+    def pattern_alignment_type(cls, v):
+        pattern=re.compile(r"(^LOCAL$)|(^GLOBAL$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid alignment_type format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid alignment_type format: {v}")
+        return v
+
+    @field_validator('x_rotation_offset')
+    def pattern_x_rotation_offset(cls, v):
+        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid x_rotation_offset format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid x_rotation_offset format: {v}")
+        return v
+
+    @field_validator('format')
+    def pattern_format(cls, v):
+        pattern=re.compile(r"(^IMOD$)|(^ARETOMO3$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid format format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid format format: {v}")
+        return v
+
+
+class Frame(ConfiguredBaseModel):
+    """
+    A frame entity.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    dose: float = Field(..., description="""The dose.""", json_schema_extra = { "linkml_meta": {'alias': 'dose', 'domain_of': ['Frame']} })
+    defocus: float = Field(..., description="""The defocus.""", json_schema_extra = { "linkml_meta": {'alias': 'defocus', 'domain_of': ['Frame']} })
+    astigmatism: float = Field(..., description="""The astigmatism.""", json_schema_extra = { "linkml_meta": {'alias': 'astigmatism', 'domain_of': ['Frame']} })
+    astigmatic_angle: float = Field(..., description="""The astigmatic angle.""", json_schema_extra = { "linkml_meta": {'alias': 'astigmatic_angle', 'domain_of': ['Frame']} })
 
 
 class DateStampedEntityMixin(ConfiguredBaseModel):
@@ -2406,6 +2775,7 @@ class Container(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config', 'tree_root': True})
 
+    alignments: Optional[List[AlignmentEntity]] = Field(None, description="""An alignment entity.""", json_schema_extra = { "linkml_meta": {'alias': 'alignments', 'domain_of': ['Container']} })
     annotations: Optional[List[AnnotationEntity]] = Field(None, description="""An annotation entity.""", json_schema_extra = { "linkml_meta": {'alias': 'annotations', 'domain_of': ['Container']} })
     collection_metadata: Optional[List[CollectionMetadataEntity]] = Field(None, description="""A collection_metadata entity.""", json_schema_extra = { "linkml_meta": {'alias': 'collection_metadata', 'domain_of': ['Container']} })
     dataset_keyphotos: Optional[List[DatasetKeyPhotoEntity]] = Field(None, description="""A dataset key photo entity.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_keyphotos', 'domain_of': ['Container']} })
@@ -2420,6 +2790,7 @@ class Container(ConfiguredBaseModel):
     standardization_config: StandardizationConfig = Field(..., description="""A standardization configuration.""", json_schema_extra = { "linkml_meta": {'alias': 'standardization_config', 'domain_of': ['Container']} })
     tiltseries: Optional[List[TiltSeriesEntity]] = Field(None, description="""A tilt series entity.""", json_schema_extra = { "linkml_meta": {'alias': 'tiltseries', 'domain_of': ['Container']} })
     tomograms: Optional[List[TomogramEntity]] = Field(None, description="""A tomogram entity.""", json_schema_extra = { "linkml_meta": {'alias': 'tomograms', 'domain_of': ['Container']} })
+    version: str = Field(..., description="""The version of the ingestion config.""", json_schema_extra = { "linkml_meta": {'alias': 'version', 'domain_of': ['Annotation', 'Container']} })
     voxel_spacings: List[VoxelSpacingEntity] = Field(..., description="""A voxel spacing entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacings', 'domain_of': ['Container']} })
 
 
@@ -2506,6 +2877,7 @@ class DefaultSource(ConfiguredBaseModel):
 
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -2521,6 +2893,7 @@ class DefaultSource(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -2547,6 +2920,7 @@ class StandardSource(DefaultSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -2563,6 +2937,7 @@ class StandardSource(DefaultSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -2578,6 +2953,7 @@ class StandardSource(DefaultSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -2596,6 +2972,7 @@ class StandardSource(DefaultSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -2608,6 +2985,7 @@ class StandardSource(DefaultSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -2623,6 +3001,7 @@ class StandardSource(DefaultSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -2700,6 +3079,7 @@ class ReferencedSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -2716,6 +3096,7 @@ class ReferencedSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -2731,6 +3112,7 @@ class ReferencedSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -2749,6 +3131,7 @@ class ReferencedSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -2761,6 +3144,7 @@ class ReferencedSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -2776,6 +3160,7 @@ class ReferencedSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -2792,6 +3177,263 @@ class ReferencedSource(StandardSource):
                        'VoxelSpacingSource']} })
 
 
+class AlignmentEntity(ConfiguredBaseModel):
+    """
+    An alignment entity.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    metadata: Alignment = Field(..., description="""The metadata for the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'DatasetEntity',
+                       'DepositionEntity',
+                       'FrameEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity']} })
+    sources: List[AlignmentSource] = Field(..., description="""An alignment source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'CollectionMetadataEntity',
+                       'DatasetEntity',
+                       'DatasetKeyPhotoEntity',
+                       'DepositionEntity',
+                       'DepositionKeyPhotoEntity',
+                       'FrameEntity',
+                       'GainEntity',
+                       'KeyImageEntity',
+                       'RawTiltEntity',
+                       'RunEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity',
+                       'VoxelSpacingEntity']} })
+
+
+class AlignmentSource(StandardSource):
+    """
+    An alignment source.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    parent_filters: Optional[AlignmentParentFilters] = Field(None, description="""Types of parent filters for an alignment source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource',
+                       'VoxelSpacingSource']} })
+    destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
+         'domain_of': ['StandardSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
+         'domain_of': ['StandardSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
+         'domain_of': ['StandardSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    literal: Optional[StandardLiteral] = Field(None, description="""A literal class with a value attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'literal',
+         'domain_of': ['StandardSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionKeyPhotoSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DepositionSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
+         'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
+                       'AnnotationParentFilters',
+                       'CollectionMetadataParentFilters',
+                       'DatasetParentFilters',
+                       'DatasetKeyPhotoParentFilters',
+                       'DepositionKeyPhotoParentFilters',
+                       'FrameParentFilters',
+                       'GainParentFilters',
+                       'KeyImageParentFilters',
+                       'RawTiltParentFilters',
+                       'RunParentFilters',
+                       'TiltSeriesParentFilters',
+                       'TomogramParentFilters',
+                       'VoxelSpacingParentFilters',
+                       'StandardSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'AnnotationSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource',
+                       'VoxelSpacingSource']} })
+
+
+class AlignmentParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for an alignment source.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    include: Optional[AlignmentParent] = Field(None, description="""A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
+                       'CollectionMetadataParentFilters',
+                       'DatasetParentFilters',
+                       'DatasetKeyPhotoParentFilters',
+                       'DepositionKeyPhotoParentFilters',
+                       'FrameParentFilters',
+                       'GainParentFilters',
+                       'KeyImageParentFilters',
+                       'RawTiltParentFilters',
+                       'RunParentFilters',
+                       'TiltSeriesParentFilters',
+                       'TomogramParentFilters',
+                       'VoxelSpacingParentFilters']} })
+    exclude: Optional[AlignmentParent] = Field(None, description="""A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
+         'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
+                       'AnnotationParentFilters',
+                       'CollectionMetadataParentFilters',
+                       'DatasetParentFilters',
+                       'DatasetKeyPhotoParentFilters',
+                       'DepositionKeyPhotoParentFilters',
+                       'FrameParentFilters',
+                       'GainParentFilters',
+                       'KeyImageParentFilters',
+                       'RawTiltParentFilters',
+                       'RunParentFilters',
+                       'TiltSeriesParentFilters',
+                       'TomogramParentFilters',
+                       'VoxelSpacingParentFilters',
+                       'StandardSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'AnnotationSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource',
+                       'VoxelSpacingSource']} })
+
+
+class AlignmentParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
+                       'CollectionMetadataParent',
+                       'FrameParent',
+                       'GainParent',
+                       'KeyImageParent',
+                       'RawTiltParent',
+                       'RunParent',
+                       'TiltSeriesParent',
+                       'TomogramParent',
+                       'VoxelSpacingParent']} })
+    deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
+                       'CollectionMetadataParent',
+                       'DatasetParent',
+                       'DatasetKeyPhotoParent',
+                       'DepositionKeyPhotoParent',
+                       'FrameParent',
+                       'GainParent',
+                       'KeyImageParent',
+                       'RawTiltParent',
+                       'RunParent',
+                       'TiltSeriesParent',
+                       'TomogramParent',
+                       'VoxelSpacingParent']} })
+    run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
+                       'CollectionMetadataParent',
+                       'FrameParent',
+                       'GainParent',
+                       'KeyImageParent',
+                       'RawTiltParent',
+                       'TiltSeriesParent',
+                       'TomogramParent',
+                       'VoxelSpacingParent']} })
+
+
 class AnnotationEntity(ConfiguredBaseModel):
     """
     An annotation entity.
@@ -2799,13 +3441,16 @@ class AnnotationEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     metadata: Annotation = Field(..., description="""Metadata describing an annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[AnnotationSource] = Field(..., description="""An annotation source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -2835,7 +3480,8 @@ class AnnotationSource(DefaultSource):
     TriangularMesh: Optional[AnnotationTriangularMeshFile] = Field(None, description="""File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.""", json_schema_extra = { "linkml_meta": {'alias': 'TriangularMesh', 'domain_of': ['AnnotationSource']} })
     TriangularMeshGroup: Optional[AnnotationTriangularMeshGroupFile] = Field(None, description="""File and sourcing data containing one or more triangular mesh annotations.""", json_schema_extra = { "linkml_meta": {'alias': 'TriangularMeshGroup', 'domain_of': ['AnnotationSource']} })
     parent_filters: Optional[AnnotationParentFilters] = Field(None, description="""Filters for the parent of an annotation source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -2850,6 +3496,7 @@ class AnnotationSource(DefaultSource):
                        'VoxelSpacingSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -2865,6 +3512,7 @@ class AnnotationSource(DefaultSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -2888,7 +3536,8 @@ class AnnotationParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[AnnotationParent] = Field(None, description="""A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -2903,6 +3552,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[AnnotationParent] = Field(None, description="""A filter for a parent class of an annotation source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -2918,6 +3568,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -2941,7 +3592,8 @@ class AnnotationParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -2952,7 +3604,8 @@ class AnnotationParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -2966,7 +3619,8 @@ class AnnotationParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -2989,7 +3643,8 @@ class CollectionMetadataEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[CollectionMetadataSource] = Field(..., description="""A collection_metadata source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -3012,7 +3667,8 @@ class CollectionMetadataSource(StandardSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[CollectionMetadataParentFilters] = Field(None, description="""Types of parent filters for a collection_metadata source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3029,6 +3685,7 @@ class CollectionMetadataSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3045,6 +3702,7 @@ class CollectionMetadataSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3060,6 +3718,7 @@ class CollectionMetadataSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3078,6 +3737,7 @@ class CollectionMetadataSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -3090,6 +3750,7 @@ class CollectionMetadataSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3105,6 +3766,7 @@ class CollectionMetadataSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3128,7 +3790,8 @@ class CollectionMetadataParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[CollectionMetadataParent] = Field(None, description="""A filter for a parent class of a collection_metadata source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -3143,6 +3806,7 @@ class CollectionMetadataParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[CollectionMetadataParent] = Field(None, description="""A filter for a parent class of a collection_metadata source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3158,6 +3822,7 @@ class CollectionMetadataParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3181,7 +3846,8 @@ class CollectionMetadataParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -3192,7 +3858,8 @@ class CollectionMetadataParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -3206,7 +3873,8 @@ class CollectionMetadataParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -3224,13 +3892,16 @@ class DatasetEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     metadata: Optional[Dataset] = Field(None, description="""High-level description of a cryoET dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[DatasetSource] = Field(..., description="""A dataset source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -3253,7 +3924,8 @@ class DatasetSource(StandardSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[DatasetParentFilters] = Field(None, description="""Types of parent filters for a dataset source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3270,6 +3942,7 @@ class DatasetSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3286,6 +3959,7 @@ class DatasetSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3301,6 +3975,7 @@ class DatasetSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3319,6 +3994,7 @@ class DatasetSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -3331,6 +4007,7 @@ class DatasetSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3346,6 +4023,7 @@ class DatasetSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3369,7 +4047,8 @@ class DatasetParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[DatasetParent] = Field(None, description="""A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -3384,6 +4063,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[DatasetParent] = Field(None, description="""A filter for a parent class of a dataset source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3399,6 +4079,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3422,7 +4103,8 @@ class DatasetParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -3444,7 +4126,8 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[DatasetKeyPhotoSource] = Field(..., description="""A key photo source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -3472,6 +4155,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -3483,7 +4167,8 @@ class DatasetKeyPhotoSource(StandardSource):
                        'TiltSeriesSource',
                        'TomogramSource']} })
     parent_filters: Optional[DatasetKeyPhotoParentFilters] = Field(None, description="""Types of parent filters for a key photo source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3500,6 +4185,7 @@ class DatasetKeyPhotoSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3516,6 +4202,7 @@ class DatasetKeyPhotoSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3531,6 +4218,7 @@ class DatasetKeyPhotoSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3545,6 +4233,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3560,6 +4249,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3583,7 +4273,8 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[DatasetKeyPhotoParent] = Field(None, description="""A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -3598,6 +4289,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[DatasetKeyPhotoParent] = Field(None, description="""A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3613,6 +4305,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3636,7 +4329,8 @@ class DatasetKeyPhotoParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -3658,13 +4352,16 @@ class DepositionEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     metadata: Optional[Deposition] = Field(None, description="""Metadata describing a deposition.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[DepositionSource] = Field(..., description="""A deposition source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -3690,6 +4387,7 @@ class DepositionSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3706,6 +4404,7 @@ class DepositionSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3721,6 +4420,7 @@ class DepositionSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3739,6 +4439,7 @@ class DepositionSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -3751,6 +4452,7 @@ class DepositionSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3766,6 +4468,7 @@ class DepositionSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3789,7 +4492,8 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[DepositionKeyPhotoSource] = Field(..., description="""A key photo source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -3817,6 +4521,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -3828,7 +4533,8 @@ class DepositionKeyPhotoSource(StandardSource):
                        'TiltSeriesSource',
                        'TomogramSource']} })
     parent_filters: Optional[DepositionKeyPhotoParentFilters] = Field(None, description="""Types of parent filters for a key photo source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3845,6 +4551,7 @@ class DepositionKeyPhotoSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3861,6 +4568,7 @@ class DepositionKeyPhotoSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3876,6 +4584,7 @@ class DepositionKeyPhotoSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -3890,6 +4599,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3905,6 +4615,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3928,7 +4639,8 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[DepositionKeyPhotoParent] = Field(None, description="""A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -3943,6 +4655,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[DepositionKeyPhotoParent] = Field(None, description="""A filter for a parent class of a key photo source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -3958,6 +4671,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3981,7 +4695,8 @@ class DepositionKeyPhotoParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -4003,7 +4718,8 @@ class FrameEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[FrameSource] = Field(..., description="""A frame source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -4017,6 +4733,14 @@ class FrameEntity(ConfiguredBaseModel):
                        'TiltSeriesEntity',
                        'TomogramEntity',
                        'VoxelSpacingEntity']} })
+    metadata: Optional[Frame] = Field(None, description="""A frame entity.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'DatasetEntity',
+                       'DepositionEntity',
+                       'FrameEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity']} })
 
 
 class FrameSource(StandardSource):
@@ -4026,7 +4750,8 @@ class FrameSource(StandardSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[FrameParentFilters] = Field(None, description="""Types of parent filters for a frame source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4043,6 +4768,7 @@ class FrameSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4059,6 +4785,7 @@ class FrameSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4074,6 +4801,7 @@ class FrameSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4092,6 +4820,7 @@ class FrameSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -4104,6 +4833,7 @@ class FrameSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -4119,6 +4849,7 @@ class FrameSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4142,7 +4873,8 @@ class FrameParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[FrameParent] = Field(None, description="""A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -4157,6 +4889,7 @@ class FrameParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[FrameParent] = Field(None, description="""A filter for a parent class of a frame source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -4172,6 +4905,7 @@ class FrameParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4195,7 +4929,8 @@ class FrameParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -4206,7 +4941,8 @@ class FrameParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -4220,7 +4956,8 @@ class FrameParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -4238,7 +4975,8 @@ class GainEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[GainSource] = Field(..., description="""A gain source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -4261,7 +4999,8 @@ class GainSource(StandardSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[GainParentFilters] = Field(None, description="""Types of parent filters for a gain source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4278,6 +5017,7 @@ class GainSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4294,6 +5034,7 @@ class GainSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4309,6 +5050,7 @@ class GainSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4327,6 +5069,7 @@ class GainSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -4339,6 +5082,7 @@ class GainSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -4354,6 +5098,7 @@ class GainSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4377,7 +5122,8 @@ class GainParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[GainParent] = Field(None, description="""A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -4392,6 +5138,7 @@ class GainParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[GainParent] = Field(None, description="""A filter for a parent class of a gain source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -4407,6 +5154,7 @@ class GainParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4430,7 +5178,8 @@ class GainParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -4441,7 +5190,8 @@ class GainParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -4455,7 +5205,8 @@ class GainParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -4473,7 +5224,8 @@ class KeyImageEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[KeyImageSource] = Field(..., description="""A key image source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -4496,7 +5248,8 @@ class KeyImageSource(StandardSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[KeyImageParentFilters] = Field(None, description="""Types of parent filters for a key image source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4513,6 +5266,7 @@ class KeyImageSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4529,6 +5283,7 @@ class KeyImageSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4544,6 +5299,7 @@ class KeyImageSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4562,6 +5318,7 @@ class KeyImageSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -4574,6 +5331,7 @@ class KeyImageSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -4589,6 +5347,7 @@ class KeyImageSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4612,7 +5371,8 @@ class KeyImageParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[KeyImageParent] = Field(None, description="""A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -4627,6 +5387,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[KeyImageParent] = Field(None, description="""A filter for a parent class of a key image source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -4642,6 +5403,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4665,7 +5427,8 @@ class KeyImageParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -4676,7 +5439,8 @@ class KeyImageParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -4690,7 +5454,8 @@ class KeyImageParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -4714,7 +5479,8 @@ class RawTiltEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[RawTiltSource] = Field(..., description="""A raw tilt source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -4737,7 +5503,8 @@ class RawTiltSource(StandardSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[RawTiltParentFilters] = Field(None, description="""Types of parent filters for a raw tilt source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4754,6 +5521,7 @@ class RawTiltSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4770,6 +5538,7 @@ class RawTiltSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4785,6 +5554,7 @@ class RawTiltSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4803,6 +5573,7 @@ class RawTiltSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -4815,6 +5586,7 @@ class RawTiltSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -4830,6 +5602,7 @@ class RawTiltSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4853,7 +5626,8 @@ class RawTiltParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[RawTiltParent] = Field(None, description="""A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -4868,6 +5642,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[RawTiltParent] = Field(None, description="""A filter for a parent class of a raw tilt source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -4883,6 +5658,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4906,7 +5682,8 @@ class RawTiltParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -4917,7 +5694,8 @@ class RawTiltParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -4931,7 +5709,8 @@ class RawTiltParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -4949,7 +5728,8 @@ class RunEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[RunSource] = Field(..., description="""A run source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -4972,7 +5752,8 @@ class RunSource(StandardSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[RunParentFilters] = Field(None, description="""Types of parent filters for a run source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -4989,6 +5770,7 @@ class RunSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5005,6 +5787,7 @@ class RunSource(StandardSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5020,6 +5803,7 @@ class RunSource(StandardSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5038,6 +5822,7 @@ class RunSource(StandardSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -5050,6 +5835,7 @@ class RunSource(StandardSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -5065,6 +5851,7 @@ class RunSource(StandardSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5088,7 +5875,8 @@ class RunParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[RunParent] = Field(None, description="""A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -5103,6 +5891,7 @@ class RunParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[RunParent] = Field(None, description="""A filter for a parent class of a run source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -5118,6 +5907,7 @@ class RunParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5141,7 +5931,8 @@ class RunParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -5152,7 +5943,8 @@ class RunParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -5188,13 +5980,16 @@ class TiltSeriesEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     metadata: Optional[TiltSeries] = Field(None, description="""Metadata describing a tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[TiltSeriesSource] = Field(..., description="""A tilt series source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -5217,7 +6012,8 @@ class TiltSeriesSource(ReferencedSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[TiltSeriesParentFilters] = Field(None, description="""Types of parent filters for a tilt series source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5236,6 +6032,7 @@ class TiltSeriesSource(ReferencedSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5252,6 +6049,7 @@ class TiltSeriesSource(ReferencedSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5267,6 +6065,7 @@ class TiltSeriesSource(ReferencedSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5285,6 +6084,7 @@ class TiltSeriesSource(ReferencedSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -5297,6 +6097,7 @@ class TiltSeriesSource(ReferencedSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -5312,6 +6113,7 @@ class TiltSeriesSource(ReferencedSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5335,7 +6137,8 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[TiltSeriesParent] = Field(None, description="""A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -5350,6 +6153,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[TiltSeriesParent] = Field(None, description="""A filter for a parent class of a tilt series source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -5365,6 +6169,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5388,7 +6193,8 @@ class TiltSeriesParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -5399,7 +6205,8 @@ class TiltSeriesParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -5413,7 +6220,8 @@ class TiltSeriesParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -5431,13 +6239,16 @@ class TomogramEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     metadata: Optional[Tomogram] = Field(None, description="""Metadata describing a tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'DatasetEntity',
                        'DepositionEntity',
+                       'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[TomogramSource] = Field(..., description="""A tomogram source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -5460,7 +6271,8 @@ class TomogramSource(ReferencedSource):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     parent_filters: Optional[TomogramParentFilters] = Field(None, description="""Types of parent filters for a tomogram source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5479,6 +6291,7 @@ class TomogramSource(ReferencedSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5495,6 +6308,7 @@ class TomogramSource(ReferencedSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5510,6 +6324,7 @@ class TomogramSource(ReferencedSource):
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5528,6 +6343,7 @@ class TomogramSource(ReferencedSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -5540,6 +6356,7 @@ class TomogramSource(ReferencedSource):
                        'TomogramSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -5555,6 +6372,7 @@ class TomogramSource(ReferencedSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5578,7 +6396,8 @@ class TomogramParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[TomogramParent] = Field(None, description="""A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -5593,6 +6412,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[TomogramParent] = Field(None, description="""A filter for a parent class of a tomogram source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -5608,6 +6428,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5631,7 +6452,8 @@ class TomogramParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -5642,7 +6464,8 @@ class TomogramParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -5656,7 +6479,8 @@ class TomogramParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -5679,7 +6503,8 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     sources: List[VoxelSpacingSource] = Field(..., description="""A voxel spacing source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
-         'domain_of': ['AnnotationEntity',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
                        'CollectionMetadataEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
@@ -5705,6 +6530,7 @@ class VoxelSpacingSource(DefaultSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5721,6 +6547,7 @@ class VoxelSpacingSource(DefaultSource):
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5739,6 +6566,7 @@ class VoxelSpacingSource(DefaultSource):
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DepositionSource',
@@ -5751,7 +6579,8 @@ class VoxelSpacingSource(DefaultSource):
                        'TomogramSource']} })
     tomogram_header: Optional[TomogramHeader] = Field(None, description="""A tomogram header, a unique source attribute for voxel spacing.""", json_schema_extra = { "linkml_meta": {'alias': 'tomogram_header', 'domain_of': ['VoxelSpacingSource']} })
     parent_filters: Optional[VoxelSpacingParentFilters] = Field(None, description="""Types of parent filters for a voxel spacing source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
-         'domain_of': ['AnnotationSource',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
@@ -5766,6 +6595,7 @@ class VoxelSpacingSource(DefaultSource):
                        'VoxelSpacingSource']} })
     exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -5781,6 +6611,7 @@ class VoxelSpacingSource(DefaultSource):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5804,7 +6635,8 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     include: Optional[VoxelSpacingParent] = Field(None, description="""A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
-         'domain_of': ['AnnotationParentFilters',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
@@ -5819,6 +6651,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters']} })
     exclude: Optional[VoxelSpacingParent] = Field(None, description="""A filter for a parent class of a voxel spacing source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
          'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
                        'DatasetParentFilters',
@@ -5834,6 +6667,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
                        'VoxelSpacingParentFilters',
                        'StandardSource',
                        'ReferencedSource',
+                       'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5857,7 +6691,8 @@ class VoxelSpacingParent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -5868,7 +6703,8 @@ class VoxelSpacingParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
@@ -5882,7 +6718,8 @@ class VoxelSpacingParent(ConfiguredBaseModel):
                        'TomogramParent',
                        'VoxelSpacingParent']} })
     run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
-         'domain_of': ['AnnotationParent',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
                        'CollectionMetadataParent',
                        'FrameParent',
                        'GainParent',
@@ -5965,6 +6802,10 @@ AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
 Annotation.model_rebuild()
+AlignmentSize.model_rebuild()
+AlignmentOffset.model_rebuild()
+Alignment.model_rebuild()
+Frame.model_rebuild()
 DateStampedEntityMixin.model_rebuild()
 DateStamp.model_rebuild()
 CrossReferencesMixin.model_rebuild()
@@ -5983,6 +6824,10 @@ KeyPhotoLiteral.model_rebuild()
 DestinationMetadataFilterKeyPair.model_rebuild()
 DestinationMetadataFilter.model_rebuild()
 ReferencedSource.model_rebuild()
+AlignmentEntity.model_rebuild()
+AlignmentSource.model_rebuild()
+AlignmentParentFilters.model_rebuild()
+AlignmentParent.model_rebuild()
 AnnotationEntity.model_rebuild()
 AnnotationSource.model_rebuild()
 AnnotationParentFilters.model_rebuild()

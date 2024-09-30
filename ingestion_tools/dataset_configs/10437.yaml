@@ -1,432 +1,654 @@
-datasets:
-  - metadata:
-      authors: &id001
-        - name: Mahrukh Usmani
-          ORCID: 0000-0002-9479-3800
-          primary_author_status: true
-          corresponding_author_status: true
-        - name: Nicolas Coudray
-          ORCID: 0000-0002-6050-2219
-          primary_author_status: true
-          corresponding_author_status: true
-        - name: Daija Bobe
-          ORCID: 0000-0002-7388-8907
-        - name: Mykhailo Kopylov
-          ORCID: 0000-0003-0188-9799
-        - name: Damian C. Ekiert
-          ORCID: 0000-0002-2570-0404
-          corresponding_author_status: true
-        - name: Gira Bhabha
-          ORCID: 0000-0003-0624-6178
-          corresponding_author_status: true
-      cell_strain:
-        name: ATCC-50506
-      cell_type:
-        name: fungal spore
-        id: CL:0002369
-      cross_references:
-        publications: 10.1101/2024.07.13.603322
-        #TODO: Add EMPIAR-12177 once available
-        related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
-      dataset_description: This dataset contains raw frames, tilt series, tomogram reconstructions and segmentations
-        from Encephalitozoon intestinalis microsporidian spores. Samples were cryo-FIB milled.
-      dataset_identifier: 10437
-      dataset_title: Cryo-ET dataset (3) of dormant microporidian spores from Encephalitozoon intestinalis
-      dates: &id002
-        deposition_date: '2024-07-09'
-        last_modified_date: '2024-07-24'
-        release_date: '2024-07-29'
-      funding:
-        - funding_agency_name: American Heart Association
-          grant_id: '915749'
-        - funding_agency_name: Searle Scholars Program
-          grant_id: 'SSP-2018-2737'
-        - funding_agency_name: NIH/NIAID
-          grant_id: 'R01AI147131'
-        - funding_agency_name: The Pew Charitable Trusts
-          grant_id: 'PEW-00033055'
-        - funding_agency_name: NIH Common Fund Transformative High Resolution Cryo-Electron Microscopy program
-          grant_id: 'U24 GM129539'
-        - funding_agency_name: Simons Foundation
-          grant_id: "SF349247"
-        - funding_agency_name: NY State Assembly
-        - funding_agency_name: NIH/NIGMS
-          grant_id: "9 P41 GM103310"
-        - funding_agency_name: Irma T. Hirschl Career Scientist Award
-      grid_preparation: quantifoil 2/2 200mesh, ~20nm evaporated carbon,prepared using waffle method
-      organism:
-        name: Encephalitozoon intestinalis
-        taxonomy_id: 58839
-      other_setup: Cryo-FIB milling
-      sample_preparation: "E. intestinalis spores were purified from infected vero cells. (For method details see:
-        Cryo-ET reveals the in situ architecture of the polar tube invasion apparatus from microsporidian parasites)"
-      sample_type: cell
-    sources:
-      - literal:
-          value:
-            - '10437'
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xf
+      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.tlt
+      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
+      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xtilt
+      - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
 annotations:
-  - metadata: &annotation_metadata
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model
-        with DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices
-        in the tomogram + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw
-        slices and perform any clean up manually + convert to contour meshes and smooth
-      annotation_object:
-        id: GO:0090642
-        name: microsporidian-type exospore
-      annotation_publications: 10.1101/2024.07.13.603322
-      annotation_software: Dragonfly
-      authors:
-        - name: Mahrukh Usmani
-          ORCID: 0000-0002-9479-3800
-          primary_author_status: true
-          corresponding_author_status: true
-        - name: Harshita Ramchandani
-        - name: Rishwanth Raghu
-          ORCID: 0009-0006-6651-142X
-        - name: Ellen D. Zhong
-          ORCID: 0000-0001-6345-1907
-        - name: Damian C. Ekiert
-          ORCID: 0000-0002-2570-0404
-          corresponding_author_status: true
-        - name: Gira Bhabha
-          ORCID: 0000-0003-0624-6178
-          corresponding_author_status: true
-      dates: *id002
-      ground_truth_status: false
-      is_curator_recommended: true
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Exospore.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-          id: GO:0090641
-          name: microsporidian-type endospore
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Endospore.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0005886
-        name: plasma membrane
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Plasma_Membrane.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0160202
-        name: polar tube anchoring disc
-        description: anchoring disc lumen
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Anchoring_Disk_Fill.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0160202
-        name: polar tube anchoring disc
-        description: anchoring disc boundary
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Anchoring_Disk_Outline.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0160201
-        name: polaroplast
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Polaroplast.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0160201
-        name: polaroplast
-        description: vesicles in polaroplast
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Vesicles_in_Polaroplast.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0005635
-        name: nuclear envelope
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Nuclear_Envelope.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0031981
-        name: nuclear lumen
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Nuclear_Fill.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: M-Layer
-        description: polar tube M-Layer
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_M-Layer.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: M-Layer
-        description: polar tube M-Layer, top coils only
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_M-Layer_TopCoilsOnly.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: OF-Layer
-        description: polar tube OF-Layer
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_OF-Layer.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        state: OF-Layer
-        description: polar tube OF-Layer, straight portion
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_Straight_Portion.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        #TODO: Once peer reviewed, request new GO term instead of using state
-        id: GO:0044099
-        name: polar tube
-        description: polar tube, unknown cluster
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_Unknown_Cluster.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0110165
-        name: cellular anatomical entity
-        description: unknown structure
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Unknown_Structure.mrc"
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      <<: *annotation_metadata
-      annotation_object:
-        id: GO:0031982
-        name: vesicle
-        description: extra-membranous vesicle
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - "Data_Set_3/{run_name}/segmentation_masks/Extra_Membranous_Vesicles.mrc"
-          is_visualization_default: true
-          mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      id: GO:0090642
+      name: microsporidian-type exospore
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: &id001
+    - ORCID: 0000-0002-9479-3800
+      corresponding_author_status: true
+      name: Mahrukh Usmani
+      primary_author_status: true
+    - name: Harshita Ramchandani
+    - ORCID: 0009-0006-6651-142X
+      name: Rishwanth Raghu
+    - ORCID: 0000-0001-6345-1907
+      name: Ellen D. Zhong
+    - ORCID: 0000-0002-2570-0404
+      corresponding_author_status: true
+      name: Damian C. Ekiert
+    - ORCID: 0000-0003-0624-6178
+      corresponding_author_status: true
+      name: Gira Bhabha
+    dates: &id002
+      deposition_date: '2024-07-09'
+      last_modified_date: '2024-07-24'
+      release_date: '2024-07-29'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Exospore.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      id: GO:0090641
+      name: microsporidian-type endospore
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Endospore.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      id: GO:0005886
+      name: plasma membrane
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Plasma_Membrane.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: anchoring disc lumen
+      id: GO:0160202
+      name: polar tube anchoring disc
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Anchoring_Disk_Fill.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: anchoring disc boundary
+      id: GO:0160202
+      name: polar tube anchoring disc
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Anchoring_Disk_Outline.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      id: GO:0160201
+      name: polaroplast
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Polaroplast.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: vesicles in polaroplast
+      id: GO:0160201
+      name: polaroplast
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Vesicles_in_Polaroplast.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      id: GO:0005635
+      name: nuclear envelope
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Nuclear_Envelope.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      id: GO:0031981
+      name: nuclear lumen
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Nuclear_Fill.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: polar tube M-Layer
+      id: GO:0044099
+      name: polar tube
+      state: M-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_M-Layer.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: polar tube M-Layer, top coils only
+      id: GO:0044099
+      name: polar tube
+      state: M-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_M-Layer_TopCoilsOnly.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: polar tube OF-Layer
+      id: GO:0044099
+      name: polar tube
+      state: OF-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_OF-Layer.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: polar tube OF-Layer, straight portion
+      id: GO:0044099
+      name: polar tube
+      state: OF-Layer
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_Straight_Portion.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: polar tube, unknown cluster
+      id: GO:0044099
+      name: polar tube
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Polar_Tube_Unknown_Cluster.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: unknown structure
+      id: GO:0110165
+      name: cellular anatomical entity
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Unknown_Structure.mrc
+
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
+    annotation_object:
+      description: extra-membranous vesicle
+      id: GO:0031982
+      name: vesicle
+    annotation_publications: 10.1101/2024.07.13.603322
+    annotation_software: Dragonfly
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - Data_Set_3/{run_name}/segmentation_masks/Extra_Membranous_Vesicles.mrc
+
+      is_visualization_default: true
+      mask_label: 1
 dataset_keyphotos:
-  - sources:
-      - literal:
-          value:
-            snapshot: 'cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_3/snapshot.png'
-            thumbnail: 'cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_3/thumbnail.png'
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_3/snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_3/thumbnail.png
+datasets:
+- metadata:
+    authors:
+    - ORCID: 0000-0002-9479-3800
+      corresponding_author_status: true
+      name: Mahrukh Usmani
+      primary_author_status: true
+    - ORCID: 0000-0002-6050-2219
+      corresponding_author_status: true
+      name: Nicolas Coudray
+      primary_author_status: true
+    - ORCID: 0000-0002-7388-8907
+      name: Daija Bobe
+    - ORCID: 0000-0003-0188-9799
+      name: Mykhailo Kopylov
+    - ORCID: 0000-0002-2570-0404
+      corresponding_author_status: true
+      name: Damian C. Ekiert
+    - ORCID: 0000-0003-0624-6178
+      corresponding_author_status: true
+      name: Gira Bhabha
+    cell_strain:
+      name: ATCC-50506
+    cell_type:
+      id: CL:0002369
+      name: fungal spore
+    cross_references:
+      publications: 10.1101/2024.07.13.603322
+      related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
+    dataset_description: This dataset contains raw frames, tilt series, tomogram reconstructions
+      and segmentations from Encephalitozoon intestinalis microsporidian spores. Samples
+      were cryo-FIB milled.
+    dataset_identifier: 10437
+    dataset_title: Cryo-ET dataset (3) of dormant microporidian spores from Encephalitozoon
+      intestinalis
+    dates: *id002
+    funding:
+    - funding_agency_name: American Heart Association
+      grant_id: '915749'
+    - funding_agency_name: Searle Scholars Program
+      grant_id: SSP-2018-2737
+    - funding_agency_name: NIH/NIAID
+      grant_id: R01AI147131
+    - funding_agency_name: The Pew Charitable Trusts
+      grant_id: PEW-00033055
+    - funding_agency_name: NIH Common Fund Transformative High Resolution Cryo-Electron
+        Microscopy program
+      grant_id: U24 GM129539
+    - funding_agency_name: Simons Foundation
+      grant_id: SF349247
+    - funding_agency_name: NY State Assembly
+    - funding_agency_name: NIH/NIGMS
+      grant_id: 9 P41 GM103310
+    - funding_agency_name: Irma T. Hirschl Career Scientist Award
+    grid_preparation: quantifoil 2/2 200mesh, ~20nm evaporated carbon,prepared using
+      waffle method
+    organism:
+      name: Encephalitozoon intestinalis
+      taxonomy_id: 58839
+    other_setup: Cryo-FIB milling
+    sample_preparation: 'E. intestinalis spores were purified from infected vero cells.
+      (For method details see: Cryo-ET reveals the in situ architecture of the polar
+      tube invasion apparatus from microsporidian parasites)'
+    sample_type: cell
+  sources:
+  - literal:
+      value:
+      - '10437'
 depositions:
-  - sources:
-      - literal:
-          value:
-            - 10307
+- sources:
+  - literal:
+      value:
+      - 10307
 frames:
-  - sources:
-      - source_glob:
-          list_glob: Data_Set_3/{run_name}/raw_frames/*.tif
+- sources:
+  - source_glob:
+      list_glob: Data_Set_3/{run_name}/raw_frames/*.tif
+gains:
+- sources:
+  - source_glob:
+      list_glob: '{gain_ref}'
 key_images:
-  - sources:
-      - source_glob:
-          list_glob: .*\.jpg
+- sources:
+  - source_glob:
+      list_glob: .*\.jpg
 rawtilts:
-  - sources:
-      - source_multi_glob:
-          list_globs:
-              - Data_Set_3/{run_name}/tilt_series/*.mrc.rawtlt
-              - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xf
-              - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.xtilt
-              - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.tlt
-              - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - Data_Set_3/{run_name}/tilt_series/*.mrc.rawtlt
 runs:
-  - sources:
-      - source_glob:
-          list_glob: Data_Set_3/tomo_*
-          match_regex: tomo_\d{4}$
-          name_regex: (tomo_\d{4})$
+- sources:
+  - source_glob:
+      list_glob: Data_Set_3/tomo_*
+      match_regex: tomo_\d{4}$
+      name_regex: (tomo_\d{4})$
 standardization_config:
   deposition_id: 10307
   run_data_map_file: Data_Set_3/run_to_data_map.tsv
   source_prefix: mahrukh_usmani_06_2024
 tiltseries:
-  - metadata:
-      acceleration_voltage: 300000
-      binning_from_frames: 1
-      camera:
-        manufacturer: GATAN
-        model: K3
-      data_acquisition_software: SerialEM
-      is_aligned: false
-      microscope:
-        manufacturer: FEI
-        model: TITAN KRIOS
-      microscope_optical_setup:
-        energy_filter: Gatan BioQuantum
-      pixel_spacing: 3.431
-      spherical_aberration_constant: 2.7
-      tilt_axis: 80
-      tilt_range:
-        max: float {tilt_series_max_tilt}
-        min: float {tilt_series_min_tilt}
-      tilt_series_quality: int {tilt_series_quality}
-      tilt_step: 3.0
-      tilting_scheme: dose-symmetric
-      total_flux: float {tilt_series_total_flux}
-    sources:
-      - source_glob:
-          list_glob: Data_Set_3/{run_name}/tilt_series/*.st
-          match_regex: ^.*\.st$
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: GATAN
+      model: K3
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: FEI
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: Gatan BioQuantum
+    pixel_spacing: 3.431
+    spherical_aberration_constant: 2.7
+    tilt_axis: 80
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: Data_Set_3/{run_name}/tilt_series/*.st
+      match_regex: ^.*\.st$
 tomograms:
-  - metadata: &tomogram_metadata
-      affine_transformation_matrix:
-        - - 1
-          - 0
-          - 0
-          - 0
-        - - 0
-          - 1
-          - 0
-          - 0
-        - - 0
-          - 0
-          - 1
-          - 0
-        - - 0
-          - 0
-          - 0
-          - 1
-      authors: &id003
-        - name: Mahrukh Usmani
-          ORCID: 0000-0002-9479-3800
-          primary_author_status: true
-          corresponding_author_status: true
-        - name: Nicolas Coudray
-          ORCID: 0000-0002-6050-2219
-          primary_author_status: true
-          corresponding_author_status: true
-        - name: Damian C. Ekiert
-          ORCID: 0000-0002-2570-0404
-          corresponding_author_status: true
-        - name: Gira Bhabha
-          ORCID: 0000-0003-0624-6178
-          corresponding_author_status: true
-      ctf_corrected: false
-      fiducial_alignment_status: NON_FIDUCIAL
-      offset:
-        x: 0
-        y: 0
-        z: 0
-      processing: raw
-      reconstruction_method: SART
-      reconstruction_software: Aretomo 1.3.0
-      tomogram_version: 1
-      voxel_spacing: 13.72
-    sources:
-      - source_glob:
-          list_glob: Data_Set_3/{run_name}/tomo_rec_4bin_SART/*.mrc
-          match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors:
+    - ORCID: 0000-0002-9479-3800
+      corresponding_author_status: true
+      name: Mahrukh Usmani
+      primary_author_status: true
+    - ORCID: 0000-0002-6050-2219
+      corresponding_author_status: true
+      name: Nicolas Coudray
+      primary_author_status: true
+    - ORCID: 0000-0002-2570-0404
+      corresponding_author_status: true
+      name: Damian C. Ekiert
+    - ORCID: 0000-0003-0624-6178
+      corresponding_author_status: true
+      name: Gira Bhabha
+    ctf_corrected: false
+    dates:
+      deposition_date: '2024-07-09'
+      last_modified_date: '2024-07-24'
+      release_date: '2024-07-29'
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: SART
+    reconstruction_software: Aretomo 1.3.0
+    tomogram_version: 1
+    voxel_spacing: 13.72
+  sources:
+  - source_glob:
+      list_glob: Data_Set_3/{run_name}/tomo_rec_4bin_SART/*.mrc
+      match_regex: (.*)\.mrc
+version: 1.1.0
 voxel_spacings:
-  - sources:
-      - literal:
-          value:
-            - 13.72
-gains:
-  - sources:
-    - source_glob:
-        list_glob: '{gain_ref}'
-
-#TODO: Ingest full set of gains when import of multiple files is supported
-#(see https://github.com/chanzuckerberg/cryoet-data-portal/issues/947)
+- sources:
+  - literal:
+      value:
+      - 13.72

@@ -1,3 +1,4 @@
+# Copies data from a v1 GraphQL api into a v2 database.
 import json
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -10,7 +11,10 @@ from support.enums import tomogram_reconstruction_method_enum as reconstruction_
 from platformics.database.connect import init_sync_db
 
 # cleanup:
-# delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;
+# delete from deposition_type; delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;
+
+# CLIENT_URL="https://graphql-cryoet-api.cryoet.staging.si.czi.technology/v1/graphql"
+CLIENT_URL = "https://graphql.cryoetdataportal.cziscience.com/v1/graphql"
 
 
 # Adapted from https://github.com/sqlalchemy/sqlalchemy/wiki/UniqueObject
@@ -57,13 +61,15 @@ def add(session, model, item, parents):
         }
     if model == models.Deposition:
         local_item_data = {
-            "deposition_title": remote_item["title"],
-            "deposition_description": remote_item["description"],
-            "publications": remote_item["deposition_publications"],
+            "title": remote_item["title"],
+            "description": remote_item["description"],
+            "deposition_publications": remote_item["deposition_publications"],
             "related_database_entries": remote_item["related_database_entries"],
             "deposition_date": remote_item["deposition_date"],
             "release_date": remote_item["release_date"],
             "last_modified_date": remote_item["last_modified_date"],
+            "key_photo_url": remote_item["key_photo_url"],
+            "key_photo_thumbnail_url": remote_item["key_photo_thumbnail_url"],
         }
     if model == models.Annotation:
         local_item_data = {
@@ -75,6 +81,7 @@ def add(session, model, item, parents):
             "https_metadata_path": remote_item["https_metadata_path"],
             "annotation_publication": remote_item["annotation_publication"],
             "annotation_method": remote_item["annotation_method"],
+            "method_links": remote_item["method_links"],
             "ground_truth_status": remote_item["ground_truth_status"],
             "object_id": remote_item["object_id"],
             "object_name": remote_item["object_name"],
@@ -103,6 +110,7 @@ def add(session, model, item, parents):
             "affiliation_name": remote_item["affiliation_name"],
             "affiliation_address": remote_item["affiliation_address"],
             "affiliation_identifier": remote_item["affiliation_identifier"],
+            "corresponding_author_status": remote_item["corresponding_author_status"],
         }
         if remote_item.get("primary_annotator_status") or remote_item.get("primary_annotator_status"):
             local_item_data["primary_author_status"] = True
@@ -163,7 +171,7 @@ def add(session, model, item, parents):
             "deposition_date": remote_item["deposition_date"],
             "release_date": remote_item["release_date"],
             "last_modified_date": remote_item["last_modified_date"],
-            "publications": remote_item["dataset_publications"],  # Field name change
+            "dataset_publications": remote_item["dataset_publications"],  # Field name change
             "related_database_entries": remote_item["related_database_entries"],
             "s3_prefix": remote_item["s3_prefix"],
             "https_prefix": remote_item["https_prefix"],
@@ -232,7 +240,7 @@ def add(session, model, item, parents):
             "is_aligned": remote_item["is_aligned"],
             "pixel_spacing": remote_item["pixel_spacing"],
             "aligned_tiltseries_binning": remote_item["aligned_tiltseries_binning"],
-            # "tiltseries_frames_count": remote_item["tiltseries_frames_count"], # This doesn't exist in the old api
+            "tiltseries_frames_count": remote_item["frames_count"],
         }
     if model == models.TomogramAuthor:
         local_item_data = {
@@ -256,6 +264,8 @@ def add(session, model, item, parents):
             "volume_y_dimension": remote_item["size_y"] * parents["voxel_spacing"],  # Key name change
             "volume_z_dimension": remote_item["size_z"] * parents["voxel_spacing"],  # Key name change
             "tiltseries_id": parents.get("tiltseries_id"),  # Key name change
+            "run_id": parents["run_id"],  # Key name change
+            "deposition_id": parents["deposition_id"],  # Key name change
         }
     if model == models.Tomogram:
         local_item_data = {
@@ -304,6 +314,7 @@ def add(session, model, item, parents):
             local_item_data["reconstruction_method"] = reconstruction_enum.Unknown
     if model == models.TomogramVoxelSpacing:
         local_item_data = {
+            "run_id": parents["run_id"],
             "voxel_spacing": remote_item["voxel_spacing"],
             "s3_prefix": remote_item["s3_prefix"],
             "https_prefix": remote_item["https_prefix"],
@@ -325,8 +336,7 @@ def import_deposition(deposition_id: int):
     db = init_sync_db(
         f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
     )
-    # client = cdp.Client("https://graphql-cryoet-api.cryoet.staging.si.czi.technology/v1/graphql")
-    client = cdp.Client()
+    client = cdp.Client(CLIENT_URL)
     dep = cdp.Deposition.get_by_id(client, deposition_id)
     with db.session() as session:
         print(f"processing {dep.id}")
@@ -343,7 +353,7 @@ def import_dataset(dataset_id: int):
     db = init_sync_db(
         f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
     )
-    client = cdp.Client()
+    client = cdp.Client(CLIENT_URL)
     dataset = cdp.Dataset.get_by_id(client, dataset_id)
     with db.session() as session:
         print(f"processing {dataset_id}")
@@ -396,7 +406,7 @@ def import_dataset(dataset_id: int):
 @click.option("--skip-until", help="skip all datasets until and including this one")
 @click.option("--parallelism", help="how many processes to run in parallel", required=True, default=10)
 def do_import(skip_until, parallelism):
-    client = cdp.Client()
+    client = cdp.Client(CLIENT_URL)
     futures = []
     with ProcessPoolExecutor(max_workers=parallelism) as workerpool:
         depositions = cdp.Deposition.find(client)

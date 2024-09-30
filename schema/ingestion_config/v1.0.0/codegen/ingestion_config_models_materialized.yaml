@@ -357,6 +357,30 @@ types:
     base: str
     pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$
 enums:
+  alignment_type_enum:
+    name: alignment_type_enum
+    description: Type of alignment
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      LOCAL:
+        text: LOCAL
+        description: Local alignment
+      GLOBAL:
+        text: GLOBAL
+        description: Global alignment
+  alignment_format_enum:
+    name: alignment_format_enum
+    description: Used to determine what alignment alogrithm to use.
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      IMOD:
+        text: IMOD
+        description: IMOD was used for the alignment. Supported file formats are (xf,
+          tlt, tilt.com, news.com, xtilt)
+      ARETOMO3:
+        text: ARETOMO3
+        description: ARETOMO3 was used for the alignment. Supported file formats are
+          (aln, txt, csv)
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -564,6 +588,7 @@ slots:
     description: Include or exclude datasets for a source.
     from_schema: cdp-ingestion-config
     domain_of:
+    - AlignmentParent
     - AnnotationParent
     - CollectionMetadataParent
     - FrameParent
@@ -581,6 +606,7 @@ slots:
     description: Include or exclude depositions for a source.
     from_schema: cdp-ingestion-config
     domain_of:
+    - AlignmentParent
     - AnnotationParent
     - CollectionMetadataParent
     - DatasetParent
@@ -601,6 +627,7 @@ slots:
     description: Include or exclude runs for a source.
     from_schema: cdp-ingestion-config
     domain_of:
+    - AlignmentParent
     - AnnotationParent
     - CollectionMetadataParent
     - FrameParent
@@ -637,6 +664,18 @@ classes:
     description: Class that models the ingestion config file.
     from_schema: cdp-ingestion-config
     attributes:
+      alignments:
+        name: alignments
+        description: An alignment entity.
+        from_schema: cdp-ingestion-config
+        alias: alignments
+        owner: Container
+        domain_of:
+        - Container
+        range: AlignmentEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
       annotations:
         name: annotations
         description: An annotation entity.
@@ -809,6 +848,19 @@ classes:
         - Container
         range: TomogramEntity
         multivalued: true
+        inlined: true
+        inlined_as_list: true
+      version:
+        name: version
+        description: The version of the ingestion config.
+        from_schema: cdp-ingestion-config
+        alias: version
+        owner: Container
+        domain_of:
+        - Annotation
+        - Container
+        range: string
+        required: true
         inlined: true
         inlined_as_list: true
       voxel_spacings:
@@ -991,6 +1043,7 @@ classes:
         owner: DefaultSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1073,6 +1126,7 @@ classes:
         owner: StandardSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1261,6 +1315,7 @@ classes:
         owner: ReferencedSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1278,6 +1333,299 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+  AlignmentEntity:
+    name: AlignmentEntity
+    description: An alignment entity.
+    from_schema: cdp-ingestion-config
+    attributes:
+      metadata:
+        name: metadata
+        description: The metadata for the alignment.
+        from_schema: cdp-ingestion-config
+        alias: metadata
+        owner: AlignmentEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - DatasetEntity
+        - DepositionEntity
+        - FrameEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: Alignment
+        required: true
+        inlined: true
+        inlined_as_list: true
+      sources:
+        name: sources
+        description: An alignment source.
+        from_schema: cdp-ingestion-config
+        alias: sources
+        owner: AlignmentEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - CollectionMetadataEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - DepositionEntity
+        - DepositionKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: AlignmentSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+  AlignmentSource:
+    name: AlignmentSource
+    description: An alignment source.
+    from_schema: cdp-ingestion-config
+    is_a: StandardSource
+    attributes:
+      parent_filters:
+        name: parent_filters
+        description: Types of parent filters for an alignment source.
+        from_schema: cdp-ingestion-config
+        alias: parent_filters
+        owner: AlignmentSource
+        domain_of:
+        - AlignmentSource
+        - AnnotationSource
+        - CollectionMetadataSource
+        - DatasetSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - FrameSource
+        - GainSource
+        - KeyImageSource
+        - RawTiltSource
+        - RunSource
+        - TiltSeriesSource
+        - TomogramSource
+        - VoxelSpacingSource
+        range: AlignmentParentFilters
+        inlined: true
+        inlined_as_list: true
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-ingestion-config
+        alias: destination_glob
+        owner: AlignmentSource
+        domain_of:
+        - StandardSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-ingestion-config
+        alias: source_glob
+        owner: AlignmentSource
+        domain_of:
+        - StandardSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-ingestion-config
+        alias: source_multi_glob
+        owner: AlignmentSource
+        domain_of:
+        - StandardSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-ingestion-config
+        alias: literal
+        owner: AlignmentSource
+        domain_of:
+        - StandardSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - VoxelSpacingSource
+        range: StandardLiteral
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: AlignmentSource
+        domain_of:
+        - DefaultSource
+        - AlignmentParentFilters
+        - AnnotationParentFilters
+        - CollectionMetadataParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+  AlignmentParentFilters:
+    name: AlignmentParentFilters
+    description: Types of parent filters for an alignment source.
+    from_schema: cdp-ingestion-config
+    attributes:
+      include:
+        name: include
+        description: A filter for a parent class of an alignment source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-ingestion-config
+        alias: include
+        owner: AlignmentParentFilters
+        domain_of:
+        - AlignmentParentFilters
+        - AnnotationParentFilters
+        - CollectionMetadataParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: AlignmentParent
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: A filter for a parent class of an alignment source. For a given
+          attribute, it can only be used if the current class is a subclass of the
+          attribute.
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: AlignmentParentFilters
+        domain_of:
+        - DefaultSource
+        - AlignmentParentFilters
+        - AnnotationParentFilters
+        - CollectionMetadataParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: AlignmentParent
+        inlined: true
+        inlined_as_list: true
+  AlignmentParent:
+    name: AlignmentParent
+    description: A filter for a parent class of an alignment source. For a given attribute,
+      it can only be used if the current class is a subclass of the attribute.
+    from_schema: cdp-ingestion-config
+    slots:
+    - dataset
+    - deposition
+    - run
+    attributes:
+      dataset:
+        name: dataset
+        description: Include or exclude datasets for a source.
+        from_schema: cdp-ingestion-config
+        alias: dataset
+        owner: AlignmentParent
+        domain_of:
+        - AlignmentParent
+        - AnnotationParent
+        - CollectionMetadataParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      deposition:
+        name: deposition
+        description: Include or exclude depositions for a source.
+        from_schema: cdp-ingestion-config
+        alias: deposition
+        owner: AlignmentParent
+        domain_of:
+        - AlignmentParent
+        - AnnotationParent
+        - CollectionMetadataParent
+        - DatasetParent
+        - DatasetKeyPhotoParent
+        - DepositionKeyPhotoParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - RunParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      run:
+        name: run
+        description: Include or exclude runs for a source.
+        from_schema: cdp-ingestion-config
+        alias: run
+        owner: AlignmentParent
+        domain_of:
+        - AlignmentParent
+        - AnnotationParent
+        - CollectionMetadataParent
+        - FrameParent
+        - GainParent
+        - KeyImageParent
+        - RawTiltParent
+        - TiltSeriesParent
+        - TomogramParent
+        - VoxelSpacingParent
+        range: string
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
   AnnotationEntity:
     name: AnnotationEntity
     description: An annotation entity.
@@ -1290,9 +1638,11 @@ classes:
         alias: metadata
         owner: AnnotationEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Annotation
@@ -1306,6 +1656,7 @@ classes:
         alias: sources
         owner: AnnotationEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -1423,6 +1774,7 @@ classes:
         alias: parent_filters
         owner: AnnotationSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -1447,6 +1799,7 @@ classes:
         owner: AnnotationSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1478,6 +1831,7 @@ classes:
         alias: include
         owner: AnnotationParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1504,6 +1858,7 @@ classes:
         owner: AnnotationParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1538,6 +1893,7 @@ classes:
         alias: dataset
         owner: AnnotationParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -1559,6 +1915,7 @@ classes:
         alias: deposition
         owner: AnnotationParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -1583,6 +1940,7 @@ classes:
         alias: run
         owner: AnnotationParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -1623,6 +1981,7 @@ classes:
         alias: sources
         owner: CollectionMetadataEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -1656,6 +2015,7 @@ classes:
         alias: parent_filters
         owner: CollectionMetadataSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -1730,6 +2090,7 @@ classes:
         owner: CollectionMetadataSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1761,6 +2122,7 @@ classes:
         alias: include
         owner: CollectionMetadataParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1787,6 +2149,7 @@ classes:
         owner: CollectionMetadataParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -1821,6 +2184,7 @@ classes:
         alias: dataset
         owner: CollectionMetadataParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -1842,6 +2206,7 @@ classes:
         alias: deposition
         owner: CollectionMetadataParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -1866,6 +2231,7 @@ classes:
         alias: run
         owner: CollectionMetadataParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -1891,9 +2257,11 @@ classes:
         alias: metadata
         owner: DatasetEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
@@ -1906,6 +2274,7 @@ classes:
         alias: sources
         owner: DatasetEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -1939,6 +2308,7 @@ classes:
         alias: parent_filters
         owner: DatasetSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -2013,6 +2383,7 @@ classes:
         owner: DatasetSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2044,6 +2415,7 @@ classes:
         alias: include
         owner: DatasetParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2070,6 +2442,7 @@ classes:
         owner: DatasetParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2101,6 +2474,7 @@ classes:
         alias: deposition
         owner: DatasetParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -2130,6 +2504,7 @@ classes:
         alias: sources
         owner: DatasetKeyPhotoEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -2177,6 +2552,7 @@ classes:
         alias: parent_filters
         owner: DatasetKeyPhotoSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -2237,6 +2613,7 @@ classes:
         owner: DatasetKeyPhotoSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2268,6 +2645,7 @@ classes:
         alias: include
         owner: DatasetKeyPhotoParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2294,6 +2672,7 @@ classes:
         owner: DatasetKeyPhotoParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2325,6 +2704,7 @@ classes:
         alias: deposition
         owner: DatasetKeyPhotoParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -2354,9 +2734,11 @@ classes:
         alias: metadata
         owner: DepositionEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Deposition
@@ -2369,6 +2751,7 @@ classes:
         alias: sources
         owner: DepositionEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -2453,6 +2836,7 @@ classes:
         owner: DepositionSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2482,6 +2866,7 @@ classes:
         alias: sources
         owner: DepositionKeyPhotoEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -2529,6 +2914,7 @@ classes:
         alias: parent_filters
         owner: DepositionKeyPhotoSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -2589,6 +2975,7 @@ classes:
         owner: DepositionKeyPhotoSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2620,6 +3007,7 @@ classes:
         alias: include
         owner: DepositionKeyPhotoParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2646,6 +3034,7 @@ classes:
         owner: DepositionKeyPhotoParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2677,6 +3066,7 @@ classes:
         alias: deposition
         owner: DepositionKeyPhotoParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -2706,6 +3096,7 @@ classes:
         alias: sources
         owner: FrameEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -2726,6 +3117,23 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
+      metadata:
+        name: metadata
+        description: A frame entity.
+        from_schema: cdp-ingestion-config
+        alias: metadata
+        owner: FrameEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - DatasetEntity
+        - DepositionEntity
+        - FrameEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: Frame
+        inlined: true
+        inlined_as_list: true
   FrameSource:
     name: FrameSource
     description: A frame source.
@@ -2739,6 +3147,7 @@ classes:
         alias: parent_filters
         owner: FrameSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -2813,6 +3222,7 @@ classes:
         owner: FrameSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2843,6 +3253,7 @@ classes:
         alias: include
         owner: FrameParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2868,6 +3279,7 @@ classes:
         owner: FrameParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -2901,6 +3313,7 @@ classes:
         alias: dataset
         owner: FrameParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -2922,6 +3335,7 @@ classes:
         alias: deposition
         owner: FrameParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -2946,6 +3360,7 @@ classes:
         alias: run
         owner: FrameParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -2971,6 +3386,7 @@ classes:
         alias: sources
         owner: GainEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -3004,6 +3420,7 @@ classes:
         alias: parent_filters
         owner: GainSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -3078,6 +3495,7 @@ classes:
         owner: GainSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3108,6 +3526,7 @@ classes:
         alias: include
         owner: GainParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3133,6 +3552,7 @@ classes:
         owner: GainParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3166,6 +3586,7 @@ classes:
         alias: dataset
         owner: GainParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -3187,6 +3608,7 @@ classes:
         alias: deposition
         owner: GainParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -3211,6 +3633,7 @@ classes:
         alias: run
         owner: GainParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -3236,6 +3659,7 @@ classes:
         alias: sources
         owner: KeyImageEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -3269,6 +3693,7 @@ classes:
         alias: parent_filters
         owner: KeyImageSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -3343,6 +3768,7 @@ classes:
         owner: KeyImageSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3374,6 +3800,7 @@ classes:
         alias: include
         owner: KeyImageParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3400,6 +3827,7 @@ classes:
         owner: KeyImageParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3435,6 +3863,7 @@ classes:
         alias: dataset
         owner: KeyImageParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -3456,6 +3885,7 @@ classes:
         alias: deposition
         owner: KeyImageParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -3480,6 +3910,7 @@ classes:
         alias: run
         owner: KeyImageParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -3532,6 +3963,7 @@ classes:
         alias: sources
         owner: RawTiltEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -3565,6 +3997,7 @@ classes:
         alias: parent_filters
         owner: RawTiltSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -3639,6 +4072,7 @@ classes:
         owner: RawTiltSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3670,6 +4104,7 @@ classes:
         alias: include
         owner: RawTiltParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3696,6 +4131,7 @@ classes:
         owner: RawTiltParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3729,6 +4165,7 @@ classes:
         alias: dataset
         owner: RawTiltParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -3750,6 +4187,7 @@ classes:
         alias: deposition
         owner: RawTiltParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -3774,6 +4212,7 @@ classes:
         alias: run
         owner: RawTiltParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -3799,6 +4238,7 @@ classes:
         alias: sources
         owner: RunEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -3832,6 +4272,7 @@ classes:
         alias: parent_filters
         owner: RunSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -3906,6 +4347,7 @@ classes:
         owner: RunSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3936,6 +4378,7 @@ classes:
         alias: include
         owner: RunParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3961,6 +4404,7 @@ classes:
         owner: RunParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -3993,6 +4437,7 @@ classes:
         alias: dataset
         owner: RunParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -4014,6 +4459,7 @@ classes:
         alias: deposition
         owner: RunParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -4116,9 +4562,11 @@ classes:
         alias: metadata
         owner: TiltSeriesEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
@@ -4131,6 +4579,7 @@ classes:
         alias: sources
         owner: TiltSeriesEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -4164,6 +4613,7 @@ classes:
         alias: parent_filters
         owner: TiltSeriesSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -4250,6 +4700,7 @@ classes:
         owner: TiltSeriesSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4281,6 +4732,7 @@ classes:
         alias: include
         owner: TiltSeriesParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4307,6 +4759,7 @@ classes:
         owner: TiltSeriesParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4340,6 +4793,7 @@ classes:
         alias: dataset
         owner: TiltSeriesParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -4361,6 +4815,7 @@ classes:
         alias: deposition
         owner: TiltSeriesParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -4385,6 +4840,7 @@ classes:
         alias: run
         owner: TiltSeriesParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -4410,9 +4866,11 @@ classes:
         alias: metadata
         owner: TomogramEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - DatasetEntity
         - DepositionEntity
+        - FrameEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Tomogram
@@ -4425,6 +4883,7 @@ classes:
         alias: sources
         owner: TomogramEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -4458,6 +4917,7 @@ classes:
         alias: parent_filters
         owner: TomogramSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -4544,6 +5004,7 @@ classes:
         owner: TomogramSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4575,6 +5036,7 @@ classes:
         alias: include
         owner: TomogramParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4601,6 +5063,7 @@ classes:
         owner: TomogramParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4635,6 +5098,7 @@ classes:
         alias: dataset
         owner: TomogramParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -4656,6 +5120,7 @@ classes:
         alias: deposition
         owner: TomogramParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -4680,6 +5145,7 @@ classes:
         alias: run
         owner: TomogramParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -4720,6 +5186,7 @@ classes:
         alias: sources
         owner: VoxelSpacingEntity
         domain_of:
+        - AlignmentEntity
         - AnnotationEntity
         - CollectionMetadataEntity
         - DatasetEntity
@@ -4802,6 +5269,7 @@ classes:
         alias: parent_filters
         owner: VoxelSpacingSource
         domain_of:
+        - AlignmentSource
         - AnnotationSource
         - CollectionMetadataSource
         - DatasetSource
@@ -4826,6 +5294,7 @@ classes:
         owner: VoxelSpacingSource
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4857,6 +5326,7 @@ classes:
         alias: include
         owner: VoxelSpacingParentFilters
         domain_of:
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4883,6 +5353,7 @@ classes:
         owner: VoxelSpacingParentFilters
         domain_of:
         - DefaultSource
+        - AlignmentParentFilters
         - AnnotationParentFilters
         - CollectionMetadataParentFilters
         - DatasetParentFilters
@@ -4916,6 +5387,7 @@ classes:
         alias: dataset
         owner: VoxelSpacingParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent
@@ -4937,6 +5409,7 @@ classes:
         alias: deposition
         owner: VoxelSpacingParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - DatasetParent
@@ -4961,6 +5434,7 @@ classes:
         alias: run
         owner: VoxelSpacingParent
         domain_of:
+        - AlignmentParent
         - AnnotationParent
         - CollectionMetadataParent
         - FrameParent

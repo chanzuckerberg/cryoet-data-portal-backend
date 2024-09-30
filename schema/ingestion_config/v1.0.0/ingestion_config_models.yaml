@@ -40,7 +40,6 @@ slots:
     multivalued: true
     range: string
 
-
 classes:
   # ============================================================================
   # Configuration file class (and its subclasses)
@@ -50,6 +49,10 @@ classes:
     description: Class that models the ingestion config file.
     tree_root: true
     attributes:
+      alignments:
+        description: Alignments for the dataset.
+        multivalued: true
+        range: AlignmentEntity
       annotations:
         description: Annotations for the dataset.
         multivalued: true
@@ -109,6 +112,10 @@ classes:
         description: Tomograms for the dataset.
         multivalued: true
         range: TomogramEntity
+      version:
+        description: The version of the ingestion config.
+        range: string
+        required: true
       voxel_spacings:
         description: Voxel spacings for the dataset.
         multivalued: true
@@ -231,6 +238,44 @@ classes:
   # ============================================================================
   # Ingestion config classes
   # ============================================================================
+  AlignmentEntity:
+    description: An alignment entity.
+    attributes:
+      metadata:
+        description: The metadata for the alignment.
+        range: Alignment
+        required: true
+      sources:
+        description: The sources for the alignment.
+        multivalued: true
+        range: AlignmentSource
+        required: true
+
+  AlignmentSource:
+    description: An alignment source.
+    is_a: StandardSource
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for an alignment source.
+        range: AlignmentParentFilters
+
+  AlignmentParentFilters:
+    description: Types of parent filters for an alignment source.
+    attributes:
+      include:
+        description: Include files for the parent of an alignment source (regexes).
+        range: AlignmentParent
+      exclude:
+        description: Exclude files for the parent of an alignment source (regexes).
+        range: AlignmentParent
+
+  AlignmentParent:
+    description: A filter for a parent class of an alignment source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+
   AnnotationEntity:
     description: An annotation entity.
     attributes:
@@ -447,6 +492,8 @@ classes:
         multivalued: true
         range: FrameSource
         required: true
+      metadata:
+        range: Frame
 
   FrameSource:
     description: A frame source.

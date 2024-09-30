@@ -1,6 +1,6 @@
 {
     "microscope": {
-        "manufacturer": "DC",
+        "manufacturer": "FEI",
         "model": "Phantom"
     },
     "spherical_aberration_constant": 2.7,

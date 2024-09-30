@@ -2,9 +2,9 @@
 erDiagram
 Tomogram {
     string name
-    float size_x
-    float size_y
-    float size_z
+    integer size_x
+    integer size_y
+    integer size_z
     float voxel_spacing
     fiducial_alignment_status_enum fiducial_alignment_status
     tomogram_reconstruction_method_enum reconstruction_method
@@ -59,7 +59,7 @@ Tiltseries {
     string https_angle_list
     string s3_gain_file
     string https_gain_file
-    float acceleration_voltage
+    integer acceleration_voltage
     float spherical_aberration_constant
     tiltseries_microscope_manufacturer_enum microscope_manufacturer
     string microscope_model
@@ -82,8 +82,8 @@ Tiltseries {
     integer tilt_series_quality
     boolean is_aligned
     float pixel_spacing
-    float aligned_tiltseries_binning
-    integer tiltseries_frames_count
+    integer aligned_tiltseries_binning
+    integer frames_count
     integer id
 }
 Run {
@@ -120,13 +120,15 @@ Frame {
     integer id
 }
 Deposition {
-    string deposition_title
-    string deposition_description
-    string publications
+    string title
+    string description
+    string deposition_publications
     string related_database_entries
     date deposition_date
     date release_date
     date last_modified_date
+    string key_photo_url
+    string key_photo_thumbnail_url
     integer id
 }
 DepositionAuthor {
@@ -163,7 +165,7 @@ Dataset {
     date deposition_date
     date release_date
     date last_modified_date
-    string publications
+    string dataset_publications
     string related_database_entries
     string s3_prefix
     string https_prefix
@@ -191,6 +193,7 @@ Annotation {
     string https_metadata_path
     string annotation_publication
     string annotation_method
+    string method_links
     boolean ground_truth_status
     string object_id
     string object_name
@@ -249,7 +252,7 @@ Alignment {
 
 Tomogram ||--|o Alignment : "alignment"
 Tomogram ||--}o TomogramAuthor : "authors"
-Tomogram ||--|o Deposition : "deposition"
+Tomogram ||--|| Deposition : "deposition"
 Tomogram ||--|o Run : "run"
 Tomogram ||--|o TomogramVoxelSpacing : "tomogram_voxel_spacing"
 TomogramVoxelSpacing ||--}o AnnotationFile : "annotation_files"
@@ -281,8 +284,8 @@ Deposition ||--}o Frame : "frames"
 Deposition ||--}o Tiltseries : "tiltseries"
 Deposition ||--}o Tomogram : "tomograms"
 Deposition ||--}o DepositionType : "deposition_types"
-DepositionAuthor ||--|o Deposition : "deposition"
-Dataset ||--|o Deposition : "deposition"
+DepositionAuthor ||--|| Deposition : "deposition"
+Dataset ||--|| Deposition : "deposition"
 Dataset ||--}o DatasetFunding : "funding_sources"
 Dataset ||--}o DatasetAuthor : "authors"
 Dataset ||--}o Run : "runs"

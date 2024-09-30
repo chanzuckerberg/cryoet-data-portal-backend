@@ -1,3 +1,11 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
 annotations:
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -46,6 +54,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: subtomo/hdcr/hdcr_tm_bin2_motl_12.star
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -67,6 +76,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: subtomo/ribo/ribo_tm_bin1_motl_12.star
+
       is_visualization_default: true
       order: xyz
 collection_metadata:
@@ -110,7 +120,7 @@ datasets:
       name: Jan Michael Schuller
     cell_strain:
       name: LKT-1
-    cross_references: &dataset_cross_references
+    cross_references: &id004
       publications: doi:10.1038/s41586-022-04971-z
       related_database_entries: EMPIAR-11058
     dataset_description: Cryo-electron tomograms of T. kivui of FIB-SEM lamella.
@@ -143,6 +153,7 @@ datasets:
 depositions:
 - metadata:
     authors: *id003
+    cross_references: *id004
     dates: *id002
     deposition_description: Cryo-electron tomograms of T. kivui FIB-SEM lamellas,
       including annotations of membrane-anchored hydrogen-dependent CO2 reductase
@@ -150,7 +161,6 @@ depositions:
     deposition_identifier: 10008
     deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires
       in T. kivui
-    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
     - annotation
@@ -162,17 +172,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: tomo/raw_stacks/{mapped_ts_name}/frames/*{mapped_frame_name}_*.tif
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.tlt
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.xf
 runs:
 - sources:
   - source_glob:
@@ -234,7 +233,9 @@ tomograms:
       - 1
     authors: *id003
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0
@@ -248,6 +249,7 @@ tomograms:
   - source_glob:
       list_glob: tomo/bin4_denoised/{run_name}.rec
       match_regex: .*
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

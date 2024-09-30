@@ -19,7 +19,7 @@ from typing_extensions import Annotated
 class DatasetCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    deposition_id: Annotated[uuid.UUID | None, Field()]
+    deposition_id: Annotated[uuid.UUID, Field()]
     title: Annotated[
         str,
         StringConstraints(
@@ -33,7 +33,7 @@ class DatasetCreateInputValidator(BaseModel):
         ),
     ]
     organism_name: Annotated[
-        str,
+        str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
@@ -130,7 +130,7 @@ class DatasetCreateInputValidator(BaseModel):
     deposition_date: Annotated[datetime.datetime, Field()]
     release_date: Annotated[datetime.datetime, Field()]
     last_modified_date: Annotated[datetime.datetime, Field()]
-    publications: Annotated[
+    dataset_publications: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -273,7 +273,7 @@ class DatasetUpdateInputValidator(BaseModel):
     deposition_date: Annotated[datetime.datetime | None, Field()]
     release_date: Annotated[datetime.datetime | None, Field()]
     last_modified_date: Annotated[datetime.datetime | None, Field()]
-    publications: Annotated[
+    dataset_publications: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,

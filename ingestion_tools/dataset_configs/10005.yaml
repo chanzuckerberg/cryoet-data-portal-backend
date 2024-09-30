@@ -30,6 +30,7 @@ annotations:
       delimiter: ' '
       file_format: csv
       glob_string: coorinates_dmt48/s{run_name}_dmt48_coordinates_bin2.txt
+
       is_visualization_default: true
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -50,6 +51,7 @@ annotations:
       delimiter: ' '
       file_format: csv
       glob_string: coordinates_dmt96/s{run_name}_dmt96_coordinates_bin2.txt
+
       is_visualization_default: true
 dataset_keyphotos:
 - sources:
@@ -84,7 +86,7 @@ datasets:
     cell_type:
       id: CL:0000019
       name: sperm
-    cross_references: &dataset_cross_references
+    cross_references: &id004
       publications: doi:10.1101/2022.09.28.510016
     dataset_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
       lamella.
@@ -114,12 +116,12 @@ datasets:
 depositions:
 - metadata:
     authors: *id003
+    cross_references: *id004
     dates: *id002
     deposition_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
       lamella, including annotations of microtubule doublets (48 nm and 96 nm repeat).
     deposition_identifier: 10005
     deposition_title: Microtubule doublet from mouse sperm
-    cross_references: *dataset_cross_references
     deposition_types:
     - dataset
     - annotation
@@ -127,11 +129,6 @@ depositions:
   - literal:
       value:
       - 10005
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:
@@ -190,7 +187,9 @@ tomograms:
       - 1
     authors: *id003
     ctf_corrected: true
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0
@@ -204,6 +203,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms_bin2/si20220214_{run_name}_ctf_bin2.xyzw
       match_regex: .*\.xyzw
+version: 1.1.0
 voxel_spacings:
 - sources:
   - literal:

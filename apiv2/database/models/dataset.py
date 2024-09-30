@@ -37,7 +37,7 @@ class Dataset(Base):
     __tablename__ = "dataset"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
+    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=False, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
@@ -48,22 +48,21 @@ class Dataset(Base):
         back_populates="dataset",
         uselist=True,
         foreign_keys="DatasetFunding.dataset_id",
+        cascade="all, delete-orphan",
     )
     authors: Mapped[list[DatasetAuthor]] = relationship(
         "DatasetAuthor",
         back_populates="dataset",
         uselist=True,
         foreign_keys="DatasetAuthor.dataset_id",
+        cascade="all, delete-orphan",
     )
     runs: Mapped[list[Run]] = relationship(
-        "Run",
-        back_populates="dataset",
-        uselist=True,
-        foreign_keys="Run.dataset_id",
+        "Run", back_populates="dataset", uselist=True, foreign_keys="Run.dataset_id", cascade="all, delete-orphan",
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
-    organism_name: Mapped[str] = mapped_column(String, nullable=False)
+    organism_name: Mapped[str] = mapped_column(String, nullable=True)
     organism_taxid: Mapped[int] = mapped_column(Integer, nullable=True)
     tissue_name: Mapped[str] = mapped_column(String, nullable=True)
     tissue_id: Mapped[str] = mapped_column(String, nullable=True)
@@ -82,8 +81,8 @@ class Dataset(Base):
     deposition_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     release_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     last_modified_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    publications: Mapped[str] = mapped_column(String, nullable=True)
+    dataset_publications: Mapped[str] = mapped_column(String, nullable=True)
     related_database_entries: Mapped[str] = mapped_column(String, nullable=True)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
     https_prefix: Mapped[str] = mapped_column(String, nullable=False)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, primary_key=True)
