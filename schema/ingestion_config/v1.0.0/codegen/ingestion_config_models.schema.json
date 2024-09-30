@@ -2281,7 +2281,7 @@
             "description": "A key value pair for a destination metadata filter.",
             "properties": {
                 "key": {
-                    "description": "The path of the key for the filter.",
+                    "description": "The path of the key for the filter in the metadata file.",
                     "items": {
                         "type": "string"
                     },
@@ -2289,8 +2289,8 @@
                     "type": "array"
                 },
                 "value": {
-                    "description": "The value for the filter.",
-                    "type": "string"
+                    "$ref": "#/$defs/Any",
+                    "description": "The value for the filter."
                 }
             },
             "required": [

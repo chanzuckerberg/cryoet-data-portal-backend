@@ -1139,7 +1139,7 @@ classes:
     attributes:
       key:
         name: key
-        description: The path of the key for the filter.
+        description: The path of the key for the filter in the metadata file.
         from_schema: cdp-ingestion-config
         alias: key
         owner: DestinationMetadataFilterKeyPair
@@ -1162,7 +1162,7 @@ classes:
         - KeyPhotoLiteral
         - DestinationMetadataFilterKeyPair
         - VoxelSpacingLiteral
-        range: string
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true

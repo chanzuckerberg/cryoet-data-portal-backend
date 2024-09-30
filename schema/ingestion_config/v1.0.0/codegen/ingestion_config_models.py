@@ -2671,8 +2671,8 @@ class DestinationMetadataFilterKeyPair(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
-    key: List[str] = Field(..., description="""The path of the key for the filter.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'key', 'domain_of': ['DestinationMetadataFilterKeyPair']} })
-    value: str = Field(..., description="""The value for the filter.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
+    key: List[str] = Field(..., description="""The path of the key for the filter in the metadata file.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'key', 'domain_of': ['DestinationMetadataFilterKeyPair']} })
+    value: Any = Field(..., description="""The value for the filter.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
          'domain_of': ['StandardLiteral',
                        'KeyPhotoLiteral',
                        'DestinationMetadataFilterKeyPair',

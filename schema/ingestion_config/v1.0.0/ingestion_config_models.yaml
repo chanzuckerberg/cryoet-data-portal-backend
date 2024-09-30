@@ -208,7 +208,7 @@ classes:
         required: true
       value:
         description: The value for the filter.
-        range: string
+        range: Any
         required: true
 
   DestinationMetadataFilter:

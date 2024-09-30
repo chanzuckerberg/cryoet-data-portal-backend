@@ -239,9 +239,9 @@ tiltseries: OPTIONAL
   sources: REQUIRED
   - source_glob: SEE dataset.sources.source_glob
   - destination_filter:
-      filters:
+      filters: REQUIRED
       - key: REQUIRED, LIST (STRING)
-        value: REQUIRED, STRING
+        value: REQUIRED, ANY (STRING, INTEGER, FLOAT, BOOLEAN)
     parent_filters: SEE runs.sources.parent_filters
 tomograms: OPTIONAL
 - metadata: OPTIONAL
