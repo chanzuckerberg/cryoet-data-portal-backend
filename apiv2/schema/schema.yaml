@@ -1706,6 +1706,9 @@ classes:
       in_plane_rotation:
         description: In-plane rotation of the projection in degrees
         range: float
+        multivalued: true
+        inlined_as_list: true
+        minimum_value: 0
         unit:
           symbol: °
           descriptive_name: degrees
