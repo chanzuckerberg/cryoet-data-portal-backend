@@ -198,6 +198,36 @@ classes:
         range: PicturePath
         required: true
 
+  DestinationMetadataFilterKeyPair:
+    description: A key value pair for a destination metadata filter.
+    attributes:
+      key:
+        description: The path of the key for the filter in the metadata file.
+        range: string
+        multivalued: true
+        required: true
+      value:
+        description: The value for the filter.
+        range: string
+        required: true
+
+  DestinationMetadataFilter:
+    description: A finder class for to filter destination metadata by certain criteria.
+    attributes:
+      filters:
+        description: The collection of filters key value pairs.
+        range: DestinationMetadataFilterKeyPair
+        required: true
+        multivalued: true
+
+  ReferencedSource:
+    description: A Inherited by a majority of source classes.
+    is_a: StandardSource
+    attributes:
+      destination_filter:
+        description: The finder object that filters destination metadata files.
+        range: DestinationMetadataFilter
+
   # ============================================================================
   # Ingestion config classes
   # ============================================================================
@@ -612,7 +642,7 @@ classes:
 
   TiltSeriesSource:
     description: A tilt series source.
-    is_a: StandardSource
+    is_a: ReferencedSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a tilt series source.
@@ -647,7 +677,7 @@ classes:
 
   TomogramSource:
     description: A tomogram source.
-    is_a: StandardSource
+    is_a: ReferencedSource
     attributes:
       parent_filters:
         description: Permitted parent filters for a tomogram source.

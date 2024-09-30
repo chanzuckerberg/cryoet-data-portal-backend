@@ -2257,6 +2257,49 @@
             "title": "DestinationGlob",
             "type": "object"
         },
+        "DestinationMetadataFilter": {
+            "additionalProperties": false,
+            "description": "A finder class for to filter destination metadata by certain criteria.",
+            "properties": {
+                "filters": {
+                    "description": "A key value pair for a destination metadata filter.",
+                    "items": {
+                        "$ref": "#/$defs/DestinationMetadataFilterKeyPair"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "filters"
+            ],
+            "title": "DestinationMetadataFilter",
+            "type": "object"
+        },
+        "DestinationMetadataFilterKeyPair": {
+            "additionalProperties": false,
+            "description": "A key value pair for a destination metadata filter.",
+            "properties": {
+                "key": {
+                    "description": "The path of the key for the filter.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "value": {
+                    "description": "The value for the filter.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "key",
+                "value"
+            ],
+            "title": "DestinationMetadataFilterKeyPair",
+            "type": "object"
+        },
         "ExperimentMetadata": {
             "additionalProperties": false,
             "description": "Metadata describing sample and sample preparation methods used in a cryoET dataset.",
@@ -3202,6 +3245,79 @@
             "title": "RawTiltSource",
             "type": "object"
         },
+        "ReferencedSource": {
+            "additionalProperties": false,
+            "description": "A Inherited by a majority of source classes.",
+            "properties": {
+                "destination_filter": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationMetadataFilter"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A finder class for to filter destination metadata by certain criteria."
+                },
+                "destination_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "literal": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/StandardLiteral"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A literal class with a value attribute."
+                },
+                "source_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMultiGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "ReferencedSource",
+            "type": "object"
+        },
         "RunEntity": {
             "additionalProperties": false,
             "description": "A run entity.",
@@ -3921,6 +4037,17 @@
             "additionalProperties": false,
             "description": "A tilt series source.",
             "properties": {
+                "destination_filter": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationMetadataFilter"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A finder class for to filter destination metadata by certain criteria."
+                },
                 "destination_glob": {
                     "anyOf": [
                         {
@@ -4421,6 +4548,17 @@
             "additionalProperties": false,
             "description": "A tomogram source.",
             "properties": {
+                "destination_filter": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationMetadataFilter"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A finder class for to filter destination metadata by certain criteria."
+                },
                 "destination_glob": {
                     "anyOf": [
                         {
