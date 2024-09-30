@@ -115,6 +115,15 @@ class BaseLiteralValueFinder(BaseFinder):
 
 
 class DestinationFilteredMetadataFinder(BaseFinder):
+    """
+    This finder helps find entities that are referenced by filtering metadata files. The filter in the list of filters
+    passed as argument follow the format of: {"key": ["path", "in", "value"], "value": "expected_value"}.
+    This is useful when we want to reference an entity but can't use the destination glob finder, as we don't know the
+    id for the entity reliably.
+    For an importer class to use this finder, it should generate metadata files, that end with suffix "_metadata.json"
+    and should have implemented the get_name_and_path class method.
+    """
+
     # Don't allow reimport the destination files that have already been imported
     allow_imports: bool = False
 
@@ -123,8 +132,7 @@ class DestinationFilteredMetadataFinder(BaseFinder):
         self.importer_cls = importer_cls
 
     @classmethod
-    def _is_match(cls, metadata: dict[str, Any], key: str | list[str], expected_value: Any) -> bool:
-        key = [key] if isinstance(key, str) else key
+    def _is_match(cls, metadata: dict[str, Any], key: list[str], expected_value: Any) -> bool:
         value = metadata
         for path_part in key:
             if isinstance(value, dict):
@@ -241,6 +249,7 @@ class DepositionObjectImporterFactory(ABC):
     ) -> list[BaseImporter]:
         results = []
         for name, path in filtered_results.items():
+            # If the file found is a metadata file from finders such as DestinationFilteredMetadataFinder
             name, path, metadata = self.handle_for_metadata_file(config, name, path, metadata)
             item = self._instantiate(config, metadata, name, path, allow_imports, parents)
             if item:
@@ -265,6 +274,16 @@ class DepositionObjectImporterFactory(ABC):
         path: str,
         metadata: dict,
     ) -> tuple[str, str, dict]:
+        """
+        This function is used to handle the case where the file found by the finder is a metadata file and has to be
+        used for instantiating the class. This method uses the get_name_and_path implementation of the importer class
+        for this purpose.
+        :param config:
+        :param name:
+        :param path:
+        :param metadata:
+        :return: name, path, metadata
+        """
         if path and path.endswith("metadata.json"):
             local_filename = config.fs.localreadable(path)
             with open(local_filename, "r") as metadata_file:
@@ -310,6 +329,7 @@ class MultiSourceFileFinder(DefaultImporterFactory):
     ):
         if not filtered_results:
             return []
+        # If any of the files found are metadata files, we use the metadata file to instantiate the class
         if any(path and path.endswith("metadata.json") for path in filtered_results.values()):
             name, path, filtered_results = self.importer_cls.get_name_and_path(metadata, None, None, filtered_results)
 

@@ -1,3 +1,4 @@
+import os
 from typing import Any
 
 from common.finders import DefaultImporterFactory
@@ -54,3 +55,9 @@ class TomogramImporter(VolumeImporter):
 
     def get_source_volume_info(self) -> VolumeInfo:
         return get_volume_info(self.config.fs, self.volume_filename)
+
+    @classmethod
+    def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
+        filename = metadata.get("omezarr_dir")
+        complete_path = os.path.join(os.path.dirname(path), filename)
+        return filename, complete_path, {filename: complete_path}

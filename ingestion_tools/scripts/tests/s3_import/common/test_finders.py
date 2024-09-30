@@ -141,12 +141,12 @@ def test_multi_parent_filters(deposition_config, parents, source_config):
 @pytest.mark.parametrize(
     "filters, expected_prefixes",
     [
-        ([{"key": "non-existent-field-name", "value": 300}], []),
-        ([{"key": "deposition_id", "value": 300}], [100]),
+        ([{"key": ["non-existent-field-name"], "value": 300}], []),
+        ([{"key": ["deposition_id"], "value": 300}], [100]),
         ([{"key": ["authors", "name", "first"], "value": "Bob"}], [101]),
         ([{"key": ["authors", "name", "first"], "value": "Alice"}], []),
         ([{"key": ["invalid", "name", "first"], "value": "Bob"}], []),
-        ([{"key": "deposition_id", "value": 303}], []),
+        ([{"key": ["deposition_id"], "value": 303}], []),
         ([], [100, 101]),
     ],
 )
