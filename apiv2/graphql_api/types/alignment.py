@@ -298,9 +298,12 @@ class AlignmentWhereClause(TypedDict):
         | None
     )
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    deposition_id: Optional[IntComparators] | None
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
+    tiltseries_id: Optional[IntComparators] | None
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    run_id: Optional[IntComparators] | None
     alignment_type: Optional[EnumComparators[alignment_type_enum]] | None
     volume_x_dimension: Optional[FloatComparators] | None
     volume_y_dimension: Optional[FloatComparators] | None

@@ -217,7 +217,9 @@ class TiltseriesWhereClause(TypedDict):
         | None
     )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    run_id: Optional[IntComparators] | None
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    deposition_id: Optional[IntComparators] | None
     s3_omezarr_dir: Optional[StrComparators] | None
     s3_mrc_file: Optional[StrComparators] | None
     https_omezarr_dir: Optional[StrComparators] | None

@@ -142,6 +142,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class AnnotationShapeWhereClause(TypedDict):
     annotation: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    annotation_id: Optional[IntComparators] | None
     annotation_files: (
         Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
     )

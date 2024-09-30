@@ -214,6 +214,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class AnnotationWhereClause(TypedDict):
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    run_id: Optional[IntComparators] | None
     annotation_shapes: (
         Optional[Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
     )
@@ -222,6 +223,7 @@ class AnnotationWhereClause(TypedDict):
         | None
     )
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    deposition_id: Optional[IntComparators] | None
     s3_metadata_path: Optional[StrComparators] | None
     https_metadata_path: Optional[StrComparators] | None
     annotation_publication: Optional[StrComparators] | None

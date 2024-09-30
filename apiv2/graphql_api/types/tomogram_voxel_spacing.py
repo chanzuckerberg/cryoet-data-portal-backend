@@ -184,6 +184,7 @@ class TomogramVoxelSpacingWhereClause(TypedDict):
         Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
     )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    run_id: Optional[IntComparators] | None
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
     voxel_spacing: Optional[FloatComparators] | None
     s3_prefix: Optional[StrComparators] | None

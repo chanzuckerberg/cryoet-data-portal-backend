@@ -333,6 +333,7 @@ class RunWhereClause(TypedDict):
     alignments: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
     annotations: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
+    dataset_id: Optional[IntComparators] | None
     frames: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     tomogram_voxel_spacings: (

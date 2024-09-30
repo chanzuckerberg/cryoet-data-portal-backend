@@ -100,6 +100,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class DatasetAuthorWhereClause(TypedDict):
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
+    dataset_id: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
     orcid: Optional[StrComparators] | None
