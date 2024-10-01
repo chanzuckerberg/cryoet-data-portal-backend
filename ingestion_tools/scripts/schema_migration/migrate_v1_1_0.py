@@ -117,9 +117,6 @@ def update_annotation_sources(config: dict) -> None:
         sources = annotation.get("sources")
         if not sources:
             continue
-        for source in sources:
-            for value in source.values():
-                value["is_portal_standard"] = False
 
 
 def remove_empty_fields(config: Union[list, dict]) -> None:

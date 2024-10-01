@@ -1551,17 +1551,6 @@ class Tomogram(AuthoredEntity):
          'domain_of': ['Tomogram', 'Alignment']} })
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'size', 'domain_of': ['Tomogram']} })
     offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
-    is_portal_standard: Optional[bool] = Field(False, description="""Whether the tomogram is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
-                       'AnnotationOrientedPointFile',
-                       'AnnotationInstanceSegmentationFile',
-                       'AnnotationPointFile',
-                       'AnnotationSegmentationMaskFile',
-                       'AnnotationSemanticSegmentationMaskFile',
-                       'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
-         'ifabsent': 'False'} })
     is_visualization_default: bool = Field(True, description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
          'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -1781,8 +1770,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1858,8 +1846,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1935,8 +1922,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2011,8 +1997,7 @@ class AnnotationPointFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2073,8 +2058,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2139,8 +2123,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2206,8 +2189,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2284,8 +2266,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
-         'domain_of': ['Tomogram',
-                       'AnnotationSourceFile',
+         'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2911,6 +2892,7 @@ class DefaultSource(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -2937,6 +2919,7 @@ class StandardSource(DefaultSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -2953,6 +2936,7 @@ class StandardSource(DefaultSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -2968,6 +2952,7 @@ class StandardSource(DefaultSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -2986,6 +2971,7 @@ class StandardSource(DefaultSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3014,6 +3000,7 @@ class StandardSource(DefaultSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -3038,7 +3025,10 @@ class StandardLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     value: List[Any] = Field(..., description="""The value for the literal.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'value',
-         'domain_of': ['StandardLiteral', 'KeyPhotoLiteral', 'VoxelSpacingLiteral']} })
+         'domain_of': ['StandardLiteral',
+                       'KeyPhotoLiteral',
+                       'DestinationMetadataFilterKeyPair',
+                       'VoxelSpacingLiteral']} })
 
 
 class KeyPhotoLiteral(ConfiguredBaseModel):
@@ -3048,7 +3038,143 @@ class KeyPhotoLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     value: PicturePath = Field(..., description="""A set of paths to representative images of a piece of data.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
-         'domain_of': ['StandardLiteral', 'KeyPhotoLiteral', 'VoxelSpacingLiteral']} })
+         'domain_of': ['StandardLiteral',
+                       'KeyPhotoLiteral',
+                       'DestinationMetadataFilterKeyPair',
+                       'VoxelSpacingLiteral']} })
+
+
+class DestinationMetadataFilterKeyPair(ConfiguredBaseModel):
+    """
+    A key value pair for a destination metadata filter.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    key: List[str] = Field(..., description="""The path of the key for the filter in the metadata file.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'key', 'domain_of': ['DestinationMetadataFilterKeyPair']} })
+    value: Any = Field(..., description="""The value for the filter.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
+         'domain_of': ['StandardLiteral',
+                       'KeyPhotoLiteral',
+                       'DestinationMetadataFilterKeyPair',
+                       'VoxelSpacingLiteral']} })
+
+
+class DestinationMetadataFilter(ConfiguredBaseModel):
+    """
+    A finder class for to filter destination metadata by certain criteria.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    filters: List[DestinationMetadataFilterKeyPair] = Field(..., description="""A key value pair for a destination metadata filter.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'filters', 'domain_of': ['DestinationMetadataFilter']} })
+
+
+class ReferencedSource(StandardSource):
+    """
+    A Inherited by a majority of source classes.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    destination_filter: Optional[DestinationMetadataFilter] = Field(None, description="""A finder class for to filter destination metadata by certain criteria.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_filter',
+         'domain_of': ['ReferencedSource', 'TiltSeriesSource', 'TomogramSource']} })
+    destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
+         'domain_of': ['StandardSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
+         'domain_of': ['StandardSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
+         'domain_of': ['StandardSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    literal: Optional[StandardLiteral] = Field(None, description="""A literal class with a value attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'literal',
+         'domain_of': ['StandardSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionKeyPhotoSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DepositionSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
+         'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
+                       'AnnotationParentFilters',
+                       'CollectionMetadataParentFilters',
+                       'DatasetParentFilters',
+                       'DatasetKeyPhotoParentFilters',
+                       'DepositionKeyPhotoParentFilters',
+                       'FrameParentFilters',
+                       'GainParentFilters',
+                       'KeyImageParentFilters',
+                       'RawTiltParentFilters',
+                       'RunParentFilters',
+                       'TiltSeriesParentFilters',
+                       'TomogramParentFilters',
+                       'VoxelSpacingParentFilters',
+                       'StandardSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'AnnotationSource',
+                       'CollectionMetadataSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource',
+                       'VoxelSpacingSource']} })
 
 
 class AlignmentEntity(ConfiguredBaseModel):
@@ -3107,6 +3233,7 @@ class AlignmentSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3123,6 +3250,7 @@ class AlignmentSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3138,6 +3266,7 @@ class AlignmentSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3156,6 +3285,7 @@ class AlignmentSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3184,6 +3314,7 @@ class AlignmentSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -3239,6 +3370,7 @@ class AlignmentParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -3379,6 +3511,7 @@ class AnnotationSource(DefaultSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -3434,6 +3567,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -3550,6 +3684,7 @@ class CollectionMetadataSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3566,6 +3701,7 @@ class CollectionMetadataSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3581,6 +3717,7 @@ class CollectionMetadataSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3599,6 +3736,7 @@ class CollectionMetadataSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3627,6 +3765,7 @@ class CollectionMetadataSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -3682,6 +3821,7 @@ class CollectionMetadataParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -3801,6 +3941,7 @@ class DatasetSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3817,6 +3958,7 @@ class DatasetSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3832,6 +3974,7 @@ class DatasetSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3850,6 +3993,7 @@ class DatasetSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -3878,6 +4022,7 @@ class DatasetSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -3933,6 +4078,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4008,6 +4154,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4037,6 +4184,7 @@ class DatasetKeyPhotoSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4053,6 +4201,7 @@ class DatasetKeyPhotoSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4068,6 +4217,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4098,6 +4248,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4153,6 +4304,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4234,6 +4386,7 @@ class DepositionSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4250,6 +4403,7 @@ class DepositionSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4265,6 +4419,7 @@ class DepositionSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4283,6 +4438,7 @@ class DepositionSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4311,6 +4467,7 @@ class DepositionSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4363,6 +4520,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4392,6 +4550,7 @@ class DepositionKeyPhotoSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4408,6 +4567,7 @@ class DepositionKeyPhotoSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4423,6 +4583,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4453,6 +4614,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4508,6 +4670,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4604,6 +4767,7 @@ class FrameSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4620,6 +4784,7 @@ class FrameSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4635,6 +4800,7 @@ class FrameSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4653,6 +4819,7 @@ class FrameSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4681,6 +4848,7 @@ class FrameSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4736,6 +4904,7 @@ class FrameParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4847,6 +5016,7 @@ class GainSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4863,6 +5033,7 @@ class GainSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4878,6 +5049,7 @@ class GainSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4896,6 +5068,7 @@ class GainSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -4924,6 +5097,7 @@ class GainSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -4979,6 +5153,7 @@ class GainParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -5090,6 +5265,7 @@ class KeyImageSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5106,6 +5282,7 @@ class KeyImageSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5121,6 +5298,7 @@ class KeyImageSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5139,6 +5317,7 @@ class KeyImageSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5167,6 +5346,7 @@ class KeyImageSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -5222,6 +5402,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -5339,6 +5520,7 @@ class RawTiltSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5355,6 +5537,7 @@ class RawTiltSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5370,6 +5553,7 @@ class RawTiltSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5388,6 +5572,7 @@ class RawTiltSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5416,6 +5601,7 @@ class RawTiltSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -5471,6 +5657,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -5582,6 +5769,7 @@ class RunSource(StandardSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5598,6 +5786,7 @@ class RunSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5613,6 +5802,7 @@ class RunSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5631,6 +5821,7 @@ class RunSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5659,6 +5850,7 @@ class RunSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -5714,6 +5906,7 @@ class RunParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -5812,7 +6005,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                        'VoxelSpacingEntity']} })
 
 
-class TiltSeriesSource(StandardSource):
+class TiltSeriesSource(ReferencedSource):
     """
     A tilt series source.
     """
@@ -5833,9 +6026,12 @@ class TiltSeriesSource(StandardSource):
                        'TiltSeriesSource',
                        'TomogramSource',
                        'VoxelSpacingSource']} })
+    destination_filter: Optional[DestinationMetadataFilter] = Field(None, description="""A finder class for to filter destination metadata by certain criteria.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_filter',
+         'domain_of': ['ReferencedSource', 'TiltSeriesSource', 'TomogramSource']} })
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5852,6 +6048,7 @@ class TiltSeriesSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5867,6 +6064,7 @@ class TiltSeriesSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5885,6 +6083,7 @@ class TiltSeriesSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -5913,6 +6112,7 @@ class TiltSeriesSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -5968,6 +6168,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -6063,7 +6264,7 @@ class TomogramEntity(ConfiguredBaseModel):
                        'VoxelSpacingEntity']} })
 
 
-class TomogramSource(StandardSource):
+class TomogramSource(ReferencedSource):
     """
     A tomogram source.
     """
@@ -6084,9 +6285,12 @@ class TomogramSource(StandardSource):
                        'TiltSeriesSource',
                        'TomogramSource',
                        'VoxelSpacingSource']} })
+    destination_filter: Optional[DestinationMetadataFilter] = Field(None, description="""A finder class for to filter destination metadata by certain criteria.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_filter',
+         'domain_of': ['ReferencedSource', 'TiltSeriesSource', 'TomogramSource']} })
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -6103,6 +6307,7 @@ class TomogramSource(StandardSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -6118,6 +6323,7 @@ class TomogramSource(StandardSource):
                        'TomogramSource']} })
     source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
          'domain_of': ['StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -6136,6 +6342,7 @@ class TomogramSource(StandardSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -6164,6 +6371,7 @@ class TomogramSource(StandardSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -6219,6 +6427,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -6320,6 +6529,7 @@ class VoxelSpacingSource(DefaultSource):
     destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -6336,6 +6546,7 @@ class VoxelSpacingSource(DefaultSource):
     source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
          'domain_of': ['StandardSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -6354,6 +6565,7 @@ class VoxelSpacingSource(DefaultSource):
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
                        'VoxelSpacingSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
                        'DatasetSource',
@@ -6398,6 +6610,7 @@ class VoxelSpacingSource(DefaultSource):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -6453,6 +6666,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
                        'TomogramParentFilters',
                        'VoxelSpacingParentFilters',
                        'StandardSource',
+                       'ReferencedSource',
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -6523,7 +6737,10 @@ class VoxelSpacingLiteral(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     value: List[float] = Field(..., description="""The value for the voxel spacing literal.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'value',
-         'domain_of': ['StandardLiteral', 'KeyPhotoLiteral', 'VoxelSpacingLiteral']} })
+         'domain_of': ['StandardLiteral',
+                       'KeyPhotoLiteral',
+                       'DestinationMetadataFilterKeyPair',
+                       'VoxelSpacingLiteral']} })
 
 
 class TomogramHeader(ConfiguredBaseModel):
@@ -6604,6 +6821,9 @@ DefaultSource.model_rebuild()
 StandardSource.model_rebuild()
 StandardLiteral.model_rebuild()
 KeyPhotoLiteral.model_rebuild()
+DestinationMetadataFilterKeyPair.model_rebuild()
+DestinationMetadataFilter.model_rebuild()
+ReferencedSource.model_rebuild()
 AlignmentEntity.model_rebuild()
 AlignmentSource.model_rebuild()
 AlignmentParentFilters.model_rebuild()

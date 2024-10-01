@@ -98,7 +98,7 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "size_z": 400,
         "voxel_spacing": 3.456,
         "fiducial_alignment_status": "NON_FIDUCIAL",
-        "reconstruction_method": "Unknown",
+        "reconstruction_method": "SART",
         "reconstruction_software": "Unknown",
         "processing": "filtered",
         "tomogram_version": "1",

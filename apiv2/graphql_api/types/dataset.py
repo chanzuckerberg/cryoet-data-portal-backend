@@ -216,6 +216,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class DatasetWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    deposition_id: Optional[IntComparators] | None
     funding_sources: (
         Optional[Annotated["DatasetFundingWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")]] | None
     )

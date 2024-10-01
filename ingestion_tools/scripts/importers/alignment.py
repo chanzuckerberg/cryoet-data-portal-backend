@@ -10,7 +10,9 @@ from importers.base_importer import BaseFileImporter
 
 if TYPE_CHECKING:
     TomogramImporter = "TomogramImporter"
+    TiltSeriesImporter = "TiltSeriesImporter"
 else:
+    from importers.tiltseries import TiltSeriesImporter
     from importers.tomogram import TomogramImporter
 
 
@@ -50,30 +52,27 @@ class AlignmentImporter(BaseFileImporter):
 
     type_key = "alignment"
     plural_key = "alignments"
+
     finder_factory = MultiSourceFileFinder
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}/Alignments"
 
-    def __init__(
-        self,
-        config: DepositionImportConfig,
-        metadata: dict[str, Any],
-        name: str,
-        path: str,
-        parents: dict[str, Any],
-        file_paths: dict[str, str],
-    ):
-        super().__init__(config, metadata, name, path, parents)
-        self.identifier = AlignmentIdentifierHelper.get_identifier(config, metadata, parents)
+    def __init__(self, *args, file_paths: dict[str, str], **kwargs):
+        super().__init__(*args, **kwargs)
         self.file_paths = file_paths
+        self.identifier = AlignmentIdentifierHelper.get_identifier(self.config, self.metadata, self.parents)
         self.converter = alignment_converter_factory(
-            config,
-            metadata,
-            list(file_paths.keys()),
-            parents,
+            self.config,
+            self.metadata,
+            list(self.file_paths.values()),
+            self.parents,
             self.get_output_path(),
         )
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         metadata_path = self.get_metadata_path()
         try:
             meta = AlignmentMetadata(self.config.fs, self.get_deposition().name, self.get_base_metadata())
@@ -82,6 +81,10 @@ class AlignmentImporter(BaseFileImporter):
             print("Skipping creating metadata for default alignment with no source tomogram")
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
+
         if self.is_default_alignment() or not self.is_valid():
             print(
                 f"Skipping importing alignment with path {self.file_paths} as it is either a default alignment or "
@@ -111,6 +114,7 @@ class AlignmentImporter(BaseFileImporter):
             "alignment_path": self.converter.get_alignment_path(),
             "tilt_path": self.converter.get_tilt_path(),
             "tiltx_path": self.converter.get_tiltx_path(),
+            "tiltseries_path": self.get_tiltseries_path(),
         }
         if "volume_dimension" not in self.metadata:
             extra_metadata["volume_dimension"] = self.get_tomogram_volume_dimension()
@@ -155,3 +159,8 @@ class AlignmentImporter(BaseFileImporter):
             "tilt_offset": 0,
             "x_rotation_offset": 0,
         }
+
+    def get_tiltseries_path(self) -> str | None:
+        for ts in TiltSeriesImporter.finder(self.config, **self.parents):
+            return ts.get_metadata_path()
+        return None

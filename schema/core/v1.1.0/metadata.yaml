@@ -527,11 +527,6 @@ classes:
         description: *desc_tomogram_offset
         range: TomogramOffset
         required: true
-      is_portal_standard:
-        description: Whether the tomogram is a portal standard.
-        range: boolean
-        required: false
-        ifabsent: false
       is_visualization_default:
         description: Whether the tomogram is the default for visualization.
         range: boolean

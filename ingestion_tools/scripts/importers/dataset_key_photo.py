@@ -14,6 +14,7 @@ class DatasetKeyPhotoImporter(BaseKeyPhotoImporter):
     plural_key = "dataset_keyphotos"
     finder_factory = DefaultImporterFactory
     has_metadata = False
+    dir_path = "{dataset_name}/Images"
 
     def get_image_src_path(self) -> str:
         image_src = self.path or self.get_first_valid_tomo_key_photo(self.name)

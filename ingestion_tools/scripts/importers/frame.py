@@ -7,3 +7,4 @@ class FrameImporter(BaseFileImporter):
     plural_key = "frames"
     finder_factory = DefaultImporterFactory
     has_metadata = False
+    dir_path = "{dataset_name}/{run_name}/Frames"

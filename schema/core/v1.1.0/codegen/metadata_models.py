@@ -2430,27 +2430,6 @@ class Tomogram(AuthoredEntity):
         description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""",
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram", "Alignment"]}},
     )
-    is_portal_standard: Optional[bool] = Field(
-        False,
-        description="""Whether the tomogram is a portal standard.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "is_portal_standard",
-                "domain_of": [
-                    "Tomogram",
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "ifabsent": "False",
-            }
-        },
-    )
     is_visualization_default: bool = Field(
         True,
         description="""Whether the tomogram is the default for visualization.""",
@@ -2831,7 +2810,6 @@ class AnnotationSourceFile(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "is_portal_standard",
                 "domain_of": [
-                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -2984,7 +2962,6 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_portal_standard",
                 "domain_of": [
-                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3137,7 +3114,6 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
             "linkml_meta": {
                 "alias": "is_portal_standard",
                 "domain_of": [
-                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3291,7 +3267,6 @@ class AnnotationPointFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_portal_standard",
                 "domain_of": [
-                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3404,7 +3379,6 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_portal_standard",
                 "domain_of": [
-                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3529,7 +3503,6 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_portal_standard",
                 "domain_of": [
-                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3655,7 +3628,6 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_portal_standard",
                 "domain_of": [
-                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
@@ -3802,7 +3774,6 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
             "linkml_meta": {
                 "alias": "is_portal_standard",
                 "domain_of": [
-                    "Tomogram",
                     "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
