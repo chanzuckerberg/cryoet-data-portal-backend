@@ -229,6 +229,15 @@ enums:
       portal_standard:
         text: portal_standard
         description: Annotation submitted by portal standardization
+  alignment_method_type_enum:
+    description: Describes how an alignment was created
+    permissible_values:
+      projection_matching:
+        description: Alignment was generated via AreTomo
+      patch_tracking :
+        description: Alignment was generated via IMOD without fiducials
+      fiducial_based:
+        description: Alignment was generated based on fiducials
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -642,6 +651,9 @@ classes:
         - alignment_alignment_type
         range: alignment_type_enum
         pattern: (^LOCAL$)|(^GLOBAL$)
+      alignment_method:
+        description: The method used to create this alignment
+        range: alignment_method_type_enum
       volume_x_dimension:
         name: volume_x_dimension
         description: X dimension of the reconstruction volume in angstrom
@@ -742,6 +754,7 @@ classes:
         description: Whether this is the portal standard alignment
         range: boolean
         ifabsent: false
+
   AnnotationAuthor:
     name: AnnotationAuthor
     annotations:
@@ -897,6 +910,13 @@ classes:
         range: AnnotationShape
         annotations:
           cascade_delete: true
+      method_links:
+        description: Links to information about how annotations were created
+        multivalued: true
+        inverse: AnnotationMethodLink.annotation
+        range: AnnotationMethodLink
+        annotations:
+          cascade_delete: true
       authors:
         name: authors
         description: Author of an annotation
@@ -944,9 +964,6 @@ classes:
         - annotation_method
         range: string
         required: true
-      method_links:
-        description: Provides links to information on the method used for generating annotation, comma separated
-        range: string
       ground_truth_status:
         name: ground_truth_status
         description: Whether an annotation is considered ground truth, as determined
@@ -2573,30 +2590,30 @@ classes:
         - author_primary_author_status
         ifabsent: false
         range: boolean
-  AnnotationMethodLinks:
-    name: AnnotationMethodLinks
-    description: A set of links to models, source code, documentation, etc referenced
-      by annotation the method
-    mixin: true
-    from_schema: cdp-dataset-config
+  AnnotationMethodLink:
+    annotations:
+      plural:
+        tag: plural
+        value: AnnotationMethodLinks
+    description: A set of links to models, source code, documentation, etc referenced by annotation method
+    mixins:
+    - IDMixin
     attributes:
-      link:
-        name: link
-        description: URL to the resource
-        from_schema: cdp-dataset-config
-        range: string
-        required: true
+      annotation:
+        name: annotation
+        description: Reference to annotation this link applies to
+        inverse: Annotation.method_links
+        range: Annotation
       link_type:
-        name: link_type
         description: Type of link (e.g. model, source code, documentation)
-        from_schema: cdp-dataset-config
         range: annotation_method_link_type_enum
         required: true
-        pattern: (^documentation$)|(^models_weights$)|(^other$)|(^source_code$)|(^website$)
       name:
-        name: name
         description: user readable name of the resource
-        from_schema: cdp-dataset-config
         range: string
         recommended: true
+      link:
+        description: URL to the resource
+        range: string
+        required: true
 source_file: api_models.yaml
