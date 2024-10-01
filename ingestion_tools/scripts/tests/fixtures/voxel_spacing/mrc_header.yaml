@@ -43,11 +43,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: ''
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:

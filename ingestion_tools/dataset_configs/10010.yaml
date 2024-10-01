@@ -25,6 +25,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -44,6 +45,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+
       is_visualization_default: true
       mask_label: 2
 - metadata:
@@ -63,6 +65,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
+
       is_visualization_default: true
       mask_label: 3
 collection_metadata:
@@ -114,7 +117,6 @@ datasets:
     dataset_identifier: 10010
     dataset_title: Organellar membranes
     dates: *id002
-    funding: []
     organism:
       name: Mus musculus
       taxonomy_id: 10090
@@ -145,11 +147,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: frames/{run_name}_*.tif
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 runs:
 - sources:
   - source_glob:
@@ -208,7 +205,9 @@ tomograms:
       - 1
     authors: *id003
     ctf_corrected: false
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

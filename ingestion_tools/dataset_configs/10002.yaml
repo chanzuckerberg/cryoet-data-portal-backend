@@ -1,3 +1,27 @@
+alignments:
+- metadata:
+    affine_transformation_matrix: &id003
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - -1
+      - 0
+    - - 0
+      - 0
+      - 625
+      - 1
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/{run_name}_sq_df_sorted_fid.xf
 annotations:
 - metadata:
     annotation_method: manual segmentation
@@ -51,6 +75,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_actin_ground_truth.mrc
+
       is_visualization_default: true
 - metadata:
     annotation_method: 2D CNN + 3D CNN hyperparameter tuning
@@ -74,6 +99,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: prediction/{run_name}_*.mrc
+
       is_visualization_default: false
 collection_metadata:
 - sources:
@@ -88,7 +114,7 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10989.gif
 datasets:
 - metadata:
-    authors: &id003
+    authors: &id004
     - ORCID: 0000-0002-4691-9501
       name: Irene de Teresa Trueba
       primary_author_status: true
@@ -161,16 +187,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: CountRef_{mapped_frame_name}-range.dm4
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/{run_name}_sq_df_sorted_fid.xf
 runs:
 - sources:
   - source_glob:
@@ -213,26 +229,15 @@ tiltseries:
       match_regex: .*
 tomograms:
 - metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - -1
-      - 0
-    - - 0
-      - 0
-      - 625
-      - 1
-    authors: *id003
+    affine_transformation_matrix: *id003
+    authors: *id004
     ctf_corrected: false
+    dates:
+      deposition_date: '2023-04-01'
+      last_modified_date: '2023-06-01'
+      release_date: '2023-06-01'
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

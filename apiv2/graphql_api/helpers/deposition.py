@@ -18,13 +18,15 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class DepositionGroupByOptions:
-    deposition_title: Optional[str] = None
-    deposition_description: Optional[str] = None
-    publications: Optional[str] = None
+    title: Optional[str] = None
+    description: Optional[str] = None
+    deposition_publications: Optional[str] = None
     related_database_entries: Optional[str] = None
     deposition_date: Optional[datetime.datetime] = None
     release_date: Optional[datetime.datetime] = None
     last_modified_date: Optional[datetime.datetime] = None
+    key_photo_url: Optional[str] = None
+    key_photo_thumbnail_url: Optional[str] = None
     id: Optional[int] = None
 
 

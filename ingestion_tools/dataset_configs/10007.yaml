@@ -1,3 +1,10 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/AreTomo/*_dose-filt.xf'
 annotations:
 - metadata:
     annotation_method: crYOLO picking
@@ -37,6 +44,7 @@ annotations:
       binning: 4
       file_format: tomoman_relion_star
       glob_string: '{run_name}/metadata/particles/*.star'
+
       is_visualization_default: true
       order: xyz
 collection_metadata:
@@ -120,17 +128,11 @@ gains:
 - sources:
   - source_glob:
       list_glob: '{run_name}/*.gain'
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
       - '{run_name}/*_dose-filt.rawtlt'
-      - '{run_name}/AreTomo/*_dose-filt.xf'
 runs:
 - sources:
   - source_glob:
@@ -231,7 +233,9 @@ tomograms:
       - 1
     authors: *id002
     ctf_corrected: false
+    dates: *id001
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

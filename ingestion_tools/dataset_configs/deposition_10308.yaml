@@ -38,6 +38,7 @@ annotations:
   - SegmentationMask:
       file_format: zarr
       glob_string: '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr'
+
       is_visualization_default: true
 datasets:
 - sources:

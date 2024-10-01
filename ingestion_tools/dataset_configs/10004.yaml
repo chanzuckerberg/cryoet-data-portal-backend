@@ -1,3 +1,11 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/{run_name}.mdoc-dose_filt.tlt'
+      - '{run_name}/{run_name}.mdoc-dose_filt.xf'
 annotations:
 - metadata:
     annotation_method: Template matching + 2D classification filtering
@@ -61,6 +69,7 @@ annotations:
       columns: xyz
       file_format: csv_with_header
       glob_string: '{run_name}/annoRibosome_bin4.txt'
+
       is_visualization_default: true
 collection_metadata:
 - sources:
@@ -158,17 +167,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: gain/gain.mrc
-key_images:
-- sources:
-  - literal:
-      value:
-      - from_tomogram
-rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/{run_name}.mdoc-dose_filt.tlt'
-      - '{run_name}/{run_name}.mdoc-dose_filt.xf'
 runs:
 - sources:
   - source_glob:
@@ -227,7 +225,9 @@ tomograms:
       - 1
     authors: *id002
     ctf_corrected: true
+    dates: *id001
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

@@ -38,6 +38,7 @@ annotations:
   - SegmentationMask:
       file_format: mrc
       glob_string: '{dataset_name}/{run_name}_membrane_segmentation_mask.mrc'
+
       is_visualization_default: false
 datasets:
 - sources:

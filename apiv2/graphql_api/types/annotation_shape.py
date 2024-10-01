@@ -178,8 +178,11 @@ class AnnotationShape(EntityInterface):
     annotation_files_aggregate: Optional[
         Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
     ] = load_annotation_file_aggregate_rows  # type:ignore
-    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description=None, default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
+        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
+        default=None,
+    )
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """
@@ -272,19 +275,25 @@ Mutation types
 @strawberry.input()
 class AnnotationShapeCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an annotation for a run", default=None,
+        description="Metadata about an shapes for an annotation", default=None,
     )
-    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description=None, default=None)
-    id: int = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
+        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
+        default=None,
+    )
+    id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
 class AnnotationShapeUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an annotation for a run", default=None,
+        description="Metadata about an shapes for an annotation", default=None,
     )
-    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description=None, default=None)
-    id: Optional[int] = strawberry.field(description="An identifier to refer to a specific instance of this type")
+    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
+        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
+        default=None,
+    )
+    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
 """

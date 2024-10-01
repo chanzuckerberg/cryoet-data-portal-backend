@@ -1,3 +1,17 @@
+alignments:
+- metadata:
+    format: IMOD
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/AreTomo/{run_name}_dose-filt.tlt'
+      - '{run_name}/AreTomo/{run_name}_dose-filt.xf'
+- metadata:
+    format: ARETOMO3
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
 annotations:
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -62,6 +76,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -85,6 +100,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -108,6 +124,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/ribosome_*.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -130,6 +147,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -153,6 +171,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/rubisco_*.star'
+
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -175,6 +194,7 @@ annotations:
       file_format: stopgap_star
       filter_value: '{annotation_micrograph_name}'
       glob_string: '{run_name}/metadata/particles/microtubule_*.star'
+
       is_visualization_default: true
       order: xyz
 collection_metadata:
@@ -295,9 +315,6 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - '{run_name}/{run_name}.rawtlt'
-      - '{run_name}/AreTomo/{run_name}_dose-filt.tlt'
-      - '{run_name}/AreTomo/{run_name}_dose-filt.xf'
-      - '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
 runs:
 - sources:
   - source_glob:
@@ -358,7 +375,9 @@ tomograms:
       - 1
     authors: *id004
     ctf_corrected: true
+    dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

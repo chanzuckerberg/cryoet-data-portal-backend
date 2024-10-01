@@ -48,12 +48,14 @@ class Annotation(Base):
         back_populates="annotation",
         uselist=True,
         foreign_keys="AnnotationShape.annotation_id",
+        cascade="all, delete-orphan",
     )
     authors: Mapped[list[AnnotationAuthor]] = relationship(
         "AnnotationAuthor",
         back_populates="annotation",
         uselist=True,
         foreign_keys="AnnotationAuthor.annotation_id",
+        cascade="all, delete-orphan",
     )
     deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
     deposition: Mapped["Deposition"] = relationship(
@@ -65,6 +67,7 @@ class Annotation(Base):
     https_metadata_path: Mapped[str] = mapped_column(String, nullable=False)
     annotation_publication: Mapped[str] = mapped_column(String, nullable=True)
     annotation_method: Mapped[str] = mapped_column(String, nullable=False)
+    method_links: Mapped[str] = mapped_column(String, nullable=True)
     ground_truth_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
     object_id: Mapped[str] = mapped_column(String, nullable=False)
     object_name: Mapped[str] = mapped_column(String, nullable=False)

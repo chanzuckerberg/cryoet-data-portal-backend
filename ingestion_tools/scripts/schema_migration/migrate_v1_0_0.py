@@ -1,12 +1,7 @@
+import logging
 from typing import Any
 
-import click
-import yaml
-
-
-@click.group()
-def cli():
-    pass
+logger = logging.getLogger(__name__)
 
 
 def create_deposition_metadata(deposition_id: str, config_data: dict[str, Any]) -> dict[str, Any]:
@@ -35,8 +30,9 @@ def has_no_sources(data: list[dict[str, Any]] | dict[str, Any]) -> bool:
     return isinstance(data, dict) or not any(row.get("sources") for row in data)
 
 
-def update_config(data: dict[str, Any]) -> dict[str, Any]:
+def upgrade(data: dict[str, Any]) -> dict[str, Any]:
     standardization_config = data["standardization_config"]
+    data["version"] = "1.0.0"
     if data.get("overrides_by_run"):
         # We only have two datasets that specify overrides. It's easier to just
         # translate these manually than deal with automating it.
@@ -209,24 +205,3 @@ def update_config(data: dict[str, Any]) -> dict[str, Any]:
         k: v for k, v in data["standardization_config"].items() if k in valid_standardization_keys
     }
     return data
-
-
-def update_file(filename: str) -> None:
-    with open(filename, "r") as fh:
-        data = yaml.safe_load(fh.read())
-
-    data = update_config(data)
-
-    with open(filename, "w") as fh:
-        fh.write(yaml.dump(data))
-
-
-@cli.command()
-@click.argument("conf_file", required=True, type=str, nargs=-1)
-def upgrade(conf_file: list[str]) -> None:
-    for filename in conf_file:
-        update_file(filename)
-
-
-if __name__ == "__main__":
-    cli()

@@ -1,4 +1,9 @@
 annotations: []
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/rawdata/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -62,7 +67,6 @@ rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
       - '{run_name}/file_*/*.rawtlt'
       - '{run_name}/{mapped_frame_name}/*.rawtlt'
 runs:
@@ -131,7 +135,9 @@ tomograms:
     align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
     offset:
       x: 0
       y: 0

@@ -49,6 +49,7 @@ annotations:
       - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*PgU0Bz.zarr'
       - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*4h1eIH.zarr'
       - '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*gBcgAd.zarr'
+
       is_visualization_default: true
 datasets:
 - sources:
