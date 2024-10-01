@@ -43,7 +43,7 @@ class TiltSeriesImporter(VolumeImporter):
     finder_factory = DefaultImporterFactory
     has_metadata = True
     dir_path = "{dataset_name}/{run_name}/TiltSeries"
-    metadata_path = "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json"
+    metadata_path = "{dataset_name}/{run_name}/TiltSeries/{{identifier}}-tiltseries_metadata.json"
 
     def __init__(
         self,

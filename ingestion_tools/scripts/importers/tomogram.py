@@ -49,9 +49,7 @@ class TomogramImporter(VolumeImporter):
     cached_find_results: dict[str, Any] = {}
     has_metadata = True
     dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram"
-    metadata_path = (
-        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json"
-    )
+    metadata_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/{{identifier}}-tomogram_metadata.json"
 
     def __init__(
         self,
