@@ -100,6 +100,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class TomogramAuthorWhereClause(TypedDict):
     tomogram: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    tomogram_id: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
     orcid: Optional[StrComparators] | None

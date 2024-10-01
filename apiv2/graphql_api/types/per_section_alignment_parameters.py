@@ -105,6 +105,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class PerSectionAlignmentParametersWhereClause(TypedDict):
     alignment: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    alignment_id: Optional[IntComparators] | None
     z_index: Optional[IntComparators] | None
     x_offset: Optional[FloatComparators] | None
     y_offset: Optional[FloatComparators] | None

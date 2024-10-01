@@ -282,6 +282,9 @@ class {{ cls.name }}WhereClause(TypedDict):
         {%- else %}
     {{ attr.name }}: Optional[{{ getComparators(attr) }}] | None
         {%- endif %}
+        {%- if attr.inverse and not attr.multivalued %}
+    {{ attr.name }}_id : Optional[{{ getComparators(attr.related_class.identifier) }}] | None
+        {%- endif %}
     {%- endfor %}
 
 """
