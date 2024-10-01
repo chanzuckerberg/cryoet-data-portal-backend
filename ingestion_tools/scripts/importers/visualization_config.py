@@ -23,8 +23,15 @@ class VisualizationConfigImporter(BaseImporter):
     plural_key = "viz_config"
     finder_factory = DefaultImporterFactory
     has_metadata = False
+    dir_path = (
+        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/"
+        "neuroglancer_config.json"
+    )
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         ng_contents = self._create_config()
         meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
         dest_file = self.get_output_path()

@@ -11,6 +11,8 @@ class RunImporter(BaseImporter):
     plural_key = "runs"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}"
+    metadata_path = "{dataset_name}/{run_name}/run_metadata.json"
 
     def __init__(
         self,
@@ -26,6 +28,9 @@ class RunImporter(BaseImporter):
         pass
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_run_metadata = self.get_metadata_path()
         print(dest_run_metadata)
         metadata = RunMetadata(self.config.fs, self.get_deposition().name, self.metadata)

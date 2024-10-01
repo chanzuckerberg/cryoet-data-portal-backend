@@ -1,7 +1,7 @@
 import os
 import os.path
 from abc import abstractmethod
-from typing import Any, Callable
+from typing import Any, Callable, Type
 
 import ndjson
 
@@ -41,8 +41,8 @@ class AnnotationIdentifierHelper(IdentifierHelper):
 
 
 class AnnotationImporterFactory(DepositionObjectImporterFactory):
-    def __init__(self, source: dict[str, Any]):
-        super().__init__(source)
+    def __init__(self, source: dict[str, Any], importer_cls: Type[BaseImporter]):
+        super().__init__(source, importer_cls)
         # flatten self.source additional layer that specifies the type of annotation file it is
         clean_source = {k: v for k, v in self.source.items() if k not in {"parent_filters", "exclude"}}
         if not (len(clean_source.keys()) == 1):
@@ -63,11 +63,11 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
 
     def _instantiate(
         self,
-        cls,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
         name: str,
         path: str,
+        allow_imports: bool,
         parents: dict[str, Any] | None,
     ):
         source_args = {k: v for k, v in self.source.items() if k not in {"shape", "glob_string", "glob_strings"}}
@@ -78,6 +78,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             "name": name,
             "path": path,
             "parents": parents,
+            "allow_imports": allow_imports,
             **source_args,
         }
         shape = self.source["shape"]
@@ -107,6 +108,8 @@ class AnnotationImporter(BaseImporter):
     plural_key = "annotations"
     finder_factory = AnnotationImporterFactory
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations"
+    metadata_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations"
     written_metadata_files = []  # This is a *class* variable that helps us avoid writing metadata files multiple times.
 
     def __init__(
@@ -122,6 +125,9 @@ class AnnotationImporter(BaseImporter):
 
     # Functions to support writing annotation data
     def import_item(self):
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_prefix = self.get_output_path()
         self.convert(dest_prefix)
 
@@ -131,6 +137,9 @@ class AnnotationImporter(BaseImporter):
         return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
 
     def import_metadata(self):
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_prefix = self.get_output_path()
         filename = f"{dest_prefix}.json"
         if filename in self.written_metadata_files:

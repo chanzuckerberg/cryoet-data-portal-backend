@@ -1,3 +1,4 @@
+import os
 from typing import Any
 
 from common.finders import DefaultImporterFactory
@@ -14,8 +15,15 @@ class TomogramImporter(VolumeImporter):
     finder_factory = DefaultImporterFactory
     cached_find_results: dict[str, Any] = {}
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram"
+    metadata_path = (
+        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json"
+    )
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         self.scale_mrcfile(
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
@@ -23,6 +31,9 @@ class TomogramImporter(VolumeImporter):
         )
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_tomo_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()
         parent_args = dict(self.parents)
@@ -44,3 +55,9 @@ class TomogramImporter(VolumeImporter):
 
     def get_source_volume_info(self) -> VolumeInfo:
         return get_volume_info(self.config.fs, self.volume_filename)
+
+    @classmethod
+    def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
+        filename = metadata.get("omezarr_dir")
+        complete_path = os.path.join(os.path.dirname(path), filename)
+        return filename, complete_path, {filename: complete_path}

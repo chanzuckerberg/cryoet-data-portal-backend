@@ -23,6 +23,7 @@ class KeyImageImporter(BaseImporter):
         "snapshot": 512,  # small detail expand
         "expanded": 1024,  # large detail expand
     }
+    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos"
 
     def get_metadata(self) -> dict[str, str]:
         return {
@@ -35,6 +36,9 @@ class KeyImageImporter(BaseImporter):
         return os.path.relpath(image_path, self.config.output_prefix)
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dir = self.get_output_path()
         preview, tomo_width = None, None
         if self.path:

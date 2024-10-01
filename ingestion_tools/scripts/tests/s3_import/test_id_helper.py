@@ -4,7 +4,7 @@ from typing import Any, Callable
 
 import pytest as pytest
 from importers.db.base_importer import S3Client
-from standardize_dirs import IMPORTERS
+from importers.utils import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi

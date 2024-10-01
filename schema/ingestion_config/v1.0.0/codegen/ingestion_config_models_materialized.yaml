@@ -1158,6 +1158,7 @@ classes:
         domain_of:
         - StandardLiteral
         - KeyPhotoLiteral
+        - DestinationMetadataFilterKeyPair
         - VoxelSpacingLiteral
         range: Any
         required: true
@@ -1179,9 +1180,157 @@ classes:
         domain_of:
         - StandardLiteral
         - KeyPhotoLiteral
+        - DestinationMetadataFilterKeyPair
         - VoxelSpacingLiteral
         range: PicturePath
         required: true
+        inlined: true
+        inlined_as_list: true
+  DestinationMetadataFilterKeyPair:
+    name: DestinationMetadataFilterKeyPair
+    description: A key value pair for a destination metadata filter.
+    from_schema: cdp-ingestion-config
+    attributes:
+      key:
+        name: key
+        description: The path of the key for the filter in the metadata file.
+        from_schema: cdp-ingestion-config
+        alias: key
+        owner: DestinationMetadataFilterKeyPair
+        domain_of:
+        - DestinationMetadataFilterKeyPair
+        range: string
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+      value:
+        name: value
+        description: The value for the filter.
+        from_schema: cdp-ingestion-config
+        alias: value
+        owner: DestinationMetadataFilterKeyPair
+        domain_of:
+        - StandardLiteral
+        - KeyPhotoLiteral
+        - DestinationMetadataFilterKeyPair
+        - VoxelSpacingLiteral
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+  DestinationMetadataFilter:
+    name: DestinationMetadataFilter
+    description: A finder class for to filter destination metadata by certain criteria.
+    from_schema: cdp-ingestion-config
+    attributes:
+      filters:
+        name: filters
+        description: A key value pair for a destination metadata filter.
+        from_schema: cdp-ingestion-config
+        alias: filters
+        owner: DestinationMetadataFilter
+        domain_of:
+        - DestinationMetadataFilter
+        range: DestinationMetadataFilterKeyPair
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+  ReferencedSource:
+    name: ReferencedSource
+    description: A Inherited by a majority of source classes.
+    from_schema: cdp-ingestion-config
+    is_a: StandardSource
+    attributes:
+      destination_filter:
+        name: destination_filter
+        description: A finder class for to filter destination metadata by certain
+          criteria.
+        from_schema: cdp-ingestion-config
+        alias: destination_filter
+        owner: ReferencedSource
+        domain_of:
+        - ReferencedSource
+        range: DestinationMetadataFilter
+        inlined: true
+        inlined_as_list: true
+      destination_glob:
+        name: destination_glob
+        description: A glob class for finding files in the output / destination directory.
+        from_schema: cdp-ingestion-config
+        alias: destination_glob
+        owner: ReferencedSource
+        domain_of:
+        - StandardSource
+        - VoxelSpacingSource
+        range: DestinationGlob
+        inlined: true
+        inlined_as_list: true
+      source_glob:
+        name: source_glob
+        description: A glob class for finding files in the source directory.
+        from_schema: cdp-ingestion-config
+        alias: source_glob
+        owner: ReferencedSource
+        domain_of:
+        - StandardSource
+        - VoxelSpacingSource
+        range: SourceGlob
+        inlined: true
+        inlined_as_list: true
+      source_multi_glob:
+        name: source_multi_glob
+        description: A glob class for finding files in the source directory (with
+          multiple globs).
+        from_schema: cdp-ingestion-config
+        alias: source_multi_glob
+        owner: ReferencedSource
+        domain_of:
+        - StandardSource
+        range: SourceMultiGlob
+        inlined: true
+        inlined_as_list: true
+      literal:
+        name: literal
+        description: A literal class with a value attribute.
+        from_schema: cdp-ingestion-config
+        alias: literal
+        owner: ReferencedSource
+        domain_of:
+        - StandardSource
+        - DatasetKeyPhotoSource
+        - DepositionKeyPhotoSource
+        - VoxelSpacingSource
+        range: StandardLiteral
+        inlined: true
+        inlined_as_list: true
+      exclude:
+        name: exclude
+        description: Exclude files from the source that match (regexes).
+        from_schema: cdp-ingestion-config
+        alias: exclude
+        owner: ReferencedSource
+        domain_of:
+        - DefaultSource
+        - AlignmentParentFilters
+        - AnnotationParentFilters
+        - CollectionMetadataParentFilters
+        - DatasetParentFilters
+        - DatasetKeyPhotoParentFilters
+        - DepositionKeyPhotoParentFilters
+        - FrameParentFilters
+        - GainParentFilters
+        - KeyImageParentFilters
+        - RawTiltParentFilters
+        - RunParentFilters
+        - TiltSeriesParentFilters
+        - TomogramParentFilters
+        - VoxelSpacingParentFilters
+        range: string
+        multivalued: true
         inlined: true
         inlined_as_list: true
   AlignmentEntity:
@@ -4455,7 +4604,7 @@ classes:
     name: TiltSeriesSource
     description: A tilt series source.
     from_schema: cdp-ingestion-config
-    is_a: StandardSource
+    is_a: ReferencedSource
     attributes:
       parent_filters:
         name: parent_filters
@@ -4479,6 +4628,18 @@ classes:
         - TomogramSource
         - VoxelSpacingSource
         range: TiltSeriesParentFilters
+        inlined: true
+        inlined_as_list: true
+      destination_filter:
+        name: destination_filter
+        description: A finder class for to filter destination metadata by certain
+          criteria.
+        from_schema: cdp-ingestion-config
+        alias: destination_filter
+        owner: TiltSeriesSource
+        domain_of:
+        - ReferencedSource
+        range: DestinationMetadataFilter
         inlined: true
         inlined_as_list: true
       destination_glob:
@@ -4747,7 +4908,7 @@ classes:
     name: TomogramSource
     description: A tomogram source.
     from_schema: cdp-ingestion-config
-    is_a: StandardSource
+    is_a: ReferencedSource
     attributes:
       parent_filters:
         name: parent_filters
@@ -4771,6 +4932,18 @@ classes:
         - TomogramSource
         - VoxelSpacingSource
         range: TomogramParentFilters
+        inlined: true
+        inlined_as_list: true
+      destination_filter:
+        name: destination_filter
+        description: A finder class for to filter destination metadata by certain
+          criteria.
+        from_schema: cdp-ingestion-config
+        alias: destination_filter
+        owner: TomogramSource
+        domain_of:
+        - ReferencedSource
+        range: DestinationMetadataFilter
         inlined: true
         inlined_as_list: true
       destination_glob:
@@ -5289,6 +5462,7 @@ classes:
         domain_of:
         - StandardLiteral
         - KeyPhotoLiteral
+        - DestinationMetadataFilterKeyPair
         - VoxelSpacingLiteral
         range: float
         required: true

@@ -20,10 +20,10 @@ from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
+from importers.utils import IMPORTERS
 from importers.voxel_spacing import VoxelSpacingImporter
 from mrcfile.mrcinterpreter import MrcInterpreter
 from mypy_boto3_s3 import S3Client
-from standardize_dirs import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
