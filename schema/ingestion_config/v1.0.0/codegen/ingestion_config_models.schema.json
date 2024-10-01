@@ -31,8 +31,8 @@
                     "description": "The format of the alignment.",
                     "pattern": "(^IMOD$)|(^ARETOMO3$)"
                 },
-                "is_canonical": {
-                    "description": "Whether the alignment is canonical.",
+                "is_portal_standard": {
+                    "description": "Whether the alignment is standardized for the portal.",
                     "type": [
                         "boolean",
                         "null"
@@ -56,7 +56,7 @@
                         "null"
                     ]
                 },
-                "volume_dimesion": {
+                "volume_dimension": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/AlignmentSize"

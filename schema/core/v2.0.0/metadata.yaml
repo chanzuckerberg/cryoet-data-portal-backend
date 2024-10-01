@@ -843,10 +843,10 @@ classes:
             - exact_cardinality: 4
             - exact_cardinality: 4
 #        ifabsent: "np.eye(4)" # TODO: comming soon from linkml https://linkml.io/linkml/schemas/arrays#representations
-      is_canonical:
-        description: Whether the alignment is canonical.
+      is_portal_standard:
+        description: Whether the alignment is standardized for the portal.
         range: boolean
-        ifabsent: true
+        ifabsent: false
       format:
         description: The format of the alignment.
         range: alignment_format_enum

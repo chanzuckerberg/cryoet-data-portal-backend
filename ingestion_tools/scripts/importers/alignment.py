@@ -154,7 +154,7 @@ class AlignmentImporter(BaseFileImporter):
                 [0, 0, 0, 1],
             ],
             "alignment_type": "GLOBAL",
-            "is_canonical": False,
+            "is_portal_standard": False,
             "volume_offset": {"x": 0, "y": 0, "z": 0},
             "tilt_offset": 0,
             "x_rotation_offset": 0,

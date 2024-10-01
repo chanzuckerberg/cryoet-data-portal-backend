@@ -1771,6 +1771,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
          'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1847,6 +1848,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
          'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1923,6 +1925,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
          'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -1998,6 +2001,7 @@ class AnnotationPointFile(AnnotationSourceFile):
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
          'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2059,6 +2063,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
          'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2124,6 +2129,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
          'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2190,6 +2196,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
          'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2267,6 +2274,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
          'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
                        'AnnotationPointFile',
@@ -2493,7 +2501,7 @@ class Alignment(ConfiguredBaseModel):
 
     alignment_type: Optional[AlignmentTypeEnum] = Field(None, description="""The type of alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'alignment_type', 'domain_of': ['Alignment']} })
     offset: Optional[AlignmentOffset] = Field(None, description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
-    volume_dimesion: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimesion', 'domain_of': ['Alignment']} })
+    volume_dimension: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimension', 'domain_of': ['Alignment']} })
     x_rotation_offset: Optional[Union[int, str]] = Field(0, description="""The x rotation offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['Alignment'],
@@ -2503,7 +2511,17 @@ class Alignment(ConfiguredBaseModel):
          'array': {'dimensions': [{'exact_cardinality': 4}, {'exact_cardinality': 4}],
                    'exact_number_dimensions': 2},
          'domain_of': ['Tomogram', 'Alignment']} })
-    is_canonical: Optional[bool] = Field(True, description="""Whether the alignment is canonical.""", json_schema_extra = { "linkml_meta": {'alias': 'is_canonical', 'domain_of': ['Alignment'], 'ifabsent': 'True'} })
+    is_portal_standard: Optional[bool] = Field(False, description="""Whether the alignment is standardized for the portal.""", json_schema_extra = { "linkml_meta": {'alias': 'is_portal_standard',
+         'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile'],
+         'ifabsent': 'False'} })
     format: AlignmentFormatEnum = Field(..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment']} })
 
     @field_validator('alignment_type')

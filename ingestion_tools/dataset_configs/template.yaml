@@ -1,4 +1,25 @@
 # Future TODO: Create example_config.yaml file to show how to use this template.
+alignments: OPTIONAL
+- metadata: OPTIONAL
+    alignment_type: OPTIONAL ENUM (LOCAL, GLOBAL)
+    format: OPTIONAL ENUM (IMOD, ARETOMO)
+    method_type: OPTIONAL ENUM (fiducial_based, patch_tracking, projection_matching)
+    is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
+    offset: OPTIONAL
+      x: REQUIRED, INTEGER
+      y: REQUIRED, INTEGER
+      z: REQUIRED, INTEGER
+    volume_dimension: OPTIONAL
+      x: REQUIRED, INTEGER
+      y: REQUIRED, INTEGER
+      z: REQUIRED, INTEGER
+    x_rotation_offset: OPTIONAL FLOAT (DEFAULT 0)
+    tilt_offset: OPTIONAL FLOAT (DEFAULT 0.0).
+    affine_transformation_matrix:  OPTIONAL 4x4 FLOAT MATRIX (DEFAULT 4x4 identity matrix)
+        - - REQUIRED, FLOAT
+          - ... (4 ELEMENTS)
+        - ... (4 ELEMENTS)
+  sources: REQUIRED
 annotations: OPTIONAL
 - metadata: REQUIRED
     confidence: OPTIONAL

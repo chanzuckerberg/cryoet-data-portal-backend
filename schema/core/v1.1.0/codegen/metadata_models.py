@@ -2811,6 +2811,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                 "alias": "is_portal_standard",
                 "domain_of": [
                     "AnnotationSourceFile",
+                    "Alignment",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -2963,6 +2964,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 "alias": "is_portal_standard",
                 "domain_of": [
                     "AnnotationSourceFile",
+                    "Alignment",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -3115,6 +3117,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 "alias": "is_portal_standard",
                 "domain_of": [
                     "AnnotationSourceFile",
+                    "Alignment",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -3268,6 +3271,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 "alias": "is_portal_standard",
                 "domain_of": [
                     "AnnotationSourceFile",
+                    "Alignment",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -3380,6 +3384,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                 "alias": "is_portal_standard",
                 "domain_of": [
                     "AnnotationSourceFile",
+                    "Alignment",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -3504,6 +3509,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                 "alias": "is_portal_standard",
                 "domain_of": [
                     "AnnotationSourceFile",
+                    "Alignment",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -3629,6 +3635,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                 "alias": "is_portal_standard",
                 "domain_of": [
                     "AnnotationSourceFile",
+                    "Alignment",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -3775,6 +3782,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                 "alias": "is_portal_standard",
                 "domain_of": [
                     "AnnotationSourceFile",
+                    "Alignment",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -4141,10 +4149,10 @@ class Alignment(ConfiguredBaseModel):
         description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""",
         json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram", "Alignment"]}},
     )
-    volume_dimesion: Optional[AlignmentSize] = Field(
+    volume_dimension: Optional[AlignmentSize] = Field(
         None,
         description="""The size of an alignment in voxels in each dimension.""",
-        json_schema_extra={"linkml_meta": {"alias": "volume_dimesion", "domain_of": ["Alignment"]}},
+        json_schema_extra={"linkml_meta": {"alias": "volume_dimension", "domain_of": ["Alignment"]}},
     )
     x_rotation_offset: Optional[Union[int, str]] = Field(
         0,
@@ -4181,10 +4189,26 @@ class Alignment(ConfiguredBaseModel):
             }
         },
     )
-    is_canonical: Optional[bool] = Field(
-        True,
-        description="""Whether the alignment is canonical.""",
-        json_schema_extra={"linkml_meta": {"alias": "is_canonical", "domain_of": ["Alignment"], "ifabsent": "True"}},
+    is_portal_standard: Optional[bool] = Field(
+        False,
+        description="""Whether the alignment is standardized for the portal.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "is_portal_standard",
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "Alignment",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "ifabsent": "False",
+            }
+        },
     )
     format: AlignmentFormatEnum = Field(
         ...,
