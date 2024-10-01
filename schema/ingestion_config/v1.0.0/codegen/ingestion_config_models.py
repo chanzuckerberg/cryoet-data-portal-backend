@@ -423,6 +423,18 @@ class AlignmentFormatEnum(str, Enum):
     ARETOMO3 = "ARETOMO3"
 
 
+class AlignmentMethodTypeEnum(str, Enum):
+    """
+    Used to determine how the alignment was done.
+    """
+    # alignment was done based on fiducial markers
+    fiducial_based = "fiducial_based"
+    # alignment was done based on patch tracking
+    patch_tracking = "patch_tracking"
+    # alignment was done based on image projection
+    projection_matching = "projection_matching"
+
+
 class AnnotationMethodTypeEnum(str, Enum):
     """
     Describes how the annotations were generated.
@@ -2315,7 +2327,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
          'exact_mappings': ['cdp-common:annotation_is_curator_recommended'],
          'ifabsent': 'False'} })
     method_type: AnnotationMethodTypeEnum = Field(..., description="""Classification of the annotation method based on supervision.""", json_schema_extra = { "linkml_meta": {'alias': 'method_type',
-         'domain_of': ['Annotation'],
+         'domain_of': ['Annotation', 'Alignment'],
          'exact_mappings': ['cdp-common:annotation_method_type']} })
     method_links: Optional[List[AnnotationMethodLinks]] = Field(None, description="""A set of links to models, source code, documentation, etc referenced by annotation the method""", json_schema_extra = { "linkml_meta": {'alias': 'method_links', 'domain_of': ['Annotation']} })
     object_count: Optional[int] = Field(None, description="""Number of objects identified""", json_schema_extra = { "linkml_meta": {'alias': 'object_count',
@@ -2523,6 +2535,7 @@ class Alignment(ConfiguredBaseModel):
                        'AnnotationTriangularMeshGroupFile'],
          'ifabsent': 'False'} })
     format: AlignmentFormatEnum = Field(..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment']} })
+    method_type: Optional[AlignmentMethodTypeEnum] = Field(None, description="""The alignment method type.""", json_schema_extra = { "linkml_meta": {'alias': 'method_type', 'domain_of': ['Annotation', 'Alignment']} })
 
     @field_validator('alignment_type')
     def pattern_alignment_type(cls, v):
@@ -2558,6 +2571,18 @@ class Alignment(ConfiguredBaseModel):
         elif isinstance(v,str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid format format: {v}")
+        return v
+
+    @field_validator('method_type')
+    def pattern_method_type(cls, v):
+        pattern=re.compile(r"(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid method_type format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid method_type format: {v}")
         return v
 
 

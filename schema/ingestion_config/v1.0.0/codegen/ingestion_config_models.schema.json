@@ -38,6 +38,11 @@
                         "null"
                     ]
                 },
+                "method_type": {
+                    "$ref": "#/$defs/AlignmentMethodTypeEnum",
+                    "description": "The alignment method type.",
+                    "pattern": "(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)"
+                },
                 "offset": {
                     "anyOf": [
                         {
@@ -121,6 +126,16 @@
                 "ARETOMO3"
             ],
             "title": "AlignmentFormatEnum",
+            "type": "string"
+        },
+        "AlignmentMethodTypeEnum": {
+            "description": "Used to determine how the alignment was done.",
+            "enum": [
+                "fiducial_based",
+                "patch_tracking",
+                "projection_matching"
+            ],
+            "title": "AlignmentMethodTypeEnum",
             "type": "string"
         },
         "AlignmentOffset": {

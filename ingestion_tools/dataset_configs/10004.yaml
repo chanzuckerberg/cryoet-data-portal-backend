@@ -1,6 +1,7 @@
 alignments:
 - metadata:
     format: IMOD
+    method_type: patch_tracking
   sources:
   - source_multi_glob:
       list_globs:
@@ -69,7 +70,6 @@ annotations:
       columns: xyz
       file_format: csv_with_header
       glob_string: '{run_name}/annoRibosome_bin4.txt'
-
       is_visualization_default: true
 collection_metadata:
 - sources:

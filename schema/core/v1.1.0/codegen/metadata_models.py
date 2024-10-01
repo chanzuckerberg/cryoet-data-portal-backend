@@ -509,6 +509,19 @@ class AlignmentFormatEnum(str, Enum):
     ARETOMO3 = "ARETOMO3"
 
 
+class AlignmentMethodTypeEnum(str, Enum):
+    """
+    Used to determine how the alignment was done.
+    """
+
+    # alignment was done based on fiducial markers
+    fiducial_based = "fiducial_based"
+    # alignment was done based on patch tracking
+    patch_tracking = "patch_tracking"
+    # alignment was done based on image projection
+    projection_matching = "projection_matching"
+
+
 class AnnotationMethodTypeEnum(str, Enum):
     """
     Describes how the annotations were generated.
@@ -3889,7 +3902,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "method_type",
-                "domain_of": ["Annotation"],
+                "domain_of": ["Annotation", "Alignment"],
                 "exact_mappings": ["cdp-common:annotation_method_type"],
             }
         },
@@ -4215,6 +4228,11 @@ class Alignment(ConfiguredBaseModel):
         description="""The format of the alignment.""",
         json_schema_extra={"linkml_meta": {"alias": "format", "domain_of": ["Alignment"]}},
     )
+    method_type: Optional[AlignmentMethodTypeEnum] = Field(
+        None,
+        description="""The alignment method type.""",
+        json_schema_extra={"linkml_meta": {"alias": "method_type", "domain_of": ["Annotation", "Alignment"]}},
+    )
 
     @field_validator("alignment_type")
     def pattern_alignment_type(cls, v):
@@ -4250,6 +4268,18 @@ class Alignment(ConfiguredBaseModel):
         elif isinstance(v, str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid format format: {v}")
+        return v
+
+    @field_validator("method_type")
+    def pattern_method_type(cls, v):
+        pattern = re.compile(r"(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid method_type format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid method_type format: {v}")
         return v
 
 

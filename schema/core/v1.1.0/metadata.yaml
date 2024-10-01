@@ -847,6 +847,9 @@ classes:
         description: The format of the alignment.
         range: alignment_format_enum
         required: true
+      method_type:
+        description: The alignment method type.
+        range: alignment_method_type_enum
   # ============================================================================
 
   # ============================================================================

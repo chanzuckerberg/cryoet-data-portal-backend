@@ -1,6 +1,7 @@
 alignments:
 - metadata:
     format: IMOD
+    method_type: fiducial_based
   sources:
   - source_multi_glob:
       list_globs:
@@ -54,7 +55,6 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: subtomo/hdcr/hdcr_tm_bin2_motl_12.star
-
       is_visualization_default: true
       order: xyz
 - metadata:
@@ -76,7 +76,6 @@ annotations:
       file_format: stopgap_star
       filter_value: '{run_name}'
       glob_string: subtomo/ribo/ribo_tm_bin1_motl_12.star
-
       is_visualization_default: true
       order: xyz
 collection_metadata:

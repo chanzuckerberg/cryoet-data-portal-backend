@@ -397,6 +397,20 @@ enums:
         text: ARETOMO3
         description: ARETOMO3 was used for the alignment. Supported file formats are
           (aln, txt, csv)
+  alignment_method_type_enum:
+    name: alignment_method_type_enum
+    description: Used to determine how the alignment was done.
+    from_schema: metadata
+    permissible_values:
+      fiducial_based:
+        text: fiducial_based
+        description: alignment was done based on fiducial markers
+      patch_tracking:
+        text: patch_tracking
+        description: alignment was done based on patch tracking
+      projection_matching:
+        text: projection_matching
+        description: alignment was done based on image projection
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -3847,6 +3861,7 @@ classes:
         owner: Annotation
         domain_of:
         - Annotation
+        - Alignment
         range: annotation_method_type_enum
         required: true
         inlined: true
@@ -4180,6 +4195,19 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^IMOD$)|(^ARETOMO3$)
+      method_type:
+        name: method_type
+        description: The alignment method type.
+        from_schema: metadata
+        alias: method_type
+        owner: Alignment
+        domain_of:
+        - Annotation
+        - Alignment
+        range: alignment_method_type_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)
   Frame:
     name: Frame
     description: A frame entity.

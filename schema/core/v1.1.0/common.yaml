@@ -827,6 +827,16 @@ enums:
       ARETOMO3:
         description: ARETOMO3 was used for the alignment. Supported file formats are (aln, txt, csv)
 
+  alignment_method_type_enum:
+    description: Used to determine how the alignment was done.
+    permissible_values:
+      fiducial_based:
+        description: alignment was done based on fiducial markers
+      patch_tracking:
+        description: alignment was done based on patch tracking
+      projection_matching:
+        description: alignment was done based on image projection
+
   annotation_method_type_enum:
     description: Describes how the annotations were generated.
     permissible_values:
