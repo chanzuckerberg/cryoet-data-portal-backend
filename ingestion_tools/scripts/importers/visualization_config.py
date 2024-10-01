@@ -24,7 +24,7 @@ class VisualizationConfigImporter(BaseImporter):
     finder_factory = DefaultImporterFactory
     has_metadata = False
     dir_path = (
-        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute/"
+        "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute/"
         "{{identifier}}-neuroglancer_config.json"
     )
 

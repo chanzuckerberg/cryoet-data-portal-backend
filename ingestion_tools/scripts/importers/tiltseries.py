@@ -51,9 +51,12 @@ class TiltSeriesImporter(VolumeImporter):
         metadata: dict[str, Any],
         name: str,
         path: str,
+        allow_imports: bool,
         parents: dict[str, Any],
     ):
-        super().__init__(config=config, metadata=metadata, name=name, path=path, parents=parents)
+        super().__init__(
+            config=config, metadata=metadata, name=name, path=path, parents=parents, allow_imports=allow_imports,
+        )
         self.identifier = TiltSeriesIdentifierHelper.get_identifier(config, self.get_base_metadata(), self.parents)
 
     def get_metadata_path(self) -> str:

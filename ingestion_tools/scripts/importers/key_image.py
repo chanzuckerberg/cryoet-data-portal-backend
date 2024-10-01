@@ -23,7 +23,7 @@ class KeyImageImporter(BaseImporter):
         "snapshot": 512,  # small detail expand
         "expanded": 1024,  # large detail expand
     }
-    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Images"
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Images"
 
     def get_metadata(self) -> dict[str, str]:
         return {

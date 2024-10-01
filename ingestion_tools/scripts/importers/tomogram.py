@@ -48,8 +48,8 @@ class TomogramImporter(VolumeImporter):
     finder_factory = DefaultImporterFactory
     cached_find_results: dict[str, Any] = {}
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram"
-    metadata_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/{{identifier}}-tomogram_metadata.json"
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Tomograms"
+    metadata_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Tomograms/{{identifier}}-tomogram_metadata.json"
 
     def __init__(
         self,
@@ -57,9 +57,12 @@ class TomogramImporter(VolumeImporter):
         metadata: dict[str, Any],
         name: str,
         path: str,
+        allow_imports: bool,
         parents: dict[str, Any],
     ):
-        super().__init__(config=config, metadata=metadata, name=name, path=path, parents=parents)
+        super().__init__(
+            config=config, metadata=metadata, name=name, path=path, parents=parents, allow_imports=allow_imports,
+        )
         self.alignment_metadata_path = self.get_alignment_metadata_path()
         self.identifier = TomogramIdentifierHelper.get_identifier(
             config,
