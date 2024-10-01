@@ -124,7 +124,9 @@ Supported WHERE clause attributes
 @strawberry.input
 class PerSectionParametersWhereClause(TypedDict):
     frame: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    frame_id: Optional[IntComparators] | None
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
+    tiltseries_id: Optional[IntComparators] | None
     z_index: Optional[IntComparators] | None
     defocus: Optional[FloatComparators] | None
     astigmatism: Optional[FloatComparators] | None

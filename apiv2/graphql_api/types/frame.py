@@ -173,6 +173,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class FrameWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    deposition_id: Optional[IntComparators] | None
     per_section_parameters: (
         Optional[
             Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
@@ -180,6 +181,7 @@ class FrameWhereClause(TypedDict):
         | None
     )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    run_id: Optional[IntComparators] | None
     raw_angle: Optional[FloatComparators] | None
     acquisition_order: Optional[IntComparators] | None
     dose: Optional[FloatComparators] | None

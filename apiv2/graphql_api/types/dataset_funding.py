@@ -99,6 +99,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class DatasetFundingWhereClause(TypedDict):
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
+    dataset_id: Optional[IntComparators] | None
     funding_agency_name: Optional[StrComparators] | None
     grant_id: Optional[StrComparators] | None
     id: Optional[IntComparators] | None

@@ -208,17 +208,21 @@ Supported WHERE clause attributes
 @strawberry.input
 class TomogramWhereClause(TypedDict):
     alignment: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    alignment_id: Optional[IntComparators] | None
     authors: (
         Optional[Annotated["TomogramAuthorWhereClause", strawberry.lazy("graphql_api.types.tomogram_author")]] | None
     )
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    deposition_id: Optional[IntComparators] | None
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    run_id: Optional[IntComparators] | None
     tomogram_voxel_spacing: (
         Optional[
             Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
         ]
         | None
     )
+    tomogram_voxel_spacing_id: Optional[IntComparators] | None
     name: Optional[StrComparators] | None
     size_x: Optional[IntComparators] | None
     size_y: Optional[IntComparators] | None
