@@ -102,6 +102,7 @@ Supported WHERE clause attributes
 @strawberry.input
 class DepositionTypeWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    deposition_id: Optional[IntComparators] | None
     type: Optional[EnumComparators[deposition_types_enum]] | None
     id: Optional[IntComparators] | None
 

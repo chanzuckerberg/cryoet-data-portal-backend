@@ -154,15 +154,18 @@ Supported WHERE clause attributes
 @strawberry.input
 class AnnotationFileWhereClause(TypedDict):
     alignment: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    alignment_id: Optional[IntComparators] | None
     annotation_shape: (
         Optional[Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
     )
+    annotation_shape_id: Optional[IntComparators] | None
     tomogram_voxel_spacing: (
         Optional[
             Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
         ]
         | None
     )
+    tomogram_voxel_spacing_id: Optional[IntComparators] | None
     format: Optional[StrComparators] | None
     s3_path: Optional[StrComparators] | None
     https_path: Optional[StrComparators] | None
