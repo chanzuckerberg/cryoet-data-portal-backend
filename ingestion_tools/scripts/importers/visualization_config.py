@@ -23,8 +23,15 @@ class VisualizationConfigImporter(BaseImporter):
     plural_key = "viz_config"
     finder_factory = DefaultImporterFactory
     has_metadata = False
+    dir_path = (
+        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/"
+        "neuroglancer_config.json"
+    )
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         if not self.get_tomogram().metadata.get("is_visualization_default"):
             print("Skipping import for tomogram that is not configured for default_visualization")
             return

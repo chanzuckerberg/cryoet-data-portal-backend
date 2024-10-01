@@ -2,8 +2,8 @@ import pytest
 from importers.dataset import DatasetImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
+from importers.utils import IMPORTERS
 from importers.voxel_spacing import VoxelSpacingImporter
-from standardize_dirs import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi

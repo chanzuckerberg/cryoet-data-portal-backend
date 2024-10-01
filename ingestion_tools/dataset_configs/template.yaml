@@ -250,6 +250,11 @@ tiltseries: OPTIONAL
     total_flux: REQUIRED, FLOAT (POSITIVE) (e^-/Å^2)
   sources: REQUIRED
   - source_glob: SEE dataset.sources.source_glob
+  - destination_filter:
+      filters: REQUIRED
+      - key: REQUIRED, LIST (STRING)
+        value: REQUIRED, ANY (STRING, INTEGER, FLOAT, BOOLEAN)
+    parent_filters: SEE runs.sources.parent_filters
 tomograms: OPTIONAL
 - metadata: OPTIONAL
     affine_transformation_matrix: OPTIONAL 4x4 FLOAT MATRIX (DEFAULT 4x4 identity matrix)

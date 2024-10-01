@@ -221,37 +221,11 @@ class DepositionImportConfig:
         return self.resolve_output_path(key, obj)
 
     def resolve_output_path(self, key: str, obj: BaseImporter) -> str:
-        paths = {
-            "voxel_spacing": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}",
-            "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
-            "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Images",
-            "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
-            "gain": "{dataset_name}/{run_name}/Gains/",
-            "frame": "{dataset_name}/{run_name}/Frames",
-            "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
-            "collection_metadata": "{dataset_name}/{run_name}/Frames",
-            "alignment": "{dataset_name}/{run_name}/Alignments",
-            "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
-            "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
-            "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
-            "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/{{identifier}}-tomogram_metadata.json",
-            "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/{{identifier}}-tiltseries_metadata.json",
-            "dataset_metadata": "{dataset_name}/dataset_metadata.json",
-            "run": "{dataset_name}/{run_name}",
-            "dataset": "{dataset_name}",
-            "dataset_keyphoto": "{dataset_name}/Images",
-            "viz_config": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute/{{identifier}}-neuroglancer_config.json",
-            "annotation_viz": (
-                "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute"
-            ),
-            "deposition": "depositions_metadata/{deposition_name}",
-            "deposition_metadata": "depositions_metadata/{deposition_name}/deposition_metadata.json",
-            "deposition_keyphoto": "depositions_metadata/{deposition_name}/Images",
-        }
+        from importers.utils import get_importer_output_path
 
         output_prefix = self.output_prefix
         glob_vars = obj.get_glob_vars()
-        path = os.path.join(output_prefix, paths[key].format(**glob_vars))
+        path = os.path.join(output_prefix, get_importer_output_path(key).format(**glob_vars))
         if ".json" in path or ".mrc" in path or ".zarr" in path:
             self.fs.makedirs(os.path.dirname(path))
         else:

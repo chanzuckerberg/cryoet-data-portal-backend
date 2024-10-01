@@ -19,7 +19,7 @@ from importers.db.dataset import DatasetDBImporter
 from importers.db.deposition import DepositionDBImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
-from standardize_dirs import IMPORTERS
+from importers.utils import IMPORTERS
 from standardize_dirs import common_options as ingest_common_options
 
 from common.config import DepositionImportConfig
