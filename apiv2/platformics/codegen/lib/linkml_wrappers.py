@@ -47,9 +47,7 @@ class FieldWrapper:
 
     @cached_property
     def type_designator(self) -> bool:
-        if self.wrapped_field.designates_type:
-            return True
-        return False
+        return bool(self.wrapped_field.designates_type)
 
     @cached_property
     def multivalued(self) -> str:
@@ -155,9 +153,7 @@ class FieldWrapper:
     @cached_property
     def readonly(self) -> bool:
         is_readonly = self.wrapped_field.readonly
-        if is_readonly:
-            return True
-        return False
+        return bool(is_readonly)
 
     # Whether these fields should be available to change via an `Update` mutation
     # All fields are mutable by default, so long as they're not marked as readonly
@@ -199,16 +195,12 @@ class FieldWrapper:
     @cached_property
     def is_enum(self) -> bool:
         field = self.view.get_element(self.wrapped_field.range)
-        if isinstance(field, EnumDefinition):
-            return True
-        return False
+        return bool(isinstance(field, EnumDefinition))
 
     @cached_property
     def is_entity(self) -> bool:
         field = self.view.get_element(self.wrapped_field.range)
-        if isinstance(field, ClassDefinition):
-            return True
-        return False
+        return bool(isinstance(field, ClassDefinition))
 
     @property
     def related_class(self) -> "EntityWrapper":
