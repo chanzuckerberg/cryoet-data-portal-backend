@@ -176,7 +176,7 @@ def import_annotation_metadata(
 def test_import_annotation_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-        voxel_spacing_importer_s3,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
@@ -207,7 +207,7 @@ def test_import_annotation_metadata(
 def test_import_annotation_metadata_with_multiple_sources(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-        voxel_spacing_importer_s3,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
@@ -281,7 +281,7 @@ def test_import_annotation_metadata_with_multiple_sources(
 def test_import_annotation_metadata_glob_strings(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-        voxel_spacing_importer_s3,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
@@ -409,7 +409,7 @@ ingest_points_test_cases = [
 def test_ingest_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-        voxel_spacing_importer_s3,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -913,7 +913,7 @@ ingest_oriented_points_test_cases = [
 def test_ingest_oriented_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-        voxel_spacing_importer_s3,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -1028,7 +1028,7 @@ ingest_instance_points_test_cases = [
 def test_ingest_instance_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-        voxel_spacing_importer_s3,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -1154,7 +1154,7 @@ ingest_mask_test_cases = [
 def test_ingest_segmentationmask(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-        voxel_spacing_importer_s3,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -1209,7 +1209,7 @@ def test_ingest_segmentationmask(
 def test_ingest_triangular_mesh(
     glob_string,
     file_format,
-        voxel_spacing_importer_local,
+    voxel_spacing_importer_local,
     deposition_config_local: DepositionImportConfig,
     local_test_data_dir: str,
 ):
@@ -1274,7 +1274,7 @@ def test_ingest_triangular_mesh(
 
 
 def test_ingest_triangular_mesh_hff(
-        voxel_spacing_importer_local,
+    voxel_spacing_importer_local,
     deposition_config_local: DepositionImportConfig,
     local_test_data_dir: str,
 ):
