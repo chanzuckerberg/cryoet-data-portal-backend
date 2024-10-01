@@ -19,7 +19,7 @@ export docker_compose:=docker compose
 # just hangs on OSX trying to launch itself in a container if it can't figure out
 # which one to use, so it's *VERY* important to include the --rm flag when invoking
 # docker compose run.
-export docker_compose_run:=docker compose run --rm
+export docker_compose_run:=docker compose run --rm --no-deps
 
 ### HELPFUL #################################################
 .PHONY: help
