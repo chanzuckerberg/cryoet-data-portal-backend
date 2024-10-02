@@ -654,7 +654,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         dataset_config_file_path = os.path.join(output_dir, f"{dataset_id}.yaml")
 
         # Update the config formatting to a newer version
-        updated_dataset_config = update_config(dataset_config)
+        updated_dataset_config = upgrade_config(dataset_config)
         # Remove empty tiltseries when all tiltseries associated to the dataset have no metadata
         if all(not ts.get("metadata") for ts in updated_dataset_config.get("tiltseries", [])):
             updated_dataset_config.pop("tiltseries")
