@@ -31,12 +31,17 @@
                     "description": "The format of the alignment.",
                     "pattern": "(^IMOD$)|(^ARETOMO3$)"
                 },
-                "is_canonical": {
-                    "description": "Whether the alignment is canonical.",
+                "is_portal_standard": {
+                    "description": "Whether the alignment is standardized for the portal.",
                     "type": [
                         "boolean",
                         "null"
                     ]
+                },
+                "method_type": {
+                    "$ref": "#/$defs/AlignmentMethodTypeEnum",
+                    "description": "The alignment method type.",
+                    "pattern": "(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)"
                 },
                 "offset": {
                     "anyOf": [
@@ -56,7 +61,7 @@
                         "null"
                     ]
                 },
-                "volume_dimesion": {
+                "volume_dimension": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/AlignmentSize"
@@ -121,6 +126,17 @@
                 "ARETOMO3"
             ],
             "title": "AlignmentFormatEnum",
+            "type": "string"
+        },
+        "AlignmentMethodTypeEnum": {
+            "description": "Used to determine how the alignment was done.",
+            "enum": [
+                "fiducial_based",
+                "patch_tracking",
+                "projection_matching",
+                "undefined"
+            ],
+            "title": "AlignmentMethodTypeEnum",
             "type": "string"
         },
         "AlignmentOffset": {

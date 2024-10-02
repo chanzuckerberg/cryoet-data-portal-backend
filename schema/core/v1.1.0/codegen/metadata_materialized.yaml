@@ -397,6 +397,23 @@ enums:
         text: ARETOMO3
         description: ARETOMO3 was used for the alignment. Supported file formats are
           (aln, txt, csv)
+  alignment_method_type_enum:
+    name: alignment_method_type_enum
+    description: Used to determine how the alignment was done.
+    from_schema: metadata
+    permissible_values:
+      fiducial_based:
+        text: fiducial_based
+        description: alignment was done based on fiducial markers
+      patch_tracking:
+        text: patch_tracking
+        description: alignment was done based on patch tracking
+      projection_matching:
+        text: projection_matching
+        description: alignment was done based on image projection
+      undefined:
+        text: undefined
+        description: how alignment was done is unknown
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -2914,6 +2931,7 @@ classes:
         owner: AnnotationSourceFile
         domain_of:
         - AnnotationSourceFile
+        - Alignment
         range: boolean
         required: false
         inlined: true
@@ -3044,6 +3062,7 @@ classes:
         owner: AnnotationOrientedPointFile
         domain_of:
         - AnnotationSourceFile
+        - Alignment
         range: boolean
         required: false
         inlined: true
@@ -3174,6 +3193,7 @@ classes:
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationSourceFile
+        - Alignment
         range: boolean
         required: false
         inlined: true
@@ -3303,6 +3323,7 @@ classes:
         owner: AnnotationPointFile
         domain_of:
         - AnnotationSourceFile
+        - Alignment
         range: boolean
         required: false
         inlined: true
@@ -3387,6 +3408,7 @@ classes:
         owner: AnnotationSegmentationMaskFile
         domain_of:
         - AnnotationSourceFile
+        - Alignment
         range: boolean
         required: false
         inlined: true
@@ -3485,6 +3507,7 @@ classes:
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
         - AnnotationSourceFile
+        - Alignment
         range: boolean
         required: false
         inlined: true
@@ -3585,6 +3608,7 @@ classes:
         owner: AnnotationTriangularMeshFile
         domain_of:
         - AnnotationSourceFile
+        - Alignment
         range: boolean
         required: false
         inlined: true
@@ -3705,6 +3729,7 @@ classes:
         owner: AnnotationTriangularMeshGroupFile
         domain_of:
         - AnnotationSourceFile
+        - Alignment
         range: boolean
         required: false
         inlined: true
@@ -3839,6 +3864,7 @@ classes:
         owner: Annotation
         domain_of:
         - Annotation
+        - Alignment
         range: annotation_method_type_enum
         required: true
         inlined: true
@@ -4088,11 +4114,11 @@ classes:
         range: AlignmentOffset
         inlined: true
         inlined_as_list: true
-      volume_dimesion:
-        name: volume_dimesion
+      volume_dimension:
+        name: volume_dimension
         description: The size of an alignment in voxels in each dimension.
         from_schema: metadata
-        alias: volume_dimesion
+        alias: volume_dimension
         owner: Alignment
         domain_of:
         - Alignment
@@ -4146,14 +4172,15 @@ classes:
         range: float
         inlined: true
         inlined_as_list: true
-      is_canonical:
-        name: is_canonical
-        description: Whether the alignment is canonical.
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the alignment is standardized for the portal.
         from_schema: metadata
-        ifabsent: 'True'
-        alias: is_canonical
+        ifabsent: 'False'
+        alias: is_portal_standard
         owner: Alignment
         domain_of:
+        - AnnotationSourceFile
         - Alignment
         range: boolean
         inlined: true
@@ -4171,6 +4198,19 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^IMOD$)|(^ARETOMO3$)
+      method_type:
+        name: method_type
+        description: The alignment method type.
+        from_schema: metadata
+        alias: method_type
+        owner: Alignment
+        domain_of:
+        - Annotation
+        - Alignment
+        range: alignment_method_type_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)
   Frame:
     name: Frame
     description: A frame entity.

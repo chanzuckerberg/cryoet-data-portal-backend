@@ -1,6 +1,7 @@
 alignments:
 - metadata:
     format: IMOD
+    method_type: patch_tracking
   sources:
   - source_multi_glob:
       list_globs:
@@ -8,6 +9,7 @@ alignments:
       - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf
 - metadata:
     format: ARETOMO3
+    method_type: patch_tracking
   sources:
   - source_multi_glob:
       list_globs:

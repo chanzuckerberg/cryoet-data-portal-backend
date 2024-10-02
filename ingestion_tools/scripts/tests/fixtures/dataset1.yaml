@@ -49,7 +49,7 @@ alignments:
       - 5
     alignment_type: LOCAL
     format: IMOD
-    is_canonical: true
+    is_portal_standard: true
     tilt_offset: -0.3
     volume_offset:
       x: -1

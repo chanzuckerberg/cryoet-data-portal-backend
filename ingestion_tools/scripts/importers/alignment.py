@@ -113,6 +113,7 @@ class AlignmentImporter(BaseFileImporter):
             "tilt_path": self.converter.get_tilt_path(),
             "tiltx_path": self.converter.get_tiltx_path(),
             "tiltseries_path": self.get_tiltseries_path(),
+            "files": [self.get_dest_filename(path) for path in self.file_paths.values()],
         }
         if "volume_dimension" not in self.metadata:
             extra_metadata["volume_dimension"] = self.get_tomogram_volume_dimension()
@@ -144,6 +145,11 @@ class AlignmentImporter(BaseFileImporter):
                 return tomogram
         return None
 
+    def get_tiltseries_path(self) -> str | None:
+        for ts in TiltSeriesImporter.finder(self.config, **self.parents):
+            return ts.get_metadata_path()
+        return None
+
     @classmethod
     def get_default_config(cls) -> list[dict]:
         return [{"metadata": cls.get_default_metadata(), "sources": [{"literal": {"value": ["default"]}}]}]
@@ -158,13 +164,14 @@ class AlignmentImporter(BaseFileImporter):
                 [0, 0, 0, 1],
             ],
             "alignment_type": "GLOBAL",
-            "is_canonical": False,
+            "is_portal_standard": False,
             "volume_offset": {"x": 0, "y": 0, "z": 0},
             "tilt_offset": 0,
             "x_rotation_offset": 0,
+            "method_type": "undefined",
         }
 
-    def get_tiltseries_path(self) -> str | None:
-        for ts in TiltSeriesImporter.finder(self.config, **self.parents):
-            return ts.get_metadata_path()
-        return None
+    @classmethod
+    def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
+        paths = {filename: filename for filename in metadata.get("files", [])}
+        return None, None, paths
