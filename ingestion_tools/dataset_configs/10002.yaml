@@ -18,6 +18,7 @@ alignments:
       - 625
       - 1
     format: IMOD
+    method_type: patch_tracking
   sources:
   - source_multi_glob:
       list_globs:
@@ -75,7 +76,6 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: labels/{run_name}_actin_ground_truth.mrc
-
       is_visualization_default: true
 - metadata:
     annotation_method: 2D CNN + 3D CNN hyperparameter tuning
@@ -99,7 +99,6 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: prediction/{run_name}_*.mrc
-
       is_visualization_default: false
 collection_metadata:
 - sources:

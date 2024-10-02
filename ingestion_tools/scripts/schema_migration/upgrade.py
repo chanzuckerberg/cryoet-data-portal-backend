@@ -17,7 +17,9 @@ def upgrade_config(data: dict[str, Any]) -> dict[str, Any]:
         {
             # current_version: (update_function, next_version)
             "0.0.0": (migrate_v1_0_0.upgrade, "1.0.0"),
-            "1.0.0": (migrate_v1_1_0.upgrade, "1.1.0")})
+            "1.0.0": (migrate_v1_1_0.upgrade, "1.1.0"),
+        },
+    )
 
     if not data.get("version"):
         logger.warning("No version found in config file. Assuming version 0.0.0.")
@@ -34,7 +36,7 @@ def upgrade_config(data: dict[str, Any]) -> dict[str, Any]:
 
 
 def has_changes(file, config):
-    with open(file, 'r') as file:
+    with open(file, "r") as file:
         old_config = yaml.safe_load(file)
     return json.dumps(old_config) != json.dumps(config)
 

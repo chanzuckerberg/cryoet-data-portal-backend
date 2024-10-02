@@ -126,7 +126,7 @@ def test_alignment_import_item(
         "alignment_path": f"{test_output_bucket}/{prefix}{id_prefix}-TS_run1.xf",
         "alignment_type": "LOCAL",
         "deposition_id": "10301",
-        "is_canonical": True,
+        "is_portal_standard": True,
         "per_section_alignment_parameters": [
             {
                 "z_index": 0,
@@ -189,7 +189,7 @@ def test_default_alignment_import_with_tomograms(
         "alignment_path": None,
         "alignment_type": "GLOBAL",
         "deposition_id": "10301",
-        "is_canonical": False,
+        "is_portal_standard": False,
         "per_section_alignment_parameters": [],
         "tilt_offset": 0,
         "tilt_path": None,
