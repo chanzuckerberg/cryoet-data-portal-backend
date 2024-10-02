@@ -10,6 +10,10 @@ prefixes:
     prefix_reference: https://w3id.org/linkml/
 default_prefix: cdp-dataset-config/
 types:
+  Array2dFloat:
+    uri: xsd:array
+    base: float
+    description: A 2D array of floats, e.g. [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
   string:
     name: string
     description: A character string
@@ -1722,10 +1726,7 @@ classes:
           descriptive_name: degrees
       in_plane_rotation:
         description: In-plane rotation of the projection in degrees
-        range: float
-        unit:
-          symbol: °
-          descriptive_name: degrees
+        range: Array2dFloat
       tilt_angle:
         name: tilt_angle
         description: Tilt angle of the projection in degrees
