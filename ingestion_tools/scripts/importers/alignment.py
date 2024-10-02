@@ -168,5 +168,5 @@ class AlignmentImporter(BaseFileImporter):
 
     @classmethod
     def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
-        paths = {filname: filname for filname in metadata.get("files", [])}
+        paths = {filename: filename for filename in metadata.get("files", [])}
         return None, None, paths
