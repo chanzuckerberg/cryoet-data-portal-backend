@@ -1,3 +1,4 @@
+import os.path
 from typing import TYPE_CHECKING
 
 from common.finders import DefaultImporterFactory
@@ -16,8 +17,13 @@ class TiltSeriesImporter(VolumeImporter):
     plural_key = "tiltseries"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+    dir_path = "{dataset_name}/{run_name}/TiltSeries"
+    metadata_path = "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json"
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         _ = self.scale_mrcfile(
             scale_z_axis=False,
             write_mrc=self.config.write_mrc,
@@ -34,6 +40,9 @@ class TiltSeriesImporter(VolumeImporter):
         return num_frames
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_ts_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()
         merge_data["frames_count"] = self.get_frames_count()
@@ -52,3 +61,9 @@ class TiltSeriesImporter(VolumeImporter):
         header.ispg = 0
         header.mz = 1
         header.cella.z = 1 * self.get_pixel_spacing()
+
+    @classmethod
+    def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
+        filename = metadata.get("omezarr_dir")
+        complete_path = os.path.join(os.path.dirname(path), filename)
+        return filename, complete_path, {filename: complete_path}

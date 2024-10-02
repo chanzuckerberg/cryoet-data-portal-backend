@@ -11,11 +11,16 @@ class DepositionImporter(BaseImporter):
     plural_key = "depositions"
     finder_factory = DefaultImporterFactory
     has_metadata = True
+    dir_path = "depositions_metadata/{deposition_name}"
+    metadata_path = "depositions_metadata/{deposition_name}/deposition_metadata.json"
 
     def import_item(self) -> None:
         pass
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         meta = DepositionMetadata(self.config.fs, self.name, self.get_base_metadata())
         extra_data = self.load_extra_metadata()
         if not self.get_base_metadata():

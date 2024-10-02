@@ -30,6 +30,9 @@ class BaseImporter:
     cached_find_results: dict[str, "BaseImporter"] = {}
     finder_factory: DepositionObjectImporterFactory | None = None
     parents: dict[str, "BaseImporter"]
+    has_metadata: bool = False
+    dir_path: str = None
+    metadata_path: str = None
 
     def __init__(
         self,
@@ -37,12 +40,16 @@ class BaseImporter:
         metadata: dict[str, Any],
         name: Optional[str] = None,
         path: Optional[str] = None,
+        allow_imports: bool = True,
         parents: Optional[dict[str, "BaseImporter"]] = None,
+        *args,
+        **kwargs,
     ):
         self.config = config
         self.metadata = metadata
         self.name = name
         self.path = path
+        self.allow_imports = allow_imports
 
         if parents is None:
             parents = {}
@@ -102,6 +109,9 @@ class BaseImporter:
     def get_metadata_path(self) -> str:
         return self.config.get_metadata_path(self)
 
+    def is_import_allowed(self):
+        return self.allow_imports
+
     @classmethod
     def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
         finder_configs = config.get_object_configs(cls.type_key)
@@ -109,8 +119,8 @@ class BaseImporter:
             metadata = finder.get("metadata", {})
             sources = finder.get("sources", [])
             for source in sources:
-                source_finder_factory = cls.finder_factory(source)
-                for item in source_finder_factory.find(cls, config, metadata, **parents):
+                source_finder_factory = cls.finder_factory(source, cls)
+                for item in source_finder_factory.find(config, metadata, **parents):
                     yield item
 
     @classmethod
@@ -125,6 +135,19 @@ class BaseImporter:
         list[dict] | None: The default configuration for the importer. If no entry exists, returns None.
         """
         return None
+
+    @classmethod
+    def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
+        """
+        Returns the name, path and a dictionary of name and paths for the importer. This method is used to override the
+        name and path for the importer when the destination metadata is provided.
+        :param metadata: the metadata associated to the relevant importer entity
+        :param name: the name identified for the importer entity
+        :param path: the path for the importer entity
+        :param results: a dict of the filename and path for the importer entity
+        :return:
+        """
+        NotImplemented("Subclasses must implement this method")
 
 
 class VolumeImporter(BaseImporter):
@@ -180,6 +203,9 @@ class VolumeImporter(BaseImporter):
 
 class BaseFileImporter(BaseImporter):
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_filename = os.path.join(self.get_output_path(), os.path.basename(self.path))
         self.config.fs.copy(self.path, dest_filename)
 
@@ -188,6 +214,9 @@ class BaseKeyPhotoImporter(BaseImporter):
     image_keys = ["snapshot", "thumbnail"]
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         dest_path = self.config.get_output_path(self)
         self.save_image(self.name, dest_path)
 

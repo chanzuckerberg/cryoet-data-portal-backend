@@ -10,8 +10,12 @@ class GainImporter(BaseImporter):
     plural_key = "gains"
     finder_factory = DefaultImporterFactory
     has_metadata = False
+    dir_path = "{dataset_name}/{run_name}/Gains"
 
     def import_item(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         fs = self.config.fs
         item = self.path
         source_file_name = os.path.basename(item)

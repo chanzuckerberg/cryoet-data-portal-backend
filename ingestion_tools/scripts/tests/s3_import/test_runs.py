@@ -3,7 +3,7 @@ import json
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
-from standardize_dirs import IMPORTERS
+from importers.utils import IMPORTERS
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
