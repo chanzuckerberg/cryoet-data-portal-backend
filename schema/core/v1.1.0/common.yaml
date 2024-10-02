@@ -836,6 +836,8 @@ enums:
         description: alignment was done based on patch tracking
       projection_matching:
         description: alignment was done based on image projection
+      undefined:
+        description: how alignment was done is unknown
 
   annotation_method_type_enum:
     description: Describes how the annotations were generated.

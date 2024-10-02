@@ -520,6 +520,8 @@ class AlignmentMethodTypeEnum(str, Enum):
     patch_tracking = "patch_tracking"
     # alignment was done based on image projection
     projection_matching = "projection_matching"
+    # how alignment was done is unknown
+    undefined = "undefined"
 
 
 class AnnotationMethodTypeEnum(str, Enum):
@@ -4272,7 +4274,7 @@ class Alignment(ConfiguredBaseModel):
 
     @field_validator("method_type")
     def pattern_method_type(cls, v):
-        pattern = re.compile(r"(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)")
+        pattern = re.compile(r"(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):

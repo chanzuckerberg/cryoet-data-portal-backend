@@ -41,7 +41,7 @@
                 "method_type": {
                     "$ref": "#/$defs/AlignmentMethodTypeEnum",
                     "description": "The alignment method type.",
-                    "pattern": "(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)"
+                    "pattern": "(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)"
                 },
                 "offset": {
                     "anyOf": [
@@ -133,7 +133,8 @@
             "enum": [
                 "fiducial_based",
                 "patch_tracking",
-                "projection_matching"
+                "projection_matching",
+                "undefined"
             ],
             "title": "AlignmentMethodTypeEnum",
             "type": "string"

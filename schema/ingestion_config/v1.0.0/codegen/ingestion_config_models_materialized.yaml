@@ -395,6 +395,9 @@ enums:
       projection_matching:
         text: projection_matching
         description: alignment was done based on image projection
+      undefined:
+        text: undefined
+        description: how alignment was done is unknown
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.

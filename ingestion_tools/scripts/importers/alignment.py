@@ -164,6 +164,7 @@ class AlignmentImporter(BaseFileImporter):
             "volume_offset": {"x": 0, "y": 0, "z": 0},
             "tilt_offset": 0,
             "x_rotation_offset": 0,
+            "method_type": "undefined",
         }
 
     @classmethod
