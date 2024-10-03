@@ -66,7 +66,7 @@ def validate_dataframe(
 def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[dict, str, int], None]:
     def validate(expected: dict, prefix: str, identifier: int) -> None:
         key = f"{prefix}{identifier}-alignment_metadata.json"
-        actual = json.loads(s3_client.get_object(Bucket=test_output_bucket, Key=key)["Body"].read())
+        actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
         for key in expected:
             assert actual[key] == expected[key], f"Key {key} does not match"
 

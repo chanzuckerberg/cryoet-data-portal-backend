@@ -123,6 +123,11 @@ deposition_keyphotos:
       value:
         snapshot: http://nginx:80/input_bucket/snapshot.gif
         thumbnail: http://nginx:80/input_bucket/thumbnail.gif
+frames:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - VPP/frames/{run_name}_*.tiff
 gains:
 - sources:
   - source_multi_glob:
@@ -174,7 +179,7 @@ tiltseries:
   sources:
   - source_glob:
       list_glob: metadata/{run_name}.st
-      name_regex: (.*)\.rec
+      name_regex: (.*)\.st
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -205,7 +210,6 @@ tomograms:
     reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: 13.48
   sources:
   - source_glob:
       list_glob: tomograms/{run_name}.rec
