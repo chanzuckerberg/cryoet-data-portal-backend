@@ -229,7 +229,6 @@ tiltseries:
 tomograms:
 - metadata:
     affine_transformation_matrix: *id003
-    authors: *id004
     ctf_corrected: false
     dates:
       deposition_date: '2023-04-01'
