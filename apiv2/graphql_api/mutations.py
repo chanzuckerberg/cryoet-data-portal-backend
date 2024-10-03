@@ -22,6 +22,12 @@ from graphql_api.types.annotation_file import (
     delete_annotation_file,
     update_annotation_file,
 )
+from graphql_api.types.annotation_method_link import (
+    AnnotationMethodLink,
+    create_annotation_method_link,
+    delete_annotation_method_link,
+    update_annotation_method_link,
+)
 from graphql_api.types.annotation_shape import (
     AnnotationShape,
     create_annotation_shape,
@@ -55,17 +61,18 @@ from graphql_api.types.deposition_type import (
     update_deposition_type,
 )
 from graphql_api.types.frame import Frame, create_frame, delete_frame, update_frame
+from graphql_api.types.frame_acquisition_file import (
+    FrameAcquisitionFile,
+    create_frame_acquisition_file,
+    delete_frame_acquisition_file,
+    update_frame_acquisition_file,
+)
+from graphql_api.types.gain_file import GainFile, create_gain_file, delete_gain_file, update_gain_file
 from graphql_api.types.per_section_alignment_parameters import (
     PerSectionAlignmentParameters,
     create_per_section_alignment_parameters,
     delete_per_section_alignment_parameters,
     update_per_section_alignment_parameters,
-)
-from graphql_api.types.per_section_parameters import (
-    PerSectionParameters,
-    create_per_section_parameters,
-    delete_per_section_parameters,
-    update_per_section_parameters,
 )
 from graphql_api.types.run import Run, create_run, delete_run, update_run
 from graphql_api.types.tiltseries import Tiltseries, create_tiltseries, delete_tiltseries, update_tiltseries
@@ -86,6 +93,16 @@ from graphql_api.types.tomogram_voxel_spacing import (
 
 @strawberry.type
 class Mutation:
+
+    # GainFile mutations
+    create_gain_file: GainFile = create_gain_file
+    update_gain_file: Sequence[GainFile] = update_gain_file
+    delete_gain_file: Sequence[GainFile] = delete_gain_file
+
+    # FrameAcquisitionFile mutations
+    create_frame_acquisition_file: FrameAcquisitionFile = create_frame_acquisition_file
+    update_frame_acquisition_file: Sequence[FrameAcquisitionFile] = update_frame_acquisition_file
+    delete_frame_acquisition_file: Sequence[FrameAcquisitionFile] = delete_frame_acquisition_file
 
     # Alignment mutations
     create_alignment: Alignment = create_alignment
@@ -147,11 +164,6 @@ class Mutation:
     update_frame: Sequence[Frame] = update_frame
     delete_frame: Sequence[Frame] = delete_frame
 
-    # PerSectionParameters mutations
-    create_per_section_parameters: PerSectionParameters = create_per_section_parameters
-    update_per_section_parameters: Sequence[PerSectionParameters] = update_per_section_parameters
-    delete_per_section_parameters: Sequence[PerSectionParameters] = delete_per_section_parameters
-
     # PerSectionAlignmentParameters mutations
     create_per_section_alignment_parameters: PerSectionAlignmentParameters = create_per_section_alignment_parameters
     update_per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = (
@@ -185,3 +197,8 @@ class Mutation:
     create_tomogram: Tomogram = create_tomogram
     update_tomogram: Sequence[Tomogram] = update_tomogram
     delete_tomogram: Sequence[Tomogram] = delete_tomogram
+
+    # AnnotationMethodLink mutations
+    create_annotation_method_link: AnnotationMethodLink = create_annotation_method_link
+    update_annotation_method_link: Sequence[AnnotationMethodLink] = update_annotation_method_link
+    delete_annotation_method_link: Sequence[AnnotationMethodLink] = delete_annotation_method_link

@@ -8,6 +8,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 from typing import TYPE_CHECKING
 
 from sqlalchemy import Float, ForeignKey, Integer
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from platformics.database.models.base import Base
@@ -38,7 +39,7 @@ class PerSectionAlignmentParameters(Base):
     z_index: Mapped[int] = mapped_column(Integer, nullable=False)
     x_offset: Mapped[float] = mapped_column(Float, nullable=True)
     y_offset: Mapped[float] = mapped_column(Float, nullable=True)
-    in_plane_rotation: Mapped[float] = mapped_column(Float, nullable=True)
-    beam_tilt: Mapped[float] = mapped_column(Float, nullable=True)
+    volume_x_rotation: Mapped[float] = mapped_column(Float, nullable=True)
+    in_plane_rotation: Mapped[JSONB] = mapped_column(JSONB, nullable=True)
     tilt_angle: Mapped[float] = mapped_column(Float, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

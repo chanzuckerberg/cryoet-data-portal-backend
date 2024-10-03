@@ -46,12 +46,6 @@ class AnnotationCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    method_links: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     ground_truth_status: Annotated[bool | None, Field()]
     object_id: Annotated[
         str,
@@ -138,12 +132,6 @@ class AnnotationUpdateInputValidator(BaseModel):
         ),
     ]
     annotation_method: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    method_links: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,

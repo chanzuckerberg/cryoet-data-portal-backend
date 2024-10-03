@@ -17,7 +17,6 @@ from platformics.database.models.file import File
 if TYPE_CHECKING:
     from database.models.alignment import Alignment
     from database.models.deposition import Deposition
-    from database.models.per_section_parameters import PerSectionParameters
     from database.models.run import Run
 
     from platformics.database.models.file import File
@@ -26,7 +25,6 @@ if TYPE_CHECKING:
 else:
     File = "File"
     Alignment = "Alignment"
-    PerSectionParameters = "PerSectionParameters"
     Run = "Run"
     Deposition = "Deposition"
     ...
@@ -41,13 +39,6 @@ class Tiltseries(Base):
         back_populates="tiltseries",
         uselist=True,
         foreign_keys="Alignment.tiltseries_id",
-        cascade="all, delete-orphan",
-    )
-    per_section_parameters: Mapped[list[PerSectionParameters]] = relationship(
-        "PerSectionParameters",
-        back_populates="tiltseries",
-        uselist=True,
-        foreign_keys="PerSectionParameters.tiltseries_id",
         cascade="all, delete-orphan",
     )
     run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
@@ -66,12 +57,8 @@ class Tiltseries(Base):
     s3_mrc_file: Mapped[str] = mapped_column(String, nullable=True)
     https_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
     https_mrc_file: Mapped[str] = mapped_column(String, nullable=True)
-    s3_collection_metadata: Mapped[str] = mapped_column(String, nullable=True)
-    https_collection_metadata: Mapped[str] = mapped_column(String, nullable=True)
     s3_angle_list: Mapped[str] = mapped_column(String, nullable=True)
     https_angle_list: Mapped[str] = mapped_column(String, nullable=True)
-    s3_gain_file: Mapped[str] = mapped_column(String, nullable=True)
-    https_gain_file: Mapped[str] = mapped_column(String, nullable=True)
     acceleration_voltage: Mapped[int] = mapped_column(Integer, nullable=False)
     spherical_aberration_constant: Mapped[float] = mapped_column(Float, nullable=False)
     microscope_manufacturer: Mapped[tiltseries_microscope_manufacturer_enum] = mapped_column(
@@ -98,5 +85,4 @@ class Tiltseries(Base):
     is_aligned: Mapped[bool] = mapped_column(Boolean, nullable=False)
     pixel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
     aligned_tiltseries_binning: Mapped[int] = mapped_column(Integer, nullable=True)
-    frames_count: Mapped[int] = mapped_column(Integer, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

@@ -17,6 +17,7 @@ from platformics.database.models.file import File
 
 if TYPE_CHECKING:
     from database.models.annotation_author import AnnotationAuthor
+    from database.models.annotation_method_link import AnnotationMethodLink
     from database.models.annotation_shape import AnnotationShape
     from database.models.deposition import Deposition
     from database.models.run import Run
@@ -28,6 +29,7 @@ else:
     File = "File"
     Run = "Run"
     AnnotationShape = "AnnotationShape"
+    AnnotationMethodLink = "AnnotationMethodLink"
     AnnotationAuthor = "AnnotationAuthor"
     Deposition = "Deposition"
     ...
@@ -50,6 +52,13 @@ class Annotation(Base):
         foreign_keys="AnnotationShape.annotation_id",
         cascade="all, delete-orphan",
     )
+    method_links: Mapped[list[AnnotationMethodLink]] = relationship(
+        "AnnotationMethodLink",
+        back_populates="annotation",
+        uselist=True,
+        foreign_keys="AnnotationMethodLink.annotation_id",
+        cascade="all, delete-orphan",
+    )
     authors: Mapped[list[AnnotationAuthor]] = relationship(
         "AnnotationAuthor",
         back_populates="annotation",
@@ -67,7 +76,6 @@ class Annotation(Base):
     https_metadata_path: Mapped[str] = mapped_column(String, nullable=False)
     annotation_publication: Mapped[str] = mapped_column(String, nullable=True)
     annotation_method: Mapped[str] = mapped_column(String, nullable=False)
-    method_links: Mapped[str] = mapped_column(String, nullable=True)
     ground_truth_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
     object_id: Mapped[str] = mapped_column(String, nullable=False)
     object_name: Mapped[str] = mapped_column(String, nullable=False)

@@ -18,6 +18,8 @@ if TYPE_CHECKING:
     from database.models.annotation import Annotation
     from database.models.dataset import Dataset
     from database.models.frame import Frame
+    from database.models.frame_acquisition_file import FrameAcquisitionFile
+    from database.models.gain_file import GainFile
     from database.models.tiltseries import Tiltseries
     from database.models.tomogram import Tomogram
     from database.models.tomogram_voxel_spacing import TomogramVoxelSpacing
@@ -31,6 +33,8 @@ else:
     Annotation = "Annotation"
     Dataset = "Dataset"
     Frame = "Frame"
+    GainFile = "GainFile"
+    FrameAcquisitionFile = "FrameAcquisitionFile"
     Tiltseries = "Tiltseries"
     TomogramVoxelSpacing = "TomogramVoxelSpacing"
     Tomogram = "Tomogram"
@@ -55,6 +59,16 @@ class Run(Base):
     )
     frames: Mapped[list[Frame]] = relationship(
         "Frame", back_populates="run", uselist=True, foreign_keys="Frame.run_id", cascade="all, delete-orphan",
+    )
+    gain_files: Mapped[list[GainFile]] = relationship(
+        "GainFile", back_populates="run", uselist=True, foreign_keys="GainFile.run_id", cascade="all, delete-orphan",
+    )
+    frame_acquisition_files: Mapped[list[FrameAcquisitionFile]] = relationship(
+        "FrameAcquisitionFile",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="FrameAcquisitionFile.run_id",
+        cascade="all, delete-orphan",
     )
     tiltseries: Mapped[list[Tiltseries]] = relationship(
         "Tiltseries", back_populates="run", uselist=True, foreign_keys="Tiltseries.run_id", cascade="all, delete-orphan",

@@ -237,7 +237,9 @@ class PerSectionParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[PerSectionParametersCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[PerSectionParametersCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -409,7 +411,13 @@ async def create_per_section_parameters(
     # Check that frame relationship is accessible.
     if validated.frame_id:
         frame = await get_db_rows(
-            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW,
+            db.Frame,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.frame_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
@@ -464,7 +472,13 @@ async def update_per_section_parameters(
     # Check that frame relationship is accessible.
     if validated.frame_id:
         frame = await get_db_rows(
-            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW,
+            db.Frame,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.frame_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
@@ -488,7 +502,13 @@ async def update_per_section_parameters(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE,
+        db.PerSectionParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -520,7 +540,13 @@ async def delete_per_section_parameters(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.DELETE,
+        db.PerSectionParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

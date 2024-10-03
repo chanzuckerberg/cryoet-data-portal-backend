@@ -18,6 +18,10 @@ import strawberry
 from fastapi import Depends
 from graphql_api.helpers.annotation import AnnotationGroupByOptions, build_annotation_groupby_output
 from graphql_api.types.annotation_author import AnnotationAuthorAggregate, format_annotation_author_aggregate_output
+from graphql_api.types.annotation_method_link import (
+    AnnotationMethodLinkAggregate,
+    format_annotation_method_link_aggregate_output,
+)
 from graphql_api.types.annotation_shape import AnnotationShapeAggregate, format_annotation_shape_aggregate_output
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
@@ -55,6 +59,11 @@ if TYPE_CHECKING:
         AnnotationAuthorOrderByClause,
         AnnotationAuthorWhereClause,
     )
+    from graphql_api.types.annotation_method_link import (
+        AnnotationMethodLink,
+        AnnotationMethodLinkOrderByClause,
+        AnnotationMethodLinkWhereClause,
+    )
     from graphql_api.types.annotation_shape import (
         AnnotationShape,
         AnnotationShapeOrderByClause,
@@ -71,6 +80,9 @@ else:
     AnnotationShapeWhereClause = "AnnotationShapeWhereClause"
     AnnotationShape = "AnnotationShape"
     AnnotationShapeOrderByClause = "AnnotationShapeOrderByClause"
+    AnnotationMethodLinkWhereClause = "AnnotationMethodLinkWhereClause"
+    AnnotationMethodLink = "AnnotationMethodLink"
+    AnnotationMethodLinkOrderByClause = "AnnotationMethodLinkOrderByClause"
     AnnotationAuthorWhereClause = "AnnotationAuthorWhereClause"
     AnnotationAuthor = "AnnotationAuthor"
     AnnotationAuthorOrderByClause = "AnnotationAuthorOrderByClause"
@@ -132,6 +144,46 @@ async def load_annotation_shape_aggregate_rows(
     relationship = mapper.relationships["annotation_shapes"]
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_annotation_shape_aggregate_output(rows)
+    return aggregate_output
+
+
+@relay.connection(
+    relay.ListConnection[
+        Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]
+    ],  # type:ignore
+)
+async def load_annotation_method_link_rows(
+    root: "Annotation",
+    info: Info,
+    where: (
+        Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")] | None
+    ) = None,
+    order_by: Optional[
+        list[
+            Annotated["AnnotationMethodLinkOrderByClause", strawberry.lazy("graphql_api.types.annotation_method_link")]
+        ]
+    ] = [],
+) -> Sequence[Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Annotation)
+    relationship = mapper.relationships["method_links"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+
+
+@strawberry.field
+async def load_annotation_method_link_aggregate_rows(
+    root: "Annotation",
+    info: Info,
+    where: (
+        Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")] | None
+    ) = None,
+) -> Optional[Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]]:
+    selections = info.selected_fields[0].selections[0].selections
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Annotation)
+    relationship = mapper.relationships["method_links"]
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    aggregate_output = format_annotation_method_link_aggregate_output(rows)
     return aggregate_output
 
 
@@ -218,6 +270,12 @@ class AnnotationWhereClause(TypedDict):
     annotation_shapes: (
         Optional[Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
     )
+    method_links: (
+        Optional[
+            Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")]
+        ]
+        | None
+    )
     authors: (
         Optional[Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")]]
         | None
@@ -228,7 +286,6 @@ class AnnotationWhereClause(TypedDict):
     https_metadata_path: Optional[StrComparators] | None
     annotation_publication: Optional[StrComparators] | None
     annotation_method: Optional[StrComparators] | None
-    method_links: Optional[StrComparators] | None
     ground_truth_status: Optional[BoolComparators] | None
     object_id: Optional[StrComparators] | None
     object_name: Optional[StrComparators] | None
@@ -260,7 +317,6 @@ class AnnotationOrderByClause(TypedDict):
     https_metadata_path: Optional[orderBy] | None
     annotation_publication: Optional[orderBy] | None
     annotation_method: Optional[orderBy] | None
-    method_links: Optional[orderBy] | None
     ground_truth_status: Optional[orderBy] | None
     object_id: Optional[orderBy] | None
     object_name: Optional[orderBy] | None
@@ -294,6 +350,12 @@ class Annotation(EntityInterface):
     annotation_shapes_aggregate: Optional[
         Annotated["AnnotationShapeAggregate", strawberry.lazy("graphql_api.types.annotation_shape")]
     ] = load_annotation_shape_aggregate_rows  # type:ignore
+    method_links: Sequence[
+        Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]
+    ] = load_annotation_method_link_rows  # type:ignore
+    method_links_aggregate: Optional[
+        Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]
+    ] = load_annotation_method_link_aggregate_rows  # type:ignore
     authors: Sequence[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]] = (
         load_annotation_author_rows
     )  # type:ignore
@@ -312,10 +374,6 @@ class Annotation(EntityInterface):
     )
     annotation_method: str = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
-    )
-    method_links: Optional[str] = strawberry.field(
-        description="Provides links to information on the method used for generating annotation, comma separated",
-        default=None,
     )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
@@ -404,7 +462,6 @@ class AnnotationMinMaxColumns:
     https_metadata_path: Optional[str] = None
     annotation_publication: Optional[str] = None
     annotation_method: Optional[str] = None
-    method_links: Optional[str] = None
     object_id: Optional[str] = None
     object_name: Optional[str] = None
     object_description: Optional[str] = None
@@ -429,13 +486,13 @@ Define enum of all columns to support count and count(distinct) aggregations
 class AnnotationCountColumns(enum.Enum):
     run = "run"
     annotationShapes = "annotation_shapes"
+    methodLinks = "method_links"
     authors = "authors"
     deposition = "deposition"
     s3MetadataPath = "s3_metadata_path"
     httpsMetadataPath = "https_metadata_path"
     annotationPublication = "annotation_publication"
     annotationMethod = "annotation_method"
-    methodLinks = "method_links"
     groundTruthStatus = "ground_truth_status"
     objectId = "object_id"
     objectName = "object_name"
@@ -508,10 +565,6 @@ class AnnotationCreateInput:
     annotation_method: str = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
     )
-    method_links: Optional[str] = strawberry.field(
-        description="Provides links to information on the method used for generating annotation, comma separated",
-        default=None,
-    )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
     )
@@ -578,10 +631,6 @@ class AnnotationUpdateInput:
     )
     annotation_method: Optional[str] = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
-    )
-    method_links: Optional[str] = strawberry.field(
-        description="Provides links to information on the method used for generating annotation, comma separated",
-        default=None,
     )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,

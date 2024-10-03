@@ -18,10 +18,6 @@ import strawberry
 from fastapi import Depends
 from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions, build_tiltseries_groupby_output
 from graphql_api.types.alignment import AlignmentAggregate, format_alignment_aggregate_output
-from graphql_api.types.per_section_parameters import (
-    PerSectionParametersAggregate,
-    format_per_section_parameters_aggregate_output,
-)
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -54,11 +50,6 @@ T = typing.TypeVar("T")
 if TYPE_CHECKING:
     from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
     from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
-    from graphql_api.types.per_section_parameters import (
-        PerSectionParameters,
-        PerSectionParametersOrderByClause,
-        PerSectionParametersWhereClause,
-    )
     from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
 
     pass
@@ -66,9 +57,6 @@ else:
     AlignmentWhereClause = "AlignmentWhereClause"
     Alignment = "Alignment"
     AlignmentOrderByClause = "AlignmentOrderByClause"
-    PerSectionParametersWhereClause = "PerSectionParametersWhereClause"
-    PerSectionParameters = "PerSectionParameters"
-    PerSectionParametersOrderByClause = "PerSectionParametersOrderByClause"
     RunWhereClause = "RunWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
@@ -113,46 +101,6 @@ async def load_alignment_aggregate_rows(
     relationship = mapper.relationships["alignments"]
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_alignment_aggregate_output(rows)
-    return aggregate_output
-
-
-@relay.connection(
-    relay.ListConnection[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ],  # type:ignore
-)
-async def load_per_section_parameters_rows(
-    root: "Tiltseries",
-    info: Info,
-    where: (
-        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
-    ) = None,
-    order_by: Optional[
-        list[
-            Annotated["PerSectionParametersOrderByClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
-        ]
-    ] = [],
-) -> Sequence[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
-    dataloader = info.context["sqlalchemy_loader"]
-    mapper = inspect(db.Tiltseries)
-    relationship = mapper.relationships["per_section_parameters"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
-@strawberry.field
-async def load_per_section_parameters_aggregate_rows(
-    root: "Tiltseries",
-    info: Info,
-    where: (
-        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
-    ) = None,
-) -> Optional[Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
-    selections = info.selected_fields[0].selections[0].selections
-    dataloader = info.context["sqlalchemy_loader"]
-    mapper = inspect(db.Tiltseries)
-    relationship = mapper.relationships["per_section_parameters"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
-    aggregate_output = format_per_section_parameters_aggregate_output(rows)
     return aggregate_output
 
 
@@ -210,12 +158,6 @@ Supported WHERE clause attributes
 @strawberry.input
 class TiltseriesWhereClause(TypedDict):
     alignments: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
-    per_section_parameters: (
-        Optional[
-            Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
-        ]
-        | None
-    )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     run_id: Optional[IntComparators] | None
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
@@ -224,12 +166,8 @@ class TiltseriesWhereClause(TypedDict):
     s3_mrc_file: Optional[StrComparators] | None
     https_omezarr_dir: Optional[StrComparators] | None
     https_mrc_file: Optional[StrComparators] | None
-    s3_collection_metadata: Optional[StrComparators] | None
-    https_collection_metadata: Optional[StrComparators] | None
     s3_angle_list: Optional[StrComparators] | None
     https_angle_list: Optional[StrComparators] | None
-    s3_gain_file: Optional[StrComparators] | None
-    https_gain_file: Optional[StrComparators] | None
     acceleration_voltage: Optional[IntComparators] | None
     spherical_aberration_constant: Optional[FloatComparators] | None
     microscope_manufacturer: Optional[EnumComparators[tiltseries_microscope_manufacturer_enum]] | None
@@ -254,7 +192,6 @@ class TiltseriesWhereClause(TypedDict):
     is_aligned: Optional[BoolComparators] | None
     pixel_spacing: Optional[FloatComparators] | None
     aligned_tiltseries_binning: Optional[IntComparators] | None
-    frames_count: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -271,12 +208,8 @@ class TiltseriesOrderByClause(TypedDict):
     s3_mrc_file: Optional[orderBy] | None
     https_omezarr_dir: Optional[orderBy] | None
     https_mrc_file: Optional[orderBy] | None
-    s3_collection_metadata: Optional[orderBy] | None
-    https_collection_metadata: Optional[orderBy] | None
     s3_angle_list: Optional[orderBy] | None
     https_angle_list: Optional[orderBy] | None
-    s3_gain_file: Optional[orderBy] | None
-    https_gain_file: Optional[orderBy] | None
     acceleration_voltage: Optional[orderBy] | None
     spherical_aberration_constant: Optional[orderBy] | None
     microscope_manufacturer: Optional[orderBy] | None
@@ -301,7 +234,6 @@ class TiltseriesOrderByClause(TypedDict):
     is_aligned: Optional[orderBy] | None
     pixel_spacing: Optional[orderBy] | None
     aligned_tiltseries_binning: Optional[orderBy] | None
-    frames_count: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -318,12 +250,6 @@ class Tiltseries(EntityInterface):
     alignments_aggregate: Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]] = (
         load_alignment_aggregate_rows
     )  # type:ignore
-    per_section_parameters: Sequence[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ] = load_per_section_parameters_rows  # type:ignore
-    per_section_parameters_aggregate: Optional[
-        Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ] = load_per_section_parameters_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: int
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
@@ -342,23 +268,11 @@ class Tiltseries(EntityInterface):
     https_mrc_file: Optional[str] = strawberry.field(
         description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None,
     )
-    s3_collection_metadata: Optional[str] = strawberry.field(
-        description="S3 path to the collection metadata file for this tiltseries", default=None,
-    )
-    https_collection_metadata: Optional[str] = strawberry.field(
-        description="HTTPS path to the collection metadata file for this tiltseries", default=None,
-    )
     s3_angle_list: Optional[str] = strawberry.field(
         description="S3 path to the angle list file for this tiltseries", default=None,
     )
     https_angle_list: Optional[str] = strawberry.field(
         description="HTTPS path to the angle list file for this tiltseries", default=None,
-    )
-    s3_gain_file: Optional[str] = strawberry.field(
-        description="S3 path to the gain file for this tiltseries", default=None,
-    )
-    https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this tiltseries", default=None,
     )
     acceleration_voltage: int = strawberry.field(description="Electron Microscope Accelerator voltage in volts")
     spherical_aberration_constant: float = strawberry.field(
@@ -401,9 +315,6 @@ class Tiltseries(EntityInterface):
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
-    frames_count: Optional[int] = strawberry.field(
-        description="Number of frames associated with this tiltseries", default=None,
-    )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -439,7 +350,6 @@ class TiltseriesNumericalColumns:
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
-    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -454,12 +364,8 @@ class TiltseriesMinMaxColumns:
     s3_mrc_file: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
     https_mrc_file: Optional[str] = None
-    s3_collection_metadata: Optional[str] = None
-    https_collection_metadata: Optional[str] = None
     s3_angle_list: Optional[str] = None
     https_angle_list: Optional[str] = None
-    s3_gain_file: Optional[str] = None
-    https_gain_file: Optional[str] = None
     acceleration_voltage: Optional[int] = None
     spherical_aberration_constant: Optional[float] = None
     microscope_model: Optional[str] = None
@@ -482,7 +388,6 @@ class TiltseriesMinMaxColumns:
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
-    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -494,19 +399,14 @@ Define enum of all columns to support count and count(distinct) aggregations
 @strawberry.enum
 class TiltseriesCountColumns(enum.Enum):
     alignments = "alignments"
-    perSectionParameters = "per_section_parameters"
     run = "run"
     deposition = "deposition"
     s3OmezarrDir = "s3_omezarr_dir"
     s3MrcFile = "s3_mrc_file"
     httpsOmezarrDir = "https_omezarr_dir"
     httpsMrcFile = "https_mrc_file"
-    s3CollectionMetadata = "s3_collection_metadata"
-    httpsCollectionMetadata = "https_collection_metadata"
     s3AngleList = "s3_angle_list"
     httpsAngleList = "https_angle_list"
-    s3GainFile = "s3_gain_file"
-    httpsGainFile = "https_gain_file"
     accelerationVoltage = "acceleration_voltage"
     sphericalAberrationConstant = "spherical_aberration_constant"
     microscopeManufacturer = "microscope_manufacturer"
@@ -531,7 +431,6 @@ class TiltseriesCountColumns(enum.Enum):
     isAligned = "is_aligned"
     pixelSpacing = "pixel_spacing"
     alignedTiltseriesBinning = "aligned_tiltseries_binning"
-    framesCount = "frames_count"
     id = "id"
 
 
@@ -592,23 +491,11 @@ class TiltseriesCreateInput:
     https_mrc_file: Optional[str] = strawberry.field(
         description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None,
     )
-    s3_collection_metadata: Optional[str] = strawberry.field(
-        description="S3 path to the collection metadata file for this tiltseries", default=None,
-    )
-    https_collection_metadata: Optional[str] = strawberry.field(
-        description="HTTPS path to the collection metadata file for this tiltseries", default=None,
-    )
     s3_angle_list: Optional[str] = strawberry.field(
         description="S3 path to the angle list file for this tiltseries", default=None,
     )
     https_angle_list: Optional[str] = strawberry.field(
         description="HTTPS path to the angle list file for this tiltseries", default=None,
-    )
-    s3_gain_file: Optional[str] = strawberry.field(
-        description="S3 path to the gain file for this tiltseries", default=None,
-    )
-    https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this tiltseries", default=None,
     )
     acceleration_voltage: int = strawberry.field(description="Electron Microscope Accelerator voltage in volts")
     spherical_aberration_constant: float = strawberry.field(
@@ -651,9 +538,6 @@ class TiltseriesCreateInput:
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
-    frames_count: Optional[int] = strawberry.field(
-        description="Number of frames associated with this tiltseries", default=None,
-    )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -673,23 +557,11 @@ class TiltseriesUpdateInput:
     https_mrc_file: Optional[str] = strawberry.field(
         description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None,
     )
-    s3_collection_metadata: Optional[str] = strawberry.field(
-        description="S3 path to the collection metadata file for this tiltseries", default=None,
-    )
-    https_collection_metadata: Optional[str] = strawberry.field(
-        description="HTTPS path to the collection metadata file for this tiltseries", default=None,
-    )
     s3_angle_list: Optional[str] = strawberry.field(
         description="S3 path to the angle list file for this tiltseries", default=None,
     )
     https_angle_list: Optional[str] = strawberry.field(
         description="HTTPS path to the angle list file for this tiltseries", default=None,
-    )
-    s3_gain_file: Optional[str] = strawberry.field(
-        description="S3 path to the gain file for this tiltseries", default=None,
-    )
-    https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this tiltseries", default=None,
     )
     acceleration_voltage: Optional[int] = strawberry.field(
         description="Electron Microscope Accelerator voltage in volts",
@@ -735,9 +607,6 @@ class TiltseriesUpdateInput:
     pixel_spacing: Optional[float] = strawberry.field(description="Pixel spacing equal in both axes in angstroms")
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
-    )
-    frames_count: Optional[int] = strawberry.field(
-        description="Number of frames associated with this tiltseries", default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 

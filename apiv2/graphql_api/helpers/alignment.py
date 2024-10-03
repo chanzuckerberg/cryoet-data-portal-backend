@@ -11,7 +11,7 @@ import strawberry
 from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
 from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
 from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions, build_tiltseries_groupby_output
-from support.enums import alignment_type_enum
+from support.enums import alignment_method_type_enum, alignment_type_enum
 
 if TYPE_CHECKING:
     from api.types.deposition import Deposition
@@ -39,6 +39,7 @@ class AlignmentGroupByOptions:
     tiltseries: Optional[TiltseriesGroupByOptions] = None
     run: Optional[RunGroupByOptions] = None
     alignment_type: Optional[alignment_type_enum] = None
+    alignment_method: Optional[alignment_method_type_enum] = None
     volume_x_dimension: Optional[float] = None
     volume_y_dimension: Optional[float] = None
     volume_z_dimension: Optional[float] = None
@@ -47,8 +48,10 @@ class AlignmentGroupByOptions:
     volume_z_offset: Optional[float] = None
     x_rotation_offset: Optional[float] = None
     tilt_offset: Optional[float] = None
-    local_alignment_file: Optional[str] = None
     affine_transformation_matrix: Optional[str] = None
+    s3_alignment_metadata: Optional[str] = None
+    https_alignment_metadata: Optional[str] = None
+    is_portal_standard: Optional[bool] = None
     id: Optional[int] = None
 
 

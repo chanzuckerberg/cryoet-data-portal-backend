@@ -5,6 +5,7 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+import datetime
 from typing import TYPE_CHECKING, Any, Optional
 
 import strawberry
@@ -58,7 +59,9 @@ class TomogramGroupByOptions:
     tomogram_version: Optional[float] = None
     processing_software: Optional[str] = None
     reconstruction_software: Optional[str] = None
-    is_canonical: Optional[bool] = None
+    is_portal_standard: Optional[bool] = None
+    is_author_submitted: Optional[bool] = None
+    is_visualization_default: Optional[bool] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
     s3_mrc_file: Optional[str] = None
@@ -73,8 +76,12 @@ class TomogramGroupByOptions:
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
-    is_standardized: Optional[bool] = None
+    publications: Optional[str] = None
+    related_database_entries: Optional[str] = None
     id: Optional[int] = None
+    deposition_date: Optional[datetime.datetime] = None
+    release_date: Optional[datetime.datetime] = None
+    last_modified_date: Optional[datetime.datetime] = None
 
 
 def build_tomogram_groupby_output(
