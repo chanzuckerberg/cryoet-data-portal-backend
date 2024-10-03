@@ -1639,20 +1639,6 @@ classes:
         exact_mappings:
         - api_frame_is_gain_corrected
         range: boolean
-      s3_gain_file:
-        name: s3_gain_file
-        description: S3 path to the gain file for this frame
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_frame_s3_gain_file
-        range: string
-      https_gain_file:
-        name: https_gain_file
-        description: HTTPS path to the gain file for this frame
-        from_schema: cdp-dataset-config
-        exact_mappings:
-        - api_frame_https_gain_file
-        range: string
       s3_prefix:
         name: s3_prefix
         description: Path to a directory containing data for this entity as an S3
@@ -2484,12 +2470,6 @@ classes:
         exact_mappings:
         - tomogram_neuroglancer_config
         range: string
-      is_standardized:
-        description: Whether this tomogram was generated per the portal's standards
-        range: boolean
-        required: true
-        # TODO - is this reasonable?
-        ifabsent: false
       publications:
         description: Comma-separated list of DOIs for publications associated with the tomogram.
         range: string
