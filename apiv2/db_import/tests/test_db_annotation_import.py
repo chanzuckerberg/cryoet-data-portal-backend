@@ -7,13 +7,16 @@ from db_import.tests.populate_db import (
     ANNOTATION_AUTHOR_ID,
     ANNOTATION_FILE_ID,
     ANNOTATION_ID,
+    ANNOTATION_METHOD_LINK_ID,
     DATASET_ID,
     RUN1_ID,
     TOMOGRAM_VOXEL_ID1,
     populate_annotation_authors,
     populate_annotation_files,
+    populate_annotation_method_links,
     populate_stale_annotation_authors,
     populate_stale_annotation_files,
+    populate_stale_annotation_method_links,
 )
 from sqlalchemy.orm import Session
 
@@ -123,6 +126,25 @@ def expected_annotation_authors() -> list[dict[str, Any]]:
     ]
 
 
+@pytest.fixture
+def expected_annotation_method_links() -> list[dict[str, Any]]:
+    return [
+        {
+            "id": ANNOTATION_METHOD_LINK_ID,
+            "annotation_id": ANNOTATION_ID,
+            "link": "https://fake-link.com/resources/100-foo-1.0_method.pdf",
+            "link_type": "documentation",
+            "name": "Method Documentation",
+        },
+        {
+            "annotation_id": ANNOTATION_ID,
+            "link": "https://another-link.com/100-foo-1.0_code.zip",
+            "link_type": "source_code",
+            "name": "Source Code",
+        },
+    ]
+
+
 # Tests addition and update  of annotations and annotation files
 def test_import_annotations(
     sync_db_session: Session,
@@ -207,3 +229,46 @@ def test_import_annotation_authors_removes_stale(
         assert len(annotation.authors) == len(expected_annotation_authors)
         for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
             verify_model(author, next(expected_annotations_authors_iter))
+
+
+# Tests update of existing annotation method links, addition of new method links
+def test_import_annotation_method_links(
+    sync_db_session: Session,
+    verify_dataset_import: Callable[[list[str]], models.Dataset],
+    verify_model: Callable[[Base, dict[str, Any]], None],
+    expected_annotations: list[dict[str, Any]],
+    expected_annotation_method_links: list[dict[str, Any]],
+) -> None:
+    populate_annotation_method_links(sync_db_session)
+    sync_db_session.commit()
+    verify_dataset_import(import_annotation_method_links=True)
+    expected_iter = iter(expected_annotation_method_links)
+    actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
+        assert len(annotation.method_links) == len(expected_annotation_method_links)
+        # for item in annotation.method_links.order_by(models.AnnotationMethodLink.link):
+        for item in sorted(annotation.method_links, key=lambda x: x.link):
+            verify_model(item, next(expected_iter))
+
+
+# Tests deletion of stale annotation and annotation method links
+def test_import_annotation_method_links_removes_stale(
+    sync_db_session: Session,
+    verify_dataset_import: Callable[[list[str]], models.Dataset],
+    verify_model: Callable[[Base, dict[str, Any]], None],
+    expected_annotations: list[dict[str, Any]],
+    expected_annotation_method_links: list[dict[str, Any]],
+) -> None:
+    populate_annotation_method_links(sync_db_session)
+    populate_stale_annotation_method_links(sync_db_session)
+    sync_db_session.commit()
+    verify_dataset_import(import_annotation_method_links=True)
+    expected_iter = iter(expected_annotation_method_links)
+    actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
+        if annotation.id != ANNOTATION_ID:
+            continue
+        assert len(annotation.method_links) == len(expected_annotation_method_links)
+        # for item in annotation.method_links.order_by(models.AnnotationMethodLink.link):
+        for item in sorted(annotation.method_links, key=lambda x: x.id, reverse=True):
+            verify_model(item, next(expected_iter))

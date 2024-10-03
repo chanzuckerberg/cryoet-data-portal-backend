@@ -8,6 +8,7 @@ from botocore.config import Config
 from db_import.importers.annotation import (
     AnnotationAuthorDBImporter,
     AnnotationDBImporter,
+    AnnotationMethodLinkDBImporter,
     StaleAnnotationDeletionDBImporter,
 )
 from db_import.importers.base_importer import DBImportConfig
@@ -33,6 +34,7 @@ def db_import_options(func):
     options = []
     options.append(click.option("--import-annotations", is_flag=True, default=False))
     options.append(click.option("--import-annotation-authors", is_flag=True, default=False))
+    options.append(click.option("--import-annotation-method-links", is_flag=True, default=False))
     options.append(click.option("--import-dataset-authors", is_flag=True, default=False))
     options.append(click.option("--import-dataset-funding", is_flag=True, default=False))
     options.append(click.option("--import-depositions", is_flag=True, default=False))
@@ -75,6 +77,7 @@ def load(
     filter_dataset: list[str],
     import_annotations: bool,
     import_annotation_authors: bool,
+    import_annotation_method_links: bool,
     import_dataset_authors: bool,
     import_dataset_funding: bool,
     import_depositions: bool,
@@ -96,6 +99,7 @@ def load(
         filter_dataset,
         import_annotations,
         import_annotation_authors,
+        import_annotation_method_links,
         import_dataset_authors,
         import_dataset_funding,
         import_depositions,
@@ -119,6 +123,7 @@ def load_func(
     filter_dataset: list[str] | None = None,
     import_annotations: bool = False,
     import_annotation_authors: bool = False,
+    import_annotation_method_links: bool = False,
     import_dataset_authors: bool = False,
     import_dataset_funding: bool = False,
     import_depositions: bool = False,
@@ -139,6 +144,7 @@ def load_func(
     if import_everything:
         import_annotations = True
         import_annotation_authors = True
+        import_annotation_method_links = True
         import_dataset_authors = True
         import_dataset_funding = True
         import_depositions = True
@@ -148,7 +154,7 @@ def load_func(
         import_tomogram_authors = True
         import_tomogram_voxel_spacing = True
     else:
-        import_annotations = max(import_annotations, import_annotation_authors)
+        import_annotations = max(import_annotations, import_annotation_authors, import_annotation_method_links)
         import_tomograms = max(import_tomograms, import_tomogram_authors)
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
         import_runs = max(import_runs, import_tiltseries, import_tomogram_voxel_spacing)
@@ -209,6 +215,7 @@ def load_func(
 
                 if import_tomograms:
                     tomogram_cleaner = StaleTomogramDeletionDBImporter(voxel_spacing_obj.id, config)
+                    TomogramDBImporter.load_deposition_map(config)
                     for tomogram in TomogramDBImporter.get_item(voxel_spacing_obj.id, run_id, voxel_spacing, config):
                         tomogram_obj = tomogram.import_to_db()
                         tomogram_cleaner.mark_as_active(tomogram_obj)
@@ -231,6 +238,13 @@ def load_func(
                                 config,
                             )
                             annotation_authors.import_to_db()
+                        if import_annotation_method_links:
+                            anno_method_links = AnnotationMethodLinkDBImporter.get_item(
+                                annotation_obj.id,
+                                annotation,
+                                config,
+                            )
+                            anno_method_links.import_to_db()
                     annotation_cleaner.remove_stale_objects()
 
                 voxel_spacing_cleaner.mark_as_active(voxel_spacing_obj)
