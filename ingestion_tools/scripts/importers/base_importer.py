@@ -64,6 +64,8 @@ class BaseImporter:
         glob_vars = {}
         glob_vars[f"{self.type_key}_path"] = self.path
         glob_vars[f"{self.type_key}_name"] = self.name
+        if hasattr(self, "identifier") and self.identifier:
+            glob_vars[f"{self.type_key}_id"] = self.identifier
         with contextlib.suppress(ValueError, TypeError):
             glob_vars[f"int_{self.type_key}_name"] = int(self.name)
 

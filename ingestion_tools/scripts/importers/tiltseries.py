@@ -42,8 +42,8 @@ class TiltSeriesImporter(VolumeImporter):
     plural_key = "tiltseries"
     finder_factory = DefaultImporterFactory
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/TiltSeries"
-    metadata_path = "{dataset_name}/{run_name}/TiltSeries/{{identifier}}-tiltseries_metadata.json"
+    dir_path = "{dataset_name}/{run_name}/TiltSeries/"
+    metadata_path = os.path.join(dir_path, "{tiltseries_id}-tiltseries_metadata.json")
 
     def __init__(
         self,
@@ -55,12 +55,14 @@ class TiltSeriesImporter(VolumeImporter):
         parents: dict[str, Any],
     ):
         super().__init__(
-            config=config, metadata=metadata, name=name, path=path, parents=parents, allow_imports=allow_imports,
+            config=config,
+            metadata=metadata,
+            name=name,
+            path=path,
+            parents=parents,
+            allow_imports=allow_imports,
         )
         self.identifier = TiltSeriesIdentifierHelper.get_identifier(config, self.get_base_metadata(), self.parents)
-
-    def get_metadata_path(self) -> str:
-        return super().get_metadata_path().format(identifier=self.identifier)
 
     def import_item(self) -> None:
         if not self.is_import_allowed():
@@ -83,7 +85,7 @@ class TiltSeriesImporter(VolumeImporter):
 
     def import_metadata(self) -> None:
         if not self.is_import_allowed():
-            print(f"Skipping import of {self.name}")
+            print(f"Skipping import of {self.name} metadata")
             return
         dest_ts_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()

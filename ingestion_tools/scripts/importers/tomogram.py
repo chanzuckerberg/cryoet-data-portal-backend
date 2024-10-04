@@ -48,8 +48,8 @@ class TomogramImporter(VolumeImporter):
     finder_factory = DefaultImporterFactory
     cached_find_results: dict[str, Any] = {}
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Tomograms"
-    metadata_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Tomograms/{{identifier}}-tomogram_metadata.json"
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Tomograms/"
+    metadata_path = os.path.join(dir_path, "{tomogram_id}-tomogram_metadata.json")
 
     def __init__(
         self,
@@ -61,7 +61,12 @@ class TomogramImporter(VolumeImporter):
         parents: dict[str, Any],
     ):
         super().__init__(
-            config=config, metadata=metadata, name=name, path=path, parents=parents, allow_imports=allow_imports,
+            config=config,
+            metadata=metadata,
+            name=name,
+            path=path,
+            parents=parents,
+            allow_imports=allow_imports,
         )
         self.alignment_metadata_path = self.get_alignment_metadata_path()
         self.identifier = TomogramIdentifierHelper.get_identifier(
@@ -84,12 +89,9 @@ class TomogramImporter(VolumeImporter):
     def get_identifier(self) -> int:
         return self.identifier
 
-    def get_metadata_path(self) -> str:
-        return super().get_metadata_path().format(identifier=self.identifier)
-
     def import_metadata(self) -> None:
         if not self.is_import_allowed():
-            print(f"Skipping import of {self.name}")
+            print(f"Skipping import of {self.name} metadata")
             return
         dest_tomo_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()

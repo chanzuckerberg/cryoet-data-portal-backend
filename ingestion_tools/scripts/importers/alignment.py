@@ -50,10 +50,10 @@ class AlignmentImporter(BaseFileImporter):
 
     type_key = "alignment"
     plural_key = "alignments"
-
     finder_factory = MultiSourceFileFinder
     has_metadata = True
     dir_path = "{dataset_name}/{run_name}/Alignments"
+    metadata_path = "{dataset_name}/{run_name}/Alignments/{alignment_id}-alignment_metadata.json"
 
     def __init__(self, *args, file_paths: dict[str, str], **kwargs):
         super().__init__(*args, **kwargs)
@@ -69,7 +69,7 @@ class AlignmentImporter(BaseFileImporter):
 
     def import_metadata(self) -> None:
         if not self.is_import_allowed():
-            print(f"Skipping import of {self.name}")
+            print(f"Skipping import of {self.name} metadata")
             return
         metadata_path = self.get_metadata_path()
         try:
@@ -102,9 +102,6 @@ class AlignmentImporter(BaseFileImporter):
             return None
         output_dir = self.get_output_path()
         return f"{output_dir}{os.path.basename(path)}"
-
-    def get_metadata_path(self) -> str:
-        return self.get_output_path() + "alignment_metadata.json"
 
     def get_extra_metadata(self) -> dict:
         extra_metadata = {
@@ -143,11 +140,6 @@ class AlignmentImporter(BaseFileImporter):
             parents = {**self.parents, "voxel_spacing": voxel_spacing}
             for tomogram in TomogramImporter.finder(self.config, **parents):
                 return tomogram
-        return None
-
-    def get_tiltseries_path(self) -> str | None:
-        for ts in TiltSeriesImporter.finder(self.config, **self.parents):
-            return ts.get_metadata_path()
         return None
 
     def get_tiltseries_path(self) -> str | None:

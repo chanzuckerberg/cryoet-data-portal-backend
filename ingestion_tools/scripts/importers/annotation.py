@@ -160,7 +160,7 @@ class AnnotationImporter(BaseImporter):
 
     def import_metadata(self):
         if not self.is_import_allowed():
-            print(f"Skipping import of {self.name}")
+            print(f"Skipping import of {self.name} metadata")
             return
         dest_prefix = self.get_output_path()
         filename = f"{dest_prefix}.json"
