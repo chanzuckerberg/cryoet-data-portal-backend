@@ -41,6 +41,7 @@ class AlignmentFactory(CommonFactory):
         RunFactory,
     )
     alignment_type = fuzzy.FuzzyChoice(["LOCAL", "GLOBAL"])
+    alignment_method = fuzzy.FuzzyChoice(["projection_matching", "patch_tracking", "fiducial_based"])
     volume_x_dimension = fuzzy.FuzzyFloat(1, 100)
     volume_y_dimension = fuzzy.FuzzyFloat(1, 100)
     volume_z_dimension = fuzzy.FuzzyFloat(1, 100)
@@ -49,6 +50,8 @@ class AlignmentFactory(CommonFactory):
     volume_z_offset = fuzzy.FuzzyFloat(1, 100)
     x_rotation_offset = fuzzy.FuzzyFloat(1, 100)
     tilt_offset = fuzzy.FuzzyFloat(1, 100)
-    local_alignment_file = fuzzy.FuzzyText()
     affine_transformation_matrix = fuzzy.FuzzyText()
+    s3_alignment_metadata = fuzzy.FuzzyText()
+    https_alignment_metadata = fuzzy.FuzzyText()
+    is_portal_standard = factory.Faker("boolean")
     id = fuzzy.FuzzyInteger(1, 1000)

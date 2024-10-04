@@ -35,8 +35,6 @@ class FrameGroupByOptions:
     acquisition_order: Optional[int] = None
     dose: Optional[float] = None
     is_gain_corrected: Optional[bool] = None
-    s3_gain_file: Optional[str] = None
-    https_gain_file: Optional[str] = None
     s3_prefix: Optional[str] = None
     https_prefix: Optional[str] = None
     id: Optional[int] = None

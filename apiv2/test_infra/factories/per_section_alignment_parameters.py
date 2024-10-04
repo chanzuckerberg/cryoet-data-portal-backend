@@ -7,6 +7,8 @@ Make changes to the template codegen/templates/test_infra/factories/class_name.p
 
 # ruff: noqa: E501 Line too long
 
+import random
+
 import factory
 from database.models import PerSectionAlignmentParameters
 from factory import Faker, fuzzy
@@ -35,7 +37,9 @@ class PerSectionAlignmentParametersFactory(CommonFactory):
     z_index = fuzzy.FuzzyInteger(1, 1000)
     x_offset = fuzzy.FuzzyFloat(1, 100)
     y_offset = fuzzy.FuzzyFloat(1, 100)
-    in_plane_rotation = fuzzy.FuzzyFloat(1, 100)
-    beam_tilt = fuzzy.FuzzyFloat(1, 100)
+    volume_x_rotation = fuzzy.FuzzyFloat(1, 100)
+    in_plane_rotation = factory.LazyAttribute(
+        lambda o: [[random.uniform(1, 100) for _ in range(5)]] * random.randint(2, 5),
+    )
     tilt_angle = fuzzy.FuzzyFloat(1, 100)
     id = fuzzy.FuzzyInteger(1, 1000)

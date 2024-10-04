@@ -7,9 +7,9 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Enum, Float, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from support.enums import alignment_type_enum
+from support.enums import alignment_method_type_enum, alignment_type_enum
 
 from platformics.database.models.base import Base
 from platformics.database.models.file import File
@@ -82,6 +82,9 @@ class Alignment(Base):
     alignment_type: Mapped[alignment_type_enum] = mapped_column(
         Enum(alignment_type_enum, native_enum=False), nullable=True,
     )
+    alignment_method: Mapped[alignment_method_type_enum] = mapped_column(
+        Enum(alignment_method_type_enum, native_enum=False), nullable=True,
+    )
     volume_x_dimension: Mapped[float] = mapped_column(Float, nullable=True)
     volume_y_dimension: Mapped[float] = mapped_column(Float, nullable=True)
     volume_z_dimension: Mapped[float] = mapped_column(Float, nullable=True)
@@ -90,6 +93,8 @@ class Alignment(Base):
     volume_z_offset: Mapped[float] = mapped_column(Float, nullable=True)
     x_rotation_offset: Mapped[float] = mapped_column(Float, nullable=True)
     tilt_offset: Mapped[float] = mapped_column(Float, nullable=True)
-    local_alignment_file: Mapped[str] = mapped_column(String, nullable=True)
     affine_transformation_matrix: Mapped[str] = mapped_column(String, nullable=True)
+    s3_alignment_metadata: Mapped[str] = mapped_column(String, nullable=True)
+    https_alignment_metadata: Mapped[str] = mapped_column(String, nullable=True)
+    is_portal_standard: Mapped[bool] = mapped_column(Boolean, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

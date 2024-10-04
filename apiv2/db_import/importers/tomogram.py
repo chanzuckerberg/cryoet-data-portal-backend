@@ -1,6 +1,7 @@
 import json
 from typing import Any, Iterator
 
+import sqlalchemy as sa
 from database import models
 from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base_importer import (
@@ -16,6 +17,7 @@ from platformics.database.models import Base
 
 
 class TomogramDBImporter(BaseDBImporter):
+    deposition_map = {}
     def __init__(
         self,
         voxel_spacing_id: int,
@@ -36,6 +38,12 @@ class TomogramDBImporter(BaseDBImporter):
 
     def get_data_map(self) -> dict[str, Any]:
         return {**self.get_direct_mapped_fields(), **self.get_computed_fields()}
+
+    @classmethod
+    def load_deposition_map(cls, config) -> None:
+        session = config.get_db_session()
+        for item in session.scalars(sa.select(models.Deposition)).all():
+            cls.deposition_map[item.id] = item
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
@@ -60,6 +68,9 @@ class TomogramDBImporter(BaseDBImporter):
             "offset_y": ["offset", "y"],
             "offset_z": ["offset", "z"],
             "deposition_id": ["deposition_id"],
+            "deposition_date": ["deposition_date"],
+            "release_date": ["release_date"],
+            "last_modified_date": ["last_modified_date"],
         }
 
     def normalize_to_unknown_str(self, value: str) -> str:
@@ -95,8 +106,13 @@ class TomogramDBImporter(BaseDBImporter):
             "key_photo_thumbnail_url": None,
             "neuroglancer_config": self.generate_neuroglancer_data(),
             "type": self.get_tomogram_type(),
-            "is_standardized": self.metadata.get("is_standardized") or False,
+            "is_portal_standard": self.metadata.get("is_standardized") or False,
         }
+        date_fields = ["deposition_date", "release_date", "last_modified_date"]
+        if not self.metadata.get("deposition_date"):
+            deposition = self.deposition_map[self.metadata["deposition_id"]]
+            for date_field in date_fields:
+                extra_data[date_field] = getattr(deposition, date_field)
         if key_photos := self.metadata.get("key_photo"):
             extra_data["key_photo_url"] = self.join_path(https_prefix, key_photos.get("snapshot"))
             extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, key_photos.get("thumbnail"))

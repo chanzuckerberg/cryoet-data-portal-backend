@@ -11,7 +11,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 import datetime
 import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, List, Optional, Sequence
 
 import database.models as db
 import strawberry
@@ -109,8 +109,7 @@ class PerSectionAlignmentParametersWhereClause(TypedDict):
     z_index: Optional[IntComparators] | None
     x_offset: Optional[FloatComparators] | None
     y_offset: Optional[FloatComparators] | None
-    in_plane_rotation: Optional[FloatComparators] | None
-    beam_tilt: Optional[FloatComparators] | None
+    volume_x_rotation: Optional[FloatComparators] | None
     tilt_angle: Optional[FloatComparators] | None
     id: Optional[IntComparators] | None
 
@@ -126,8 +125,8 @@ class PerSectionAlignmentParametersOrderByClause(TypedDict):
     z_index: Optional[orderBy] | None
     x_offset: Optional[orderBy] | None
     y_offset: Optional[orderBy] | None
+    volume_x_rotation: Optional[orderBy] | None
     in_plane_rotation: Optional[orderBy] | None
-    beam_tilt: Optional[orderBy] | None
     tilt_angle: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
@@ -150,10 +149,10 @@ class PerSectionAlignmentParameters(EntityInterface):
     y_offset: Optional[float] = strawberry.field(
         description="In-plane Y-shift of the projection in angstrom", default=None,
     )
-    in_plane_rotation: Optional[float] = strawberry.field(
+    volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
+    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
         description="In-plane rotation of the projection in degrees", default=None,
     )
-    beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -181,8 +180,7 @@ class PerSectionAlignmentParametersNumericalColumns:
     z_index: Optional[int] = None
     x_offset: Optional[float] = None
     y_offset: Optional[float] = None
-    in_plane_rotation: Optional[float] = None
-    beam_tilt: Optional[float] = None
+    volume_x_rotation: Optional[float] = None
     tilt_angle: Optional[float] = None
     id: Optional[int] = None
 
@@ -197,8 +195,7 @@ class PerSectionAlignmentParametersMinMaxColumns:
     z_index: Optional[int] = None
     x_offset: Optional[float] = None
     y_offset: Optional[float] = None
-    in_plane_rotation: Optional[float] = None
-    beam_tilt: Optional[float] = None
+    volume_x_rotation: Optional[float] = None
     tilt_angle: Optional[float] = None
     id: Optional[int] = None
 
@@ -214,8 +211,8 @@ class PerSectionAlignmentParametersCountColumns(enum.Enum):
     zIndex = "z_index"
     xOffset = "x_offset"
     yOffset = "y_offset"
+    volumeXRotation = "volume_x_rotation"
     inPlaneRotation = "in_plane_rotation"
-    beamTilt = "beam_tilt"
     tiltAngle = "tilt_angle"
     id = "id"
 
@@ -271,10 +268,10 @@ class PerSectionAlignmentParametersCreateInput:
     y_offset: Optional[float] = strawberry.field(
         description="In-plane Y-shift of the projection in angstrom", default=None,
     )
-    in_plane_rotation: Optional[float] = strawberry.field(
+    volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
+    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
         description="In-plane rotation of the projection in degrees", default=None,
     )
-    beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -289,10 +286,10 @@ class PerSectionAlignmentParametersUpdateInput:
     y_offset: Optional[float] = strawberry.field(
         description="In-plane Y-shift of the projection in angstrom", default=None,
     )
-    in_plane_rotation: Optional[float] = strawberry.field(
+    volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
+    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
         description="In-plane rotation of the projection in degrees", default=None,
     )
-    beam_tilt: Optional[float] = strawberry.field(description="Beam tilt during projection in degrees", default=None)
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 

@@ -20,6 +20,11 @@ from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
 from graphql_api.types.alignment import AlignmentAggregate, format_alignment_aggregate_output
 from graphql_api.types.annotation import AnnotationAggregate, format_annotation_aggregate_output
 from graphql_api.types.frame import FrameAggregate, format_frame_aggregate_output
+from graphql_api.types.frame_acquisition_file import (
+    FrameAcquisitionFileAggregate,
+    format_frame_acquisition_file_aggregate_output,
+)
+from graphql_api.types.gain_file import GainFileAggregate, format_gain_file_aggregate_output
 from graphql_api.types.tiltseries import TiltseriesAggregate, format_tiltseries_aggregate_output
 from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
 from graphql_api.types.tomogram_voxel_spacing import (
@@ -56,6 +61,12 @@ if TYPE_CHECKING:
     from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
     from graphql_api.types.dataset import Dataset, DatasetOrderByClause, DatasetWhereClause
     from graphql_api.types.frame import Frame, FrameOrderByClause, FrameWhereClause
+    from graphql_api.types.frame_acquisition_file import (
+        FrameAcquisitionFile,
+        FrameAcquisitionFileOrderByClause,
+        FrameAcquisitionFileWhereClause,
+    )
+    from graphql_api.types.gain_file import GainFile, GainFileOrderByClause, GainFileWhereClause
     from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
     from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
     from graphql_api.types.tomogram_voxel_spacing import (
@@ -78,6 +89,12 @@ else:
     FrameWhereClause = "FrameWhereClause"
     Frame = "Frame"
     FrameOrderByClause = "FrameOrderByClause"
+    GainFileWhereClause = "GainFileWhereClause"
+    GainFile = "GainFile"
+    GainFileOrderByClause = "GainFileOrderByClause"
+    FrameAcquisitionFileWhereClause = "FrameAcquisitionFileWhereClause"
+    FrameAcquisitionFile = "FrameAcquisitionFile"
+    FrameAcquisitionFileOrderByClause = "FrameAcquisitionFileOrderByClause"
     TiltseriesWhereClause = "TiltseriesWhereClause"
     Tiltseries = "Tiltseries"
     TiltseriesOrderByClause = "TiltseriesOrderByClause"
@@ -200,6 +217,76 @@ async def load_frame_aggregate_rows(
     relationship = mapper.relationships["frames"]
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_frame_aggregate_output(rows)
+    return aggregate_output
+
+
+@relay.connection(
+    relay.ListConnection[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]],  # type:ignore
+)
+async def load_gain_file_rows(
+    root: "Run",
+    info: Info,
+    where: Annotated["GainFileWhereClause", strawberry.lazy("graphql_api.types.gain_file")] | None = None,
+    order_by: Optional[list[Annotated["GainFileOrderByClause", strawberry.lazy("graphql_api.types.gain_file")]]] = [],
+) -> Sequence[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Run)
+    relationship = mapper.relationships["gain_files"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+
+
+@strawberry.field
+async def load_gain_file_aggregate_rows(
+    root: "Run",
+    info: Info,
+    where: Annotated["GainFileWhereClause", strawberry.lazy("graphql_api.types.gain_file")] | None = None,
+) -> Optional[Annotated["GainFileAggregate", strawberry.lazy("graphql_api.types.gain_file")]]:
+    selections = info.selected_fields[0].selections[0].selections
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Run)
+    relationship = mapper.relationships["gain_files"]
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    aggregate_output = format_gain_file_aggregate_output(rows)
+    return aggregate_output
+
+
+@relay.connection(
+    relay.ListConnection[
+        Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
+    ],  # type:ignore
+)
+async def load_frame_acquisition_file_rows(
+    root: "Run",
+    info: Info,
+    where: (
+        Annotated["FrameAcquisitionFileWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file")] | None
+    ) = None,
+    order_by: Optional[
+        list[
+            Annotated["FrameAcquisitionFileOrderByClause", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
+        ]
+    ] = [],
+) -> Sequence[Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Run)
+    relationship = mapper.relationships["frame_acquisition_files"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+
+
+@strawberry.field
+async def load_frame_acquisition_file_aggregate_rows(
+    root: "Run",
+    info: Info,
+    where: (
+        Annotated["FrameAcquisitionFileWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file")] | None
+    ) = None,
+) -> Optional[Annotated["FrameAcquisitionFileAggregate", strawberry.lazy("graphql_api.types.frame_acquisition_file")]]:
+    selections = info.selected_fields[0].selections[0].selections
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Run)
+    relationship = mapper.relationships["frame_acquisition_files"]
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    aggregate_output = format_frame_acquisition_file_aggregate_output(rows)
     return aggregate_output
 
 
@@ -335,6 +422,13 @@ class RunWhereClause(TypedDict):
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
     dataset_id: Optional[IntComparators] | None
     frames: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    gain_files: Optional[Annotated["GainFileWhereClause", strawberry.lazy("graphql_api.types.gain_file")]] | None
+    frame_acquisition_files: (
+        Optional[
+            Annotated["FrameAcquisitionFileWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
+        ]
+        | None
+    )
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     tomogram_voxel_spacings: (
         Optional[
@@ -390,6 +484,18 @@ class Run(EntityInterface):
     frames_aggregate: Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]] = (
         load_frame_aggregate_rows
     )  # type:ignore
+    gain_files: Sequence[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]] = (
+        load_gain_file_rows
+    )  # type:ignore
+    gain_files_aggregate: Optional[Annotated["GainFileAggregate", strawberry.lazy("graphql_api.types.gain_file")]] = (
+        load_gain_file_aggregate_rows
+    )  # type:ignore
+    frame_acquisition_files: Sequence[
+        Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
+    ] = load_frame_acquisition_file_rows  # type:ignore
+    frame_acquisition_files_aggregate: Optional[
+        Annotated["FrameAcquisitionFileAggregate", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
+    ] = load_frame_acquisition_file_aggregate_rows  # type:ignore
     tiltseries: Sequence[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
         load_tiltseries_rows
     )  # type:ignore
@@ -459,6 +565,8 @@ class RunCountColumns(enum.Enum):
     annotations = "annotations"
     dataset = "dataset"
     frames = "frames"
+    gainFiles = "gain_files"
+    frameAcquisitionFiles = "frame_acquisition_files"
     tiltseries = "tiltseries"
     tomogramVoxelSpacings = "tomogram_voxel_spacings"
     tomograms = "tomograms"

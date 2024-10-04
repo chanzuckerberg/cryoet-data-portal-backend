@@ -27,7 +27,6 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "data_acquisition_software": "SerialEM",
             "deposition_id": 300,
             "https_angle_list": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/bar.rawtlt",
-            "https_collection_metadata": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/foo.mdoc",
             "https_mrc_file": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
             "https_omezarr_dir": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
             "id": TILTSERIES_ID,
@@ -42,7 +41,6 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "related_empiar_entry": "EMPIAR-XYZ",
             "run_id": RUN1_ID,
             "s3_angle_list": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/bar.rawtlt",
-            "s3_collection_metadata": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/foo.mdoc",
             "s3_mrc_file": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.mrc",
             "s3_omezarr_dir": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/ts_foo.zarr",
             "spherical_aberration_constant": 2.7,
@@ -54,7 +52,6 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "tilt_step": 2,
             "tilting_scheme": "Dose symmetric from 0.0 degrees",
             "total_flux": 122,
-            "frames_count": 60,
         },
         {
             "acceleration_voltage": 10000,
@@ -82,7 +79,6 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "tilt_step": 3,
             "tilting_scheme": "min to max tilt",
             "total_flux": 12,
-            "frames_count": None,
         },
     ]
 

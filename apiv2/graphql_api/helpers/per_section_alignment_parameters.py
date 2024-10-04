@@ -28,8 +28,8 @@ class PerSectionAlignmentParametersGroupByOptions:
     z_index: Optional[int] = None
     x_offset: Optional[float] = None
     y_offset: Optional[float] = None
-    in_plane_rotation: Optional[float] = None
-    beam_tilt: Optional[float] = None
+    volume_x_rotation: Optional[float] = None
+    in_plane_rotation: Optional[list[list[float]]] = None
     tilt_angle: Optional[float] = None
     id: Optional[int] = None
 

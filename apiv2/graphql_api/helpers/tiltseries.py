@@ -36,12 +36,8 @@ class TiltseriesGroupByOptions:
     s3_mrc_file: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
     https_mrc_file: Optional[str] = None
-    s3_collection_metadata: Optional[str] = None
-    https_collection_metadata: Optional[str] = None
     s3_angle_list: Optional[str] = None
     https_angle_list: Optional[str] = None
-    s3_gain_file: Optional[str] = None
-    https_gain_file: Optional[str] = None
     acceleration_voltage: Optional[int] = None
     spherical_aberration_constant: Optional[float] = None
     microscope_manufacturer: Optional[tiltseries_microscope_manufacturer_enum] = None
@@ -66,7 +62,6 @@ class TiltseriesGroupByOptions:
     is_aligned: Optional[bool] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
-    frames_count: Optional[int] = None
     id: Optional[int] = None
 
 

@@ -1,9 +1,11 @@
+from datetime import date
 from typing import Any, Callable
 
 import pytest as pytest
 from database import models
 from db_import.tests.populate_db import (
     DATASET_ID,
+    DEPOSITION_ID2,
     RUN1_ID,
     TOMOGRAM_AUTHOR_ID,
     TOMOGRAM_ID,
@@ -69,7 +71,6 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "processing": "raw",
         "processing_software": "tomo3D",
         "tomogram_version": 1.0,
-        "is_canonical": True,
         "s3_omezarr_dir": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.zarr",
         "https_omezarr_dir": f"{http_prefix}/{run1_vs_path}CanonicalTomogram/RUN1.zarr",
         "s3_mrc_file": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
@@ -85,7 +86,10 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "key_photo_thumbnail_url": f"{http_prefix}/{run1_vs_path}KeyPhotos/key-photo-thumbnail.png",
         "neuroglancer_config": '{"foo":"bar","baz":"test"}',
         "deposition_id": 301,
-        "is_standardized": False,
+        "is_portal_standard": False,
+        "deposition_date": date(2023, 4, 2),
+        "release_date": date(2024, 6, 1),
+        "last_modified_date": date(2023, 9, 2),
     }
     run2_tomo = {
         "name": "RUN2",
@@ -98,7 +102,6 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "reconstruction_software": "Unknown",
         "processing": "filtered",
         "tomogram_version": 1.0,
-        "is_canonical": True,
         "s3_omezarr_dir": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.zarr",
         "https_omezarr_dir": f"{http_prefix}/{run2_vs_path}CanonicalTomogram/RUN2.zarr",
         "s3_mrc_file": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
@@ -112,7 +115,10 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "offset_z": 0,
         "neuroglancer_config": "{}",
         "deposition_id": 300,
-        "is_standardized": False,
+        "is_portal_standard": False,
+        "deposition_date": date(2022, 4, 2),
+        "release_date": date(2022, 6, 1),
+        "last_modified_date": date(2022, 9, 2),
     }
     return {
         "RUN1": {
@@ -164,7 +170,7 @@ def test_import_voxel_spacings_and_tomograms(
 ) -> None:
     populate_tomograms(sync_db_session)
     sync_db_session.commit()
-    actual = verify_dataset_import(import_tomograms=True)
+    actual = verify_dataset_import(import_tomograms=True, import_depositions=True, deposition_id=[DEPOSITION_ID2])
     for run in sorted(actual.runs, key=lambda x: x.name):
         tomogram_voxel_spacings = sorted(run.tomogram_voxel_spacings, key=lambda x: x.voxel_spacing)
         expected_voxel_spacings = expected_voxel_spacings_by_run.get(run.name, [])

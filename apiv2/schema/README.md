@@ -12,7 +12,9 @@ Tomogram {
     float tomogram_version
     string processing_software
     string reconstruction_software
-    boolean is_canonical
+    boolean is_portal_standard
+    boolean is_author_submitted
+    boolean is_visualization_default
     string s3_omezarr_dir
     string https_omezarr_dir
     string s3_mrc_file
@@ -27,8 +29,12 @@ Tomogram {
     string key_photo_url
     string key_photo_thumbnail_url
     string neuroglancer_config
-    boolean is_standardized
+    string publications
+    string related_database_entries
     integer id
+    date deposition_date
+    date release_date
+    date last_modified_date
 }
 TomogramVoxelSpacing {
     float voxel_spacing
@@ -53,12 +59,8 @@ Tiltseries {
     string s3_mrc_file
     string https_omezarr_dir
     string https_mrc_file
-    string s3_collection_metadata
-    string https_collection_metadata
     string s3_angle_list
     string https_angle_list
-    string s3_gain_file
-    string https_gain_file
     integer acceleration_voltage
     float spherical_aberration_constant
     tiltseries_microscope_manufacturer_enum microscope_manufacturer
@@ -83,7 +85,6 @@ Tiltseries {
     boolean is_aligned
     float pixel_spacing
     integer aligned_tiltseries_binning
-    integer frames_count
     integer id
 }
 Run {
@@ -92,19 +93,28 @@ Run {
     string https_prefix
     integer id
 }
-PerSectionParameters {
-    integer z_index
-    float defocus
-    float astigmatism
-    float astigmatic_angle
+FrameAcquisitionFile {
+    string s3_mdoc_path
+    string https_mdoc_path
+    integer id
+}
+GainFile {
+    string s3_file_path
+    string https_file_path
+    integer id
+}
+AnnotationMethodLink {
+    annotation_method_link_type_enum link_type
+    string name
+    string link
     integer id
 }
 PerSectionAlignmentParameters {
     integer z_index
     float x_offset
     float y_offset
-    float in_plane_rotation
-    float beam_tilt
+    float volume_x_rotation
+    Array2dFloat in_plane_rotation
     float tilt_angle
     integer id
 }
@@ -113,8 +123,6 @@ Frame {
     integer acquisition_order
     float dose
     boolean is_gain_corrected
-    string s3_gain_file
-    string https_gain_file
     string s3_prefix
     string https_prefix
     integer id
@@ -193,7 +201,6 @@ Annotation {
     string https_metadata_path
     string annotation_publication
     string annotation_method
-    string method_links
     boolean ground_truth_status
     string object_id
     string object_name
@@ -237,6 +244,7 @@ AnnotationAuthor {
 }
 Alignment {
     alignment_type_enum alignment_type
+    alignment_method_type_enum alignment_method
     float volume_x_dimension
     float volume_y_dimension
     float volume_z_dimension
@@ -245,8 +253,10 @@ Alignment {
     float volume_z_offset
     float x_rotation_offset
     float tilt_offset
-    string local_alignment_file
     string affine_transformation_matrix
+    string s3_alignment_metadata
+    string https_alignment_metadata
+    boolean is_portal_standard
     integer id
 }
 
@@ -260,21 +270,22 @@ TomogramVoxelSpacing ||--|o Run : "run"
 TomogramVoxelSpacing ||--}o Tomogram : "tomograms"
 TomogramAuthor ||--|o Tomogram : "tomogram"
 Tiltseries ||--}o Alignment : "alignments"
-Tiltseries ||--}o PerSectionParameters : "per_section_parameters"
 Tiltseries ||--|| Run : "run"
 Tiltseries ||--|o Deposition : "deposition"
 Run ||--}o Alignment : "alignments"
 Run ||--}o Annotation : "annotations"
 Run ||--|| Dataset : "dataset"
 Run ||--}o Frame : "frames"
+Run ||--}o GainFile : "gain_files"
+Run ||--}o FrameAcquisitionFile : "frame_acquisition_files"
 Run ||--}o Tiltseries : "tiltseries"
 Run ||--}o TomogramVoxelSpacing : "tomogram_voxel_spacings"
 Run ||--}o Tomogram : "tomograms"
-PerSectionParameters ||--|| Frame : "frame"
-PerSectionParameters ||--|| Tiltseries : "tiltseries"
+FrameAcquisitionFile ||--|o Run : "run"
+GainFile ||--|o Run : "run"
+AnnotationMethodLink ||--|o Annotation : "annotation"
 PerSectionAlignmentParameters ||--|| Alignment : "alignment"
 Frame ||--|o Deposition : "deposition"
-Frame ||--}o PerSectionParameters : "per_section_parameters"
 Frame ||--|o Run : "run"
 Deposition ||--}o DepositionAuthor : "authors"
 Deposition ||--}o Alignment : "alignments"
@@ -293,6 +304,7 @@ DatasetFunding ||--|o Dataset : "dataset"
 DatasetAuthor ||--|o Dataset : "dataset"
 Annotation ||--|o Run : "run"
 Annotation ||--}o AnnotationShape : "annotation_shapes"
+Annotation ||--}o AnnotationMethodLink : "method_links"
 Annotation ||--}o AnnotationAuthor : "authors"
 Annotation ||--|o Deposition : "deposition"
 AnnotationShape ||--|o Annotation : "annotation"

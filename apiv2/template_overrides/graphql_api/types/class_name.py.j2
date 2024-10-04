@@ -35,8 +35,6 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
     UUIDComparators
   {%- elif field.type == "string" -%}
     StrComparators
-  {%- elif field.type == "Array2dFloat" -%}
-    JSONB
   {%- elif field.type == "integer" -%}
     IntComparators
   {%- elif field.type == "float" -%}
@@ -278,7 +276,7 @@ class {{ cls.name }}WhereClause(TypedDict):
     {%- for attr in cls.visible_fields %}
         {%- if attr.type == cls.name %}
     {{ attr.name }}_id: Optional[{{ getComparators(attr.related_class.identifier) }}] | None
-        {%- elif attr.type == "File" %}
+        {%- elif attr.type in ["File", "Array2dFloat"] %}
         {%- else %}
     {{ attr.name }}: Optional[{{ getComparators(attr) }}] | None
         {%- endif %}
