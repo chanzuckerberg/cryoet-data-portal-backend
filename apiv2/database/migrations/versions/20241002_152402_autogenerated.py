@@ -112,9 +112,9 @@ def upgrade() -> None:
     op.add_column("tomogram", sa.Column("is_visualization_default", sa.Boolean(), nullable=True))
     op.add_column("tomogram", sa.Column("publications", sa.String(), nullable=True))
     op.add_column("tomogram", sa.Column("related_database_entries", sa.String(), nullable=True))
-    op.add_column("tomogram", sa.Column("deposition_date", sa.DateTime(timezone=True), nullable=False))
-    op.add_column("tomogram", sa.Column("release_date", sa.DateTime(timezone=True), nullable=False))
-    op.add_column("tomogram", sa.Column("last_modified_date", sa.DateTime(timezone=True), nullable=False))
+    op.add_column("tomogram", sa.Column("deposition_date", sa.DateTime(timezone=True), nullable=True))
+    op.add_column("tomogram", sa.Column("release_date", sa.DateTime(timezone=True), nullable=True))
+    op.add_column("tomogram", sa.Column("last_modified_date", sa.DateTime(timezone=True), nullable=True))
     op.drop_column("tomogram", "is_canonical")
     # ### end Alembic commands ###
 

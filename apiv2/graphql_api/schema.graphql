@@ -5065,13 +5065,13 @@ type Tomogram implements EntityInterface & Node {
   relatedDatabaseEntries: String
 
   """The date a data item was received by the cryoET data portal."""
-  depositionDate: DateTime!
+  depositionDate: DateTime
 
   """The date a data item was received by the cryoET data portal."""
-  releaseDate: DateTime!
+  releaseDate: DateTime
 
   """The date a piece of data was last modified on the cryoET data portal."""
-  lastModifiedDate: DateTime!
+  lastModifiedDate: DateTime
 }
 
 type TomogramAggregate {
@@ -5481,13 +5481,13 @@ input TomogramCreateInput {
   id: Int!
 
   """The date a data item was received by the cryoET data portal."""
-  depositionDate: DateTime!
+  depositionDate: DateTime = null
 
   """The date a data item was received by the cryoET data portal."""
-  releaseDate: DateTime!
+  releaseDate: DateTime = null
 
   """The date a piece of data was last modified on the cryoET data portal."""
-  lastModifiedDate: DateTime!
+  lastModifiedDate: DateTime = null
 }
 
 """An edge in a connection."""
@@ -5740,13 +5740,13 @@ input TomogramUpdateInput {
   id: Int
 
   """The date a data item was received by the cryoET data portal."""
-  depositionDate: DateTime
+  depositionDate: DateTime = null
 
   """The date a data item was received by the cryoET data portal."""
-  releaseDate: DateTime
+  releaseDate: DateTime = null
 
   """The date a piece of data was last modified on the cryoET data portal."""
-  lastModifiedDate: DateTime
+  lastModifiedDate: DateTime = null
 }
 
 """Voxel spacings for a run"""

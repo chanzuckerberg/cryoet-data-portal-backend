@@ -151,9 +151,9 @@ class TomogramCreateInputValidator(BaseModel):
         ),
     ]
     id: Annotated[int, Field()]
-    deposition_date: Annotated[datetime.datetime, Field()]
-    release_date: Annotated[datetime.datetime, Field()]
-    last_modified_date: Annotated[datetime.datetime, Field()]
+    deposition_date: Annotated[datetime.datetime | None, Field()]
+    release_date: Annotated[datetime.datetime | None, Field()]
+    last_modified_date: Annotated[datetime.datetime | None, Field()]
 
 
 class TomogramUpdateInputValidator(BaseModel):

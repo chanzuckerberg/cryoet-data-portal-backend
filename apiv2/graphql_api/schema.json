@@ -22057,39 +22057,27 @@
               "args": [],
               "name": "depositionDate",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
               }
             },
             {
               "args": [],
               "name": "releaseDate",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
               }
             },
             {
               "args": [],
               "name": "lastModifiedDate",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
               }
             }
           ],
@@ -35284,42 +35272,30 @@
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "depositionDate",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "releaseDate",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "lastModifiedDate",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "DateTime",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
               }
             }
           ],
@@ -35648,7 +35624,7 @@
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "depositionDate",
               "type": {
                 "kind": "SCALAR",
@@ -35657,7 +35633,7 @@
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "releaseDate",
               "type": {
                 "kind": "SCALAR",
@@ -35666,7 +35642,7 @@
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "lastModifiedDate",
               "type": {
                 "kind": "SCALAR",
