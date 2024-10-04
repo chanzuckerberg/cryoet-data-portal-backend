@@ -18,6 +18,7 @@ from platformics.database.models import Base
 
 class TomogramDBImporter(BaseDBImporter):
     deposition_map = {}
+
     def __init__(
         self,
         voxel_spacing_id: int,

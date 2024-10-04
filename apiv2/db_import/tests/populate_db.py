@@ -544,7 +544,11 @@ def populate_annotation_authors(session: sa.orm.Session) -> None:
 @write_data
 def populate_stale_annotation_method_links(session: sa.orm.Session) -> None:
     populate_stale_annotations(session)
-    session.add(AnnotationMethodLink(annotation_id=STALE_ANNOTATION_ID, name="Stale Link 0", link_type="other", link="https://some-link.com"))
+    session.add(
+        AnnotationMethodLink(
+            annotation_id=STALE_ANNOTATION_ID, name="Stale Link 0", link_type="other", link="https://some-link.com",
+        ),
+    )
     session.add(
         AnnotationMethodLink(
             annotation_id=STALE_ANNOTATION_ID,
@@ -553,6 +557,7 @@ def populate_stale_annotation_method_links(session: sa.orm.Session) -> None:
             link="https://stale-link.com",
         ),
     )
+
 
 @write_data
 def populate_annotation_method_links(session: sa.orm.Session) -> None:

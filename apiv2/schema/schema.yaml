@@ -2231,6 +2231,13 @@ classes:
     mixins:
     - IDMixin
     - DateStampedEntityMixin
+    slot_usage:
+      deposition_date:
+        required: False
+      last_modified_date:
+        required: False
+      release_date:
+        required: False
     attributes:
       alignment:
         name: alignment

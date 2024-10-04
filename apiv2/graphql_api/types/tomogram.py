@@ -410,14 +410,14 @@ class Tomogram(EntityInterface):
         default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
-    deposition_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+    deposition_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
     )
-    release_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+    release_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
     )
-    last_modified_date: datetime.datetime = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+    last_modified_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a piece of data was last modified on the cryoET data portal.", default=None,
     )
 
 
@@ -656,14 +656,14 @@ class TomogramCreateInput:
         default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
-    deposition_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+    deposition_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
     )
-    release_date: datetime.datetime = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+    release_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
     )
-    last_modified_date: datetime.datetime = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+    last_modified_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a piece of data was last modified on the cryoET data portal.", default=None,
     )
 
 
@@ -749,13 +749,13 @@ class TomogramUpdateInput:
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
     deposition_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal.", default=None,
     )
     release_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a data item was received by the cryoET data portal.",
+        description="The date a data item was received by the cryoET data portal.", default=None,
     )
     last_modified_date: Optional[datetime.datetime] = strawberry.field(
-        description="The date a piece of data was last modified on the cryoET data portal.",
+        description="The date a piece of data was last modified on the cryoET data portal.", default=None,
     )
 
 
