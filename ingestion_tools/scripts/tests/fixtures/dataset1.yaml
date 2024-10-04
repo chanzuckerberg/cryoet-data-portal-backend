@@ -209,6 +209,7 @@ tomograms:
     processing: raw
     reconstruction_method: WBP
     reconstruction_software: IMOD
+    is_visualization_default: true
     tomogram_version: 1
   sources:
   - source_glob:

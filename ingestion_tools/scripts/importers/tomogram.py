@@ -121,14 +121,13 @@ class TomogramImporter(VolumeImporter):
 
         for alignment in AlignmentImporter.finder(self.config, **self.parents):
             return alignment.get_metadata_path()
-        # TODO: This should be an error, but we need to fix the data first.
+        # TODO: As all tomograms need to be associated to an alignment this should be an error, but we need to fix the
+        #  data first.
         return None
 
-    def get_neuroglancer_config_path(self) -> str:
+    def get_neuroglancer_config_path(self) -> str | None:
         if self.metadata.get("is_visualization_default"):
-            # TODO: Refactor this to a method in the viz_config importer with identifier in the name
-            return self.config.resolve_output_path("viz_config", self).format(identifier=self.identifier)
-
+            return self.config.resolve_output_path("viz_config", self)
         return None
 
     @classmethod

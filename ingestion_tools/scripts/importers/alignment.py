@@ -53,7 +53,7 @@ class AlignmentImporter(BaseFileImporter):
     finder_factory = MultiSourceFileFinder
     has_metadata = True
     dir_path = "{dataset_name}/{run_name}/Alignments"
-    metadata_path = "{dataset_name}/{run_name}/Alignments/{alignment_id}-alignment_metadata.json"
+    metadata_path = os.path.join(dir_path, "{alignment_id}-alignment_metadata.json")
 
     def __init__(self, *args, file_paths: dict[str, str], **kwargs):
         super().__init__(*args, **kwargs)

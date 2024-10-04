@@ -145,16 +145,26 @@ def test_tomogram_import_metadata(
         item.import_metadata()
     run_name = parents["run"].name
     voxel_spacing = 13.48
-    prefix = f"output/{parents['dataset'].name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}/Tomograms"
+    run_path = f"output/{parents['dataset'].name}/{run_name}"
+    vs_path = f"{run_path}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}"
+    prefix = f"{vs_path}/Tomograms"
     tomogram_files = get_children(s3_client, test_output_bucket, prefix)
     id_prefix = 100
     assert f"{id_prefix}-tomogram_metadata.json" in tomogram_files
+    image_path = f"{parents['dataset'].name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}/Images/{id_prefix}-key-photo-"
     expected = {
         "omezarr_dir": f"{id_prefix}-{run_name}.zarr",
         "mrc_files": [f"{id_prefix}-{run_name}.mrc"],
         "voxel_spacing": 13.48,
         "scales": [{"x": 6, "y": 8, "z": 10}, {"x": 3, "y": 4, "z": 5}, {"x": 2, "y": 2, "z": 3}],
         "size": {"x": 6, "y": 8, "z": 10},
+        "alignment_metadata_path": f"{test_output_bucket}/{run_path}/Alignments/100-alignment_metadata.json",
+        "neuroglancer_config_path": f"{test_output_bucket}/{vs_path}/NeuroglancerPrecompute/"
+                                    f"{id_prefix}-neuroglancer_config.json",
+        "key_photo": {
+            "snapshot": f"{image_path}snapshot.png",
+            "thumbnail": f"{image_path}thumbnail.png",
+        },
     }
     validate_metadata(expected, prefix, id_prefix)
 

@@ -25,7 +25,7 @@ class VisualizationConfigImporter(BaseImporter):
     has_metadata = False
     dir_path = (
         "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute/"
-        "{{identifier}}-neuroglancer_config.json"
+        "{tomogram_id}-neuroglancer_config.json"
     )
 
     def import_item(self) -> None:
