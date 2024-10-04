@@ -28,7 +28,7 @@ from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
 from strawberry import relay
 from strawberry.types import Info
-from support.enums import alignment_type_enum
+from support.enums import alignment_method_type_enum, alignment_type_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
 from validators.alignment import AlignmentCreateInputValidator, AlignmentUpdateInputValidator
@@ -37,6 +37,7 @@ from platformics.graphql_api.core.deps import get_authz_client, get_db_session, 
 from platformics.graphql_api.core.errors import PlatformicsError
 from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
 from platformics.graphql_api.core.query_input_types import (
+    BoolComparators,
     EnumComparators,
     FloatComparators,
     IntComparators,
@@ -305,6 +306,7 @@ class AlignmentWhereClause(TypedDict):
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     run_id: Optional[IntComparators] | None
     alignment_type: Optional[EnumComparators[alignment_type_enum]] | None
+    alignment_method: Optional[EnumComparators[alignment_method_type_enum]] | None
     volume_x_dimension: Optional[FloatComparators] | None
     volume_y_dimension: Optional[FloatComparators] | None
     volume_z_dimension: Optional[FloatComparators] | None
@@ -313,8 +315,10 @@ class AlignmentWhereClause(TypedDict):
     volume_z_offset: Optional[FloatComparators] | None
     x_rotation_offset: Optional[FloatComparators] | None
     tilt_offset: Optional[FloatComparators] | None
-    local_alignment_file: Optional[StrComparators] | None
     affine_transformation_matrix: Optional[StrComparators] | None
+    s3_alignment_metadata: Optional[StrComparators] | None
+    https_alignment_metadata: Optional[StrComparators] | None
+    is_portal_standard: Optional[BoolComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -329,6 +333,7 @@ class AlignmentOrderByClause(TypedDict):
     tiltseries: Optional[Annotated["TiltseriesOrderByClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
     alignment_type: Optional[orderBy] | None
+    alignment_method: Optional[orderBy] | None
     volume_x_dimension: Optional[orderBy] | None
     volume_y_dimension: Optional[orderBy] | None
     volume_z_dimension: Optional[orderBy] | None
@@ -337,8 +342,10 @@ class AlignmentOrderByClause(TypedDict):
     volume_z_offset: Optional[orderBy] | None
     x_rotation_offset: Optional[orderBy] | None
     tilt_offset: Optional[orderBy] | None
-    local_alignment_file: Optional[orderBy] | None
     affine_transformation_matrix: Optional[orderBy] | None
+    s3_alignment_metadata: Optional[orderBy] | None
+    https_alignment_metadata: Optional[orderBy] | None
+    is_portal_standard: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -385,6 +392,9 @@ class Alignment(EntityInterface):
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
         description="Whether this a LOCAL or GLOBAL alignment", default=None,
     )
+    alignment_method: Optional[alignment_method_type_enum] = strawberry.field(
+        description="The method used to create this alignment", default=None,
+    )
     volume_x_dimension: Optional[float] = strawberry.field(
         description="X dimension of the reconstruction volume in angstrom", default=None,
     )
@@ -407,9 +417,17 @@ class Alignment(EntityInterface):
         description="Additional X rotation of the reconstruction volume in degrees", default=None,
     )
     tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
-    local_alignment_file: Optional[str] = strawberry.field(description="Path to the local alignment file", default=None)
     affine_transformation_matrix: Optional[str] = strawberry.field(
         description="A placeholder for the affine transformation matrix.", default=None,
+    )
+    s3_alignment_metadata: Optional[str] = strawberry.field(
+        description="S3 path to the metadata file for this alignment", default=None,
+    )
+    https_alignment_metadata: Optional[str] = strawberry.field(
+        description="HTTPS url to the metadata file for this alignment", default=None,
+    )
+    is_portal_standard: Optional[bool] = strawberry.field(
+        description="Whether this is the portal standard alignment", default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -460,8 +478,9 @@ class AlignmentMinMaxColumns:
     volume_z_offset: Optional[float] = None
     x_rotation_offset: Optional[float] = None
     tilt_offset: Optional[float] = None
-    local_alignment_file: Optional[str] = None
     affine_transformation_matrix: Optional[str] = None
+    s3_alignment_metadata: Optional[str] = None
+    https_alignment_metadata: Optional[str] = None
     id: Optional[int] = None
 
 
@@ -479,6 +498,7 @@ class AlignmentCountColumns(enum.Enum):
     tomograms = "tomograms"
     run = "run"
     alignmentType = "alignment_type"
+    alignmentMethod = "alignment_method"
     volumeXDimension = "volume_x_dimension"
     volumeYDimension = "volume_y_dimension"
     volumeZDimension = "volume_z_dimension"
@@ -487,8 +507,10 @@ class AlignmentCountColumns(enum.Enum):
     volumeZOffset = "volume_z_offset"
     xRotationOffset = "x_rotation_offset"
     tiltOffset = "tilt_offset"
-    localAlignmentFile = "local_alignment_file"
     affineTransformationMatrix = "affine_transformation_matrix"
+    s3AlignmentMetadata = "s3_alignment_metadata"
+    httpsAlignmentMetadata = "https_alignment_metadata"
+    isPortalStandard = "is_portal_standard"
     id = "id"
 
 
@@ -539,6 +561,9 @@ class AlignmentCreateInput:
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
         description="Whether this a LOCAL or GLOBAL alignment", default=None,
     )
+    alignment_method: Optional[alignment_method_type_enum] = strawberry.field(
+        description="The method used to create this alignment", default=None,
+    )
     volume_x_dimension: Optional[float] = strawberry.field(
         description="X dimension of the reconstruction volume in angstrom", default=None,
     )
@@ -561,9 +586,17 @@ class AlignmentCreateInput:
         description="Additional X rotation of the reconstruction volume in degrees", default=None,
     )
     tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
-    local_alignment_file: Optional[str] = strawberry.field(description="Path to the local alignment file", default=None)
     affine_transformation_matrix: Optional[str] = strawberry.field(
         description="A placeholder for the affine transformation matrix.", default=None,
+    )
+    s3_alignment_metadata: Optional[str] = strawberry.field(
+        description="S3 path to the metadata file for this alignment", default=None,
+    )
+    https_alignment_metadata: Optional[str] = strawberry.field(
+        description="HTTPS url to the metadata file for this alignment", default=None,
+    )
+    is_portal_standard: Optional[bool] = strawberry.field(
+        description="Whether this is the portal standard alignment", default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -576,6 +609,9 @@ class AlignmentUpdateInput:
     alignment_type: Optional[alignment_type_enum] = strawberry.field(
         description="Whether this a LOCAL or GLOBAL alignment", default=None,
     )
+    alignment_method: Optional[alignment_method_type_enum] = strawberry.field(
+        description="The method used to create this alignment", default=None,
+    )
     volume_x_dimension: Optional[float] = strawberry.field(
         description="X dimension of the reconstruction volume in angstrom", default=None,
     )
@@ -598,9 +634,17 @@ class AlignmentUpdateInput:
         description="Additional X rotation of the reconstruction volume in degrees", default=None,
     )
     tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
-    local_alignment_file: Optional[str] = strawberry.field(description="Path to the local alignment file", default=None)
     affine_transformation_matrix: Optional[str] = strawberry.field(
         description="A placeholder for the affine transformation matrix.", default=None,
+    )
+    s3_alignment_metadata: Optional[str] = strawberry.field(
+        description="S3 path to the metadata file for this alignment", default=None,
+    )
+    https_alignment_metadata: Optional[str] = strawberry.field(
+        description="HTTPS url to the metadata file for this alignment", default=None,
+    )
+    is_portal_standard: Optional[bool] = strawberry.field(
+        description="Whether this is the portal standard alignment", default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 

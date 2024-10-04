@@ -44,18 +44,6 @@ class TiltseriesCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    s3_collection_metadata: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_collection_metadata: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     s3_angle_list: Annotated[
         str | None,
         StringConstraints(
@@ -63,18 +51,6 @@ class TiltseriesCreateInputValidator(BaseModel):
         ),
     ]
     https_angle_list: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    s3_gain_file: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_gain_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -221,7 +197,6 @@ class TiltseriesCreateInputValidator(BaseModel):
             ge=0,
         ),
     ]
-    frames_count: Annotated[int | None, Field()]
     id: Annotated[int, Field()]
 
 
@@ -254,18 +229,6 @@ class TiltseriesUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    s3_collection_metadata: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_collection_metadata: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     s3_angle_list: Annotated[
         str | None,
         StringConstraints(
@@ -273,18 +236,6 @@ class TiltseriesUpdateInputValidator(BaseModel):
         ),
     ]
     https_angle_list: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    s3_gain_file: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_gain_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
@@ -431,5 +382,4 @@ class TiltseriesUpdateInputValidator(BaseModel):
             ge=0,
         ),
     ]
-    frames_count: Annotated[int | None, Field()]
     id: Annotated[int | None, Field()]

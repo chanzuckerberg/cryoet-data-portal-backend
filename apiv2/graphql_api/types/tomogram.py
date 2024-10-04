@@ -33,6 +33,7 @@ from platformics.graphql_api.core.errors import PlatformicsError
 from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
 from platformics.graphql_api.core.query_input_types import (
     BoolComparators,
+    DatetimeComparators,
     EnumComparators,
     FloatComparators,
     IntComparators,
@@ -234,7 +235,9 @@ class TomogramWhereClause(TypedDict):
     tomogram_version: Optional[FloatComparators] | None
     processing_software: Optional[StrComparators] | None
     reconstruction_software: Optional[StrComparators] | None
-    is_canonical: Optional[BoolComparators] | None
+    is_portal_standard: Optional[BoolComparators] | None
+    is_author_submitted: Optional[BoolComparators] | None
+    is_visualization_default: Optional[BoolComparators] | None
     s3_omezarr_dir: Optional[StrComparators] | None
     https_omezarr_dir: Optional[StrComparators] | None
     s3_mrc_file: Optional[StrComparators] | None
@@ -249,8 +252,12 @@ class TomogramWhereClause(TypedDict):
     key_photo_url: Optional[StrComparators] | None
     key_photo_thumbnail_url: Optional[StrComparators] | None
     neuroglancer_config: Optional[StrComparators] | None
-    is_standardized: Optional[BoolComparators] | None
+    publications: Optional[StrComparators] | None
+    related_database_entries: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
+    deposition_date: Optional[DatetimeComparators] | None
+    release_date: Optional[DatetimeComparators] | None
+    last_modified_date: Optional[DatetimeComparators] | None
 
 
 """
@@ -280,7 +287,9 @@ class TomogramOrderByClause(TypedDict):
     tomogram_version: Optional[orderBy] | None
     processing_software: Optional[orderBy] | None
     reconstruction_software: Optional[orderBy] | None
-    is_canonical: Optional[orderBy] | None
+    is_portal_standard: Optional[orderBy] | None
+    is_author_submitted: Optional[orderBy] | None
+    is_visualization_default: Optional[orderBy] | None
     s3_omezarr_dir: Optional[orderBy] | None
     https_omezarr_dir: Optional[orderBy] | None
     s3_mrc_file: Optional[orderBy] | None
@@ -295,8 +304,12 @@ class TomogramOrderByClause(TypedDict):
     key_photo_url: Optional[orderBy] | None
     key_photo_thumbnail_url: Optional[orderBy] | None
     neuroglancer_config: Optional[orderBy] | None
-    is_standardized: Optional[orderBy] | None
+    publications: Optional[orderBy] | None
+    related_database_entries: Optional[orderBy] | None
     id: Optional[orderBy] | None
+    deposition_date: Optional[orderBy] | None
+    release_date: Optional[orderBy] | None
+    last_modified_date: Optional[orderBy] | None
 
 
 """
@@ -347,8 +360,15 @@ class Tomogram(EntityInterface):
         description="Processing software used to derive the tomogram", default=None,
     )
     reconstruction_software: str = strawberry.field(description="Name of software used for reconstruction")
-    is_canonical: Optional[bool] = strawberry.field(
-        description="Is this tomogram considered the canonical tomogram for the run experiment? True=Yes", default=None,
+    is_portal_standard: Optional[bool] = strawberry.field(
+        description="whether this tomogram adheres to portal standards", default=None,
+    )
+    is_author_submitted: Optional[bool] = strawberry.field(
+        description="Whether this tomogram was submitted by the author of the dataset it belongs to.", default=None,
+    )
+    is_visualization_default: Optional[bool] = strawberry.field(
+        description="Data curator’s subjective choice of default tomogram to display in visualization for a run",
+        default=None,
     )
     s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tomogram in multiscale OME-Zarr format", default=None,
@@ -382,10 +402,23 @@ class Tomogram(EntityInterface):
     neuroglancer_config: Optional[str] = strawberry.field(
         description="the compact json of neuroglancer config", default=None,
     )
-    is_standardized: bool = strawberry.field(
-        description="Whether this tomogram was generated per the portal's standards",
+    publications: Optional[str] = strawberry.field(
+        description="Comma-separated list of DOIs for publications associated with the tomogram.", default=None,
+    )
+    related_database_entries: Optional[str] = strawberry.field(
+        description="If a CryoET tomogram is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
+    deposition_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
+    )
+    release_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
+    )
+    last_modified_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a piece of data was last modified on the cryoET data portal.", default=None,
+    )
 
 
 """
@@ -447,7 +480,12 @@ class TomogramMinMaxColumns:
     key_photo_url: Optional[str] = None
     key_photo_thumbnail_url: Optional[str] = None
     neuroglancer_config: Optional[str] = None
+    publications: Optional[str] = None
+    related_database_entries: Optional[str] = None
     id: Optional[int] = None
+    deposition_date: Optional[datetime.datetime] = None
+    release_date: Optional[datetime.datetime] = None
+    last_modified_date: Optional[datetime.datetime] = None
 
 
 """
@@ -473,7 +511,9 @@ class TomogramCountColumns(enum.Enum):
     tomogramVersion = "tomogram_version"
     processingSoftware = "processing_software"
     reconstructionSoftware = "reconstruction_software"
-    isCanonical = "is_canonical"
+    isPortalStandard = "is_portal_standard"
+    isAuthorSubmitted = "is_author_submitted"
+    isVisualizationDefault = "is_visualization_default"
     s3OmezarrDir = "s3_omezarr_dir"
     httpsOmezarrDir = "https_omezarr_dir"
     s3MrcFile = "s3_mrc_file"
@@ -488,8 +528,12 @@ class TomogramCountColumns(enum.Enum):
     keyPhotoUrl = "key_photo_url"
     keyPhotoThumbnailUrl = "key_photo_thumbnail_url"
     neuroglancerConfig = "neuroglancer_config"
-    isStandardized = "is_standardized"
+    publications = "publications"
+    relatedDatabaseEntries = "related_database_entries"
     id = "id"
+    depositionDate = "deposition_date"
+    releaseDate = "release_date"
+    lastModifiedDate = "last_modified_date"
 
 
 """
@@ -562,8 +606,15 @@ class TomogramCreateInput:
         description="Processing software used to derive the tomogram", default=None,
     )
     reconstruction_software: str = strawberry.field(description="Name of software used for reconstruction")
-    is_canonical: Optional[bool] = strawberry.field(
-        description="Is this tomogram considered the canonical tomogram for the run experiment? True=Yes", default=None,
+    is_portal_standard: Optional[bool] = strawberry.field(
+        description="whether this tomogram adheres to portal standards", default=None,
+    )
+    is_author_submitted: Optional[bool] = strawberry.field(
+        description="Whether this tomogram was submitted by the author of the dataset it belongs to.", default=None,
+    )
+    is_visualization_default: Optional[bool] = strawberry.field(
+        description="Data curator’s subjective choice of default tomogram to display in visualization for a run",
+        default=None,
     )
     s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tomogram in multiscale OME-Zarr format", default=None,
@@ -597,10 +648,23 @@ class TomogramCreateInput:
     neuroglancer_config: Optional[str] = strawberry.field(
         description="the compact json of neuroglancer config", default=None,
     )
-    is_standardized: bool = strawberry.field(
-        description="Whether this tomogram was generated per the portal's standards",
+    publications: Optional[str] = strawberry.field(
+        description="Comma-separated list of DOIs for publications associated with the tomogram.", default=None,
+    )
+    related_database_entries: Optional[str] = strawberry.field(
+        description="If a CryoET tomogram is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
+    deposition_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
+    )
+    release_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
+    )
+    last_modified_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a piece of data was last modified on the cryoET data portal.", default=None,
+    )
 
 
 @strawberry.input()
@@ -634,8 +698,15 @@ class TomogramUpdateInput:
         description="Processing software used to derive the tomogram", default=None,
     )
     reconstruction_software: Optional[str] = strawberry.field(description="Name of software used for reconstruction")
-    is_canonical: Optional[bool] = strawberry.field(
-        description="Is this tomogram considered the canonical tomogram for the run experiment? True=Yes", default=None,
+    is_portal_standard: Optional[bool] = strawberry.field(
+        description="whether this tomogram adheres to portal standards", default=None,
+    )
+    is_author_submitted: Optional[bool] = strawberry.field(
+        description="Whether this tomogram was submitted by the author of the dataset it belongs to.", default=None,
+    )
+    is_visualization_default: Optional[bool] = strawberry.field(
+        description="Data curator’s subjective choice of default tomogram to display in visualization for a run",
+        default=None,
     )
     s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tomogram in multiscale OME-Zarr format", default=None,
@@ -669,10 +740,23 @@ class TomogramUpdateInput:
     neuroglancer_config: Optional[str] = strawberry.field(
         description="the compact json of neuroglancer config", default=None,
     )
-    is_standardized: Optional[bool] = strawberry.field(
-        description="Whether this tomogram was generated per the portal's standards",
+    publications: Optional[str] = strawberry.field(
+        description="Comma-separated list of DOIs for publications associated with the tomogram.", default=None,
+    )
+    related_database_entries: Optional[str] = strawberry.field(
+        description="If a CryoET tomogram is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.",
+        default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
+    deposition_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
+    )
+    release_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a data item was received by the cryoET data portal.", default=None,
+    )
+    last_modified_date: Optional[datetime.datetime] = strawberry.field(
+        description="The date a piece of data was last modified on the cryoET data portal.", default=None,
+    )
 
 
 """

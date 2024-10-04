@@ -17,14 +17,9 @@ import database.models as db
 import strawberry
 from fastapi import Depends
 from graphql_api.helpers.frame import FrameGroupByOptions, build_frame_groupby_output
-from graphql_api.types.per_section_parameters import (
-    PerSectionParametersAggregate,
-    format_per_section_parameters_aggregate_output,
-)
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
-from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
@@ -50,11 +45,6 @@ T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
-    from graphql_api.types.per_section_parameters import (
-        PerSectionParameters,
-        PerSectionParametersOrderByClause,
-        PerSectionParametersWhereClause,
-    )
     from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
 
     pass
@@ -62,9 +52,6 @@ else:
     DepositionWhereClause = "DepositionWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
-    PerSectionParametersWhereClause = "PerSectionParametersWhereClause"
-    PerSectionParameters = "PerSectionParameters"
-    PerSectionParametersOrderByClause = "PerSectionParametersOrderByClause"
     RunWhereClause = "RunWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
@@ -92,46 +79,6 @@ async def load_deposition_rows(
     mapper = inspect(db.Frame)
     relationship = mapper.relationships["deposition"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
-
-
-@relay.connection(
-    relay.ListConnection[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ],  # type:ignore
-)
-async def load_per_section_parameters_rows(
-    root: "Frame",
-    info: Info,
-    where: (
-        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
-    ) = None,
-    order_by: Optional[
-        list[
-            Annotated["PerSectionParametersOrderByClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
-        ]
-    ] = [],
-) -> Sequence[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
-    dataloader = info.context["sqlalchemy_loader"]
-    mapper = inspect(db.Frame)
-    relationship = mapper.relationships["per_section_parameters"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
-@strawberry.field
-async def load_per_section_parameters_aggregate_rows(
-    root: "Frame",
-    info: Info,
-    where: (
-        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
-    ) = None,
-) -> Optional[Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
-    selections = info.selected_fields[0].selections[0].selections
-    dataloader = info.context["sqlalchemy_loader"]
-    mapper = inspect(db.Frame)
-    relationship = mapper.relationships["per_section_parameters"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
-    aggregate_output = format_per_section_parameters_aggregate_output(rows)
-    return aggregate_output
 
 
 @strawberry.field
@@ -174,20 +121,12 @@ Supported WHERE clause attributes
 class FrameWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
     deposition_id: Optional[IntComparators] | None
-    per_section_parameters: (
-        Optional[
-            Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
-        ]
-        | None
-    )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     run_id: Optional[IntComparators] | None
     raw_angle: Optional[FloatComparators] | None
     acquisition_order: Optional[IntComparators] | None
     dose: Optional[FloatComparators] | None
     is_gain_corrected: Optional[BoolComparators] | None
-    s3_gain_file: Optional[StrComparators] | None
-    https_gain_file: Optional[StrComparators] | None
     s3_prefix: Optional[StrComparators] | None
     https_prefix: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
@@ -206,8 +145,6 @@ class FrameOrderByClause(TypedDict):
     acquisition_order: Optional[orderBy] | None
     dose: Optional[orderBy] | None
     is_gain_corrected: Optional[orderBy] | None
-    s3_gain_file: Optional[orderBy] | None
-    https_gain_file: Optional[orderBy] | None
     s3_prefix: Optional[orderBy] | None
     https_prefix: Optional[orderBy] | None
     id: Optional[orderBy] | None
@@ -224,12 +161,6 @@ class Frame(EntityInterface):
         load_deposition_rows
     )  # type:ignore
     deposition_id: Optional[int]
-    per_section_parameters: Sequence[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ] = load_per_section_parameters_rows  # type:ignore
-    per_section_parameters_aggregate: Optional[
-        Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ] = load_per_section_parameters_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: Optional[int]
     raw_angle: float = strawberry.field(description="Camera angle for a frame")
@@ -239,10 +170,6 @@ class Frame(EntityInterface):
     dose: float = strawberry.field(description="The raw camera angle for a frame")
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
-    )
-    s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
-    https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame", default=None,
     )
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
@@ -287,8 +214,6 @@ class FrameMinMaxColumns:
     raw_angle: Optional[float] = None
     acquisition_order: Optional[int] = None
     dose: Optional[float] = None
-    s3_gain_file: Optional[str] = None
-    https_gain_file: Optional[str] = None
     s3_prefix: Optional[str] = None
     https_prefix: Optional[str] = None
     id: Optional[int] = None
@@ -302,14 +227,11 @@ Define enum of all columns to support count and count(distinct) aggregations
 @strawberry.enum
 class FrameCountColumns(enum.Enum):
     deposition = "deposition"
-    perSectionParameters = "per_section_parameters"
     run = "run"
     rawAngle = "raw_angle"
     acquisitionOrder = "acquisition_order"
     dose = "dose"
     isGainCorrected = "is_gain_corrected"
-    s3GainFile = "s3_gain_file"
-    httpsGainFile = "https_gain_file"
     s3Prefix = "s3_prefix"
     httpsPrefix = "https_prefix"
     id = "id"
@@ -366,10 +288,6 @@ class FrameCreateInput:
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
-    https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame", default=None,
-    )
     s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
     https_prefix: str = strawberry.field(
         description="Path to a directory containing data for this entity as an HTTPS url",
@@ -388,10 +306,6 @@ class FrameUpdateInput:
     dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame")
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
-    )
-    s3_gain_file: Optional[str] = strawberry.field(description="S3 path to the gain file for this frame", default=None)
-    https_gain_file: Optional[str] = strawberry.field(
-        description="HTTPS path to the gain file for this frame", default=None,
     )
     s3_prefix: Optional[str] = strawberry.field(
         description="Path to a directory containing data for this entity as an S3 url",

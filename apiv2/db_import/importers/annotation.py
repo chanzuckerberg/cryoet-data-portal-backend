@@ -1,4 +1,3 @@
-import json
 from typing import Any, Iterator
 
 from database import models
@@ -34,7 +33,6 @@ class AnnotationDBImporter(BaseDBImporter):
 
     def get_data_map(self) -> dict[str, Any]:
         deposition = get_deposition(self.config, self.metadata.get("deposition_id"))
-        method_links = self.metadata.get("method_links")
         return {
             "s3_metadata_path": self.join_path(self.config.s3_prefix, self.metadata_path),
             "https_metadata_path": self.join_path(self.config.https_prefix, self.metadata_path),
@@ -56,7 +54,6 @@ class AnnotationDBImporter(BaseDBImporter):
             "is_curator_recommended": ["is_curator_recommended"],
             "method_type": ["method_type"],
             "deposition_id": deposition.id,
-            "method_links": json.dumps(method_links) if method_links else None,
         }
 
     def import_to_db(self) -> Base:
@@ -213,6 +210,42 @@ class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
     @classmethod
     def get_db_model_class(cls) -> type[Base]:
         return models.AnnotationAuthor
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"annotation_id": self.annotation_id}
+
+    @classmethod
+    def get_item(
+        cls,
+        annotation_id: int,
+        parent: AnnotationDBImporter,
+        config: DBImportConfig,
+    ) -> "AnnotationAuthorDBImporter":
+        return cls(annotation_id, parent, config)
+
+
+class AnnotationMethodLinkDBImporter(StaleDeletionDBImporter):
+    def __init__(self, annotation_id: int, parent: AnnotationDBImporter, config: DBImportConfig):
+        self.annotation_id = annotation_id
+        self.parent = parent
+        self.config = config
+        self.metadata = parent.metadata.get("method_links", [])
+
+    def get_data_map(self) -> dict[str, Any]:
+        return {
+            "annotation_id": self.annotation_id,
+            "link_type": ["link_type"],
+            "name": ["custom_name"],
+            "link": ["link"],
+        }
+
+    @classmethod
+    def get_id_fields(cls) -> list[str]:
+        return ["annotation_id", "link"]
+
+    @classmethod
+    def get_db_model_class(cls) -> type[Base]:
+        return models.AnnotationMethodLink
 
     def get_filters(self) -> dict[str, Any]:
         return {"annotation_id": self.annotation_id}

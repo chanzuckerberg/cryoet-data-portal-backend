@@ -15,7 +15,6 @@ from platformics.database.models.file import File
 
 if TYPE_CHECKING:
     from database.models.deposition import Deposition
-    from database.models.per_section_parameters import PerSectionParameters
     from database.models.run import Run
 
     from platformics.database.models.file import File
@@ -24,7 +23,6 @@ if TYPE_CHECKING:
 else:
     File = "File"
     Deposition = "Deposition"
-    PerSectionParameters = "PerSectionParameters"
     Run = "Run"
     ...
 
@@ -39,13 +37,6 @@ class Frame(Base):
         foreign_keys=deposition_id,
         back_populates="frames",
     )
-    per_section_parameters: Mapped[list[PerSectionParameters]] = relationship(
-        "PerSectionParameters",
-        back_populates="frame",
-        uselist=True,
-        foreign_keys="PerSectionParameters.frame_id",
-        cascade="all, delete-orphan",
-    )
     run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=True, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
@@ -56,8 +47,6 @@ class Frame(Base):
     acquisition_order: Mapped[int] = mapped_column(Integer, nullable=True)
     dose: Mapped[float] = mapped_column(Float, nullable=False)
     is_gain_corrected: Mapped[bool] = mapped_column(Boolean, nullable=True)
-    s3_gain_file: Mapped[str] = mapped_column(String, nullable=True)
-    https_gain_file: Mapped[str] = mapped_column(String, nullable=True)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
     https_prefix: Mapped[str] = mapped_column(String, nullable=False)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

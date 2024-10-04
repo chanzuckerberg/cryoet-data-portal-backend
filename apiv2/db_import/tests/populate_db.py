@@ -1,10 +1,11 @@
-from datetime import datetime
+from datetime import date, datetime
 
 import sqlalchemy as sa
 from database.models import (
     Annotation,
     AnnotationAuthor,
     AnnotationFile,
+    AnnotationMethodLink,
     AnnotationShape,
     Dataset,
     DatasetAuthor,
@@ -34,6 +35,7 @@ TOMOGRAM_AUTHOR_ID = 701
 ANNOTATION_ID = 602
 ANNOTATION_FILE_ID = 701
 ANNOTATION_AUTHOR_ID = 702
+ANNOTATION_METHOD_LINK_ID = 802
 
 STALE_RUN_ID = 902
 STALE_TOMOGRAM_ID = 903
@@ -49,9 +51,9 @@ def stale_deposition_metadata() -> dict:
         "id": DEPOSITION_ID1,
         "title": "Test Deposition",
         "description": "Test Description",
-        "deposition_date": datetime.now().date(),
-        "release_date": datetime.now().date(),
-        "last_modified_date": datetime.now().date(),
+        "deposition_date": date(2022, 4, 2),
+        "release_date": date(2022, 6, 1),
+        "last_modified_date": date(2022, 9, 2),
         "deposition_publications": "Publications",
     }
 
@@ -233,7 +235,10 @@ def populate_stale_tomogram_voxel_spacing(session: sa.orm.Session, run_id: int =
         offset_x=0,
         offset_y=0,
         offset_z=0,
-        is_standardized=True,
+        is_portal_standard=True,
+        deposition_date=datetime.min,
+        release_date=datetime.min,
+        last_modified_date=datetime.min,
     )
     session.add(stale_tomogram)
     session.add(TomogramAuthor(tomogram=stale_tomogram, name="Jane Smith", author_list_order=1))
@@ -284,7 +289,10 @@ def populate_tomograms(session: sa.orm.Session) -> Tomogram:
         offset_x=0,
         offset_y=0,
         offset_z=0,
-        is_standardized=True,
+        is_portal_standard=True,
+        deposition_date=datetime.min,
+        release_date=datetime.min,
+        last_modified_date=datetime.min,
     )
 
 
@@ -314,7 +322,10 @@ def populate_stale_tomograms(session: sa.orm.Session) -> Tomogram:
         offset_x=0,
         offset_y=0,
         offset_z=0,
-        is_standardized=True,
+        is_portal_standard=True,
+        deposition_date=datetime.min,
+        release_date=datetime.min,
+        last_modified_date=datetime.min,
     )
 
 
@@ -528,6 +539,44 @@ def populate_annotation_authors(session: sa.orm.Session) -> None:
         author_list_order=1,
     )
     session.add(author2)
+
+
+@write_data
+def populate_stale_annotation_method_links(session: sa.orm.Session) -> None:
+    populate_stale_annotations(session)
+    session.add(
+        AnnotationMethodLink(
+            annotation_id=STALE_ANNOTATION_ID, name="Stale Link 0", link_type="other", link="https://some-link.com",
+        ),
+    )
+    session.add(
+        AnnotationMethodLink(
+            annotation_id=STALE_ANNOTATION_ID,
+            name="Stale link",
+            link_type="source_code",
+            link="https://stale-link.com",
+        ),
+    )
+
+
+@write_data
+def populate_annotation_method_links(session: sa.orm.Session) -> None:
+    populate_annotations(session)
+    row = AnnotationMethodLink(
+        id=ANNOTATION_METHOD_LINK_ID,
+        annotation_id=ANNOTATION_ID,
+        link="https://fake-link.com/resources/100-foo-1.0_method.pdf",
+        link_type="documentation",
+        name="Method Documentation",
+    )
+    session.add(row)
+    row2 = AnnotationMethodLink(
+        annotation_id=ANNOTATION_ID,
+        link="https://another-link.com",
+        link_type="website",
+        name="Stale Link",
+    )
+    session.add(row2)
 
 
 @write_data

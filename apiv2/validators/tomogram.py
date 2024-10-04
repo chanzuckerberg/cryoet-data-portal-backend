@@ -8,6 +8,7 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+import datetime
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
@@ -68,7 +69,9 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    is_canonical: Annotated[bool | None, Field()]
+    is_portal_standard: Annotated[bool | None, Field()]
+    is_author_submitted: Annotated[bool | None, Field()]
+    is_visualization_default: Annotated[bool | None, Field()]
     s3_omezarr_dir: Annotated[
         str | None,
         StringConstraints(
@@ -133,8 +136,24 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    is_standardized: Annotated[bool, Field()]
+    publications: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
+        ),
+    ]
+    related_database_entries: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)",
+        ),
+    ]
     id: Annotated[int, Field()]
+    deposition_date: Annotated[datetime.datetime | None, Field()]
+    release_date: Annotated[datetime.datetime | None, Field()]
+    last_modified_date: Annotated[datetime.datetime | None, Field()]
 
 
 class TomogramUpdateInputValidator(BaseModel):
@@ -190,7 +209,9 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    is_canonical: Annotated[bool | None, Field()]
+    is_portal_standard: Annotated[bool | None, Field()]
+    is_author_submitted: Annotated[bool | None, Field()]
+    is_visualization_default: Annotated[bool | None, Field()]
     s3_omezarr_dir: Annotated[
         str | None,
         StringConstraints(
@@ -255,5 +276,21 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    is_standardized: Annotated[bool | None, Field()]
+    publications: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
+        ),
+    ]
+    related_database_entries: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|pdb[0-9a-zA-Z]{4,8}))*$)",
+        ),
+    ]
     id: Annotated[int | None, Field()]
+    deposition_date: Annotated[datetime.datetime | None, Field()]
+    release_date: Annotated[datetime.datetime | None, Field()]
+    last_modified_date: Annotated[datetime.datetime | None, Field()]

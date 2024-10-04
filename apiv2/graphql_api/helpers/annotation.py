@@ -37,7 +37,6 @@ class AnnotationGroupByOptions:
     https_metadata_path: Optional[str] = None
     annotation_publication: Optional[str] = None
     annotation_method: Optional[str] = None
-    method_links: Optional[str] = None
     ground_truth_status: Optional[bool] = None
     object_id: Optional[str] = None
     object_name: Optional[str] = None

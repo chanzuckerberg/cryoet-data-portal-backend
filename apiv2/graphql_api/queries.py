@@ -27,6 +27,12 @@ from graphql_api.types.annotation_file import (
     resolve_annotation_files,
     resolve_annotation_files_aggregate,
 )
+from graphql_api.types.annotation_method_link import (
+    AnnotationMethodLink,
+    AnnotationMethodLinkAggregate,
+    resolve_annotation_method_links,
+    resolve_annotation_method_links_aggregate,
+)
 from graphql_api.types.annotation_shape import (
     AnnotationShape,
     AnnotationShapeAggregate,
@@ -65,17 +71,18 @@ from graphql_api.types.deposition_type import (
     resolve_deposition_types_aggregate,
 )
 from graphql_api.types.frame import Frame, FrameAggregate, resolve_frames, resolve_frames_aggregate
+from graphql_api.types.frame_acquisition_file import (
+    FrameAcquisitionFile,
+    FrameAcquisitionFileAggregate,
+    resolve_frame_acquisition_files,
+    resolve_frame_acquisition_files_aggregate,
+)
+from graphql_api.types.gain_file import GainFile, GainFileAggregate, resolve_gain_files, resolve_gain_files_aggregate
 from graphql_api.types.per_section_alignment_parameters import (
     PerSectionAlignmentParameters,
     PerSectionAlignmentParametersAggregate,
     resolve_per_section_alignment_parameters,
     resolve_per_section_alignment_parameters_aggregate,
-)
-from graphql_api.types.per_section_parameters import (
-    PerSectionParameters,
-    PerSectionParametersAggregate,
-    resolve_per_section_parameters,
-    resolve_per_section_parameters_aggregate,
 )
 from graphql_api.types.run import Run, RunAggregate, resolve_runs, resolve_runs_aggregate
 from graphql_api.types.tiltseries import (
@@ -108,6 +115,8 @@ class Query:
     #
 
     # Query entities
+    gain_files: Sequence[GainFile] = resolve_gain_files
+    frame_acquisition_files: Sequence[FrameAcquisitionFile] = resolve_frame_acquisition_files
     alignments: Sequence[Alignment] = resolve_alignments
     annotation_authors: Sequence[AnnotationAuthor] = resolve_annotation_authors
     annotation_files: Sequence[AnnotationFile] = resolve_annotation_files
@@ -120,15 +129,17 @@ class Query:
     depositions: Sequence[Deposition] = resolve_depositions
     deposition_types: Sequence[DepositionType] = resolve_deposition_types
     frames: Sequence[Frame] = resolve_frames
-    per_section_parameters: Sequence[PerSectionParameters] = resolve_per_section_parameters
     per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = resolve_per_section_alignment_parameters
     runs: Sequence[Run] = resolve_runs
     tiltseries: Sequence[Tiltseries] = resolve_tiltseries
     tomogram_authors: Sequence[TomogramAuthor] = resolve_tomogram_authors
     tomogram_voxel_spacings: Sequence[TomogramVoxelSpacing] = resolve_tomogram_voxel_spacings
     tomograms: Sequence[Tomogram] = resolve_tomograms
+    annotation_method_links: Sequence[AnnotationMethodLink] = resolve_annotation_method_links
 
     # Query entity aggregates
+    gain_files_aggregate: GainFileAggregate = resolve_gain_files_aggregate
+    frame_acquisition_files_aggregate: FrameAcquisitionFileAggregate = resolve_frame_acquisition_files_aggregate
     alignments_aggregate: AlignmentAggregate = resolve_alignments_aggregate
     annotation_authors_aggregate: AnnotationAuthorAggregate = resolve_annotation_authors_aggregate
     annotation_files_aggregate: AnnotationFileAggregate = resolve_annotation_files_aggregate
@@ -141,7 +152,6 @@ class Query:
     depositions_aggregate: DepositionAggregate = resolve_depositions_aggregate
     deposition_types_aggregate: DepositionTypeAggregate = resolve_deposition_types_aggregate
     frames_aggregate: FrameAggregate = resolve_frames_aggregate
-    per_section_parameters_aggregate: PerSectionParametersAggregate = resolve_per_section_parameters_aggregate
     per_section_alignment_parameters_aggregate: PerSectionAlignmentParametersAggregate = (
         resolve_per_section_alignment_parameters_aggregate
     )
@@ -150,3 +160,4 @@ class Query:
     tomogram_authors_aggregate: TomogramAuthorAggregate = resolve_tomogram_authors_aggregate
     tomogram_voxel_spacings_aggregate: TomogramVoxelSpacingAggregate = resolve_tomogram_voxel_spacings_aggregate
     tomograms_aggregate: TomogramAggregate = resolve_tomograms_aggregate
+    annotation_method_links_aggregate: AnnotationMethodLinkAggregate = resolve_annotation_method_links_aggregate

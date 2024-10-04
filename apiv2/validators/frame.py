@@ -29,18 +29,6 @@ class FrameCreateInputValidator(BaseModel):
     acquisition_order: Annotated[int | None, Field()]
     dose: Annotated[float, Field()]
     is_gain_corrected: Annotated[bool | None, Field()]
-    s3_gain_file: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_gain_file: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     s3_prefix: Annotated[
         str,
         StringConstraints(
@@ -71,18 +59,6 @@ class FrameUpdateInputValidator(BaseModel):
     acquisition_order: Annotated[int | None, Field()]
     dose: Annotated[float | None, Field()]
     is_gain_corrected: Annotated[bool | None, Field()]
-    s3_gain_file: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_gain_file: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
     s3_prefix: Annotated[
         str | None,
         StringConstraints(

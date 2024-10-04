@@ -18,6 +18,13 @@ class annotation_file_source_enum(enum.StrEnum):
 
 
 @strawberry.enum
+class alignment_method_type_enum(enum.StrEnum):
+    projection_matching = "projection_matching"
+    patch_tracking = "patch_tracking"
+    fiducial_based = "fiducial_based"
+
+
+@strawberry.enum
 class annotation_method_type_enum(enum.StrEnum):
     manual = "manual"
     automated = "automated"

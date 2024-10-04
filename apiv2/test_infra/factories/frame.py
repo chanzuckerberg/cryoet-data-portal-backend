@@ -40,8 +40,6 @@ class FrameFactory(CommonFactory):
     acquisition_order = fuzzy.FuzzyInteger(1, 1000)
     dose = fuzzy.FuzzyFloat(1, 100)
     is_gain_corrected = factory.Faker("boolean")
-    s3_gain_file = fuzzy.FuzzyText()
-    https_gain_file = fuzzy.FuzzyText()
     s3_prefix = fuzzy.FuzzyText()
     https_prefix = fuzzy.FuzzyText()
     id = fuzzy.FuzzyInteger(1, 1000)
