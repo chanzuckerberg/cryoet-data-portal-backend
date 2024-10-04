@@ -152,6 +152,8 @@ python3 enqueue_runs.py sync --exclude '*' --include 'Annotations/*.json' --s3-p
 | --include-deposition | null    | Look for deposition metadata  with the deposition ids passed here. This helps sync the deposition data.                                                                                            |
 | --no-sync-dataset | False   | Skip syncing datasets. This is useful when we want to only update deposition data                                                                                                                  |
 
+## Retrieving logs from job runs
+Use the `fetch_enqueue_runs_logs.py` script to retrieve logs from the job runs. This script is used for fetching logs for the jobs run with `enqueue_runs.py` and categorizing them into success and failed directories based on the execution status. To provide the required ARNs needed for the `fetch_enqueue_runs_logs.py` script, run `enqueue_runs.py` with an output log file specified using the `--execution-machine-log` flag. See `fetch_enqueue_runs_logs.md` for more details.
 
 ## Building and pushing up a dev/test image:
 
