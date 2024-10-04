@@ -150,6 +150,11 @@ class AlignmentImporter(BaseFileImporter):
             return ts.get_metadata_path()
         return None
 
+    def get_tiltseries_path(self) -> str | None:
+        for ts in TiltSeriesImporter.finder(self.config, **self.parents):
+            return ts.get_metadata_path()
+        return None
+
     @classmethod
     def get_default_config(cls) -> list[dict]:
         return [{"metadata": cls.get_default_metadata(), "sources": [{"literal": {"value": ["default"]}}]}]
