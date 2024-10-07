@@ -84,7 +84,7 @@ class IMODAlignmentConverter(BaseAlignmentConverter):
         for path in self.paths:
             if path.endswith(tuple(valid_suffix)):
                 file_name = os.path.basename(path)
-                dest_filepath = f"{self.output_prefix}{file_name}"
+                dest_filepath = os.path.join(self.output_prefix, file_name)
                 if self.config.fs.exists(dest_filepath):
                     return dest_filepath
         return None

@@ -1,4 +1,5 @@
 import json
+import os.path
 from os.path import basename
 from typing import Callable
 
@@ -37,7 +38,8 @@ def input_bucket() -> str:
 def add_alignment_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[str, int], None]:
     def _add_alignment_metadata(prefix: str, deposition_id: int) -> None:
         body = json.dumps({"deposition_id": deposition_id}).encode("utf-8")
-        s3_client.put_object(Bucket=test_output_bucket, Key=f"{prefix}100-alignment_metadata.json", Body=body)
+        key = os.path.join(prefix, "alignment_metadata.json")
+        s3_client.put_object(Bucket=test_output_bucket, Key=key, Body=body)
 
     return _add_alignment_metadata
 
@@ -52,11 +54,11 @@ def validate_dataframe(
         body = get_data_from_s3(s3_client, bucket_name, path)
         return pd.read_csv(body, sep=r"\s+")
 
-    def validate(prefix: str, filename: str, id_prefix: int) -> None:
+    def validate(prefix: str, filename: str) -> None:
         alignment_files = {basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)}
-        assert f"{id_prefix}-{filename}" in alignment_files
+        assert filename in alignment_files
         actual = get_data_frame(input_bucket, f"input_bucket/10001_input/alignments/{filename}")
-        expected = get_data_frame(test_output_bucket, f"{prefix}{id_prefix}-{filename}")
+        expected = get_data_frame(test_output_bucket, os.path.join(prefix, filename))
         assert actual.equals(expected)
 
     return validate
@@ -64,8 +66,8 @@ def validate_dataframe(
 
 @pytest.fixture
 def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[dict, str, int], None]:
-    def validate(expected: dict, prefix: str, identifier: int) -> None:
-        key = f"{prefix}{identifier}-alignment_metadata.json"
+    def validate(expected: dict, prefix: str) -> None:
+        key = os.path.join(prefix, "alignment_metadata.json")
         actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
         for key in expected:
             assert actual[key] == expected[key], f"Key {key} does not match"
@@ -98,8 +100,8 @@ def create_config(
 def test_alignment_import_item(
     create_config: Callable[[str], DepositionImportConfig],
     add_alignment_metadata: Callable[[str, int], None],
-    validate_dataframe: Callable[[str, str, int], None],
-    validate_metadata: Callable[[dict, str, int], None],
+    validate_dataframe: Callable[[str, str], None],
+    validate_metadata: Callable[[dict, str], None],
     test_output_bucket: str,
     deposition_id: int,
     id_prefix: int,
@@ -110,20 +112,22 @@ def test_alignment_import_item(
     run_name = parents.get("run").name
     prefix = f"output/{dataset_name}/{run_name}/Alignments/"
     if deposition_id:
-        add_alignment_metadata(prefix, deposition_id)
+        existing_prefix = os.path.join(prefix, "100/")
+        add_alignment_metadata(existing_prefix, deposition_id)
 
     alignments = list(AlignmentImporter.finder(config, **parents))
     for alignment in alignments:
         alignment.import_item()
         alignment.import_metadata()
 
-    validate_dataframe(prefix, "TS_run1.xf", id_prefix)
-    validate_dataframe(prefix, "TS_run1.tlt", id_prefix)
-    validate_dataframe(prefix, "TS_run1.xtilt", id_prefix)
+    output_prefix = os.path.join(prefix, str(id_prefix))
+    validate_dataframe(output_prefix, "TS_run1.xf")
+    validate_dataframe(output_prefix, "TS_run1.tlt")
+    validate_dataframe(output_prefix, "TS_run1.xtilt")
 
     expected = {
         "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
-        "alignment_path": f"{test_output_bucket}/{prefix}{id_prefix}-TS_run1.xf",
+        "alignment_path": f"{test_output_bucket}/{output_prefix}/TS_run1.xf",
         "alignment_type": "LOCAL",
         "deposition_id": "10301",
         "is_portal_standard": True,
@@ -154,20 +158,20 @@ def test_alignment_import_item(
             },
         ],
         "tilt_offset": -0.3,
-        "tilt_path": f"{test_output_bucket}/{prefix}{id_prefix}-TS_run1.tlt",
-        "tiltx_path": f"{test_output_bucket}/{prefix}{id_prefix}-TS_run1.xtilt",
+        "tilt_path": f"{test_output_bucket}/{output_prefix}/TS_run1.tlt",
+        "tiltx_path": f"{test_output_bucket}/{output_prefix}/TS_run1.xtilt",
         "volume_dimension": {"x": 6, "y": 8, "z": 10},
         "volume_offset": {"x": -1, "y": 2, "z": -3},
         "x_rotation_offset": -2.3,
     }
-    validate_metadata(expected, prefix, id_prefix)
+    validate_metadata(expected, output_prefix)
 
 
 def test_default_alignment_import_with_tomograms(
     create_config: Callable[[str], DepositionImportConfig],
     s3_client: S3Client,
     test_output_bucket: str,
-    validate_metadata: Callable[[dict, str, int], None],
+    validate_metadata: Callable[[dict, str], None],
 ) -> None:
     config = create_config("alignments/alignment1.yaml")
     parents = get_parents(config)
@@ -198,7 +202,7 @@ def test_default_alignment_import_with_tomograms(
         "volume_offset": {"x": 0, "y": 0, "z": 0},
         "x_rotation_offset": 0,
     }
-    validate_metadata(expected, prefix, 100)
+    validate_metadata(expected, os.path.join(prefix, "100"))
 
 
 def test_default_alignment_import_without_tomograms(
@@ -225,8 +229,6 @@ def test_custom_alignment_import_without_tomograms(
     create_config: Callable[[str], DepositionImportConfig],
     s3_client: S3Client,
     test_output_bucket: str,
-    validate_dataframe: Callable[[str, str, int], None],
-    validate_metadata: Callable[[dict, str, int], None],
 ) -> None:
     config = create_config("alignments/alignment3.yaml")
     parents = get_parents(config)
@@ -259,13 +261,11 @@ def test_custom_alignment_with_dimensions_import_without_tomograms(
 
     dataset_name = parents.get("dataset").name
     run_name = parents.get("run").name
-    prefix = f"output/{dataset_name}/{run_name}/Alignments/"
-    id_prefix = 100
-
-    validate_dataframe(prefix, "TS_run1.xf", id_prefix)
+    prefix = f"output/{dataset_name}/{run_name}/Alignments/100"
+    validate_dataframe(prefix, "TS_run1.xf")
     expected = {
         "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
-        "alignment_path": f"{test_output_bucket}/{prefix}{id_prefix}-TS_run1.xf",
+        "alignment_path": f"{test_output_bucket}/{prefix}/TS_run1.xf",
         "alignment_type": "LOCAL",
         "deposition_id": "10301",
         "is_canonical": True,
@@ -302,7 +302,7 @@ def test_custom_alignment_with_dimensions_import_without_tomograms(
         "volume_offset": {"x": -1, "y": 2, "z": -3},
         "x_rotation_offset": -2.3,
     }
-    validate_metadata(expected, prefix, id_prefix)
+    validate_metadata(expected, prefix)
 
 
 def test_allow_import_is_false(
