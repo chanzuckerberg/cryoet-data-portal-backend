@@ -18,7 +18,8 @@ class TiltSeriesIdentifierHelper(IdentifierHelper):
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         run = parents["run"]
         tiltseries_dir_path = config.resolve_output_path("tiltseries", run)
-        return os.path.join(tiltseries_dir_path, "*tiltseries_metadata.json")
+        metadata_glob = os.path.join(tiltseries_dir_path, "*", "tiltseries_metadata.json")
+        return metadata_glob
 
     @classmethod
     def _generate_hash_key(
@@ -43,7 +44,7 @@ class TiltSeriesImporter(VolumeImporter):
     finder_factory = DefaultImporterFactory
     has_metadata = True
     dir_path = "{dataset_name}/{run_name}/TiltSeries/"
-    metadata_path = os.path.join(dir_path, "{tiltseries_id}-tiltseries_metadata.json")
+    metadata_path = os.path.join(dir_path, "{tiltseries_id}", "tiltseries_metadata.json")
 
     def __init__(
         self,

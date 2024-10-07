@@ -15,8 +15,8 @@ from tests.s3_import.util import create_config, get_children, get_data_from_s3, 
 
 @pytest.fixture
 def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[dict, str, int], None]:
-    def validate(expected: dict, prefix: str, identifier: int) -> None:
-        key = os.path.join(prefix, f"{identifier}-tomogram_metadata.json")
+    def validate(expected: dict, prefix: str) -> None:
+        key = os.path.join(prefix, "tomogram_metadata.json")
         actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
         for key in expected:
             assert actual[key] == expected[key], f"Key {key} does not match"
@@ -31,7 +31,7 @@ def add_tomogram_metadata(s3_client: S3Client, test_output_bucket: str) -> Calla
         if additional_metadata:
             data.update(additional_metadata)
         body = json.dumps(data).encode("utf-8")
-        key = os.path.join(prefix, "100-tomogram_metadata.json")
+        key = os.path.join(prefix, "100", "tomogram_metadata.json")
         s3_client.put_object(Bucket=test_output_bucket, Key=key, Body=body)
 
     return _add_tomogram_metadata
@@ -56,13 +56,13 @@ def get_parents(config: DepositionImportConfig) -> dict[str, BaseImporter]:
         (
             10301,
             {"reconstruction_method": "WBP", "processing": "raw"},
-            "100-alignment_metadata.json",
+            "100/alignment_metadata.json",
             100,
         ),  # tomogram metadata exists for the same deposition and alignment path specified in metadata
         (
             100001,
             {"reconstruction_method": "WBP", "processing": "raw"},
-            "100-alignment_metadata.json",
+            "100/alignment_metadata.json",
             101,
         ),  # Existing metadata has same values other than deposition id and alignment path is specified in metadata
         (
@@ -80,19 +80,19 @@ def get_parents(config: DepositionImportConfig) -> dict[str, BaseImporter]:
         (
             10301,
             {"reconstruction_method": "SIRT", "processing": "raw"},
-            "100-alignment_metadata.json",
+            "100/alignment_metadata.json",
             101,
         ),  # Existing metadata with same deposition_id but different reconstruction_method
         (
             10301,
             {"reconstruction_method": "WBP", "processing": "denoised"},
-            "100-alignment_metadata.json",
+            "100/alignment_metadata.json",
             101,
         ),  # Existing metadata with same deposition_id but different processing
         (
             10301,
             {"reconstruction_method": "WBP", "processing": "raw", "voxel_spacing": 20},
-            "100-alignment_metadata.json",
+            "100/alignment_metadata.json",
             101,
         ),  # Existing metadata with same deposition_id but different voxel_spacing
     ],
@@ -101,8 +101,8 @@ def test_tomogram_import(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
-    add_tomogram_metadata: Callable[[str, int], None],
-    validate_metadata: Callable[[dict, str, int], None],
+    add_tomogram_metadata: Callable[[str, int, dict], None],
+    validate_metadata: Callable[[dict, str], None],
     deposition_id: int,
     existing_metadata: dict,
     alignment_path: str,
@@ -120,22 +120,23 @@ def test_tomogram_import(
             )
         existing_prefix = prefix.format(voxel_spacing=existing_metadata.get("voxel_spacing", voxel_spacing))
         add_tomogram_metadata(existing_prefix, deposition_id, existing_metadata)
-    prefix = prefix.format(voxel_spacing=voxel_spacing)
+
     tomogram = list(TomogramImporter.finder(config, **parents))
     for item in tomogram:
         item.import_item()
         item.import_metadata()
-    tomogram_files = get_children(s3_client, test_output_bucket, prefix)
-    assert f"{id_prefix}-{run_name}.mrc" in tomogram_files
-    assert f"{id_prefix}-{run_name}.zarr" in tomogram_files
-    assert f"{id_prefix}-tomogram_metadata.json" in tomogram_files
+    prefix = prefix.format(voxel_spacing=voxel_spacing)
+    tomogram_files = get_children(s3_client, test_output_bucket, os.path.join(prefix, str(id_prefix)))
+    assert f"{run_name}.mrc" in tomogram_files
+    assert f"{run_name}.zarr" in tomogram_files
+    assert "tomogram_metadata.json" in tomogram_files
 
 
 def test_tomogram_import_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
-    validate_metadata: Callable[[dict, str, int], None],
+    validate_metadata: Callable[[dict, str], None],
 ) -> None:
     """
     To recreate the test mrc file with the dimensions and pixel spacing used in the test, use create_mrc method in
@@ -153,18 +154,18 @@ def test_tomogram_import_metadata(
     voxel_spacing = 13.48
     run_path = f"output/{parents['dataset'].name}/{run_name}"
     vs_path = f"{run_path}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}"
-    prefix = f"{vs_path}/Tomograms"
-    tomogram_files = get_children(s3_client, test_output_bucket, prefix)
     id_prefix = 100
-    assert f"{id_prefix}-tomogram_metadata.json" in tomogram_files
+    prefix = f"{vs_path}/Tomograms/{id_prefix}"
+    tomogram_files = get_children(s3_client, test_output_bucket, prefix)
+    assert "tomogram_metadata.json" in tomogram_files
     image_path = f"{parents['dataset'].name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}/Images/{id_prefix}-key-photo-"
     expected = {
-        "omezarr_dir": f"{id_prefix}-{run_name}.zarr",
-        "mrc_files": [f"{id_prefix}-{run_name}.mrc"],
+        "omezarr_dir": f"{run_name}.zarr",
+        "mrc_files": [f"{run_name}.mrc"],
         "voxel_spacing": 13.48,
         "scales": [{"x": 6, "y": 8, "z": 10}, {"x": 3, "y": 4, "z": 5}, {"x": 2, "y": 2, "z": 3}],
         "size": {"x": 6, "y": 8, "z": 10},
-        "alignment_metadata_path": f"{test_output_bucket}/{run_path}/Alignments/100-alignment_metadata.json",
+        "alignment_metadata_path": f"{test_output_bucket}/{run_path}/Alignments/100/alignment_metadata.json",
         "neuroglancer_config_path": f"{test_output_bucket}/{vs_path}/NeuroglancerPrecompute/"
                                     f"{id_prefix}-neuroglancer_config.json",
         "key_photo": {
@@ -172,14 +173,13 @@ def test_tomogram_import_metadata(
             "thumbnail": f"{image_path}thumbnail.png",
         },
     }
-    validate_metadata(expected, prefix, id_prefix)
+    validate_metadata(expected, prefix)
 
 
 def test_tomogram_no_import(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
-    validate_metadata: Callable[[dict, str, int], None],
 ) -> None:
     config = create_config(s3_fs, test_output_bucket)
     parents = get_parents(config)

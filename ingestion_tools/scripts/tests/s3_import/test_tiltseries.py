@@ -12,8 +12,8 @@ from tests.s3_import.util import create_config, get_children, get_data_from_s3, 
 
 @pytest.fixture
 def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[dict, str, int], None]:
-    def validate(expected: dict, prefix: str, identifier: int) -> None:
-        key = os.path.join(prefix, f"{identifier}-tiltseries_metadata.json")
+    def validate(expected: dict, prefix: str) -> None:
+        key = os.path.join(prefix, "tiltseries_metadata.json")
         actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
         for key in expected:
             assert actual[key] == expected[key], f"Key {key} does not match"
@@ -25,7 +25,7 @@ def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[
 def add_tiltseries_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[str, int], None]:
     def _add_tiltseries_metadata(prefix: str, deposition_id: int) -> None:
         body = json.dumps({"deposition_id": deposition_id}).encode("utf-8")
-        key = os.path.join(prefix, "100-tiltseries_metadata.json")
+        key = os.path.join(prefix, "100", "tiltseries_metadata.json")
         s3_client.put_object(Bucket=test_output_bucket, Key=key, Body=body)
 
     return _add_tiltseries_metadata
@@ -51,7 +51,7 @@ def test_tiltseries_import(
     config = create_config(s3_fs, test_output_bucket)
     parents = get_run_and_parents(config)
     run_name = parents["run"].name
-    prefix = f"output/{parents['dataset'].name}/{run_name}/TiltSeries"
+    prefix = f"output/{parents['dataset'].name}/{run_name}/TiltSeries/"
     if deposition_id:
         add_tiltseries_metadata(prefix, deposition_id)
 
@@ -59,10 +59,12 @@ def test_tiltseries_import(
     for item in tilt_series:
         item.import_item()
         item.import_metadata()
-    tilt_series_files = get_children(s3_client, test_output_bucket, prefix)
-    assert f"{id_prefix}-{run_name}.mrc" in tilt_series_files
-    assert f"{id_prefix}-{run_name}.zarr" in tilt_series_files
-    assert f"{id_prefix}-tiltseries_metadata.json" in tilt_series_files
+    output_prefix = os.path.join(prefix, str(id_prefix))
+    print(f"output_prefix: {output_prefix}")
+    tilt_series_files = get_children(s3_client, test_output_bucket, output_prefix)
+    assert f"{run_name}.mrc" in tilt_series_files
+    assert f"{run_name}.zarr" in tilt_series_files
+    assert "tiltseries_metadata.json" in tilt_series_files
 
 
 @pytest.mark.parametrize(
@@ -76,7 +78,7 @@ def test_tiltseries_import_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
-    validate_metadata: Callable[[dict, str, int], None],
+    validate_metadata: Callable[[dict, str], None],
     config_path: str,
     expected_pixel_spacing: float,
     expected_frames_count: int,
@@ -94,26 +96,24 @@ def test_tiltseries_import_metadata(
         item.import_item()
         item.import_metadata()
     run_name = parents["run"].name
-    prefix = f"output/{parents['dataset'].name}/{run_name}/TiltSeries"
+    prefix = f"output/{parents['dataset'].name}/{run_name}/TiltSeries/100"
     tilt_series_files = get_children(s3_client, test_output_bucket, prefix)
-    id_prefix = 100
-    assert f"{id_prefix}-tiltseries_metadata.json" in tilt_series_files
+    assert "tiltseries_metadata.json" in tilt_series_files
     expected = {
         "frames_count": expected_frames_count,
-        "omezarr_dir": f"{id_prefix}-{run_name}.zarr",
-        "mrc_files": [f"{id_prefix}-{run_name}.mrc"],
+        "omezarr_dir": f"{run_name}.zarr",
+        "mrc_files": [f"{run_name}.mrc"],
         "pixel_spacing": expected_pixel_spacing,
         "scales": [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 5, "x": 10}, {"z": 4, "y": 3, "x": 5}],
         "size": {"z": 4, "y": 10, "x": 20},
     }
-    validate_metadata(expected, prefix, id_prefix)
+    validate_metadata(expected, prefix)
 
 
 def test_tiltseries_no_import(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
-    validate_metadata: Callable[[dict, str, int], None],
 ) -> None:
     config = create_config(s3_fs, test_output_bucket)
     parents = get_run_and_parents(config)
