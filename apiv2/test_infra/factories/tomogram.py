@@ -55,6 +55,7 @@ class TomogramFactory(CommonFactory):
     tomogram_version = fuzzy.FuzzyFloat(1, 100)
     processing_software = fuzzy.FuzzyText()
     reconstruction_software = fuzzy.FuzzyText()
+    is_canonical = factory.Faker("boolean")
     is_portal_standard = factory.Faker("boolean")
     is_author_submitted = factory.Faker("boolean")
     is_visualization_default = factory.Faker("boolean")
