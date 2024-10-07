@@ -32,15 +32,13 @@ class VisualizationConfigImporter(BaseImporter):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-        if not self.get_tomogram().metadata.get("is_visualization_default"):
+        tomogram_metadata = self.get_tomogram().metadata
+        if not tomogram_metadata.get("is_visualization_default"):
             print("Skipping import for tomogram that is not configured for default_visualization")
             return
-        ng_contents = self._create_config()
+        ng_contents = self._create_config(tomogram_metadata.get("alignment_metadata_path"))
         meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
         meta.write_metadata(self.get_output_path())
-
-    def get_output_path(self) -> str:
-        return super().get_output_path().format(identifier=self.get_tomogram().get_identifier())
 
     def _get_annotation_metadata_files(self) -> list[str]:
         # Getting a list of paths to the annotation metadata files using glob instead of using the annotation finder
@@ -105,7 +103,7 @@ class VisualizationConfigImporter(BaseImporter):
             is_instance_segmentation=is_instance_segmentation,
         )
 
-    def _create_config(self) -> dict[str, Any]:
+    def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
         voxel_size = round(volume_info.voxel_size, 3)
@@ -114,12 +112,17 @@ class VisualizationConfigImporter(BaseImporter):
 
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
 
+        # TODO: Update the annotation metadata to be fetched from all voxel spacings once, we start supporting the
+        #  co-ordinate transformation in neuroglancer
         annotation_metadata_paths = self._get_annotation_metadata_files()
         colors_used = []
 
         for annotation_metadata_path in annotation_metadata_paths:
             with open(self.config.fs.localreadable(annotation_metadata_path), "r") as f:
                 metadata = json.load(f)
+            if metadata.get("alignment_metadata_path") != alignment_metadata_path:
+                print(f"Skipping annotation {annotation_metadata_path} with different alignment metadata")
+                continue
             annotation_hash_input = to_base_hash_input(metadata)
             metadata_file_name = Path(annotation_metadata_path).stem
             name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
