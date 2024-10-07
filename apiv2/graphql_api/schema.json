@@ -6745,6 +6745,15 @@
             },
             {
               "defaultValue": null,
+              "name": "isCanonical",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "BoolComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "isPortalStandard",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -21872,6 +21881,15 @@
             },
             {
               "args": [],
+              "name": "isCanonical",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "isPortalStandard",
               "type": {
                 "kind": "SCALAR",
@@ -22492,6 +22510,15 @@
             {
               "defaultValue": null,
               "name": "reconstructionSoftware",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "isCanonical",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -23357,6 +23384,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "isCanonical",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
                 "ofType": null
               }
             },
@@ -24926,6 +24962,9 @@
             },
             {
               "name": "reconstructionSoftware"
+            },
+            {
+              "name": "isCanonical"
             },
             {
               "name": "isPortalStandard"
@@ -35077,6 +35116,15 @@
             },
             {
               "defaultValue": "null",
+              "name": "isCanonical",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
               "name": "isPortalStandard",
               "type": {
                 "kind": "SCALAR",
@@ -35440,6 +35488,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "isCanonical",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
                 "ofType": null
               }
             },

@@ -236,6 +236,7 @@ def populate_stale_tomogram_voxel_spacing(session: sa.orm.Session, run_id: int =
         offset_y=0,
         offset_z=0,
         is_portal_standard=True,
+        is_canonical=True,
         deposition_date=datetime.min,
         release_date=datetime.min,
         last_modified_date=datetime.min,
@@ -290,6 +291,7 @@ def populate_tomograms(session: sa.orm.Session) -> Tomogram:
         offset_y=0,
         offset_z=0,
         is_portal_standard=True,
+        is_canonical=True,
         deposition_date=datetime.min,
         release_date=datetime.min,
         last_modified_date=datetime.min,
@@ -323,6 +325,7 @@ def populate_stale_tomograms(session: sa.orm.Session) -> Tomogram:
         offset_y=0,
         offset_z=0,
         is_portal_standard=True,
+        is_canonical=True,
         deposition_date=datetime.min,
         release_date=datetime.min,
         last_modified_date=datetime.min,
@@ -546,7 +549,10 @@ def populate_stale_annotation_method_links(session: sa.orm.Session) -> None:
     populate_stale_annotations(session)
     session.add(
         AnnotationMethodLink(
-            annotation_id=STALE_ANNOTATION_ID, name="Stale Link 0", link_type="other", link="https://some-link.com",
+            annotation_id=STALE_ANNOTATION_ID,
+            name="Stale Link 0",
+            link_type="other",
+            link="https://some-link.com",
         ),
     )
     session.add(

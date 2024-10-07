@@ -98,7 +98,6 @@ class TomogramDBImporter(BaseDBImporter):
             "fiducial_alignment_status": normalize_fiducial_alignment(self.metadata.get("fiducial_alignment_status")),
             "reconstruction_method": self.normalize_to_unknown_str(self.metadata.get("reconstruction_method")),
             "reconstruction_software": self.normalize_to_unknown_str(self.metadata.get("reconstruction_software")),
-            "is_canonical": True,  # TODO: mark this for deprecation
             "s3_omezarr_dir": self.join_path(s3_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
             "https_omezarr_dir": self.join_path(https_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
             "s3_mrc_file": self.join_path(s3_prefix, self.dir_prefix, self.metadata["mrc_files"][0]),
@@ -107,6 +106,7 @@ class TomogramDBImporter(BaseDBImporter):
             "key_photo_thumbnail_url": None,
             "neuroglancer_config": self.generate_neuroglancer_data(),
             "type": self.get_tomogram_type(),
+            "is_canonical": self.metadata.get("is_standardized") or False,
             "is_portal_standard": self.metadata.get("is_standardized") or False,
         }
         date_fields = ["deposition_date", "release_date", "last_modified_date"]

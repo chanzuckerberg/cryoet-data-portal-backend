@@ -89,6 +89,7 @@ class Tomogram(Base):
     tomogram_version: Mapped[float] = mapped_column(Float, nullable=True)
     processing_software: Mapped[str] = mapped_column(String, nullable=True)
     reconstruction_software: Mapped[str] = mapped_column(String, nullable=False)
+    is_canonical: Mapped[bool] = mapped_column(Boolean, nullable=True)
     is_portal_standard: Mapped[bool] = mapped_column(Boolean, nullable=True)
     is_author_submitted: Mapped[bool] = mapped_column(Boolean, nullable=True)
     is_visualization_default: Mapped[bool] = mapped_column(Boolean, nullable=True)
