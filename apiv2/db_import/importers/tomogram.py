@@ -106,7 +106,7 @@ class TomogramDBImporter(BaseDBImporter):
             "key_photo_thumbnail_url": None,
             "neuroglancer_config": self.generate_neuroglancer_data(),
             "type": self.get_tomogram_type(),
-            "is_canonical": self.metadata.get("is_standardized") or False,
+            "is_standardized": self.metadata.get("is_standardized") or False,
             "is_portal_standard": self.metadata.get("is_standardized") or False,
         }
         date_fields = ["deposition_date", "release_date", "last_modified_date"]

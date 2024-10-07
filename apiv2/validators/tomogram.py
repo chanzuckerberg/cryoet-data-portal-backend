@@ -69,7 +69,7 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    is_canonical: Annotated[bool | None, Field()]
+    is_standardized: Annotated[bool, Field()]
     is_portal_standard: Annotated[bool | None, Field()]
     is_author_submitted: Annotated[bool | None, Field()]
     is_visualization_default: Annotated[bool | None, Field()]
@@ -210,7 +210,7 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
-    is_canonical: Annotated[bool | None, Field()]
+    is_standardized: Annotated[bool | None, Field()]
     is_portal_standard: Annotated[bool | None, Field()]
     is_author_submitted: Annotated[bool | None, Field()]
     is_visualization_default: Annotated[bool | None, Field()]

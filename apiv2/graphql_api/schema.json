@@ -6745,7 +6745,7 @@
             },
             {
               "defaultValue": null,
-              "name": "isCanonical",
+              "name": "isStandardized",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "BoolComparators",
@@ -21881,11 +21881,15 @@
             },
             {
               "args": [],
-              "name": "isCanonical",
+              "name": "isStandardized",
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               }
             },
             {
@@ -22518,7 +22522,7 @@
             },
             {
               "defaultValue": null,
-              "name": "isCanonical",
+              "name": "isStandardized",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -23389,7 +23393,7 @@
             },
             {
               "args": [],
-              "name": "isCanonical",
+              "name": "isStandardized",
               "type": {
                 "kind": "SCALAR",
                 "name": "Boolean",
@@ -24964,7 +24968,7 @@
               "name": "reconstructionSoftware"
             },
             {
-              "name": "isCanonical"
+              "name": "isStandardized"
             },
             {
               "name": "isPortalStandard"
@@ -35115,12 +35119,16 @@
               }
             },
             {
-              "defaultValue": "null",
-              "name": "isCanonical",
+              "defaultValue": null,
+              "name": "isStandardized",
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               }
             },
             {
@@ -35492,8 +35500,8 @@
               }
             },
             {
-              "defaultValue": "null",
-              "name": "isCanonical",
+              "defaultValue": null,
+              "name": "isStandardized",
               "type": {
                 "kind": "SCALAR",
                 "name": "Boolean",

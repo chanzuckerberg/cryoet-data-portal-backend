@@ -5000,7 +5000,7 @@ type Tomogram implements EntityInterface & Node {
   reconstructionSoftware: String!
 
   """whether this tomogram adheres to portal standards"""
-  isCanonical: Boolean
+  isStandardized: Boolean!
 
   """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean
@@ -5342,7 +5342,7 @@ enum TomogramCountColumns {
   tomogramVersion
   processingSoftware
   reconstructionSoftware
-  isCanonical
+  isStandardized
   isPortalStandard
   isAuthorSubmitted
   isVisualizationDefault
@@ -5417,7 +5417,7 @@ input TomogramCreateInput {
   reconstructionSoftware: String!
 
   """whether this tomogram adheres to portal standards"""
-  isCanonical: Boolean = null
+  isStandardized: Boolean!
 
   """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean = null
@@ -5522,7 +5522,7 @@ type TomogramGroupByOptions {
   tomogramVersion: Float
   processingSoftware: String
   reconstructionSoftware: String
-  isCanonical: Boolean
+  isStandardized: Boolean
   isPortalStandard: Boolean
   isAuthorSubmitted: Boolean
   isVisualizationDefault: Boolean
@@ -5606,7 +5606,7 @@ input TomogramOrderByClause {
   tomogramVersion: orderBy
   processingSoftware: orderBy
   reconstructionSoftware: orderBy
-  isCanonical: orderBy
+  isStandardized: orderBy
   isPortalStandard: orderBy
   isAuthorSubmitted: orderBy
   isVisualizationDefault: orderBy
@@ -5681,7 +5681,7 @@ input TomogramUpdateInput {
   reconstructionSoftware: String
 
   """whether this tomogram adheres to portal standards"""
-  isCanonical: Boolean = null
+  isStandardized: Boolean
 
   """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean = null
@@ -5968,7 +5968,7 @@ input TomogramWhereClause {
   tomogramVersion: FloatComparators
   processingSoftware: StrComparators
   reconstructionSoftware: StrComparators
-  isCanonical: BoolComparators
+  isStandardized: BoolComparators
   isPortalStandard: BoolComparators
   isAuthorSubmitted: BoolComparators
   isVisualizationDefault: BoolComparators

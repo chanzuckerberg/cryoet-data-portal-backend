@@ -2383,10 +2383,11 @@ classes:
         range: string
         required: true
         description: Name of software used for reconstruction
-      is_canonical:
+      is_standardized:
         description: whether this tomogram adheres to portal standards
         range: boolean
         ifabsent: false
+        required: true
       is_portal_standard:
         description: whether this tomogram adheres to portal standards
         range: boolean
