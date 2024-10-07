@@ -20,7 +20,7 @@ from importers.base_importer import BaseImporter
 class AnnotationIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):
-        return parents["voxel_spacing"].get_output_path()
+        return "-".join(["annotation", parents["voxel_spacing"].get_output_path()])
 
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:

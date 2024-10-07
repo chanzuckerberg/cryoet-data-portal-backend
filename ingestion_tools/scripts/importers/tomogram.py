@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Any
 
 from common.config import DepositionImportConfig
@@ -14,13 +15,14 @@ from importers.key_image import KeyImageImporter
 class TomogramIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
-        return parents["voxel_spacing"].get_output_path()
+        return "-".join(["tomogram", parents["run"].get_output_path()])
 
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         voxel_spacing = parents["voxel_spacing"]
         tomogram_dir_path = config.resolve_output_path("tomogram", voxel_spacing)
-        return os.path.join(tomogram_dir_path, "*tomogram_metadata.json")
+        search_path = re.sub(r"/VoxelSpacing[0-9.]+/", "/VoxelSpacing*/", tomogram_dir_path)
+        return os.path.join(search_path, "*tomogram_metadata.json")
 
     @classmethod
     def _generate_hash_key(
@@ -34,6 +36,7 @@ class TomogramIdentifierHelper(IdentifierHelper):
         return "-".join(
             [
                 container_key,
+                str(metadata.get("voxel_spacing", parents["voxel_spacing"].name)),
                 metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path", "")),
                 metadata.get("reconstruction_method", ""),
                 metadata.get("processing", ""),

@@ -4,7 +4,7 @@ from typing import Callable
 
 import pytest as pytest
 from importers.base_importer import BaseImporter
-from importers.tomogram import TomogramIdentifierHelper, TomogramImporter
+from importers.tomogram import TomogramImporter
 from importers.voxel_spacing import VoxelSpacingImporter
 from mypy_boto3_s3 import S3Client
 
@@ -82,13 +82,19 @@ def get_parents(config: DepositionImportConfig) -> dict[str, BaseImporter]:
             {"reconstruction_method": "SIRT", "processing": "raw"},
             "100-alignment_metadata.json",
             101,
-        ),
+        ),  # Existing metadata with same deposition_id but different reconstruction_method
         (
             10301,
             {"reconstruction_method": "WBP", "processing": "denoised"},
             "100-alignment_metadata.json",
             101,
-        ),
+        ),  # Existing metadata with same deposition_id but different processing
+        (
+            10301,
+            {"reconstruction_method": "WBP", "processing": "raw", "voxel_spacing": 20},
+            "100-alignment_metadata.json",
+            101,
+        ),  # Existing metadata with same deposition_id but different voxel_spacing
     ],
 )
 def test_tomogram_import(
@@ -106,15 +112,15 @@ def test_tomogram_import(
     parents = get_parents(config)
     run_name = parents["run"].name
     voxel_spacing = 13.48
-    prefix = f"output/{parents['dataset'].name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}/Tomograms"
+    prefix = f"output/{parents['dataset'].name}/{run_name}/Reconstructions/VoxelSpacing{{voxel_spacing:.3f}}/Tomograms"
     if deposition_id and existing_metadata:
         if alignment_path:
             existing_metadata["alignment_metadata_path"] = os.path.join(
                 test_output_bucket, f"output/{parents['dataset'].name}/{run_name}/Alignments", alignment_path,
             )
-        add_tomogram_metadata(prefix, deposition_id, existing_metadata)
-    TomogramIdentifierHelper.cached_identifiers.clear()
-    TomogramIdentifierHelper.loaded_containers.clear()
+        existing_prefix = prefix.format(voxel_spacing=existing_metadata.get("voxel_spacing", voxel_spacing))
+        add_tomogram_metadata(existing_prefix, deposition_id, existing_metadata)
+    prefix = prefix.format(voxel_spacing=voxel_spacing)
     tomogram = list(TomogramImporter.finder(config, **parents))
     for item in tomogram:
         item.import_item()

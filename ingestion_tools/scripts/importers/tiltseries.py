@@ -12,7 +12,7 @@ from importers.frame import FrameImporter
 class TiltSeriesIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
-        return parents["run"].get_output_path()
+        return "-".join(["tiltseries", parents["run"].get_output_path()])
 
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
