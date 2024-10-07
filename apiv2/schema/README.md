@@ -12,7 +12,7 @@ Tomogram {
     float tomogram_version
     string processing_software
     string reconstruction_software
-    boolean is_canonical
+    boolean is_standardized
     boolean is_portal_standard
     boolean is_author_submitted
     boolean is_visualization_default

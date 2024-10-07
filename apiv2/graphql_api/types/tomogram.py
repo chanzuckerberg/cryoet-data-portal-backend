@@ -235,7 +235,7 @@ class TomogramWhereClause(TypedDict):
     tomogram_version: Optional[FloatComparators] | None
     processing_software: Optional[StrComparators] | None
     reconstruction_software: Optional[StrComparators] | None
-    is_canonical: Optional[BoolComparators] | None
+    is_standardized: Optional[BoolComparators] | None
     is_portal_standard: Optional[BoolComparators] | None
     is_author_submitted: Optional[BoolComparators] | None
     is_visualization_default: Optional[BoolComparators] | None
@@ -288,7 +288,7 @@ class TomogramOrderByClause(TypedDict):
     tomogram_version: Optional[orderBy] | None
     processing_software: Optional[orderBy] | None
     reconstruction_software: Optional[orderBy] | None
-    is_canonical: Optional[orderBy] | None
+    is_standardized: Optional[orderBy] | None
     is_portal_standard: Optional[orderBy] | None
     is_author_submitted: Optional[orderBy] | None
     is_visualization_default: Optional[orderBy] | None
@@ -362,9 +362,7 @@ class Tomogram(EntityInterface):
         description="Processing software used to derive the tomogram", default=None,
     )
     reconstruction_software: str = strawberry.field(description="Name of software used for reconstruction")
-    is_canonical: Optional[bool] = strawberry.field(
-        description="whether this tomogram adheres to portal standards", default=None,
-    )
+    is_standardized: bool = strawberry.field(description="whether this tomogram adheres to portal standards")
     is_portal_standard: Optional[bool] = strawberry.field(
         description="whether this tomogram adheres to portal standards", default=None,
     )
@@ -516,7 +514,7 @@ class TomogramCountColumns(enum.Enum):
     tomogramVersion = "tomogram_version"
     processingSoftware = "processing_software"
     reconstructionSoftware = "reconstruction_software"
-    isCanonical = "is_canonical"
+    isStandardized = "is_standardized"
     isPortalStandard = "is_portal_standard"
     isAuthorSubmitted = "is_author_submitted"
     isVisualizationDefault = "is_visualization_default"
@@ -612,9 +610,7 @@ class TomogramCreateInput:
         description="Processing software used to derive the tomogram", default=None,
     )
     reconstruction_software: str = strawberry.field(description="Name of software used for reconstruction")
-    is_canonical: Optional[bool] = strawberry.field(
-        description="whether this tomogram adheres to portal standards", default=None,
-    )
+    is_standardized: bool = strawberry.field(description="whether this tomogram adheres to portal standards")
     is_portal_standard: Optional[bool] = strawberry.field(
         description="whether this tomogram adheres to portal standards", default=None,
     )
@@ -707,9 +703,7 @@ class TomogramUpdateInput:
         description="Processing software used to derive the tomogram", default=None,
     )
     reconstruction_software: Optional[str] = strawberry.field(description="Name of software used for reconstruction")
-    is_canonical: Optional[bool] = strawberry.field(
-        description="whether this tomogram adheres to portal standards", default=None,
-    )
+    is_standardized: Optional[bool] = strawberry.field(description="whether this tomogram adheres to portal standards")
     is_portal_standard: Optional[bool] = strawberry.field(
         description="whether this tomogram adheres to portal standards", default=None,
     )
