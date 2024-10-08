@@ -1,10 +1,12 @@
 # Copies data from a v1 GraphQL api into a v2 database.
+import contextlib
 import json
 import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import click
 import cryoet_data_portal as cdp
+import requests
 from database import models
 from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum
 
@@ -38,9 +40,17 @@ def get_or_create(session, cls, row_id, filters, data):
 
 
 def add(session, model, item, parents):
-    remote_item = item.to_dict()
+    remote_item = item
+    # Sometimes we send in a dict instead of an object, so it's ok to ignore errors here.
+    with contextlib.suppress(AttributeError):
+        remote_item = item.to_dict()
 
     local_item_data = {}
+
+    # Set some default arguments for `get_or_create` that can be mutated for special cases below.
+    new_item_id = remote_item.get("id")
+    find_item_filters = [(model.id == new_item_id)]
+
     if model == models.DepositionAuthor:
         local_item_data = {
             "deposition_id": remote_item["deposition_id"],
@@ -59,6 +69,11 @@ def add(session, model, item, parents):
             "deposition_id": parents["deposition_id"],
             "type": remote_item["deposition_types"],
         }
+        new_item_id = None
+        find_item_filters = [
+            (models.DepositionType.deposition_id == parents["deposition_id"]),
+            (models.DepositionType.type == remote_item["deposition_types"]),
+        ]
     if model == models.Deposition:
         local_item_data = {
             "title": remote_item["title"],
@@ -81,7 +96,6 @@ def add(session, model, item, parents):
             "https_metadata_path": remote_item["https_metadata_path"],
             "annotation_publication": remote_item["annotation_publication"],
             "annotation_method": remote_item["annotation_method"],
-            "method_links": remote_item["method_links"],
             "ground_truth_status": remote_item["ground_truth_status"],
             "object_id": remote_item["object_id"],
             "object_name": remote_item["object_name"],
@@ -98,6 +112,19 @@ def add(session, model, item, parents):
             "release_date": remote_item["release_date"],
             "last_modified_date": remote_item["last_modified_date"],
         }
+    if model == models.AnnotationMethodLink:
+        local_item_data = {
+            "annotation_id": parents["annotation_id"],
+            "link_type": remote_item["link_type"],
+            "name": remote_item["custom_name"],
+            "link": remote_item["link"],
+        }
+        new_item_id = None
+        find_item_filters = [
+            (models.AnnotationMethodLink.annotation_id == parents["annotation_id"]),
+            (models.AnnotationMethodLink.link_type == remote_item["link_type"]),
+            (models.AnnotationMethodLink.name == remote_item["custom_name"]),
+        ]
     if model == models.AnnotationAuthor:
         if "author_list_order" not in remote_item:
             remote_item["author_list_order"] = 1  # TODO FIXME this isn't quite accurate!
@@ -210,12 +237,8 @@ def add(session, model, item, parents):
             "s3_mrc_file": remote_item["s3_mrc_bin1"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
             "https_mrc_file": remote_item["https_mrc_bin1"],
-            "s3_collection_metadata": remote_item["s3_collection_metadata"],
-            "https_collection_metadata": remote_item["https_collection_metadata"],
             "s3_angle_list": remote_item["s3_angle_list"],
             "https_angle_list": remote_item["https_angle_list"],
-            # "s3_gain_file": remote_item["s3_gain_file"], # This doesn't exist in the old api
-            # "https_gain_file": remote_item["https_gain_file"], # This doesn't exist in the old api
             "acceleration_voltage": remote_item["acceleration_voltage"],
             "spherical_aberration_constant": remote_item["spherical_aberration_constant"],
             "microscope_manufacturer": remote_item["microscope_manufacturer"],
@@ -240,7 +263,6 @@ def add(session, model, item, parents):
             "is_aligned": remote_item["is_aligned"],
             "pixel_spacing": remote_item["pixel_spacing"],
             "aligned_tiltseries_binning": remote_item["aligned_tiltseries_binning"],
-            "tiltseries_frames_count": remote_item["frames_count"],
         }
     if model == models.TomogramAuthor:
         local_item_data = {
@@ -283,7 +305,10 @@ def add(session, model, item, parents):
             "tomogram_version": remote_item["tomogram_version"],
             "processing_software": remote_item["processing_software"],
             "reconstruction_software": remote_item["reconstruction_software"],
-            "is_canonical": remote_item["is_canonical"],
+            "is_author_submitted": remote_item["is_canonical"],
+            "is_portal_standard": False,
+            "is_standardized": False,
+            "is_visualization_default": False,
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
             "s3_mrc_file": remote_item["s3_mrc_scale0"],
@@ -298,7 +323,6 @@ def add(session, model, item, parents):
             "key_photo_url": remote_item["key_photo_url"],
             "key_photo_thumbnail_url": remote_item["key_photo_thumbnail_url"],
             "neuroglancer_config": remote_item["neuroglancer_config"],
-            "is_standardized": False,  # We don't have standardized tomos yet.
         }
         # Special handling for converting values.
         reconstruction_method = remote_item["reconstruction_method"].lower()
@@ -322,8 +346,8 @@ def add(session, model, item, parents):
     item = get_or_create(
         session,
         model,
-        remote_item["id"],
-        [(model.id == remote_item["id"])],
+        new_item_id,  # Use the possibly-mutated value assigned above
+        find_item_filters,  # Use the possibly-mutated value assigned above
         local_item_data,
     )
 
@@ -342,11 +366,36 @@ def import_deposition(deposition_id: int):
         print(f"processing {dep.id}")
         d = add(session, models.Deposition, dep, {})
         # TODO this is assuming only a single deposition type per deposition in the old db!
-        add(session, models.DepositionType, dep, {"deposition_id": dep.id})
+        for deptype in dep.deposition_types.split(","):
+            add(session, models.DepositionType, {"deposition_types": deptype}, {"deposition_id": dep.id})
         for author in cdp.DepositionAuthor.find(client, [cdp.DepositionAuthor.deposition_id == d.id]):
             add(session, models.DepositionAuthor, author, {"deposition_id": d.id})
         print(f"deposition {dep.id} done")
         session.commit()
+
+
+# Method links isn't exposed by the v2 client for some reason
+def fetch_method_links(annotation):
+    headers = {
+        "Content-type": "application/json",
+    }
+    query = (
+        """
+        query MyQuery {
+            annotations(where: {id: {_eq: %d }}) {
+                method_links
+            }
+        }
+    """
+        % annotation.id
+    )
+    payload = json.dumps({"query": query, "variables": None, "operationName": "MyQuery"})
+    res = requests.post(CLIENT_URL, headers=headers, data=payload)
+    data = res.json()
+    anno = data["data"]["annotations"][0]
+    if anno and anno.get("method_links"):
+        return anno["method_links"]
+    return []
 
 
 def import_dataset(dataset_id: int):
@@ -383,6 +432,8 @@ def import_dataset(dataset_id: int):
                 for anno in cdp.Annotation.find(client, [cdp.Annotation.tomogram_voxel_spacing_id == vs.id]):
                     a = add(session, models.Annotation, anno, parents)
                     parents["annotation_id"] = a.id
+                    for methodlink in fetch_method_links(anno):
+                        add(session, models.AnnotationMethodLink, methodlink, parents)
                     for annofile in cdp.AnnotationFile.find(client, [cdp.AnnotationFile.annotation_id == anno.id]):
                         add(session, models.AnnotationFile, annofile, parents)
                     for annoauthor in cdp.AnnotationAuthor.find(
