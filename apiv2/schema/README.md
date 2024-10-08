@@ -124,8 +124,8 @@ Frame {
     integer acquisition_order
     float dose
     boolean is_gain_corrected
-    string s3_prefix
-    string https_prefix
+    string s3_frame_path
+    string https_frame_path
     integer id
 }
 Deposition {

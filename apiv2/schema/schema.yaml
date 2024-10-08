@@ -1608,7 +1608,6 @@ classes:
     from_schema: cdp-dataset-config
     mixins:
       - IDMixin
-      - S3PrefixedEntityMixin
     attributes:
       deposition:
         name: deposition
@@ -1656,24 +1655,14 @@ classes:
         exact_mappings:
           - api_frame_is_gain_corrected
         range: boolean
-      s3_prefix:
-        name: s3_prefix
-        description:
-          Path to a directory containing data for this entity as an S3
-          url
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - api_s3_prefix
+      s3_frame_path:
+        description: Path to a directory containing data for this entity as an S3 url
         range: string
         required: true
-      https_prefix:
-        name: https_prefix
+      https_frame_path:
         description:
           Path to a directory containing data for this entity as an HTTPS
           url
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - api_https_prefix
         range: string
         required: true
   PerSectionAlignmentParameters:
