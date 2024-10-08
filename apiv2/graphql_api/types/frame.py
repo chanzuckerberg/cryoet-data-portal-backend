@@ -127,8 +127,8 @@ class FrameWhereClause(TypedDict):
     acquisition_order: Optional[IntComparators] | None
     dose: Optional[FloatComparators] | None
     is_gain_corrected: Optional[BoolComparators] | None
-    s3_prefix: Optional[StrComparators] | None
-    https_prefix: Optional[StrComparators] | None
+    s3_frame_path: Optional[StrComparators] | None
+    https_frame_path: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -145,8 +145,8 @@ class FrameOrderByClause(TypedDict):
     acquisition_order: Optional[orderBy] | None
     dose: Optional[orderBy] | None
     is_gain_corrected: Optional[orderBy] | None
-    s3_prefix: Optional[orderBy] | None
-    https_prefix: Optional[orderBy] | None
+    s3_frame_path: Optional[orderBy] | None
+    https_frame_path: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -171,10 +171,8 @@ class Frame(EntityInterface):
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
-    https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
-    )
+    s3_frame_path: str = strawberry.field(description="S3 path to the frame file")
+    https_frame_path: str = strawberry.field(description="HTTPS path to the frame file")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -214,8 +212,8 @@ class FrameMinMaxColumns:
     raw_angle: Optional[float] = None
     acquisition_order: Optional[int] = None
     dose: Optional[float] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
+    s3_frame_path: Optional[str] = None
+    https_frame_path: Optional[str] = None
     id: Optional[int] = None
 
 
@@ -232,8 +230,8 @@ class FrameCountColumns(enum.Enum):
     acquisitionOrder = "acquisition_order"
     dose = "dose"
     isGainCorrected = "is_gain_corrected"
-    s3Prefix = "s3_prefix"
-    httpsPrefix = "https_prefix"
+    s3FramePath = "s3_frame_path"
+    httpsFramePath = "https_frame_path"
     id = "id"
 
 
@@ -288,10 +286,8 @@ class FrameCreateInput:
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_prefix: str = strawberry.field(description="Path to a directory containing data for this entity as an S3 url")
-    https_prefix: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
-    )
+    s3_frame_path: str = strawberry.field(description="S3 path to the frame file")
+    https_frame_path: str = strawberry.field(description="HTTPS path to the frame file")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -307,12 +303,8 @@ class FrameUpdateInput:
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url",
-    )
-    https_prefix: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
-    )
+    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file")
+    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file")
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 

@@ -5949,7 +5949,7 @@
             },
             {
               "defaultValue": null,
-              "name": "s3Prefix",
+              "name": "s3FramePath",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
@@ -5958,7 +5958,7 @@
             },
             {
               "defaultValue": null,
-              "name": "httpsPrefix",
+              "name": "httpsFramePath",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
@@ -19565,7 +19565,7 @@
             },
             {
               "args": [],
-              "name": "s3Prefix",
+              "name": "s3FramePath",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -19578,7 +19578,7 @@
             },
             {
               "args": [],
-              "name": "httpsPrefix",
+              "name": "httpsFramePath",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -19667,7 +19667,7 @@
             },
             {
               "defaultValue": null,
-              "name": "s3Prefix",
+              "name": "s3FramePath",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -19676,7 +19676,7 @@
             },
             {
               "defaultValue": null,
-              "name": "httpsPrefix",
+              "name": "httpsFramePath",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -19904,7 +19904,7 @@
             },
             {
               "args": [],
-              "name": "s3Prefix",
+              "name": "s3FramePath",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -19913,7 +19913,7 @@
             },
             {
               "args": [],
-              "name": "httpsPrefix",
+              "name": "httpsFramePath",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -19995,7 +19995,7 @@
             },
             {
               "args": [],
-              "name": "s3Prefix",
+              "name": "s3FramePath",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -20004,7 +20004,7 @@
             },
             {
               "args": [],
-              "name": "httpsPrefix",
+              "name": "httpsFramePath",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -20048,10 +20048,10 @@
               "name": "isGainCorrected"
             },
             {
-              "name": "s3Prefix"
+              "name": "s3FramePath"
             },
             {
-              "name": "httpsPrefix"
+              "name": "httpsFramePath"
             },
             {
               "name": "id"
@@ -33307,7 +33307,7 @@
             },
             {
               "defaultValue": null,
-              "name": "s3Prefix",
+              "name": "s3FramePath",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -33320,7 +33320,7 @@
             },
             {
               "defaultValue": null,
-              "name": "httpsPrefix",
+              "name": "httpsFramePath",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
@@ -33410,7 +33410,7 @@
             },
             {
               "defaultValue": null,
-              "name": "s3Prefix",
+              "name": "s3FramePath",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -33419,7 +33419,7 @@
             },
             {
               "defaultValue": null,
-              "name": "httpsPrefix",
+              "name": "httpsFramePath",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",

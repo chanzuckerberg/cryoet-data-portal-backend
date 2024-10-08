@@ -47,6 +47,6 @@ class Frame(Base):
     acquisition_order: Mapped[int] = mapped_column(Integer, nullable=True)
     dose: Mapped[float] = mapped_column(Float, nullable=False)
     is_gain_corrected: Mapped[bool] = mapped_column(Boolean, nullable=True)
-    s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
-    https_prefix: Mapped[str] = mapped_column(String, nullable=False)
+    s3_frame_path: Mapped[str] = mapped_column(String, nullable=False)
+    https_frame_path: Mapped[str] = mapped_column(String, nullable=False)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
