@@ -53,7 +53,6 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "related_empiar_entry": ["related_empiar_entry"],
             "tilt_series_quality": ["tilt_series_quality"],
             "aligned_tiltseries_binning": ["aligned_tiltseries_binning"],
-            "frames_count": ["frames_count"],
         }
 
     def get_first_match_file_name(self, file_extension_pattern: str):
@@ -79,10 +78,6 @@ class TiltSeriesDBImporter(BaseDBImporter):
         if omezarr_path := self.metadata.get("omezarr_dir"):
             extra_data["s3_omezarr_dir"] = self.join_path(s3_prefix, self.dir_prefix, omezarr_path)
             extra_data["https_omezarr_dir"] = self.join_path(https_prefix, self.dir_prefix, omezarr_path)
-
-        if mdoc := self.get_first_match_file_name("*.mdoc"):
-            extra_data["s3_collection_metadata"] = self.join_path(s3_prefix, mdoc)
-            extra_data["https_collection_metadata"] = self.join_path(https_prefix, mdoc)
 
         if angle_list := self.get_first_match_file_name("*.rawtlt") or self.get_first_match_file_name("*.tlt"):
             extra_data["s3_angle_list"] = self.join_path(s3_prefix, angle_list)
