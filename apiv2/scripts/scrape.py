@@ -308,7 +308,7 @@ def add(session, model, item, parents):
             "is_author_submitted": remote_item["is_canonical"],
             "is_portal_standard": False,
             "is_standardized": False,
-            "is_visualization_default": False,
+            "is_visualization_default": remote_item["is_canonical"],
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
             "s3_mrc_file": remote_item["s3_mrc_scale0"],
