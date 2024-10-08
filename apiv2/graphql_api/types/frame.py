@@ -171,12 +171,8 @@ class Frame(EntityInterface):
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_frame_path: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url",
-    )
-    https_frame_path: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
-    )
+    s3_frame_path: str = strawberry.field(description="S3 path to the frame file")
+    https_frame_path: str = strawberry.field(description="HTTPS path to the frame file")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -290,12 +286,8 @@ class FrameCreateInput:
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_frame_path: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url",
-    )
-    https_frame_path: str = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
-    )
+    s3_frame_path: str = strawberry.field(description="S3 path to the frame file")
+    https_frame_path: str = strawberry.field(description="HTTPS path to the frame file")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -311,12 +303,8 @@ class FrameUpdateInput:
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_frame_path: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an S3 url",
-    )
-    https_frame_path: Optional[str] = strawberry.field(
-        description="Path to a directory containing data for this entity as an HTTPS url",
-    )
+    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file")
+    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file")
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 

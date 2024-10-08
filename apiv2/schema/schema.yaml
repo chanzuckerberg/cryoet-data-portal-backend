@@ -1656,13 +1656,11 @@ classes:
           - api_frame_is_gain_corrected
         range: boolean
       s3_frame_path:
-        description: Path to a directory containing data for this entity as an S3 url
+        description: S3 path to the frame file
         range: string
         required: true
       https_frame_path:
-        description:
-          Path to a directory containing data for this entity as an HTTPS
-          url
+        description: HTTPS path to the frame file
         range: string
         required: true
   PerSectionAlignmentParameters:
