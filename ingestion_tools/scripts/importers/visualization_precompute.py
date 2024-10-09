@@ -50,6 +50,10 @@ class BaseAnnotationPrecompute:
 
     def _get_neuroglancer_precompute_path(self, annotation_path: str, output_prefix: str) -> str:
         file_name = os.path.basename(f"{annotation_path}_{self._get_shape().lower()}")
+        if not file_name.split("-")[0].isdigit():
+            # If the file name does not start with a number, use the id from the directory
+            annotation_id = os.path.basename(os.path.dirname(annotation_path))
+            file_name = f"{annotation_id}-{file_name}"
         return os.path.join(output_prefix, file_name, "")
 
     def neuroglancer_precompute(self, *args, **kwargs) -> None:
