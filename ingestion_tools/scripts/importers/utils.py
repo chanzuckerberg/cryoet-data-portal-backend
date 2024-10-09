@@ -46,8 +46,9 @@ IMPORTER_DEP_TREE = {
                 GainImporter: {},
                 FrameImporter: {},
                 CollectionMetadataImporter: {},
-                RawTiltImporter: {},
-                TiltSeriesImporter: {},
+                TiltSeriesImporter: {
+                    RawTiltImporter: {},
+                },
                 AlignmentImporter: {},
                 VoxelSpacingImporter: {
                     AnnotationImporter: {

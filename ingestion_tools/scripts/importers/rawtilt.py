@@ -7,4 +7,4 @@ class RawTiltImporter(BaseFileImporter):
     plural_key = "rawtilts"
     finder_factory = DefaultImporterFactory
     has_metadata = False
-    dir_path = "{dataset_name}/{run_name}/TiltSeries"
+    dir_path = "{dataset_name}/{run_name}/TiltSeries/{tiltseries_id}"
