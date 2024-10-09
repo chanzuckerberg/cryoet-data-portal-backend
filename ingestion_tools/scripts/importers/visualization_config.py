@@ -32,7 +32,7 @@ class VisualizationConfigImporter(BaseImporter):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-        tomogram_metadata = self.get_tomogram().metadata
+        tomogram_metadata = self._get_tomogram_metadata()
         if not tomogram_metadata.get("is_visualization_default"):
             print("Skipping import for tomogram that is not configured for default_visualization")
             return
@@ -40,10 +40,16 @@ class VisualizationConfigImporter(BaseImporter):
         meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
         meta.write_metadata(self.get_output_path())
 
+    def _get_tomogram_metadata(self) -> dict[str, Any]:
+        tomo_metadata_path = self.get_tomogram().get_metadata_path()
+        with open(self.config.fs.localreadable(tomo_metadata_path), "r") as f:
+            metadata = json.load(f)
+        return metadata or {}
+
     def _get_annotation_metadata_files(self) -> list[str]:
         # Getting a list of paths to the annotation metadata files using glob instead of using the annotation finder
         # to get all the annotations and not just the ones associated with the current deposition
-        annotation_path = self.config.resolve_output_path("annotation_metadata", self)
+        annotation_path = self.config.resolve_output_path("annotation_metadata", self, {"annotation_id": "*"})
         return self.config.fs.glob(os.path.join(annotation_path, "*.json"))
 
     def _to_directory_path(self, path: str) -> str:
@@ -125,6 +131,10 @@ class VisualizationConfigImporter(BaseImporter):
                 continue
             annotation_hash_input = to_base_hash_input(metadata)
             metadata_file_name = Path(annotation_metadata_path).stem
+            if not metadata_file_name.split("-")[0].isdigit():
+                # If the file name does not start with a number, use the id from the directory
+                annotation_id = os.path.basename(os.path.dirname(annotation_metadata_path))
+                metadata_file_name = f"{annotation_id}-{metadata_file_name}"
             name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
 
             for file in metadata.get("files", []):
