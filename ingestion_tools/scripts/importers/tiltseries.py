@@ -1,15 +1,40 @@
 import os.path
-from typing import TYPE_CHECKING
+from typing import Any
 
+from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
+from common.id_helper import IdentifierHelper
 from common.metadata import TiltSeriesMetadata
 from importers.base_importer import VolumeImporter
 from importers.frame import FrameImporter
 
-if TYPE_CHECKING:
-    from importers.run import RunImporter
-else:
-    RunImporter = "RunImporter"
+
+class TiltSeriesIdentifierHelper(IdentifierHelper):
+    @classmethod
+    def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
+        return "-".join(["tiltseries", parents["run"].get_output_path()])
+
+    @classmethod
+    def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
+        run = parents["run"]
+        metadata_glob = config.resolve_output_path("tiltseries_metadata", run, {"tiltseries_id": "*"})
+        return metadata_glob
+
+    @classmethod
+    def _generate_hash_key(
+        cls,
+        container_key: str,
+        metadata: dict[str, Any],
+        parents: dict[str, Any],
+        *args,
+        **kwargs,
+    ) -> str:
+        return "-".join(
+            [
+                container_key,
+                str(metadata.get("deposition_id", int(parents["deposition"].name))),
+            ],
+        )
 
 
 class TiltSeriesImporter(VolumeImporter):
@@ -17,8 +42,27 @@ class TiltSeriesImporter(VolumeImporter):
     plural_key = "tiltseries"
     finder_factory = DefaultImporterFactory
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/TiltSeries"
-    metadata_path = "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json"
+    dir_path = "{dataset_name}/{run_name}/TiltSeries/{tiltseries_id}"
+    metadata_path = os.path.join(dir_path, "tiltseries_metadata.json")
+
+    def __init__(
+        self,
+        config: DepositionImportConfig,
+        metadata: dict[str, Any],
+        name: str,
+        path: str,
+        allow_imports: bool,
+        parents: dict[str, Any],
+    ):
+        super().__init__(
+            config=config,
+            metadata=metadata,
+            name=name,
+            path=path,
+            parents=parents,
+            allow_imports=allow_imports,
+        )
+        self.identifier = TiltSeriesIdentifierHelper.get_identifier(config, self.get_base_metadata(), self.parents)
 
     def import_item(self) -> None:
         if not self.is_import_allowed():
@@ -41,7 +85,7 @@ class TiltSeriesImporter(VolumeImporter):
 
     def import_metadata(self) -> None:
         if not self.is_import_allowed():
-            print(f"Skipping import of {self.name}")
+            print(f"Skipping import of {self.name} metadata")
             return
         dest_ts_metadata = self.get_metadata_path()
         merge_data = self.load_extra_metadata()

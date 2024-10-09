@@ -163,7 +163,7 @@ def test_destination_filtered_metadata_finder(
     run_name = "random_run"
 
     def _put_data(prefix: int, data: dict):
-        key = f"{dataset_id}/{run_name}/TiltSeries/{prefix}-tiltseries_metadata.json"
+        key = f"{dataset_id}/{run_name}/TiltSeries/{prefix}/tiltseries_metadata.json"
         s3_client.put_object(Bucket=test_output_bucket, Key=key, Body=json.dumps(data).encode("utf-8"))
 
     _put_data(100, {"deposition_id": 300})
@@ -177,6 +177,6 @@ def test_destination_filtered_metadata_finder(
 
     expected = {}
     for expected_prefix in expected_prefixes:
-        filename = f"{test_output_bucket}/{dataset_id}/{run_name}/TiltSeries/{expected_prefix}-tiltseries_metadata.json"
+        filename = f"{test_output_bucket}/{dataset_id}/{run_name}/TiltSeries/{expected_prefix}/tiltseries_metadata.json"
         expected[filename] = filename
     assert actual_result == expected

@@ -13,18 +13,19 @@ from common.fs import FileSystemApi
 from common.id_helper import IdentifierHelper
 from common.image import check_mask_for_label, make_pyramids
 from common.metadata import AnnotationMetadata
+from importers.alignment import AlignmentImporter
 from importers.base_importer import BaseImporter
 
 
 class AnnotationIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs):
-        return parents["voxel_spacing"].get_output_path()
+        return "-".join(["annotation", parents["voxel_spacing"].get_output_path()])
 
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         vs = parents["voxel_spacing"]
-        anno_dir_path = config.resolve_output_path("annotation", vs)
+        anno_dir_path = config.resolve_output_path("annotation", vs, {"annotation_id": "*"})
         return os.path.join(anno_dir_path, "*.json")
 
     @classmethod
@@ -36,6 +37,8 @@ class AnnotationIdentifierHelper(IdentifierHelper):
                 metadata["annotation_object"].get("description") or "",
                 metadata["annotation_object"]["name"],
                 metadata["annotation_method"],
+                metadata["annotation_object"].get("state") or "",
+                metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path")),
             ],
         )
 
@@ -71,13 +74,21 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         parents: dict[str, Any] | None,
     ):
         source_args = {k: v for k, v in self.source.items() if k not in {"shape", "glob_string", "glob_strings"}}
+        alignment_path = self._get_alignment_metadata_path(config, parents)
+        identifier = AnnotationIdentifierHelper.get_identifier(
+            config,
+            metadata,
+            parents,
+            alignment_metadata_path=alignment_path,
+        )
         instance_args = {
-            "identifier": AnnotationIdentifierHelper.get_identifier(config, metadata, parents),
+            "identifier": identifier,
             "config": config,
             "metadata": metadata,
             "name": name,
             "path": path,
             "parents": parents,
+            "alignment_metadata_path": alignment_path,
             "allow_imports": allow_imports,
             **source_args,
         }
@@ -102,25 +113,36 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         if anno.is_valid():
             return anno
 
+    @classmethod
+    def _get_alignment_metadata_path(cls, config: DepositionImportConfig, parents: dict[str, Any]) -> str:
+        for alignment in AlignmentImporter.finder(config, **parents):
+            return alignment.get_metadata_path()
+        return ""
+
 
 class AnnotationImporter(BaseImporter):
     type_key = "annotation"
     plural_key = "annotations"
     finder_factory = AnnotationImporterFactory
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations"
-    metadata_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations"
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Annotations/{annotation_id}"
+    metadata_path = dir_path
     written_metadata_files = []  # This is a *class* variable that helps us avoid writing metadata files multiple times.
 
     def __init__(
         self,
         identifier: int,
+        alignment_metadata_path: str,
         *args,
         **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)
         self.identifier: int = identifier
-        self.local_metadata = {"object_count": 0, "files": []}
+        self.local_metadata = {
+            "object_count": 0,
+            "files": [],
+            "alignment_metadata_path": alignment_metadata_path,
+        }
         self.annotation_metadata = AnnotationMetadata(self.config.fs, self.get_deposition().name, self.metadata)
 
     # Functions to support writing annotation data
@@ -133,12 +155,13 @@ class AnnotationImporter(BaseImporter):
 
     # Functions to support writing annotation metadata
     def get_output_path(self):
-        output_dir = super().get_output_path()
-        return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
+        output_dir = super().get_output_path().format(annotation_id=self.identifier)
+        self.config.fs.makedirs(output_dir)
+        return self.annotation_metadata.get_filename_prefix(output_dir)
 
     def import_metadata(self):
         if not self.is_import_allowed():
-            print(f"Skipping import of {self.name}")
+            print(f"Skipping import of {self.name} metadata")
             return
         dest_prefix = self.get_output_path()
         filename = f"{dest_prefix}.json"

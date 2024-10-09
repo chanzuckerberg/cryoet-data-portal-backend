@@ -1,7 +1,10 @@
+import os.path
 from typing import List
 
 from botocore.response import StreamingBody
+from importers.base_importer import BaseImporter
 from importers.dataset import DatasetImporter
+from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.utils import IMPORTERS
 from mypy_boto3_s3 import S3Client
@@ -27,15 +30,31 @@ def create_config(s3_fs: FileSystemApi, test_output_bucket: str, config_path: st
     return DepositionImportConfig(s3_fs, import_config, output_path, input_bucket, IMPORTERS)
 
 
-def get_dataset_and_run(
+def get_run_and_parents(
     config: DepositionImportConfig,
+    deposition_index: int = 0,
     dataset_index: int = 0,
     run_index: int = 0,
-) -> tuple[DatasetImporter, RunImporter]:
-    dataset = list(DatasetImporter.finder(config))[dataset_index]
-    run = list(RunImporter.finder(config, dataset=dataset))[run_index]
-    return dataset, run
+) -> dict[str, BaseImporter]:
+    deposition = list(DepositionImporter.finder(config))[deposition_index]
+    parents = {"deposition": deposition}
+    parents["dataset"] = list(DatasetImporter.finder(config, **parents))[dataset_index]
+    parents["run"] = list(RunImporter.finder(config, **parents))[run_index]
+    return parents
 
 
 def get_data_from_s3(s3_client: S3Client, bucket_name: str, path: str) -> StreamingBody:
     return s3_client.get_object(Bucket=bucket_name, Key=path)["Body"]
+
+
+def get_children(s3_client: S3Client, bucket: str, prefix: str, recurse: bool = False) -> set[str]:
+    all_descendants = {os.path.relpath(item, prefix) for item in list_dir(s3_client, bucket, prefix)}
+    if recurse:
+        return all_descendants
+
+    def get_root_folder(path):
+        while os.path.dirname(path) != path and "/" in path:
+            path = os.path.dirname(path)
+        return path
+
+    return {get_root_folder(item) if "/" in item else item for item in all_descendants}

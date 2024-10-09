@@ -29,7 +29,7 @@ class RunImporter(BaseImporter):
 
     def import_metadata(self) -> None:
         if not self.is_import_allowed():
-            print(f"Skipping import of {self.name}")
+            print(f"Skipping import of {self.name} metadata")
             return
         dest_run_metadata = self.get_metadata_path()
         print(dest_run_metadata)

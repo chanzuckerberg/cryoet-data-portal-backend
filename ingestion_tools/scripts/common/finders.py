@@ -145,7 +145,8 @@ class DestinationFilteredMetadataFinder(BaseFinder):
         return expected_value in value if isinstance(value, list) else value == expected_value
 
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str | None]:
-        output_path = os.path.join(config.output_prefix, self.importer_cls.dir_path.format(**glob_vars))
+        updated_glob_vars = {**glob_vars, **{f"{self.importer_cls.type_key}_id": "*"}}
+        output_path = os.path.join(config.output_prefix, self.importer_cls.dir_path.format(**updated_glob_vars))
         responses = {}
         for file_path in config.fs.glob(os.path.join(output_path, "*metadata.json")):
             local_filename = config.fs.localreadable(file_path)
