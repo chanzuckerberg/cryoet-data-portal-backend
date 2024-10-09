@@ -22,8 +22,7 @@ class AlignmentIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         run = parents["run"]
-        alignment_dir_path = config.resolve_output_path("alignment", run)
-        metadata_glob = os.path.join(alignment_dir_path, "*", "alignment_metadata.json")
+        metadata_glob = config.resolve_output_path("alignment_metadata", run, {"alignment_id": "*"})
         return metadata_glob
 
     @classmethod
@@ -53,8 +52,8 @@ class AlignmentImporter(BaseFileImporter):
     plural_key = "alignments"
     finder_factory = MultiSourceFileFinder
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/Alignments"
-    metadata_path = os.path.join(dir_path, "{alignment_id}", "alignment_metadata.json")
+    dir_path = "{dataset_name}/{run_name}/Alignments/{alignment_id}"
+    metadata_path = os.path.join(dir_path, "alignment_metadata.json")
 
     def __init__(self, *args, file_paths: dict[str, str], **kwargs):
         super().__init__(*args, **kwargs)
@@ -93,9 +92,6 @@ class AlignmentImporter(BaseFileImporter):
         for path in self.file_paths.values():
             dest_filename = self.get_dest_filename(path)
             self.config.fs.copy(path, dest_filename)
-
-    def get_output_path(self) -> str:
-        return os.path.join(super().get_output_path(), str(self.identifier))
 
     def get_dest_filename(self, path: str) -> str | None:
         if not path:

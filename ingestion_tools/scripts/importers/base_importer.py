@@ -191,8 +191,7 @@ class VolumeImporter(BaseImporter):
 
     def get_output_path(self) -> str:
         output_dir = super().get_output_path()
-        identifier = str(self.identifier) if self.identifier else ""
-        return os.path.join(output_dir, identifier, self.get_run().name)
+        return os.path.join(output_dir, self.get_run().name)
 
     def load_extra_metadata(self) -> dict[str, Any]:
         run: RunImporter = self.get_run()

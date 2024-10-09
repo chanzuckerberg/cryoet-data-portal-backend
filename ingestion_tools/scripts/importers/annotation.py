@@ -25,7 +25,7 @@ class AnnotationIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         vs = parents["voxel_spacing"]
-        anno_dir_path = config.resolve_output_path("annotation", vs)
+        anno_dir_path = config.resolve_output_path("annotation", vs, {"annotation_id": "*"})
         return os.path.join(anno_dir_path, "*.json")
 
     @classmethod
@@ -125,7 +125,7 @@ class AnnotationImporter(BaseImporter):
     plural_key = "annotations"
     finder_factory = AnnotationImporterFactory
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Annotations/{{annotation_id}}"
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Annotations/{annotation_id}"
     metadata_path = dir_path
     written_metadata_files = []  # This is a *class* variable that helps us avoid writing metadata files multiple times.
 

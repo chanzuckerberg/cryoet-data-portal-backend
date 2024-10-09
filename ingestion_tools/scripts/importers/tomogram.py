@@ -20,9 +20,9 @@ class TomogramIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         voxel_spacing = parents["voxel_spacing"]
-        tomogram_dir_path = config.resolve_output_path("tomogram", voxel_spacing)
+        tomogram_dir_path = config.resolve_output_path("tomogram_metadata", voxel_spacing, {"tomogram_id": "*"})
         search_path = re.sub(r"/VoxelSpacing[0-9.]+/", "/VoxelSpacing*/", tomogram_dir_path)
-        return os.path.join(search_path, "*", "tomogram_metadata.json")
+        return search_path
 
     @classmethod
     def _generate_hash_key(
@@ -51,8 +51,8 @@ class TomogramImporter(VolumeImporter):
     finder_factory = DefaultImporterFactory
     cached_find_results: dict[str, Any] = {}
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Tomograms/"
-    metadata_path = os.path.join(dir_path, "{tomogram_id}", "tomogram_metadata.json")
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Tomograms/{tomogram_id}"
+    metadata_path = os.path.join(dir_path, "tomogram_metadata.json")
 
     def __init__(
         self,

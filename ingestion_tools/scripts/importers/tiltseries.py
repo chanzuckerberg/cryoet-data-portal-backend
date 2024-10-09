@@ -17,8 +17,7 @@ class TiltSeriesIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         run = parents["run"]
-        tiltseries_dir_path = config.resolve_output_path("tiltseries", run)
-        metadata_glob = os.path.join(tiltseries_dir_path, "*", "tiltseries_metadata.json")
+        metadata_glob = config.resolve_output_path("tiltseries_metadata", run, {"tiltseries_id": "*"})
         return metadata_glob
 
     @classmethod
@@ -43,8 +42,8 @@ class TiltSeriesImporter(VolumeImporter):
     plural_key = "tiltseries"
     finder_factory = DefaultImporterFactory
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/TiltSeries/"
-    metadata_path = os.path.join(dir_path, "{tiltseries_id}", "tiltseries_metadata.json")
+    dir_path = "{dataset_name}/{run_name}/TiltSeries/{tiltseries_id}"
+    metadata_path = os.path.join(dir_path, "tiltseries_metadata.json")
 
     def __init__(
         self,

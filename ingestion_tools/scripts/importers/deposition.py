@@ -1,3 +1,4 @@
+import os.path
 from typing import Any
 
 from common.finders import DefaultImporterFactory
@@ -12,7 +13,7 @@ class DepositionImporter(BaseImporter):
     finder_factory = DefaultImporterFactory
     has_metadata = True
     dir_path = "depositions_metadata/{deposition_name}"
-    metadata_path = "depositions_metadata/{deposition_name}/deposition_metadata.json"
+    metadata_path = os.path.join(dir_path, "deposition_metadata.json")
 
     def import_item(self) -> None:
         pass
