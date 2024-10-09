@@ -67,7 +67,7 @@ class NeuroglancerMetadata(BaseMetadata):
 
 
 class AnnotationMetadata(MergedMetadata):
-    def get_filename_prefix(self, output_dir: str, identifier: int) -> str:
+    def get_filename_prefix(self, output_dir: str) -> str:
         version = self.metadata["version"]
         obj = None
         with contextlib.suppress(KeyError):
@@ -78,7 +78,6 @@ class AnnotationMetadata(MergedMetadata):
             output_dir,
             "-".join(
                 [
-                    str(identifier),
                     re.sub("[^0-9a-z]", "_", obj.lower()),
                     re.sub("[^0-9a-z.]", "_", f"{str(version).lower()}"),
                 ],

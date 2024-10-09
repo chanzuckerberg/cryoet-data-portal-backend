@@ -125,8 +125,8 @@ class AnnotationImporter(BaseImporter):
     plural_key = "annotations"
     finder_factory = AnnotationImporterFactory
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Annotations"
-    metadata_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Annotations"
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Annotations/{{annotation_id}}"
+    metadata_path = dir_path
     written_metadata_files = []  # This is a *class* variable that helps us avoid writing metadata files multiple times.
 
     def __init__(
@@ -155,8 +155,9 @@ class AnnotationImporter(BaseImporter):
 
     # Functions to support writing annotation metadata
     def get_output_path(self):
-        output_dir = super().get_output_path()
-        return self.annotation_metadata.get_filename_prefix(output_dir, self.identifier)
+        output_dir = super().get_output_path().format(annotation_id=self.identifier)
+        self.config.fs.makedirs(output_dir)
+        return self.annotation_metadata.get_filename_prefix(output_dir)
 
     def import_metadata(self):
         if not self.is_import_allowed():

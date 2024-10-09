@@ -74,7 +74,7 @@ def deposition_config_s3(s3_fs: FileSystemApi, test_output_bucket: str, tmp_path
 
 
 @pytest.fixture
-def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir, tmp_path) -> DepositionImportConfig:
+def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir: str, tmp_path) -> DepositionImportConfig:
     config_file = generate_anno_config_file(tmp_path, "fixtures")
     output_path = f"/{tmp_path}/output"
     config = DepositionImportConfig(local_fs, config_file, output_path, local_test_data_dir, IMPORTERS)
@@ -152,8 +152,8 @@ def import_annotation_metadata(
     anno_file = anno.get_output_path() + "_point.ndjson"
     # Make sure we have a ndjson data file and a metadata file
     anno_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
-    assert "100-some_protein-1.0.json" in anno_files
-    assert "100-some_protein-1.0_point.ndjson" in anno_files
+    assert "some_protein-1.0.json" in anno_files
+    assert "some_protein-1.0_point.ndjson" in anno_files
 
     # Sanity check the metadata
     with s3_fs.open(metadata_file, "r") as fh:
@@ -165,7 +165,7 @@ def import_annotation_metadata(
     fileinfo = metadata["files"][0]
     assert fileinfo["format"] == "ndjson"
     assert fileinfo["shape"] == "Point"
-    assert "100-some_protein-1.0_point.ndjson" in fileinfo["path"]
+    assert "some_protein-1.0_point.ndjson" in fileinfo["path"]
 
     # Sanity check the ndjson file
     with s3_fs.open(anno_file, "r") as fh:
@@ -264,8 +264,8 @@ def test_import_annotation_metadata_with_multiple_sources(
     metadata_file = anno1.get_output_path() + ".json"
     # Make sure we have a ndjson data file and a metadata file
     anno_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
-    assert "100-some_protein-1.0.json" in anno_files
-    assert "100-some_protein-1.0_point.ndjson" in anno_files
+    assert "some_protein-1.0.json" in anno_files
+    assert "some_protein-1.0_point.ndjson" in anno_files
 
     # Sanity check the metadata
     with s3_fs.open(metadata_file, "r") as fh:
@@ -274,7 +274,6 @@ def test_import_annotation_metadata_with_multiple_sources(
     fileinfo = metadata["files"]
     assert {item["format"] for item in fileinfo} == {"zarr", "ndjson", "mrc"}
     assert {item["shape"] for item in fileinfo} == {"Point", "SegmentationMask"}
-    print(fileinfo)
     assert len(fileinfo) == 3  # We should have ndjson, mrc and zarr files
 
 
@@ -1248,7 +1247,7 @@ def test_ingest_triangular_mesh(
 
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Reconstructions/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing10.000/Annotations/100/some_protein-1.0_triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "alignment_metadata_path": "foo",
@@ -1315,10 +1314,9 @@ def test_ingest_triangular_mesh_hff(
     )
     anno.import_item()
     anno.import_metadata()
-
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Reconstructions/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing10.000/Annotations/100/some_protein-1.0_triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "alignment_metadata_path": "foo",
