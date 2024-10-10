@@ -62,6 +62,7 @@ class TomogramImporter(VolumeImporter):
         path: str,
         allow_imports: bool,
         parents: dict[str, Any],
+        alignment_metadata_path: str = None,
     ):
         super().__init__(
             config=config,
@@ -71,7 +72,7 @@ class TomogramImporter(VolumeImporter):
             parents=parents,
             allow_imports=allow_imports,
         )
-        self.alignment_metadata_path = self.get_alignment_metadata_path()
+        self.alignment_metadata_path = alignment_metadata_path or self.get_alignment_metadata_path()
         self.identifier = TomogramIdentifierHelper.get_identifier(
             config,
             self.get_base_metadata(),

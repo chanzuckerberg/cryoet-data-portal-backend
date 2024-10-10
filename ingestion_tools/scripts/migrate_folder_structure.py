@@ -4,6 +4,7 @@ import re
 from typing import Any, Optional
 
 import click as click
+from importers.alignment import AlignmentImporter
 from importers.base_importer import BaseImporter
 from importers.utils import IMPORTER_DEP_TREE, IMPORTERS
 from standardize_dirs import flatten_dependency_tree
@@ -28,7 +29,7 @@ OLD_PATHS = {
     "deposition_metadata": "depositions_metadata/{deposition_name}/deposition_metadata.json",
     "frame": "{dataset_name}/{run_name}/Frames",
     "gain": "{dataset_name}/{run_name}/Gains/",
-    "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos",
+    "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos/*",
     "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
     "run": "{dataset_name}/{run_name}",
     "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
@@ -105,6 +106,22 @@ def migrate_tomograms(cls, config: DepositionImportConfig, parents: dict[str, An
     # config.fs.move(metadata_path, cls.get_metadata_path)
 
 
+def migrate_viz_config(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+    old_path = cls.path
+    new_path = cls.get_output_path()
+    print(f"Moving {old_path} to {new_path}")
+    # config.fs.move(old_path, new_path)
+
+
+def migrate_key_image(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+    old_path = cls.path
+    tomo_id = cls.parents["tomogram"].identifier
+    file_name = f"{tomo_id}-{os.path.basename(old_path)}"
+    new_path = os.path.join(cls.get_output_path(), file_name)
+    print(f"Moving {old_path} to {new_path}")
+    # config.fs.move(old_path, new_path)
+
+
 def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
     output_path = cls.get_output_path()
     metadata_path = kwargs.get("metadata_path")
@@ -116,12 +133,14 @@ def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, 
         # config.fs.move(old_path, new_path)
     print(f"Moving {metadata_path} to {cls.get_output_path()}.json")
     # config.fs.move(metadata_path, f"{cls.get_output_path()}.json)
-    pass
+
 
 MIGRATION_MAP = {
+    "annotation": migrate_annotations,
     "tiltseries": migrate_tiltseries,
     "tomogram": migrate_tomograms,
-    "annotation": migrate_annotations,
+    "viz_config": migrate_viz_config,
+    "key_image": migrate_key_image,
 }
 
 
@@ -196,7 +215,10 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                     metadata = json.load(f)
                 name, path, results = migrate_cls.get_name_and_path(metadata, None, file_path, {})
                 kwargs = {"allow_imports": False, "parents": parents}
-                print(path, results)
+                if migrate_cls.type_key == "tomogram":
+                    glob_vars = {**_get_glob_vars(migrate_cls, parents), **{"alignment_id": "100"}}
+                    alignment_path = AlignmentImporter.dir_path.format(**glob_vars)
+                    kwargs["alignment_metadata_path"] = os.path.join(alignment_path, "alignment_metadata.json")
                 if path:
                     kwargs["path"] = path
                 elif results:
@@ -213,7 +235,7 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
             },
         }
         importer_factory = DefaultImporterFactory(source, migrate_cls)
-        for item in importer_factory.find(config, _get_glob_vars(migrate_cls, parents)):
+        for item in importer_factory.find(config, {}, **parents):
             item.allow_imports = False
             yield item, {}
     else:
