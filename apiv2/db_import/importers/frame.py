@@ -15,6 +15,7 @@ from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 #   s3_frame_path: str
 #   https_frame_path: str
 
+
 class FrameItem(ItemDBImporter):
     direct_mapped_fields = {}
     id_fields = ["run_id", "s3_frame_path"]

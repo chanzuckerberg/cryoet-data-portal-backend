@@ -59,7 +59,6 @@ class TomogramGroupByOptions:
     tomogram_version: Optional[float] = None
     processing_software: Optional[str] = None
     reconstruction_software: Optional[str] = None
-    is_standardized: Optional[bool] = None
     is_portal_standard: Optional[bool] = None
     is_author_submitted: Optional[bool] = None
     is_visualization_default: Optional[bool] = None

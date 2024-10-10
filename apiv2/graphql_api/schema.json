@@ -6749,15 +6749,6 @@
             },
             {
               "defaultValue": null,
-              "name": "isStandardized",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "BoolComparators",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
               "name": "isPortalStandard",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -21885,19 +21876,6 @@
             },
             {
               "args": [],
-              "name": "isStandardized",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [],
               "name": "isPortalStandard",
               "type": {
                 "kind": "SCALAR",
@@ -22518,15 +22496,6 @@
             {
               "defaultValue": null,
               "name": "reconstructionSoftware",
-              "type": {
-                "kind": "ENUM",
-                "name": "orderBy",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "name": "isStandardized",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -23392,15 +23361,6 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isStandardized",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
                 "ofType": null
               }
             },
@@ -24970,9 +24930,6 @@
             },
             {
               "name": "reconstructionSoftware"
-            },
-            {
-              "name": "isStandardized"
             },
             {
               "name": "isPortalStandard"
@@ -35127,19 +35084,6 @@
               }
             },
             {
-              "defaultValue": null,
-              "name": "isStandardized",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              }
-            },
-            {
               "defaultValue": "null",
               "name": "isPortalStandard",
               "type": {
@@ -35504,15 +35448,6 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "name": "isStandardized",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
                 "ofType": null
               }
             },

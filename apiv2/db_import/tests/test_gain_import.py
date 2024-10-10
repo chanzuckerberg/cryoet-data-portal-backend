@@ -26,12 +26,19 @@ def expected_gains(http_prefix: str) -> list[dict[str, Any]]:
         },
     ]
 
+
 @write_data
 def populate_existing_gains(session: sa.orm.Session) -> models.GainFile:
     populate_run(session)
     stale_frame = models.GainFile(run_id=RUN1_ID, https_file_path="STALE_FRAME", s3_file_path="STALE_FRAME")
     session.add(stale_frame)
-    return models.GainFile(id=333, run_id=RUN1_ID, s3_file_path="s3://test-public-bucket/30001/RUN1/Frames/run1_gain.mrc", https_file_path="meep")
+    return models.GainFile(
+        id=333,
+        run_id=RUN1_ID,
+        s3_file_path="s3://test-public-bucket/30001/RUN1/Frames/run1_gain.mrc",
+        https_file_path="meep",
+    )
+
 
 # Tests addition of new gains, and updating entries already existing in db, and cleanup of old gains.
 def test_import_gains(
@@ -44,7 +51,7 @@ def test_import_gains(
     sync_db_session.commit()
     actual = verify_dataset_import(import_gains=True)
     expected_iter = iter(expected_gains)
-    for run in [run for run in actual.runs if run.name == 'RUN1']:
+    for run in [run for run in actual.runs if run.name == "RUN1"]:
         assert len(run.gain_files) == 2
         assert run.gain_files[0].id == 333
         for gain in run.gain_files:
