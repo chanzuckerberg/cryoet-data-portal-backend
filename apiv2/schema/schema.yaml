@@ -574,6 +574,7 @@ classes:
       run:
         inverse: Run.gain_files
         range: Run
+        required: true
       s3_file_path:
         description: Path to the file in s3
         range: string
@@ -1614,11 +1615,13 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.frames
         range: Deposition
+        required: true
       run:
         name: run
         from_schema: cdp-dataset-config
         inverse: Run.frames
         range: Run
+        required: true
       raw_angle:
         name: raw_angle
         description: Camera angle for a frame
@@ -1626,7 +1629,7 @@ classes:
         exact_mappings:
           - api_frame_raw_angle
         range: float
-        required: true
+        required: false
         minimum_value: -90
         maximum_value: 90
       acquisition_order:
@@ -1644,7 +1647,7 @@ classes:
         exact_mappings:
           - api_frame_dose
         range: float
-        required: true
+        required: false
         unit:
           symbol: e-/Å2
           descriptive_name: electrons per square angstrom

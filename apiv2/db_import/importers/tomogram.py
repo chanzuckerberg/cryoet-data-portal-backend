@@ -3,11 +3,11 @@ from typing import Any, Iterator
 
 import sqlalchemy as sa
 from database import models
+from db_import.common.config import DBImportConfig
 from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
-    DBImportConfig,
     StaleParentDeletionDBImporter,
 )
 from db_import.importers.deposition import get_deposition

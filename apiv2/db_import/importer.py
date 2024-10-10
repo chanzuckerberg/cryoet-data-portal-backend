@@ -5,15 +5,17 @@ import boto3
 import click
 from botocore import UNSIGNED
 from botocore.config import Config
+from db_import.common.config import DBImportConfig
 from db_import.importers.annotation import (
     AnnotationAuthorDBImporter,
     AnnotationDBImporter,
     AnnotationMethodLinkDBImporter,
     StaleAnnotationDeletionDBImporter,
 )
-from db_import.importers.base_importer import DBImportConfig
 from db_import.importers.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
 from db_import.importers.deposition import DepositionAuthorDBImporter, DepositionDBImporter, DepositionTypeDBImporter
+from db_import.importers.frame import FrameImporter
+from db_import.importers.gain import GainImporter
 from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
 from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
 from db_import.importers.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
@@ -39,6 +41,8 @@ def db_import_options(func):
     options.append(click.option("--import-dataset-funding", is_flag=True, default=False))
     options.append(click.option("--import-depositions", is_flag=True, default=False))
     options.append(click.option("--import-runs", is_flag=True, default=False))
+    options.append(click.option("--import-gains", is_flag=True, default=False))
+    options.append(click.option("--import-frames", is_flag=True, default=False))
     options.append(click.option("--import-tiltseries", is_flag=True, default=False))
     options.append(click.option("--import-tomograms", is_flag=True, default=False))
     options.append(click.option("--import-tomogram-authors", is_flag=True, default=False))
@@ -82,6 +86,8 @@ def load(
     import_dataset_funding: bool,
     import_depositions: bool,
     import_runs: bool,
+    import_gains: bool,
+    import_frames: bool,
     import_tiltseries: bool,
     import_tomograms: bool,
     import_tomogram_authors: bool,
@@ -104,6 +110,8 @@ def load(
         import_dataset_funding,
         import_depositions,
         import_runs,
+        import_gains,
+        import_frames,
         import_tiltseries,
         import_tomograms,
         import_tomogram_authors,
@@ -128,6 +136,8 @@ def load_func(
     import_dataset_funding: bool = False,
     import_depositions: bool = False,
     import_runs: bool = False,
+    import_gains: bool = False,
+    import_frames: bool = False,
     import_tiltseries: bool = False,
     import_tomograms: bool = False,
     import_tomogram_authors: bool = False,
@@ -149,6 +159,8 @@ def load_func(
         import_dataset_funding = True
         import_depositions = True
         import_runs = True
+        import_gains = True
+        import_frames = True
         import_tiltseries = True
         import_tomograms = True
         import_tomogram_authors = True
@@ -157,7 +169,7 @@ def load_func(
         import_annotations = max(import_annotations, import_annotation_authors, import_annotation_method_links)
         import_tomograms = max(import_tomograms, import_tomogram_authors)
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
-        import_runs = max(import_runs, import_tiltseries, import_tomogram_voxel_spacing)
+        import_runs = max(import_runs, import_gains, import_frames, import_tiltseries, import_tomogram_voxel_spacing)
 
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
@@ -198,6 +210,13 @@ def load_func(
             run_id = run_obj.id
             run_cleaner.mark_as_active(run_obj)
 
+            parents = {"run": run_obj, "dataset": dataset_obj}
+            if import_frames:
+                frame_importer = FrameImporter(config, **parents)
+                frame_importer.import_items()
+            if import_gains:
+                gain_importer = GainImporter(config, **parents)
+                gain_importer.import_items()
             if import_tiltseries:
                 tiltseries_cleaner = StaleTiltSeriesDeletionDBImporter(run_id, config)
                 tiltseries = TiltSeriesDBImporter.get_item(run_id, run, config)
