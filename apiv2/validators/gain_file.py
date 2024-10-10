@@ -17,7 +17,7 @@ from typing_extensions import Annotated
 class GainFileCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    run_id: Annotated[uuid.UUID | None, Field()]
+    run_id: Annotated[uuid.UUID, Field()]
     s3_file_path: Annotated[
         str,
         StringConstraints(
