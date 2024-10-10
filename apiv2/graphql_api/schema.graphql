@@ -5000,9 +5000,6 @@ type Tomogram implements EntityInterface & Node {
   reconstructionSoftware: String!
 
   """whether this tomogram adheres to portal standards"""
-  isStandardized: Boolean!
-
-  """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean
 
   """
@@ -5342,7 +5339,6 @@ enum TomogramCountColumns {
   tomogramVersion
   processingSoftware
   reconstructionSoftware
-  isStandardized
   isPortalStandard
   isAuthorSubmitted
   isVisualizationDefault
@@ -5415,9 +5411,6 @@ input TomogramCreateInput {
 
   """Name of software used for reconstruction"""
   reconstructionSoftware: String!
-
-  """whether this tomogram adheres to portal standards"""
-  isStandardized: Boolean!
 
   """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean = null
@@ -5522,7 +5515,6 @@ type TomogramGroupByOptions {
   tomogramVersion: Float
   processingSoftware: String
   reconstructionSoftware: String
-  isStandardized: Boolean
   isPortalStandard: Boolean
   isAuthorSubmitted: Boolean
   isVisualizationDefault: Boolean
@@ -5606,7 +5598,6 @@ input TomogramOrderByClause {
   tomogramVersion: orderBy
   processingSoftware: orderBy
   reconstructionSoftware: orderBy
-  isStandardized: orderBy
   isPortalStandard: orderBy
   isAuthorSubmitted: orderBy
   isVisualizationDefault: orderBy
@@ -5679,9 +5670,6 @@ input TomogramUpdateInput {
 
   """Name of software used for reconstruction"""
   reconstructionSoftware: String
-
-  """whether this tomogram adheres to portal standards"""
-  isStandardized: Boolean
 
   """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean = null
@@ -5968,7 +5956,6 @@ input TomogramWhereClause {
   tomogramVersion: FloatComparators
   processingSoftware: StrComparators
   reconstructionSoftware: StrComparators
-  isStandardized: BoolComparators
   isPortalStandard: BoolComparators
   isAuthorSubmitted: BoolComparators
   isVisualizationDefault: BoolComparators
