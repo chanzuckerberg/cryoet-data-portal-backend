@@ -14,7 +14,8 @@ from common.finders import DefaultImporterFactory
 from common.fs import FileSystemApi
 
 OLD_PATHS = {
-    "alignment": "{dataset_name}/{run_name}/Alignments/{alignment_id}",
+    "alignment": "{dataset_name}/{run_name}/Alignments/{alignment_id}-",
+    "alignment_metadata": "{dataset_name}/{run_name}/Alignments/{alignment_id}-alignment_metadata.json",
     "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
     "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations/*.json",
     "annotation_viz": (
@@ -122,6 +123,16 @@ def migrate_key_image(cls, config: DepositionImportConfig, parents: dict[str, An
     # config.fs.move(old_path, new_path)
 
 
+def migrate_alignments(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+    metadata_path = kwargs.get("metadata_path")
+    for path in cls.file_paths.values():
+        new_path = os.path.join(cls.get_output_path(), os.path.basename(path).lstrip(f"{cls.identifier}-"))
+        print(f"Moving {path} to {new_path}")
+        # config.fs.move(path, new_path)
+    print(f"Moving {metadata_path} to {cls.get_metadata_path()}")
+    # config.fs.move(metadata_path, cls.get_metadata_path())
+
+
 def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
     output_path = cls.get_output_path()
     metadata_path = kwargs.get("metadata_path")
@@ -136,6 +147,7 @@ def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, 
 
 
 MIGRATION_MAP = {
+    "alignment": migrate_alignments,
     "annotation": migrate_annotations,
     "tiltseries": migrate_tiltseries,
     "tomogram": migrate_tomograms,
@@ -182,7 +194,7 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                 for item in source_finder_factory.find(config, metadata, **parents):
                     item.allow_imports = False
                     yield item, {}
-    elif migrate_cls.type_key in {"alignment", "gains", "frames", "collection_metadata"}:
+    elif migrate_cls.type_key in {"rawtlt", "gain", "collection_metadata"}:
         print(f"Skipping for now {migrate_cls.type_key}..")
     elif f"{migrate_cls.type_key}_metadata" in OLD_PATHS:
         print(f"Finding metadata for {migrate_cls.type_key}..")
@@ -191,7 +203,7 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
         glob_path = os.path.join(config.output_prefix, glob_str)
         for file_path in config.fs.glob(glob_path):
             args = {"metadata_path": file_path}
-            if "*" in glob_path:
+            if "*" in glob_path and migrate_cls.type_key not in {"alignment"}:
                 if migrate_cls.type_key == "annotation":
                     name = re.search(re.compile(glob_str.replace("*", "(.*)")), file_path).group(1)
                     with config.fs.open(file_path, "r") as f:
@@ -222,7 +234,7 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                 if path:
                     kwargs["path"] = path
                 elif results:
-                    kwargs["paths"] = results
+                    kwargs["file_paths"] = results
                 yield migrate_cls(config, metadata, name, **kwargs), args
     elif f"{migrate_cls.type_key}" in OLD_PATHS:
         print(f"Destination Finder for {migrate_cls.type_key} ")
