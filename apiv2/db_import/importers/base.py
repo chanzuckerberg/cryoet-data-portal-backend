@@ -1,4 +1,5 @@
 import logging
+import os
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Type
 
@@ -40,6 +41,9 @@ class ItemDBImporter:
     def _get_identifiers(self) -> dict[str, Any]:
         identifiers = {id_field: self.model_args[id_field] for id_field in self.id_fields}
         return identifiers
+
+    def get_s3_id(self):
+        return os.path.dirname(self.input_data["file"]).split("/")[-1]
 
     def load(self, session) -> Base:
         """

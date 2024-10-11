@@ -18,8 +18,9 @@ from db_import.importers.frame import FrameImporter
 from db_import.importers.gain import GainImporter
 from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
 from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
-from db_import.importers.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
+from db_import.importers.tomogram import TomogramAuthorImporter, TomogramImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
+from s3fs import S3FileSystem
 
 from platformics.database.connect import init_sync_db
 
@@ -173,7 +174,9 @@ def load_func(
 
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
-    config = DBImportConfig(s3_client, s3_bucket, https_prefix, session)
+    s3fs = S3FileSystem(client_kwargs={"endpoint_url": endpoint_url})
+    config = DBImportConfig(s3_client, s3fs, s3_bucket, https_prefix, session)
+    config.load_deposition_map()
 
     if import_depositions and deposition_id:
         for dep_id in deposition_id:
@@ -205,6 +208,9 @@ def load_func(
 
         run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
+            print(f"GOT ITEM {run.dir_prefix}")
+            if "TS_045" not in run.dir_prefix:
+                continue
             logger.info("Processing Run with prefix %s", run.dir_prefix)
             run_obj = run.import_to_db()
             run_id = run_obj.id
@@ -233,16 +239,13 @@ def load_func(
                 voxel_spacing_obj = voxel_spacing.import_to_db()
 
                 if import_tomograms:
-                    tomogram_cleaner = StaleTomogramDeletionDBImporter(voxel_spacing_obj.id, config)
-                    TomogramDBImporter.load_deposition_map(config)
-                    for tomogram in TomogramDBImporter.get_item(voxel_spacing_obj.id, run_id, voxel_spacing, config):
-                        tomogram_obj = tomogram.import_to_db()
-                        tomogram_cleaner.mark_as_active(tomogram_obj)
-
+                    parents = {"run": run_obj, "voxel_spacing": voxel_spacing_obj}
+                    tomo_importer = TomogramImporter(config, **parents)
+                    for tomogram_obj in tomo_importer.import_items():
                         if import_tomogram_authors:
-                            tomogram_authors = TomogramAuthorDBImporter.get_item(tomogram_obj.id, tomogram, config)
-                            tomogram_authors.import_to_db()
-                    tomogram_cleaner.remove_stale_objects()
+                            parents = {"run": run_obj, "voxel_spacing": voxel_spacing_obj, "tomogram": tomogram_obj}
+                            tomogram_authors = TomogramAuthorImporter(config, **parents)
+                            tomogram_authors.import_items()
 
                 if import_annotations:
                     annotation_cleaner = StaleAnnotationDeletionDBImporter(run_id, config)
@@ -270,7 +273,7 @@ def load_func(
 
             voxel_spacing_cleaner.remove_stale_objects()
 
-        run_cleaner.remove_stale_objects()
+        # run_cleaner.remove_stale_objects()
         session.commit()
     session.commit()
 

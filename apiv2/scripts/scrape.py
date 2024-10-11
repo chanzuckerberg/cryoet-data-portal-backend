@@ -11,7 +11,7 @@ from support.enums import tomogram_reconstruction_method_enum as reconstruction_
 from platformics.database.connect import init_sync_db
 
 # cleanup:
-# delete from deposition_type; delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;
+# delete from deposition_type; delete from annotation_author; delete from annotation_method_link; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from gain_file; delete from frame; delete from run; delete from run; delete from dataset; delete from deposition;
 
 # CLIENT_URL="https://graphql-cryoet-api.cryoet.staging.si.czi.technology/v1/graphql"
 CLIENT_URL = "https://graphql.cryoetdataportal.cziscience.com/v1/graphql"
