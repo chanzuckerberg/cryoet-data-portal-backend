@@ -26,7 +26,7 @@ class ItemDBImporter:
     # Which sqlalchemy model class is being imported?
     model_class: Type[Base]
     # A map between model properties and their locations in the input data.
-    direct_mapped_fields: dict[str, list[str]] = {}
+    direct_mapped_fields: dict[str, list[str | int]] = {}
     # Which fields uniquely identify a row?
     id_fields: list[str] = []
 
