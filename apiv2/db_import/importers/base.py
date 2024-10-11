@@ -22,7 +22,7 @@ logger = logging.getLogger("db_import")
 
 class ItemDBImporter:
     model_class: Type[Base]
-    direct_mapped_fields: dict[str, list[str]] = {}
+    direct_mapped_fields: dict[str, list[str | int]] = {}
     id_fields: list[str] = []
 
     def __init__(self, config: DBImportConfig, input_data: dict[str, Any]):
