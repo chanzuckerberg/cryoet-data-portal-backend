@@ -42,7 +42,7 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
         run: RunDBImporter,
         config: DBImportConfig,
     ) -> "Iterator[TomogramVoxelSpacingDBImporter]":
-        tomogram_path = cls.join_path(run.dir_prefix, "Tomograms/")
+        tomogram_path = cls.join_path(run.dir_prefix, "Reconstructions/")
         return [
             cls(run_id, voxel_spacing_path, run, config)
             for voxel_spacing_path in config.glob_s3(tomogram_path, "VoxelSpacing*", is_file=False)

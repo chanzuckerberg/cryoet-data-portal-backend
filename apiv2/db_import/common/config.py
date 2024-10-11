@@ -1,10 +1,14 @@
 import json
 import logging
 from datetime import datetime
+from functools import lru_cache
 from pathlib import PurePath
 from typing import TYPE_CHECKING, Any
 
+import sqlalchemy as sa
 from botocore.exceptions import ClientError
+from database import models
+from s3fs import S3FileSystem
 from sqlalchemy.orm import Session
 
 if TYPE_CHECKING:
@@ -17,6 +21,7 @@ logger = logging.getLogger("config")
 
 class DBImportConfig:
     s3_client: S3Client
+    s3fs: S3FileSystem
     bucket_name: str
     s3_prefix: str
     https_prefix: str
@@ -25,18 +30,32 @@ class DBImportConfig:
     def __init__(
         self,
         s3_client: S3Client,
+        s3fs: S3FileSystem,
         bucket_name: str,
         https_prefix: str,
         session: Session,
     ):
         self.s3_client = s3_client
+        self.s3fs = s3fs
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
         self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
         self.session = session
+        self.deposition_map: dict[int, models.Deposition] = {}
 
     def get_db_session(self) -> Session:
         return self.session
+
+    def load_deposition_map(self) -> None:
+        session = self.get_db_session()
+        for item in session.scalars(sa.select(models.Deposition)).all():
+            self.deposition_map[item.id] = item
+
+    @lru_cache  # noqa
+    def get_alignment_by_path(self, path: str) -> int | None:
+        session = self.get_db_session()
+        for item in session.scalars(sa.select(models.Alignment).where(models.Alignment.s3_alignment_metadata == path)).all():
+            return item.id
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
@@ -74,6 +93,8 @@ class DBImportConfig:
         else it will return None.
         """
         try:
+            if key.startswith(self.bucket_name):
+                key = key[len(self.bucket_name) + 1 :]
             text = self.s3_client.get_object(Bucket=self.bucket_name, Key=key)
             return json.loads(text["Body"].read())
         except ClientError as ex:
