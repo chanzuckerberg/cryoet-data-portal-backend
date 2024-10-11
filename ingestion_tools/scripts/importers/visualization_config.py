@@ -32,19 +32,13 @@ class VisualizationConfigImporter(BaseImporter):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-        tomogram_metadata = self._get_tomogram_metadata()
-        if not tomogram_metadata.get("is_visualization_default"):
+        tomogram = self.get_tomogram()
+        if not tomogram.get_base_metadata().get("is_visualization_default"):
             print("Skipping import for tomogram that is not configured for default_visualization")
             return
-        ng_contents = self._create_config(tomogram_metadata.get("alignment_metadata_path"))
+        ng_contents = self._create_config(tomogram.alignment_metadata_path)
         meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
         meta.write_metadata(self.get_output_path())
-
-    def _get_tomogram_metadata(self) -> dict[str, Any]:
-        tomo_metadata_path = self.get_tomogram().get_metadata_path()
-        with open(self.config.fs.localreadable(tomo_metadata_path), "r") as f:
-            metadata = json.load(f)
-        return metadata or {}
 
     def _get_annotation_metadata_files(self) -> list[str]:
         # Getting a list of paths to the annotation metadata files using glob instead of using the annotation finder
