@@ -102,11 +102,11 @@ class AlignmentImporter(BaseFileImporter):
     def get_extra_metadata(self) -> dict:
         extra_metadata = {
             "per_section_alignment_parameters": self.converter.get_per_section_alignment_parameters(),
-            "alignment_path": self.to_formatted_path(self.converter.get_alignment_path()),
-            "tilt_path": self.to_formatted_path(self.converter.get_tilt_path()),
-            "tiltx_path": self.to_formatted_path(self.converter.get_tiltx_path()),
-            "tiltseries_path": self.to_formatted_path(self.get_tiltseries_path()),
-            "files": [self.to_formatted_path(self.get_dest_filename(path)) for path in self.file_paths.values()],
+            "alignment_path": self.config.to_formatted_path(self.converter.get_alignment_path()),
+            "tilt_path": self.config.to_formatted_path(self.converter.get_tilt_path()),
+            "tiltx_path": self.config.to_formatted_path(self.converter.get_tiltx_path()),
+            "tiltseries_path": self.config.to_formatted_path(self.get_tiltseries_path()),
+            "files": [self.config.to_formatted_path(self.get_dest_filename(path)) for path in self.file_paths.values()],
         }
         if "volume_dimension" not in self.metadata:
             extra_metadata["volume_dimension"] = self.get_tomogram_volume_dimension()
