@@ -153,13 +153,18 @@ class DestinationFilteredMetadataFinder(BaseFinder):
                 metadata = json.load(metadata_file)
             if all(self._is_match(metadata, item.get("key"), item.get("value")) for item in self.filters):
                 responses[file_path] = file_path
-
         return responses
 
 
 ###
 ### Factories
 ###
+def get_remote_json(path: str, config: DepositionImportConfig) -> dict[str, Any]:
+    local_filename = config.fs.localreadable(path)
+    with open(local_filename, "r") as metadata_file:
+        return json.load(metadata_file)
+
+
 class DepositionObjectImporterFactory(ABC):
     def __init__(self, source: dict[str, Any], importer_cls: Type[BaseImporter]):
         self.importer_cls = importer_cls
@@ -285,10 +290,8 @@ class DepositionObjectImporterFactory(ABC):
         :return: name, path, metadata
         """
         if path and path.endswith("metadata.json"):
-            local_filename = config.fs.localreadable(path)
-            with open(local_filename, "r") as metadata_file:
-                metadata = json.load(metadata_file)
-            name, path, paths = self.importer_cls.get_name_and_path(metadata, name, path, None)
+            remote_metadata = get_remote_json(path, config)
+            name, path, paths = self.importer_cls.get_name_and_path(remote_metadata, name, path, None)
         return name, path, metadata
 
 
@@ -329,9 +332,13 @@ class MultiSourceFileFinder(DefaultImporterFactory):
     ):
         if not filtered_results:
             return []
-        # If any of the files found are metadata files, we use the metadata file to instantiate the class
-        if any(path and path.endswith("metadata.json") for path in filtered_results.values()):
-            name, path, filtered_results = self.importer_cls.get_name_and_path(metadata, None, None, filtered_results)
+        # If the files found are metadata files, we use the metadata file to instantiate the class
+        if all(path and path.endswith("metadata.json") for path in filtered_results.values()):
+            if len(filtered_results) > 1:
+                raise Exception("Multiple metadata files found for a single entity")
+            metadata_path = next(iter(filtered_results.values()))
+            remote_metadata = get_remote_json(metadata_path, config)
+            name, path, filtered_results = self.importer_cls.get_name_and_path(remote_metadata, None, None, filtered_results)
 
         names = ",".join([os.path.basename(path) for path in filtered_results])
         item = self.importer_cls(
