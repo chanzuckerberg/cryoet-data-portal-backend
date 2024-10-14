@@ -114,6 +114,12 @@ class BaseImporter:
     def is_import_allowed(self):
         return self.allow_imports
 
+    def to_formatted_path(self, path: str) -> str:
+        """
+        Returns the s3 key, without the bucket name, for the given path. Helpful for formatting paths in metadata.
+        """
+        return os.path.relpath(path, self.config.output_prefix) if path else None
+
     @classmethod
     def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
         finder_configs = config.get_object_configs(cls.type_key)

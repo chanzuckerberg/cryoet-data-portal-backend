@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, Optional
 
 from common.alignment_converter import alignment_converter_factory
 from common.config import DepositionImportConfig
+from common.exceptions import TomogramNotFoundError
 from common.finders import MultiSourceFileFinder
 from common.id_helper import IdentifierHelper
 from common.metadata import AlignmentMetadata
@@ -75,7 +76,7 @@ class AlignmentImporter(BaseFileImporter):
         try:
             meta = AlignmentMetadata(self.config.fs, self.get_deposition().name, self.get_base_metadata())
             meta.write_metadata(metadata_path, self.get_extra_metadata())
-        except IOError:
+        except TomogramNotFoundError:
             print("Skipping creating metadata for default alignment with no source tomogram")
 
     def import_item(self) -> None:
@@ -101,11 +102,11 @@ class AlignmentImporter(BaseFileImporter):
     def get_extra_metadata(self) -> dict:
         extra_metadata = {
             "per_section_alignment_parameters": self.converter.get_per_section_alignment_parameters(),
-            "alignment_path": self.converter.get_alignment_path(),
-            "tilt_path": self.converter.get_tilt_path(),
-            "tiltx_path": self.converter.get_tiltx_path(),
-            "tiltseries_path": self.get_tiltseries_path(),
-            "files": [self.get_dest_filename(path) for path in self.file_paths.values()],
+            "alignment_path": self.to_formatted_path(self.converter.get_alignment_path()),
+            "tilt_path": self.to_formatted_path(self.converter.get_tilt_path()),
+            "tiltx_path": self.to_formatted_path(self.converter.get_tiltx_path()),
+            "tiltseries_path": self.to_formatted_path(self.get_tiltseries_path()),
+            "files": [self.to_formatted_path(self.get_dest_filename(path)) for path in self.file_paths.values()],
         }
         if "volume_dimension" not in self.metadata:
             extra_metadata["volume_dimension"] = self.get_tomogram_volume_dimension()
@@ -118,7 +119,7 @@ class AlignmentImporter(BaseFileImporter):
         tomogram = self.get_tomogram()
         if not tomogram:
             # If no source tomogram is found don't create a default alignment metadata file.
-            raise IOError("No source tomogram found for creating default alignment")
+            raise TomogramNotFoundError()
         return tomogram.get_source_volume_info().get_dimensions()
 
     def is_default_alignment(self) -> bool:
