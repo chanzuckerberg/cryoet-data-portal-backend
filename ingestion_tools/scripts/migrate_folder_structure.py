@@ -48,14 +48,15 @@ def move(config: DepositionImportConfig, old_path: str, new_path: str):
     # config.fs.move(old_path, new_path)
 
 
-def migrate_tiltseries(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+def migrate_volume(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
     """
-    Renames the tiltseries in the run to include the identifier (default of 100)
-    Renames the tiltseries_metadata in the run to include the identifier (default of 100)
-
+    Moves the volumes of the entity to include the identifier in the path (default of 100)
+    Moves the metadata of the entity  to include the identifier in the path (default of 100)
+    :param cls:
     :param config:
     :param parents:
-    :return: if titlseries exists
+    :param kwargs:
+    :return:
     """
     output_path = cls.get_output_path()
     metadata_path = kwargs.get("metadata_path")
@@ -70,47 +71,52 @@ def migrate_tiltseries(cls, config: DepositionImportConfig, parents: dict[str, A
     move(config, metadata_path, cls.get_metadata_path())
 
 
-def migrate_tomograms(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+def migrate_tomograms(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
     """
-    Renames the key photo in the run to include the identifier (default of 100)
-    Update the path to Reconstruction/VoxelSpacingXX.XX/KeyPhotos/...
-
-    Renames the neuroglancer_config in the run to include the identifier (default of 100)
-    Updates the path of the neuroglancer_config.json to Reconstruction/VoxelSpacingXX.XX/NeuroglancerPrecompute
-    Update the path to the image layer in the neuroglancer_config.json
-
-    Renames the tomograms in the run to include the identifier (default of 100)
-    Renames the tomogram_metadata in the run to include the identifier (default of 100)
+    Moves the tomograms in the run to include the identifier in the path (default of 100)
+    Moves the tomogram_metadata in the run to include the identifier in the path (default of 100)
     Update the path to Reconstruction/VoxelSpacingXX.XX/Tomograms/...
 
     Update the tomogram path in the metadata json
     Update the key_photos file path in the metadata json
     Update the neuroglancer_config path name in the metadata json
-
+    :param cls:
     :param config:
     :param parents:
-    :return: if tomogram exists
+    :param kwargs:
+    :return:
     """
-    output_path = cls.get_output_path()
-    metadata_path = kwargs.get("metadata_path")
-    metadata_dir = os.path.dirname(metadata_path)
-    for fmt, key in {"mrc": "mrc_files", "zarr": "omezarr_dir"}.items():
-        filename = cls.metadata.get(key)
-        if isinstance(filename, list):
-            filename = filename[0]
-        old_path = os.path.join(metadata_dir, filename)
-        new_path = f"{output_path}.{fmt}"
-        move(config, old_path, new_path)
-    move(config, metadata_path, cls.get_metadata_path())
+    # TODO: Update the metadata json file with the new paths
+    migrate_volume(cls, config, parents, kwargs)
 
 
-def migrate_viz_config(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+def migrate_viz_config(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
+    """
+    Renames the neuroglancer_config in the run to include the identifier (default of 100)
+    Updates the path of the neuroglancer_config.json to Reconstruction/VoxelSpacingXX.XX/NeuroglancerPrecompute
+    Update the path to the layer in the neuroglancer_config.json
+    :param cls:
+    :param config:
+    :param parents:
+    :param kwargs:
+    :return:
+    """
+    # TODO: Update the path to the image layer in the neuroglancer_config.json
     old_path = cls.path
     new_path = cls.get_output_path()
     move(config, old_path, new_path)
 
 
-def migrate_key_image(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+def migrate_key_image(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
+    """
+    Renames the key photo in the run to include the identifier (default of 100)
+    Update the path to Reconstruction/VoxelSpacingXX.XX/KeyPhotos/..
+    :param cls:
+    :param config:
+    :param parents:
+    :param kwargs:
+    :return:
+    """
     old_path = cls.path
     tomo_id = cls.parents["tomogram"].identifier
     file_name = f"{tomo_id}-{os.path.basename(old_path)}"
@@ -118,15 +124,26 @@ def migrate_key_image(cls, config: DepositionImportConfig, parents: dict[str, An
     move(config, old_path, new_path)
 
 
-def migrate_alignments(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
-    metadata_path = kwargs.get("metadata_path")
+def migrate_alignments(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
     for old_path in cls.file_paths.values():
         new_path = os.path.join(cls.get_output_path(), os.path.basename(old_path).lstrip(f"{cls.identifier}-"))
         move(config, old_path, new_path)
-    move(config, metadata_path, cls.get_metadata_path())
+    metadata_path = kwargs.get("metadata_path")
+    if metadata_path:
+        move(config, metadata_path, cls.get_metadata_path())
 
 
-def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
+    """
+    Moves the annotations in the run to the Reconstruction path
+    Moves the annotation_metadata in the run to the Reconstruction path
+    :param cls:
+    :param config:
+    :param parents:
+    :param kwargs:
+    :return:
+    """
+    # TODO: Update the metadata json file with the new paths
     output_path = cls.get_output_path()
     metadata_path = kwargs.get("metadata_path")
     for file in cls.metadata["files"]:
@@ -137,7 +154,7 @@ def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, 
     move(config, metadata_path, f"{cls.get_output_path()}.json")
 
 
-def migrate_files(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+def migrate_files(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
     dir_name = os.path.basename(cls.path)
     old_path = cls.path
     new_path = os.path.join(cls.get_output_path(), dir_name)
@@ -152,7 +169,7 @@ MIGRATION_MAP = {
     "gain": migrate_files,
     "key_image": migrate_key_image,
     "rawtilt": migrate_files,
-    "tiltseries": migrate_tiltseries,
+    "tiltseries": migrate_volume,
     "tomogram": migrate_tomograms,
     "viz_config": migrate_viz_config,
 }
@@ -188,8 +205,8 @@ def _get_glob_vars(migrate_cls: BaseImporter, parents: dict[str, Any]) -> dict[s
 def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, BaseImporter]):
     if migrate_cls.type_key in {"deposition", "dataset"}:
         finder_configs = config.get_object_configs(migrate_cls.type_key)
-        for finder in finder_configs:
-            sources = finder.get("sources", [])
+        for _finder in finder_configs:
+            sources = _finder.get("sources", [])
             for source in sources:
                 source_finder_factory = migrate_cls.finder_factory(source, migrate_cls)
                 for item in source_finder_factory.find(config, {}, **parents):
@@ -235,7 +252,7 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                 elif results:
                     kwargs["file_paths"] = results
                 yield migrate_cls(config, metadata, name, **kwargs), args
-    elif migrate_cls.type_key in {"gain", "rawtilt", "collection_metadata"}:
+    elif migrate_cls.type_key in OLD_PATHS:
         finder_configs = []
         for configs in config.get_object_configs(migrate_cls.type_key):
             for source in configs.get("sources", []):
@@ -243,43 +260,29 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                     finder_configs.extend(source.get("source_multi_glob").get("list_globs"))
                 elif "source_glob" in source:
                     finder_configs.append(source.get("source_glob").get("list_glob"))
+                elif "literal" in source:
+                    literal_values = source.get("literal").get("value")
+                    if not isinstance(literal_values, list):
+                        literal_values = [literal_values]
+                    finder_configs.append(literal_values)
         for source_glob in finder_configs:
+            dest_suffix = None
             if migrate_cls.type_key == "gain" and source_glob.endswith(".dm4"):
-                dest_suffix = ".mrc"
-            else:
-                dest_suffix = os.path.splitext(source_glob)[1]
-            glob = os.path.join(
-                OLD_PATHS.get(f"{migrate_cls.type_key}").format(**_get_glob_vars(migrate_cls, parents)),
-                f"*{dest_suffix}",
-            )
+                dest_suffix = "*.mrc"
+            elif isinstance(source_glob, str):
+                dest_suffix = f"*{os.path.splitext(source_glob)[1]}"
+            path = OLD_PATHS.get(f"{migrate_cls.type_key}").format(**_get_glob_vars(migrate_cls, parents))
+            glob = os.path.join(path, dest_suffix) if dest_suffix else path
             source = {
                 "destination_glob": {
                     "list_glob": os.path.join(config.output_prefix, glob),
-                    "name_regex": "(.*)",
+                    "name_regex": "VoxelSpacing(.*)" if migrate_cls.type_key == "voxel_spacing" else "(.*)",
                     "match_regex": "(.*)",
                 },
             }
             importer_factory = DefaultImporterFactory(source, migrate_cls)
             for item in importer_factory.find(config, {}, **parents):
-                item.allow_imports = False
                 yield item, {}
-
-    elif f"{migrate_cls.type_key}" in OLD_PATHS:
-        print(f"Destination Finder for {migrate_cls.type_key} ")
-        glob = OLD_PATHS.get(f"{migrate_cls.type_key}").format(**_get_glob_vars(migrate_cls, parents))
-        source = {
-            "destination_glob": {
-                "list_glob": os.path.join(config.output_prefix, glob),
-                "name_regex": "VoxelSpacing(.*)" if migrate_cls.type_key == "voxel_spacing" else "(.*)",
-                "match_regex": "(.*)",
-            },
-        }
-        importer_factory = DefaultImporterFactory(source, migrate_cls)
-        for item in importer_factory.find(config, {}, **parents):
-            item.allow_imports = False
-            yield item, {}
-    else:
-        print(f"To handle {migrate_cls.type_key} ")
 
     return []
 
@@ -310,7 +313,7 @@ def _migrate(config, tree, to_migrate, to_iterate, kwargs, parents: Optional[dic
 
             type_key = item.type_key
             if import_class in to_migrate and type_key in MIGRATION_MAP:
-                if OLD_PATHS.get(type_key).rstrip("/") == item.dir_path:
+                if OLD_PATHS.get(type_key, "").rstrip("/") == item.dir_path:
                     print(f"Skipping {type_key} migration as old path and new path are same")
                 else:
                     print(f"Migrating {type_key} {item.name}")
