@@ -1,6 +1,7 @@
 import json
 import os.path
 import re
+import urllib.parse
 from typing import Any, Optional
 
 import click as click
@@ -10,6 +11,7 @@ from importers.utils import IMPORTER_DEP_TREE, IMPORTERS
 from standardize_dirs import flatten_dependency_tree
 
 from common.config import DepositionImportConfig
+from common.formats import tojson
 from common.fs import FileSystemApi
 
 OLD_PATHS = {
@@ -36,8 +38,10 @@ OLD_PATHS = {
     "tiltseries": "{dataset_name}/{run_name}/TiltSeries",
     "tiltseries_metadata": "{dataset_name}/{run_name}/TiltSeries/tiltseries_metadata.json",
     "tomogram": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram",
-    "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/tomogram_metadata.json",
-    "viz_config": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/neuroglancer_config.json",
+    "tomogram_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/"
+                         "tomogram_metadata.json",
+    "viz_config": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/"
+                  "neuroglancer_config.json",
     "voxel_spacing": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}",
 }
 
@@ -47,7 +51,15 @@ def move(config: DepositionImportConfig, old_path: str, new_path: str):
     config.fs.move(old_path, new_path, recursive=True)
 
 
-def migrate_volume(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
+def delete(config: DepositionImportConfig, path: str):
+    print(f"Deleting {path}")
+    # if hasattr(config.fs, "s3fs"):
+    #     config.fs.s3fs.rm(path)
+
+
+def migrate_volume(
+        cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs,
+) -> None:
     """
     Moves the volumes of the entity to include the identifier in the path (default of 100)
     Moves the metadata of the entity  to include the identifier in the path (default of 100)
@@ -55,6 +67,7 @@ def migrate_volume(cls, config: DepositionImportConfig, parents: dict[str, Any],
     :param config:
     :param parents:
     :param kwargs:
+    :param migrate_metadata:
     :return:
     """
     output_path = cls.get_output_path()
@@ -67,7 +80,8 @@ def migrate_volume(cls, config: DepositionImportConfig, parents: dict[str, Any],
         old_path = os.path.join(metadata_dir, filename)
         new_path = f"{output_path}.{fmt}"
         move(config, old_path, new_path)
-    move(config, metadata_path, cls.get_metadata_path())
+    if kwargs.get("migrate_metadata", True):
+        move(config, metadata_path, cls.get_metadata_path())
 
 
 def migrate_tomograms(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
@@ -85,8 +99,11 @@ def migrate_tomograms(cls, config: DepositionImportConfig, parents: dict[str, An
     :param kwargs:
     :return:
     """
-    # TODO: Update the metadata json file with the new paths
-    migrate_volume(cls, config, parents, kwargs)
+    migrate_volume(cls, config, parents, {**kwargs, "migrate_metadata": False})
+    # This is a very hacky way to get the metadata path set up with the correct values
+    cls.allow_imports = True
+    cls.import_metadata()
+    delete(config, kwargs.get("metadata_path"))
 
 
 def migrate_viz_config(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
@@ -100,10 +117,25 @@ def migrate_viz_config(cls, config: DepositionImportConfig, parents: dict[str, A
     :param kwargs:
     :return:
     """
-    # TODO: Update the path to the image layer in the neuroglancer_config.json
     old_path = cls.path
     new_path = cls.get_output_path()
-    move(config, old_path, new_path)
+    with config.fs.open(old_path, "r") as f:
+        ng_config = json.load(f)
+    if image_layer := next((layer for layer in ng_config["layers"] if layer["type"] == "image"), None):
+        path = cls.parents["tomogram"].get_output_path().replace(config.output_prefix, "") + ".zarr"
+        image_url = urllib.parse.urljoin("https://files.cryoetdataportal.cziscience.com", path)
+        image_layer["source"]["url"] = "zarr://" + image_url
+
+    old_precompute_path = cls.parents["voxel_spacing"].get_output_path().replace(config.output_prefix, "")
+    new_precompute_path = old_precompute_path.replace("Tomogram", "Reconstruction")
+    for layer in ng_config["layers"]:
+        if layer["type"] in {"annotation", "segmentation"}:
+            url = layer["source"]["url"]
+            layer["source"]["url"] = url.replace(old_precompute_path, new_precompute_path)
+    with config.fs.open(new_path, "w") as f:
+        f.write(tojson(ng_config))
+
+    delete(config, old_path)
 
 
 def migrate_key_image(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
@@ -142,15 +174,22 @@ def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, 
     :param kwargs:
     :return:
     """
-    # TODO: Update the metadata json file with the new paths
     output_path = cls.get_output_path()
     metadata_path = kwargs.get("metadata_path")
     for file in cls.metadata["files"]:
         filename = file["path"]
         old_path = os.path.join(config.output_prefix, filename)
         new_path = f"{output_path}{os.path.splitext(filename)[1]}"
+        file["path"] = new_path.replace(config.output_prefix, "").lstrip("/")
         move(config, old_path, new_path)
-    move(config, metadata_path, f"{cls.get_output_path()}.json")
+    cls.metadata["alignment_metadata_path"] = cls.local_metadata["alignment_metadata_path"]
+
+    path = f"{cls.get_output_path()}.json"
+    print(f"Writing metadata to {path}")
+    with config.fs.open(path, "w") as f:
+        f.write(tojson(cls.metadata))
+
+    delete(config, metadata_path)
 
 
 def migrate_files(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
