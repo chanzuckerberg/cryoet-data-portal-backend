@@ -21,7 +21,7 @@ OLD_PATHS = {
     "annotation_viz": (
         "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute/{annotation_id}-*"
     ),
-    "collection_metadata": "{dataset_name}/{run_name}/TiltSeries/*.mdoc",
+    "collection_metadata": "{dataset_name}/{run_name}/TiltSeries/",
     "dataset": "{dataset_name}",
     "dataset_keyphoto": "{dataset_name}/Images",
     "dataset_metadata": "{dataset_name}/dataset_metadata.json",
@@ -29,7 +29,7 @@ OLD_PATHS = {
     "deposition_keyphoto": "depositions_metadata/{deposition_name}/Images",
     "deposition_metadata": "depositions_metadata/{deposition_name}/deposition_metadata.json",
     "frame": "{dataset_name}/{run_name}/Frames",
-    "gain": "{dataset_name}/{run_name}/Gains/",
+    "gain": "{dataset_name}/{run_name}/Frames/",
     "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos/*",
     "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
     "run": "{dataset_name}/{run_name}",
@@ -149,7 +149,9 @@ MIGRATION_MAP = {
     "annotation": migrate_annotations,
     "annotation_viz": migrate_files,
     "collection_metadata": migrate_files,
+    "gain": migrate_files,
     "key_image": migrate_key_image,
+    "rawtilt": migrate_files,
     "tiltseries": migrate_tiltseries,
     "tomogram": migrate_tomograms,
     "viz_config": migrate_viz_config,
@@ -187,15 +189,12 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
     if migrate_cls.type_key in {"deposition", "dataset"}:
         finder_configs = config.get_object_configs(migrate_cls.type_key)
         for finder in finder_configs:
-            metadata = finder.get("metadata", {})
             sources = finder.get("sources", [])
             for source in sources:
                 source_finder_factory = migrate_cls.finder_factory(source, migrate_cls)
-                for item in source_finder_factory.find(config, metadata, **parents):
+                for item in source_finder_factory.find(config, {}, **parents):
                     item.allow_imports = False
                     yield item, {}
-    elif migrate_cls.type_key in {"rawtlt", "gain"}:
-        print(f"Skipping for now {migrate_cls.type_key}..")
     elif f"{migrate_cls.type_key}_metadata" in OLD_PATHS:
         print(f"Finding metadata for {migrate_cls.type_key}..")
         glob_vars = _get_glob_vars(migrate_cls, parents)
@@ -236,6 +235,35 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                 elif results:
                     kwargs["file_paths"] = results
                 yield migrate_cls(config, metadata, name, **kwargs), args
+    elif migrate_cls.type_key in {"gain", "rawtilt", "collection_metadata"}:
+        finder_configs = []
+        for configs in config.get_object_configs(migrate_cls.type_key):
+            for source in configs.get("sources", []):
+                if "source_multi_glob" in source:
+                    finder_configs.extend(source.get("source_multi_glob").get("list_globs"))
+                elif "source_glob" in source:
+                    finder_configs.append(source.get("source_glob").get("list_glob"))
+        for source_glob in finder_configs:
+            if migrate_cls.type_key == "gain" and source_glob.endswith(".dm4"):
+                dest_suffix = ".mrc"
+            else:
+                dest_suffix = os.path.splitext(source_glob)[1]
+            glob = os.path.join(
+                OLD_PATHS.get(f"{migrate_cls.type_key}").format(**_get_glob_vars(migrate_cls, parents)),
+                f"*{dest_suffix}",
+            )
+            source = {
+                "destination_glob": {
+                    "list_glob": os.path.join(config.output_prefix, glob),
+                    "name_regex": "(.*)",
+                    "match_regex": "(.*)",
+                },
+            }
+            importer_factory = DefaultImporterFactory(source, migrate_cls)
+            for item in importer_factory.find(config, {}, **parents):
+                item.allow_imports = False
+                yield item, {}
+
     elif f"{migrate_cls.type_key}" in OLD_PATHS:
         print(f"Destination Finder for {migrate_cls.type_key} ")
         glob = OLD_PATHS.get(f"{migrate_cls.type_key}").format(**_get_glob_vars(migrate_cls, parents))
