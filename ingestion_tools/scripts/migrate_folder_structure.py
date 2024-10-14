@@ -19,7 +19,7 @@ OLD_PATHS = {
     "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
     "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations/*.json",
     "annotation_viz": (
-        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute"
+        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute/{annotation_id}-*"
     ),
     "collection_metadata": "{dataset_name}/{run_name}/Frames",
     "dataset": "{dataset_name}",
@@ -146,13 +146,22 @@ def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, 
     # config.fs.move(metadata_path, f"{cls.get_output_path()}.json)
 
 
+def migrate_annotation_viz(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> bool:
+    dir_name = os.path.basename(cls.path)
+    old_path = cls.path
+    new_path = os.path.join(cls.get_output_path(), dir_name)
+    print(f"Moving {old_path} to {new_path}")
+    # config.fs.move(old_path, new_path)
+
+
 MIGRATION_MAP = {
     "alignment": migrate_alignments,
     "annotation": migrate_annotations,
+    "annotation_viz": migrate_annotation_viz,
+    "key_image": migrate_key_image,
     "tiltseries": migrate_tiltseries,
     "tomogram": migrate_tomograms,
     "viz_config": migrate_viz_config,
-    "key_image": migrate_key_image,
 }
 
 
