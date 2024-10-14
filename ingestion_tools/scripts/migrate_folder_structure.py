@@ -10,12 +10,11 @@ from importers.utils import IMPORTER_DEP_TREE, IMPORTERS
 from standardize_dirs import flatten_dependency_tree
 
 from common.config import DepositionImportConfig
-from common.finders import DefaultImporterFactory
 from common.fs import FileSystemApi
 
 OLD_PATHS = {
-    "alignment": "{dataset_name}/{run_name}/Alignments/{alignment_id}-",
-    "alignment_metadata": "{dataset_name}/{run_name}/Alignments/{alignment_id}-alignment_metadata.json",
+    "alignment": "{dataset_name}/{run_name}/TiltSeries/",
+    # "alignment_metadata": "{dataset_name}/{run_name}/Alignments/{alignment_id}-alignment_metadata.json",
     "annotation": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations",
     "annotation_metadata": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/Annotations/*.json",
     "annotation_viz": (
@@ -252,7 +251,7 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                 elif results:
                     kwargs["file_paths"] = results
                 yield migrate_cls(**kwargs), args
-    elif migrate_cls.type_key in OLD_PATHS:
+    elif migrate_cls.type_key in OLD_PATHS and migrate_cls.type_key not in {"frame"}:
         finder_configs = []
         for configs in config.get_object_configs(migrate_cls.type_key):
             for source in configs.get("sources", []):
@@ -280,7 +279,7 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                     "match_regex": "(.*)",
                 },
             }
-            importer_factory = DefaultImporterFactory(source, migrate_cls)
+            importer_factory = migrate_cls.finder_factory(source, migrate_cls)
             for item in importer_factory.find(config, {}, **parents):
                 yield item, {}
     return []
