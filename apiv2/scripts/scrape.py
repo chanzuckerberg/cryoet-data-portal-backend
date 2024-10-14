@@ -298,7 +298,6 @@ def add(session, model, item, parents):
             "key_photo_url": remote_item["key_photo_url"],
             "key_photo_thumbnail_url": remote_item["key_photo_thumbnail_url"],
             "neuroglancer_config": remote_item["neuroglancer_config"],
-            "is_standardized": False,  # We don't have standardized tomos yet.
         }
         # Special handling for converting values.
         reconstruction_method = remote_item["reconstruction_method"].lower()
