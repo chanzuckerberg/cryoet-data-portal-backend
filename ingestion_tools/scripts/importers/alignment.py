@@ -1,5 +1,5 @@
 import os.path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Optional
 
 from common.alignment_converter import alignment_converter_factory
 from common.config import DepositionImportConfig
@@ -7,25 +7,23 @@ from common.finders import MultiSourceFileFinder
 from common.id_helper import IdentifierHelper
 from common.metadata import AlignmentMetadata
 from importers.base_importer import BaseFileImporter
+from importers.tiltseries import TiltSeriesImporter
+from importers.voxel_spacing import VoxelSpacingImporter
 
 if TYPE_CHECKING:
-    TomogramImporter = "TomogramImporter"
-    TiltSeriesImporter = "TiltSeriesImporter"
-else:
-    from importers.tiltseries import TiltSeriesImporter
     from importers.tomogram import TomogramImporter
 
 
 class AlignmentIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
-        return parents["run"].get_output_path()
+        return "-".join(["alignment", parents["run"].get_output_path()])
 
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         run = parents["run"]
-        alignment_dir_path = config.resolve_output_path("alignment", run)
-        return os.path.join(alignment_dir_path, "*alignment_metadata.json")
+        metadata_glob = config.resolve_output_path("alignment_metadata", run, {"alignment_id": "*"})
+        return metadata_glob
 
     @classmethod
     def _generate_hash_key(
@@ -52,10 +50,10 @@ class AlignmentImporter(BaseFileImporter):
 
     type_key = "alignment"
     plural_key = "alignments"
-
     finder_factory = MultiSourceFileFinder
     has_metadata = True
-    dir_path = "{dataset_name}/{run_name}/Alignments"
+    dir_path = "{dataset_name}/{run_name}/Alignments/{alignment_id}"
+    metadata_path = os.path.join(dir_path, "alignment_metadata.json")
 
     def __init__(self, *args, file_paths: dict[str, str], **kwargs):
         super().__init__(*args, **kwargs)
@@ -71,7 +69,7 @@ class AlignmentImporter(BaseFileImporter):
 
     def import_metadata(self) -> None:
         if not self.is_import_allowed():
-            print(f"Skipping import of {self.name}")
+            print(f"Skipping import of {self.name} metadata")
             return
         metadata_path = self.get_metadata_path()
         try:
@@ -95,18 +93,10 @@ class AlignmentImporter(BaseFileImporter):
             dest_filename = self.get_dest_filename(path)
             self.config.fs.copy(path, dest_filename)
 
-    def get_output_path(self) -> str:
-        output_directory = super().get_output_path()
-        return os.path.join(output_directory, f"{self.identifier}-")
-
     def get_dest_filename(self, path: str) -> str | None:
         if not path:
             return None
-        output_dir = self.get_output_path()
-        return f"{output_dir}{os.path.basename(path)}"
-
-    def get_metadata_path(self) -> str:
-        return self.get_output_path() + "alignment_metadata.json"
+        return os.path.join(self.get_output_path(), os.path.basename(path))
 
     def get_extra_metadata(self) -> dict:
         extra_metadata = {
@@ -125,21 +115,29 @@ class AlignmentImporter(BaseFileImporter):
         return extra_metadata
 
     def get_tomogram_volume_dimension(self) -> dict:
-        for tomogram in TomogramImporter.finder(self.config, **self.parents):
-            return tomogram.get_source_volume_info().get_dimensions()
-
-        # If no source tomogram is found don't create a default alignment metadata file.
-        raise IOError("No source tomogram found for creating default alignment")
+        tomogram = self.get_tomogram()
+        if not tomogram:
+            # If no source tomogram is found don't create a default alignment metadata file.
+            raise IOError("No source tomogram found for creating default alignment")
+        return tomogram.get_source_volume_info().get_dimensions()
 
     def is_default_alignment(self) -> bool:
         return "default" in self.file_paths
 
     def is_valid(self) -> bool:
         volume_dim = self.metadata.get("volume_dimension", {})
-        return (
-            all(volume_dim.get(dim) for dim in "xyz")
-            or next(TomogramImporter.finder(self.config, **self.parents), None) is not None
-        )
+        return all(volume_dim.get(dim) for dim in "xyz") or self.get_tomogram() is not None
+
+    def get_tomogram(self) -> Optional["TomogramImporter"]:
+        # We are returning the first tomogram, as we only allow one alignment per deposition, and all the
+        # tomograms imported for an ingestion config have the same dimensions as they are related to the same alignment.
+        from importers.tomogram import TomogramImporter
+
+        for voxel_spacing in VoxelSpacingImporter.finder(self.config, **self.parents):
+            parents = {**self.parents, "voxel_spacing": voxel_spacing}
+            for tomogram in TomogramImporter.finder(self.config, **parents):
+                return tomogram
+        return None
 
     def get_tiltseries_path(self) -> str | None:
         for ts in TiltSeriesImporter.finder(self.config, **self.parents):

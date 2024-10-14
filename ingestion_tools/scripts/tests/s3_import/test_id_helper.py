@@ -20,7 +20,7 @@ class FooIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         run = parents["run"]
-        return os.path.join(run.get_output_path(), "*foo_metadata.json")
+        return os.path.join(run.get_output_path(), "*", "foo_metadata.json")
 
     @classmethod
     def _generate_hash_key(
@@ -38,7 +38,8 @@ class FooIdentifierHelper(IdentifierHelper):
 def add_foo_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[str, int], None]:
     def _add_metadata(prefix: str, foo_id: int) -> None:
         body = json.dumps({"foo_id": foo_id}).encode("utf-8")
-        s3_client.put_object(Bucket=test_output_bucket, Key=f"{prefix}100-foo_metadata.json", Body=body)
+        key = os.path.join(prefix, "100", "foo_metadata.json")
+        s3_client.put_object(Bucket=test_output_bucket, Key=key, Body=body)
 
     return _add_metadata
 

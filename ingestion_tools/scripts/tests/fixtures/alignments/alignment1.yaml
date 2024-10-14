@@ -23,3 +23,8 @@ tomograms:
   - source_glob:
       list_glob: tomograms/{run_name}.rec
       match_regex: .*\.rec
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 4.123

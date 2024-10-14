@@ -1,5 +1,6 @@
 import pytest
 from importers.dataset import DatasetImporter
+from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.tomogram import TomogramImporter
 from importers.utils import IMPORTERS
@@ -34,10 +35,15 @@ def test_voxel_spacing_by_tomogram_metadata(
     config = DepositionImportConfig(s3_fs, import_config, output_path, input_bucket, IMPORTERS)
     config.load_map_files()
 
-    datasets = list(DatasetImporter.finder(config))
-    runs = list(RunImporter.finder(config, dataset=datasets[0]))
-    vs = list(VoxelSpacingImporter.finder(config, dataset=datasets[0], run=runs[0]))
-    tomos = list(TomogramImporter.finder(config, dataset=datasets[0], run=runs[0], voxel_spacing=vs[0]))
+    depositions = list(DepositionImporter.finder(config))
+    datasets = list(DatasetImporter.finder(config, deposition=depositions[0]))
+    runs = list(RunImporter.finder(config, dataset=datasets[0], deposition=depositions[0]))
+    vs = list(VoxelSpacingImporter.finder(config, dataset=datasets[0], run=runs[0], deposition=depositions[0]))
+    tomos = list(
+        TomogramImporter.finder(
+            config, dataset=datasets[0], run=runs[0], voxel_spacing=vs[0], deposition=depositions[0],
+        ),
+    )
 
     assert vs[0].name == "{:.3f}".format(round(float(expected), 3))
 

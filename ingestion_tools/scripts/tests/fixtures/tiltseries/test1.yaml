@@ -1,0 +1,54 @@
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10001'
+depositions:
+- sources:
+  - literal:
+      value:
+      - '10301'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/{run_name}.rawtlt
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/TS_*.rec
+      match_regex: .*
+      name_regex: (.*).rec
+standardization_config:
+  deposition_id: 10001
+  source_prefix: input_bucket/10001_input
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: SerialEM
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: Krios
+    microscope_optical_setup:
+      energy_filter: GIF Quantum LS
+      image_corrector: null
+      phase_plate: Volta Phase Plate
+    related_empiar_entry: EMPIAR-10988
+    spherical_aberration_constant: 2.7
+    tilt_axis: 70.1
+    tilt_range:
+      max: 60
+      min: -40
+    tilt_series_quality: 5
+    tilt_step: 2
+    tilting_scheme: Dose symmetric from 0.0 degrees
+    total_flux: 122
+  sources:
+  - source_glob:
+      list_glob: metadata/{run_name}.st
+      name_regex: (.*)\.st

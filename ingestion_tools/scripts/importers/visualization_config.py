@@ -24,23 +24,26 @@ class VisualizationConfigImporter(BaseImporter):
     finder_factory = DefaultImporterFactory
     has_metadata = False
     dir_path = (
-        "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/"
-        "neuroglancer_config.json"
+        "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/NeuroglancerPrecompute/"
+        "{tomogram_id}-neuroglancer_config.json"
     )
 
     def import_item(self) -> None:
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-        ng_contents = self._create_config()
+        tomogram = self.get_tomogram()
+        if not tomogram.get_base_metadata().get("is_visualization_default"):
+            print("Skipping import for tomogram that is not configured for default_visualization")
+            return
+        ng_contents = self._create_config(tomogram.alignment_metadata_path)
         meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
-        dest_file = self.get_output_path()
-        meta.write_metadata(dest_file)
+        meta.write_metadata(self.get_output_path())
 
     def _get_annotation_metadata_files(self) -> list[str]:
         # Getting a list of paths to the annotation metadata files using glob instead of using the annotation finder
         # to get all the annotations and not just the ones associated with the current deposition
-        annotation_path = self.config.resolve_output_path("annotation_metadata", self)
+        annotation_path = self.config.resolve_output_path("annotation_metadata", self, {"annotation_id": "*"})
         return self.config.fs.glob(os.path.join(annotation_path, "*.json"))
 
     def _to_directory_path(self, path: str) -> str:
@@ -100,7 +103,7 @@ class VisualizationConfigImporter(BaseImporter):
             is_instance_segmentation=is_instance_segmentation,
         )
 
-    def _create_config(self) -> dict[str, Any]:
+    def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
         voxel_size = round(volume_info.voxel_size, 3)
@@ -109,14 +112,23 @@ class VisualizationConfigImporter(BaseImporter):
 
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
 
+        # TODO: Update the annotation metadata to be fetched from all voxel spacings once, we start supporting the
+        #  co-ordinate transformation in neuroglancer
         annotation_metadata_paths = self._get_annotation_metadata_files()
         colors_used = []
 
         for annotation_metadata_path in annotation_metadata_paths:
             with open(self.config.fs.localreadable(annotation_metadata_path), "r") as f:
                 metadata = json.load(f)
+            if metadata.get("alignment_metadata_path") != alignment_metadata_path:
+                print(f"Skipping annotation {annotation_metadata_path} with different alignment metadata")
+                continue
             annotation_hash_input = to_base_hash_input(metadata)
             metadata_file_name = Path(annotation_metadata_path).stem
+            if not metadata_file_name.split("-")[0].isdigit():
+                # If the file name does not start with a number, use the id from the directory
+                annotation_id = os.path.basename(os.path.dirname(annotation_metadata_path))
+                metadata_file_name = f"{annotation_id}-{metadata_file_name}"
             name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
 
             for file in metadata.get("files", []):

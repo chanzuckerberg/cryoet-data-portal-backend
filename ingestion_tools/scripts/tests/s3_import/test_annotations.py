@@ -74,14 +74,14 @@ def deposition_config_s3(s3_fs: FileSystemApi, test_output_bucket: str, tmp_path
 
 
 @pytest.fixture
-def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir, tmp_path) -> DepositionImportConfig:
+def deposition_config_local(local_fs: FileSystemApi, local_test_data_dir: str, tmp_path) -> DepositionImportConfig:
     config_file = generate_anno_config_file(tmp_path, "fixtures")
     output_path = f"/{tmp_path}/output"
     config = DepositionImportConfig(local_fs, config_file, output_path, local_test_data_dir, IMPORTERS)
     return config
 
 
-def tomo_importer_factory(deposition_config: DepositionImportConfig) -> TomogramImporter:
+def voxel_spacing_importer_factory(deposition_config: DepositionImportConfig) -> VoxelSpacingImporter:
     deposition = DepositionImporter(
         config=deposition_config,
         metadata={},
@@ -110,24 +110,17 @@ def tomo_importer_factory(deposition_config: DepositionImportConfig) -> Tomogram
         path="vs1",
         parents={**run.parents, **{"run": run}},
     )
-    tomo = TomogramImporter(
-        config=deposition_config,
-        metadata={},
-        name="tomo1",
-        path="run1",
-        parents={**vs.parents, **{"voxel_spacing": vs}},
-    )
-    return tomo
+    return vs
 
 
 @pytest.fixture
-def tomo_importer_s3(deposition_config_s3: DepositionImportConfig) -> TomogramImporter:
-    return tomo_importer_factory(deposition_config_s3)
+def voxel_spacing_importer_s3(deposition_config_s3: DepositionImportConfig) -> VoxelSpacingImporter:
+    return voxel_spacing_importer_factory(deposition_config_s3)
 
 
 @pytest.fixture
-def tomo_importer_local(deposition_config_local: DepositionImportConfig) -> TomogramImporter:
-    return tomo_importer_factory(deposition_config_local)
+def voxel_spacing_importer_local(deposition_config_local: DepositionImportConfig) -> VoxelSpacingImporter:
+    return voxel_spacing_importer_factory(deposition_config_local)
 
 
 def import_annotation_metadata(
@@ -143,11 +136,12 @@ def import_annotation_metadata(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/annotations/points.csv",
-        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        parents={"voxel_spacing": tomo_importer_s3, **tomo_importer_s3.parents},
         identifier=100,
         columns=anno_config["sources"][0]["Point"].get("columns"),
         delimiter=anno_config["sources"][0]["Point"].get("delimiter"),
         file_format=anno_config["sources"][0]["Point"].get("file_format"),
+        alignment_metadata_path="foo",
     )
     anno.import_item()
     anno.import_metadata()
@@ -158,8 +152,8 @@ def import_annotation_metadata(
     anno_file = anno.get_output_path() + "_point.ndjson"
     # Make sure we have a ndjson data file and a metadata file
     anno_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
-    assert "100-some_protein-1.0.json" in anno_files
-    assert "100-some_protein-1.0_point.ndjson" in anno_files
+    assert "some_protein-1.0.json" in anno_files
+    assert "some_protein-1.0_point.ndjson" in anno_files
 
     # Sanity check the metadata
     with s3_fs.open(metadata_file, "r") as fh:
@@ -171,7 +165,7 @@ def import_annotation_metadata(
     fileinfo = metadata["files"][0]
     assert fileinfo["format"] == "ndjson"
     assert fileinfo["shape"] == "Point"
-    assert "100-some_protein-1.0_point.ndjson" in fileinfo["path"]
+    assert "some_protein-1.0_point.ndjson" in fileinfo["path"]
 
     # Sanity check the ndjson file
     with s3_fs.open(anno_file, "r") as fh:
@@ -182,7 +176,7 @@ def import_annotation_metadata(
 def test_import_annotation_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer_s3: TomogramImporter,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
@@ -203,7 +197,7 @@ def test_import_annotation_metadata(
     import_annotation_metadata(
         s3_fs,
         test_output_bucket,
-        tomo_importer_s3,
+        voxel_spacing_importer_s3,
         deposition_config_s3,
         s3_client,
         anno_config,
@@ -213,7 +207,7 @@ def test_import_annotation_metadata(
 def test_import_annotation_metadata_with_multiple_sources(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer_s3: TomogramImporter,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
@@ -245,19 +239,21 @@ def test_import_annotation_metadata_with_multiple_sources(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/annotations/segmask.mrc",
-        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
         identifier=100,
         file_format=anno_config["sources"][0]["SegmentationMask"].get("file_format"),
+        alignment_metadata_path="foo",
     )
     anno2 = PointAnnotation(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/annotations/points.csv",
-        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
         identifier=100,
         columns=anno_config["sources"][1]["Point"].get("columns"),
         delimiter=anno_config["sources"][1]["Point"].get("delimiter"),
         file_format=anno_config["sources"][1]["Point"].get("file_format"),
+        alignment_metadata_path="foo",
     )
     for anno in [anno1, anno2]:
         anno.import_item()
@@ -268,8 +264,8 @@ def test_import_annotation_metadata_with_multiple_sources(
     metadata_file = anno1.get_output_path() + ".json"
     # Make sure we have a ndjson data file and a metadata file
     anno_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
-    assert "100-some_protein-1.0.json" in anno_files
-    assert "100-some_protein-1.0_point.ndjson" in anno_files
+    assert "some_protein-1.0.json" in anno_files
+    assert "some_protein-1.0_point.ndjson" in anno_files
 
     # Sanity check the metadata
     with s3_fs.open(metadata_file, "r") as fh:
@@ -278,14 +274,13 @@ def test_import_annotation_metadata_with_multiple_sources(
     fileinfo = metadata["files"]
     assert {item["format"] for item in fileinfo} == {"zarr", "ndjson", "mrc"}
     assert {item["shape"] for item in fileinfo} == {"Point", "SegmentationMask"}
-    print(fileinfo)
     assert len(fileinfo) == 3  # We should have ndjson, mrc and zarr files
 
 
 def test_import_annotation_metadata_glob_strings(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer_s3: TomogramImporter,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
 ) -> None:
@@ -306,7 +301,7 @@ def test_import_annotation_metadata_glob_strings(
     import_annotation_metadata(
         s3_fs,
         test_output_bucket,
-        tomo_importer_s3,
+        voxel_spacing_importer_s3,
         deposition_config_s3,
         s3_client,
         anno_config,
@@ -413,7 +408,7 @@ ingest_points_test_cases = [
 def test_ingest_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer_s3: TomogramImporter,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -431,12 +426,13 @@ def test_ingest_point_data(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["Point"].get("glob_string"),
-        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
         identifier=100,
         columns=anno_config["sources"][0]["Point"].get("columns"),
         delimiter=anno_config["sources"][0]["Point"].get("delimiter"),
         file_format=anno_config["sources"][0]["Point"]["file_format"],
         binning=anno_config["sources"][0]["Point"].get("binning"),
+        alignment_metadata_path="foo",
     )
     anno.import_item()
 
@@ -916,7 +912,7 @@ ingest_oriented_points_test_cases = [
 def test_ingest_oriented_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer_s3: TomogramImporter,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -933,12 +929,13 @@ def test_ingest_oriented_point_data(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["OrientedPoint"].get("glob_string"),
-        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
         identifier=100,
         binning=case["source_cfg"]["OrientedPoint"].get("binning"),
         file_format=case["source_cfg"]["OrientedPoint"]["file_format"],
         filter_value=case["source_cfg"]["OrientedPoint"].get("filter_value"),
         order=case["source_cfg"]["OrientedPoint"].get("order"),
+        alignment_metadata_path="foo",
     )
     anno.import_item()
 
@@ -1030,7 +1027,7 @@ ingest_instance_points_test_cases = [
 def test_ingest_instance_point_data(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer_s3: TomogramImporter,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -1048,10 +1045,11 @@ def test_ingest_instance_point_data(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/" + case["source_cfg"]["InstanceSegmentation"].get("glob_string"),
-        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
         identifier=100,
         binning=case["source_cfg"]["InstanceSegmentation"].get("binning"),
         file_format=anno_config["sources"][0]["InstanceSegmentation"]["file_format"],
+        alignment_metadata_path="foo",
     )
     anno.import_item()
 
@@ -1155,7 +1153,7 @@ ingest_mask_test_cases = [
 def test_ingest_segmentationmask(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
-    tomo_importer_s3: TomogramImporter,
+    voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
@@ -1174,10 +1172,11 @@ def test_ingest_segmentationmask(
         metadata=default_anno_metadata,
         path="test-public-bucket/input_bucket/20002/"
         + case["source_cfg"]["SemanticSegmentationMask"].get("glob_string"),
-        parents={"tomogram": tomo_importer_s3, **tomo_importer_s3.parents},
+        parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
         identifier=100,
         mask_label=case["source_cfg"]["SemanticSegmentationMask"].get("mask_label"),
         file_format=anno_config["sources"][0]["SemanticSegmentationMask"]["file_format"],
+        alignment_metadata_path="foo",
     )
     anno.import_item()
 
@@ -1209,7 +1208,7 @@ def test_ingest_segmentationmask(
 def test_ingest_triangular_mesh(
     glob_string,
     file_format,
-    tomo_importer_local: TomogramImporter,
+    voxel_spacing_importer_local,
     deposition_config_local: DepositionImportConfig,
     local_test_data_dir: str,
 ):
@@ -1238,18 +1237,20 @@ def test_ingest_triangular_mesh(
         config=deposition_config_local,
         metadata=default_anno_metadata,
         path=os.path.join(fixtures_dir, glob_string),
-        parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
+        parents={"voxel_spacing": voxel_spacing_importer_local, **voxel_spacing_importer_local.parents},
         file_format=file_format,
         identifier=100,
+        alignment_metadata_path="foo",
     )
     anno.import_item()
     anno.import_metadata()
 
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing10.000/Annotations/100/some_protein-1.0_triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
+        "alignment_metadata_path": "foo",
         "files": [
             {
                 "format": "glb",
@@ -1272,7 +1273,7 @@ def test_ingest_triangular_mesh(
 
 
 def test_ingest_triangular_mesh_hff(
-    tomo_importer_local: TomogramImporter,
+    voxel_spacing_importer_local,
     deposition_config_local: DepositionImportConfig,
     local_test_data_dir: str,
 ):
@@ -1305,19 +1306,20 @@ def test_ingest_triangular_mesh_hff(
         config=deposition_config_local,
         metadata=default_anno_metadata,
         path=os.path.join(fixtures_dir, glob_string),
-        parents={"tomogram": tomo_importer_local, **tomo_importer_local.parents},
+        parents={"voxel_spacing": voxel_spacing_importer_local, **voxel_spacing_importer_local.parents},
         file_format=file_format,
         identifier=100,
         mesh_name=mesh_name,
+        alignment_metadata_path="foo",
     )
     anno.import_item()
     anno.import_metadata()
-
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Tomograms/VoxelSpacing10.000/Annotations/100-some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing10.000/Annotations/100/some_protein-1.0_triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
+        "alignment_metadata_path": "foo",
         "files": [
             {
                 "format": "glb",

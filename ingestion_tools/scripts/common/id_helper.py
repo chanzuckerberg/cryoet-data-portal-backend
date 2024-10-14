@@ -69,7 +69,9 @@ class IdentifierHelper:
             return
         metadata_glob = cls._get_metadata_glob(config, parents, *args, **kwargs)
         for file in config.fs.glob(metadata_glob):
-            identifier = int(os.path.basename(file).split("-")[0])
+            id_dirname = os.path.basename(os.path.dirname(file))
+            # identifier = int(id_dirname) if id_dirname.isdigit() else 100
+            identifier = int(id_dirname)
             if identifier >= cls.next_identifier[container_key]:
                 cls.next_identifier[container_key] = identifier + 1
             metadata = json.loads(config.fs.open(file, "r").read())
