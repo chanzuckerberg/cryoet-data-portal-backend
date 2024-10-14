@@ -333,7 +333,7 @@ class MultiSourceFileFinder(DefaultImporterFactory):
         if not filtered_results:
             return []
         # If the files found are metadata files, we use the metadata file to instantiate the class
-        if all(path and path.endswith("metadata.json") for path in filtered_results):
+        if all(path and path.endswith("metadata.json") for path in filtered_results.values()):
             if len(filtered_results) > 1:
                 raise Exception("Multiple metadata files found for a single entity")
             metadata_path = next(iter(filtered_results.values()))
