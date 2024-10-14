@@ -1,0 +1,102 @@
+{
+  "voxel_spacing": 12.300,
+  "reconstruction_method": "WBP",
+  "reconstruction_software": "IMOD",
+  "fiducial_alignment_status": "FIDUCIAL",
+  "ctf_corrected": true,
+  "processing": "raw",
+  "processing_software": "tomo3D",
+  "align_softwares": [
+    "RAPTOR"
+  ],
+  "is_visualization_default": true,
+  "offset": {
+    "x": 10,
+    "y": 32,
+    "z": 43
+  },
+  "affine_transformation_matrix": [
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "authors": [
+    {
+      "name": "John Doe",
+      "corresponding_author_status": true,
+      "primary_author_status": false
+    },
+    {
+      "name": "Jane Smith",
+      "ORCID": "0000-4444-1234-0000",
+      "corresponding_author_status": false,
+      "primary_author_status": false,
+      "email": "jsmith@test.com",
+      "affiliation_name": "Foo",
+      "affiliation_address": "some address",
+      "affiliation_identifier": "test-affliation-id"
+    }
+  ],
+  "tomogram_version": 1,
+  "scales": [
+    {
+      "z": 500,
+      "y": 1016,
+      "x": 980
+    },
+    {
+      "z": 250,
+      "y": 508,
+      "x": 490
+    },
+    {
+      "z": 125,
+      "y": 254,
+      "x": 245
+    }
+  ],
+  "size": {
+    "z": 500,
+    "y": 1016,
+    "x": 980
+  },
+  "omezarr_dir": "RUN1.zarr",
+  "mrc_files": [
+    "RUN1.mrc"
+  ],
+  "run_name": "RUN1",
+  "key_photo": {
+    "snapshot": "30001/RUN1/Tomograms/VoxelSpacing12.300/KeyPhotos/key-photo-snapshot.png",
+    "thumbnail": "30001/RUN1/Tomograms/VoxelSpacing12.300/KeyPhotos/key-photo-thumbnail.png"
+  },
+  "deposition_id": 301,
+  "dates": {
+    "deposition_date": "2023-04-01",
+    "last_modified_date": "2023-06-01",
+    "release_date": "2023-06-01"
+  },
+  "alignment_metadata_path": "test-public-bucket/30001/RUN1/Alignments/100/alignment_metadata.json",
+  "neuroglancer_config_path": "test-public-bucket/30001/RUN1/Reconstructions/VoxelSpacing13.480/NeuroglancerPrecompute/100-neuroglancer_config.json",
+  "last_updated_at": 1728676818
+}
