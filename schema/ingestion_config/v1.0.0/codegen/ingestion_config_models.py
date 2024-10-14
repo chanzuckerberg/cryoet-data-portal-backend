@@ -3228,7 +3228,7 @@ class AlignmentEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
-    metadata: Alignment = Field(..., description="""The metadata for the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
+    metadata: Optional[Alignment] = Field(None, description="""The metadata for the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'DatasetEntity',
@@ -3236,7 +3236,7 @@ class AlignmentEntity(ConfiguredBaseModel):
                        'FrameEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
-    sources: List[AlignmentSource] = Field(..., description="""An alignment source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: Optional[List[AlignmentSource]] = Field(None, description="""An alignment source.""", json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
