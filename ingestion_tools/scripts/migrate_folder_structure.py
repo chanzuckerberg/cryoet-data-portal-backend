@@ -222,7 +222,7 @@ def cli(ctx):
     pass
 
 
-def common_options(func):
+def migrate_common_options(func):
     options = []
     for cls in IMPORTERS:
         plural_key = cls.plural_key.replace("_", "-")
@@ -365,7 +365,7 @@ def _migrate(config, tree, to_migrate, to_iterate, kwargs, parents: Optional[dic
 @click.argument("output_bucket", required=True, type=str)
 @click.option("--migrate-everything", is_flag=True, default=False)
 @click.option("--local-fs", type=bool, is_flag=True, default=False)
-@common_options
+@migrate_common_options
 @click.pass_context
 def migrate(
     ctx,
@@ -378,7 +378,8 @@ def migrate(
     fs_mode = "s3"
     if local_fs:
         fs_mode = "local"
-    fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=False)
+    # The increased read timeout prevents failures for the large files.
+    fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=False, config_kwargs={"read_timeout": 40})
     config = DepositionImportConfig(fs, config_file, output_bucket, output_bucket, IMPORTERS)
     # config.load_map_files()
 
