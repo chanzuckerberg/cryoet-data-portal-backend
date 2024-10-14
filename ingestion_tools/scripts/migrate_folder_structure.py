@@ -47,8 +47,11 @@ OLD_PATHS = {
 
 
 def move(config: DepositionImportConfig, old_path: str, new_path: str):
-    print(f"Moving {old_path} to {new_path}")
-    config.fs.move(old_path, new_path, recursive=True)
+    if config.fs.exists(old_path):
+        print(f"Moving {old_path} to {new_path}")
+        config.fs.move(old_path, new_path, recursive=True)
+    else:
+        print(f"Skipping move of {old_path} as it does not exist")
 
 
 def delete(config: DepositionImportConfig, path: str):
