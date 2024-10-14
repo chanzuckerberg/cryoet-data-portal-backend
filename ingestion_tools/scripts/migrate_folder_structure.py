@@ -53,8 +53,8 @@ def move(config: DepositionImportConfig, old_path: str, new_path: str):
 
 def delete(config: DepositionImportConfig, path: str):
     print(f"Deleting {path}")
-    # if hasattr(config.fs, "s3fs"):
-    #     config.fs.s3fs.rm(path)
+    if hasattr(config.fs, "s3fs"):
+        config.fs.s3fs.rm(path)
 
 
 def migrate_volume(
