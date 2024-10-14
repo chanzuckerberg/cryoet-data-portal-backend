@@ -44,7 +44,7 @@ OLD_PATHS = {
 
 def move(config: DepositionImportConfig, old_path: str, new_path: str):
     print(f"Moving {old_path} to {new_path}")
-    # config.fs.move(old_path, new_path)
+    config.fs.move(old_path, new_path, recursive=True)
 
 
 def migrate_volume(cls, config: DepositionImportConfig, parents: dict[str, Any], kwargs) -> None:
