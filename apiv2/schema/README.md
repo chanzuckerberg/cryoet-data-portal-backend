@@ -12,7 +12,6 @@ Tomogram {
     float tomogram_version
     string processing_software
     string reconstruction_software
-    boolean is_standardized
     boolean is_portal_standard
     boolean is_author_submitted
     boolean is_visualization_default
@@ -283,11 +282,11 @@ Run ||--}o Tiltseries : "tiltseries"
 Run ||--}o TomogramVoxelSpacing : "tomogram_voxel_spacings"
 Run ||--}o Tomogram : "tomograms"
 FrameAcquisitionFile ||--|o Run : "run"
-GainFile ||--|o Run : "run"
+GainFile ||--|| Run : "run"
 AnnotationMethodLink ||--|o Annotation : "annotation"
 PerSectionAlignmentParameters ||--|| Alignment : "alignment"
-Frame ||--|o Deposition : "deposition"
-Frame ||--|o Run : "run"
+Frame ||--|| Deposition : "deposition"
+Frame ||--|| Run : "run"
 Deposition ||--}o DepositionAuthor : "authors"
 Deposition ||--}o Alignment : "alignments"
 Deposition ||--}o Annotation : "annotations"

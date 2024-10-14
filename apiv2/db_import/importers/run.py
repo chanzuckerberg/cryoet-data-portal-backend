@@ -1,9 +1,9 @@
 from typing import Any, Iterator
 
 from database.models import Run
+from db_import.common.config import DBImportConfig
 from db_import.importers.base_importer import (
     BaseDBImporter,
-    DBImportConfig,
     StaleDeletionDBImporter,
     StaleParentDeletionDBImporter,
 )

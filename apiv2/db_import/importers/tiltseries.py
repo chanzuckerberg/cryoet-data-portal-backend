@@ -1,7 +1,8 @@
 from typing import Any
 
 from database import models
-from db_import.importers.base_importer import BaseDBImporter, DBImportConfig, StaleParentDeletionDBImporter
+from db_import.common.config import DBImportConfig
+from db_import.importers.base_importer import BaseDBImporter, StaleParentDeletionDBImporter
 from db_import.importers.deposition import get_deposition
 from db_import.importers.run import RunDBImporter
 

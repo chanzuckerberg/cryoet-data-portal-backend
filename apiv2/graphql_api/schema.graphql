@@ -3275,26 +3275,26 @@ type Frame implements EntityInterface & Node {
   """Numeric identifier (May change!)"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
-  runId: Int
+  runId: Int!
 
   """Camera angle for a frame"""
-  rawAngle: Float!
+  rawAngle: Float
 
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int
 
   """The raw camera angle for a frame"""
-  dose: Float!
+  dose: Float
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """S3 path to the frame file"""
   s3FramePath: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """HTTPS path to the frame file"""
   httpsFramePath: String!
 }
 
@@ -3456,25 +3456,25 @@ enum FrameCountColumns {
 }
 
 input FrameCreateInput {
-  depositionId: ID = null
-  runId: ID = null
+  depositionId: ID!
+  runId: ID!
 
   """Camera angle for a frame"""
-  rawAngle: Float!
+  rawAngle: Float = null
 
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int = null
 
   """The raw camera angle for a frame"""
-  dose: Float!
+  dose: Float = null
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean = null
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """S3 path to the frame file"""
   s3FramePath: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """HTTPS path to the frame file"""
   httpsFramePath: String!
 
   """Numeric identifier (May change!)"""
@@ -3531,25 +3531,25 @@ input FrameOrderByClause {
 }
 
 input FrameUpdateInput {
-  depositionId: ID = null
-  runId: ID = null
+  depositionId: ID
+  runId: ID
 
   """Camera angle for a frame"""
-  rawAngle: Float
+  rawAngle: Float = null
 
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int = null
 
   """The raw camera angle for a frame"""
-  dose: Float
+  dose: Float = null
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean = null
 
-  """Path to a directory containing data for this entity as an S3 url"""
+  """S3 path to the frame file"""
   s3FramePath: String
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
+  """HTTPS path to the frame file"""
   httpsFramePath: String
 
   """Numeric identifier (May change!)"""
@@ -3582,7 +3582,7 @@ type GainFile implements EntityInterface & Node {
   """Numeric identifier (May change!)"""
   id: Int!
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
-  runId: Int
+  runId: Int!
 
   """Path to the file in s3"""
   s3FilePath: String!
@@ -3623,7 +3623,7 @@ enum GainFileCountColumns {
 }
 
 input GainFileCreateInput {
-  runId: ID = null
+  runId: ID!
 
   """Path to the file in s3"""
   s3FilePath: String!
@@ -3669,7 +3669,7 @@ input GainFileOrderByClause {
 }
 
 input GainFileUpdateInput {
-  runId: ID = null
+  runId: ID
 
   """Path to the file in s3"""
   s3FilePath: String
@@ -5000,9 +5000,6 @@ type Tomogram implements EntityInterface & Node {
   reconstructionSoftware: String!
 
   """whether this tomogram adheres to portal standards"""
-  isStandardized: Boolean!
-
-  """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean
 
   """
@@ -5342,7 +5339,6 @@ enum TomogramCountColumns {
   tomogramVersion
   processingSoftware
   reconstructionSoftware
-  isStandardized
   isPortalStandard
   isAuthorSubmitted
   isVisualizationDefault
@@ -5415,9 +5411,6 @@ input TomogramCreateInput {
 
   """Name of software used for reconstruction"""
   reconstructionSoftware: String!
-
-  """whether this tomogram adheres to portal standards"""
-  isStandardized: Boolean!
 
   """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean = null
@@ -5522,7 +5515,6 @@ type TomogramGroupByOptions {
   tomogramVersion: Float
   processingSoftware: String
   reconstructionSoftware: String
-  isStandardized: Boolean
   isPortalStandard: Boolean
   isAuthorSubmitted: Boolean
   isVisualizationDefault: Boolean
@@ -5606,7 +5598,6 @@ input TomogramOrderByClause {
   tomogramVersion: orderBy
   processingSoftware: orderBy
   reconstructionSoftware: orderBy
-  isStandardized: orderBy
   isPortalStandard: orderBy
   isAuthorSubmitted: orderBy
   isVisualizationDefault: orderBy
@@ -5679,9 +5670,6 @@ input TomogramUpdateInput {
 
   """Name of software used for reconstruction"""
   reconstructionSoftware: String
-
-  """whether this tomogram adheres to portal standards"""
-  isStandardized: Boolean
 
   """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean = null
@@ -5968,7 +5956,6 @@ input TomogramWhereClause {
   tomogramVersion: FloatComparators
   processingSoftware: StrComparators
   reconstructionSoftware: StrComparators
-  isStandardized: BoolComparators
   isPortalStandard: BoolComparators
   isAuthorSubmitted: BoolComparators
   isVisualizationDefault: BoolComparators

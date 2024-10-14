@@ -31,21 +31,21 @@ class Frame(Base):
     __tablename__ = "frame"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
+    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=False, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
         back_populates="frames",
     )
-    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=True, index=True)
+    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
         foreign_keys=run_id,
         back_populates="frames",
     )
-    raw_angle: Mapped[float] = mapped_column(Float, nullable=False)
+    raw_angle: Mapped[float] = mapped_column(Float, nullable=True)
     acquisition_order: Mapped[int] = mapped_column(Integer, nullable=True)
-    dose: Mapped[float] = mapped_column(Float, nullable=False)
+    dose: Mapped[float] = mapped_column(Float, nullable=True)
     is_gain_corrected: Mapped[bool] = mapped_column(Boolean, nullable=True)
     s3_frame_path: Mapped[str] = mapped_column(String, nullable=False)
     https_frame_path: Mapped[str] = mapped_column(String, nullable=False)

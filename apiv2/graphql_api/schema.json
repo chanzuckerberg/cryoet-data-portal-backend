@@ -1857,9 +1857,13 @@
               "args": [],
               "name": "runId",
               "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
               }
             },
             {
@@ -6740,15 +6744,6 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "name": "isStandardized",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "BoolComparators",
                 "ofType": null
               }
             },
@@ -19469,9 +19464,13 @@
               "args": [],
               "name": "depositionId",
               "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
               }
             },
             {
@@ -19514,22 +19513,22 @@
               "args": [],
               "name": "runId",
               "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
               }
             },
             {
               "args": [],
               "name": "rawAngle",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Float",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
               }
             },
             {
@@ -19545,13 +19544,9 @@
               "args": [],
               "name": "dose",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Float",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
               }
             },
             {
@@ -21881,19 +21876,6 @@
             },
             {
               "args": [],
-              "name": "isStandardized",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              }
-            },
-            {
-              "args": [],
               "name": "isPortalStandard",
               "type": {
                 "kind": "SCALAR",
@@ -22514,15 +22496,6 @@
             {
               "defaultValue": null,
               "name": "reconstructionSoftware",
-              "type": {
-                "kind": "ENUM",
-                "name": "orderBy",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "name": "isStandardized",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -23388,15 +23361,6 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isStandardized",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
                 "ofType": null
               }
             },
@@ -24966,9 +24930,6 @@
             },
             {
               "name": "reconstructionSoftware"
-            },
-            {
-              "name": "isStandardized"
             },
             {
               "name": "isPortalStandard"
@@ -30062,12 +30023,16 @@
           "fields": null,
           "inputFields": [
             {
-              "defaultValue": "null",
+              "defaultValue": null,
               "name": "runId",
               "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
               }
             },
             {
@@ -30129,7 +30094,7 @@
           "fields": null,
           "inputFields": [
             {
-              "defaultValue": "null",
+              "defaultValue": null,
               "name": "runId",
               "type": {
                 "kind": "SCALAR",
@@ -33244,34 +33209,38 @@
           "fields": null,
           "inputFields": [
             {
-              "defaultValue": "null",
-              "name": "depositionId",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": "null",
-              "name": "runId",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
-            },
-            {
               "defaultValue": null,
-              "name": "rawAngle",
+              "name": "depositionId",
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
                   "kind": "SCALAR",
-                  "name": "Float",
+                  "name": "ID",
                   "ofType": null
                 }
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "runId",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "rawAngle",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
               }
             },
             {
@@ -33284,16 +33253,12 @@
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "dose",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Float",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
               }
             },
             {
@@ -33355,7 +33320,7 @@
           "fields": null,
           "inputFields": [
             {
-              "defaultValue": "null",
+              "defaultValue": null,
               "name": "depositionId",
               "type": {
                 "kind": "SCALAR",
@@ -33364,7 +33329,7 @@
               }
             },
             {
-              "defaultValue": "null",
+              "defaultValue": null,
               "name": "runId",
               "type": {
                 "kind": "SCALAR",
@@ -33373,7 +33338,7 @@
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "rawAngle",
               "type": {
                 "kind": "SCALAR",
@@ -33391,7 +33356,7 @@
               }
             },
             {
-              "defaultValue": null,
+              "defaultValue": "null",
               "name": "dose",
               "type": {
                 "kind": "SCALAR",
@@ -35119,19 +35084,6 @@
               }
             },
             {
-              "defaultValue": null,
-              "name": "isStandardized",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              }
-            },
-            {
               "defaultValue": "null",
               "name": "isPortalStandard",
               "type": {
@@ -35496,15 +35448,6 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "defaultValue": null,
-              "name": "isStandardized",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
                 "ofType": null
               }
             },

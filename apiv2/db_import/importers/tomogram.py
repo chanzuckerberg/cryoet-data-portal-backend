@@ -3,11 +3,11 @@ from typing import Any, Iterator
 
 import sqlalchemy as sa
 from database import models
+from db_import.common.config import DBImportConfig
 from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
-    DBImportConfig,
     StaleParentDeletionDBImporter,
 )
 from db_import.importers.deposition import get_deposition
@@ -106,7 +106,6 @@ class TomogramDBImporter(BaseDBImporter):
             "key_photo_thumbnail_url": None,
             "neuroglancer_config": self.generate_neuroglancer_data(),
             "type": self.get_tomogram_type(),
-            "is_standardized": self.metadata.get("is_standardized") or False,
             "is_portal_standard": self.metadata.get("is_standardized") or False,
         }
         date_fields = ["deposition_date", "release_date", "last_modified_date"]

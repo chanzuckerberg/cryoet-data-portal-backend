@@ -160,14 +160,14 @@ class Frame(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
         load_deposition_rows
     )  # type:ignore
-    deposition_id: Optional[int]
+    deposition_id: int
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: Optional[int]
-    raw_angle: float = strawberry.field(description="Camera angle for a frame")
+    run_id: int
+    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame", default=None)
     acquisition_order: Optional[int] = strawberry.field(
         description="Frame's acquistion order within a tilt experiment", default=None,
     )
-    dose: float = strawberry.field(description="The raw camera angle for a frame")
+    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
@@ -276,13 +276,13 @@ Mutation types
 
 @strawberry.input()
 class FrameCreateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    raw_angle: float = strawberry.field(description="Camera angle for a frame")
+    deposition_id: strawberry.ID = strawberry.field(description=None)
+    run_id: strawberry.ID = strawberry.field(description=None)
+    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame", default=None)
     acquisition_order: Optional[int] = strawberry.field(
         description="Frame's acquistion order within a tilt experiment", default=None,
     )
-    dose: float = strawberry.field(description="The raw camera angle for a frame")
+    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
@@ -293,13 +293,13 @@ class FrameCreateInput:
 
 @strawberry.input()
 class FrameUpdateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame")
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description=None)
+    run_id: Optional[strawberry.ID] = strawberry.field(description=None)
+    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame", default=None)
     acquisition_order: Optional[int] = strawberry.field(
         description="Frame's acquistion order within a tilt experiment", default=None,
     )
-    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame")
+    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
