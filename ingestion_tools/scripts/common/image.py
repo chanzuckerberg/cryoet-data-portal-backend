@@ -17,6 +17,7 @@ from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
 from skimage.transform import downscale_local_mean
 
+from common.config import DepositionImportConfig
 from common.fs import FileSystemApi, S3Filesystem
 
 
@@ -390,16 +391,18 @@ class MaskConverter(TomoConverter):
         return np.any(self.volume_reader.data == self.label)
 
 
-def get_volume_metadata(fs: FileSystemApi, output_prefix: str) -> dict[str, Any]:
+def get_volume_metadata(config: DepositionImportConfig, output_prefix: str) -> dict[str, Any]:
     # Generates metadata related to volume files.
     scales = []
+    fs = config.fs
     size: dict[str, float] = {}
-    omezarr_dir = fs.destformat(f"{output_prefix}.zarr")
-    with open(fs.localreadable(os.path.join(omezarr_dir, ".zattrs")), "r") as fh:
+    omezarr_dir = f"{output_prefix}.zarr"
+    dest_zarr_dir = fs.destformat(omezarr_dir)
+    with open(fs.localreadable(os.path.join(dest_zarr_dir, ".zattrs")), "r") as fh:
         zarrinfo = json.loads(fh.read())
     multiscales = zarrinfo["multiscales"][0]["datasets"]
     for scale in multiscales:
-        with open(fs.localreadable(os.path.join(omezarr_dir, scale["path"], ".zarray")), "r") as fh:
+        with open(fs.localreadable(os.path.join(dest_zarr_dir, scale["path"], ".zarray")), "r") as fh:
             scaleinfo = json.loads(fh.read())
         shape = scaleinfo["shape"]
         dims = {"z": shape[0], "y": shape[1], "x": shape[2]}
@@ -409,8 +412,8 @@ def get_volume_metadata(fs: FileSystemApi, output_prefix: str) -> dict[str, Any]
     return {
         "scales": scales,
         "size": size,
-        "omezarr_dir": os.path.basename(omezarr_dir),
-        "mrc_files": [os.path.basename(f"{output_prefix}.mrc")],
+        "omezarr_dir": config.to_formatted_path(omezarr_dir),
+        "mrc_file": config.to_formatted_path(f"{output_prefix}.mrc"),
     }
 
 
