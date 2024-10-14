@@ -203,7 +203,8 @@ def _get_glob_vars(migrate_cls: BaseImporter, parents: dict[str, Any]) -> dict[s
 
 
 def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, BaseImporter]):
-    if migrate_cls.type_key in {"deposition", "dataset"}:
+    if migrate_cls.type_key in {"deposition", "dataset", "dataset_keyphoto", "deposition_keyphoto"}:
+        # Uses the default finders as ingestion for these entities
         finder_configs = config.get_object_configs(migrate_cls.type_key)
         for _finder in finder_configs:
             sources = _finder.get("sources", [])
@@ -213,45 +214,44 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                     item.allow_imports = False
                     yield item, {}
     elif f"{migrate_cls.type_key}_metadata" in OLD_PATHS:
+        # Glob the metadata to define the entity
         print(f"Finding metadata for {migrate_cls.type_key}..")
         glob_vars = _get_glob_vars(migrate_cls, parents)
         glob_str = OLD_PATHS.get(f"{migrate_cls.type_key}_metadata").format(**glob_vars)
         glob_path = os.path.join(config.output_prefix, glob_str)
         for file_path in config.fs.glob(glob_path):
             args = {"metadata_path": file_path}
-            if "*" in glob_path and migrate_cls.type_key not in {"alignment"}:
-                if migrate_cls.type_key == "annotation":
-                    name = re.search(re.compile(glob_str.replace("*", "(.*)")), file_path).group(1)
-                    with config.fs.open(file_path, "r") as f:
-                        metadata = json.load(f)
-                    kwargs = {
-                        "alignment_metadata_path": "alignment_metadata.json",
-                        "identifier": int(name.split("-")[0]),
-                        "allow_imports": False,
-                        "parents": parents,
-                        "config": config,
-                        "metadata": metadata,
-                        "name": name,
-                        "path": os.path.join(config.output_prefix, metadata["files"][0]["path"]),
-                    }
-                    yield migrate_cls(**kwargs), args
-                elif migrate_cls.type_key == "run":
-                    name = re.search(re.compile(glob_str.replace("*", "(.*)")), file_path).group(1)
-                    yield migrate_cls(config, {}, name, file_path, parents=parents, allow_imports=False), args
+            with config.fs.open(file_path, "r") as f:
+                metadata = json.load(f)
+            kwargs = {
+                "allow_imports": False,
+                "parents": parents,
+                "config": config,
+                "metadata": metadata,
+            }
+            if migrate_cls.type_key in {"annotation", "tomogram"}:
+                glob_vars = {**_get_glob_vars(migrate_cls, parents), **{"alignment_id": "100"}}
+                alignment_path = AlignmentImporter.dir_path.format(**glob_vars)
+                kwargs["alignment_metadata_path"] = os.path.join(alignment_path, "alignment_metadata.json")
+            if migrate_cls.type_key == "annotation":
+                name = re.search(re.compile(glob_str.replace("*", "(.*)")), file_path).group(1)
+                additional_args = {
+                    "identifier": int(name.split("-")[0]),
+                    "name": name,
+                    "path": os.path.join(config.output_prefix, metadata["files"][0]["path"]),
+                }
+                yield migrate_cls(**{**kwargs, **additional_args}), args
+            elif migrate_cls.type_key == "run":
+                name = re.search(re.compile(glob_str.replace("*", "(.*)")), file_path).group(1)
+                yield migrate_cls(name=name, path=file_path, **kwargs), args
             else:
-                with config.fs.open(file_path, "r") as f:
-                    metadata = json.load(f)
                 name, path, results = migrate_cls.get_name_and_path(metadata, None, file_path, {})
-                kwargs = {"allow_imports": False, "parents": parents}
-                if migrate_cls.type_key == "tomogram":
-                    glob_vars = {**_get_glob_vars(migrate_cls, parents), **{"alignment_id": "100"}}
-                    alignment_path = AlignmentImporter.dir_path.format(**glob_vars)
-                    kwargs["alignment_metadata_path"] = os.path.join(alignment_path, "alignment_metadata.json")
+                kwargs["name"] = name
                 if path:
                     kwargs["path"] = path
                 elif results:
                     kwargs["file_paths"] = results
-                yield migrate_cls(config, metadata, name, **kwargs), args
+                yield migrate_cls(**kwargs), args
     elif migrate_cls.type_key in OLD_PATHS:
         finder_configs = []
         for configs in config.get_object_configs(migrate_cls.type_key):
@@ -283,7 +283,6 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
             importer_factory = DefaultImporterFactory(source, migrate_cls)
             for item in importer_factory.find(config, {}, **parents):
                 yield item, {}
-
     return []
 
 
