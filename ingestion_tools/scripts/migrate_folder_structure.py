@@ -31,7 +31,7 @@ OLD_PATHS = {
     "deposition_metadata": "depositions_metadata/{deposition_name}/deposition_metadata.json",
     "frame": "{dataset_name}/{run_name}/Frames",
     "gain": "{dataset_name}/{run_name}/Frames/",
-    "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos/*",
+    "key_image": "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/KeyPhotos/",
     "rawtilt": "{dataset_name}/{run_name}/TiltSeries",
     "run": "{dataset_name}/{run_name}",
     "run_metadata": "{dataset_name}/{run_name}/run_metadata.json",
@@ -152,8 +152,7 @@ def migrate_key_image(cls, config: DepositionImportConfig, parents: dict[str, An
     :return:
     """
     old_path = cls.path
-    tomo_id = cls.parents["tomogram"].identifier
-    file_name = f"{tomo_id}-{os.path.basename(old_path)}"
+    file_name = f"{os.path.basename(old_path)}"
     new_path = os.path.join(cls.get_output_path(), file_name)
     move(config, old_path, new_path)
 
@@ -311,6 +310,8 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
             dest_suffix = None
             if migrate_cls.type_key == "gain" and source_glob.endswith(".dm4"):
                 dest_suffix = "*.mrc"
+            if migrate_cls.type_key == "key_image":
+                dest_suffix = "*.png"
             elif isinstance(source_glob, str):
                 dest_suffix = f"*{os.path.splitext(source_glob)[1]}"
             path = OLD_PATHS.get(f"{migrate_cls.type_key}").format(**_get_glob_vars(migrate_cls, parents))
