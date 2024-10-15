@@ -23,7 +23,7 @@ class KeyImageImporter(BaseImporter):
         "snapshot": 512,  # small detail expand
         "expanded": 1024,  # large detail expand
     }
-    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Images"
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Images/{tomogram_id}/"
 
     def get_metadata(self) -> dict[str, str]:
         return {
@@ -93,8 +93,7 @@ class KeyImageImporter(BaseImporter):
         return preview, data.shape[-1]
 
     def get_file_name(self, image_type: str) -> str:
-        tomogram_id = self.get_tomogram().get_identifier()
-        return f"{tomogram_id}-key-photo-{image_type}.png"
+        return f"key-photo-{image_type}.png"
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:
