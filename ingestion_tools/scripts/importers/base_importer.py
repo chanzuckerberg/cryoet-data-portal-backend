@@ -196,7 +196,7 @@ class VolumeImporter(BaseImporter):
     def load_extra_metadata(self) -> dict[str, Any]:
         run: RunImporter = self.get_run()
         output_prefix = self.get_output_path()
-        metadata = get_volume_metadata(self.config.fs, output_prefix)
+        metadata = get_volume_metadata(self.config, output_prefix)
         metadata["run_name"] = run.name
         return metadata
 

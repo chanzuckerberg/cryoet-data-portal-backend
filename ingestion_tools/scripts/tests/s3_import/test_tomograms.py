@@ -116,7 +116,7 @@ def test_tomogram_import(
     if deposition_id and existing_metadata:
         if alignment_path:
             existing_metadata["alignment_metadata_path"] = os.path.join(
-                test_output_bucket, f"output/{parents['dataset'].name}/{run_name}/Alignments", alignment_path,
+                f"{parents['dataset'].name}/{run_name}/Alignments", alignment_path,
             )
         existing_prefix = prefix.format(voxel_spacing=existing_metadata.get("voxel_spacing", voxel_spacing))
         add_tomogram_metadata(existing_prefix, deposition_id, existing_metadata)
@@ -152,28 +152,27 @@ def test_tomogram_import_metadata(
         item.import_metadata()
     run_name = parents["run"].name
     voxel_spacing = 13.48
-    run_path = f"output/{parents['dataset'].name}/{run_name}"
-    vs_path = f"{run_path}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}"
+    vs_path = f"{parents['dataset'].name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}"
     id_prefix = 100
     prefix = f"{vs_path}/Tomograms/{id_prefix}"
-    tomogram_files = get_children(s3_client, test_output_bucket, prefix)
+    tomogram_files = get_children(s3_client, test_output_bucket,  f"output/{prefix}")
     assert "tomogram_metadata.json" in tomogram_files
     image_path = f"{parents['dataset'].name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}/Images/{id_prefix}-key-photo-"
     expected = {
-        "omezarr_dir": f"{run_name}.zarr",
-        "mrc_files": [f"{run_name}.mrc"],
+        "omezarr_dir": os.path.join(prefix, f"{run_name}.zarr"),
+        "mrc_file": os.path.join(prefix, f"{run_name}.mrc"),
         "voxel_spacing": 13.48,
         "scales": [{"x": 6, "y": 8, "z": 10}, {"x": 3, "y": 4, "z": 5}, {"x": 2, "y": 2, "z": 3}],
         "size": {"x": 6, "y": 8, "z": 10},
-        "alignment_metadata_path": f"{test_output_bucket}/{run_path}/Alignments/100/alignment_metadata.json",
-        "neuroglancer_config_path": f"{test_output_bucket}/{vs_path}/NeuroglancerPrecompute/"
+        "alignment_metadata_path": f"{parents['dataset'].name}/{run_name}/Alignments/100/alignment_metadata.json",
+        "neuroglancer_config_path": f"{vs_path}/NeuroglancerPrecompute/"
                                     f"{id_prefix}-neuroglancer_config.json",
         "key_photo": {
             "snapshot": f"{image_path}snapshot.png",
             "thumbnail": f"{image_path}thumbnail.png",
         },
     }
-    validate_metadata(expected, prefix)
+    validate_metadata(expected, f"output/{prefix}")
 
 
 def test_tomogram_no_import(
