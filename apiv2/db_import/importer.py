@@ -264,7 +264,7 @@ def load_func(
                 if import_annotations:
                     annotation_cleaner = StaleAnnotationDeletionDBImporter(run_id, config)
                     for annotation in AnnotationDBImporter.get_item(
-                        voxel_spacing_obj.id, voxel_spacing, run_obj, config
+                        voxel_spacing_obj.id, voxel_spacing, run_obj, config,
                     ):
                         annotation_obj = annotation.import_to_db()
                         annotation_cleaner.mark_as_active(annotation_obj)

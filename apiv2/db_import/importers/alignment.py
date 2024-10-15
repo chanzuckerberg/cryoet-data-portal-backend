@@ -39,7 +39,7 @@ class AlignmentItem(ItemDBImporter):
         "tilt_offset": ["tilt_offset"],
         "x_rotation_offset": ["x_rotation_offset"],
         "affine_transformation_matrix": ["affine_transformation_matrix"],
-        "alignment_method": ["alignment_method"],
+        "alignment_method": ["method_type"],
         "s3_alignment_metadata": ["file"],
         "is_portal_standard": ["is_portal_standard"],
     }

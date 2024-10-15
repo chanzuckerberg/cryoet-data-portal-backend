@@ -63,7 +63,7 @@ class TomogramItem(ItemDBImporter):
             "is_portal_standard": self.input_data.get("is_standardized") or False,
             "is_visualization_default": False,
             "is_author_submitted": bool(
-                self.input_data["deposition_id"] == self.input_data["run"].dataset.deposition_id
+                self.input_data["deposition_id"] == self.input_data["run"].dataset.deposition_id,
             ),
         }
         if ng_config := self.input_data.get("neuroglancer_config_path"):

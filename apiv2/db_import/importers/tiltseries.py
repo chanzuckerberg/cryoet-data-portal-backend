@@ -57,7 +57,10 @@ class TiltSeriesDBImporter(BaseDBImporter):
         }
 
     def get_first_match_file_name(self, file_extension_pattern: str):
-        for key in self.config.glob_s3(self.dir_prefix, file_extension_pattern):
+        dir_prefix = self.dir_prefix
+        if not dir_prefix.endswith("/"):
+            dir_prefix = f"{dir_prefix}/"
+        for key in self.config.glob_s3(dir_prefix, file_extension_pattern):
             return key
 
     def get_computed_fields(self) -> dict[str, Any]:
