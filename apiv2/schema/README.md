@@ -123,8 +123,8 @@ Frame {
     integer acquisition_order
     float dose
     boolean is_gain_corrected
-    string s3_prefix
-    string https_prefix
+    string s3_frame_path
+    string https_frame_path
     integer id
 }
 Deposition {
@@ -282,11 +282,11 @@ Run ||--}o Tiltseries : "tiltseries"
 Run ||--}o TomogramVoxelSpacing : "tomogram_voxel_spacings"
 Run ||--}o Tomogram : "tomograms"
 FrameAcquisitionFile ||--|o Run : "run"
-GainFile ||--|o Run : "run"
+GainFile ||--|| Run : "run"
 AnnotationMethodLink ||--|o Annotation : "annotation"
 PerSectionAlignmentParameters ||--|| Alignment : "alignment"
-Frame ||--|o Deposition : "deposition"
-Frame ||--|o Run : "run"
+Frame ||--|| Deposition : "deposition"
+Frame ||--|| Run : "run"
 Deposition ||--}o DepositionAuthor : "authors"
 Deposition ||--}o Alignment : "alignments"
 Deposition ||--}o Annotation : "annotations"

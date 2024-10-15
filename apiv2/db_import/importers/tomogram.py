@@ -3,11 +3,11 @@ from typing import Any, Iterator
 
 import sqlalchemy as sa
 from database import models
+from db_import.common.config import DBImportConfig
 from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base_importer import (
     AuthorsStaleDeletionDBImporter,
     BaseDBImporter,
-    DBImportConfig,
     StaleParentDeletionDBImporter,
 )
 from db_import.importers.deposition import get_deposition
@@ -98,7 +98,6 @@ class TomogramDBImporter(BaseDBImporter):
             "fiducial_alignment_status": normalize_fiducial_alignment(self.metadata.get("fiducial_alignment_status")),
             "reconstruction_method": self.normalize_to_unknown_str(self.metadata.get("reconstruction_method")),
             "reconstruction_software": self.normalize_to_unknown_str(self.metadata.get("reconstruction_software")),
-            "is_canonical": True,  # TODO: mark this for deprecation
             "s3_omezarr_dir": self.join_path(s3_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
             "https_omezarr_dir": self.join_path(https_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
             "s3_mrc_file": self.join_path(s3_prefix, self.dir_prefix, self.metadata["mrc_files"][0]),

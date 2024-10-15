@@ -72,6 +72,7 @@ class TomogramImporter(VolumeImporter):
             parents=parents,
             allow_imports=allow_imports,
         )
+
         self.alignment_metadata_path = alignment_metadata_path or self.get_alignment_metadata_path()
         self.identifier = TomogramIdentifierHelper.get_identifier(
             config,

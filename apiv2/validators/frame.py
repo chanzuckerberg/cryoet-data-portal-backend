@@ -17,25 +17,25 @@ from typing_extensions import Annotated
 class FrameCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    deposition_id: Annotated[uuid.UUID | None, Field()]
-    run_id: Annotated[uuid.UUID | None, Field()]
+    deposition_id: Annotated[uuid.UUID, Field()]
+    run_id: Annotated[uuid.UUID, Field()]
     raw_angle: Annotated[
-        float,
+        float | None,
         Field(
             ge=-90,
             le=90,
         ),
     ]
     acquisition_order: Annotated[int | None, Field()]
-    dose: Annotated[float, Field()]
+    dose: Annotated[float | None, Field()]
     is_gain_corrected: Annotated[bool | None, Field()]
-    s3_prefix: Annotated[
+    s3_frame_path: Annotated[
         str,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
-    https_prefix: Annotated[
+    https_frame_path: Annotated[
         str,
         StringConstraints(
             strip_whitespace=True,
@@ -59,13 +59,13 @@ class FrameUpdateInputValidator(BaseModel):
     acquisition_order: Annotated[int | None, Field()]
     dose: Annotated[float | None, Field()]
     is_gain_corrected: Annotated[bool | None, Field()]
-    s3_prefix: Annotated[
+    s3_frame_path: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
-    https_prefix: Annotated[
+    https_frame_path: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,

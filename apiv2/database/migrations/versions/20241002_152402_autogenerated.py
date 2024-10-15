@@ -107,6 +107,7 @@ def upgrade() -> None:
     op.drop_column("tiltseries", "https_collection_metadata")
     op.drop_column("tiltseries", "s3_collection_metadata")
     op.drop_column("tiltseries", "s3_gain_file")
+    op.drop_column("tomogram", "is_canonical")
     op.add_column("tomogram", sa.Column("is_portal_standard", sa.Boolean(), nullable=True))
     op.add_column("tomogram", sa.Column("is_author_submitted", sa.Boolean(), nullable=True))
     op.add_column("tomogram", sa.Column("is_visualization_default", sa.Boolean(), nullable=True))
@@ -115,7 +116,6 @@ def upgrade() -> None:
     op.add_column("tomogram", sa.Column("deposition_date", sa.DateTime(timezone=True), nullable=True))
     op.add_column("tomogram", sa.Column("release_date", sa.DateTime(timezone=True), nullable=True))
     op.add_column("tomogram", sa.Column("last_modified_date", sa.DateTime(timezone=True), nullable=True))
-    op.drop_column("tomogram", "is_canonical")
     # ### end Alembic commands ###
 
 

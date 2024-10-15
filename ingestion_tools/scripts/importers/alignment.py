@@ -129,6 +129,8 @@ class AlignmentImporter(BaseFileImporter):
         return all(volume_dim.get(dim) for dim in "xyz") or self.get_tomogram() is not None
 
     def get_tomogram(self) -> Optional["TomogramImporter"]:
+        # We are returning the first tomogram, as we only allow one alignment per deposition, and all the
+        # tomograms imported for an ingestion config have the same dimensions as they are related to the same alignment.
         from importers.tomogram import TomogramImporter
 
         for voxel_spacing in VoxelSpacingImporter.finder(self.config, **self.parents):

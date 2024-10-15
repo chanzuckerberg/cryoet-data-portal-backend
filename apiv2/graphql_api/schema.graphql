@@ -3275,27 +3275,27 @@ type Frame implements EntityInterface & Node {
   """Numeric identifier (May change!)"""
   id: Int!
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
-  depositionId: Int
+  depositionId: Int!
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
-  runId: Int
+  runId: Int!
 
   """Camera angle for a frame"""
-  rawAngle: Float!
+  rawAngle: Float
 
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int
 
   """The raw camera angle for a frame"""
-  dose: Float!
+  dose: Float
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean
 
-  """Path to a directory containing data for this entity as an S3 url"""
-  s3Prefix: String!
+  """S3 path to the frame file"""
+  s3FramePath: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
-  httpsPrefix: String!
+  """HTTPS path to the frame file"""
+  httpsFramePath: String!
 }
 
 """
@@ -3450,32 +3450,32 @@ enum FrameCountColumns {
   acquisitionOrder
   dose
   isGainCorrected
-  s3Prefix
-  httpsPrefix
+  s3FramePath
+  httpsFramePath
   id
 }
 
 input FrameCreateInput {
-  depositionId: ID = null
-  runId: ID = null
+  depositionId: ID!
+  runId: ID!
 
   """Camera angle for a frame"""
-  rawAngle: Float!
+  rawAngle: Float = null
 
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int = null
 
   """The raw camera angle for a frame"""
-  dose: Float!
+  dose: Float = null
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean = null
 
-  """Path to a directory containing data for this entity as an S3 url"""
-  s3Prefix: String!
+  """S3 path to the frame file"""
+  s3FramePath: String!
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
-  httpsPrefix: String!
+  """HTTPS path to the frame file"""
+  httpsFramePath: String!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -3497,8 +3497,8 @@ type FrameGroupByOptions {
   acquisitionOrder: Int
   dose: Float
   isGainCorrected: Boolean
-  s3Prefix: String
-  httpsPrefix: String
+  s3FramePath: String
+  httpsFramePath: String
   id: Int
 }
 
@@ -3506,8 +3506,8 @@ type FrameMinMaxColumns {
   rawAngle: Float
   acquisitionOrder: Int
   dose: Float
-  s3Prefix: String
-  httpsPrefix: String
+  s3FramePath: String
+  httpsFramePath: String
   id: Int
 }
 
@@ -3525,32 +3525,32 @@ input FrameOrderByClause {
   acquisitionOrder: orderBy
   dose: orderBy
   isGainCorrected: orderBy
-  s3Prefix: orderBy
-  httpsPrefix: orderBy
+  s3FramePath: orderBy
+  httpsFramePath: orderBy
   id: orderBy
 }
 
 input FrameUpdateInput {
-  depositionId: ID = null
-  runId: ID = null
+  depositionId: ID
+  runId: ID
 
   """Camera angle for a frame"""
-  rawAngle: Float
+  rawAngle: Float = null
 
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int = null
 
   """The raw camera angle for a frame"""
-  dose: Float
+  dose: Float = null
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean = null
 
-  """Path to a directory containing data for this entity as an S3 url"""
-  s3Prefix: String
+  """S3 path to the frame file"""
+  s3FramePath: String
 
-  """Path to a directory containing data for this entity as an HTTPS url"""
-  httpsPrefix: String
+  """HTTPS path to the frame file"""
+  httpsFramePath: String
 
   """Numeric identifier (May change!)"""
   id: Int
@@ -3565,8 +3565,8 @@ input FrameWhereClause {
   acquisitionOrder: IntComparators
   dose: FloatComparators
   isGainCorrected: BoolComparators
-  s3Prefix: StrComparators
-  httpsPrefix: StrComparators
+  s3FramePath: StrComparators
+  httpsFramePath: StrComparators
   id: IntComparators
 }
 
@@ -3582,7 +3582,7 @@ type GainFile implements EntityInterface & Node {
   """Numeric identifier (May change!)"""
   id: Int!
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
-  runId: Int
+  runId: Int!
 
   """Path to the file in s3"""
   s3FilePath: String!
@@ -3623,7 +3623,7 @@ enum GainFileCountColumns {
 }
 
 input GainFileCreateInput {
-  runId: ID = null
+  runId: ID!
 
   """Path to the file in s3"""
   s3FilePath: String!
@@ -3669,7 +3669,7 @@ input GainFileOrderByClause {
 }
 
 input GainFileUpdateInput {
-  runId: ID = null
+  runId: ID
 
   """Path to the file in s3"""
   s3FilePath: String

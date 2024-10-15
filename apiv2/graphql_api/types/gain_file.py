@@ -126,7 +126,7 @@ Define GainFile type
 @strawberry.type(description="Gain values for frames in this run")
 class GainFile(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: Optional[int]
+    run_id: int
     s3_file_path: str = strawberry.field(description="Path to the file in s3")
     https_file_path: str = strawberry.field(description="Path to the file as an https url")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -221,7 +221,7 @@ Mutation types
 
 @strawberry.input()
 class GainFileCreateInput:
-    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    run_id: strawberry.ID = strawberry.field(description=None)
     s3_file_path: str = strawberry.field(description="Path to the file in s3")
     https_file_path: str = strawberry.field(description="Path to the file as an https url")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -229,7 +229,7 @@ class GainFileCreateInput:
 
 @strawberry.input()
 class GainFileUpdateInput:
-    run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    run_id: Optional[strawberry.ID] = strawberry.field(description=None)
     s3_file_path: Optional[str] = strawberry.field(description="Path to the file in s3")
     https_file_path: Optional[str] = strawberry.field(description="Path to the file as an https url")
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")

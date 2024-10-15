@@ -29,7 +29,7 @@ class GainFile(Base):
     __tablename__ = "gain_file"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=True, index=True)
+    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
         foreign_keys=run_id,
