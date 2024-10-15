@@ -66,7 +66,9 @@ def validate_dataframe(
 
 @pytest.fixture
 def validate_metadata(
-    s3_client: S3Client, test_output_bucket: str, precision: float = 10e-5,
+    s3_client: S3Client,
+    test_output_bucket: str,
+    precision: float = 10e-5,
 ) -> Callable[[dict, str, int], None]:
     def validate(expected: dict, prefix: str) -> None:
         key = os.path.join(prefix, "alignment_metadata.json")
