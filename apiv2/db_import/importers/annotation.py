@@ -18,22 +18,25 @@ class AnnotationDBImporter(BaseDBImporter):
     def __init__(
         self,
         voxel_spacing_id: int,
+        run_obj: Base,
         dir_prefix: str,
         metadata_filename: str,
         parent: TomogramVoxelSpacingDBImporter,
         config: DBImportConfig,
     ):
         self.voxel_spacing_id = voxel_spacing_id
+        self.run = run_obj
         # TODO: update name
         self.dir_prefix = dir_prefix
         self.parent = parent
         self.config = config
         self.metadata_path = metadata_filename
         self.metadata = config.load_key_json(self.metadata_path)
+        self.deposition = get_deposition(self.config, self.metadata.get("deposition_id"))
 
     def get_data_map(self) -> dict[str, Any]:
-        deposition = get_deposition(self.config, self.metadata.get("deposition_id"))
         return {
+            "run_id": self.run.id,
             "s3_metadata_path": self.join_path(self.config.s3_prefix, self.metadata_path),
             "https_metadata_path": self.join_path(self.config.https_prefix, self.metadata_path),
             "deposition_date": ["dates", "deposition_date"],
@@ -53,7 +56,7 @@ class AnnotationDBImporter(BaseDBImporter):
             "annotation_software": ["annotation_software"],
             "is_curator_recommended": ["is_curator_recommended"],
             "method_type": ["method_type"],
-            "deposition_id": deposition.id,
+            "deposition_id": self.deposition.id,
         }
 
     def import_to_db(self) -> Base:
@@ -82,11 +85,12 @@ class AnnotationDBImporter(BaseDBImporter):
         cls,
         voxel_spacing_id: int,
         voxel_spacing: TomogramVoxelSpacingDBImporter,
+        run_obj: Base,
         config: DBImportConfig,
     ) -> Iterator["AnnotationDBImporter"]:
         annotation_dir_path = cls.join_path(voxel_spacing.dir_prefix, "Annotations/")
         return [
-            cls(voxel_spacing_id, annotation_dir_path, annotation_metadata_path, voxel_spacing, config)
+            cls(voxel_spacing_id, run_obj, annotation_dir_path, annotation_metadata_path, voxel_spacing, config)
             for annotation_metadata_path in config.recursive_glob_s3(annotation_dir_path, "*/*.json")
         ]
 
@@ -103,6 +107,7 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
         self.tomogram_voxel_spacing_id = tomogram_voxel_spacing_id
         self.parent = parent
         self.config = config
+        self.parent_metadata = parent.metadata
         self.alignment_id = self.config.get_alignment_by_path(parent.metadata["alignment_metadata_path"])
         self.metadata = parent.metadata.get("files", [])
 
@@ -112,11 +117,20 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
             "tomogram_voxel_spacing_id": self.tomogram_voxel_spacing_id,
             "format": ["format"],
             "is_visualization_default": ["is_visualization_default"],
-            "source": ["source"],
         }
+
+    def calculate_source(self, metadata: dict[str, Any]) -> str:
+        # "dataset_author" or "community" or "portal_standard"
+        if self.parent.deposition.id == self.parent.run.dataset.deposition_id:
+            return "dataset_author"
+        else:
+            if metadata.get("is_portal_standard"):
+                return "portal_standard"
+            return "community"
 
     def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
         data_map["alignment_id"] = self.alignment_id
+        data_map["source"] = self.calculate_source(metadata)
         data_map["s3_path"] = self.join_path(self.config.s3_prefix, metadata["path"])
         data_map["https_path"] = self.join_path(self.config.https_prefix, metadata["path"])
         return data_map
