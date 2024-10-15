@@ -30,7 +30,7 @@ def expected_gains(http_prefix: str) -> list[dict[str, Any]]:
 @write_data
 def populate_existing_gains(session: sa.orm.Session) -> models.GainFile:
     populate_run(session)
-    stale_frame = models.GainFile(run_id=RUN1_ID, https_file_path="STALE_FRAME", s3_file_path="STALE_FRAME")
+    stale_frame = models.GainFile(run_id=RUN1_ID, https_file_path="STALE_GAIN", s3_file_path="STALE_FRAME")
     session.add(stale_frame)
     return models.GainFile(
         id=333,

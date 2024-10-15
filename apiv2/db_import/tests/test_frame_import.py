@@ -32,7 +32,10 @@ def expected_frames(http_prefix: str) -> list[dict[str, Any]]:
 def populate_existing_frames(session: sa.orm.Session) -> models.Frame:
     populate_run(session)
     stale_frame = models.Frame(
-        run_id=RUN1_ID, deposition_id=DEPOSITION_ID1, https_frame_path="STALE_FRAME", s3_frame_path="STALE_FRAME",
+        run_id=RUN1_ID,
+        deposition_id=DEPOSITION_ID1,
+        https_frame_path="STALE_FRAME",
+        s3_frame_path="STALE_FRAME",
     )
     session.add(stale_frame)
     return models.Frame(

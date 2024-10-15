@@ -1,0 +1,32 @@
+{
+    "microscope": {
+        "manufacturer": "FEI",
+        "model": "Phantom"
+    },
+    "spherical_aberration_constant": 2.7,
+    "microscope_optical_setup": {
+        "energy_filter": "TFS"
+    },
+    "camera": {
+        "manufacturer": "FEI",
+        "model": "FALCON"
+    },
+    "acceleration_voltage": 10000,
+    "tilting_scheme": "min to max tilt",
+    "tilt_axis": 56.4,
+    "tilt_step": 3,
+    "tilt_range": {
+        "min": -33,
+        "max": 33
+    },
+    "total_flux": 12,
+    "data_acquisition_software": "leginon",
+    "tilt_series_quality": 2,
+    "pixel_spacing": 5.240,
+    "omezarr_dir": "ts_foo.zarr",
+    "mrc_files": [
+        "ts_foo.mrc"
+    ],
+    "run_name": "RUN3",
+    "deposition_id": 300
+}

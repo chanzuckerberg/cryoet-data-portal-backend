@@ -54,7 +54,9 @@ class DBImportConfig:
     @lru_cache  # noqa
     def get_alignment_by_path(self, path: str) -> int | None:
         session = self.get_db_session()
-        for item in session.scalars(sa.select(models.Alignment).where(models.Alignment.s3_alignment_metadata == path)).all():
+        for item in session.scalars(
+            sa.select(models.Alignment).where(models.Alignment.s3_alignment_metadata == path),
+        ).all():
             return item.id
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:

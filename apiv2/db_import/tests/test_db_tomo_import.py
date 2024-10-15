@@ -1,6 +1,8 @@
 from datetime import date
+import json
 from typing import Any, Callable
 
+from _pytest.fixtures import pytest_fixture_setup
 import pytest as pytest
 from database import models
 from db_import.tests.populate_db import (
@@ -71,10 +73,10 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "processing": "raw",
         "processing_software": "tomo3D",
         "tomogram_version": 1.0,
-        "s3_omezarr_dir": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.zarr",
-        "https_omezarr_dir": f"{http_prefix}/{run1_vs_path}CanonicalTomogram/RUN1.zarr",
-        "s3_mrc_file": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
-        "https_mrc_file": f"{http_prefix}/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
+        "s3_omezarr_dir": f"s3://test-public-bucket/{run1_vs_path}Tomograms/100/RUN1.zarr",
+        "https_omezarr_dir": f"{http_prefix}/{run1_vs_path}Tomograms/100/RUN1.zarr",
+        "s3_mrc_file": f"s3://test-public-bucket/{run1_vs_path}Tomograms/100/RUN1.mrc",
+        "https_mrc_file": f"{http_prefix}/{run1_vs_path}Tomograms/100/RUN1.mrc",
         "scale0_dimensions": "980,1016,500",
         "scale1_dimensions": "490,508,250",
         "scale2_dimensions": "245,254,125",
@@ -82,14 +84,14 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "offset_x": 10,
         "offset_y": 32,
         "offset_z": 43,
-        "key_photo_url": f"{http_prefix}/{run1_vs_path}KeyPhotos/key-photo-snapshot.png",
-        "key_photo_thumbnail_url": f"{http_prefix}/{run1_vs_path}KeyPhotos/key-photo-thumbnail.png",
-        "neuroglancer_config": '{"foo":"bar","baz":"test"}',
-        "deposition_id": 301,
+        "key_photo_url": f"{http_prefix}/{run1_vs_path}Images/key-photo-snapshot.png",
+        "key_photo_thumbnail_url": f"{http_prefix}/{run1_vs_path}Images/key-photo-thumbnail.png",
+        "deposition_id": 300,
         "is_portal_standard": False,
-        "deposition_date": date(2023, 4, 2),
+        "deposition_date": date(2023, 4, 1),
         "release_date": date(2024, 6, 1),
         "last_modified_date": date(2023, 9, 2),
+        "neuroglancer_config": '{"foo":"bar","baz":"test"}',
     }
     run2_tomo = {
         "name": "RUN2",
@@ -102,10 +104,10 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "reconstruction_software": "Unknown",
         "processing": "filtered",
         "tomogram_version": 1.0,
-        "s3_omezarr_dir": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.zarr",
-        "https_omezarr_dir": f"{http_prefix}/{run2_vs_path}CanonicalTomogram/RUN2.zarr",
-        "s3_mrc_file": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
-        "https_mrc_file": f"{http_prefix}/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
+        "s3_omezarr_dir": f"s3://test-public-bucket/{run2_vs_path}Tomograms/100/RUN2.zarr",
+        "https_omezarr_dir": f"{http_prefix}/{run2_vs_path}Tomograms/100/RUN2.zarr",
+        "s3_mrc_file": f"s3://test-public-bucket/{run2_vs_path}Tomograms/100/RUN2.mrc",
+        "https_mrc_file": f"{http_prefix}/{run2_vs_path}Tomograms/100/RUN2.mrc",
         "scale0_dimensions": "800,800,400",
         "scale1_dimensions": "400,400,200",
         "scale2_dimensions": "200,200,100",

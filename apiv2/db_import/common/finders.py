@@ -25,6 +25,11 @@ class ItemFinder(ABC):
     def find(self, item_importer: ItemDBImporter) -> list[ItemDBImporter]:
         pass
 
+    def strip_bucket_from_path(self, path):
+        if path.startswith(self.config.bucket_name):
+            return path[len(self.config.bucket_name) + 1 :]
+        return path
+
     def recursive_glob(self, prefix: str, target_glob: str) -> list[str]:
         s3 = self.config.s3fs
         prefix = prefix.rstrip("/")
@@ -65,7 +70,7 @@ class FileFinder(ItemFinder):
         results: list[ItemDBImporter] = []
         for file in self.glob_s3(self.path, self.glob, is_file=True):
             if self.match_regex.match(file):
-                data = {"file": file}
+                data = {"file": self.strip_bucket_from_path(file)}
                 data.update(parents)
                 results.append(item_importer(self.config, data))
         return results
@@ -85,13 +90,13 @@ class MetadataFileFinder(ItemFinder):
             if self.list_key:
                 for idx, item in enumerate(json_data[self.list_key]):
                     data = item
-                    data["file"] = file
+                    data["file"] = self.strip_bucket_from_path(file)
                     data["index"] = idx + 1  # Use a 1-based index for humans.
                     data.update(parents)
                     results.append(item_importer(self.config, data))
                 # If we have a list key, we don't want to continue
                 continue
-            data = {"file": file}
+            data = {"file": self.strip_bucket_from_path(file)}
             data.update(parents)
             data.update(json_data)
             results.append(item_importer(self.config, data))
