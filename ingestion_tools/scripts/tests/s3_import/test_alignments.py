@@ -72,14 +72,6 @@ def validate_metadata(
         key = os.path.join(prefix, "alignment_metadata.json")
         actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
         for key in expected:
-            # # Assert with precision for psap values
-            # if key == "per_section_alignment_parameters":
-            #     for i, psap in enumerate(expected[key]):
-            #         for psap_key in psap:
-            #             assert actual[key][i][psap_key] == pytest.approx(
-            #                 expected[key][i][psap_key], abs=precision
-            #             ), f"Key {key},{i},{psap_key} does not match"
-            # else:
             assert actual[key] == expected[key], f"Key {key} does not match"
 
     return validate
