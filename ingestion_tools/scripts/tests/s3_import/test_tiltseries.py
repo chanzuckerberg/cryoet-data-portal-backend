@@ -101,8 +101,8 @@ def test_tiltseries_import_metadata(
     assert "tiltseries_metadata.json" in tilt_series_files
     expected = {
         "frames_count": expected_frames_count,
-        "omezarr_dir": f"{run_name}.zarr",
-        "mrc_files": [f"{run_name}.mrc"],
+        "omezarr_dir": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.zarr",
+        "mrc_file": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.mrc",
         "pixel_spacing": expected_pixel_spacing,
         "scales": [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 5, "x": 10}, {"z": 4, "y": 3, "x": 5}],
         "size": {"z": 4, "y": 10, "x": 20},
