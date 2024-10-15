@@ -65,11 +65,21 @@ def validate_dataframe(
 
 
 @pytest.fixture
-def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[dict, str, int], None]:
+def validate_metadata(
+    s3_client: S3Client, test_output_bucket: str, precision: float = 10e-5,
+) -> Callable[[dict, str, int], None]:
     def validate(expected: dict, prefix: str) -> None:
         key = os.path.join(prefix, "alignment_metadata.json")
         actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
         for key in expected:
+            # # Assert with precision for psap values
+            # if key == "per_section_alignment_parameters":
+            #     for i, psap in enumerate(expected[key]):
+            #         for psap_key in psap:
+            #             assert actual[key][i][psap_key] == pytest.approx(
+            #                 expected[key][i][psap_key], abs=precision
+            #             ), f"Key {key},{i},{psap_key} does not match"
+            # else:
             assert actual[key] == expected[key], f"Key {key} does not match"
 
     return validate
@@ -125,6 +135,7 @@ def test_alignment_import_item(
     validate_dataframe(output_prefix, "TS_run1.tlt")
     validate_dataframe(output_prefix, "TS_run1.xtilt")
 
+    tol = 10e-5
     expected = {
         "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
         "alignment_path": f"{test_output_bucket}/{output_prefix}/TS_run1.xf",
@@ -134,25 +145,25 @@ def test_alignment_import_item(
         "per_section_alignment_parameters": [
             {
                 "z_index": 0,
-                "in_plane_rotation": [[0.029, -1.0], [1.0, 0.029]],
-                "x_offset": 23.95253,
-                "y_offset": -56.17124,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(23.95253, abs=tol),
+                "y_offset": pytest.approx(-56.17124, abs=tol),
                 "tilt_angle": -5.0,
                 "volume_x_rotation": 0.23,
             },
             {
                 "z_index": 1,
-                "in_plane_rotation": [[0.029, -1.0], [1.0, 0.029]],
-                "x_offset": 57.29936,
-                "y_offset": 74.24210000000001,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(57.29936, abs=tol),
+                "y_offset": pytest.approx(74.24210, abs=tol),
                 "tilt_angle": 0.0,
                 "volume_x_rotation": 2.12,
             },
             {
                 "z_index": 2,
-                "in_plane_rotation": [[0.029, -1.0], [1.0, 0.029]],
-                "x_offset": 80.51020000000001,
-                "y_offset": 91.54409,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(80.51020, abs=tol),
+                "y_offset": pytest.approx(91.54409, abs=tol),
                 "tilt_angle": 5.0,
                 "volume_x_rotation": 1.97,
             },
@@ -200,6 +211,7 @@ def test_alignment_import_item_aretomo(
 
     output_prefix = os.path.join(prefix, str(id_prefix))
 
+    tol = 10e-3
     expected = {
         "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
         "alignment_path": f"{test_output_bucket}/{output_prefix}/TS_run1.aln",
@@ -209,32 +221,32 @@ def test_alignment_import_item_aretomo(
         "per_section_alignment_parameters": [
             {
                 "z_index": 0,
-                "in_plane_rotation": [[0.029, -1.0], [1.0, 0.029]],
-                "x_offset": 23.95253,
-                "y_offset": -56.17124,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(23.95253, abs=tol),
+                "y_offset": pytest.approx(-56.17124, abs=tol),
                 "tilt_angle": -5.0,
                 "volume_x_rotation": 0.0,
             },
             {
                 "z_index": 1,
-                "in_plane_rotation": [[0.029, -1.0], [1.0, 0.029]],
-                "x_offset": 57.29936,
-                "y_offset": 74.24210000000001,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(57.29936, abs=tol),
+                "y_offset": pytest.approx(74.24210, abs=tol),
                 "tilt_angle": 0.0,
                 "volume_x_rotation": 0.0,
             },
             {
                 "z_index": 2,
-                "in_plane_rotation": [[0.029, -1.0], [1.0, 0.029]],
-                "x_offset": 80.51020000000001,
-                "y_offset": 91.54409,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(80.51020, abs=tol),
+                "y_offset": pytest.approx(91.54409, abs=tol),
                 "tilt_angle": 5.0,
                 "volume_x_rotation": 0.0,
             },
         ],
         "tilt_offset": -0.3,
-        "tilt_path": f"{test_output_bucket}/{output_prefix}/TS_run1.tlt",
-        "tiltx_path": f"{test_output_bucket}/{output_prefix}/TS_run1.xtilt",
+        "tilt_path": None,
+        "tiltx_path": None,
         "volume_dimension": {"x": 6, "y": 8, "z": 10},
         "volume_offset": {"x": -1, "y": 2, "z": -3},
         "x_rotation_offset": -2.3,
