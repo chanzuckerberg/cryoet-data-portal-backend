@@ -181,8 +181,9 @@ def migrate_annotations(cls, config: DepositionImportConfig, parents: dict[str, 
     metadata_path = kwargs.get("metadata_path")
     for file in cls.metadata["files"]:
         filename = file["path"]
+        shape = file["shape"].lower()
         old_path = os.path.join(config.output_prefix, filename)
-        new_path = f"{output_path}{os.path.splitext(filename)[1]}"
+        new_path = f"{output_path}_{shape}{os.path.splitext(filename)[1]}"
         file["path"] = new_path.replace(config.output_prefix, "").lstrip("/")
         move(config, old_path, new_path)
     cls.metadata["alignment_metadata_path"] = cls.local_metadata["alignment_metadata_path"]
