@@ -114,9 +114,10 @@ def test_alignment_import_item(
     parents = get_parents(config)
     dataset_name = parents.get("dataset").name
     run_name = parents.get("run").name
-    prefix = f"output/{dataset_name}/{run_name}/Alignments/"
+    prefix = f"{dataset_name}/{run_name}/Alignments"
+
     if deposition_id:
-        existing_prefix = os.path.join(prefix, "100/")
+        existing_prefix = os.path.join("output", prefix, "100/")
         add_alignment_metadata(existing_prefix, deposition_id)
 
     alignments = list(AlignmentImporter.finder(config, **parents))
@@ -124,7 +125,7 @@ def test_alignment_import_item(
         alignment.import_item()
         alignment.import_metadata()
 
-    output_prefix = os.path.join(prefix, str(id_prefix))
+    output_prefix = os.path.join("output", prefix, str(id_prefix))
     validate_dataframe(output_prefix, "TS_run1.xf")
     validate_dataframe(output_prefix, "TS_run1.tlt")
     validate_dataframe(output_prefix, "TS_run1.xtilt")
@@ -132,7 +133,7 @@ def test_alignment_import_item(
     tol = 10e-5
     expected = {
         "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
-        "alignment_path": f"{test_output_bucket}/{output_prefix}/TS_run1.xf",
+        "alignment_path": f"{prefix}/{id_prefix}/TS_run1.xf",
         "alignment_type": "LOCAL",
         "deposition_id": "10301",
         "is_portal_standard": True,
@@ -163,8 +164,8 @@ def test_alignment_import_item(
             },
         ],
         "tilt_offset": -0.3,
-        "tilt_path": f"{test_output_bucket}/{output_prefix}/TS_run1.tlt",
-        "tiltx_path": f"{test_output_bucket}/{output_prefix}/TS_run1.xtilt",
+        "tilt_path": f"{prefix}/{id_prefix}/TS_run1.tlt",
+        "tiltx_path": f"{prefix}/{id_prefix}/TS_run1.xtilt",
         "volume_dimension": {"x": 6, "y": 8, "z": 10},
         "volume_offset": {"x": -1, "y": 2, "z": -3},
         "x_rotation_offset": -2.3,
@@ -342,11 +343,11 @@ def test_custom_alignment_with_dimensions_import_without_tomograms(
 
     dataset_name = parents.get("dataset").name
     run_name = parents.get("run").name
-    prefix = f"output/{dataset_name}/{run_name}/Alignments/100"
-    validate_dataframe(prefix, "TS_run1.xf")
+    prefix = f"{dataset_name}/{run_name}/Alignments/100"
+    validate_dataframe(f"output/{prefix}", "TS_run1.xf")
     expected = {
         "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
-        "alignment_path": f"{test_output_bucket}/{prefix}/TS_run1.xf",
+        "alignment_path": f"{prefix}/TS_run1.xf",
         "alignment_type": "LOCAL",
         "deposition_id": "10301",
         "is_canonical": True,
@@ -383,7 +384,7 @@ def test_custom_alignment_with_dimensions_import_without_tomograms(
         "volume_offset": {"x": -1, "y": 2, "z": -3},
         "x_rotation_offset": -2.3,
     }
-    validate_metadata(expected, prefix)
+    validate_metadata(expected, f"output/{prefix}")
 
 
 def test_allow_import_is_false(

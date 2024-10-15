@@ -71,7 +71,7 @@ class TomogramImporter(VolumeImporter):
             parents=parents,
             allow_imports=allow_imports,
         )
-        self.alignment_metadata_path = self.get_alignment_metadata_path()
+        self.alignment_metadata_path = config.to_formatted_path(self.get_alignment_metadata_path())
         self.identifier = TomogramIdentifierHelper.get_identifier(
             config,
             self.get_base_metadata(),
@@ -112,7 +112,7 @@ class TomogramImporter(VolumeImporter):
             base_metadata.get("fiducial_alignment_status"),
         )
         merge_data["alignment_metadata_path"] = self.alignment_metadata_path
-        merge_data["neuroglancer_config_path"] = self.get_neuroglancer_config_path()
+        merge_data["neuroglancer_config_path"] = self.config.to_formatted_path(self.get_neuroglancer_config_path())
         metadata = TomoMetadata(self.config.fs, self.get_deposition().name, base_metadata)
         metadata.write_metadata(dest_tomo_metadata, merge_data)
 

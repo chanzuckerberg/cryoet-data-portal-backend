@@ -32,7 +32,6 @@ class RunImporter(BaseImporter):
             print(f"Skipping import of {self.name} metadata")
             return
         dest_run_metadata = self.get_metadata_path()
-        print(dest_run_metadata)
         metadata = RunMetadata(self.config.fs, self.get_deposition().name, self.metadata)
         merge_data = {"run_name": self.name}
         metadata.write_metadata(dest_run_metadata, merge_data)
