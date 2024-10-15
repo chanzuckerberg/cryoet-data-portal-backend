@@ -157,7 +157,7 @@ def test_tomogram_import_metadata(
     prefix = f"{vs_path}/Tomograms/{id_prefix}"
     tomogram_files = get_children(s3_client, test_output_bucket,  f"output/{prefix}")
     assert "tomogram_metadata.json" in tomogram_files
-    image_path = f"{parents['dataset'].name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing:.3f}/Images/{id_prefix}-key-photo-"
+    image_path = f"{vs_path}/Images/{id_prefix}/key-photo-"
     expected = {
         "omezarr_dir": os.path.join(prefix, f"{run_name}.zarr"),
         "mrc_file": os.path.join(prefix, f"{run_name}.mrc"),
