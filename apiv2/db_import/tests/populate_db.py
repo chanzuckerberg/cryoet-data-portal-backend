@@ -430,7 +430,7 @@ def populate_annotations(session: sa.orm.Session) -> Annotation:
     return Annotation(
         id=ANNOTATION_ID,
         run_id=RUN1_ID,
-        s3_metadata_path="s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json",
+        s3_metadata_path="s3://test-public-bucket/30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100/foo-1.0.json",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
         release_date="2025-06-01",

@@ -27,10 +27,13 @@ class ItemFinder(ABC):
 
     def recursive_glob(self, prefix: str, target_glob: str) -> list[str]:
         s3 = self.config.s3fs
+        prefix = prefix.rstrip("/")
+        logger.info("Recursively looking for files in %s/%s", prefix, target_glob)
         return s3.glob(os.path.join(prefix, target_glob))
 
     def glob_s3(self, prefix: str, glob_string: str, is_file: bool = True):
         s3 = self.config.s3fs
+        prefix = prefix.rstrip("/")
         if glob_string:
             prefix = os.path.join(prefix, glob_string)
         logger.info("Looking for files in %s", prefix)
@@ -48,6 +51,7 @@ class ItemFinder(ABC):
         data = json.loads(s3.cat_file(key))
         return data
 
+
 class FileFinder(ItemFinder):
     def __init__(self, config: DBImportConfig, path: str, glob: str, match_regex: str | None):
         self.config = config
@@ -59,13 +63,13 @@ class FileFinder(ItemFinder):
 
     def find(self, item_importer: ItemDBImporter, parents: dict[str, Base]) -> list[ItemDBImporter]:
         results: list[ItemDBImporter] = []
-        logger.info("Looking for files in %s/%s", self.path, self.glob)
         for file in self.glob_s3(self.path, self.glob, is_file=True):
             if self.match_regex.match(file):
                 data = {"file": file}
                 data.update(parents)
                 results.append(item_importer(self.config, data))
         return results
+
 
 class MetadataFileFinder(ItemFinder):
     def __init__(self, config: DBImportConfig, path: str, file_glob: str, list_key: str | None = None):
@@ -76,14 +80,13 @@ class MetadataFileFinder(ItemFinder):
 
     def find(self, item_importer: ItemDBImporter, parents: dict[str, Base]) -> list[ItemDBImporter]:
         results: list[ItemDBImporter] = []
-        logger.info("Looking for files in %s/%s", self.path, self.file_glob)
         for file in self.recursive_glob(self.path, self.file_glob):
             json_data = self.load_metadata(file)
             if self.list_key:
                 for idx, item in enumerate(json_data[self.list_key]):
                     data = item
                     data["file"] = file
-                    data["index"] = idx + 1 # Use a 1-based index for humans.
+                    data["index"] = idx + 1  # Use a 1-based index for humans.
                     data.update(parents)
                     results.append(item_importer(self.config, data))
                 # If we have a list key, we don't want to continue

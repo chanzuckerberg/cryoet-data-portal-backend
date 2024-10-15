@@ -25,7 +25,7 @@ from platformics.database.models import Base
 
 @pytest.fixture
 def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
-    path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json"
+    path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100/foo-1.0.json"
     return [
         {
             "id": ANNOTATION_ID,
@@ -63,7 +63,7 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
 
 @pytest.fixture
 def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
-    path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/Annotations/"
+    path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/"
     return [
         {
             "id": ANNOTATION_FILE_ID,

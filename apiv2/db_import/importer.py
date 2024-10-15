@@ -176,7 +176,6 @@ def load_func(
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
     s3fs = S3FileSystem(client_kwargs={"endpoint_url": endpoint_url})
     config = DBImportConfig(s3_client, s3fs, s3_bucket, https_prefix, session)
-    config.load_deposition_map()
 
     if import_depositions and deposition_id:
         for dep_id in deposition_id:
@@ -186,6 +185,8 @@ def load_func(
                 deposition_authors.import_to_db()
                 deposition_types = DepositionTypeDBImporter.get_item(deposition_obj.id, deposition_importer, config)
                 deposition_types.import_to_db()
+
+    config.load_deposition_map()
 
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
@@ -208,9 +209,6 @@ def load_func(
 
         run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
-            print(f"GOT ITEM {run.dir_prefix}")
-            if "TS_045" not in run.dir_prefix:
-                continue
             logger.info("Processing Run with prefix %s", run.dir_prefix)
             run_obj = run.import_to_db()
             run_id = run_obj.id
@@ -273,7 +271,7 @@ def load_func(
 
             voxel_spacing_cleaner.remove_stale_objects()
 
-        # run_cleaner.remove_stale_objects()
+        run_cleaner.remove_stale_objects()
         session.commit()
     session.commit()
 

@@ -29,22 +29,22 @@ def expected_voxel_spacings_by_run(http_prefix: str) -> dict[str, list[dict[str,
             "id": TOMOGRAM_VOXEL_ID2,
             "run_id": RUN1_ID,
             "voxel_spacing": 9.876,
-            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing9.876/",
-            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing9.876/",
+            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing9.876/",
+            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing9.876/",
         },
         {
             "id": TOMOGRAM_VOXEL_ID1,
             "run_id": RUN1_ID,
             "voxel_spacing": 12.3,
-            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/",
-            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/",
+            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/",
+            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/",
         },
     ]
     run2_voxel_spacings = [
         {
             "voxel_spacing": 3.456,
-            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN2/Tomograms/VoxelSpacing3.456/",
-            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN2/Tomograms/VoxelSpacing3.456/",
+            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN2/Reconstructions/VoxelSpacing3.456/",
+            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN2/Reconstructions/VoxelSpacing3.456/",
         },
     ]
     return {
@@ -55,8 +55,8 @@ def expected_voxel_spacings_by_run(http_prefix: str) -> dict[str, list[dict[str,
 
 @pytest.fixture
 def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[dict[str, Any]]]]:
-    run1_vs_path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/"
-    run2_vs_path = f"{DATASET_ID}/RUN2/Tomograms/VoxelSpacing3.456/"
+    run1_vs_path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/"
+    run2_vs_path = f"{DATASET_ID}/RUN2/Reconstructions/VoxelSpacing3.456/"
     run1_tomo = {
         "id": TOMOGRAM_ID,
         "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
