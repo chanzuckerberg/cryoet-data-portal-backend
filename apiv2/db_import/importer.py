@@ -6,6 +6,7 @@ import click
 from botocore import UNSIGNED
 from botocore.config import Config
 from db_import.common.config import DBImportConfig
+from db_import.importers.alignment import AlignmentImporter
 from db_import.importers.annotation import (
     AnnotationAuthorDBImporter,
     AnnotationDBImporter,
@@ -42,6 +43,7 @@ def db_import_options(func):
     options.append(click.option("--import-dataset-funding", is_flag=True, default=False))
     options.append(click.option("--import-depositions", is_flag=True, default=False))
     options.append(click.option("--import-runs", is_flag=True, default=False))
+    options.append(click.option("--import-alignments", is_flag=True, default=False))
     options.append(click.option("--import-gains", is_flag=True, default=False))
     options.append(click.option("--import-frames", is_flag=True, default=False))
     options.append(click.option("--import-tiltseries", is_flag=True, default=False))
@@ -87,6 +89,7 @@ def load(
     import_dataset_funding: bool,
     import_depositions: bool,
     import_runs: bool,
+    import_alignments: bool,
     import_gains: bool,
     import_frames: bool,
     import_tiltseries: bool,
@@ -111,6 +114,7 @@ def load(
         import_dataset_funding,
         import_depositions,
         import_runs,
+        import_alignments,
         import_gains,
         import_frames,
         import_tiltseries,
@@ -137,6 +141,7 @@ def load_func(
     import_dataset_funding: bool = False,
     import_depositions: bool = False,
     import_runs: bool = False,
+    import_alignments: bool = False,
     import_gains: bool = False,
     import_frames: bool = False,
     import_tiltseries: bool = False,
@@ -160,6 +165,7 @@ def load_func(
         import_dataset_funding = True
         import_depositions = True
         import_runs = True
+        import_alignments = True
         import_gains = True
         import_frames = True
         import_tiltseries = True
@@ -170,7 +176,14 @@ def load_func(
         import_annotations = max(import_annotations, import_annotation_authors, import_annotation_method_links)
         import_tomograms = max(import_tomograms, import_tomogram_authors)
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
-        import_runs = max(import_runs, import_gains, import_frames, import_tiltseries, import_tomogram_voxel_spacing)
+        import_runs = max(
+            import_runs,
+            import_alignments,
+            import_gains,
+            import_frames,
+            import_tiltseries,
+            import_tomogram_voxel_spacing,
+        )
 
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
@@ -228,6 +241,9 @@ def load_func(
                     tiltseries_obj = tiltseries.import_to_db()
                     tiltseries_cleaner.mark_as_active(tiltseries_obj)
                 tiltseries_cleaner.remove_stale_objects()
+            if import_alignments:
+                alignment_importer = AlignmentImporter(config, **parents)
+                alignment_importer.import_items()
 
             if not import_tomogram_voxel_spacing:
                 continue

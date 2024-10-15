@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from datetime import datetime
 from functools import lru_cache
 from pathlib import PurePath
@@ -59,6 +60,14 @@ class DBImportConfig:
         ).all():
             return item.id
 
+    @lru_cache  # noqa
+    def get_tiltseries_by_path(self, path: str) -> int | None:
+        session = self.get_db_session()
+        path = os.path.join(self.s3_prefix, os.path.dirname(path), "%")
+        print(path)
+        item = session.scalars(sa.select(models.Tiltseries).where(models.Tiltseries.s3_mrc_file.like(path))).one()
+        return item.id
+
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
         logger.info("looking for prefix %s", prefix)
@@ -73,6 +82,22 @@ class DBImportConfig:
                 except Exception:
                     continue
         return result
+
+    def recursive_glob_s3(self, prefix: str, glob_string: str) -> list[str]:
+        # Returns path to a matched glob.
+        s3 = self.s3fs
+        prefix = prefix.rstrip("/")
+        path = os.path.join(self.bucket_name, prefix, glob_string)
+        logger.info("Recursively looking for files in %s", path)
+        return s3.glob(path)
+
+    def recursive_glob_prefix(self, prefix: str, glob_string: str) -> list[str]:
+        # Returns a prefix that contains a given glob'd path but not the path to the found item itself.
+        s3 = self.s3fs
+        prefix = prefix.rstrip("/")
+        path = os.path.join(self.bucket_name, prefix, glob_string)
+        logger.info("Recursively looking for files in %s", path)
+        return [os.path.dirname(item[len(self.bucket_name) + 1 :]) for item in s3.glob(path)]
 
     def glob_s3(self, prefix: str, glob_string: str, is_file: bool = True):
         paginator = self.s3_client.get_paginator("list_objects_v2")

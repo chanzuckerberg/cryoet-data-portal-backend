@@ -35,6 +35,16 @@ class ItemDBImporter:
         self.input_data = input_data
         self.model_args = {}
 
+    def get_https_url(self, input_path: str) -> str:
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.https_prefix, input_path)
+
+    def get_s3_url(self, input_path: str) -> str:
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.s3_prefix, input_path)
+
     def _map_direct_fields(self):
         """Iterate over `self.direct_mapped_fields` and populate model args based on the data we find in the input dict."""
         for db_key, _ in self.direct_mapped_fields.items():

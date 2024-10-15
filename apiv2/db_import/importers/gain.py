@@ -42,7 +42,7 @@ class GainImporter(IntegratedDBImporter):
 
     def get_finder_args(self) -> dict[str, Any]:
         return {
-            "path": os.path.join(self.run.s3_prefix, "Frames/"),
+            "path": os.path.join(self.run.s3_prefix, "Gains/"),
             "glob": "*_gain*",
             "match_regex": ".*",
         }

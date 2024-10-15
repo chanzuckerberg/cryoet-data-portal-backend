@@ -1,8 +1,6 @@
 from datetime import date
-import json
 from typing import Any, Callable
 
-from _pytest.fixtures import pytest_fixture_setup
 import pytest as pytest
 from database import models
 from db_import.tests.populate_db import (

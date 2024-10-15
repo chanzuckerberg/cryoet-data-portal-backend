@@ -6,7 +6,6 @@ from database import models
 from db_import.common.finders import MetadataFileFinder
 from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
-from db_import.importers.deposition import get_deposition
 
 
 class TomogramItem(ItemDBImporter):
@@ -49,7 +48,7 @@ class TomogramItem(ItemDBImporter):
             "tomogram_voxel_spacing_id": self.input_data["tomogram_voxel_spacing"].id,
             "run_id": self.input_data["run"].id,
             "fiducial_alignment_status": normalize_fiducial_alignment(
-                self.input_data.get("fiducial_alignment_status", False)
+                self.input_data.get("fiducial_alignment_status", False),
             ),
             "reconstruction_method": self.normalize_to_unknown_str(self.input_data.get("reconstruction_method")),
             "reconstruction_software": self.normalize_to_unknown_str(self.input_data.get("reconstruction_software")),
@@ -61,9 +60,10 @@ class TomogramItem(ItemDBImporter):
             "alignment_id": self.config.get_alignment_by_path(self.input_data["alignment_metadata_path"]),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
-            "neuroglancer_config": self.generate_neuroglancer_data(self.input_data.get("neuroglancer_config_path")),
             "is_portal_standard": self.input_data.get("is_standardized") or False,
         }
+        if ng_config := self.input_data.get("neuroglancer_config_path"):
+            extra_data["neuroglancer_config"] = self.generate_neuroglancer_data(ng_config)
         if key_photos := self.input_data.get("key_photo"):
             extra_data["key_photo_url"] = os.path.join(https_prefix, key_photos.get("snapshot"))
             extra_data["key_photo_thumbnail_url"] = os.path.join(https_prefix, key_photos.get("thumbnail"))

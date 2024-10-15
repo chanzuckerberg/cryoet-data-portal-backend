@@ -48,7 +48,7 @@ class AlignmentItem(ItemDBImporter):
 
     def load_computed_fields(self):
         self.model_args["https_alignment_metadata"] = self.get_https_url(self.input_data["file"])
-        self.model_args["tiltseries_id"] = self.config.get_tiltseries_by_path(self.input_data["tiltseries_path"]).id
+        self.model_args["tiltseries_id"] = self.config.get_tiltseries_by_path(self.input_data["tiltseries_path"])
         self.model_args["run_id"] = self.input_data["run"].id
 
 
@@ -68,6 +68,5 @@ class AlignmentImporter(IntegratedDBImporter):
     def get_finder_args(self) -> dict[str, Any]:
         return {
             "path": os.path.join(self.run.s3_prefix, "Alignments/"),
-            "glob": "*/alignment_metadata.json",
-            "match_regex": ".*",
+            "file_glob": "*/alignment_metadata.json",
         }
