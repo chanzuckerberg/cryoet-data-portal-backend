@@ -74,7 +74,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         parents: dict[str, Any] | None,
     ):
         source_args = {k: v for k, v in self.source.items() if k not in {"shape", "glob_string", "glob_strings"}}
-        alignment_path = self._get_alignment_metadata_path(config, parents)
+        alignment_path = config.to_formatted_path(self._get_alignment_metadata_path(config, parents))
         identifier = AnnotationIdentifierHelper.get_identifier(
             config,
             metadata,

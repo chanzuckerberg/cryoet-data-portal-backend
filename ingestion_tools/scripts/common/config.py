@@ -246,3 +246,9 @@ class DepositionImportConfig:
         if not results:
             results = []
         return results
+
+    def to_formatted_path(self, path: str) -> str:
+        """
+        Returns the s3 key, without the bucket name, for the given path. Helpful for formatting paths in metadata.
+        """
+        return os.path.relpath(path, self.output_prefix) if path else None
