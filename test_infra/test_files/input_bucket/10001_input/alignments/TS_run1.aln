@@ -1,0 +1,11 @@
+# AreTomo Alignment / Priims bprmMn
+# RawSize = 10 20 3
+# NumPatches = 0
+
+# AlphaOffset =     0.00
+# BetaOffset =     0.00
+# SEC     ROT         GMAG       TX          TY      SMEAN     SFIT    SCALE     BASE     TILT
+    0    88.3389    1.00000     23.953    -56.171     1.00     1.00     1.00     0.00     -5.00
+    1    88.3389    1.00000     57.299     74.242     1.00     1.00     1.00     0.00      0.00
+    2    88.3389    1.00000     80.510     91.544     1.00     1.00     1.00     0.00      5.00
+# Local Alignment

@@ -29,6 +29,7 @@ alignments:
   sources:
   - source_multi_glob:
       list_globs:
+      - alignments/{run_name}.tlt
       - alignments/{run_name}.xf
 datasets:
 - sources:

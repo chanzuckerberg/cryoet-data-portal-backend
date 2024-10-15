@@ -75,6 +75,9 @@ class IMODAlignmentConverter(BaseAlignmentConverter):
         return self._get_files_with_suffix(["newst.com"])
 
     def get_per_section_alignment_parameters(self) -> list[dict]:
+        if self.get_alignment_path() is None or self.get_tilt_path() is None:
+            return []
+
         with self.config.fs.open(self.get_alignment_path(), "r") as file:
             xf = ImodXF.from_stream(file)
 
@@ -104,7 +107,7 @@ class IMODAlignmentConverter(BaseAlignmentConverter):
         return [psap.model_dump() for psap in ali.per_section_alignment_parameters]
 
 
-class AreTomoAlignmentConverter(BaseAlignmentConverter):
+class AreTomo3AlignmentConverter(BaseAlignmentConverter):
     def get_alignment_path(self) -> str | None:
         return self._get_files_with_suffix([".aln"])
 
@@ -127,6 +130,6 @@ def alignment_converter_factory(
     if alignment_format == "IMOD":
         return IMODAlignmentConverter(paths, config, parents, output_prefix)
     elif alignment_format == "ARETOMO3":
-        return AreTomoAlignmentConverter(paths, config, parents, output_prefix)
+        return AreTomo3AlignmentConverter(paths, config, parents, output_prefix)
 
     return BaseAlignmentConverter()
