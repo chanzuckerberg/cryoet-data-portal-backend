@@ -50,5 +50,5 @@ class FrameImporter(IntegratedDBImporter):
         return {
             "path": os.path.join(self.run.s3_prefix, "Frames/"),
             "glob": "*",
-            "match_regex": r"^(?:(?!_gain\.).)*$",
+            "match_regex": r"^(?:(?!_gain\.).)*(?<!mdoc)$",
         }

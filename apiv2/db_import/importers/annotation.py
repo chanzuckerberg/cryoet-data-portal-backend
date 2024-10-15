@@ -103,6 +103,7 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
         self.tomogram_voxel_spacing_id = tomogram_voxel_spacing_id
         self.parent = parent
         self.config = config
+        self.alignment_id = self.config.get_alignment_by_path(parent.metadata["alignment_metadata_path"])
         self.metadata = parent.metadata.get("files", [])
 
     def get_data_map(self) -> dict[str, Any]:
@@ -115,6 +116,7 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
         }
 
     def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
+        data_map["alignment_id"] = self.alignment_id
         data_map["s3_path"] = self.join_path(self.config.s3_prefix, metadata["path"])
         data_map["https_path"] = self.join_path(self.config.https_prefix, metadata["path"])
         return data_map
