@@ -194,9 +194,10 @@ def test_alignment_import_item_aretomo(
     parents = get_parents(config)
     dataset_name = parents.get("dataset").name
     run_name = parents.get("run").name
-    prefix = f"output/{dataset_name}/{run_name}/Alignments/"
+    prefix = f"{dataset_name}/{run_name}/Alignments"
+
     if deposition_id:
-        existing_prefix = os.path.join(prefix, "100/")
+        existing_prefix = os.path.join("output", prefix, "100/")
         add_alignment_metadata(existing_prefix, deposition_id)
 
     alignments = list(AlignmentImporter.finder(config, **parents))
@@ -204,12 +205,12 @@ def test_alignment_import_item_aretomo(
         alignment.import_item()
         alignment.import_metadata()
 
-    output_prefix = os.path.join(prefix, str(id_prefix))
+    output_prefix = os.path.join("output", prefix, str(id_prefix))
 
     tol = 10e-3
     expected = {
         "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
-        "alignment_path": f"{test_output_bucket}/{output_prefix}/TS_run1.aln",
+        "alignment_path": f"{prefix}/{id_prefix}/TS_run1.aln",
         "alignment_type": "LOCAL",
         "deposition_id": "10301",
         "is_portal_standard": True,
@@ -378,7 +379,7 @@ def test_custom_alignment_with_dimensions_import_without_tomograms(
             },
         ],
         "tilt_offset": -0.3,
-        "tilt_path": f"{test_output_bucket}/{prefix}/TS_run1.tlt",
+        "tilt_path": f"{prefix}/TS_run1.tlt",
         "tiltx_path": None,
         "volume_dimension": {"x": 6, "y": 8, "z": 10},
         "volume_offset": {"x": -1, "y": 2, "z": -3},
