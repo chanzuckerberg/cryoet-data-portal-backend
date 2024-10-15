@@ -1568,6 +1568,31 @@ files = [
 ]
 
 [[package]]
+name = "cryoet-alignment"
+version = "0.0.5"
+description = "Alignment format conversion for cryoET."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "cryoet_alignment-0.0.5-py3-none-any.whl", hash = "sha256:54812b822159092bc60f0e3ccd2efd5662b15b77a63ca298303c3f097f5ef623"},
+    {file = "cryoet_alignment-0.0.5.tar.gz", hash = "sha256:98d2216641184f83eef6917b790afb56e83d6a42d43e92b7cecd4c3a3bced8b0"},
+]
+
+[package.dependencies]
+click = "*"
+fsspec = ">=2024.6.0"
+mrcfile = "*"
+numpy = "<2"
+pandas = "*"
+pydantic = ">=2"
+s3fs = "*"
+
+[package.extras]
+dev = ["black", "ipython", "notebook", "pre-commit", "ruff"]
+docs = ["mkdocs", "mkdocs-autorefs", "mkdocs-material", "mkdocstrings[python]"]
+test = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "cryoet-data-portal-neuroglancer"
 version = "0.1.0"
 description = "Utility package for working with Neuroglancer data in the CZI Cryo-ET Data Portal"
@@ -5795,4 +5820,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5279f29b9c33850c93246d09346a630b394254b8f14f7f0a99b4abba23adfa3c"
+content-hash = "bff7d02ae387dd0d2962d0c627c193adf0435b021a98ab4559c80a66e84bc24f"
