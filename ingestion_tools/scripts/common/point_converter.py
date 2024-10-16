@@ -329,7 +329,9 @@ def _from_relion4_star(
     df = starfile.read(local_file)
 
     pixel_a = df["optics"]["rlnImagePixelSize"][0]
-    df2 = df["particles"][(df["particles"]["rlnTomoName"] == filter_value)]
+
+    df2 = df["particles"] if filter_value is None else df["particles"][(df["particles"]["rlnTomoName"] == filter_value)]
+
     xyz_c = df2[["rlnCoordinateX", "rlnCoordinateY", "rlnCoordinateZ"]].to_numpy()
     xyz_s_a = df2[["rlnOriginXAngst", "rlnOriginYAngst", "rlnOriginZAngst"]].to_numpy()  # shift in angstrom
     positions = (xyz_c - (xyz_s_a / pixel_a)) / float(binning)

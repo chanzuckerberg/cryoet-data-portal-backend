@@ -401,6 +401,81 @@ ingest_points_test_cases = [
             {"type": "point", "location": {"x": 0, "y": 1.5, "z": 0}},
         ],
     },
+    # relion3_star
+    {
+        "case": "relion3_star, disregard orientation, filter value 1, binning 4",
+        "source_cfg": {
+            "Point": {
+                "columns": "xyz",
+                "file_format": "relion3_star",
+                "glob_string": "annotations/relion_3_star.star",
+                "is_visualization_default": False,
+                "filter_value": "tomo_1.tomostar",
+                "binning": 4,
+            },
+        },
+        "count": 2,
+        "out_data": [
+            {
+                "type": "point",
+                "location": {"x": 1.3, "y": 2.6, "z": 3.8},
+            },
+            {
+                "type": "point",
+                "location": {"x": 0.2, "y": 0.4, "z": 0.7},
+            },
+        ],
+    },
+    # tomoman_relion_star
+    {
+        "case": "tomoman_relion_star, disregard orientation, filter value 1, binning 4",
+        "source_cfg": {
+            "Point": {
+                "columns": "xyz",
+                "file_format": "tomoman_relion_star",
+                "glob_string": "annotations/tomoman_relion_star.star",
+                "is_visualization_default": False,
+                "filter_value": "grid_1_lamella1_pos1",
+                "binning": 4,
+            },
+        },
+        "count": 2,
+        "out_data": [
+            {
+                "type": "point",
+                "location": {"x": 1.3, "y": 2.6, "z": 3.8},
+            },
+            {
+                "type": "point",
+                "location": {"x": 0.2, "y": 0.4, "z": 0.7},
+            },
+        ],
+    },
+    # relion4_star
+    {
+        "case": "relion4_star, disregard orientation, filter value 1, binning 4",
+        "source_cfg": {
+            "Point": {
+                "columns": "xyz",
+                "file_format": "relion4_star",
+                "glob_string": "annotations/relion_4_star.star",
+                "is_visualization_default": False,
+                "filter_value": "TS_001",
+                "binning": 4,
+            },
+        },
+        "count": 2,
+        "out_data": [
+            {
+                "type": "point",
+                "location": {"x": 1.3, "y": 2.6, "z": 3.8},
+            },
+            {
+                "type": "point",
+                "location": {"x": 0.2, "y": 0.4, "z": 0.7},
+            },
+        ],
+    },
 ]
 
 
@@ -432,6 +507,7 @@ def test_ingest_point_data(
         delimiter=anno_config["sources"][0]["Point"].get("delimiter"),
         file_format=anno_config["sources"][0]["Point"]["file_format"],
         binning=anno_config["sources"][0]["Point"].get("binning"),
+        filter_value=anno_config["sources"][0]["Point"].get("filter_value", None),
         alignment_metadata_path="foo",
     )
     anno.import_item()
