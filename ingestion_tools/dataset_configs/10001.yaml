@@ -6,6 +6,7 @@ alignments:
   - source_multi_glob:
       list_globs:
       - metadata/{run_name}.xf
+      - metadata/{run_name}.tlt
 annotations:
 - metadata:
     annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
