@@ -324,7 +324,7 @@ class AbstractPointAnnotation(BaseAnnotationSource):
 
     def __init__(
         self,
-        binning: int | None = None,
+        binning: float | None = None,
         *args,
         **kwargs,
     ) -> None:
@@ -389,16 +389,21 @@ class PointAnnotation(AbstractPointAnnotation):
         "csv": pc.from_csv,
         "csv_with_header": pc.from_csv_with_header,
         "mod": pc.from_mod,
+        "relion3_star": pc.point_from_relion3_star,
+        "relion4_star": pc.point_from_relion4_star,
+        "tomoman_relion_star": pc.point_from_tomoman_relion_star,
     }
     valid_file_formats = list(map_functions.keys())
 
     columns: str
     delimiter: str
+    filter_value: str | None
 
     def __init__(
         self,
         columns: str | None = None,
         delimiter: str | None = None,
+        filter_value: str | None = None,
         *args,
         **kwargs,
     ) -> None:
@@ -412,11 +417,16 @@ class PointAnnotation(AbstractPointAnnotation):
 
         super().__init__(*args, **kwargs)
 
+        self.filter_value = None
+        if filter_value:
+            self.filter_value = filter_value.format(**self.get_glob_vars())
+
     def get_converter_args(self):
         return {
             "binning": self.binning,
             "order": self.columns,
             "delimiter": self.delimiter,
+            "filter_value": self.filter_value,
         }
 
 
