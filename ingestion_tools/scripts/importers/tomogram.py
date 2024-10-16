@@ -33,10 +33,16 @@ class TomogramIdentifierHelper(IdentifierHelper):
         *args,
         **kwargs,
     ) -> str:
+        voxel_spacing = metadata.get("voxel_spacing")
+        # Handles the case where voxel_spacing in the config metadata is a formatted string
+        if not voxel_spacing or isinstance(voxel_spacing, str) and not voxel_spacing.isdigit():
+            voxel_spacing = parents["voxel_spacing"].name
+        elif isinstance(voxel_spacing, float):
+            voxel_spacing = f"{voxel_spacing:.3f}"
         return "-".join(
             [
                 container_key,
-                str(metadata.get("voxel_spacing", parents["voxel_spacing"].name)),
+                str(voxel_spacing),
                 metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path", "")),
                 metadata.get("reconstruction_method", ""),
                 metadata.get("processing", ""),
