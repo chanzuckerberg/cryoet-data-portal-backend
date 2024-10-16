@@ -96,7 +96,7 @@ class TiltSeriesDBImporter(BaseDBImporter):
 
     @classmethod
     def get_item(cls, run_id: int, run: RunDBImporter, config: DBImportConfig) -> "TiltSeriesDBImporter":
-        ts_dir_path = cls.join_path(run.dir_prefix, "TiltSeries")
+        ts_dir_path = cls.join_path(run.dir_prefix, "TiltSeries/100")
         ts_prefix = config.find_subdirs_with_files(ts_dir_path, "tiltseries_metadata.json")
         return cls(run_id, ts_prefix[0], run, config) if len(ts_prefix) > 0 else None
 

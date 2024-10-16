@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from pathlib import PurePath
 from typing import TYPE_CHECKING, Any, Optional
+from s3fs import S3FileSystem
 
 import peewee
 from botocore.exceptions import ClientError
@@ -27,13 +28,25 @@ class DBImportConfig:
     def __init__(
         self,
         s3_client: S3Client,
+        s3fs: S3FileSystem,
         bucket_name: str,
         https_prefix: str,
     ):
         self.s3_client = s3_client
+        self.s3fs = s3fs
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
         self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
+
+    def recursive_glob_s3(self, prefix: str, glob_string: str) -> list[str]:
+        # Returns path to a matched glob.
+        s3 = self.s3fs
+        prefix = prefix.rstrip("/")
+        path = os.path.join(self.bucket_name, prefix, glob_string)
+        logger.info("Recursively looking for files in %s", path)
+        def convert_to_key(str):
+            return str[len(self.bucket_name) + 1 :]
+        return [convert_to_key(item) for item in s3.glob(path)]
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")

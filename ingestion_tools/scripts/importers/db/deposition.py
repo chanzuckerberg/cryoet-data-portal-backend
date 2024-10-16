@@ -46,8 +46,9 @@ class DepositionDBImporter(BaseDBImporter):
 
     def get_computed_fields(self) -> dict[str, Any]:
         extra_data = {
-            "s3_prefix": self.get_https_url(self.dir_prefix),
-            "https_prefix": self.get_https_url("key_photo_url": None,
+            "s3_prefix": self.get_s3_url(self.dir_prefix),
+            "https_prefix": self.get_https_url(self.dir_prefix),
+            "key_photo_url": None,
             "key_photo_thumbnail_url": None,
         }
         deposition_type = self.metadata.get("deposition_types", [])

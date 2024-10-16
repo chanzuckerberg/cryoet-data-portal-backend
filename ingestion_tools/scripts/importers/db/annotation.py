@@ -83,7 +83,7 @@ class AnnotationDBImporter(BaseDBImporter):
         annotation_dir_path = cls.join_path(voxel_spacing.dir_prefix, "Annotations/")
         return [
             cls(voxel_spacing_id, annotation_dir_path, annotation_metadata_path, voxel_spacing, config)
-            for annotation_metadata_path in config.glob_s3(annotation_dir_path, "*.json")
+            for annotation_metadata_path in config.recursive_glob_s3(annotation_dir_path, "*/*.json")
         ]
 
 
