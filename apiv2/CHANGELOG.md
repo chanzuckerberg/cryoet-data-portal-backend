@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.3.0...apiv2-v1.4.0) (2024-10-16)
+
+
+### Features
+
+* add frame & gain ingestion to db import ([#308](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/308)) ([7a167d6](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/7a167d651bb5b89425695adc7eb0e427979c5aae))
+* Support scraping deposition_types and annotation_method_links ([#305](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/305)) ([740cd4c](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/740cd4c1418f9852d927347fb5b05212e1e2369f))
+
 ## [1.3.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.2.0...apiv2-v1.3.0) (2024-10-08)
 
 
