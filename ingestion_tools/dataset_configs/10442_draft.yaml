@@ -86,12 +86,14 @@ annotations:
     method_type: automated
     version: 1.0
   sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_strings:
-        - '{run_name}_Vol_Segment_mask.mrc'
-      is_visualization_default: true
-      mask_label: 1
+    - OrientedPoint:
+        file_format: relion3_star
+        glob_string: 'combined.star'
+        is_visualization_default: true
+        order: xyz
+        binning: 5
+        filter_value: '{run_name}'
+        filter_key: filter_key
 
 collection_metadata:
 - sources:
