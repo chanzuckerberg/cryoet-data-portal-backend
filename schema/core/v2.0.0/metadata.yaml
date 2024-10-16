@@ -752,65 +752,65 @@ classes:
     attributes:
       x:
         any_of:
-          - range: integer
-          - range: IntegerFormattedString
+          - range: float
+          - range: FloatFormattedString
         required: true
-        description: Number of pixels in the 3D data fast axis
+        description: X dimension of the reconstruction volume in angstrom
         unit:
-          descriptive_name: pixels
-          symbol: px
+          descriptive_name: Angstrom
+          symbol: Å
       y:
         any_of:
-          - range: integer
-          - range: IntegerFormattedString
+        - range: float
+        - range: FloatFormattedString
         required: true
-        description: Number of pixels in the 3D data medium axis
+        description: Y dimension of the reconstruction volume in angstrom
         unit:
-          descriptive_name: pixels
-          symbol: px
+          descriptive_name: Angstrom
+          symbol: Å
       z:
         any_of:
-          - range: integer
-          - range: IntegerFormattedString
+        - range: float
+        - range: FloatFormattedString
         required: true
-        description: Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
+        description: Z dimension of the reconstruction volume in angstrom
         unit:
-          descriptive_name: pixels
-          symbol: px
+          descriptive_name: Angstrom
+          symbol: Å
 
   AlignmentOffset:
     description: &desc_alignment_offset The offset of a alignment in voxels in each dimension relative to the canonical tomogram.
     attributes:
       x:
         any_of:
-          - range: integer
-          - range: cdp-common:IntegerFormattedString
+          - range: float
+          - range: cdp-common:FloatFormattedString
         required: true
-        description: x offset relative to the canonical tomogram in pixels
-        ifabsent: "int(0)"
+        description: X shift of the reconstruction volume in angstrom
+        ifabsent: "float(0)"
         unit:
-          descriptive_name: pixels
-          symbol: px
+          descriptive_name: Angstrom
+          symbol: Å
       y:
         any_of:
-          - range: integer
-          - range: cdp-common:IntegerFormattedString
+        - range: float
+        - range: cdp-common:FloatFormattedString
         required: true
-        description: y offset relative to the canonical tomogram in pixels
-        ifabsent: "int(0)"
+        description: Y shift of the reconstruction volume in angstrom
+        ifabsent: "float(0)"
         unit:
-          descriptive_name: pixels
-          symbol: px
+          descriptive_name: Angstrom
+          symbol: Å
       z:
         any_of:
-          - range: integer
-          - range: cdp-common:IntegerFormattedString
+        - range: float
+        - range: cdp-common:FloatFormattedString
         required: true
-        ifabsent: "int(0)"
-        description: z offset relative to the canonical tomogram in pixels
+        description: Z shift of the reconstruction volume in angstrom
+        ifabsent: "float(0)"
         unit:
-          descriptive_name: pixels
-          symbol: px
+          descriptive_name: Angstrom
+          symbol: Å
 
 
   Alignment:
