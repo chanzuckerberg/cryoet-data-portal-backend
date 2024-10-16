@@ -241,7 +241,7 @@ tomograms:
       - 0
       - 0
       - 1
-    authors:
+    authors: &id003
       - name: Mohammadreza Paraan
         primary_author_status: true
         corresponding_author_status: false
@@ -258,6 +258,10 @@ tomograms:
         primary_author_status: true
         corresponding_author_status: false
         ORCID: 0000-0002-3248-9678
+      - name: Shawn Zheng
+        primary_author_status: false
+        corresponding_author_status: true
+        ORCID: 0000-0001-9517-3075
     ctf_corrected: true
     dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
@@ -275,6 +279,44 @@ tomograms:
   - source_glob:
       list_glob: '{run_name}_Vol.mrc'
       match_regex: (.*)\.mrc
+
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id003
+    ctf_corrected: true
+    dates: *id002
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v1.0.23
+    tomogram_version: 1
+    voxel_spacing: 'float {voxel_spacing_name}'
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_dctf_Vol.mrc'
+      match_regex: (.*)\.mrc
+
 
 version: 1.1.0
 voxel_spacings:
