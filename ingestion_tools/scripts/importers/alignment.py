@@ -120,7 +120,9 @@ class AlignmentImporter(BaseFileImporter):
         if not tomogram:
             # If no source tomogram is found don't create a default alignment metadata file.
             raise TomogramNotFoundError()
-        return tomogram.get_source_volume_info().get_dimensions()
+        voxel_size = round(tomogram.get_source_volume_info().voxel_size, 3)
+        dim = tomogram.get_source_volume_info().get_dimensions()
+        return {d: voxel_size * dim[d] for d in "xyz"}
 
     def is_default_alignment(self) -> bool:
         return "default" in self.file_paths

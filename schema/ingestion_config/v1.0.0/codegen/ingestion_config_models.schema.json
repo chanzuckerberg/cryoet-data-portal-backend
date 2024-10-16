@@ -100,7 +100,14 @@
             "description": "An alignment entity.",
             "properties": {
                 "metadata": {
-                    "$ref": "#/$defs/Alignment",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Alignment"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "The metadata for the alignment."
                 },
                 "sources": {
@@ -108,14 +115,12 @@
                     "items": {
                         "$ref": "#/$defs/AlignmentSource"
                     },
-                    "minItems": 1,
-                    "type": "array"
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 }
             },
-            "required": [
-                "metadata",
-                "sources"
-            ],
             "title": "AlignmentEntity",
             "type": "object"
         },
@@ -923,6 +928,13 @@
                 "file_format": {
                     "description": "File format for this file",
                     "type": "string"
+                },
+                "filter_value": {
+                    "description": "The filter value for an oriented point / instance segmentation annotation file.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",

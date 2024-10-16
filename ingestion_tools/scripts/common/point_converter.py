@@ -311,13 +311,13 @@ def from_stopgap_star(
 
     return points
 
-
-def from_relion4_star(
+def _from_relion4_star(
     local_file: Union[str, os.PathLike],
     filter_value: str,
     binning: float = 1.0,
     order: str = "xyz",
-) -> List[OrientedPoint]:
+    keep_orientation = True,
+) -> List[Union[OrientedPoint, Point]]:
     """
     Relion4 star format convertion to position and rotation matrix
     to be applied to the instance volume.
@@ -329,7 +329,9 @@ def from_relion4_star(
     df = starfile.read(local_file)
 
     pixel_a = df["optics"]["rlnImagePixelSize"][0]
-    df2 = df["particles"][(df["particles"]["rlnTomoName"] == filter_value)]
+
+    df2 = df["particles"] if filter_value is None else df["particles"][(df["particles"]["rlnTomoName"] == filter_value)]
+
     xyz_c = df2[["rlnCoordinateX", "rlnCoordinateY", "rlnCoordinateZ"]].to_numpy()
     xyz_s_a = df2[["rlnOriginXAngst", "rlnOriginYAngst", "rlnOriginZAngst"]].to_numpy()  # shift in angstrom
     positions = (xyz_c - (xyz_s_a / pixel_a)) / float(binning)
@@ -337,19 +339,44 @@ def from_relion4_star(
 
     points = []
     for i in range(len(df2)):
-        points.append(
-            OrientedPoint(
-                x_coord=positions[i, axis_order[0]],
-                y_coord=positions[i, axis_order[1]],
-                z_coord=positions[i, axis_order[2]],
-                rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).inv().as_matrix(),
+        if keep_orientation:
+            points.append(
+                OrientedPoint(
+                    x_coord=positions[i, axis_order[0]],
+                    y_coord=positions[i, axis_order[1]],
+                    z_coord=positions[i, axis_order[2]],
+                    rot_matrix=matrix_transform(
+                        Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).inv().as_matrix(),
+                    ),
                 ),
-            ),
-        )
+            )
+        else:
+            points.append(
+                Point(
+                    x_coord=positions[i, axis_order[0]],
+                    y_coord=positions[i, axis_order[1]],
+                    z_coord=positions[i, axis_order[2]],
+                ),
+            )
 
     return points
 
+def from_relion4_star(
+    local_file: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
+) -> List[OrientedPoint]:
+    return _from_relion4_star(local_file, filter_value, binning, order, keep_orientation=True)
+
+def point_from_relion4_star(
+    local_file: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
+    delimiter: str = None,
+) -> List[Point]:
+    return _from_relion4_star(local_file, filter_value, binning, order, keep_orientation=False)
 
 def _from_relion3_star_filtered(
     local_file: Union[str, os.PathLike],
@@ -357,7 +384,8 @@ def _from_relion3_star_filtered(
     filter_key: str = "rlnMicrographName",
     binning: float = 1.0,
     order: str = "xyz",
-):
+    keep_orientation = True,
+) -> List[Union[OrientedPoint, Point]]:
     """
     Filter Relion3 star file according to filter_value and filter_key
     and then convert to position and rotation matrix
@@ -382,16 +410,25 @@ def _from_relion3_star_filtered(
 
     points = []
     for i in range(len(df2)):
-        points.append(
-            OrientedPoint(
-                x_coord=positions[i, axis_order[0]],
-                y_coord=positions[i, axis_order[1]],
-                z_coord=positions[i, axis_order[2]],
-                rot_matrix=matrix_transform(
-                    Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).inv().as_matrix(),
+        if keep_orientation:
+            points.append(
+                OrientedPoint(
+                    x_coord=positions[i, axis_order[0]],
+                    y_coord=positions[i, axis_order[1]],
+                    z_coord=positions[i, axis_order[2]],
+                    rot_matrix=matrix_transform(
+                        Rotation.from_euler(angles=euler_angles[i], seq="ZYZ", degrees=True).inv().as_matrix(),
+                    ),
                 ),
-            ),
-        )
+            )
+        else:
+            points.append(
+                Point(
+                    x_coord=positions[i, axis_order[0]],
+                    y_coord=positions[i, axis_order[1]],
+                    z_coord=positions[i, axis_order[2]],
+                ),
+            )
 
     return points
 
@@ -407,8 +444,21 @@ def from_relion3_star(
     to be applied to the instance volume.
     """
     filter_key = "rlnMicrographName"
-    return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order)
+    return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order, keep_orientation=True)
 
+def point_from_relion3_star(
+    file_path: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
+    delimiter: str = None,
+) -> List[Point]:
+    """
+    Relion3 star format convertion to position
+    to be applied to the instance volume.
+    """
+    filter_key = "rlnMicrographName"
+    return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order, keep_orientation=False)
 
 def from_tomoman_relion_star(
     file_path: Union[str, os.PathLike],
@@ -421,4 +471,15 @@ def from_tomoman_relion_star(
     to be applied to the instance volume.
     """
     filter_key = "rlnTomoName"
-    return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order)
+    return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order, keep_orientation=True)
+
+def point_from_tomoman_relion_star(
+    file_path: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "xyz",
+    delimiter: str = None,
+) -> List[Point]:
+    """ Tomoman Relion3 star format convertion to position to be applied to the instance volume. """
+    filter_key = "rlnTomoName"
+    return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order, keep_orientation=False)

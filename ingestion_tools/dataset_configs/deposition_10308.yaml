@@ -1,3 +1,9 @@
+alignments:
+- sources:
+  - destination_glob:
+      list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+      match_regex: .*
+      name_regex: (.*)
 annotations:
 - metadata:
     annotation_method: Prediction using membrain-seg without rescaling and weights
@@ -75,6 +81,6 @@ version: 1.1.0
 voxel_spacings:
 - sources:
   - destination_glob:
-      list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
+      list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
       match_regex: .*
       name_regex: VoxelSpacing(.*)
