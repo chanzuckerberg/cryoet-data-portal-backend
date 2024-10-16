@@ -649,6 +649,9 @@ classes:
       delimiter:
         exact_mappings:
           - cdp-common:annotation_source_file_delimiter
+      filter_value:
+        exact_mappings:
+          - cdp-common:annotation_source_file_filter_value
 
   AnnotationSegmentationMaskFile:
     is_a: AnnotationSourceFile

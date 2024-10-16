@@ -2973,6 +2973,7 @@ classes:
         owner: AnnotationOrientedPointFile
         domain_of:
         - AnnotationOrientedPointFile
+        - AnnotationPointFile
         range: string
         inlined: true
         inlined_as_list: true
@@ -3104,6 +3105,7 @@ classes:
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationOrientedPointFile
+        - AnnotationPointFile
         range: string
         inlined: true
         inlined_as_list: true
@@ -3248,6 +3250,21 @@ classes:
         alias: delimiter
         owner: AnnotationPointFile
         domain_of:
+        - AnnotationPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      filter_value:
+        name: filter_value
+        description: The filter value for an oriented point / instance segmentation
+          annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_filter_value
+        alias: filter_value
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
         - AnnotationPointFile
         range: string
         inlined: true
