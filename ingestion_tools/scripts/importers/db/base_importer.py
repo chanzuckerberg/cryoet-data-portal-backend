@@ -147,6 +147,18 @@ class BaseDBImporter:
         db_obj.save(force_insert=force_insert)
         return db_obj
 
+    def get_https_url(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.https_prefix, input_path)
+
+    def get_s3_url(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.s3_prefix, input_path)
+
 
 class StaleDeletionDBImporter(BaseDBImporter):
     """

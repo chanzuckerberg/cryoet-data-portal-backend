@@ -36,8 +36,8 @@ class AnnotationDBImporter(BaseDBImporter):
         method_links = self.metadata.get("method_links")
         return {
             "tomogram_voxel_spacing_id": self.voxel_spacing_id,
-            "s3_metadata_path": self.join_path(self.config.s3_prefix, self.metadata_path),
-            "https_metadata_path": self.join_path(self.config.https_prefix, self.metadata_path),
+            "s3_metadata_path": self.get_s3_url(self.metadata_path),
+            "https_metadata_path": self.get_https_url(self.metadata_path),
             "deposition_date": ["dates", "deposition_date"],
             "release_date": ["dates", "release_date"],
             "last_modified_date": ["dates", "last_modified_date"],
@@ -103,8 +103,8 @@ class AnnotationFilesDBImporter(StaleDeletionDBImporter):
         }
 
     def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
-        data_map["s3_path"] = self.join_path(self.config.s3_prefix, metadata["path"])
-        data_map["https_path"] = self.join_path(self.config.https_prefix, metadata["path"])
+        data_map["s3_path"] = self.get_s3_url(metadata["path"])
+        data_map["https_path"] = self.get_https_url(metadata["path"])
         return data_map
 
     @classmethod
