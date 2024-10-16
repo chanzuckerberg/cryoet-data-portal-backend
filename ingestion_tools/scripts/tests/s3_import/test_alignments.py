@@ -166,7 +166,7 @@ def test_alignment_import_item(
         "tilt_offset": -0.3,
         "tilt_path": f"{prefix}/{id_prefix}/TS_run1.tlt",
         "tiltx_path": f"{prefix}/{id_prefix}/TS_run1.xtilt",
-        "volume_dimension": {"x": 13.48, "y": 13.48, "z": 13.48},
+        "volume_dimension": {"x": 13.48 * 6, "y": 13.48 * 8, "z": 13.48 * 10},
         "volume_offset": {"x": -1, "y": 2, "z": -3},
         "x_rotation_offset": -2.3,
     }
@@ -243,7 +243,7 @@ def test_alignment_import_item_aretomo(
         "tilt_offset": -0.3,
         "tilt_path": None,
         "tiltx_path": None,
-        "volume_dimension": {"x": 13.48, "y": 13.48, "z": 13.48},
+        "volume_dimension": {"x": 13.48 * 6, "y": 13.48 * 8, "z": 13.48 * 10},
         "volume_offset": {"x": -1, "y": 2, "z": -3},
         "x_rotation_offset": -2.3,
     }
@@ -281,7 +281,7 @@ def test_default_alignment_import_with_tomograms(
         "tilt_offset": 0,
         "tilt_path": None,
         "tiltx_path": None,
-        "volume_dimension": {"x": 13.48, "y": 13.48, "z": 13.48},
+        "volume_dimension": {"x": 13.48 * 6, "y": 13.48 * 8, "z": 13.48 * 10},
         "volume_offset": {"x": 0, "y": 0, "z": 0},
         "x_rotation_offset": 0,
     }
