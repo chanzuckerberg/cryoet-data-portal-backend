@@ -86,14 +86,13 @@ annotations:
     method_type: automated
     version: 1.0
   sources:
-    - OrientedPoint:
+    - Point:
         file_format: relion3_star
         glob_string: 'combined.star'
         is_visualization_default: true
-        order: xyz
+        columns: xyz
         binning: 5
         filter_value: '{run_name}'
-        filter_key: filter_key
 
 collection_metadata:
 - sources:
