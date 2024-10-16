@@ -302,10 +302,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: '{run_name}/*.gain'
-key_images:
-- sources:
-  - source_glob:
-      list_glob: .*\.jpg
 rawtilts:
 - sources:
   - source_multi_glob:

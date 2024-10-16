@@ -81,10 +81,6 @@ frames:
 - sources:
   - source_glob:
       list_glob: frames/{frame_prefix}*.mrc
-key_images:
-- sources:
-  - source_glob:
-      list_glob: .*\.jpg
 runs:
 - sources:
   - source_glob:

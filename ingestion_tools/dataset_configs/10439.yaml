@@ -252,10 +252,6 @@ depositions:
   - literal:
       value:
       - 10309
-key_images:
-- sources:
-  - source_glob:
-      list_glob: .*\.jpg
 runs:
 - sources:
   - source_glob:
