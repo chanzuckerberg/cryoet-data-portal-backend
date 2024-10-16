@@ -314,6 +314,9 @@ def finder(migrate_cls, config: DepositionImportConfig, **parents: dict[str, Bas
                 dest_suffix = "*.png"
             elif isinstance(source_glob, str):
                 dest_suffix = f"*{os.path.splitext(source_glob)[1]}"
+            elif migrate_cls.type_key == "alignment" and isinstance(source_glob, list):
+                print("Skipping alignment migration as source is a literal")
+                continue
             path = OLD_PATHS.get(f"{migrate_cls.type_key}").format(**_get_glob_vars(migrate_cls, parents))
             glob = os.path.join(path, dest_suffix) if dest_suffix else path
             source = {
