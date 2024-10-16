@@ -929,6 +929,13 @@
                     "description": "File format for this file",
                     "type": "string"
                 },
+                "filter_value": {
+                    "description": "The filter value for an oriented point / instance segmentation annotation file.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
                     "type": [

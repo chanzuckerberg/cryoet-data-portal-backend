@@ -2872,7 +2872,11 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "filter_value",
-                "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                ],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
             }
         },
@@ -3025,7 +3029,11 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "filter_value",
-                "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                ],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
             }
         },
@@ -3193,6 +3201,21 @@ class AnnotationPointFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationPointFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_delimiter"],
                 "ifabsent": "string(,)",
+            }
+        },
+    )
+    filter_value: Optional[str] = Field(
+        None,
+        description="""The filter value for an oriented point / instance segmentation annotation file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "filter_value",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
             }
         },
     )
