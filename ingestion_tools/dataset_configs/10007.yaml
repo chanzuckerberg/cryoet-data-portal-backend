@@ -5,6 +5,7 @@ alignments:
   - source_multi_glob:
       list_globs:
       - '{run_name}/AreTomo/*_dose-filt.xf'
+      - '{run_name}/AreTomo/*_dose-filt.tlt'
 annotations:
 - metadata:
     annotation_method: crYOLO picking
