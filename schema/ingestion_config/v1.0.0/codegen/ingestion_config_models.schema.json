@@ -100,7 +100,14 @@
             "description": "An alignment entity.",
             "properties": {
                 "metadata": {
-                    "$ref": "#/$defs/Alignment",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Alignment"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "The metadata for the alignment."
                 },
                 "sources": {
@@ -108,14 +115,12 @@
                     "items": {
                         "$ref": "#/$defs/AlignmentSource"
                     },
-                    "minItems": 1,
-                    "type": "array"
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 }
             },
-            "required": [
-                "metadata",
-                "sources"
-            ],
             "title": "AlignmentEntity",
             "type": "object"
         },

@@ -244,12 +244,10 @@ classes:
       metadata:
         description: The metadata for the alignment.
         range: Alignment
-        required: true
       sources:
         description: The sources for the alignment.
         multivalued: true
         range: AlignmentSource
-        required: true
 
   AlignmentSource:
     description: An alignment source.
