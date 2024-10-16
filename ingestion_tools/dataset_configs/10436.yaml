@@ -349,10 +349,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: '{gain_ref}'
-key_images:
-- sources:
-  - source_glob:
-      list_glob: .*\.jpg
 rawtilts:
 - sources:
   - source_multi_glob:
