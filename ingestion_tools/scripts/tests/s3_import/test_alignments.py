@@ -250,6 +250,83 @@ def test_alignment_import_item_aretomo(
     validate_metadata(expected, output_prefix)
 
 
+@pytest.mark.parametrize(
+    "deposition_id, id_prefix",
+    [
+        (None, 100),  # No alignment metadata exists
+        (100001, 101),  # alignment metadata exists for a different deposition
+        (10301, 100),  # alignment metadata exists for the same deposition as test
+    ],
+)
+def test_alignment_import_item_aretomo(
+    create_config: Callable[[str], DepositionImportConfig],
+    add_alignment_metadata: Callable[[str, int], None],
+    validate_dataframe: Callable[[str, str], None],
+    validate_metadata: Callable[[dict, str], None],
+    test_output_bucket: str,
+    deposition_id: int,
+    id_prefix: int,
+) -> None:
+    config = create_config("dataset2.yaml")
+    parents = get_parents(config)
+    dataset_name = parents.get("dataset").name
+    run_name = parents.get("run").name
+    prefix = f"{dataset_name}/{run_name}/Alignments"
+
+    if deposition_id:
+        existing_prefix = os.path.join("output", prefix, "100/")
+        add_alignment_metadata(existing_prefix, deposition_id)
+
+    alignments = list(AlignmentImporter.finder(config, **parents))
+    for alignment in alignments:
+        alignment.import_item()
+        alignment.import_metadata()
+
+    output_prefix = os.path.join("output", prefix, str(id_prefix))
+
+    tol = 10e-3
+    expected = {
+        "affine_transformation_matrix": [[2, 0, 0, 0], [0, 3, 0, 0], [0, 4, 1, 0], [0, 0, 0, 5]],
+        "alignment_path": f"{prefix}/{id_prefix}/TS_run1.aln",
+        "alignment_type": "LOCAL",
+        "deposition_id": "10301",
+        "is_portal_standard": True,
+        "per_section_alignment_parameters": [
+            {
+                "z_index": 0,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(23.95253, abs=tol),
+                "y_offset": pytest.approx(-56.17124, abs=tol),
+                "tilt_angle": -5.0,
+                "volume_x_rotation": 0.0,
+            },
+            {
+                "z_index": 1,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(57.29936, abs=tol),
+                "y_offset": pytest.approx(74.24210, abs=tol),
+                "tilt_angle": 0.0,
+                "volume_x_rotation": 0.0,
+            },
+            {
+                "z_index": 2,
+                "in_plane_rotation": [pytest.approx([0.029, -1.0], abs=tol), pytest.approx([1.0, 0.029], abs=tol)],
+                "x_offset": pytest.approx(80.51020, abs=tol),
+                "y_offset": pytest.approx(91.54409, abs=tol),
+                "tilt_angle": 5.0,
+                "volume_x_rotation": 0.0,
+            },
+        ],
+        "tilt_offset": -0.3,
+        "tilt_path": None,
+        "tiltx_path": None,
+        "volume_dimension": {"x": 6, "y": 8, "z": 10},
+        "volume_offset": {"x": -1, "y": 2, "z": -3},
+        "x_rotation_offset": -2.3,
+    }
+    validate_metadata(expected, output_prefix)
+
+
 def test_default_alignment_import_with_tomograms(
     create_config: Callable[[str], DepositionImportConfig],
     s3_client: S3Client,
