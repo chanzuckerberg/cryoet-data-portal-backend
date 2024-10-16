@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import os.path
 import re
 import time
@@ -58,6 +59,14 @@ def enqueue_common_options(func):
             help="Specify docker image tag, defaults to 'main'",
         ),
     )
+    options.append(
+        click.option(
+            "--execution-machine-log",
+            type=str,
+            default=None,
+            help="Log execution machine ARNs to this file",
+        ),
+    )
     options.append(click.option("--memory", type=int, default=None, help="Specify memory allocation override"))
     options.append(click.option("--parallelism", required=True, type=int, default=20))
     for option in options:
@@ -65,16 +74,26 @@ def enqueue_common_options(func):
     return func
 
 
+def create_execution_machine_log_file(filename):
+    abs_path = os.path.abspath(filename)
+    if os.path.exists(abs_path):
+        os.remove(abs_path)
+        logger.warning("Removing existing %s file.", filename)
+
+    os.makedirs(os.path.dirname(abs_path), exist_ok=True)
+
+
 def handle_common_options(ctx, kwargs):
     ctx.obj = {
         "environment": kwargs["environment"],
         "ecr_repo": kwargs["ecr_repo"],
         "ecr_tag": kwargs["ecr_tag"],
+        "execution_machine_log": kwargs["execution_machine_log"],
         "memory": kwargs["memory"],
         "parallelism": kwargs["parallelism"],
         **get_aws_env(kwargs["environment"]),
     }
-    enqueue_common_keys = ["environment", "ecr_repo", "ecr_tag", "memory", "parallelism"]
+    enqueue_common_keys = ["environment", "ecr_repo", "ecr_tag", "execution_machine_log", "memory", "parallelism"]
     # Make sure to remove these common options from the list of args processed by commands.
     for opt in enqueue_common_keys:
         del kwargs[opt]
@@ -98,6 +117,7 @@ def run_job(
     ecr_repo: str,
     ecr_tag: str,
     memory: int | None = None,
+    execution_machine_log: str | None = None,
     **kwargs,  # Ignore any the extra vars this method doesn't need.
 ):
     if not memory:
@@ -128,11 +148,17 @@ def run_job(
         service_name="stepfunctions",
     )
 
-    return client.start_execution(
+    execution = client.start_execution(
         stateMachineArn=state_machine_arn,
         name=execution_name,
         input=json.dumps(sfn_input_json),
     )
+
+    if execution_machine_log is not None:
+        with open(execution_machine_log, "a") as f:
+            f.write(execution["executionArn"] + "\n")
+
+    return execution
 
 
 def get_aws_env(environment):
@@ -278,6 +304,9 @@ def db_import(
     if not ctx.obj.get("memory"):
         ctx.obj["memory"] = 4000
 
+    if ctx.obj.get("execution_machine_log") is not None:
+        create_execution_machine_log_file(ctx.obj.get("execution_machine_log"))
+
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
         for dataset_id, _ in get_datasets(
@@ -387,6 +416,9 @@ def queue(
     exclude_runs = [re.compile(pattern) for pattern in kwargs.get("exclude_run_name", [])]
     filter_datasets = [re.compile(pattern) for pattern in kwargs.get("filter_dataset_name", [])]
     exclude_datasets = [re.compile(pattern) for pattern in kwargs.get("exclude_dataset_name", [])]
+
+    if ctx.obj.get("execution_machine_log") is not None:
+        create_execution_machine_log_file(ctx.obj.get("execution_machine_log"))
 
     # Always iterate over depostions, datasets and runs.
     for deposition in DepositionImporter.finder(config):
@@ -564,6 +596,9 @@ def sync(
 
     for param, value in OrderedSyncFilters._options:
         new_args.append(f"--{param.name} '{value}'")
+
+    if ctx.obj.get("execution_machine_log") is not None:
+        create_execution_machine_log_file(ctx.obj.get("execution_machine_log"))
 
     if sync_dataset:
         entities = get_datasets(
