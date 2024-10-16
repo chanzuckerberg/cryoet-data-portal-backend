@@ -69,7 +69,7 @@ class AnnotationFileItem(ItemDBImporter):
             return "community"
 
     def load_computed_fields(self):
-        alignment_path = self.input_data["original_data"]["alignment_metadata_path"]
+        alignment_path = self.get_s3_url(self.input_data["original_data"]["alignment_metadata_path"])
         self.model_args["annotation_shape_id"] = self.input_data["annotation_shape"].id
         self.model_args["tomogram_voxel_spacing_id"] = self.input_data["tomogram_voxel_spacing"].id
         if alignment_path:
