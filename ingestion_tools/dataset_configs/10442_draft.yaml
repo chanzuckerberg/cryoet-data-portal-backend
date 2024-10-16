@@ -103,8 +103,8 @@ dataset_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot:
-        thumbnail:
+        snapshot: null
+        thumbnail: null
 
 datasets:
 - metadata:
@@ -164,7 +164,7 @@ depositions:
   - literal:
       value:
       - 10312
-      -
+
 frames:
 - sources:
   - source_glob:
@@ -174,11 +174,6 @@ gains:
 - sources:
   - source_glob:
       list_glob: '24jul16a_gain.gain'
-
-key_images:
-- sources:
-  - source_glob:
-      list_glob: .*\.jpg
 
 rawtilts:
 - sources:
@@ -191,7 +186,7 @@ runs:
   - source_glob:
       list_glob: '*.aln'
       match_regex: .*\.aln$
-      name_regex: (.*).aln$
+      name_regex: (.*)\.aln$
 
 standardization_config:
   deposition_id: 10312
