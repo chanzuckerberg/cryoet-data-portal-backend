@@ -251,4 +251,8 @@ class DepositionImportConfig:
         """
         Returns the s3 key, without the bucket name, for the given path. Helpful for formatting paths in metadata.
         """
-        return os.path.relpath(path, self.output_prefix) if path else None
+        if path:
+            if path.startswith(self.output_prefix):
+                return os.path.relpath(path, self.output_prefix)
+            return path
+        return None
