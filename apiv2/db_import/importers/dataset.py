@@ -63,8 +63,8 @@ class DatasetDBImporter(BaseDBImporter):
     def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         extra_data = {
-            "s3_prefix": self.join_path(self.config.s3_prefix, self.dir_prefix),
-            "https_prefix": self.join_path(https_prefix, self.dir_prefix),
+            "s3_prefix": self.get_s3_url(self.dir_prefix),
+            "https_prefix": self.get_https_url(https_prefix, self.dir_prefix),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
         }
@@ -73,9 +73,9 @@ class DatasetDBImporter(BaseDBImporter):
 
         key_photos = self.metadata.get("key_photos", {})
         if snapshot_path := key_photos.get("snapshot"):
-            extra_data["key_photo_url"] = self.join_path(https_prefix, snapshot_path)
+            extra_data["key_photo_url"] = self.get_https_url(snapshot_path)
         if thumbnail_path := key_photos.get("thumbnail"):
-            extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, thumbnail_path)
+            extra_data["key_photo_thumbnail_url"] = self.get_https_url(thumbnail_path)
 
         deposition = get_deposition(self.config, self.metadata.get("deposition_id"))
         extra_data["deposition_id"] = deposition.id

@@ -40,13 +40,13 @@ class AlignmentItem(ItemDBImporter):
         "x_rotation_offset": ["x_rotation_offset"],
         "affine_transformation_matrix": ["affine_transformation_matrix"],
         "alignment_method": ["method_type"],
-        "s3_alignment_metadata": ["file"],
         "is_portal_standard": ["is_portal_standard"],
     }
     id_fields = ["run_id", "deposition_id"]
     model_class = models.Alignment
 
     def load_computed_fields(self):
+        self.model_args["s3_alignment_metadata"] = self.get_s3_url(self.input_data["file"])
         self.model_args["https_alignment_metadata"] = self.get_https_url(self.input_data["file"])
         self.model_args["tiltseries_id"] = self.config.get_tiltseries_by_path(self.input_data["tiltseries_path"])
         self.model_args["run_id"] = self.input_data["run"].id

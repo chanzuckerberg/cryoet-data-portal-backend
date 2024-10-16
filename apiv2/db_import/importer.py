@@ -8,10 +8,11 @@ from botocore.config import Config
 from db_import.common.config import DBImportConfig
 from db_import.importers.alignment import AlignmentImporter
 from db_import.importers.annotation import (
-    AnnotationAuthorDBImporter,
-    AnnotationDBImporter,
-    AnnotationMethodLinkDBImporter,
-    StaleAnnotationDeletionDBImporter,
+    AnnotationAuthorImporter,
+    AnnotationFileImporter,
+    AnnotationImporter,
+    AnnotationMethodLinkImporter,
+    AnnotationShapeImporter,
 )
 from db_import.importers.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
 from db_import.importers.deposition import DepositionAuthorDBImporter, DepositionDBImporter, DepositionTypeDBImporter
@@ -262,28 +263,21 @@ def load_func(
                             tomogram_authors.import_items()
 
                 if import_annotations:
-                    annotation_cleaner = StaleAnnotationDeletionDBImporter(run_id, config)
-                    for annotation in AnnotationDBImporter.get_item(
-                        voxel_spacing_obj.id, voxel_spacing, run_obj, config,
-                    ):
-                        annotation_obj = annotation.import_to_db()
-                        annotation_cleaner.mark_as_active(annotation_obj)
+                    parents = {"tomogram_voxel_spacing": voxel_spacing_obj, "run": run_obj, "dataset": dataset_obj}
+                    anno_importer = AnnotationImporter(config, **parents)
+                    for anno in anno_importer.import_items():
+                        parents["annotation"] = anno
+                        annoshape = AnnotationShapeImporter(config, **parents)
+                        for shape in annoshape.import_items():
+                            annofile = AnnotationFileImporter(config, annotation_shape=shape, **parents)
+                            annofile.import_items()
 
                         if import_annotation_authors:
-                            annotation_authors = AnnotationAuthorDBImporter.get_item(
-                                annotation_obj.id,
-                                annotation,
-                                config,
-                            )
-                            annotation_authors.import_to_db()
+                            authors = AnnotationAuthorImporter(config, **parents)
+                            authors.import_items()
                         if import_annotation_method_links:
-                            anno_method_links = AnnotationMethodLinkDBImporter.get_item(
-                                annotation_obj.id,
-                                annotation,
-                                config,
-                            )
-                            anno_method_links.import_to_db()
-                    annotation_cleaner.remove_stale_objects()
+                            methodlinks = AnnotationMethodLinkImporter(config, **parents)
+                            methodlinks.import_items()
 
                 voxel_spacing_cleaner.mark_as_active(voxel_spacing_obj)
 

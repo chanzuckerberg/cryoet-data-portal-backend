@@ -76,6 +76,32 @@ class FileFinder(ItemFinder):
         return results
 
 
+class JsonDataFinder(ItemFinder):
+    def __init__(self, config: DBImportConfig, path: str, list_key: str | None = None, match_key: str | None = None, match_value: str | None = None):
+        self.config = config
+        self.path = path
+        self.list_key = []
+        if list_key:
+            self.list_key = list_key
+        self.match_key = match_key
+        self.match_value = match_value
+
+    def find(self, item_importer: ItemDBImporter, parents: dict[str, Base]) -> list[ItemDBImporter]:
+        results: list[ItemDBImporter] = []
+        json_data = self.load_metadata(self.path)
+        original_json_data = json_data
+        for key in self.list_key:
+            json_data = json_data[key]
+        if self.match_key and self.match_value:
+            json_data = [item for item in json_data if item.get(self.match_key) == self.match_value]
+        for idx, item in enumerate(json_data):
+            item["file"] = self.path
+            item["index"] = idx + 1
+            item["original_data"] = original_json_data
+            item.update(parents)
+            results.append(item_importer(self.config, item))
+        return results
+
 class MetadataFileFinder(ItemFinder):
     def __init__(self, config: DBImportConfig, path: str, file_glob: str, list_key: str | None = None):
         self.config = config

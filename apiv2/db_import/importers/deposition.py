@@ -51,8 +51,8 @@ class DepositionDBImporter(BaseDBImporter):
     def get_computed_fields(self) -> dict[str, Any]:
         https_prefix = self.config.https_prefix
         extra_data = {
-            "s3_prefix": self.join_path(self.config.s3_prefix, self.dir_prefix),
-            "https_prefix": self.join_path(https_prefix, self.dir_prefix),
+            "s3_prefix": self.get_s3_url(self.dir_prefix),
+            "https_prefix": self.get_https_url(self.dir_prefix),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
         }

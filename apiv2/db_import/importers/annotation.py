@@ -1,286 +1,220 @@
-from typing import Any, Iterator
+import os
+from typing import Any
 
 from database import models
-from db_import.common.config import DBImportConfig
-from db_import.importers.base_importer import (
-    AuthorsStaleDeletionDBImporter,
-    BaseDBImporter,
-    StaleDeletionDBImporter,
-    StaleParentDeletionDBImporter,
-)
-from db_import.importers.deposition import get_deposition
-from db_import.importers.voxel_spacing import TomogramVoxelSpacingDBImporter
-
-from platformics.database.models import Base
+from db_import.common.finders import JsonDataFinder, MetadataFileFinder
+from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 
 
-class AnnotationDBImporter(BaseDBImporter):
-    def __init__(
-        self,
-        voxel_spacing_id: int,
-        run_obj: Base,
-        dir_prefix: str,
-        metadata_filename: str,
-        parent: TomogramVoxelSpacingDBImporter,
-        config: DBImportConfig,
-    ):
-        self.voxel_spacing_id = voxel_spacing_id
-        self.run = run_obj
-        # TODO: update name
-        self.dir_prefix = dir_prefix
-        self.parent = parent
-        self.config = config
-        self.metadata_path = metadata_filename
-        self.metadata = config.load_key_json(self.metadata_path)
-        self.deposition = get_deposition(self.config, self.metadata.get("deposition_id"))
+class AnnotationItem(ItemDBImporter):
+    id_fields = ["run_id", "deposition_id", "annotation_method", "object_name", "object_description", "object_state"]
+    model_class = models.Annotation
+    direct_mapped_fields = {
+        "deposition_id": ["deposition_id"],
+        "deposition_date": ["dates", "deposition_date"],
+        "release_date": ["dates", "release_date"],
+        "last_modified_date": ["dates", "last_modified_date"],
+        "annotation_publication": ["annotation_publications"],
+        "annotation_method": ["annotation_method"],
+        "ground_truth_status": ["ground_truth_status"],
+        "object_name": ["annotation_object", "name"],
+        "object_id": ["annotation_object", "id"],
+        "object_description": ["annotation_object", "description"],
+        "object_state": ["annotation_object", "state"],
+        "object_count": ["object_count"],
+        "confidence_precision": ["confidence", "precision"],
+        "confidence_recall": ["confidence", "recall"],
+        "ground_truth_used": ["confidence", "ground_truth_used"],
+        "annotation_software": ["annotation_software"],
+        "is_curator_recommended": ["is_curator_recommended"],
+        "method_type": ["method_type"],
+    }
 
-    def get_data_map(self) -> dict[str, Any]:
-        return {
-            "run_id": self.run.id,
-            "s3_metadata_path": self.join_path(self.config.s3_prefix, self.metadata_path),
-            "https_metadata_path": self.join_path(self.config.https_prefix, self.metadata_path),
-            "deposition_date": ["dates", "deposition_date"],
-            "release_date": ["dates", "release_date"],
-            "last_modified_date": ["dates", "last_modified_date"],
-            "annotation_publication": ["annotation_publications"],
-            "annotation_method": ["annotation_method"],
-            "ground_truth_status": ["ground_truth_status"],
-            "object_name": ["annotation_object", "name"],
-            "object_id": ["annotation_object", "id"],
-            "object_description": ["annotation_object", "description"],
-            "object_state": ["annotation_object", "state"],
-            "object_count": ["object_count"],
-            "confidence_precision": ["confidence", "precision"],
-            "confidence_recall": ["confidence", "recall"],
-            "ground_truth_used": ["confidence", "ground_truth_used"],
-            "annotation_software": ["annotation_software"],
-            "is_curator_recommended": ["is_curator_recommended"],
-            "method_type": ["method_type"],
-            "deposition_id": self.deposition.id,
+    def normalize_to_unknown_str(self, value: str) -> str:
+        return value if value else "Unknown"
+
+    def load_computed_fields(self):
+        extra_data = {
+            "run_id": self.input_data["run"].id,
+            "s3_metadata_path": self.get_s3_url(self.input_data["file"]),
+            "https_metadata_path": self.get_https_url(self.input_data["file"]),
         }
+        self.model_args.update(extra_data)
 
-    def import_to_db(self) -> Base:
-        annotation_obj = super().import_to_db()
-        annotation_shapes = AnnotationShapesDBImporter.get_item(annotation_obj.id, self, self.config)
-        annotation_shape = annotation_shapes.import_to_db()
-        annotation_files = AnnotationFilesDBImporter.get_item(
-            annotation_shape.id,
-            self.voxel_spacing_id,
-            self,
-            self.config,
-        )
-        annotation_files.import_to_db()
-        return annotation_obj
+class AnnotationShapeItem(ItemDBImporter):
+    id_fields = ["annotation_id", "shape_type"]
+    model_class = models.AnnotationShape
+    direct_mapped_fields = {
+        "shape_type": ["shape"],
+    }
 
-    @classmethod
-    def get_id_fields(cls) -> list[str]:
-        return ["s3_metadata_path"]
+    def load_computed_fields(self):
+        self.model_args["annotation_id"] = self.input_data["annotation"].id
 
-    @classmethod
-    def get_db_model_class(cls) -> type[Base]:
-        return models.Annotation
-
-    @classmethod
-    def get_item(
-        cls,
-        voxel_spacing_id: int,
-        voxel_spacing: TomogramVoxelSpacingDBImporter,
-        run_obj: Base,
-        config: DBImportConfig,
-    ) -> Iterator["AnnotationDBImporter"]:
-        annotation_dir_path = cls.join_path(voxel_spacing.dir_prefix, "Annotations/")
-        return [
-            cls(voxel_spacing_id, run_obj, annotation_dir_path, annotation_metadata_path, voxel_spacing, config)
-            for annotation_metadata_path in config.recursive_glob_s3(annotation_dir_path, "*/*.json")
-        ]
-
-
-class AnnotationFilesDBImporter(StaleDeletionDBImporter):
-    def __init__(
-        self,
-        annotation_shape_id: int,
-        tomogram_voxel_spacing_id: int,
-        parent: AnnotationDBImporter,
-        config: DBImportConfig,
-    ):
-        self.annotation_shape_id = annotation_shape_id
-        self.tomogram_voxel_spacing_id = tomogram_voxel_spacing_id
-        self.parent = parent
-        self.config = config
-        self.parent_metadata = parent.metadata
-        self.alignment_id = self.config.get_alignment_by_path(parent.metadata["alignment_metadata_path"])
-        self.metadata = parent.metadata.get("files", [])
-
-    def get_data_map(self) -> dict[str, Any]:
-        return {
-            "annotation_shape_id": self.annotation_shape_id,
-            "tomogram_voxel_spacing_id": self.tomogram_voxel_spacing_id,
+class AnnotationFileItem(ItemDBImporter):
+    id_fields = ["format", "tomogram_voxel_spacing_id", "annotation_shape_id"]
+    model_class = models.AnnotationFile
+    direct_mapped_fields = {
             "format": ["format"],
             "is_visualization_default": ["is_visualization_default"],
         }
 
-    def calculate_source(self, metadata: dict[str, Any]) -> str:
+    def calculate_source(self) -> str:
         # "dataset_author" or "community" or "portal_standard"
-        if self.parent.deposition.id == self.parent.run.dataset.deposition_id:
+        if self.input_data["annotation"].deposition.id == self.input_data["run"].dataset.deposition_id:
             return "dataset_author"
         else:
-            if metadata.get("is_portal_standard"):
+            if self.input_data.get("is_portal_standard"):
                 return "portal_standard"
             return "community"
 
-    def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
-        data_map["alignment_id"] = self.alignment_id
-        data_map["source"] = self.calculate_source(metadata)
-        data_map["s3_path"] = self.join_path(self.config.s3_prefix, metadata["path"])
-        data_map["https_path"] = self.join_path(self.config.https_prefix, metadata["path"])
-        return data_map
+    def load_computed_fields(self):
+        alignment_path = self.input_data["original_data"]["alignment_metadata_path"]
+        self.model_args["annotation_shape_id"] = self.input_data["annotation_shape"].id
+        self.model_args["tomogram_voxel_spacing_id"] = self.input_data["tomogram_voxel_spacing"].id
+        if alignment_path:
+            self.model_args["alignment_id"] = self.config.get_alignment_by_path(alignment_path)
+        self.model_args["source"] = self.calculate_source()
+        self.model_args["s3_path"] = self.get_s3_url(self.input_data["path"])
+        self.model_args["https_path"] = self.get_https_url(self.input_data["path"])
 
-    @classmethod
-    def get_id_fields(cls) -> list[str]:
-        return ["format", "tomogram_voxel_spacing_id", "annotation_shape_id"]
+class AnnotationImporter(IntegratedDBImporter):
+    finder = MetadataFileFinder
+    row_importer = AnnotationItem
+    # TODO This should ideally be True, but we've disabled it for the moment since
+    # we are only looking for annotations within a voxel spacing, however those
+    # annotations are only associated with runs.
+    clean_up_siblings = False
 
-    @classmethod
-    def get_db_model_class(cls) -> type[Base]:
-        return models.AnnotationFile
-
-    def get_filters(self) -> dict[str, Any]:
-        return {"tomogram_voxel_spacing_id": self.tomogram_voxel_spacing_id}
-
-    @classmethod
-    def get_item(
-        cls,
-        annotation_shape_id: int,
-        tomogram_voxel_spacing_id: int,
-        parent: AnnotationDBImporter,
-        config: DBImportConfig,
-    ) -> "AnnotationFilesDBImporter":
-        return cls(annotation_shape_id, tomogram_voxel_spacing_id, parent, config)
-
-
-class AnnotationShapesDBImporter(StaleDeletionDBImporter):
-    def __init__(self, annotation_id: int, parent: AnnotationDBImporter, config: DBImportConfig):
-        self.annotation_id = annotation_id
-        self.parent = parent
+    def __init__(self, config, run: models.Run, tomogram_voxel_spacing: models.TomogramVoxelSpacing, **unused_parents):
+        self.run = run
+        self.tomogram_voxel_spacing = tomogram_voxel_spacing
         self.config = config
-        self.metadata = parent.metadata.get("files", [])
-
-    def get_data_map(self) -> dict[str, Any]:
-        return {
-            "annotation_id": self.annotation_id,
-            "shape_type": ["shape"],
-        }
-
-    @classmethod
-    def get_id_fields(cls) -> list[str]:
-        return ["annotation_id", "shape_type"]
-
-    @classmethod
-    def get_db_model_class(cls) -> type[Base]:
-        return models.AnnotationShape
+        self.parents = {"run": run, "tomogram_voxel_spacing": tomogram_voxel_spacing}
 
     def get_filters(self) -> dict[str, Any]:
-        return {"annotation_id": self.annotation_id}
+        raise NotImplementedError("This method should not be called, since annotations don't support sibling cleanup")
 
-    @classmethod
-    def get_item(
-        cls,
-        annotation_id: int,
-        parent: AnnotationDBImporter,
-        config: DBImportConfig,
-    ) -> "AnnotationShapesDBImporter":
-        return cls(annotation_id, parent, config)
+    def get_finder_args(self) -> dict[str, Any]:
+        return {
+            "path": os.path.join(self.tomogram_voxel_spacing.s3_prefix, "Annotations/"),
+            "file_glob": "*/*.json",
+        }
 
+class AnnotationShapeImporter(IntegratedDBImporter):
+    finder = JsonDataFinder
+    row_importer = AnnotationShapeItem
+    clean_up_siblings = True
 
-class AnnotationAuthorDBImporter(AuthorsStaleDeletionDBImporter):
-    def __init__(self, annotation_id: int, parent: AnnotationDBImporter, config: DBImportConfig):
-        self.annotation_id = annotation_id
-        self.parent = parent
+    def __init__(self, config, annotation: models.Annotation, run: models.Run, tomogram_voxel_spacing: models.TomogramVoxelSpacing, **unused_parents):
+        self.run = run
+        self.tomogram_voxel_spacing = tomogram_voxel_spacing
+        self.annotation = annotation
         self.config = config
-        self.metadata = parent.metadata.get("authors", [])
-
-    def get_data_map(self) -> dict[str, Any]:
-        return {
-            "annotation_id": self.annotation_id,
-            "orcid": ["ORCID"],
-            "name": ["name"],
-            "corresponding_author_status": ["corresponding_author_status"],
-            "email": ["email"],
-            "affiliation_name": ["affiliation_name"],
-            "affiliation_address": ["affiliation_address"],
-            "affiliation_identifier": ["affiliation_identifier"],
-            "author_list_order": ["author_list_order"],
-        }
-
-    def update_data_map(self, data_map: dict[str, Any], metadata: dict[str, Any], index: int) -> dict[str, Any]:
-        data_map = super().update_data_map(data_map, metadata, index)
-        primary_author_status = {
-            "primary_annotator_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
-            "primary_author_status": metadata.get("primary_annotator_status", metadata.get("primary_author_status")),
-        }
-        return {**data_map, **primary_author_status}
-
-    @classmethod
-    def get_id_fields(cls) -> list[str]:
-        return ["annotation_id", "name"]
-
-    @classmethod
-    def get_db_model_class(cls) -> type[Base]:
-        return models.AnnotationAuthor
+        self.parents = {"run": run, "tomogram_voxel_spacing": tomogram_voxel_spacing, "annotation": annotation}
 
     def get_filters(self) -> dict[str, Any]:
-        return {"annotation_id": self.annotation_id}
+        return {"annotation_id": self.annotation.id}
 
-    @classmethod
-    def get_item(
-        cls,
-        annotation_id: int,
-        parent: AnnotationDBImporter,
-        config: DBImportConfig,
-    ) -> "AnnotationAuthorDBImporter":
-        return cls(annotation_id, parent, config)
+    def get_finder_args(self) -> dict[str, Any]:
+        metadata_path = self.annotation.s3_metadata_path
+        return {
+            "path": self.convert_to_finder_path(metadata_path),
+            "list_key": ["files"],
+        }
 
+class AnnotationFileImporter(IntegratedDBImporter):
+    finder = JsonDataFinder
+    row_importer = AnnotationFileItem
+    clean_up_siblings = True
 
-class AnnotationMethodLinkDBImporter(StaleDeletionDBImporter):
-    def __init__(self, annotation_id: int, parent: AnnotationDBImporter, config: DBImportConfig):
-        self.annotation_id = annotation_id
-        self.parent = parent
+    def __init__(self, config, annotation: models.Annotation, annotation_shape: models.AnnotationShape, run: models.Run, tomogram_voxel_spacing: models.TomogramVoxelSpacing, **unused_parents):
+        self.run = run
+        self.tomogram_voxel_spacing = tomogram_voxel_spacing
+        self.annotation = annotation
+        self.annotation_shape = annotation_shape
         self.config = config
-        self.metadata = parent.metadata.get("method_links", [])
+        self.parents = {"run": run, "tomogram_voxel_spacing": tomogram_voxel_spacing, "annotation_shape": annotation_shape, "annotation": annotation}
 
-    def get_data_map(self) -> dict[str, Any]:
+    def get_filters(self) -> dict[str, Any]:
+        return {"annotation_shape_id": self.annotation_shape.id}
+
+    def get_finder_args(self) -> dict[str, Any]:
+        metadata_path = self.annotation.s3_metadata_path
         return {
-            "annotation_id": self.annotation_id,
-            "link_type": ["link_type"],
-            "name": ["custom_name"],
-            "link": ["link"],
+            "path": self.convert_to_finder_path(metadata_path),
+            "list_key": ["files"],
+            "match_key": "shape",
+            "match_value": self.annotation_shape.shape_type,
         }
 
-    @classmethod
-    def get_id_fields(cls) -> list[str]:
-        return ["annotation_id", "link"]
+class AnnotationAuthorItem(ItemDBImporter):
+    id_fields = ["annotation_id", "name"]
+    model_class = models.AnnotationAuthor
+    direct_mapped_fields = {
+        "orcid": ["ORCID"],
+        "name": ["name"],
+        "primary_author_status": ["primary_author_status"],
+        "corresponding_author_status": ["corresponding_author_status"],
+        "email": ["email"],
+        "affiliation_name": ["affiliation_name"],
+        "affiliation_address": ["affiliation_address"],
+        "affiliation_identifier": ["affiliation_identifier"],
+        "author_list_order": ["index"],
+    }
 
-    @classmethod
-    def get_db_model_class(cls) -> type[Base]:
-        return models.AnnotationMethodLink
+    def load_computed_fields(self):
+        self.model_args["annotation_id"] = self.input_data["annotation"].id
+
+class AnnotationAuthorImporter(IntegratedDBImporter):
+    finder = JsonDataFinder
+    row_importer = AnnotationAuthorItem
+    clean_up_siblings = True
+
+    def __init__(self, config, annotation: models.Annotation, **unused_parents):
+        self.annotation = annotation
+        self.config = config
+        self.parents = {"annotation": annotation}
 
     def get_filters(self) -> dict[str, Any]:
-        return {"annotation_id": self.annotation_id}
+        return {"annotation_id": self.annotation.id}
 
-    @classmethod
-    def get_item(
-        cls,
-        annotation_id: int,
-        parent: AnnotationDBImporter,
-        config: DBImportConfig,
-    ) -> "AnnotationAuthorDBImporter":
-        return cls(annotation_id, parent, config)
+    def get_finder_args(self) -> dict[str, Any]:
+        metadata_path = self.annotation.s3_metadata_path
+        return {
+            "path": self.convert_to_finder_path(metadata_path),
+            "list_key": ["authors"],
+        }
 
 
-class StaleAnnotationDeletionDBImporter(StaleParentDeletionDBImporter):
-    ref_klass = AnnotationDBImporter
+class AnnotationMethodLinkItem(ItemDBImporter):
+    id_fields = ["annotation_id", "link"]
+    model_class = models.AnnotationMethodLink
+    direct_mapped_fields = {
+        "link_type": ["link_type"],
+        "name": ["custom_name"],
+        "link": ["link"],
+    }
+
+    def load_computed_fields(self):
+        self.model_args["annotation_id"] = self.input_data["annotation"].id
+
+class AnnotationMethodLinkImporter(IntegratedDBImporter):
+    finder = JsonDataFinder
+    row_importer = AnnotationMethodLinkItem
+    clean_up_siblings = True
+
+    def __init__(self, config, annotation: models.Annotation, **unused_parents):
+        self.annotation = annotation
+        self.config = config
+        self.parents = {"annotation": annotation}
 
     def get_filters(self) -> dict[str, Any]:
-        return {"run_id": self.parent_id}
+        return {"annotation_id": self.annotation.id}
 
-    def children_tables_references(self) -> dict[str, None]:
-        return {"authors": None, "files": None, "shapes": None}
+    def get_finder_args(self) -> dict[str, Any]:
+        metadata_path = self.annotation.s3_metadata_path
+        return {
+            "path": self.convert_to_finder_path(metadata_path),
+            "list_key": ["method_links"],
+        }

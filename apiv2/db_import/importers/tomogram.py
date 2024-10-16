@@ -41,8 +41,6 @@ class TomogramItem(ItemDBImporter):
 
     def load_computed_fields(self):
         https_prefix = self.config.https_prefix
-        s3_prefix = self.config.s3_prefix
-        tomo_s3_path = os.path.dirname(self.input_data["file"])
         extra_data = {
             "ctf_corrected": bool(self.input_data.get("ctf_corrected")),
             "tomogram_voxel_spacing_id": self.input_data["tomogram_voxel_spacing"].id,
@@ -52,10 +50,10 @@ class TomogramItem(ItemDBImporter):
             ),
             "reconstruction_method": self.normalize_to_unknown_str(self.input_data.get("reconstruction_method")),
             "reconstruction_software": self.normalize_to_unknown_str(self.input_data.get("reconstruction_software")),
-            "s3_omezarr_dir": os.path.join(s3_prefix, tomo_s3_path, self.input_data["omezarr_dir"]),
-            "https_omezarr_dir": os.path.join(https_prefix, tomo_s3_path, self.input_data["omezarr_dir"]),
-            "s3_mrc_file": os.path.join(s3_prefix, tomo_s3_path, self.input_data["mrc_files"][0]),
-            "https_mrc_file": os.path.join(https_prefix, tomo_s3_path, self.input_data["mrc_files"][0]),
+            "s3_omezarr_dir": self.get_s3_url(self.input_data["omezarr_dir"]),
+            "https_omezarr_dir": self.get_https_url(self.input_data["omezarr_dir"]),
+            "s3_mrc_file": self.get_s3_url(self.input_data["mrc_file"]),
+            "https_mrc_file": self.get_https_url(self.input_data["mrc_file"]),
             # TODO: Add alignment_id once we have an alignment importer.
             "alignment_id": self.config.get_alignment_by_path(self.input_data["alignment_metadata_path"]),
             "key_photo_url": None,
