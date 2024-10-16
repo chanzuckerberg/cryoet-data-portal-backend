@@ -73,7 +73,7 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "tilt_range": round(abs(tilt_max - tilt_min), 2),
             "is_aligned": self.metadata.get("is_aligned") or False,
         }
-        if mrc_path := self.metadata.get("mrc_files", [None])[0]:
+        if mrc_path := self.metadata.get("mrc_file"):
             extra_data["s3_mrc_file"] = self.get_s3_url(mrc_path)
             extra_data["https_mrc_file"] = self.get_https_url(mrc_path)
 
