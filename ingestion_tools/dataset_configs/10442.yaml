@@ -2,6 +2,9 @@ alignments:
 - metadata:
     format: ARETOMO3
     method_type: projection_matching
+    alignment_type: LOCAL
+    is_portal_standard: true
+
   sources:
   - source_multi_glob:
       list_globs:
