@@ -195,7 +195,7 @@ def load(
                                 config,
                             )
                             annotation_authors.import_to_db()
-                        annotation_cleaner.remove_stale_objects()
+                    annotation_cleaner.remove_stale_objects()
 
                 voxel_spacing_cleaner.mark_as_active(voxel_spacing_obj)
 
