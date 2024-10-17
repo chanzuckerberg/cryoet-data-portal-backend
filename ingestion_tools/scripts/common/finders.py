@@ -338,10 +338,10 @@ class MultiSourceFileFinder(DefaultImporterFactory):
             if len(filtered_results) > 1:
                 raise Exception("Multiple metadata files found for a single entity")
             metadata_path = next(iter(filtered_results.values()))
-            remote_metadata = get_remote_json(metadata_path, config)
-            name, path, filtered_results = self.importer_cls.get_name_and_path(remote_metadata, None, None, filtered_results)
+            metadata = get_remote_json(metadata_path, config)
+            name, path, filtered_results = self.importer_cls.get_name_and_path(metadata, None, None, filtered_results)
 
-        names = ",".join([os.path.basename(path) for path in filtered_results])
+        names = ",".join([os.path.basename(path) for path in filtered_results if path])
         item = self.importer_cls(
             config=config,
             metadata=metadata,
