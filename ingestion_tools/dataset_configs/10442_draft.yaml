@@ -174,7 +174,7 @@ frames:
 gains:
 - sources:
   - source_glob:
-      list_glob: '24jul16a_gain.gain'
+      list_glob: '{gain_file}'
 
 rawtilts:
 - sources:
@@ -192,6 +192,7 @@ runs:
 standardization_config:
   deposition_id: 10312
   source_prefix: CZII/20241015_minicell/
+  run_data_map_file: run_to_data_map.tsv
 
 tiltseries:
 - metadata:
