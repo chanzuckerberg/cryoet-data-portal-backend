@@ -70,11 +70,14 @@ class TomogramDBImporter(BaseDBImporter):
     def get_tomogram_type(self) -> str:
         if self.dataset.deposition_id == self.metadata.get("deposition_id"):
             return "CANONICAL"
-        return "UNKOWN" # TYPO that's also reflected in the db :'(
+        return "UNKOWN"  # TYPO that's also reflected in the db :'(
 
     def generate_neuroglancer_data(self) -> str:
-        path = self.join_path(self.dir_prefix, "neuroglancer_config.json")
-        config = self.config.load_key_json(path, is_file_required=False)
+        tomogram_id = self.dir_prefix.split("/").pop()
+        path = os.path.relpath(
+            os.path.join(self.dir_prefix, f"../../NeuroglancerPrecompute/{tomogram_id}-neuroglancer_config.json")
+        )
+        config = self.config.load_key_json(path, is_file_required=True)
         # TODO: Log warning
         return json.dumps(config, separators=(",", ":")) if config else "{}"
 
