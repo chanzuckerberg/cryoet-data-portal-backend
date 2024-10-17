@@ -58,10 +58,6 @@ depositions:
   - literal:
       value:
       - 10038
-key_images:
-- sources:
-  - source_glob:
-      list_glob: '{run_name}/keyimg_{run_name}.jpg'
 rawtilts:
 - sources:
   - source_multi_glob:

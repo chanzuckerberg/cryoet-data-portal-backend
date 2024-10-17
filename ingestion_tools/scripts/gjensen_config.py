@@ -184,7 +184,7 @@ def to_standardization_config(
         "tomo_glob": f"{{run_name}}/{tomo_path}",
         "tomo_regex": r".*\.(mrc|rec)$",
         "tomo_voxel_size": "",
-        "tomo_key_photo_glob": "{run_name}/keyimg_{run_name}.jpg",
+        # "tomo_key_photo_glob": "{run_name}/keyimg_{run_name}.jpg",
         "run_glob": "*",
         "run_regex": f'({"|".join(run_names)})$',
         "run_name_regex": "(.*)",
