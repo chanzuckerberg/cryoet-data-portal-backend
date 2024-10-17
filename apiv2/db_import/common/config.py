@@ -63,8 +63,9 @@ class DBImportConfig:
     @lru_cache  # noqa
     def get_tiltseries_by_path(self, path: str) -> int | None:
         session = self.get_db_session()
-        path = os.path.join(self.s3_prefix, os.path.dirname(path), "%")
-        print(path)
+        # '_' is a wildcard character in sql LIKE queries, so we need to escape them!
+        escaped_path = os.path.dirname(path).replace("_", "\\_")
+        path = os.path.join(self.s3_prefix, escaped_path, "%")
         item = session.scalars(sa.select(models.Tiltseries).where(models.Tiltseries.s3_mrc_file.like(path))).one()
         return item.id
 
