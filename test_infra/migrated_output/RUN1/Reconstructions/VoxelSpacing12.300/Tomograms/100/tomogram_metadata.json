@@ -1,0 +1,86 @@
+{
+    "voxel_spacing": 12.3,
+    "reconstruction_method": "WBP",
+    "reconstruction_software": "IMOD",
+    "fiducial_alignment_status": "FIDUCIAL",
+    "ctf_corrected": true,
+    "processing": "raw",
+    "processing_software": "tomo3D",
+    "align_softwares": [
+        "RAPTOR"
+    ],
+    "offset": {
+        "x": 10,
+        "y": 32,
+        "z": 43
+    },
+    "affine_transformation_matrix": [
+        [
+            1,
+            0,
+            0,
+            0
+        ],
+        [
+            0,
+            1,
+            0,
+            0
+        ],
+        [
+            0,
+            0,
+            1,
+            0
+        ],
+        [
+            0,
+            0,
+            0,
+            1
+        ]
+    ],
+    "authors": [
+        {
+            "name": "John Doe",
+            "corresponding_author_status": true,
+            "primary_author_status": false
+        },
+        {
+            "name": "Jane Smith",
+            "ORCID": "0000-4444-1234-0000",
+            "corresponding_author_status": false,
+            "primary_author_status": false,
+            "email": "jsmith@test.com",
+            "affiliation_name": "Foo",
+            "affiliation_address": "some address",
+            "affiliation_identifier": "test-affliation-id"
+        }
+    ],
+    "tomogram_version": 1,
+    "scales": [
+        {
+            "z": 4,
+            "y": 4,
+            "x": 4
+        }
+    ],
+    "size": {
+        "z": 4,
+        "y": 4,
+        "x": 4
+    },
+    "omezarr_dir": "RUN1.zarr",
+    "mrc_files": [
+        "RUN1.mrc"
+    ],
+    "run_name": "RUN1",
+    "key_photo": {
+        "snapshot": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Images/100-key-photo-snapshot.png",
+        "thumbnail": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Images/100-key-photo-thumbnail.png"
+    },
+    "deposition_id": 301,
+    "alignment_metadata_path": "30001/RUN1/Alignments/100/alignment_metadata.json",
+    "neuroglancer_config_path": null,
+    "last_updated_at": 1728937653
+}

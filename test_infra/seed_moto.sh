@@ -11,4 +11,4 @@ export AWS_REGION=us-west-2
 bucket_1=test-public-bucket
 $aws s3api head-bucket --bucket $bucket_1 2>/dev/null || $aws s3 mb s3://$bucket_1
 
-$aws s3 sync test_files s3://$bucket_1/
+$aws s3 sync --delete test_files s3://$bucket_1/

@@ -1,10 +1,15 @@
 import json
 import logging
+import os
 from datetime import datetime
+from functools import lru_cache
 from pathlib import PurePath
 from typing import TYPE_CHECKING, Any
 
+import sqlalchemy as sa
 from botocore.exceptions import ClientError
+from database import models
+from s3fs import S3FileSystem
 from sqlalchemy.orm import Session
 
 if TYPE_CHECKING:
@@ -17,6 +22,7 @@ logger = logging.getLogger("config")
 
 class DBImportConfig:
     s3_client: S3Client
+    s3fs: S3FileSystem
     bucket_name: str
     s3_prefix: str
     https_prefix: str
@@ -25,18 +31,43 @@ class DBImportConfig:
     def __init__(
         self,
         s3_client: S3Client,
+        s3fs: S3FileSystem,
         bucket_name: str,
         https_prefix: str,
         session: Session,
     ):
         self.s3_client = s3_client
+        self.s3fs = s3fs
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
         self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
         self.session = session
+        self.deposition_map: dict[int, models.Deposition] = {}
 
     def get_db_session(self) -> Session:
         return self.session
+
+    def load_deposition_map(self) -> None:
+        session = self.get_db_session()
+        for item in session.scalars(sa.select(models.Deposition)).all():
+            self.deposition_map[item.id] = item
+
+    @lru_cache  # noqa
+    def get_alignment_by_path(self, path: str) -> int | None:
+        session = self.get_db_session()
+        for item in session.scalars(
+            sa.select(models.Alignment).where(models.Alignment.s3_alignment_metadata == path),
+        ).all():
+            return item.id
+
+    @lru_cache  # noqa
+    def get_tiltseries_by_path(self, path: str) -> int | None:
+        session = self.get_db_session()
+        # '_' is a wildcard character in sql LIKE queries, so we need to escape them!
+        escaped_path = os.path.dirname(path).replace("_", "\\_")
+        path = os.path.join(self.s3_prefix, escaped_path, "%")
+        item = session.scalars(sa.select(models.Tiltseries).where(models.Tiltseries.s3_mrc_file.like(path))).one()
+        return item.id
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
@@ -52,6 +83,22 @@ class DBImportConfig:
                 except Exception:
                     continue
         return result
+
+    def recursive_glob_s3(self, prefix: str, glob_string: str) -> list[str]:
+        # Returns path to a matched glob.
+        s3 = self.s3fs
+        prefix = prefix.rstrip("/")
+        path = os.path.join(self.bucket_name, prefix, glob_string)
+        logger.info("Recursively looking for files in %s", path)
+        return s3.glob(path)
+
+    def recursive_glob_prefix(self, prefix: str, glob_string: str) -> list[str]:
+        # Returns a prefix that contains a given glob'd path but not the path to the found item itself.
+        s3 = self.s3fs
+        prefix = prefix.rstrip("/")
+        path = os.path.join(self.bucket_name, prefix, glob_string)
+        logger.info("Recursively looking for files in %s", path)
+        return [os.path.dirname(item[len(self.bucket_name) + 1 :]) for item in s3.glob(path)]
 
     def glob_s3(self, prefix: str, glob_string: str, is_file: bool = True):
         paginator = self.s3_client.get_paginator("list_objects_v2")
@@ -74,6 +121,8 @@ class DBImportConfig:
         else it will return None.
         """
         try:
+            if key.startswith(self.bucket_name):
+                key = key[len(self.bucket_name) + 1 :]
             text = self.s3_client.get_object(Bucket=self.bucket_name, Key=key)
             return json.loads(text["Body"].read())
         except ClientError as ex:
