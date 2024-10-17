@@ -69,14 +69,6 @@ def db_import_options(func):
     type=bool,
     help="Print DB Queries",
 )
-@click.option(
-    "--allow-annotation-deletion",
-    is_flag=True,
-    required=False,
-    default=False,
-    type=bool,
-    help="Whether it's ok to delete annotations.",
-)
 @db_import_options
 def load(
     s3_bucket: str,
@@ -96,7 +88,6 @@ def load(
     import_tomograms: bool,
     import_tomogram_authors: bool,
     import_tomogram_voxel_spacing: bool,
-    allow_annotation_deletion: bool,
     import_everything: bool,
     deposition_id: list[str],
     endpoint_url: str,
@@ -204,7 +195,6 @@ def load(
                                 config,
                             )
                             annotation_authors.import_to_db()
-                    if allow_annotation_deletion:
                         annotation_cleaner.remove_stale_objects()
 
                 voxel_spacing_cleaner.mark_as_active(voxel_spacing_obj)
