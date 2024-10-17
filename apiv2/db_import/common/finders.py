@@ -1,3 +1,4 @@
+from functools import lru_cache
 import json
 import logging
 import os
@@ -15,6 +16,12 @@ if TYPE_CHECKING:
     from db_import.importers.base import ItemDBImporter
 else:
     ItemDBImporter = Any
+
+
+@lru_cache(maxsize=30)  # noqa
+def cached_metadata_load(s3fs, key):
+    data = json.loads(s3fs.cat_file(key))
+    return data
 
 
 class ItemFinder(ABC):
@@ -52,9 +59,7 @@ class ItemFinder(ABC):
         Loads file matching the key value as json. If file does not exist, will raise error if is_file_required is True
         else it will return None.
         """
-        s3 = self.config.s3fs
-        data = json.loads(s3.cat_file(key))
-        return data
+        return cached_metadata_load(self.config.s3fs, key)
 
 
 class FileFinder(ItemFinder):
@@ -77,7 +82,14 @@ class FileFinder(ItemFinder):
 
 
 class JsonDataFinder(ItemFinder):
-    def __init__(self, config: DBImportConfig, path: str, list_key: str | None = None, match_key: str | None = None, match_value: str | None = None):
+    def __init__(
+        self,
+        config: DBImportConfig,
+        path: str,
+        list_key: str | None = None,
+        match_key: str | None = None,
+        match_value: str | None = None,
+    ):
         self.config = config
         self.path = path
         self.list_key = []
@@ -91,7 +103,10 @@ class JsonDataFinder(ItemFinder):
         json_data = self.load_metadata(self.path)
         original_json_data = json_data
         for key in self.list_key:
-            json_data = json_data[key]
+            try:
+                json_data = json_data[key]
+            except KeyError:
+                return []
         if self.match_key and self.match_value:
             json_data = [item for item in json_data if item.get(self.match_key) == self.match_value]
         for idx, item in enumerate(json_data):
@@ -101,6 +116,7 @@ class JsonDataFinder(ItemFinder):
             item.update(parents)
             results.append(item_importer(self.config, item))
         return results
+
 
 class MetadataFileFinder(ItemFinder):
     def __init__(self, config: DBImportConfig, path: str, file_glob: str, list_key: str | None = None):
