@@ -61,10 +61,8 @@
     "y": 800,
     "x": 800
   },
-  "omezarr_dir": "RUN2.zarr",
-  "mrc_files": [
-    "RUN2.mrc"
-  ],
+  "omezarr_dir": "30001/RUN2/Reconstructions/VoxelSpacing3.456/Tomograms/100/RUN2.zarr",
+  "mrc_file": "30001/RUN2/Reconstructions/VoxelSpacing3.456/Tomograms/100/RUN2.mrc",
   "run_name": "RUN2",
   "deposition_id": 300,
   "dates": {

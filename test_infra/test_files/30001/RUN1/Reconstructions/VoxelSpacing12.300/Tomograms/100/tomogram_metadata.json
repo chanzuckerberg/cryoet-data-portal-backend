@@ -81,10 +81,8 @@
     "y": 1016,
     "x": 980
   },
-  "omezarr_dir": "RUN1.zarr",
-  "mrc_files": [
-    "RUN1.mrc"
-  ],
+  "omezarr_dir": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Tomograms/100/RUN1.zarr",
+  "mrc_file": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Tomograms/100/RUN1.mrc",
   "run_name": "RUN1",
   "key_photo": {
     "snapshot": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Images/key-photo-snapshot.png",

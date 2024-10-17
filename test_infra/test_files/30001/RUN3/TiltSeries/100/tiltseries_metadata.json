@@ -23,10 +23,8 @@
   "data_acquisition_software": "leginon",
   "tilt_series_quality": 2,
   "pixel_spacing": 5.240,
-  "omezarr_dir": "ts_foo.zarr",
-  "mrc_files": [
-    "ts_foo.mrc"
-  ],
+  "omezarr_dir": "30001/RUN3/TiltSeries/100/ts_foo.zarr",
+  "mrc_file": "30001/RUN3/TiltSeries/100/ts_foo.mrc",
   "run_name": "RUN3",
   "deposition_id": 300,
   "last_updated_at": 1728675676

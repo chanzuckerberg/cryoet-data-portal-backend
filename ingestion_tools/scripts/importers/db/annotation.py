@@ -67,7 +67,14 @@ class AnnotationDBImporter(BaseDBImporter):
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
-        return ["s3_metadata_path"]
+        return [
+            "tomogram_voxel_spacing_id",
+            "deposition_id",
+            "annotation_method",
+            "object_name",
+            "object_description",
+            "object_state",
+        ]
 
     @classmethod
     def get_db_model_class(cls) -> type[BaseModel]:

@@ -52,10 +52,8 @@
   "pixel_spacing": 4.370,
   "is_aligned": true,
   "aligned_tiltseries_binning": 3,
-  "omezarr_dir": "ts_foo.zarr",
-  "mrc_files": [
-    "ts_foo.mrc"
-  ],
+  "omezarr_dir": "30001/RUN1/TiltSeries/100/ts_foo.zarr",
+  "mrc_file": "30001/RUN1/TiltSeries/100/ts_foo.mrc",
   "run_name": "RUN1",
   "frames_count": 60,
   "deposition_id": 300,
