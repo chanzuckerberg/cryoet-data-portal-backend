@@ -1569,13 +1569,13 @@ files = [
 
 [[package]]
 name = "cryoet-alignment"
-version = "0.0.5"
+version = "0.0.6"
 description = "Alignment format conversion for cryoET."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "cryoet_alignment-0.0.5-py3-none-any.whl", hash = "sha256:54812b822159092bc60f0e3ccd2efd5662b15b77a63ca298303c3f097f5ef623"},
-    {file = "cryoet_alignment-0.0.5.tar.gz", hash = "sha256:98d2216641184f83eef6917b790afb56e83d6a42d43e92b7cecd4c3a3bced8b0"},
+    {file = "cryoet_alignment-0.0.6-py3-none-any.whl", hash = "sha256:550997ebb1deffd7ba5bb557f45e37137470618ebda6a99a266393daaff9c931"},
+    {file = "cryoet_alignment-0.0.6.tar.gz", hash = "sha256:c47b83e0007cf50cc9f6b7a7fc546b5d2018a28fcc6d4dd96293a1a6ccfcf703"},
 ]
 
 [package.dependencies]
@@ -5820,4 +5820,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "bff7d02ae387dd0d2962d0c627c193adf0435b021a98ab4559c80a66e84bc24f"
+content-hash = "6eb047578f2b5cd70d643eacdea9aae41613b7bcaa4fc7551f23c56b3bf70e87"
