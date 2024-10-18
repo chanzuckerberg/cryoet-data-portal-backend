@@ -10,7 +10,6 @@ from common.config import DepositionImportConfig
 
 
 class BaseAlignmentConverter:
-
     def __init__(
         self,
         paths: list[str] = None,
@@ -112,6 +111,8 @@ class AreTomo3AlignmentConverter(BaseAlignmentConverter):
         return self._get_files_with_suffix([".aln"])
 
     def get_per_section_alignment_parameters(self) -> list[dict]:
+        if self.get_alignment_path() is None:
+            return []
         with self.config.fs.open(self.get_alignment_path(), "r") as file:
             aln = AreTomo3ALN.from_stream(file)
 
