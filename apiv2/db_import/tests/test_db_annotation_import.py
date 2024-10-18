@@ -170,6 +170,7 @@ def test_import_annotations(
 
 
 # Tests state annotation and files are removed
+@pytest.mark.skip(reason="Cleaning up stale annotations is currently disabled.")
 def test_import_annotations_files_removes_stale(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],

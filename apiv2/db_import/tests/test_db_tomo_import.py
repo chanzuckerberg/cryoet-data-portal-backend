@@ -90,6 +90,8 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "release_date": date(2024, 6, 1),
         "last_modified_date": date(2023, 9, 2),
         "neuroglancer_config": '{"foo":"bar","baz":"test"}',
+        "is_visualization_default": False,
+        "is_author_submitted": True,
     }
     run2_tomo = {
         "name": "RUN2",
@@ -119,6 +121,8 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "deposition_date": date(2022, 4, 2),
         "release_date": date(2022, 6, 1),
         "last_modified_date": date(2022, 9, 2),
+        "is_visualization_default": False,
+        "is_author_submitted": True,
     }
     return {
         "RUN1": {

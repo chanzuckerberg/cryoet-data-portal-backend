@@ -80,6 +80,13 @@ def write_data(function):
 
 
 @write_data
+def populate_deposition2(session: sa.orm.Session) -> Deposition:
+    metadata = stale_deposition_metadata()
+    metadata["id"] = DEPOSITION_ID2
+    return Deposition(**metadata)
+
+
+@write_data
 def populate_deposition(session: sa.orm.Session) -> Deposition:
     return Deposition(**stale_deposition_metadata())
 
@@ -427,19 +434,21 @@ def populate_stale_tiltseries(session: sa.orm.Session) -> None:
 
 @write_data
 def populate_annotations(session: sa.orm.Session) -> Annotation:
+    populate_deposition2(session)
     populate_tomogram_voxel_spacing(session)
     return Annotation(
         id=ANNOTATION_ID,
         run_id=RUN1_ID,
+        deposition_id=DEPOSITION_ID2,
         s3_metadata_path="s3://test-public-bucket/30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100/foo-1.0.json",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
         release_date="2025-06-01",
         last_modified_date="2025-06-01",
-        annotation_method="manual",
+        annotation_method="2D CNN predictions",
         method_type="manual",
         ground_truth_status=False,
-        object_name="bar",
+        object_name="foo",
         object_count=0,
         object_id="invalid-id",
         annotation_software="bar",
@@ -487,7 +496,7 @@ def populate_annotation_files(session: sa.orm.Session) -> None:
     file2 = AnnotationFile(
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         annotation_shape=shape,
-        format="ndjson",
+        format="mrc",
         **default_kwargs,
     )
     session.add(file)
