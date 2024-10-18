@@ -1,0 +1,40 @@
+{
+    "voxel_spacing": 3.456,
+    "reconstruction_method": "SART",
+    "reconstruction_software": "",
+    "fiducial_alignment_status": "NON_FIDUCIAL",
+    "ctf_corrected": "",
+    "processing": "filtered",
+    "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "authors": [],
+    "tomogram_version": 1,
+    "scales": [
+        {
+            "z": 4,
+            "y": 4,
+            "x": 4
+        }
+    ],
+    "size": {
+        "z": 4,
+        "y": 4,
+        "x": 4
+    },
+    "omezarr_dir": "RUN2.zarr",
+    "mrc_files": [
+        "RUN2.mrc"
+    ],
+    "run_name": "RUN2",
+    "deposition_id": 300,
+    "key_photo": {
+        "snapshot": "30001/RUN2/Reconstructions/VoxelSpacing3.456/Images/100-key-photo-snapshot.png",
+        "thumbnail": "30001/RUN2/Reconstructions/VoxelSpacing3.456/Images/100-key-photo-thumbnail.png"
+    },
+    "alignment_metadata_path": "30001/RUN2/Alignments/100/alignment_metadata.json",
+    "neuroglancer_config_path": null,
+    "last_updated_at": 1728937653
+}

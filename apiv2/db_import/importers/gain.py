@@ -17,12 +17,9 @@ class GainItem(ItemDBImporter):
     model_class = models.GainFile
 
     def load_computed_fields(self):
-        https_prefix = self.config.https_prefix
-        s3_prefix = self.config.s3_prefix
-
         self.model_args["run_id"] = self.input_data["run"].id
-        self.model_args["s3_file_path"] = os.path.join(s3_prefix, self.input_data["file"])
-        self.model_args["https_file_path"] = os.path.join(https_prefix, self.input_data["file"])
+        self.model_args["s3_file_path"] = self.get_s3_url(self.input_data["file"])
+        self.model_args["https_file_path"] = self.get_https_url(self.input_data["file"])
 
 
 class GainImporter(IntegratedDBImporter):
@@ -42,7 +39,7 @@ class GainImporter(IntegratedDBImporter):
 
     def get_finder_args(self) -> dict[str, Any]:
         return {
-            "path": os.path.join(self.run.s3_prefix, "Frames/"),
+            "path": os.path.join(self.run.s3_prefix, "Gains/"),
             "glob": "*_gain*",
             "match_regex": ".*",
         }

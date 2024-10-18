@@ -1,0 +1,37 @@
+{
+    "multiscales": [
+        {
+            "axes": [
+                {
+                    "name": "x",
+                    "type": "space"
+                },
+                {
+                    "name": "y",
+                    "type": "space"
+                },
+                {
+                    "name": "z",
+                    "type": "space"
+                }
+            ],
+            "datasets": [
+                {
+                    "coordinateTransformations": [
+                        {
+                            "scale": [
+                                14.08,
+                                14.08,
+                                14.08
+                            ],
+                            "type": "scale"
+                        }
+                    ],
+                    "path": "0"
+                }
+            ],
+            "name": "/",
+            "version": "0.4"
+        }
+    ]
+}

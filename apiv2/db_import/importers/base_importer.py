@@ -67,6 +67,18 @@ class BaseDBImporter:
         session.flush()
         return db_obj
 
+    def get_https_url(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.https_prefix, input_path)
+
+    def get_s3_url(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.s3_prefix, input_path)
+
 
 class StaleDeletionDBImporter(BaseDBImporter):
     """
@@ -112,7 +124,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
         """
         return data_map
 
-    def import_to_db(self) -> Base:
+    def import_to_db(self) -> list[Base]:
         """
         Gets all the existing objects as a map for the current filter criteria. It creates/updates the records iterating
         over the metadata list, and popping any existing value from the map. After the iteration, the map only contains
@@ -124,7 +136,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
         metadata_list = self.metadata if isinstance(self.metadata, list) else [self.metadata]
         session = self.config.get_db_session()
 
-        db_obj = None
+        db_objs = []
         for index, entry in enumerate(metadata_list):
             entry_data_map = self.update_data_map(data_map, entry, index)
             hash_values = [str(map_to_value(id_field, entry_data_map, entry)) for id_field in self.get_id_fields()]
@@ -137,6 +149,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
             for db_key, _data_path in entry_data_map.items():
                 setattr(db_obj, db_key, map_to_value(db_key, entry_data_map, entry))
             session.add(db_obj)
+            db_objs.append(db_obj)
 
         for stale_obj in records_to_delete:
             logger.info(
@@ -147,7 +160,7 @@ class StaleDeletionDBImporter(BaseDBImporter):
             )
             session.delete(stale_obj)
         session.flush()
-        return db_obj
+        return db_objs
 
 
 class AuthorsStaleDeletionDBImporter(StaleDeletionDBImporter):

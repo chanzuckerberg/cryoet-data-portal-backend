@@ -22,8 +22,8 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
     def get_data_map(self) -> dict[str, Any]:
         return {
             "voxel_spacing": float(os.path.basename(self.dir_prefix.strip("/"))[len("VoxelSpacing") :]),
-            "s3_prefix": self.join_path(self.config.s3_prefix, self.dir_prefix),
-            "https_prefix": self.join_path(self.config.https_prefix, self.dir_prefix),
+            "s3_prefix": self.get_s3_url(self.dir_prefix),
+            "https_prefix": self.get_https_url(self.dir_prefix),
             "run_id": self.run_id,
         }
 
@@ -42,7 +42,7 @@ class TomogramVoxelSpacingDBImporter(BaseDBImporter):
         run: RunDBImporter,
         config: DBImportConfig,
     ) -> "Iterator[TomogramVoxelSpacingDBImporter]":
-        tomogram_path = cls.join_path(run.dir_prefix, "Tomograms/")
+        tomogram_path = cls.join_path(run.dir_prefix, "Reconstructions/")
         return [
             cls(run_id, voxel_spacing_path, run, config)
             for voxel_spacing_path in config.glob_s3(tomogram_path, "VoxelSpacing*", is_file=False)
