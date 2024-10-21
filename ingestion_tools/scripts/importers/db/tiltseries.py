@@ -71,11 +71,11 @@ class TiltSeriesDBImporter(BaseDBImporter):
         }
         if mrc_path := self.metadata.get("mrc_file"):
             extra_data["s3_mrc_bin1"] = self.get_s3_url(mrc_path)
-            extra_data["https_mrc_bin1"] = self.get_https_url(self.dir_prefix, mrc_path)
+            extra_data["https_mrc_bin1"] = self.get_https_url(mrc_path)
 
         if omezarr_path := self.metadata.get("omezarr_dir"):
             extra_data["s3_omezarr_dir"] = self.get_s3_url(omezarr_path)
-            extra_data["https_omezarr_dir"] = self.get_https_url(self.dir_prefix, omezarr_path)
+            extra_data["https_omezarr_dir"] = self.get_https_url(omezarr_path)
 
         if mdoc := self.get_first_match_file_name("*.mdoc"):
             extra_data["s3_collection_metadata"] = self.get_s3_url(mdoc)
