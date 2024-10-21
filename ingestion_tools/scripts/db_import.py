@@ -12,6 +12,7 @@ from importers.db.run import RunDBImporter, StaleRunDeletionDBImporter
 from importers.db.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
 from importers.db.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
 from importers.db.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
+from s3fs import S3FileSystem
 
 from common import db_models
 
@@ -117,7 +118,8 @@ def load(
 
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
-    config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+    s3fs = S3FileSystem(client_kwargs={"endpoint_url": endpoint_url})
+    config = DBImportConfig(s3_client, s3fs, s3_bucket, https_prefix)
 
     if import_depositions and deposition_id:
         for dep_id in deposition_id:
@@ -169,7 +171,9 @@ def load(
 
                 if import_tomograms:
                     tomogram_cleaner = StaleTomogramDeletionDBImporter(voxel_spacing_obj.id, config)
-                    for tomogram in TomogramDBImporter.get_item(voxel_spacing_obj.id, voxel_spacing, config):
+                    for tomogram in TomogramDBImporter.get_item(
+                        voxel_spacing_obj.id, voxel_spacing, dataset_obj, config,
+                    ):
                         tomogram_obj = tomogram.import_to_db()
                         tomogram_cleaner.mark_as_active(tomogram_obj)
 

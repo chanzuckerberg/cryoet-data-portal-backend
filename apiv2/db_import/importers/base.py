@@ -1,4 +1,5 @@
 import logging
+import os
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Type
 
@@ -25,7 +26,7 @@ class ItemDBImporter:
     # Which sqlalchemy model class is being imported?
     model_class: Type[Base]
     # A map between model properties and their locations in the input data.
-    direct_mapped_fields: dict[str, list[str]] = {}
+    direct_mapped_fields: dict[str, list[str | int]] = {}
     # Which fields uniquely identify a row?
     id_fields: list[str] = []
 
@@ -33,6 +34,19 @@ class ItemDBImporter:
         self.config = config
         self.input_data = input_data
         self.model_args = {}
+
+    def get_https_url(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.https_prefix, input_path)
+
+    def get_s3_url(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.s3_prefix, input_path)
+
 
     def _map_direct_fields(self):
         """Iterate over `self.direct_mapped_fields` and populate model args based on the data we find in the input dict."""
@@ -46,6 +60,9 @@ class ItemDBImporter:
     def _get_identifiers(self) -> dict[str, Any]:
         identifiers = {id_field: self.model_args[id_field] for id_field in self.id_fields}
         return identifiers
+
+    def get_s3_id(self):
+        return os.path.dirname(self.input_data["file"]).split("/")[-1]
 
     def load(self, session) -> Base:
         """
@@ -95,6 +112,14 @@ class IntegratedDBImporter(ABC):
     def __init__(self, config: DBImportConfig):
         self.config = config
         self.parents: dict[str, Base] = {}
+
+    def convert_to_finder_path(self, input_path: str) -> str:
+        """Converts an S3 path in the DB to a path we can use in finders with s3fs"""
+        if input_path.startswith("s3://"):
+            input_path = input_path[5:]
+        if input_path.startswith(self.config.s3_prefix):
+            input_path = os.path.join(self.config.bucket_name, input_path[len(self.config.s3_prefix) + 1:])
+        return input_path
 
     @abstractmethod
     def get_finder_args(self) -> dict[str, Any]:

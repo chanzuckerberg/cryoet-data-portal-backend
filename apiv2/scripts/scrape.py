@@ -13,10 +13,7 @@ from support.enums import tomogram_reconstruction_method_enum as reconstruction_
 from platformics.database.connect import init_sync_db
 
 # cleanup:
-# delete from deposition_type; delete from annotation_author; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from per_section_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from run; delete from run; delete from dataset; delete from deposition;
-
-# CLIENT_URL="https://graphql-cryoet-api.cryoet.staging.si.czi.technology/v1/graphql"
-CLIENT_URL = "https://graphql.cryoetdataportal.cziscience.com/v1/graphql"
+# delete from deposition_type; delete from annotation_author; delete from annotation_method_link; delete from dataset_author; delete from deposition_author; delete from annotation_file ; delete from annotation_shape ; delete from dataset_funding; delete from tomogram_author; delete from tomogram; delete from annotation; delete from annotation; delete from tomogram_voxel_spacing; delete from per_section_alignment_parameters; delete from alignment; delete from frame; delete from tiltseries; delete from gain_file; delete from frame; delete from run; delete from run; delete from dataset; delete from deposition;
 
 
 # Adapted from https://github.com/sqlalchemy/sqlalchemy/wiki/UniqueObject
@@ -307,7 +304,6 @@ def add(session, model, item, parents):
             "reconstruction_software": remote_item["reconstruction_software"],
             "is_author_submitted": remote_item["is_canonical"],
             "is_portal_standard": False,
-            "is_standardized": False,
             "is_visualization_default": remote_item["is_canonical"],
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
@@ -356,11 +352,9 @@ def add(session, model, item, parents):
     return item
 
 
-def import_deposition(deposition_id: int):
-    db = init_sync_db(
-        f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
-    )
-    client = cdp.Client(CLIENT_URL)
+def db_import_deposition(client_url, db_uri, deposition_id: int):
+    db = init_sync_db(db_uri)
+    client = cdp.Client(client_url)
     dep = cdp.Deposition.get_by_id(client, deposition_id)
     with db.session() as session:
         print(f"processing {dep.id}")
@@ -375,7 +369,7 @@ def import_deposition(deposition_id: int):
 
 
 # Method links isn't exposed by the v2 client for some reason
-def fetch_method_links(annotation):
+def fetch_method_links(client_url, annotation):
     headers = {
         "Content-type": "application/json",
     }
@@ -390,7 +384,7 @@ def fetch_method_links(annotation):
         % annotation.id
     )
     payload = json.dumps({"query": query, "variables": None, "operationName": "MyQuery"})
-    res = requests.post(CLIENT_URL, headers=headers, data=payload)
+    res = requests.post(client_url, headers=headers, data=payload)
     data = res.json()
     anno = data["data"]["annotations"][0]
     if anno and anno.get("method_links"):
@@ -398,11 +392,9 @@ def fetch_method_links(annotation):
     return []
 
 
-def import_dataset(dataset_id: int):
-    db = init_sync_db(
-        f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
-    )
-    client = cdp.Client(CLIENT_URL)
+def db_import_dataset(client_url, db_uri, dataset_id: int):
+    db = init_sync_db(db_uri)
+    client = cdp.Client(client_url)
     dataset = cdp.Dataset.get_by_id(client, dataset_id)
     with db.session() as session:
         print(f"processing {dataset_id}")
@@ -432,7 +424,7 @@ def import_dataset(dataset_id: int):
                 for anno in cdp.Annotation.find(client, [cdp.Annotation.tomogram_voxel_spacing_id == vs.id]):
                     a = add(session, models.Annotation, anno, parents)
                     parents["annotation_id"] = a.id
-                    for methodlink in fetch_method_links(anno):
+                    for methodlink in fetch_method_links(client_url, anno):
                         add(session, models.AnnotationMethodLink, methodlink, parents)
                     for annofile in cdp.AnnotationFile.find(client, [cdp.AnnotationFile.annotation_id == anno.id]):
                         add(session, models.AnnotationFile, annofile, parents)
@@ -454,21 +446,52 @@ def import_dataset(dataset_id: int):
 
 
 @click.command()
-@click.option("--skip-until", help="skip all datasets until and including this one")
-@click.option("--parallelism", help="how many processes to run in parallel", required=True, default=10)
-def do_import(skip_until, parallelism):
-    client = cdp.Client(CLIENT_URL)
+# Either prod or staging
+@click.argument("env", required=True, type=str)
+@click.option("--skip-until", help="skip all datasets until and including this one", type=int)
+@click.option("--import-dataset", help="Import specific datasets (multiple ok)", multiple=True, type=int)
+@click.option("--import-deposition", help="Import specific depositions (multiple ok)", multiple=True, type=int)
+@click.option("--db-uri", help="Database URI")
+@click.option(
+    "--import-all-depositions",
+    is_flag=True,
+    help="Whether to import depositions",
+    required=False,
+    default=False,
+)
+@click.option("--parallelism", help="how many processes to run in parallel", required=True, default=10, type=int)
+def do_import(env, import_dataset, import_deposition, db_uri, import_all_depositions, skip_until, parallelism):
     futures = []
+    if env not in ["prod", "staging"]:
+        print("Env must be 'prod' or 'staging'")
+        exit(1)
+    if env == "staging":
+        client_url = "https://graphql-cryoet-api.cryoet.staging.si.czi.technology/v1/graphql"
+    else:
+        client_url = "https://graphql.cryoetdataportal.cziscience.com/v1/graphql"
+
+    if not db_uri:
+        db_uri = (
+            f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
+        )
+
+    client = cdp.Client(client_url)
+
     with ProcessPoolExecutor(max_workers=parallelism) as workerpool:
-        depositions = cdp.Deposition.find(client)
-        depositions.sort(key=lambda a: a.id)  # Sort datasets by id
-        for dep in depositions:
-            futures.append(
-                workerpool.submit(
-                    import_deposition,
-                    dep.id,
-                ),
-            )
+        if import_all_depositions or import_deposition:
+            depositions = cdp.Deposition.find(client)
+            depositions.sort(key=lambda a: a.id)  # Sort datasets by id
+            for dep in depositions:
+                if import_deposition and dep.id not in import_deposition:
+                    continue
+                futures.append(
+                    workerpool.submit(
+                        db_import_deposition,
+                        client_url,
+                        db_uri,
+                        dep.id,
+                    ),
+                )
         datasets = cdp.Dataset.find(client)
         datasets.sort(key=lambda a: a.id)  # Sort datasets by id
         for dataset in datasets:
@@ -476,10 +499,14 @@ def do_import(skip_until, parallelism):
                 if dataset.id == int(skip_until):
                     skip_until = None
                 continue
+            if import_dataset and dataset.id not in import_dataset:
+                continue
 
             futures.append(
                 workerpool.submit(
-                    import_dataset,
+                    db_import_dataset,
+                    client_url,
+                    db_uri,
                     dataset.id,
                 ),
             )

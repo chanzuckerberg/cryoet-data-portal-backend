@@ -25,22 +25,22 @@ def expected_voxel_spacings_by_run(http_prefix: str) -> dict[str, list[dict[str,
             "id": TOMOGRAM_VOXEL_ID2,
             "run_id": RUN1_ID,
             "voxel_spacing": 9.876,
-            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing9.876/",
-            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing9.876/",
+            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing9.876/",
+            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing9.876/",
         },
         {
             "id": TOMOGRAM_VOXEL_ID1,
             "run_id": RUN1_ID,
             "voxel_spacing": 12.3,
-            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/",
-            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/",
+            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/",
+            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/",
         },
     ]
     run2_voxel_spacings = [
         {
             "voxel_spacing": 3.456,
-            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN2/Tomograms/VoxelSpacing3.456/",
-            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN2/Tomograms/VoxelSpacing3.456/",
+            "s3_prefix": f"s3://test-public-bucket/{DATASET_ID}/RUN2/Reconstructions/VoxelSpacing3.456/",
+            "https_prefix": f"{http_prefix}/{DATASET_ID}/RUN2/Reconstructions/VoxelSpacing3.456/",
         },
     ]
     return {
@@ -51,8 +51,8 @@ def expected_voxel_spacings_by_run(http_prefix: str) -> dict[str, list[dict[str,
 
 @pytest.fixture
 def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[dict[str, Any]]]]:
-    run1_vs_path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/"
-    run2_vs_path = f"{DATASET_ID}/RUN2/Tomograms/VoxelSpacing3.456/"
+    run1_vs_path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/"
+    run2_vs_path = f"{DATASET_ID}/RUN2/Reconstructions/VoxelSpacing3.456/"
     run1_tomo = {
         "id": TOMOGRAM_ID,
         "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
@@ -68,10 +68,10 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "processing_software": "tomo3D",
         "tomogram_version": "1",
         "is_canonical": True,
-        "s3_omezarr_dir": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.zarr",
-        "https_omezarr_dir": f"{http_prefix}/{run1_vs_path}CanonicalTomogram/RUN1.zarr",
-        "s3_mrc_scale0": f"s3://test-public-bucket/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
-        "https_mrc_scale0": f"{http_prefix}/{run1_vs_path}CanonicalTomogram/RUN1.mrc",
+        "s3_omezarr_dir": f"s3://test-public-bucket/{run1_vs_path}Tomograms/100/RUN1.zarr",
+        "https_omezarr_dir": f"{http_prefix}/{run1_vs_path}Tomograms/100/RUN1.zarr",
+        "s3_mrc_scale0": f"s3://test-public-bucket/{run1_vs_path}Tomograms/100/RUN1.mrc",
+        "https_mrc_scale0": f"{http_prefix}/{run1_vs_path}Tomograms/100/RUN1.mrc",
         "scale0_dimensions": "980,1016,500",
         "scale1_dimensions": "490,508,250",
         "scale2_dimensions": "245,254,125",
@@ -85,11 +85,11 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
             [0, 0, 1, 0],
             [0, 0, 0, 1],
         ],
-        "key_photo_url": f"{http_prefix}/{run1_vs_path}KeyPhotos/key-photo-snapshot.png",
-        "key_photo_thumbnail_url": f"{http_prefix}/{run1_vs_path}KeyPhotos/key-photo-thumbnail.png",
+        "key_photo_url": f"{http_prefix}/{run1_vs_path}Images/key-photo-snapshot.png",
+        "key_photo_thumbnail_url": f"{http_prefix}/{run1_vs_path}Images/key-photo-thumbnail.png",
         "neuroglancer_config": '{"foo":"bar","baz":"test"}',
         "type": "CANONICAL",
-        "deposition_id": 301,
+        "deposition_id": 300,
     }
     run2_tomo = {
         "name": "RUN2",
@@ -102,11 +102,17 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "reconstruction_software": "Unknown",
         "processing": "filtered",
         "tomogram_version": "1",
+        "affine_transformation_matrix": [
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1],
+        ],
         "is_canonical": True,
-        "s3_omezarr_dir": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.zarr",
-        "https_omezarr_dir": f"{http_prefix}/{run2_vs_path}CanonicalTomogram/RUN2.zarr",
-        "s3_mrc_scale0": f"s3://test-public-bucket/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
-        "https_mrc_scale0": f"{http_prefix}/{run2_vs_path}CanonicalTomogram/RUN2.mrc",
+        "s3_omezarr_dir": f"s3://test-public-bucket/{run2_vs_path}Tomograms/100/RUN2.zarr",
+        "https_omezarr_dir": f"{http_prefix}/{run2_vs_path}Tomograms/100/RUN2.zarr",
+        "s3_mrc_scale0": f"s3://test-public-bucket/{run2_vs_path}Tomograms/100/RUN2.mrc",
+        "https_mrc_scale0": f"{http_prefix}/{run2_vs_path}Tomograms/100/RUN2.mrc",
         "scale0_dimensions": "800,800,400",
         "scale1_dimensions": "400,400,200",
         "scale2_dimensions": "200,200,100",
@@ -114,7 +120,7 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "offset_x": 0,
         "offset_y": 0,
         "offset_z": 0,
-        "neuroglancer_config": "{}",
+        "neuroglancer_config": '{"foo":"bar","baz":"test"}',
         "type": "CANONICAL",
         "deposition_id": 300,
     }

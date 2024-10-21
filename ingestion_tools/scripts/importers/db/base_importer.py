@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, Optional
 
 import peewee
 from botocore.exceptions import ClientError
+from s3fs import S3FileSystem
 
 from common.db_models import BaseModel
 
@@ -27,13 +28,25 @@ class DBImportConfig:
     def __init__(
         self,
         s3_client: S3Client,
+        s3fs: S3FileSystem,
         bucket_name: str,
         https_prefix: str,
     ):
         self.s3_client = s3_client
+        self.s3fs = s3fs
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
         self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
+
+    def recursive_glob_s3(self, prefix: str, glob_string: str) -> list[str]:
+        # Returns path to a matched glob.
+        s3 = self.s3fs
+        prefix = prefix.rstrip("/")
+        path = os.path.join(self.bucket_name, prefix, glob_string)
+        logger.info("Recursively looking for files in %s", path)
+        def convert_to_key(str):
+            return str[len(self.bucket_name) + 1 :]
+        return [convert_to_key(item) for item in s3.glob(path)]
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
@@ -146,6 +159,18 @@ class BaseDBImporter:
 
         db_obj.save(force_insert=force_insert)
         return db_obj
+
+    def get_https_url(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.https_prefix, input_path)
+
+    def get_s3_url(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        return os.path.join(self.config.s3_prefix, input_path)
 
 
 class StaleDeletionDBImporter(BaseDBImporter):

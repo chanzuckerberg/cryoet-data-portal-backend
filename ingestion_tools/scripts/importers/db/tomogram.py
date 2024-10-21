@@ -1,4 +1,5 @@
 import json
+import os
 from typing import Any, Iterator
 
 import importers.db.deposition
@@ -20,11 +21,13 @@ class TomogramDBImporter(BaseDBImporter):
         voxel_spacing_id: int,
         dir_prefix: str,
         parent: TomogramVoxelSpacingDBImporter,
+        dataset: Any,
         config: DBImportConfig,
     ):
         self.voxel_spacing_id = voxel_spacing_id
         self.dir_prefix = dir_prefix
         self.parent = parent
+        self.dataset = dataset
         self.config = config
         self.metadata = config.load_key_json(self.get_metadata_file_path())
 
@@ -65,37 +68,38 @@ class TomogramDBImporter(BaseDBImporter):
         return value if value else "Unknown"
 
     def get_tomogram_type(self) -> str:
-        if "CanonicalTomogram" in self.dir_prefix:
+        if self.dataset.deposition_id == self.metadata.get("deposition_id"):
             return "CANONICAL"
-        return "UNKOWN"
+        return "UNKOWN"  # TYPO that's also reflected in the db :'(
 
     def generate_neuroglancer_data(self) -> str:
-        path = self.join_path(self.dir_prefix, "neuroglancer_config.json")
-        config = self.config.load_key_json(path, is_file_required=False)
+        tomogram_id = self.dir_prefix.split("/").pop()
+        path = os.path.relpath(
+            os.path.join(self.dir_prefix, f"../../NeuroglancerPrecompute/{tomogram_id}-neuroglancer_config.json"),
+        )
+        config = self.config.load_key_json(path, is_file_required=True)
         # TODO: Log warning
         return json.dumps(config, separators=(",", ":")) if config else "{}"
 
     def get_computed_fields(self) -> dict[str, Any]:
-        https_prefix = self.config.https_prefix
-        s3_prefix = self.config.s3_prefix
         extra_data = {
             "tomogram_voxel_spacing_id": self.voxel_spacing_id,
             "fiducial_alignment_status": normalize_fiducial_alignment(self.metadata.get("fiducial_alignment_status")),
             "reconstruction_method": self.normalize_to_unknown_str(self.metadata.get("reconstruction_method")),
             "reconstruction_software": self.normalize_to_unknown_str(self.metadata.get("reconstruction_software")),
             "is_canonical": True,  # TODO: mark this for deprecation
-            "s3_omezarr_dir": self.join_path(s3_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
-            "https_omezarr_dir": self.join_path(https_prefix, self.dir_prefix, self.metadata["omezarr_dir"]),
-            "s3_mrc_scale0": self.join_path(s3_prefix, self.dir_prefix, self.metadata["mrc_files"][0]),
-            "https_mrc_scale0": self.join_path(https_prefix, self.dir_prefix, self.metadata["mrc_files"][0]),
+            "s3_omezarr_dir": self.get_s3_url(self.metadata["omezarr_dir"]),
+            "https_omezarr_dir": self.get_https_url(self.metadata["omezarr_dir"]),
+            "s3_mrc_scale0": self.get_s3_url(self.metadata["mrc_file"]),
+            "https_mrc_scale0": self.get_https_url(self.metadata["mrc_file"]),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
             "neuroglancer_config": self.generate_neuroglancer_data(),
             "type": self.get_tomogram_type(),
         }
         if key_photos := self.metadata.get("key_photo"):
-            extra_data["key_photo_url"] = self.join_path(https_prefix, key_photos.get("snapshot"))
-            extra_data["key_photo_thumbnail_url"] = self.join_path(https_prefix, key_photos.get("thumbnail"))
+            extra_data["key_photo_url"] = self.get_https_url(key_photos.get("snapshot"))
+            extra_data["key_photo_thumbnail_url"] = self.get_https_url(key_photos.get("thumbnail"))
 
         for i in range(0, 3):
             scale = self.metadata["scales"][i]
@@ -110,12 +114,13 @@ class TomogramDBImporter(BaseDBImporter):
         cls,
         voxel_spacing_id: int,
         voxel_spacing: TomogramVoxelSpacingDBImporter,
+        dataset: Any,
         config: DBImportConfig,
     ) -> Iterator["TomogramDBImporter"]:
-        tomogram_dir_path = cls.join_path(voxel_spacing.dir_prefix, "CanonicalTomogram")
+        tomogram_dir_path = cls.join_path(voxel_spacing.dir_prefix, "Tomograms")
         return [
-            cls(voxel_spacing_id, tomogram_prefix, voxel_spacing, config)
-            for tomogram_prefix in config.find_subdirs_with_files(tomogram_dir_path, "tomogram_metadata.json")
+            cls(voxel_spacing_id, os.path.dirname(tomogram_prefix), voxel_spacing, dataset, config)
+            for tomogram_prefix in config.recursive_glob_s3(tomogram_dir_path, "*/tomogram_metadata.json")
         ]
 
 

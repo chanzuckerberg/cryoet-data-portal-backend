@@ -7,6 +7,24 @@ from database import models
 
 from platformics.database.connect import init_sync_db
 
+# Seems ok, but could stand to doublecheck:
+# Tomogram.processing_software has all null values! (mapped)
+# Annotation.object_state has all null values! (mapped)
+# Annotation.confidence_precision has all null values! (mapped)
+# Annotation.confidence_recall has all null values! (mapped)
+# Annotation.ground_truth_used has all null values! (mapped)
+# Dataset.tissue_name has all null values! (mapped)
+# Dataset.tissue_id has all null values! (mapped)
+# Dataset.cell_name has all null values! (mapped)
+# Dataset.cell_type_id has all null values! (mapped)
+# Dataset.other_setup has all null values! (mapped)
+# Dataset.cell_component_name has all null values! (mapped)
+# Dataset.cell_component_id has all null values! (mapped)
+# Tiltseries.microscope_phase_plate has all null values! (mapped)
+# Tiltseries.microscope_image_corrector has all null values! (mapped)
+# Tiltseries.microscope_additional_info has all null values! (mapped)
+# Tiltseries.aligned_tiltseries_binning has all null values! (mapped)
+
 
 def model_class_cols(model_cls):
     inspected = sa.inspect(model_cls)
@@ -17,19 +35,10 @@ def model_class_cols(model_cls):
 def check_table(model_cls):
     # AnnotationFile.source is TODO - we need to populate it somehow.
     expected_to_be_empty = [
-        "Alignment.alignment_type",
-        "Alignment.volume_x_offset",
-        "Alignment.volume_y_offset",
-        "Alignment.volume_z_offset",
-        "Alignment.x_rotation_offset",
-        "Alignment.tilt_offset",
-        "Alignment.local_alignment_file",
-        "AnnotationAuthor.email",
-        "AnnotationAuthor.affiliation_name",
-        "AnnotationAuthor.affiliation_address",
-        "AnnotationAuthor.affiliation_identifier",
-        "Dataset.tissue_name",
-        "Dataset.tissue_id",
+        "TomogramAuthor.email",
+        "TomogramAuthor.affiliation_name",
+        "TomogramAuthor.affiliation_address",
+        "TomogramAuthor.affiliation_identifier",
         "DatasetAuthor.email",
         "DatasetAuthor.affiliation_name",
         "DatasetAuthor.affiliation_address",
@@ -38,13 +47,24 @@ def check_table(model_cls):
         "DepositionAuthor.affiliation_name",
         "DepositionAuthor.affiliation_address",
         "DepositionAuthor.affiliation_identifier",
-        "Tiltseries.microscope_image_corrector",
-        "Tiltseries.s3_gain_file",
-        "Tiltseries.https_gain_file",
-        "TomogramAuthor.email",
-        "TomogramAuthor.affiliation_name",
-        "TomogramAuthor.affiliation_address",
-        "TomogramAuthor.affiliation_identifier",
+        "AnnotationAuthor.email",
+        "AnnotationAuthor.affiliation_name",
+        "AnnotationAuthor.affiliation_address",
+        "AnnotationAuthor.affiliation_identifier",
+        "Frame.raw_angle",
+        "Frame.acquisition_order",
+        "Frame.dose",
+        "Frame.is_gain_corrected",
+        # These are just not being populated yet.
+        "Deposition.key_photo_url",
+        "Deposition.key_photo_thumbnail_url",
+        # Needs s3 ingestion feedback:
+        "Tomogram.deposition_date",
+        "Tomogram.release_date",
+        "Tomogram.last_modified_date",
+        "Tomogram.publications",
+        "Tomogram.related_database_entries",
+        "Tomogram.neuroglancer_config",
     ]
     db = init_sync_db(
         f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
@@ -81,6 +101,7 @@ def check_tables():
         models.Annotation,
         models.AnnotationAuthor,
         models.AnnotationFile,
+        models.AnnotationMethodLink,
         models.AnnotationShape,
         models.Dataset,
         models.DatasetAuthor,
@@ -88,7 +109,8 @@ def check_tables():
         models.Deposition,
         models.DepositionAuthor,
         models.DepositionType,
-        # models.Frame,
+        models.Frame,
+        models.GainFile,
         models.Run,
         models.Tiltseries,
         models.Tomogram,

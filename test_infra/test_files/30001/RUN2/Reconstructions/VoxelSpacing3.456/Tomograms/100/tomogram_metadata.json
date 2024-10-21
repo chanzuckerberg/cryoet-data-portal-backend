@@ -1,0 +1,76 @@
+{
+  "voxel_spacing": 3.456,
+  "reconstruction_method": "SART",
+  "reconstruction_software": "",
+  "fiducial_alignment_status": "NON_FIDUCIAL",
+  "ctf_corrected": "",
+  "processing": "filtered",
+  "is_visualization_default": true,
+  "offset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "affine_transformation_matrix": [
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "authors": [],
+  "tomogram_version": 1,
+  "scales": [
+    {
+      "z": 400,
+      "y": 800,
+      "x": 800
+    },
+    {
+      "z": 200,
+      "y": 400,
+      "x": 400
+    },
+    {
+      "z": 100,
+      "y": 200,
+      "x": 200
+    }
+  ],
+  "size": {
+    "z": 400,
+    "y": 800,
+    "x": 800
+  },
+  "omezarr_dir": "30001/RUN2/Reconstructions/VoxelSpacing3.456/Tomograms/100/RUN2.zarr",
+  "mrc_file": "30001/RUN2/Reconstructions/VoxelSpacing3.456/Tomograms/100/RUN2.mrc",
+  "run_name": "RUN2",
+  "deposition_id": 300,
+  "dates": {
+    "deposition_date": "2022-04-02",
+    "last_modified_date": "2022-09-02",
+    "release_date": "2022-06-01"
+  },
+  "alignment_metadata_path": "foo",
+  "neuroglancer_config_path": "test-public-bucket/30001/RUN2/Reconstructions/VoxelSpacing3.456/NeuroglancerPrecompute/100-neuroglancer_config.json",
+  "last_updated_at": 1728676818
+}
