@@ -32,7 +32,7 @@ class VisualizationConfigImporter(BaseImporter):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-          
+
         tomogram = self.get_tomogram()
         if not tomogram.get_base_metadata().get("is_visualization_default"):
             print("Skipping import for tomogram that is not configured for default_visualization")
