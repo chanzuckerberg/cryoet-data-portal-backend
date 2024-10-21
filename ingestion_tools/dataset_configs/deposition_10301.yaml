@@ -1,6 +1,5 @@
 alignments:
-- metadata:
-  sources:
+- sources:
   - destination_glob:
       list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
       match_regex: .*

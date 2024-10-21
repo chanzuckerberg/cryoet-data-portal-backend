@@ -301,6 +301,13 @@ frames:
 - sources:
   - source_glob:
       list_glob: Tomo{run_name}/raw_data/raw_frames/*.mrc.bz2
+
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - 'Tomo{run_name}/raw_data/imod_metadata/*.rawtlt'
+
 runs:
 - sources:
   - source_glob:
