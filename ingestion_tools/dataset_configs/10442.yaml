@@ -164,7 +164,52 @@ datasets:
       value:
       - '10442'
 depositions:
-- sources:
+- metadata:
+    authors:
+      - name: Ariana Peck
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0000-0002-5940-3897
+      - name: Mallak Ali
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0009-0007-8169-0996
+      - name: Yue Yu
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0000-0002-3248-9678
+      - name: Jonathan Schwartz
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0000-0002-8063-6951
+      - name: John Glass
+        ORCID: 0000-0002-3784-5301
+        primary_author_status: true
+        corresponding_author_status: false
+        email: jglass@jcvi.org
+      - name: Shawn Zheng
+        primary_author_status: false
+        corresponding_author_status: true
+        ORCID: 0000-0001-9517-3075
+      - name: Mohammadreza Paraan
+        ORCID: 0000-0002-8402-0134
+        primary_author_status: true
+        corresponding_author_status: true
+        email: reza.paraan@czii.org
+    cross_references:
+      publications: doi:10.7554/eLife.36842
+    dates: *id002
+    deposition_description: Cryo-eletron tomograms of synthetically reduced genome cells. JCVI Syn 3A have 493 genes
+      (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). The dataset was collected on a Krios G4 using
+      a Falcon 4i detector. Tomograms were reconstructed using AreTomo3 v1.0.23. The deposition also includes locations
+      of cytosolic ribosomes identified using slabpick and membrane segmenations created using membrain-seg.
+    deposition_identifier: 10312
+    deposition_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram
+      averaging pipelines
+    deposition_types:
+      - dataset
+      - annotation
+  sources:
   - literal:
       value:
       - 10312
