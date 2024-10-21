@@ -67,6 +67,10 @@ class FileSystemApi(ABC):
     def read_block(self, path: str, start: int | None = None, end: int | None = None) -> str:
         pass
 
+    @abstractmethod
+    def move(self, src_path: str, dest_path: str, **kwargs) -> None:
+        pass
+
 
 class S3Filesystem(FileSystemApi):
     def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None, **kwargs):
@@ -169,6 +173,9 @@ class S3Filesystem(FileSystemApi):
 
         return local_dest_file
 
+    def move(self, src_path: str, dest_path: str, **kwargs) -> None:
+        self.s3fs.mv(src_path, dest_path, **kwargs)
+
 
 class LocalFilesystem(FileSystemApi):
     def __init__(self, force_overwrite: bool):
@@ -203,3 +210,6 @@ class LocalFilesystem(FileSystemApi):
 
     def exists(self, path: str) -> bool:
         return os.path.exists(path)
+
+    def move(self, src_path: str, dest_path: str, **kwargs) -> None:
+        shutil.move(src_path, dest_path)
