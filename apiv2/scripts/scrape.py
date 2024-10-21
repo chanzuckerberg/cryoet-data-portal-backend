@@ -453,7 +453,11 @@ def db_import_dataset(client_url, db_uri, dataset_id: int):
 @click.option("--import-deposition", help="Import specific depositions (multiple ok)", multiple=True, type=int)
 @click.option("--db-uri", help="Database URI")
 @click.option(
-    "--import-all-depositions", is_flag=True, help="Whether to import depositions", required=False, default=False,
+    "--import-all-depositions",
+    is_flag=True,
+    help="Whether to import depositions",
+    required=False,
+    default=False,
 )
 @click.option("--parallelism", help="how many processes to run in parallel", required=True, default=10, type=int)
 def do_import(env, import_dataset, import_deposition, db_uri, import_all_depositions, skip_until, parallelism):
@@ -478,9 +482,8 @@ def do_import(env, import_dataset, import_deposition, db_uri, import_all_deposit
             depositions = cdp.Deposition.find(client)
             depositions.sort(key=lambda a: a.id)  # Sort datasets by id
             for dep in depositions:
-                if import_deposition:
-                    if dep.id not in import_deposition:
-                        continue
+                if import_deposition and dep.id not in import_deposition:
+                    continue
                 futures.append(
                     workerpool.submit(
                         db_import_deposition,
@@ -496,9 +499,8 @@ def do_import(env, import_dataset, import_deposition, db_uri, import_all_deposit
                 if dataset.id == int(skip_until):
                     skip_until = None
                 continue
-            if import_dataset:
-                if dataset.id not in import_dataset:
-                    continue
+            if import_dataset and dataset.id not in import_dataset:
+                continue
 
             futures.append(
                 workerpool.submit(

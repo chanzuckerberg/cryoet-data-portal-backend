@@ -61,7 +61,6 @@ class DatasetDBImporter(BaseDBImporter):
         }
 
     def get_computed_fields(self) -> dict[str, Any]:
-        https_prefix = self.config.https_prefix
         extra_data = {
             "s3_prefix": self.get_s3_url(self.dir_prefix),
             "https_prefix": self.get_https_url(self.dir_prefix),
