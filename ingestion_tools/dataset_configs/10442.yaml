@@ -166,14 +166,14 @@ datasets:
 depositions:
 - metadata:
     authors:
-      - name: Ariana Peck
-        primary_author_status: true
-        corresponding_author_status: false
-        ORCID: 0000-0002-5940-3897
       - name: Mallak Ali
         primary_author_status: true
         corresponding_author_status: false
         ORCID: 0009-0007-8169-0996
+      - name: Ariana Peck
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0000-0002-5940-3897
       - name: Yue Yu
         primary_author_status: true
         corresponding_author_status: false
@@ -200,9 +200,10 @@ depositions:
       publications: doi:10.7554/eLife.36842
     dates: *id002
     deposition_description: Cryo-eletron tomograms of synthetically reduced genome cells. JCVI Syn 3A have 493 genes
-      (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). The dataset was collected on a Krios G4 using
-      a Falcon 4i detector. Tomograms were reconstructed using AreTomo3 v1.0.23. The deposition also includes locations
-      of cytosolic ribosomes identified using slabpick and membrane segmenations created using membrain-seg.
+      (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were prepared by plunge-freezing via
+      Leica GP2. Contained data was collected on a Krios G4 using a Falcon 4i detector. Tomograms were reconstructed
+      using AreTomo3 v1.0.23. The deposition also includes locations of cytosolic ribosomes identified using slabpick
+      and membrane segmenations created using membrain-seg.
     deposition_identifier: 10312
     deposition_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram
       averaging pipelines
