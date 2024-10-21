@@ -88,7 +88,7 @@ def add(session, model, item, parents):
             # "primary_author_status": remote_item.get["primary_annotator_status"],
             # "corresponding_author_status": remote_item.get("corresponding_annotator_status"),
             "run_id": parents["run_id"],
-            "deposition_id": parents["deposition_id"],  # Doesn't exist in the old api.
+            "deposition_id": remote_item["deposition_id"],  # Doesn't exist in the old api.
             "s3_metadata_path": remote_item["s3_metadata_path"],
             "https_metadata_path": remote_item["https_metadata_path"],
             "annotation_publication": remote_item["annotation_publication"],
