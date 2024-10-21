@@ -184,16 +184,16 @@ depositions:
         ORCID: 0000-0002-8063-6951
       - name: John Glass
         ORCID: 0000-0002-3784-5301
-        primary_author_status: true
+        primary_author_status: false
         corresponding_author_status: false
         email: jglass@jcvi.org
       - name: Shawn Zheng
         primary_author_status: false
-        corresponding_author_status: true
+        corresponding_author_status: false
         ORCID: 0000-0001-9517-3075
       - name: Mohammadreza Paraan
         ORCID: 0000-0002-8402-0134
-        primary_author_status: true
+        primary_author_status: false
         corresponding_author_status: true
         email: reza.paraan@czii.org
     cross_references:
