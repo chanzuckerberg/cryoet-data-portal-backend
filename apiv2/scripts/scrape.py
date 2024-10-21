@@ -229,7 +229,7 @@ def add(session, model, item, parents):
     if model == models.Tiltseries:
         local_item_data = {
             "run_id": parents["run_id"],
-            "deposition_id": parents["deposition_id"],  # We don't have deposition id's yet
+            "deposition_id": remote_item["deposition_id"],
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
             "s3_mrc_file": remote_item["s3_mrc_bin1"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
@@ -289,7 +289,7 @@ def add(session, model, item, parents):
     if model == models.Tomogram:
         local_item_data = {
             "alignment_id": parents["alignment_id"],
-            "deposition_id": parents["deposition_id"],
+            "deposition_id": remote_item["deposition_id"],
             "tomogram_voxel_spacing_id": parents["tomogram_voxel_spacing_id"],
             "run_id": parents["run_id"],
             "name": remote_item["name"],
