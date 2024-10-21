@@ -192,6 +192,7 @@ def populate_stale_tomogram_voxel_spacing(run_id: int = RUN1_ID) -> None:
     TomogramAuthor.create(tomogram_id=stale_tomogram.id, name="John John", author_list_order=2)
     stale_annotation = Annotation.create(
         tomogram_voxel_spacing_id=stale_voxel_spacing.id,
+        deposition_id=DEPOSITION_ID2,
         s3_metadata_path="foo",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
@@ -342,14 +343,15 @@ def populate_annotations() -> None:
     Annotation.create(
         id=ANNOTATION_ID,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
+        deposition_id=DEPOSITION_ID2,
         s3_metadata_path="s3://test-public-bucket/30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
         release_date="2025-06-01",
         last_modified_date="2025-06-01",
-        annotation_method="",
+        annotation_method="2D CNN predictions",
         ground_truth_status=False,
-        object_name="bar",
+        object_name="foo",
         object_count=0,
         object_id="invalid-id",
         annotation_software="bar",
@@ -360,6 +362,7 @@ def populate_stale_annotations() -> None:
     Annotation.create(
         id=STALE_ANNOTATION_ID,
         tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
+        deposition_id=DEPOSITION_ID2,
         s3_metadata_path="foo",
         https_metadata_path="foo",
         deposition_date="2025-04-01",

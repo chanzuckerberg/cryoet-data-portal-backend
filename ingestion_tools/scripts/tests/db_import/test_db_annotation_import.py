@@ -19,7 +19,7 @@ import common.db_models as models
 
 @pytest.fixture
 def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
-    path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json"
+    path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100/foo-1.0.json"
     return [
         {
             "id": ANNOTATION_ID,
@@ -43,12 +43,12 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
                 {
                     "link": "https://fake-link.com/resources/100-foo-1.0_method.pdf",
                     "link_type": "documentation",
-                    "name": "Method Documentation",
+                    "custom_name": "Method Documentation",
                 },
                 {
                     "link": "https://another-link.com/100-foo-1.0_code.zip",
                     "link_type": "source_code",
-                    "name": "Source Code",
+                    "custom_name": "Source Code",
                 },
             ],
         },
@@ -57,7 +57,7 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
 
 @pytest.fixture
 def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
-    path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/Annotations/"
+    path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/"
     return [
         {
             "id": ANNOTATION_FILE_ID,
