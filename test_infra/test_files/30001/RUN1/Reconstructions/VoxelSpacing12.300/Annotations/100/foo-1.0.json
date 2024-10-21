@@ -16,7 +16,7 @@
     {
       "name": "Jane Smith",
       "corresponding_author_status": false,
-      "primary_annotator_status": true
+      "primary_author_status": true
     },
     {
       "name": "J Carpenter",
@@ -27,7 +27,7 @@
       "name": "John Doe",
       "ORCID": "0000-0000-1234-0000",
       "corresponding_author_status": false,
-      "primary_annotator_status": false,
+      "primary_author_status": false,
       "email": "jdoe@test.com"
     }
   ],
@@ -38,19 +38,19 @@
   "files": [
     {
       "format": "ndjson",
-      "path": "30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0_point.ndjson",
+      "path": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100-foo-1.0_point.ndjson",
       "shape": "Point",
       "is_visualization_default": true
     },
     {
       "format": "mrc",
-      "path": "30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0_segmask.mrc",
+      "path": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100-foo-1.0_segmask.mrc",
       "shape": "SegmentationMask",
       "is_visualization_default": false
     },
     {
       "format": "zarr",
-      "path": "30001/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0_segmask.zarr",
+      "path": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100-foo-1.0_segmask.zarr",
       "shape": "SegmentationMask",
       "is_visualization_default": false
     }
@@ -59,12 +59,12 @@
     {
       "link": "https://fake-link.com/resources/100-foo-1.0_method.pdf",
       "link_type": "documentation",
-      "name": "Method Documentation"
+      "custom_name": "Method Documentation"
     },
     {
       "link": "https://another-link.com/100-foo-1.0_code.zip",
       "link_type": "source_code",
-      "name": "Source Code"
+      "custom_name": "Source Code"
     }
   ],
   "deposition_id": 301,

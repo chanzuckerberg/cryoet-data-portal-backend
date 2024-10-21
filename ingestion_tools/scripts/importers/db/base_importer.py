@@ -4,10 +4,10 @@ import os
 from datetime import datetime
 from pathlib import PurePath
 from typing import TYPE_CHECKING, Any, Optional
-from s3fs import S3FileSystem
 
 import peewee
 from botocore.exceptions import ClientError
+from s3fs import S3FileSystem
 
 from common.db_models import BaseModel
 

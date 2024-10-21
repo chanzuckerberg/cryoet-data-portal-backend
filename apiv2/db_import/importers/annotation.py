@@ -41,6 +41,7 @@ class AnnotationItem(ItemDBImporter):
         }
         self.model_args.update(extra_data)
 
+
 class AnnotationShapeItem(ItemDBImporter):
     id_fields = ["annotation_id", "shape_type"]
     model_class = models.AnnotationShape
@@ -51,13 +52,14 @@ class AnnotationShapeItem(ItemDBImporter):
     def load_computed_fields(self):
         self.model_args["annotation_id"] = self.input_data["annotation"].id
 
+
 class AnnotationFileItem(ItemDBImporter):
     id_fields = ["format", "tomogram_voxel_spacing_id", "annotation_shape_id"]
     model_class = models.AnnotationFile
     direct_mapped_fields = {
-            "format": ["format"],
-            "is_visualization_default": ["is_visualization_default"],
-        }
+        "format": ["format"],
+        "is_visualization_default": ["is_visualization_default"],
+    }
 
     def calculate_source(self) -> str:
         # "dataset_author" or "community" or "portal_standard"
@@ -77,6 +79,7 @@ class AnnotationFileItem(ItemDBImporter):
         self.model_args["source"] = self.calculate_source()
         self.model_args["s3_path"] = self.get_s3_url(self.input_data["path"])
         self.model_args["https_path"] = self.get_https_url(self.input_data["path"])
+
 
 class AnnotationImporter(IntegratedDBImporter):
     finder = MetadataFileFinder
@@ -101,12 +104,20 @@ class AnnotationImporter(IntegratedDBImporter):
             "file_glob": "*/*.json",
         }
 
+
 class AnnotationShapeImporter(IntegratedDBImporter):
     finder = JsonDataFinder
     row_importer = AnnotationShapeItem
     clean_up_siblings = True
 
-    def __init__(self, config, annotation: models.Annotation, run: models.Run, tomogram_voxel_spacing: models.TomogramVoxelSpacing, **unused_parents):
+    def __init__(
+        self,
+        config,
+        annotation: models.Annotation,
+        run: models.Run,
+        tomogram_voxel_spacing: models.TomogramVoxelSpacing,
+        **unused_parents,
+    ):
         self.run = run
         self.tomogram_voxel_spacing = tomogram_voxel_spacing
         self.annotation = annotation
@@ -123,18 +134,32 @@ class AnnotationShapeImporter(IntegratedDBImporter):
             "list_key": ["files"],
         }
 
+
 class AnnotationFileImporter(IntegratedDBImporter):
     finder = JsonDataFinder
     row_importer = AnnotationFileItem
     clean_up_siblings = True
 
-    def __init__(self, config, annotation: models.Annotation, annotation_shape: models.AnnotationShape, run: models.Run, tomogram_voxel_spacing: models.TomogramVoxelSpacing, **unused_parents):
+    def __init__(
+        self,
+        config,
+        annotation: models.Annotation,
+        annotation_shape: models.AnnotationShape,
+        run: models.Run,
+        tomogram_voxel_spacing: models.TomogramVoxelSpacing,
+        **unused_parents,
+    ):
         self.run = run
         self.tomogram_voxel_spacing = tomogram_voxel_spacing
         self.annotation = annotation
         self.annotation_shape = annotation_shape
         self.config = config
-        self.parents = {"run": run, "tomogram_voxel_spacing": tomogram_voxel_spacing, "annotation_shape": annotation_shape, "annotation": annotation}
+        self.parents = {
+            "run": run,
+            "tomogram_voxel_spacing": tomogram_voxel_spacing,
+            "annotation_shape": annotation_shape,
+            "annotation": annotation,
+        }
 
     def get_filters(self) -> dict[str, Any]:
         return {"annotation_shape_id": self.annotation_shape.id}
@@ -147,6 +172,7 @@ class AnnotationFileImporter(IntegratedDBImporter):
             "match_key": "shape",
             "match_value": self.annotation_shape.shape_type,
         }
+
 
 class AnnotationAuthorItem(ItemDBImporter):
     id_fields = ["annotation_id", "name"]
@@ -164,7 +190,12 @@ class AnnotationAuthorItem(ItemDBImporter):
     }
 
     def load_computed_fields(self):
+        if not self.model_args.get("primary_author_status"):
+            self.model_args["primary_author_status"] = False
+        if not self.model_args.get("corresponding_author_status"):
+            self.model_args["corresponding_author_status"] = False
         self.model_args["annotation_id"] = self.input_data["annotation"].id
+
 
 class AnnotationAuthorImporter(IntegratedDBImporter):
     finder = JsonDataFinder
@@ -198,6 +229,7 @@ class AnnotationMethodLinkItem(ItemDBImporter):
 
     def load_computed_fields(self):
         self.model_args["annotation_id"] = self.input_data["annotation"].id
+
 
 class AnnotationMethodLinkImporter(IntegratedDBImporter):
     finder = JsonDataFinder

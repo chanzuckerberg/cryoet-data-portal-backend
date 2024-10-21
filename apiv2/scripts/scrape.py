@@ -453,7 +453,7 @@ def db_import_dataset(client_url, db_uri, dataset_id: int):
 @click.option("--import-deposition", help="Import specific depositions (multiple ok)", multiple=True, type=int)
 @click.option("--db-uri", help="Database URI")
 @click.option(
-    "--import-all-depositions", is_flag=True, help="Whether to import depositions", required=False, default=False
+    "--import-all-depositions", is_flag=True, help="Whether to import depositions", required=False, default=False,
 )
 @click.option("--parallelism", help="how many processes to run in parallel", required=True, default=10, type=int)
 def do_import(env, import_dataset, import_deposition, db_uri, import_all_depositions, skip_until, parallelism):

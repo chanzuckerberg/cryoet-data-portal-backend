@@ -1,9 +1,9 @@
-from functools import lru_cache
 import json
 import logging
 import os
 import re
 from abc import ABC, abstractmethod
+from functools import lru_cache
 from typing import TYPE_CHECKING, Any
 
 from db_import.common.config import DBImportConfig

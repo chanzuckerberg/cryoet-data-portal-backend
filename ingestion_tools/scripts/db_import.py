@@ -172,7 +172,7 @@ def load(
                 if import_tomograms:
                     tomogram_cleaner = StaleTomogramDeletionDBImporter(voxel_spacing_obj.id, config)
                     for tomogram in TomogramDBImporter.get_item(
-                        voxel_spacing_obj.id, voxel_spacing, dataset_obj, config
+                        voxel_spacing_obj.id, voxel_spacing, dataset_obj, config,
                     ):
                         tomogram_obj = tomogram.import_to_db()
                         tomogram_cleaner.mark_as_active(tomogram_obj)

@@ -17,12 +17,12 @@ from platformics.database.models import Base
 def expected_gains(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
-            "s3_file_path": "s3://test-public-bucket/30001/RUN1/Frames/run1_gain.mrc",
-            "https_file_path": "https://foo.com/30001/RUN1/Frames/run1_gain.mrc",
+            "s3_file_path": "s3://test-public-bucket/30001/RUN1/Gains/run1_gain.mrc",
+            "https_file_path": "https://foo.com/30001/RUN1/Gains/run1_gain.mrc",
         },
         {
-            "s3_file_path": "s3://test-public-bucket/30001/RUN1/Frames/run1a_gain.mrc",
-            "https_file_path": "https://foo.com/30001/RUN1/Frames/run1a_gain.mrc",
+            "s3_file_path": "s3://test-public-bucket/30001/RUN1/Gains/run1a_gain.mrc",
+            "https_file_path": "https://foo.com/30001/RUN1/Gains/run1a_gain.mrc",
         },
     ]
 
@@ -35,7 +35,7 @@ def populate_existing_gains(session: sa.orm.Session) -> models.GainFile:
     return models.GainFile(
         id=333,
         run_id=RUN1_ID,
-        s3_file_path="s3://test-public-bucket/30001/RUN1/Frames/run1_gain.mrc",
+        s3_file_path="s3://test-public-bucket/30001/RUN1/Gains/run1_gain.mrc",
         https_file_path="meep",
     )
 
@@ -52,9 +52,10 @@ def test_import_gains(
     actual = verify_dataset_import(import_gains=True)
     expected_iter = iter(expected_gains)
     for run in [run for run in actual.runs if run.name == "RUN1"]:
+        gains = sorted(run.gain_files, key=lambda x: x.id, reverse=True)
         assert len(run.gain_files) == 2
-        assert run.gain_files[0].id == 333
-        for gain in run.gain_files:
+        assert gains[0].id == 333
+        for gain in gains:
             expected = next(expected_iter)
             if "run_id" not in expected:
                 expected["run_id"] = run.id

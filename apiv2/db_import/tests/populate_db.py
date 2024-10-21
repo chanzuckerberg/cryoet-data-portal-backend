@@ -488,8 +488,8 @@ def populate_annotation_files(session: sa.orm.Session) -> None:
     )
     file = AnnotationFile(
         id=ANNOTATION_FILE_ID,
-        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         annotation_shape=shape,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         format="ndjson",
         **default_kwargs,
     )

@@ -1,15 +1,9 @@
 # Copies data from a v1 GraphQL api into a v2 database.
-import sqlalchemy as sa
-import contextlib
-import json
 import os
-from concurrent.futures import ProcessPoolExecutor, as_completed
 
 import click
-import cryoet_data_portal as cdp
-import requests
+import sqlalchemy as sa
 from database import models
-from support.enums import tomogram_reconstruction_method_enum as reconstruction_enum
 
 from platformics.database.connect import init_sync_db
 
