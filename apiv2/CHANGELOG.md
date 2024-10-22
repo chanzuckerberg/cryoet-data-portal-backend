@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.4.0...apiv2-v1.5.0) (2024-10-22)
+
+
+### Features
+
+* update apiv2 db ingestion to support new s3 schema ([#324](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/324)) ([02441de](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/02441dea0c008ac476bb0e993fb01c8331cd8f8b))
+
+
+### Bug Fixes
+
+* fixes for db ingestion ([#334](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/334)) ([d142394](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/d1423949f534667fc6131eb29729c040461cc16d))
+
 ## [1.4.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.3.0...apiv2-v1.4.0) (2024-10-16)
 
 
