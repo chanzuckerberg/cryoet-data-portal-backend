@@ -112,60 +112,7 @@ dataset_keyphotos:
 
 datasets:
 - metadata:
-    authors:
-      - name: Mallak Ali
-        ORCID: 0009-0007-8169-0996
-        primary_author_status: true
-        corresponding_author_status: false
-        email: mallak.ali@czii.org
-      - name: Yue Yu
-        ORCID: 0000-0002-3248-9678
-        primary_author_status: true
-        corresponding_author_status: false
-        email: yue.yu@czii.org
-      - name: John Glass
-        ORCID: 0000-0002-3784-5301
-        primary_author_status: true
-        corresponding_author_status: false
-        email: jglass@jcvi.org
-      - name: Mohammadreza Paraan
-        ORCID: 0000-0002-8402-0134
-        primary_author_status: true
-        corresponding_author_status: true
-        email: reza.paraan@czii.org
-    cell_strain:
-      name: JCVI-syn3A
-    cell_type:
-      id: CL:0000520
-      name: prokaryotic cell
-    dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically
-      reduced genome cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12).
-    dataset_identifier: 10442
-    dataset_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram averaging pipelines
-    dates: *id002
-    funding:
-    - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: 'CZII-2023–327779'
-    grid_preparation: 'Glow discharge Quantifoil Cu 200 mesh 2/1 + apply 4ul of pellet to grid + blot for 6 seconds +
-      plunge-freeze'
-    organism:
-      name: Mycoplasma mycoides subsp. capri str. GM12
-      taxonomy_id: 436113
-    sample_preparation: 'If in liquid culture, breifly centrifuge tube at low speed to mix liquid; if frozen, dethaw
-      cells at -80C (or on dry ice) & gently mix until ready to transfer to culture + Set up culture tubes with 1mL SP4
-      media each + In hood, transfer ~10uL of liquid (or scrape a small amount of the frozen culture) and add to culture
-      tube + Set aside culture tube of media only to assist in monitoring pH (color should change in ~1-3 days) +
-      For scaling up, cultures can be scaled by 1:100 dilution into fresh prewarmed media for overnight culturing +
-      For long-term storage, cultures can be aliquoted and frozen in -80C (stable for several months); best to freeze
-      cultures right after media turns orange.'
-    sample_type: cell
-  sources:
-  - literal:
-      value:
-      - '10442'
-depositions:
-- metadata:
-    authors:
+    authors: &dataset_authors
       - name: Mallak Ali
         primary_author_status: true
         corresponding_author_status: false
@@ -196,6 +143,44 @@ depositions:
         primary_author_status: false
         corresponding_author_status: true
         email: reza.paraan@czii.org
+    cell_strain:
+      name: JCVI-syn3A
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
+    dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically
+      reduced genome cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12).
+      Samples were prepared by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4 using a Falcon
+      4i detector and SelctrisX energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23. The deposition also
+      includes locations of cytosolic ribosomes identified using slabpick and membrane segmenations created using
+      membrain-seg.
+    dataset_identifier: 10442
+    dataset_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram
+      averaging pipelines
+    dates: *id002
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: 'CZII-2023–327779'
+    grid_preparation: 'Glow discharge Quantifoil Cu 200 mesh 2/1 + apply 4ul of pellet to grid + blot for 6 seconds +
+      plunge-freeze'
+    organism:
+      name: Mycoplasma mycoides subsp. capri str. GM12
+      taxonomy_id: 436113
+    sample_preparation: 'If in liquid culture, breifly centrifuge tube at low speed to mix liquid; if frozen, dethaw
+      cells at -80C (or on dry ice) & gently mix until ready to transfer to culture + Set up culture tubes with 1mL SP4
+      media each + In hood, transfer ~10uL of liquid (or scrape a small amount of the frozen culture) and add to culture
+      tube + Set aside culture tube of media only to assist in monitoring pH (color should change in ~1-3 days) +
+      For scaling up, cultures can be scaled by 1:100 dilution into fresh prewarmed media for overnight culturing +
+      For long-term storage, cultures can be aliquoted and frozen in -80C (stable for several months); best to freeze
+      cultures right after media turns orange.'
+    sample_type: cell
+  sources:
+  - literal:
+      value:
+      - '10442'
+depositions:
+- metadata:
+    authors: *dataset_authors
     cross_references:
       publications: doi:10.7554/eLife.36842
     dates: *id002
