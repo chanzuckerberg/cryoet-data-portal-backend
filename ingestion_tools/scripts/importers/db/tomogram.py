@@ -72,12 +72,10 @@ class TomogramDBImporter(BaseDBImporter):
             return "CANONICAL"
         return "UNKOWN"  # TYPO that's also reflected in the db :'(
 
-    def generate_neuroglancer_data(self) -> str:
-        tomogram_id = self.dir_prefix.split("/").pop()
-        path = os.path.relpath(
-            os.path.join(self.dir_prefix, f"../../NeuroglancerPrecompute/{tomogram_id}-neuroglancer_config.json"),
-        )
-        config = self.config.load_key_json(path, is_file_required=True)
+    def generate_neuroglancer_data(self, config_path) -> str:
+        if not config_path:
+            return "{}"
+        config = self.config.load_key_json(config_path, is_file_required=True)
         # TODO: Log warning
         return json.dumps(config, separators=(",", ":")) if config else "{}"
 
@@ -94,7 +92,7 @@ class TomogramDBImporter(BaseDBImporter):
             "https_mrc_scale0": self.get_https_url(self.metadata["mrc_file"]),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
-            "neuroglancer_config": self.generate_neuroglancer_data(),
+            "neuroglancer_config": self.generate_neuroglancer_data(self.metadata.get("neuroglancer_config_path")),
             "type": self.get_tomogram_type(),
         }
         if key_photos := self.metadata.get("key_photo"):

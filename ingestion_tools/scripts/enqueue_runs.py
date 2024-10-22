@@ -175,7 +175,7 @@ def get_datasets(
     exclude_datasets = [re.compile(pattern) for pattern in exclude_dataset]
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", config=s3_config)
-    config = DBImportConfig(s3_client, s3_bucket, https_prefix)
+    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix)
 
     datasets_to_check = []
     if include_dataset:
@@ -198,7 +198,7 @@ def get_datasets(
 def get_depositions(s3_bucket, include_depositions, anonymous: bool):
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", config=s3_config)
-    config = DBImportConfig(s3_client, s3_bucket, "")
+    config = DBImportConfig(s3_client, None, s3_bucket, "")
     for dep in include_depositions:
         for deposition in DepositionDBImporter.get_items(config, dep):
             deposition_id = os.path.basename(deposition.dir_prefix.strip("/"))

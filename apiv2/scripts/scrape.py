@@ -88,7 +88,7 @@ def add(session, model, item, parents):
             # "primary_author_status": remote_item.get["primary_annotator_status"],
             # "corresponding_author_status": remote_item.get("corresponding_annotator_status"),
             "run_id": parents["run_id"],
-            "deposition_id": parents["deposition_id"],  # Doesn't exist in the old api.
+            "deposition_id": remote_item["deposition_id"],  # Doesn't exist in the old api.
             "s3_metadata_path": remote_item["s3_metadata_path"],
             "https_metadata_path": remote_item["https_metadata_path"],
             "annotation_publication": remote_item["annotation_publication"],
@@ -229,7 +229,7 @@ def add(session, model, item, parents):
     if model == models.Tiltseries:
         local_item_data = {
             "run_id": parents["run_id"],
-            "deposition_id": parents["deposition_id"],  # We don't have deposition id's yet
+            "deposition_id": remote_item["deposition_id"],
             "s3_omezarr_dir": remote_item["s3_omezarr_dir"],
             "s3_mrc_file": remote_item["s3_mrc_bin1"],
             "https_omezarr_dir": remote_item["https_omezarr_dir"],
@@ -289,7 +289,7 @@ def add(session, model, item, parents):
     if model == models.Tomogram:
         local_item_data = {
             "alignment_id": parents["alignment_id"],
-            "deposition_id": parents["deposition_id"],
+            "deposition_id": remote_item["deposition_id"],
             "tomogram_voxel_spacing_id": parents["tomogram_voxel_spacing_id"],
             "run_id": parents["run_id"],
             "name": remote_item["name"],

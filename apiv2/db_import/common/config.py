@@ -10,6 +10,7 @@ import sqlalchemy as sa
 from botocore.exceptions import ClientError
 from database import models
 from s3fs import S3FileSystem
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
 
 if TYPE_CHECKING:
@@ -66,8 +67,14 @@ class DBImportConfig:
         # '_' is a wildcard character in sql LIKE queries, so we need to escape them!
         escaped_path = os.path.dirname(path).replace("_", "\\_")
         path = os.path.join(self.s3_prefix, escaped_path, "%")
-        item = session.scalars(sa.select(models.Tiltseries).where(models.Tiltseries.s3_mrc_file.like(path))).one()
-        return item.id
+        try:
+            item = session.scalars(sa.select(models.Tiltseries).where(models.Tiltseries.s3_mrc_file.like(path))).one()
+            return item.id
+        except NoResultFound:
+            # We have a few runs that (erroneously) are missing tiltseries.
+            # They need to be fixed, but in the meantime let's not fail ingestion
+            # for the entire dataset based on that problem.
+            return None
 
     def find_subdirs_with_files(self, prefix: str, target_filename: str) -> list[str]:
         paginator = self.s3_client.get_paginator("list_objects_v2")
