@@ -115,7 +115,7 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "offset_x": 0,
         "offset_y": 0,
         "offset_z": 0,
-        "neuroglancer_config": '{"foo":"bar","baz":"test"}',
+        "neuroglancer_config": None,
         "deposition_id": 300,
         "is_portal_standard": False,
         "deposition_date": date(2022, 4, 2),
