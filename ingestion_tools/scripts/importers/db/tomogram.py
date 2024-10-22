@@ -39,7 +39,7 @@ class TomogramDBImporter(BaseDBImporter):
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
-        return ["name", "tomogram_voxel_spacing_id"]
+        return ["tomogram_voxel_spacing_id", "deposition_id", "processing", "reconstruction_method"]
 
     @classmethod
     def get_db_model_class(cls) -> type[BaseModel]:
