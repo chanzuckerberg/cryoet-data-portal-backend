@@ -1,5 +1,4 @@
 import json
-from sqlalchemy.exc import NoResultFound
 import logging
 import os
 from datetime import datetime
@@ -11,6 +10,7 @@ import sqlalchemy as sa
 from botocore.exceptions import ClientError
 from database import models
 from s3fs import S3FileSystem
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
 
 if TYPE_CHECKING:
