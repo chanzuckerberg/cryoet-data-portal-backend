@@ -25,11 +25,11 @@ from platformics.database.models import Base
 
 @pytest.fixture
 def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
-    path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/Annotations/100-foo-1.0.json"
+    path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100/foo-1.0.json"
     return [
         {
             "id": ANNOTATION_ID,
-            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
+            "run_id": RUN1_ID,
             "s3_metadata_path": f"s3://test-public-bucket/{path}",
             "https_metadata_path": f"{http_prefix}/{path}",
             "deposition_date": datetime.date(2023, 4, 1),
@@ -45,48 +45,36 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
             "object_count": 16,
             "deposition_id": 301,
             "method_type": "hybrid",
-            "method_links": [
-                {
-                    "link": "https://fake-link.com/resources/100-foo-1.0_method.pdf",
-                    "link_type": "documentation",
-                    "name": "Method Documentation",
-                },
-                {
-                    "link": "https://another-link.com/100-foo-1.0_code.zip",
-                    "link_type": "source_code",
-                    "name": "Source Code",
-                },
-            ],
         },
     ]
 
 
 @pytest.fixture
 def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
-    path = f"{DATASET_ID}/RUN1/Tomograms/VoxelSpacing12.300/Annotations/"
+    path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/"
     return [
         {
             "id": ANNOTATION_FILE_ID,
-            "annotation_id": ANNOTATION_ID,
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_point.ndjson",
             "https_path": f"{http_prefix}/{path}100-foo-1.0_point.ndjson",
-            "shape_type": "Point",
+            "source": "community",
             "format": "ndjson",
             "is_visualization_default": True,
         },
         {
-            "annotation_id": ANNOTATION_ID,
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_segmask.mrc",
             "https_path": f"{http_prefix}/{path}100-foo-1.0_segmask.mrc",
-            "shape_type": "SegmentationMask",
+            "source": "community",
             "format": "mrc",
             "is_visualization_default": False,
         },
         {
-            "annotation_id": ANNOTATION_ID,
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_segmask.zarr",
             "https_path": f"{http_prefix}/{path}100-foo-1.0_segmask.zarr",
-            "shape_type": "SegmentationMask",
+            "source": "community",
             "format": "zarr",
             "is_visualization_default": False,
         },
@@ -101,7 +89,6 @@ def expected_annotation_authors() -> list[dict[str, Any]]:
             "annotation_id": ANNOTATION_ID,
             "name": "Jane Smith",
             "corresponding_author_status": False,
-            "primary_annotator_status": True,
             "primary_author_status": True,
             "author_list_order": 1,
         },
@@ -109,7 +96,6 @@ def expected_annotation_authors() -> list[dict[str, Any]]:
             "annotation_id": ANNOTATION_ID,
             "name": "J Carpenter",
             "corresponding_author_status": False,
-            "primary_annotator_status": True,
             "primary_author_status": True,
             "author_list_order": 2,
         },
@@ -117,7 +103,6 @@ def expected_annotation_authors() -> list[dict[str, Any]]:
             "annotation_id": ANNOTATION_ID,
             "name": "John Doe",
             "corresponding_author_status": False,
-            "primary_annotator_status": False,
             "primary_author_status": False,
             "orcid": "0000-0000-1234-0000",
             "email": "jdoe@test.com",
@@ -160,16 +145,19 @@ def test_import_annotations(
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
     actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    files = []
     for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
-        assert len(annotation.files) == len(expected_annotation_files)
-        for shape in sorted(annotation.shapes, key=lambda x: x.shape):
-            for file in sorted(shape.files, key=lambda x: x.format):
+        for shape in sorted(annotation.annotation_shapes, key=lambda x: x.shape_type):
+            files.extend(shape.annotation_files)
+            for file in sorted(shape.annotation_files, key=lambda x: x.format):
                 verify_model(file, next(expected_annotations_files_iter))
         assert len(annotation.authors) == 0
+    assert len(files) == len(expected_annotation_files)
 
 
 # Tests state annotation and files are removed
+@pytest.mark.skip(reason="Cleaning up stale annotations is currently disabled.")
 def test_import_annotations_files_removes_stale(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
@@ -207,7 +195,7 @@ def test_import_annotation_authors(
     actual_runs = sync_db_session.get(models.Run, RUN1_ID)
     for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         assert len(annotation.authors) == len(expected_annotation_authors)
-        for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
+        for author in sorted(annotation.authors, key=lambda x: x.author_list_order):
             verify_model(author, next(expected_annotations_authors_iter))
 
 
@@ -226,8 +214,10 @@ def test_import_annotation_authors_removes_stale(
     expected_annotations_authors_iter = iter(expected_annotation_authors)
     actual_runs = sync_db_session.get(models.Run, RUN1_ID)
     for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
+        if annotation.id != ANNOTATION_ID:
+            continue
         assert len(annotation.authors) == len(expected_annotation_authors)
-        for author in annotation.authors.order_by(models.AnnotationAuthor.author_list_order):
+        for author in sorted(annotation.authors, key=lambda x: x.author_list_order):
             verify_model(author, next(expected_annotations_authors_iter))
 
 
@@ -246,8 +236,7 @@ def test_import_annotation_method_links(
     actual_runs = sync_db_session.get(models.Run, RUN1_ID)
     for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         assert len(annotation.method_links) == len(expected_annotation_method_links)
-        # for item in annotation.method_links.order_by(models.AnnotationMethodLink.link):
-        for item in sorted(annotation.method_links, key=lambda x: x.link):
+        for item in sorted(annotation.method_links, key=lambda x: x.link, reverse=True):
             verify_model(item, next(expected_iter))
 
 

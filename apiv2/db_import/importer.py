@@ -6,11 +6,13 @@ import click
 from botocore import UNSIGNED
 from botocore.config import Config
 from db_import.common.config import DBImportConfig
+from db_import.importers.alignment import AlignmentImporter
 from db_import.importers.annotation import (
-    AnnotationAuthorDBImporter,
-    AnnotationDBImporter,
-    AnnotationMethodLinkDBImporter,
-    StaleAnnotationDeletionDBImporter,
+    AnnotationAuthorImporter,
+    AnnotationFileImporter,
+    AnnotationImporter,
+    AnnotationMethodLinkImporter,
+    AnnotationShapeImporter,
 )
 from db_import.importers.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
 from db_import.importers.deposition import DepositionAuthorDBImporter, DepositionDBImporter, DepositionTypeDBImporter
@@ -18,8 +20,9 @@ from db_import.importers.frame import FrameImporter
 from db_import.importers.gain import GainImporter
 from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
 from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
-from db_import.importers.tomogram import StaleTomogramDeletionDBImporter, TomogramAuthorDBImporter, TomogramDBImporter
+from db_import.importers.tomogram import TomogramAuthorImporter, TomogramImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
+from s3fs import S3FileSystem
 
 from platformics.database.connect import init_sync_db
 
@@ -41,6 +44,7 @@ def db_import_options(func):
     options.append(click.option("--import-dataset-funding", is_flag=True, default=False))
     options.append(click.option("--import-depositions", is_flag=True, default=False))
     options.append(click.option("--import-runs", is_flag=True, default=False))
+    options.append(click.option("--import-alignments", is_flag=True, default=False))
     options.append(click.option("--import-gains", is_flag=True, default=False))
     options.append(click.option("--import-frames", is_flag=True, default=False))
     options.append(click.option("--import-tiltseries", is_flag=True, default=False))
@@ -86,6 +90,7 @@ def load(
     import_dataset_funding: bool,
     import_depositions: bool,
     import_runs: bool,
+    import_alignments: bool,
     import_gains: bool,
     import_frames: bool,
     import_tiltseries: bool,
@@ -110,6 +115,7 @@ def load(
         import_dataset_funding,
         import_depositions,
         import_runs,
+        import_alignments,
         import_gains,
         import_frames,
         import_tiltseries,
@@ -136,6 +142,7 @@ def load_func(
     import_dataset_funding: bool = False,
     import_depositions: bool = False,
     import_runs: bool = False,
+    import_alignments: bool = False,
     import_gains: bool = False,
     import_frames: bool = False,
     import_tiltseries: bool = False,
@@ -159,6 +166,7 @@ def load_func(
         import_dataset_funding = True
         import_depositions = True
         import_runs = True
+        import_alignments = True
         import_gains = True
         import_frames = True
         import_tiltseries = True
@@ -169,11 +177,19 @@ def load_func(
         import_annotations = max(import_annotations, import_annotation_authors, import_annotation_method_links)
         import_tomograms = max(import_tomograms, import_tomogram_authors)
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
-        import_runs = max(import_runs, import_gains, import_frames, import_tiltseries, import_tomogram_voxel_spacing)
+        import_runs = max(
+            import_runs,
+            import_alignments,
+            import_gains,
+            import_frames,
+            import_tiltseries,
+            import_tomogram_voxel_spacing,
+        )
 
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", endpoint_url=endpoint_url, config=s3_config)
-    config = DBImportConfig(s3_client, s3_bucket, https_prefix, session)
+    s3fs = S3FileSystem(client_kwargs={"endpoint_url": endpoint_url})
+    config = DBImportConfig(s3_client, s3fs, s3_bucket, https_prefix, session)
 
     if import_depositions and deposition_id:
         for dep_id in deposition_id:
@@ -183,6 +199,8 @@ def load_func(
                 deposition_authors.import_to_db()
                 deposition_types = DepositionTypeDBImporter.get_item(deposition_obj.id, deposition_importer, config)
                 deposition_types.import_to_db()
+
+    config.load_deposition_map()
 
     for dataset in DatasetDBImporter.get_items(config, s3_prefix):
         if filter_dataset and dataset.dir_prefix not in filter_dataset:
@@ -224,6 +242,9 @@ def load_func(
                     tiltseries_obj = tiltseries.import_to_db()
                     tiltseries_cleaner.mark_as_active(tiltseries_obj)
                 tiltseries_cleaner.remove_stale_objects()
+            if import_alignments:
+                alignment_importer = AlignmentImporter(config, **parents)
+                alignment_importer.import_items()
 
             if not import_tomogram_voxel_spacing:
                 continue
@@ -233,38 +254,30 @@ def load_func(
                 voxel_spacing_obj = voxel_spacing.import_to_db()
 
                 if import_tomograms:
-                    tomogram_cleaner = StaleTomogramDeletionDBImporter(voxel_spacing_obj.id, config)
-                    TomogramDBImporter.load_deposition_map(config)
-                    for tomogram in TomogramDBImporter.get_item(voxel_spacing_obj.id, run_id, voxel_spacing, config):
-                        tomogram_obj = tomogram.import_to_db()
-                        tomogram_cleaner.mark_as_active(tomogram_obj)
-
+                    parents = {"run": run_obj, "voxel_spacing": voxel_spacing_obj}
+                    tomo_importer = TomogramImporter(config, **parents)
+                    for tomogram_obj in tomo_importer.import_items():
                         if import_tomogram_authors:
-                            tomogram_authors = TomogramAuthorDBImporter.get_item(tomogram_obj.id, tomogram, config)
-                            tomogram_authors.import_to_db()
-                    tomogram_cleaner.remove_stale_objects()
+                            parents = {"run": run_obj, "voxel_spacing": voxel_spacing_obj, "tomogram": tomogram_obj}
+                            tomogram_authors = TomogramAuthorImporter(config, **parents)
+                            tomogram_authors.import_items()
 
                 if import_annotations:
-                    annotation_cleaner = StaleAnnotationDeletionDBImporter(run_id, config)
-                    for annotation in AnnotationDBImporter.get_item(voxel_spacing_obj.id, voxel_spacing, config):
-                        annotation_obj = annotation.import_to_db()
-                        annotation_cleaner.mark_as_active(annotation_obj)
+                    parents = {"tomogram_voxel_spacing": voxel_spacing_obj, "run": run_obj, "dataset": dataset_obj}
+                    anno_importer = AnnotationImporter(config, **parents)
+                    for anno in anno_importer.import_items():
+                        parents["annotation"] = anno
+                        annoshape = AnnotationShapeImporter(config, **parents)
+                        for shape in annoshape.import_items():
+                            annofile = AnnotationFileImporter(config, annotation_shape=shape, **parents)
+                            annofile.import_items()
 
                         if import_annotation_authors:
-                            annotation_authors = AnnotationAuthorDBImporter.get_item(
-                                annotation_obj.id,
-                                annotation,
-                                config,
-                            )
-                            annotation_authors.import_to_db()
+                            authors = AnnotationAuthorImporter(config, **parents)
+                            authors.import_items()
                         if import_annotation_method_links:
-                            anno_method_links = AnnotationMethodLinkDBImporter.get_item(
-                                annotation_obj.id,
-                                annotation,
-                                config,
-                            )
-                            anno_method_links.import_to_db()
-                    annotation_cleaner.remove_stale_objects()
+                            methodlinks = AnnotationMethodLinkImporter(config, **parents)
+                            methodlinks.import_items()
 
                 voxel_spacing_cleaner.mark_as_active(voxel_spacing_obj)
 

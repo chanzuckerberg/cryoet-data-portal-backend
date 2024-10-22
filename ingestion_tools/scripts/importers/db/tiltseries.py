@@ -60,8 +60,6 @@ class TiltSeriesDBImporter(BaseDBImporter):
             return key
 
     def get_computed_fields(self) -> dict[str, Any]:
-        https_prefix = self.config.https_prefix
-        s3_prefix = self.config.s3_prefix
         tilt_max = float(self.metadata["tilt_range"]["max"])
         tilt_min = float(self.metadata["tilt_range"]["min"])
         extra_data = {
@@ -71,25 +69,25 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "tilt_range": round(abs(tilt_max - tilt_min), 2),
             "is_aligned": self.metadata.get("is_aligned") or False,
         }
-        if mrc_path := self.metadata.get("mrc_files", [None])[0]:
-            extra_data["s3_mrc_bin1"] = self.join_path(s3_prefix, self.dir_prefix, mrc_path)
-            extra_data["https_mrc_bin1"] = self.join_path(https_prefix, self.dir_prefix, mrc_path)
+        if mrc_path := self.metadata.get("mrc_file"):
+            extra_data["s3_mrc_bin1"] = self.get_s3_url(mrc_path)
+            extra_data["https_mrc_bin1"] = self.get_https_url(mrc_path)
 
         if omezarr_path := self.metadata.get("omezarr_dir"):
-            extra_data["s3_omezarr_dir"] = self.join_path(s3_prefix, self.dir_prefix, omezarr_path)
-            extra_data["https_omezarr_dir"] = self.join_path(https_prefix, self.dir_prefix, omezarr_path)
+            extra_data["s3_omezarr_dir"] = self.get_s3_url(omezarr_path)
+            extra_data["https_omezarr_dir"] = self.get_https_url(omezarr_path)
 
         if mdoc := self.get_first_match_file_name("*.mdoc"):
-            extra_data["s3_collection_metadata"] = self.join_path(s3_prefix, mdoc)
-            extra_data["https_collection_metadata"] = self.join_path(https_prefix, mdoc)
+            extra_data["s3_collection_metadata"] = self.get_s3_url(mdoc)
+            extra_data["https_collection_metadata"] = self.get_https_url(mdoc)
 
         if angle_list := self.get_first_match_file_name("*.rawtlt") or self.get_first_match_file_name("*.tlt"):
-            extra_data["s3_angle_list"] = self.join_path(s3_prefix, angle_list)
-            extra_data["https_angle_list"] = self.join_path(https_prefix, angle_list)
+            extra_data["s3_angle_list"] = self.get_s3_url(angle_list)
+            extra_data["https_angle_list"] = self.get_https_url(angle_list)
 
         if alignment_file_path := self.get_first_match_file_name("*.xf"):
-            extra_data["s3_alignment_file"] = self.join_path(s3_prefix, alignment_file_path)
-            extra_data["https_alignment_file"] = self.join_path(https_prefix, alignment_file_path)
+            extra_data["s3_alignment_file"] = self.get_s3_url(alignment_file_path)
+            extra_data["https_alignment_file"] = self.get_https_url(alignment_file_path)
 
         deposition = importers.db.deposition.get_deposition(self.config, self.metadata.get("deposition_id"))
         extra_data["deposition_id"] = deposition.id
@@ -98,7 +96,7 @@ class TiltSeriesDBImporter(BaseDBImporter):
 
     @classmethod
     def get_item(cls, run_id: int, run: RunDBImporter, config: DBImportConfig) -> "TiltSeriesDBImporter":
-        ts_dir_path = cls.join_path(run.dir_prefix, "TiltSeries")
+        ts_dir_path = cls.join_path(run.dir_prefix, "TiltSeries/100")
         ts_prefix = config.find_subdirs_with_files(ts_dir_path, "tiltseries_metadata.json")
         return cls(run_id, ts_prefix[0], run, config) if len(ts_prefix) > 0 else None
 
