@@ -74,8 +74,7 @@ class TomogramDBImporter(BaseDBImporter):
 
     def generate_neuroglancer_data(self, config_path) -> str:
         if not config_path:
-            return {}
-        tomogram_id = self.dir_prefix.split("/").pop()
+            return "{}"
         config = self.config.load_key_json(config_path, is_file_required=True)
         # TODO: Log warning
         return json.dumps(config, separators=(",", ":")) if config else "{}"
