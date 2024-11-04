@@ -209,6 +209,7 @@ class OMEZarrReader(VolumeReader):
 
         nodes = list(reader())
         self._attrs = self.loc.root_attrs
+        self._shape = nodes[0].data[0].shape
         self._header_only = header_only
 
         if not header_only:
@@ -226,7 +227,7 @@ class OMEZarrReader(VolumeReader):
         #     rms = np.sqrt(np.mean((self.data - np.mean(self.data)) ** 2))  # Calculate RMS,
         #     dmean = np.mean(self.data)  # Calculate dmean
 
-        z, y, x = self.data.shape
+        z, y, x = self._shape
         return VolumeInfo(
             self._attrs["multiscales"][0]["datasets"][0]["coordinateTransformations"][0]["scale"][1],
             0,
