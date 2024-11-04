@@ -120,7 +120,7 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "offset_x": 0,
         "offset_y": 0,
         "offset_z": 0,
-        "neuroglancer_config": "{}",
+        "neuroglancer_config": None,
         "type": "CANONICAL",
         "deposition_id": 300,
     }
