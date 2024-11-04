@@ -275,6 +275,7 @@ def add(session, model, item, parents):
             "primary_author_status": remote_item["primary_author_status"],
         }
     if model == models.Alignment:
+        find_item_filters = [(model.run_id == parents["run_id"])]
         if not remote_item.get("affine_transformation_matrix"):
             remote_item["affine_transformation_matrix"] = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
         local_item_data = {
@@ -471,9 +472,7 @@ def do_import(env, import_dataset, import_deposition, db_uri, import_all_deposit
         client_url = "https://graphql.cryoetdataportal.cziscience.com/v1/graphql"
 
     if not db_uri:
-        db_uri = (
-            f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}",
-        )
+        db_uri = f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}"
 
     client = cdp.Client(client_url)
 
