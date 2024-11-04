@@ -72,9 +72,11 @@ class TomogramDBImporter(BaseDBImporter):
             return "CANONICAL"
         return "UNKOWN"  # TYPO that's also reflected in the db :'(
 
-    def generate_neuroglancer_data(self, config_path) -> str:
+    def generate_neuroglancer_data(self, config_path) -> str | None:
         if not config_path:
-            return "{}"
+            # Handle the case where there is no neuroglancer config file specified, which is expected when
+            # visualization_default is set to False.
+            return None
         config = self.config.load_key_json(config_path, is_file_required=True)
         # TODO: Log warning
         return json.dumps(config, separators=(",", ":")) if config else "{}"
