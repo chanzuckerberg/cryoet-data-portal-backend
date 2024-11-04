@@ -9,8 +9,9 @@ from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 
 
 class TomogramItem(ItemDBImporter):
+    # TODO - add the alignment_id field once that data is added the first time.
     id_fields = [
-        "alignment_id",
+        # "alignment_id",
         "deposition_id",
         "processing",
         "processing_software",
