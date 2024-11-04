@@ -34,7 +34,11 @@ class TomogramItem(ItemDBImporter):
     def normalize_to_unknown_str(self, value: str) -> str:
         return value.replace(" ", "_") if value else "Unknown"
 
-    def generate_neuroglancer_data(self, path) -> str:
+    def generate_neuroglancer_data(self, path) -> str | None:
+        if not path:
+            # Handle the case where there is no neuroglancer config file specified which is expected when
+            # visualization_default is set to False.
+            return None
         config = self.config.load_key_json(path, is_file_required=False)
         # TODO: Log warning
         return json.dumps(config, separators=(",", ":")) if config else "{}"
