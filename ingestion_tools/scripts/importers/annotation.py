@@ -392,6 +392,7 @@ class PointAnnotation(AbstractPointAnnotation):
         "relion3_star": pc.point_from_relion3_star,
         "relion4_star": pc.point_from_relion4_star,
         "tomoman_relion_star": pc.point_from_tomoman_relion_star,
+        "copick": pc.point_from_copick,
     }
     valid_file_formats = list(map_functions.keys())
 
@@ -438,6 +439,7 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
         "tomoman_relion_star": pc.from_tomoman_relion_star,
         "stopgap_star": pc.from_stopgap_star,
         "mod": pc.from_oriented_mod,
+        "copick": pc.from_copick,
     }
     valid_file_formats = list(map_functions.keys())
 
