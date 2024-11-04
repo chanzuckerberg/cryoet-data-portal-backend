@@ -4,6 +4,7 @@ Various conversion of euler angle to rotation matrix
 
 import contextlib
 import csv
+import json
 import os
 from dataclasses import dataclass
 from typing import List, Tuple, Union
@@ -483,3 +484,60 @@ def point_from_tomoman_relion_star(
     """ Tomoman Relion3 star format convertion to position to be applied to the instance volume. """
     filter_key = "rlnTomoName"
     return _from_relion3_star_filtered(file_path, filter_value, filter_key, binning, order, keep_orientation=False)
+
+def _from_copick(
+    file_path: Union[str, os.PathLike],
+    filter_value: str = "",
+    binning: float = 1.0,
+    order: str = "",
+    keep_orientation = True,
+) -> List[Union[OrientedPoint, Point]]:
+    """copick format conversion to position and rotation matrix."""
+
+    with open(file_path, "r") as f:
+        data = json.load(f)
+
+    copick_points = data.get("points", None)
+
+    if copick_points is None:
+        return []
+
+    points = []
+
+    for p in copick_points:
+        if keep_orientation:
+            points.append(
+                OrientedPoint(
+                    x_coord=p["location"]["x"] / binning,
+                    y_coord=p["location"]["y"] / binning,
+                    z_coord=p["location"]["z"] / binning,
+                    rot_matrix=np.array(p["transformation_"])[0:3, 0:3],
+                ),
+            )
+        else:
+            points.append(
+                Point(
+                    x_coord=p["location"]["x"] / binning,
+                    y_coord=p["location"]["y"] / binning,
+                    z_coord=p["location"]["z"] / binning,
+                ),
+            )
+
+    return points
+
+def from_copick(
+    file_path: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "",
+) -> List[OrientedPoint]:
+    return _from_copick(file_path, filter_value, binning, order, keep_orientation=True)
+
+def point_from_copick(
+    file_path: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "",
+    delimiter: str = None,
+) -> List[Point]:
+    return _from_copick(file_path, filter_value, binning, order, keep_orientation=False)

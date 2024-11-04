@@ -476,6 +476,38 @@ ingest_points_test_cases = [
             },
         ],
     },
+    # relion4_star
+    {
+        "case": "copick, disregard orientation, binning 4",
+        "source_cfg": {
+            "Point": {
+                "columns": "xyz",
+                "file_format": "copick",
+                "glob_string": "annotations/copick.json",
+                "is_visualization_default": False,
+                "binning": 10,
+            },
+        },
+        "count": 4,
+        "out_data": [
+            {
+                "type": "point",
+                "location": {"x": 4.0, "y": 2.0, "z": 3.0},
+            },
+            {
+                "type": "point",
+                "location": {"x": 0.0, "y": 5.0, "z": 1.0},
+            },
+            {
+                "type": "point",
+                "location": {"x": 3, "y": 1.5, "z": 9.2},
+            },
+            {
+                "type": "point",
+                "location": {"x": 3.0, "y": 1.0, "z": 5.0},
+            },
+        ],
+    },
 ]
 
 
@@ -977,6 +1009,58 @@ ingest_oriented_points_test_cases = [
                     [8.09016994e-01, -4.78525095e-01, 3.41328633e-01],
                     [5.87785252e-01, 6.58633290e-01, -4.69798560e-01],
                     [-2.77555756e-17, 5.80702956e-01, 8.14115518e-01],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "copick, binning 10",
+        "source_cfg": {
+            "OrientedPoint": {
+                "order": "xyz",
+                "file_format": "copick",
+                "glob_string": "annotations/copick.json",
+                "is_visualization_default": False,
+                "filter_value": None,
+                "binning": 10,
+            },
+        },
+        "count": 4,
+        "out_data": [
+            {
+                "type": "orientedPoint",
+                "location": {"x": 4.0, "y": 2.0, "z": 3.0},
+                "xyz_rotation_matrix": [
+                    [-0.0, -0.7071067811865475, 0.7071067811865475],
+                    [1.0, -0.0, 0.0],
+                    [0.0, 0.7071067811865475, 0.7071067811865475],
+                ],
+            },
+            {
+                "type": "orientedPoint",
+                "location": {"x": 0.0, "y": 5.0, "z": 1.0},
+                "xyz_rotation_matrix": [
+                    [0.6123724356957945, 0.6123724356957947, 0.4999999999999998],
+                    [-0.3535533905932737, -0.35355339059327356, 0.8660254037844386],
+                    [0.7071067811865475, -0.7071067811865475, 0.0],
+                ],
+            },
+            {
+                "type": "orientedPoint",
+                "location": {"x": 3, "y": 1.5, "z": 9.2},
+                "xyz_rotation_matrix": [
+                    [0.6424020199109172, 0.5950348471655409, 0.48296291314453405],
+                    [-0.7244443697168013, 0.6770771969714244, 0.12940952255126045],
+                    [-0.24999999999999983, -0.4330127018922193, 0.8660254037844386],
+                ],
+            },
+            {
+                "type": "orientedPoint",
+                "location": {"x": 3.0, "y": 1.0, "z": 5.0},
+                "xyz_rotation_matrix": [
+                    [0, 0.0, -1.0],
+                    [0.0, 1.0, 0.0],
+                    [1.0, 0.0, 0],
                 ],
             },
         ],
