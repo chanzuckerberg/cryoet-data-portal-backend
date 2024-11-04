@@ -46,6 +46,7 @@ class TomogramIdentifierHelper(IdentifierHelper):
                 metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path", "")),
                 metadata.get("reconstruction_method", ""),
                 metadata.get("processing", ""),
+                metadata.get("processing_software", ""),
                 str(metadata.get("deposition_id", int(parents["deposition"].name))),
             ],
         )
@@ -79,7 +80,9 @@ class TomogramImporter(VolumeImporter):
             allow_imports=allow_imports,
         )
 
-        self.alignment_metadata_path = config.to_formatted_path(alignment_metadata_path or self.get_alignment_metadata_path())
+        self.alignment_metadata_path = config.to_formatted_path(
+            alignment_metadata_path or self.get_alignment_metadata_path(),
+        )
         self.identifier = TomogramIdentifierHelper.get_identifier(
             config,
             self.get_base_metadata(),
