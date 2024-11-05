@@ -463,11 +463,13 @@ def db_import_dataset(client_url, db_uri, dataset_id: int):
 @click.option("--parallelism", help="how many processes to run in parallel", required=True, default=10, type=int)
 def do_import(env, import_dataset, import_deposition, db_uri, import_all_depositions, skip_until, parallelism):
     futures = []
-    if env not in ["prod", "staging"]:
-        print("Env must be 'prod' or 'staging'")
+    if env not in ["prod", "staging", "local"]:
+        print("Env must be 'prod' or 'staging' or 'local'")
         exit(1)
     if env == "staging":
         client_url = "https://graphql-cryoet-api.cryoet.staging.si.czi.technology/v1/graphql"
+    elif env == "local":
+        client_url = "http://localhost:8080/v1/graphql"
     else:
         client_url = "https://graphql.cryoetdataportal.cziscience.com/v1/graphql"
 
