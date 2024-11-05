@@ -10,8 +10,15 @@ from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 
 class TomogramItem(ItemDBImporter):
     # TODO - add the alignment_id field once that data is added the first time.
-    # id_fields = ["run_id", "tomogram_voxel_spacing_id", "deposition_id", "alignment_id", "processing", "reconstruction_method""]
-    id_fields = ["run_id", "tomogram_voxel_spacing_id", "deposition_id", "processing", "reconstruction_method"]
+    id_fields = [
+        # "alignment_id",
+        "deposition_id",
+        "processing",
+        "processing_software",
+        "reconstruction_method",
+        "run_id",
+        "tomogram_voxel_spacing_id",
+    ]
     model_class = models.Tomogram
     direct_mapped_fields = {
         "name": ["run_name"],
@@ -105,8 +112,6 @@ class TomogramImporter(IntegratedDBImporter):
 
 
 class TomogramAuthorItem(ItemDBImporter):
-    # TODO - add the alignment_id field once that data is added the first time.
-    # id_fields = ["run_id", "tomogram_voxel_spacing_id", "deposition_id", "alignment_id", "processing", "reconstruction_method""]
     id_fields = ["tomogram_id", "name"]
     model_class = models.TomogramAuthor
     direct_mapped_fields = {
