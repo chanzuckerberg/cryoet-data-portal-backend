@@ -83,6 +83,7 @@ def convert_where_clauses_to_sql(
     # Create a dictionary with the keys as the related field/field names
     # The values are dict of {order_by: {"field": ..., "index": ...}, where: {...}, group_by: [...]}
     all_joins = defaultdict(dict)  # type: ignore
+    where_joins = defaultdict(dict)  # type: ignore
     for item in order_by:
         for col, v in item["field"].items():
             if col in mapper.relationships:  # type: ignore
@@ -93,7 +94,7 @@ def convert_where_clauses_to_sql(
                 local_order_by.append({"field": col, "sort": v, "index": item["index"]})
     for col, v in where_clause.items():
         if col in mapper.relationships:  # type: ignore
-            all_joins[col]["where"] = v
+            where_joins[col]["where"] = v
         else:
             local_where_clauses[col] = v
     authz_client.modify_where_clause(principal, action, sa_model, local_where_clauses)
@@ -108,7 +109,28 @@ def convert_where_clauses_to_sql(
     for col in local_group_by:
         query = query.add_columns(col)  # type: ignore
 
-    # Handle related fields
+    # Handle filtering on related fields
+    for join_field, join_info in where_joins.items():
+        relationship = mapper.relationships[join_field]  # type: ignore
+        related_cls = relationship.mapper.entity
+        secure_query = authz_client.get_resource_query(principal, action, related_cls)
+        # Get the subquery, nested order_by fields, and nested group_by fields that need to be applied to the current query
+        subquery, subquery_order_by, subquery_group_by = convert_where_clauses_to_sql(
+            principal,
+            authz_client,
+            action,
+            secure_query,
+            related_cls,
+            join_info.get("where"),  # type: ignore
+            join_info.get("order_by"),
+            join_info.get("group_by"),
+            depth,
+        )
+        query_alias = aliased(related_cls, subquery)  # type: ignore
+        for local, remote in relationship.local_remote_pairs:
+            subquery = subquery.filter((getattr(sa_model, local.key) == getattr(query_alias, remote.key)))
+        query = query.where(subquery.exists())
+    # Handle aggregating and sorting on related fields.
     for join_field, join_info in all_joins.items():
         relationship = mapper.relationships[join_field]  # type: ignore
         related_cls = relationship.mapper.entity
