@@ -42,7 +42,7 @@ async def test_filter_query(
         r3 = RunFactory.create(name="003")
         AnnotationFactory.create(run=r3, object_name="ribosome")
 
-    # Fetch all runs that have membrane filters and names starting with "00"
+    # Fetch all runs that have membrane annotations and names starting with "00"
     query = """
         query MyQuery {
             runs (where: {name: {_like: "00%"}, annotations: {objectName: {_like: "%membrane%"}}}) {
