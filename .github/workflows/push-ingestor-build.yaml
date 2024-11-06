@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 jobs:
-  deploy-to-staging:
+  push-ingestor-build:
     name: build and push ingestor to remote
     runs-on: ubuntu-latest
     environment: staging
@@ -38,5 +38,31 @@ jobs:
           context: ./ingestion_tools
           file: ./ingestion_tools/Dockerfile
           tags: ${{ secrets.ECR_REPO }}:${{ github.head_ref || github.ref_name }}
+          push: true
+          provenance: false
+  push-ingestorv2-build:
+    name: build and push apiv2 ingestor to remote
+    runs-on: ubuntu-latest
+    environment: staging
+    if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend'
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          mask-aws-account-id: true
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-duration-seconds: 1200
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Docker build & Push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./apiv2
+          file: ./apiv2/Dockerfile
+          tags: ${{ secrets.ECR_REPO_V2 }}:${{ github.head_ref || github.ref_name }}
           push: true
           provenance: false
