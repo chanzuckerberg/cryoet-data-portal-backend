@@ -36,6 +36,7 @@ class TomogramItem(ItemDBImporter):
         "deposition_date": ["dates", "deposition_date"],
         "release_date": ["dates", "release_date"],
         "last_modified_date": ["dates", "last_modified_date"],
+        "is_visualization_default": ["is_visualization_default"],
     }
 
     def normalize_to_unknown_str(self, value: str) -> str:
@@ -72,7 +73,6 @@ class TomogramItem(ItemDBImporter):
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
             "is_portal_standard": self.input_data.get("is_standardized") or False,
-            "is_visualization_default": False,
             "is_author_submitted": bool(
                 self.input_data["deposition_id"] == self.input_data["run"].dataset.deposition_id,
             ),

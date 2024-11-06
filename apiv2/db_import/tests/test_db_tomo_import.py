@@ -90,7 +90,7 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "release_date": date(2024, 6, 1),
         "last_modified_date": date(2023, 9, 2),
         "neuroglancer_config": '{"foo":"bar","baz":"test"}',
-        "is_visualization_default": False,
+        "is_visualization_default": True,
         "is_author_submitted": True,
     }
     run2_tomo = {
