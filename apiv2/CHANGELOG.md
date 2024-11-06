@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.4.0...apiv2-v1.5.0) (2024-11-06)
+
+
+### Features
+
+* Expand the Tomgram importer hash function to include processing software ([#340](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/340)) ([3a92596](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/3a92596e94293f3026547939422ac6cf0440ff04))
+* update apiv2 db ingestion to support new s3 schema ([#324](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/324)) ([02441de](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/02441dea0c008ac476bb0e993fb01c8331cd8f8b))
+
+
+### Bug Fixes
+
+* fixes for db ingestion ([#334](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/334)) ([d142394](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/d1423949f534667fc6131eb29729c040461cc16d))
+* fixes for filtering on related fields. ([#343](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/343)) ([9cf033a](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/9cf033ab930a7a11e971eac65efcbf6644a0b935))
+* Only read one alignment per run from the V1 api into the V2 api ([#341](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/341)) ([3a7cacf](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/3a7cacf03fae251a401088143719e7d201f1545e))
+
 ## [1.4.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.3.0...apiv2-v1.4.0) (2024-10-16)
 
 
