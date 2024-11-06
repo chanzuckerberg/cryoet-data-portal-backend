@@ -189,7 +189,7 @@ class VisualizationConfigImporter(BaseImporter):
         return state_generator.combine_json_layers(layers, scale=resolution)
 
     def get_annotation_color(self, annotation: AnnotationImporter, tomogram: TomogramImporter) -> str | None:
-
+        """Get the color associated with the annotation from the visualization config."""
         if annotation.shape == "SegmentationMask":
             extension = "zarr"
         elif annotation.shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
@@ -198,10 +198,7 @@ class VisualizationConfigImporter(BaseImporter):
             return None
 
         output_path = self._to_directory_path(annotation.get_output_filename(annotation.get_output_path(), extension))
-        print(output_path)
-
         layer_info = self._get_annotation_layer_info(tomogram.alignment_metadata_path)
-        print(layer_info)
 
         if output_path in layer_info:
             return layer_info[output_path]["args"]["color"]
