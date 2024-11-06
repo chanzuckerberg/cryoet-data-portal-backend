@@ -11,3 +11,7 @@ class DepositionKeyPhotoImporter(BaseKeyPhotoImporter):
 
     def get_image_src_path(self) -> str | None:
         return self.path
+
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        return [{"sources": [{"literal": {"value": ["snapshot", "thumbnail"]}}]}]

@@ -34,3 +34,7 @@ class DatasetKeyPhotoImporter(BaseKeyPhotoImporter):
                         if self.config.fs.exists(img_path):
                             return img_path
         return None
+
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        return [{"sources": [{"literal": {"value": ["snapshot", "thumbnail"]}}]}]
