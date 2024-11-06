@@ -36,6 +36,7 @@ class TomogramItem(ItemDBImporter):
         "deposition_date": ["dates", "deposition_date"],
         "release_date": ["dates", "release_date"],
         "last_modified_date": ["dates", "last_modified_date"],
+        "is_visualization_default": ["is_visualization_default"],
     }
 
     def normalize_to_unknown_str(self, value: str) -> str:
