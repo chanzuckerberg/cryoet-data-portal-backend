@@ -73,7 +73,6 @@ class TomogramItem(ItemDBImporter):
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
             "is_portal_standard": self.input_data.get("is_standardized") or False,
-            "is_visualization_default": False,
             "is_author_submitted": bool(
                 self.input_data["deposition_id"] == self.input_data["run"].dataset.deposition_id,
             ),

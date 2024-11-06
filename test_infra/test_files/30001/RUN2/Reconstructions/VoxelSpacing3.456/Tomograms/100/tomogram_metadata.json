@@ -5,7 +5,7 @@
   "fiducial_alignment_status": "NON_FIDUCIAL",
   "ctf_corrected": "",
   "processing": "filtered",
-  "is_visualization_default": true,
+  "is_visualization_default": false,
   "offset": {
     "x": 0,
     "y": 0,
