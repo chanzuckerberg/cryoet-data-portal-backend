@@ -299,7 +299,7 @@ datasets:
       described in the accompanying paper and include point labels for Apo-ferritin, Beta-amylase, Beta-galactosidase,
       cytosolic ribosomes, thyroglobulin and VLP.
     dataset_identifier: 10440
-    dataset_title: CZII - CryoET Object Identification Challenge - Simulated Training Data
+    dataset_title: CZII - CryoET Object Identification Challenge - Experimental Training Data
     dates: *dates
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
