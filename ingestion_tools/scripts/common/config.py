@@ -229,7 +229,7 @@ class DepositionImportConfig:
             glob_vars.update(extra_glob_vars)
         path = os.path.join(output_prefix, get_importer_output_path(key).format(**glob_vars))
 
-        # If it's a glob pattern, we don't want to create the directory.
+        # If the path contains a wildcard, we don't want to create the directory
         if '*' in path or '?' in path:
             return path
 

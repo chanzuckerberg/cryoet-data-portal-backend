@@ -294,6 +294,7 @@ def populate_tomograms(session: sa.orm.Session) -> Tomogram:
         scale1_dimensions="",
         scale2_dimensions="",
         processing="raw",
+        processing_software="tomo3D",
         offset_x=0,
         offset_y=0,
         offset_z=0,
@@ -440,7 +441,9 @@ def populate_annotations(session: sa.orm.Session) -> Annotation:
         id=ANNOTATION_ID,
         run_id=RUN1_ID,
         deposition_id=DEPOSITION_ID2,
-        s3_metadata_path="s3://test-public-bucket/30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100/foo-1.0.json",
+        s3_metadata_path=(
+            "s3://test-public-bucket/30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100/foo-1.0.json"
+        ),
         https_metadata_path="foo",
         deposition_date="2025-04-01",
         release_date="2025-06-01",

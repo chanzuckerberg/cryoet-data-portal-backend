@@ -231,6 +231,7 @@ def populate_tomograms() -> None:
         scale1_dimensions="",
         scale2_dimensions="",
         processing="raw",
+        processing_software="tomo3D",
         deposition_id=DEPOSITION_ID1,
         offset_x=0,
         offset_y=0,

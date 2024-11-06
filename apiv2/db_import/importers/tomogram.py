@@ -10,8 +10,15 @@ from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 
 class TomogramItem(ItemDBImporter):
     # TODO - add the alignment_id field once that data is added the first time.
-    # id_fields = ["run_id", "tomogram_voxel_spacing_id", "deposition_id", "alignment_id", "processing", "reconstruction_method""]
-    id_fields = ["run_id", "tomogram_voxel_spacing_id", "deposition_id", "processing", "reconstruction_method"]
+    id_fields = [
+        # "alignment_id",
+        "deposition_id",
+        "processing",
+        "processing_software",
+        "reconstruction_method",
+        "run_id",
+        "tomogram_voxel_spacing_id",
+    ]
     model_class = models.Tomogram
     direct_mapped_fields = {
         "name": ["run_name"],
@@ -29,6 +36,7 @@ class TomogramItem(ItemDBImporter):
         "deposition_date": ["dates", "deposition_date"],
         "release_date": ["dates", "release_date"],
         "last_modified_date": ["dates", "last_modified_date"],
+        "is_visualization_default": ["is_visualization_default"],
     }
 
     def normalize_to_unknown_str(self, value: str) -> str:
@@ -65,7 +73,6 @@ class TomogramItem(ItemDBImporter):
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
             "is_portal_standard": self.input_data.get("is_standardized") or False,
-            "is_visualization_default": False,
             "is_author_submitted": bool(
                 self.input_data["deposition_id"] == self.input_data["run"].dataset.deposition_id,
             ),
@@ -105,8 +112,6 @@ class TomogramImporter(IntegratedDBImporter):
 
 
 class TomogramAuthorItem(ItemDBImporter):
-    # TODO - add the alignment_id field once that data is added the first time.
-    # id_fields = ["run_id", "tomogram_voxel_spacing_id", "deposition_id", "alignment_id", "processing", "reconstruction_method""]
     id_fields = ["tomogram_id", "name"]
     model_class = models.TomogramAuthor
     direct_mapped_fields = {
