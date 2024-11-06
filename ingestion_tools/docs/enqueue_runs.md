@@ -87,6 +87,34 @@ python3 enqueue_runs.py db-import --import-everything --include-dataset 10001 --
 # Prod example
 export AWS_PROFILE=cryoet-prod
 python3 enqueue_runs.py db-import --environment prod --import-annotation-authors --filter-datasets '.000[12]'
+```
+
+## APIv2 Database ingestion (`db-import` subcommand)
+
+The `enqueue_runs.py db-import-v2` queues up jobs to read data from S3 and import into the v2 database, making data available via the API. It launches one task per **dataset** and by default it will import **all datasets** unless filters or a list of specific datasets to import are provided.
+
+### tl;dr:
+```bash
+cd ingestion_tools/scripts
+
+# Activate a python virtualenv
+source ../.venv/bin/activate
+
+# Set up any required AWS env vars
+EXPORT AWS_PROFILE=cryoet-dev
+
+# Main args
+# python3 enqueue_runs.py db-import-v2 [--stuff-to-import]
+
+# Get information on what types of stuff we can import
+python3 enqueue_runs.py db-import-v2 --help
+
+# Staging Example
+python3 enqueue_runs.py db-import-v2 --import-everything --include-dataset 10001 --include-dataset 10002
+
+# Prod example
+export AWS_PROFILE=cryoet-prod
+python3 enqueue_runs.py db-import-v2 --environment prod --import-annotation-authors --filter-datasets '.000[12]'
 
 ```
 

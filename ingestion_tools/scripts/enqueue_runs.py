@@ -222,6 +222,116 @@ def to_args(**kwargs) -> list[str]:
     return args
 
 
+@cli.command(name="v2-db-import")
+@click.option("--s3-bucket", required=False, type=str, help="S3 bucket to read from")
+@click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
+@click.option("--s3-prefix", required=True, default="", type=str)
+@click.option(
+    "--delete-first/--no-delete-first",
+    is_flag=True,
+    required=True,
+    default=False,
+    type=bool,
+    help="Remove the dataset from the v2 db before reimporting?",
+)
+@click.option(
+    "--debug/--no-debug",
+    is_flag=True,
+    required=True,
+    default=True,
+    type=bool,
+    help="Print DB Queries",
+)
+@click.option("--filter-datasets", type=str, default=None, multiple=True)
+@click.option("--include-dataset", type=str, default=None, multiple=True)
+@click.option("--exclude-dataset", type=str, default=None, multiple=True)
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="db_import_v2-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
+)
+@db_import_options
+@enqueue_common_options
+@click.pass_context
+def v2_db_import(
+    ctx,
+    s3_bucket: str | None,
+    https_prefix: str | None,
+    s3_prefix: str,
+    debug: bool,
+    delete_first: bool,
+    filter_datasets: list[str],
+    include_dataset: list[str],
+    exclude_dataset: list[str],
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    handle_common_options(ctx, kwargs)
+    # Override the image name set by the CLI flags. This is heavy handed but should be ok.
+    ctx.obj["ecr_repo"] = "apiv2-x86"
+
+    # Set per-env defaults if values weren't provided.
+    env = ctx.obj["environment"]
+    if not s3_bucket:
+        s3_bucket = "cryoet-data-portal-staging"
+        if env == "prod":
+            s3_bucket = "cryoet-data-portal-public"
+    if not https_prefix:
+        https_prefix = "https://files.cryoet.staging.si.czi.technology"
+        if env == "prod":
+            https_prefix = "https://files.cryoetdataportal.cziscience.com"
+
+    # Default to using a lot less memory than the ingestion job.
+    if not ctx.obj.get("memory"):
+        ctx.obj["memory"] = 4000
+
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for dataset_id, _ in get_datasets(
+            s3_bucket,
+            https_prefix,
+            filter_datasets,
+            include_dataset,
+            exclude_dataset,
+            s3_prefix,
+            kwargs.get("anonymous"),
+        ):
+            print(f"Processing dataset {dataset_id}...")
+
+            new_args = to_args(**kwargs)
+            new_args.append(f"--s3-prefix {dataset_id}")
+            if debug:
+                new_args.append("--debug")
+
+            execution_name = f"{int(time.time())}-dbimportv2-{dataset_id}"
+
+            # execution name greater than 80 chars causes boto ValidationException
+            if len(execution_name) > 80:
+                execution_name = execution_name[-80:]
+
+            wdl_args = {
+                "s3_bucket": s3_bucket,
+                "https_prefix": https_prefix,
+                "flags": " ".join(new_args),
+                "environment": ctx.obj["environment"],
+                "delete_first": delete_first,
+            }
+            futures.append(
+                workerpool.submit(
+                    partial(
+                        run_job,
+                        execution_name,
+                        wdl_args,
+                        swipe_wdl_key=swipe_wdl_key,
+                        **ctx.obj,
+                    ),
+                ),
+            )
+        wait(futures)
+
+
 @cli.command(name="db-import")
 @click.option("--s3-bucket", required=False, type=str, help="S3 bucket to read from")
 @click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
