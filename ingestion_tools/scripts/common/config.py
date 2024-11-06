@@ -228,6 +228,11 @@ class DepositionImportConfig:
         if extra_glob_vars:
             glob_vars.update(extra_glob_vars)
         path = os.path.join(output_prefix, get_importer_output_path(key).format(**glob_vars))
+
+        # If the path contains a wildcard, we don't want to create the directory
+        if '*' in path or '?' in path:
+            return path
+
         if ".json" in path or ".mrc" in path or ".zarr" in path:
             self.fs.makedirs(os.path.dirname(path))
         else:
