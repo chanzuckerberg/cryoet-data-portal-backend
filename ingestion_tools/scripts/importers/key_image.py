@@ -7,9 +7,10 @@ from PIL import Image
 
 from common.finders import DefaultImporterFactory
 from common.image import ZarrReader
-from common.make_key_image import generate_preview, process_key_image
+from common.make_key_image import KeyMaskAnnotation, KeyPointAnnotation, generate_preview, process_key_image
 from importers.annotation import AnnotationImporter
 from importers.base_importer import BaseImporter
+from importers.visualization_config import VisualizationConfigImporter
 
 
 class KeyImageImporter(BaseImporter):
@@ -69,19 +70,39 @@ class KeyImageImporter(BaseImporter):
             return data, data.shape[-1]
         return None, None
 
-    def load_annotations(self) -> Generator[np.ndarray, None, None]:
+    def load_point_annotations(self) -> Generator[KeyPointAnnotation, None, None]:
+        vis_config_importer = VisualizationConfigImporter(self.config, {}, parents=self.parents)
         for annotation in AnnotationImporter.finder(self.config, **self.parents):
-            if annotation.shape.lower() not in {"orientedpoint", "point"}:
-                continue
-            annotation_path = annotation.get_output_path()
-            try:
-                annotation_data = annotation.get_output_data(annotation_path)
-                yield annotation_data
-                # We prefer point files over oriented point files, so stop if we just processed that.
-                if annotation.shape.lower() == "point":
-                    break
-            except FileNotFoundError:
-                print(f"Unable to load annotation data for {annotation.get_output_filename(annotation_path)}")
+            is_default = annotation.is_visualization_default
+            if annotation.shape.lower() in {"orientedpoint", "point"} and is_default:
+                annotation_path = annotation.get_output_path()
+                try:
+                    annotation_data = annotation.get_output_data(annotation_path)
+                    color = vis_config_importer.get_annotation_color(annotation, self.get_tomogram())
+
+                    yield KeyPointAnnotation(
+                        color=color,
+                        data=annotation_data,
+                    )
+                except FileNotFoundError:
+                    print(f"Unable to load annotation data for {annotation.get_output_filename(annotation_path)}")
+
+    def load_mask_annotations(self) -> Generator[KeyMaskAnnotation, None, None]:
+        vis_config_importer = VisualizationConfigImporter(self.config, {}, parents=self.parents)
+        for annotation in AnnotationImporter.finder(self.config, **self.parents):
+            is_default = annotation.is_visualization_default
+            if annotation.shape.lower() == "segmentationmask" and is_default:
+                annotation_path = annotation.get_output_filename(annotation.get_output_path()) + ".zarr"
+                try:
+                    annotation_data = ZarrReader(self.config.fs, annotation_path).get_data()
+                    color = vis_config_importer.get_annotation_color(annotation, self.get_tomogram())
+
+                    yield KeyMaskAnnotation(
+                        color=color,
+                        data=annotation_data,
+                    )
+                except FileNotFoundError:
+                    print(f"Unable to load annotation data for {annotation.get_output_filename(annotation_path)}")
 
     def generate_preview_from_tomo(self) -> tuple[np.ndarray, np.ndarray]:
         tomo_filename = self.get_tomogram().get_output_path() + ".zarr"
@@ -89,7 +110,13 @@ class KeyImageImporter(BaseImporter):
         # TODO: optimize to check if image needs to be regenerated
         print(f"loading tomogram {tomo_filename}")
         data = ZarrReader(self.config.fs, tomo_filename).get_data()
-        preview = generate_preview(data, projection_depth=40, annotations=self.load_annotations(), cmap="tab10")
+        preview = generate_preview(
+            data,
+            projection_depth=40,
+            point_annotations=self.load_point_annotations(),
+            mask_annotations=self.load_mask_annotations(),
+            cmap="tab10",
+        )
         return preview, data.shape[-1]
 
     def get_file_name(self, image_type: str) -> str:

@@ -229,8 +229,10 @@ class DepositionImportConfig:
             glob_vars.update(extra_glob_vars)
         path = os.path.join(output_prefix, get_importer_output_path(key).format(**glob_vars))
         if ".json" in path or ".mrc" in path or ".zarr" in path:
+            print(f"Resolved path: {path}")
             self.fs.makedirs(os.path.dirname(path))
         else:
+            print(f"Resolved path: {path}")
             self.fs.makedirs(path)
         return path
 

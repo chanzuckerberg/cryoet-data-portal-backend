@@ -76,7 +76,7 @@ class VoxelSpacingImporter(BaseImporter):
     plural_key = "voxel_spacings"
     finder_factory = VSImporterFactory
     has_metadata = False
-    dir_path = "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}"
+    dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}"
 
     def __init__(
         self,

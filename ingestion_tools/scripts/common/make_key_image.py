@@ -6,6 +6,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import skimage
+from pydantic import BaseModel, ConfigDict
 
 logger = logging.getLogger("key-image-maker")
 logger.setLevel(logging.ERROR)
@@ -13,14 +14,76 @@ logger.setLevel(logging.ERROR)
 BinningType = Literal[1, 2, 4]
 AnnotationType = list[dict[str, Any]]
 
+class KeyPointAnnotation(BaseModel):
+    color: str
+    data: list[dict[str, Any]]
+
+class KeyMaskAnnotation(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    color: str
+    data: dask.array
+
+
+def project_slab(
+    volume: dask.array,
+    projection_depth: int,
+    normalize: bool = True,
+    binarize: bool = False,
+) -> np.ndarray[np.float32]:
+    """Project a slab of the given volume along the z-axis.
+
+    Parameters
+    ----------
+    volume : array
+        Volume to project.
+    projection_depth : int
+        Depth of the projection to slice from the center of the volume.
+    normalize : bool, optional
+        Whether to normalize the projection.
+    binarize : bool, optional
+        Whether to binarize the projection.
+
+    Returns
+    -------
+    projection : array of float32
+        Projected slab.
+    """
+    z_center = volume.shape[0] // 2
+
+    z_min = z_center - projection_depth // 2
+    z_max = z_min + projection_depth
+    z_slice = np.asarray(volume[z_min:z_max, :, :])
+
+    # generate enhanced center slice
+    projection = np.sum(z_slice, axis=0)
+
+    if normalize:
+        delta = projection.std()
+        mean = projection.mean()
+        v_min = mean - 3 * delta
+        v_max = mean + 3 * delta
+
+        projection[projection < v_min] = v_min
+        projection[projection > v_max] = v_max
+        projection = 255 * (projection - v_min) / (v_max - v_min)
+
+    if binarize:
+        projection = (projection > 0).astype(np.float32)
+
+    return projection, z_min, z_max
+
+
 
 def generate_preview(
     tomogram: dask.array,
-    annotations: Iterable[AnnotationType],
+    point_annotations: Iterable[KeyPointAnnotation] = None,
+    mask_annotations: Iterable[KeyMaskAnnotation] = None,
     *,
     projection_depth: int,
     binning_factor: BinningType = 1,
-    cmap: str = "Set1",
+    point_alpha: float = 0.8,
+    mask_alpha: float = 0.1,
+    cmap: str = "",
 ) -> np.ndarray[np.uint8]:
     """Generate a preview image of the given tomogram and annotations.
 
@@ -42,23 +105,15 @@ def generate_preview(
     preview : array of uint8
         Generated preview image.
     """
-    z_center = tomogram.shape[0] // 2
+    if point_annotations is None:
+        point_annotations = []
+
+    if mask_annotations is None:
+        mask_annotations = []
+
     cmap = mpl.colormaps[cmap]
 
-    z_min = z_center - projection_depth // 2
-    z_max = z_min + projection_depth
-    z_slice = np.asarray(tomogram[z_min:z_max, :, :])
-
-    # generate enhanced center slice
-    projection = np.sum(z_slice, axis=0)
-    delta = projection.std()
-    mean = projection.mean()
-    v_min = mean - 3 * delta
-    v_max = mean + 3 * delta
-
-    projection[projection < v_min] = v_min
-    projection[projection > v_max] = v_max
-    projection = 255 * (projection - v_min) / (v_max - v_min)
+    projection, z_min, z_max = project_slab(tomogram, projection_depth, normalize=True, binarize=False)
 
     # marker size should take up at most 5% of the canvas
     marker_size = tomogram.shape[-1] / 10
@@ -71,44 +126,49 @@ def generate_preview(
     )
     ax.imshow(projection, cmap="gray", zorder=0)
 
-    i = 0
+    plot_z = 1
 
-    for i, annotation in enumerate(annotations):
-        color = cmap(i)
-        for item in annotation:
-            if (t := item.get("type")) is None:
-                logger.error("type for %s cannot be determined", item)
+    for annotation in mask_annotations:
+        color = annotation.color
+        cmap = mpl.colors.ListedColormap(["#000000", color], "binary", N=2)
+
+        mask_projection, _, _ = project_slab(annotation.data, projection_depth, normalize=False, binarize=True)
+
+        ax.imshow(mask_projection, cmap=cmap, alpha=mask_projection * mask_alpha, zorder=plot_z)
+        plot_z += 1
+
+
+    for annotation in point_annotations:
+        color = annotation.color
+
+        for item in annotation.data:
+            if (location := item.get("location")) is None:
+                logger.error("location missing for entry %s", item)
+                continue
+            try:
+                x, y, z = location["x"], location["y"], location["z"]
+            except KeyError:
+                logger.error(
+                    "incorrect format for point location %s",
+                    location,
+                )
                 continue
 
-            if t in ("point", "orientedPoint"):
-                if (location := item.get("location")) is None:
-                    logger.error("location missing for entry %s", item)
-                    continue
-                try:
-                    x, y, z = location["x"], location["y"], location["z"]
-                except KeyError:
-                    logger.error(
-                        "incorrect format for point location %s",
-                        location,
-                    )
-                    continue
+            if z_min <= z / binning_factor <= z_max:
+                # don't bother adding points behind the visible z slice
+                plt.scatter(
+                    x / binning_factor,
+                    y / binning_factor,
+                    s=marker_size,
+                    color=color,
+                    alpha=point_alpha,
+                    marker="o",
+                    edgecolors="white",
+                    linewidths=marker_size / 100,
+                    zorder=plot_z+z,
+                )
 
-                if z / binning_factor >= z_min and z / binning_factor <= z_max:
-                    # don't bother adding points behind the visible z slice
-                    plt.scatter(
-                        x / binning_factor,
-                        y / binning_factor,
-                        s=marker_size,
-                        color=color,
-                        marker="o",
-                        edgecolors="white",
-                        linewidths=marker_size / 100,
-                        zorder=z,
-                    )
-            else:
-                # TODO: (backlogged) handle membrane segmentation annotation
-                logger.warning("unsupported annotation type %s", t)
-                continue
+        plot_z += 1
 
     # remove the ticks and labels
     ax.set_axis_off()

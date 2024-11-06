@@ -156,6 +156,7 @@ class AnnotationImporter(BaseImporter):
     # Functions to support writing annotation metadata
     def get_output_path(self):
         output_dir = super().get_output_path().format(annotation_id=self.identifier)
+        print(f"Creating output directory {output_dir}")
         self.config.fs.makedirs(output_dir)
         return self.annotation_metadata.get_filename_prefix(output_dir)
 
