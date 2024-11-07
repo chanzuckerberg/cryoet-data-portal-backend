@@ -43,8 +43,8 @@ jobs:
       - name: Docker build & Push
         uses: docker/build-push-action@v4
         with:
-          context: ./${{build_dir}}
-          file: ./${{build_dir}}/Dockerfile
+          context: ./${{ build_dir }}
+          file: ./${{ build_dir }}/Dockerfile
           tags: ${{ repo }}:${{ github.head_ref || github.ref_name }}
           push: true
           provenance: false
