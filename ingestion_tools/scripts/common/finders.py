@@ -201,8 +201,10 @@ class DepositionObjectImporterFactory(ABC):
                 return False
         return True
 
-    def _get_glob_vars(self, **parent_objects: dict[str, Any] | None):
-        glob_vars = {}
+    def _get_glob_vars(self, config: DepositionImportConfig, **parent_objects: dict[str, Any] | None) -> dict[str, str]:
+        glob_vars = {
+            "output_path": config.output_prefix,
+        }
         for _, parent_obj in parent_objects.items():
             glob_vars.update(parent_obj.get_glob_vars())
             # These are *only* used by source glob finder, which is kindof a hack :'(
@@ -234,7 +236,7 @@ class DepositionObjectImporterFactory(ABC):
         **parent_objects: dict[str, Any] | None,
     ) -> list[BaseImporter]:
         loader = self.load(config, **parent_objects)
-        glob_vars = self._get_glob_vars(**parent_objects)
+        glob_vars = self._get_glob_vars(config, **parent_objects)
         found = loader.find(config, glob_vars)
         filtered_results = {}
         for name, path in found.items():
