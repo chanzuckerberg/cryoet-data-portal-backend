@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "ingestion_tools/**"
+      - "apiv2/**"
       - ".github/workflows/push-ingestor-build.yaml"
 
 # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
@@ -14,7 +15,14 @@ permissions:
   contents: read
 
 jobs:
-  deploy-to-staging:
+  push-images:
+    strategy:
+      matrix:
+        include:
+          - build_dir: ingestion_tools
+            repo: ${{ secrets.ECR_REPO }}
+          - build_dir: apiv2
+            repo: ${{ secrets.ECR_REPO_V2 }}
     name: build and push ingestor to remote
     runs-on: ubuntu-latest
     environment: staging
@@ -35,8 +43,8 @@ jobs:
       - name: Docker build & Push
         uses: docker/build-push-action@v4
         with:
-          context: ./ingestion_tools
-          file: ./ingestion_tools/Dockerfile
-          tags: ${{ secrets.ECR_REPO }}:${{ github.head_ref || github.ref_name }}
+          context: ./${{ build_dir }}
+          file: ./${{ build_dir }}/Dockerfile
+          tags: ${{ repo }}:${{ github.head_ref || github.ref_name }}
           push: true
           provenance: false
