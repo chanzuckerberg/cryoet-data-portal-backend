@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - jgadling/fix-image-build
+      - jgadling-image-build
     paths:
       - "ingestion_tools/**"
       - "apiv2/**"
@@ -44,8 +44,8 @@ jobs:
       - name: Docker build & Push
         uses: docker/build-push-action@v4
         with:
-          context: ./${{ build_dir }}
-          file: ./${{ build_dir }}/Dockerfile
+          context: ./${{ matrix.build_dir }}
+          file: ./${{ matrix.build_dir }}/Dockerfile
           tags: ${{ secrets[matrix.repo_key] }}:${{ github.head_ref || github.ref_name }}
           push: true
           provenance: false
