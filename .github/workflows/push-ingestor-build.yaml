@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - jgadling/fix-image-build
     paths:
       - "ingestion_tools/**"
       - "apiv2/**"
@@ -20,9 +21,9 @@ jobs:
       matrix:
         include:
           - build_dir: ingestion_tools
-            repo: ${{ secrets.ECR_REPO }}
+            repo_key: ECR_REPO
           - build_dir: apiv2
-            repo: ${{ secrets.ECR_REPO_V2 }}
+            repo_key: ECR_REPO_V2
     name: build and push ingestor to remote
     runs-on: ubuntu-latest
     environment: staging
@@ -45,6 +46,6 @@ jobs:
         with:
           context: ./${{ build_dir }}
           file: ./${{ build_dir }}/Dockerfile
-          tags: ${{ repo }}:${{ github.head_ref || github.ref_name }}
+          tags: ${{ secrets[matrix.repo_key] }}:${{ github.head_ref || github.ref_name }}
           push: true
           provenance: false
