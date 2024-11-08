@@ -15,27 +15,31 @@ task cryoet_data_dbimport_workflow {
         export PYTHONUNBUFFERED=1
         python --version 1>&2
         ls -l 1>&2
-        pwd 1>&2
-        touch done.txt
+        original_dir=$(pwd)
         cd /usr/src/app/ingestion_tools/scripts
         set +x
         POSTGRES_URL=$(aws secretsmanager get-secret-value --secret-id ~{environment}/db_uri | jq -r .SecretString | jq -r .db_uri)
         echo python db_import.py load ~{s3_bucket} ~{https_prefix} POSTGRES_URL ~{flags} 1>&2
         python db_import.py load ~{s3_bucket} ~{https_prefix} $POSTGRES_URL ~{flags} 1>&2
+        cd $original_dir
+        echo "done"" > done.txt
+     # Including depositions looks like so:
+     --import-depositions --deposition-id 10310
     >>>
 
     runtime {
         docker: docker_image_id
     }
     output {
-        String entity_id = read_string("entity_id")
-        File done = "metadata.tsv"
+        String done = read_string("done.txt")
     }
 }
 
 task cryoet_data_dbimport_v2_workflow {
     input {
+        String done
         String docker_image_id
+        String v2_docker_image_id
         String aws_region
         String s3_bucket
         String https_prefix
@@ -53,10 +57,9 @@ task cryoet_data_dbimport_v2_workflow {
         pwd 1>&2
         set +x
         POSTGRES_URL=$(aws secretsmanager get-secret-value --secret-id ~{environment}/v2_db_uri | jq -r .SecretString | jq -r .db_uri)
-        # Scrape ID's from the v1 api so we keep things in sync
-        if [ -n "~{delete_first}" ]; then
-          python3 -m scripts.delete_dataset --db-uri $POSTGRES_URL --i-am-super-sure yes ~{dataset_id};
-        fi
+        # TODO - Scrape ID's from the v1 api so we keep things in sync
+        pip install cryoet-data-portal==3.1.0
+        python3 -m scripts.get_v1_dataset_ids ~{environment} --scrape_flags
         python3 -m scripts.scrape ~{environment} --db-uri $POSTGRES_URL ~{scrape_flags}
         # Scrape ID's from the v1 api so we keep things in sync
         python3 -m scripts.scrape ~{environment} --db-uri $POSTGRES_URL ~{scrape_flags}
@@ -88,9 +91,11 @@ workflow cryoet_data_dbimport {
         environment = environment,
         flags = flags
     }
+
     call cryoet_data_dbimport_v2_workflow {
         input:
-        docker_image_id = docker_image_id,
+        done = cryoet_data_dbimport_workflow.done
+        docker_image_id = v2_docker_image_id,
         aws_region = aws_region,
         s3_bucket = s3_bucket,
         https_prefix = https_prefix,
