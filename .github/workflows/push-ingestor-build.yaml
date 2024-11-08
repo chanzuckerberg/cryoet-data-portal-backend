@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - jgadling-image-build
     paths:
       - "ingestion_tools/**"
       - "apiv2/**"
