@@ -20,9 +20,9 @@ jobs:
       matrix:
         include:
           - build_dir: ingestion_tools
-            repo: ${{ secrets.ECR_REPO }}
+            repo_key: ECR_REPO
           - build_dir: apiv2
-            repo: ${{ secrets.ECR_REPO_V2 }}
+            repo_key: ECR_REPO_V2
     name: build and push ingestor to remote
     runs-on: ubuntu-latest
     environment: staging
@@ -43,8 +43,8 @@ jobs:
       - name: Docker build & Push
         uses: docker/build-push-action@v4
         with:
-          context: ./${{ build_dir }}
-          file: ./${{ build_dir }}/Dockerfile
-          tags: ${{ repo }}:${{ github.head_ref || github.ref_name }}
+          context: ./${{ matrix.build_dir }}
+          file: ./${{ matrix.build_dir }}/Dockerfile
+          tags: ${{ secrets[matrix.repo_key] }}:${{ github.head_ref || github.ref_name }}
           push: true
           provenance: false
