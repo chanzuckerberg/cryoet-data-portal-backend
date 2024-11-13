@@ -75,6 +75,7 @@ def db_import_options(func):
 @click.option("--filter-dataset", type=str, default=None, multiple=True)
 @click.option("--s3-prefix", required=True, default="", type=str)
 @click.option("--endpoint-url", type=str, default=None)
+@click.option("--debug", is_flag=True, default=False)
 @db_import_options
 def load(
     s3_bucket: str,
@@ -100,6 +101,7 @@ def load(
     import_everything: bool,
     deposition_id: list[str],
     endpoint_url: str,
+    debug: bool,  # Just included for compatibility with the old script.
 ):
     load_func(
         s3_bucket,
