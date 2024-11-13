@@ -127,7 +127,6 @@ def run_job(
 
     session = Session(region_name=aws_region)
     client = session.client(service_name="stepfunctions")
-    print(json.dumps(sfn_input_json, indent=4))
     return client.start_execution(
         stateMachineArn=state_machine_arn,
         name=execution_name,
