@@ -102,7 +102,7 @@ def populate_dataset_funding() -> None:
         id=DATASET_FUNDING_ID,
         dataset_id=DATASET_ID,
         funding_agency_name="Grant Provider 1",
-        grant_id="foo",
+        grant_id="1234",
     )
 
 
