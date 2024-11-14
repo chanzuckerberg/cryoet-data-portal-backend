@@ -14,9 +14,11 @@ logger.setLevel(logging.ERROR)
 BinningType = Literal[1, 2, 4]
 AnnotationType = list[dict[str, Any]]
 
+
 class KeyPointAnnotation(BaseModel):
     color: str
     data: list[dict[str, Any]]
+
 
 class KeyMaskAnnotation(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -73,7 +75,6 @@ def project_slab(
     return projection, z_min, z_max
 
 
-
 def generate_preview(
     tomogram: dask.array,
     point_annotations: Iterable[KeyPointAnnotation] = None,
@@ -83,26 +84,31 @@ def generate_preview(
     binning_factor: BinningType = 1,
     point_alpha: float = 0.8,
     mask_alpha: float = 0.1,
-    cmap: str = "",
 ) -> np.ndarray[np.uint8]:
     """Generate a preview image of the given tomogram and annotations.
 
     Parameters
     ----------
-    tomogram : array
+    tomogram : dask.array
         Tomogram to slice from.
-    annotations : Iterable[list[dict[str, any]]]
-        Annotations to render.
+    point_annotations : Iterable[KeyPointAnnotation], optional
+        Point annotations to render.
+    mask_annotations : Iterable[KeyMaskAnnotation], optional
+        Mask annotations to render.
     projection_depth : int, kw-only
         Depth of the projection to slice from the center of the tomogram.
     binning_factor : {1, 2, 4}, kw-only
         If a binning factor was applied to the given tomogram, the annotations will be scaled down accordingly.
+    point_alpha : float, optional
+        Alpha value for point annotations.
+    mask_alpha : float, optional
+        Alpha value for mask annotations.
     cmap : str, optional, kw-only
         MatPlotLib colormap to use.
 
     Returns
     -------
-    preview : array of uint8
+    preview : np.ndarray[np.uint8]
         Generated preview image.
     """
     if point_annotations is None:
@@ -110,8 +116,6 @@ def generate_preview(
 
     if mask_annotations is None:
         mask_annotations = []
-
-    cmap = mpl.colormaps[cmap]
 
     projection, z_min, z_max = project_slab(tomogram, projection_depth, normalize=True, binarize=False)
 
@@ -129,18 +133,14 @@ def generate_preview(
     plot_z = 1
 
     for annotation in mask_annotations:
-        color = annotation.color
-        cmap = mpl.colors.ListedColormap(["#000000", color], "binary", N=2)
+        cmap = mpl.colors.ListedColormap(["#000000", annotation.color], "binary", N=2)
 
         mask_projection, _, _ = project_slab(annotation.data, projection_depth, normalize=False, binarize=True)
 
         ax.imshow(mask_projection, cmap=cmap, alpha=mask_projection * mask_alpha, zorder=plot_z)
         plot_z += 1
 
-
     for annotation in point_annotations:
-        color = annotation.color
-
         for item in annotation.data:
             if (location := item.get("location")) is None:
                 logger.error("location missing for entry %s", item)
@@ -160,12 +160,12 @@ def generate_preview(
                     x / binning_factor,
                     y / binning_factor,
                     s=marker_size,
-                    color=color,
+                    c=annotation.color,
                     alpha=point_alpha,
                     marker="o",
                     edgecolors="white",
                     linewidths=marker_size / 100,
-                    zorder=plot_z+z,
+                    zorder=plot_z + z,
                 )
 
         plot_z += 1

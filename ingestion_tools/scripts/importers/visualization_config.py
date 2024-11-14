@@ -10,7 +10,6 @@ from common.colors import generate_hash, to_base_hash_input
 from common.finders import DefaultImporterFactory
 from common.image import VolumeInfo
 from common.metadata import NeuroglancerMetadata
-from importers.annotation import AnnotationImporter
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
@@ -48,16 +47,13 @@ class VisualizationConfigImporter(BaseImporter):
         annotation_path = self.config.resolve_output_path("annotation_metadata", self, {"annotation_id": "*"})
         return self.config.fs.glob(os.path.join(annotation_path, "*.json"))
 
-    def _to_directory_path(self, path: str) -> str:
-        return path.removeprefix(self.config.output_prefix).removeprefix("/")
-
     def _to_tomogram_layer(
         self,
         tomogram: TomogramImporter,
         volume_info: VolumeInfo,
         resolution: tuple[float, float, float],
     ) -> dict[str, Any]:
-        zarr_dir_path = self._to_directory_path(f"{tomogram.get_output_path()}.zarr")
+        zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
         return state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
@@ -76,6 +72,7 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
+        **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_segmentation_mask_layer(
             source_path,
@@ -94,6 +91,7 @@ class VisualizationConfigImporter(BaseImporter):
         color: str,
         resolution: tuple[float, float, float],
         is_instance_segmentation: bool,
+        **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_point_layer(
             source_path,
@@ -105,8 +103,7 @@ class VisualizationConfigImporter(BaseImporter):
             is_instance_segmentation=is_instance_segmentation,
         )
 
-    def _get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
-
+    def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
 
         # TODO: Update the annotation metadata to be fetched from all voxel spacings once, we start supporting the
@@ -133,19 +130,19 @@ class VisualizationConfigImporter(BaseImporter):
             name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
 
             for file in metadata.get("files", []):
-                # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
-                if file.get("format") not in {"zarr", "ndjson"}:
-                    continue
-
                 shape = file.get("shape")
                 if shape not in {"SegmentationMask", "Point", "OrientedPoint", "InstanceSegmentation"}:
                     print(f"Skipping file with unknown shape {shape}")
                     continue
 
+                # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
+                if file.get("format") not in {"zarr", "ndjson"}:
+                    continue
+
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
                 hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
 
-                path = self._to_directory_path(
+                path = self.config.to_formatted_path(
                     os.path.join(precompute_path, f"{metadata_file_name}_{shape.lower()}"),
                 )
 
@@ -158,7 +155,7 @@ class VisualizationConfigImporter(BaseImporter):
                         "file_metadata": file,
                         "name_prefix": name_prefix,
                         "color": hex_colors[0],
-                        "is_instance_seg": is_instance_seg,
+                        "is_instance_segmentation": is_instance_seg,
                     },
                 }
 
@@ -174,7 +171,7 @@ class VisualizationConfigImporter(BaseImporter):
         resolution = (voxel_size * 1e-10,) * 3
         layers = [self._to_tomogram_layer(tomogram, volume_info, resolution)]
 
-        annotation_layer_info = self._annotation_config_args(alignment_metadata_path)
+        annotation_layer_info = self.get_annotation_layer_info(alignment_metadata_path)
 
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "resolution": resolution}
@@ -183,27 +180,8 @@ class VisualizationConfigImporter(BaseImporter):
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
-            else:
-                print(f"Skipping file with unknown shape {args['shape']}")
 
         return state_generator.combine_json_layers(layers, scale=resolution)
-
-    def get_annotation_color(self, annotation: AnnotationImporter, tomogram: TomogramImporter) -> str | None:
-        """Get the color associated with the annotation from the visualization config."""
-        if annotation.shape == "SegmentationMask":
-            extension = "zarr"
-        elif annotation.shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
-            extension = "ndjson"
-        else:
-            return None
-
-        output_path = self._to_directory_path(annotation.get_output_filename(annotation.get_output_path(), extension))
-        layer_info = self._get_annotation_layer_info(tomogram.alignment_metadata_path)
-
-        if output_path in layer_info:
-            return layer_info[output_path]["args"]["color"]
-        else:
-            return None
 
     @classmethod
     def _get_annotation_name_prefix(cls, metadata: dict[str, Any], stemmed_metadata_path: str) -> str:
