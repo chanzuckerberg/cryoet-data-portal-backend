@@ -81,8 +81,8 @@ EXPORT AWS_PROFILE=cryoet-dev
 # Get information on what types of stuff we can import
 python3 enqueue_runs.py db-import --help
 
-# Staging Example
-python3 enqueue_runs.py db-import --import-everything --include-dataset 10001 --include-dataset 10002
+# Staging Example, importing two depositions and two datasets
+python3 enqueue_runs.py db-import --import-everything --include-dataset 10001 --include-dataset 10002 --import-depositions --deposition-id 10001 --deposition-id 10002
 
 # Prod example
 export AWS_PROFILE=cryoet-prod
@@ -106,6 +106,7 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | --include-dataset | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's                                                                                        |
 | --exclude-dataset | null | Supply a regular expression to exclude a list of dataset ID's the import. This option can be specified multiple times with multiple regular expressions.                                           |
 | --s3-prefix       | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset                                                               |
+| --import-depositions   | false | Whether to import deposition metadata. It's necessary to include this flag the first time we import data for a new deposition!                                                                                                            |
 | --deposition-id   | null | To be used with the --import-depositions flag to specify the depositions to be imported                                                                                                            |
 
 

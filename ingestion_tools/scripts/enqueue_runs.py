@@ -241,7 +241,7 @@ def to_args(**kwargs) -> list[str]:
     "--swipe-wdl-key",
     type=str,
     required=True,
-    default="db_import-v0.0.1.wdl",
+    default="db_import-v0.0.2.wdl",
     help="Specify wdl key for custom workload",
 )
 @db_import_options
@@ -294,6 +294,11 @@ def db_import(
             new_args.append(f"--s3-prefix {dataset_id}")
             if debug:
                 new_args.append("--debug")
+            scrape_args = ["--import-dataset", f"{dataset_id}"]
+            for idx, arg in enumerate(new_args):
+                if arg == "--deposition-id":
+                    scrape_args.append("--import-deposition")
+                    scrape_args.append(new_args[idx + 1])
 
             execution_name = f"{int(time.time())}-dbimport-{dataset_id}"
 
@@ -301,11 +306,15 @@ def db_import(
             if len(execution_name) > 80:
                 execution_name = execution_name[-80:]
 
+            aws_region = ctx.obj["aws_region"]
+            ecr_tag = ctx.obj["ecr_tag"]
             wdl_args = {
                 "s3_bucket": s3_bucket,
                 "https_prefix": https_prefix,
                 "flags": " ".join(new_args),
+                "scrape_flags": " ".join(scrape_args),
                 "environment": ctx.obj["environment"],
+                "v2_docker_image_id": f"908710317728.dkr.ecr.{aws_region}.amazonaws.com/apiv2-x86:{ecr_tag}",
             }
             futures.append(
                 workerpool.submit(
