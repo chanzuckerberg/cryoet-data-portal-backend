@@ -75,9 +75,9 @@ class VisualizationConfigImporter(BaseImporter):
         **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_segmentation_mask_layer(
-            source_path,
-            f"{name_prefix} segmentation",
-            self.config.https_prefix,
+            source=source_path,
+            name=f"{name_prefix} segmentation",
+            url=self.config.https_prefix,
             color=color,
             scale=resolution,
             is_visible=file_metadata.get("is_visualization_default"),
