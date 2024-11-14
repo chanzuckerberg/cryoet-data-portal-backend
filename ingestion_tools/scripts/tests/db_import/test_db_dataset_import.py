@@ -60,6 +60,11 @@ def expected_funding_sources() -> list[dict[str, Any]]:
         },
         {
             "dataset_id": DATASET_ID,
+            "funding_agency_name": "Grant Provider 1",
+            "grant_id": "5678",
+        },
+        {
+            "dataset_id": DATASET_ID,
             "funding_agency_name": "Test Agency 1",
             "grant_id": "56789",
         },

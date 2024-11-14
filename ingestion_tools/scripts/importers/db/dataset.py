@@ -141,7 +141,7 @@ class DatasetFundingDBImporter(StaleDeletionDBImporter):
 
     @classmethod
     def get_id_fields(cls) -> list[str]:
-        return ["dataset_id", "funding_agency_name"]
+        return ["dataset_id", "funding_agency_name", "grant_id"]
 
     @classmethod
     def get_db_model_class(cls) -> type[BaseModel]:
