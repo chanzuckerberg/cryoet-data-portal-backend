@@ -33,7 +33,7 @@ def _get_colors(n_colors: int, exclude: list[FLOAT_COLOR], seed: int = None) -> 
     colors = distinctipy.get_colors(n_colors, exclude_colors=exclude, rng=seed)
     output_colors = [color for color in colors if _is_valid_color(color)]
     if len(output_colors) < n_colors:
-        return output_colors + _get_colors(n_colors - len(output_colors), exclude=exclude + colors)
+        return output_colors + _get_colors(n_colors - len(output_colors), exclude=exclude + colors, seed=seed)
     return output_colors
 
 
