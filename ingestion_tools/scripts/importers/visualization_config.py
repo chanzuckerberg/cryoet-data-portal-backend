@@ -47,16 +47,13 @@ class VisualizationConfigImporter(BaseImporter):
         annotation_path = self.config.resolve_output_path("annotation_metadata", self, {"annotation_id": "*"})
         return self.config.fs.glob(os.path.join(annotation_path, "*.json"))
 
-    def _to_directory_path(self, path: str) -> str:
-        return path.removeprefix(self.config.output_prefix).removeprefix("/")
-
     def _to_tomogram_layer(
         self,
         tomogram: TomogramImporter,
         volume_info: VolumeInfo,
         resolution: tuple[float, float, float],
     ) -> dict[str, Any]:
-        zarr_dir_path = self._to_directory_path(f"{tomogram.get_output_path()}.zarr")
+        zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
         return state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
@@ -75,6 +72,7 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
+        **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_segmentation_mask_layer(
             source_path,
@@ -93,6 +91,7 @@ class VisualizationConfigImporter(BaseImporter):
         color: str,
         resolution: tuple[float, float, float],
         is_instance_segmentation: bool,
+        **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_point_layer(
             source_path,
@@ -104,19 +103,16 @@ class VisualizationConfigImporter(BaseImporter):
             is_instance_segmentation=is_instance_segmentation,
         )
 
-    def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
-        tomogram = self.get_tomogram()
-        volume_info = tomogram.get_output_volume_info()
-        voxel_size = round(volume_info.voxel_size, 3)
-        resolution = (voxel_size * 1e-10,) * 3
-        layers = [self._to_tomogram_layer(tomogram, volume_info, resolution)]
-
+    def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
 
         # TODO: Update the annotation metadata to be fetched from all voxel spacings once, we start supporting the
         #  co-ordinate transformation in neuroglancer
         annotation_metadata_paths = self._get_annotation_metadata_files()
         colors_used = []
+
+        # Accumulates any arguments that need to be passed to the layer generation functions
+        annotation_layer_info = {}
 
         for annotation_metadata_path in annotation_metadata_paths:
             with open(self.config.fs.localreadable(annotation_metadata_path), "r") as f:
@@ -125,6 +121,7 @@ class VisualizationConfigImporter(BaseImporter):
                 print(f"Skipping annotation {annotation_metadata_path} with different alignment metadata")
                 continue
             annotation_hash_input = to_base_hash_input(metadata)
+
             metadata_file_name = Path(annotation_metadata_path).stem
             if not metadata_file_name.split("-")[0].isdigit():
                 # If the file name does not start with a number, use the id from the directory
@@ -133,27 +130,56 @@ class VisualizationConfigImporter(BaseImporter):
             name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
 
             for file in metadata.get("files", []):
+                shape = file.get("shape")
+                if shape not in {"SegmentationMask", "Point", "OrientedPoint", "InstanceSegmentation"}:
+                    print(f"Skipping file with unknown shape {shape}")
+                    continue
+
                 # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
                 if file.get("format") not in {"zarr", "ndjson"}:
                     continue
 
-                shape = file.get("shape")
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
                 hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
-                path = self._to_directory_path(
+
+                path = self.config.to_formatted_path(
                     os.path.join(precompute_path, f"{metadata_file_name}_{shape.lower()}"),
                 )
-                if shape == "SegmentationMask":
-                    layers.append(self._to_segmentation_mask_layer(path, file, name_prefix, hex_colors[0], resolution))
+
+                is_instance_seg = shape == "InstanceSegmentation"
+
+                annotation_layer_info[file.get("path")] = {
+                    "shape": shape,
+                    "args": {
+                        "source_path": path,
+                        "file_metadata": file,
+                        "name_prefix": name_prefix,
+                        "color": hex_colors[0],
+                        "is_instance_segmentation": is_instance_seg,
+                    },
+                }
+
+                if not is_instance_seg:
                     colors_used.append(float_colors[0])
-                elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
-                    is_instance_seg = shape == "InstanceSegmentation"
-                    layer = self._to_point_layer(path, file, name_prefix, hex_colors[0], resolution, is_instance_seg)
-                    layers.append(layer)
-                    if not is_instance_seg:
-                        colors_used.append(float_colors[0])
-                else:
-                    print(f"Skipping file with unknown shape {shape}")
+
+        return annotation_layer_info
+
+    def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
+        tomogram = self.get_tomogram()
+        volume_info = tomogram.get_output_volume_info()
+        voxel_size = round(volume_info.voxel_size, 3)
+        resolution = (voxel_size * 1e-10,) * 3
+        layers = [self._to_tomogram_layer(tomogram, volume_info, resolution)]
+
+        annotation_layer_info = self.get_annotation_layer_info(alignment_metadata_path)
+
+        for _, info in annotation_layer_info.items():
+            args = {**info["args"], "resolution": resolution}
+
+            if info["shape"] == "SegmentationMask":
+                layers.append(self._to_segmentation_mask_layer(**args))
+            elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
+                layers.append(self._to_point_layer(**args))
 
         return state_generator.combine_json_layers(layers, scale=resolution)
 
