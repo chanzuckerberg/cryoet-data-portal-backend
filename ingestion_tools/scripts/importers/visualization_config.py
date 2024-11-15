@@ -95,7 +95,6 @@ class VisualizationConfigImporter(BaseImporter):
     ) -> dict[str, Any]:
         args = {
             "source": source_path,
-            "name": f"{name_prefix} point",
             "url": self.config.https_prefix,
             "color": color,
             "scale": resolution,
@@ -103,7 +102,9 @@ class VisualizationConfigImporter(BaseImporter):
             "is_instance_segmentation": shape == "InstanceSegmentation",
         }
         if shape == "OrientedPoint":
+            args["name"] = f"{name_prefix} orientedpoint"
             return state_generator.generate_oriented_point_layer(**args)
+        args["name"] = f"{name_prefix} point"
         return state_generator.generate_point_layer(**args)
 
     def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:

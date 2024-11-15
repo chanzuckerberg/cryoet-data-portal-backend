@@ -182,10 +182,12 @@ def annotation_usecases(
     if format == "ndjson":
         if shape in {"Point", "InstanceSegmentation"}:
             generator_method = "generate_point_layer"
+            input_args["name"] += "point"
         elif shape == "OrientedPoint":
             generator_method = "generate_oriented_point_layer"
+            input_args["name"] += "orientedpoint"
         input_args["is_instance_segmentation"] = shape == "InstanceSegmentation"
-        input_args["name"] += "point"
+
         return_value = {"key": generator_method, "random": "value"}
     elif shape == "SegmentationMask" and format == "zarr":
         generator_method = "generate_segmentation_mask_layer"
