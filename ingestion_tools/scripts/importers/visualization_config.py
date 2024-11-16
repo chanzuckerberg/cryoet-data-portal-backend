@@ -93,13 +93,14 @@ class VisualizationConfigImporter(BaseImporter):
         shape: str,
         **kwargs,
     ) -> dict[str, Any]:
+        is_instance_segmentation = shape == "InstanceSegmentation"
         args = {
             "source": source_path,
             "url": self.config.https_prefix,
             "color": color,
             "scale": resolution,
             "is_visible": file_metadata.get("is_visualization_default"),
-            "is_instance_segmentation": shape == "InstanceSegmentation",
+            "is_instance_segmentation": is_instance_segmentation,
         }
         if shape == "OrientedPoint":
             args["name"] = f"{name_prefix} orientedpoint"
