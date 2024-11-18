@@ -75,9 +75,9 @@ class VisualizationConfigImporter(BaseImporter):
         **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_segmentation_mask_layer(
-            source_path,
-            f"{name_prefix} segmentation",
-            self.config.https_prefix,
+            source=source_path,
+            name=f"{name_prefix} segmentation",
+            url=self.config.https_prefix,
             color=color,
             scale=resolution,
             is_visible=file_metadata.get("is_visualization_default"),
@@ -90,18 +90,23 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
-        is_instance_segmentation: bool,
+        shape: str,
         **kwargs,
     ) -> dict[str, Any]:
-        return state_generator.generate_point_layer(
-            source_path,
-            f"{name_prefix} point",
-            self.config.https_prefix,
-            color=color,
-            scale=resolution,
-            is_visible=file_metadata.get("is_visualization_default"),
-            is_instance_segmentation=is_instance_segmentation,
-        )
+        is_instance_segmentation = shape == "InstanceSegmentation"
+        args = {
+            "source": source_path,
+            "url": self.config.https_prefix,
+            "color": color,
+            "scale": resolution,
+            "is_visible": file_metadata.get("is_visualization_default"),
+            "is_instance_segmentation": is_instance_segmentation,
+        }
+        if shape == "OrientedPoint":
+            args["name"] = f"{name_prefix} orientedpoint"
+            return state_generator.generate_oriented_point_layer(**args)
+        args["name"] = f"{name_prefix} point"
+        return state_generator.generate_point_layer(**args)
 
     def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
@@ -155,7 +160,7 @@ class VisualizationConfigImporter(BaseImporter):
                         "file_metadata": file,
                         "name_prefix": name_prefix,
                         "color": hex_colors[0],
-                        "is_instance_segmentation": is_instance_seg,
+                        "shape": shape,
                     },
                 }
 
@@ -180,7 +185,6 @@ class VisualizationConfigImporter(BaseImporter):
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
-
         return state_generator.combine_json_layers(layers, scale=resolution)
 
     @classmethod

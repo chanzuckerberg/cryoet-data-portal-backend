@@ -80,7 +80,7 @@ def validate_metadata(
 
 
 @pytest.fixture
-def create_config(
+def config_generator(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     input_bucket: str,
@@ -102,7 +102,7 @@ def create_config(
     ],
 )
 def test_alignment_import_item(
-    create_config: Callable[[str], DepositionImportConfig],
+    config_generator: Callable[[str], DepositionImportConfig],
     add_alignment_metadata: Callable[[str, int], None],
     validate_dataframe: Callable[[str, str], None],
     validate_metadata: Callable[[dict, str], None],
@@ -110,7 +110,7 @@ def test_alignment_import_item(
     deposition_id: int,
     id_prefix: int,
 ) -> None:
-    config = create_config("dataset1.yaml")
+    config = config_generator("dataset1.yaml")
     parents = get_parents(config)
     dataset_name = parents.get("dataset").name
     run_name = parents.get("run").name
@@ -182,7 +182,7 @@ def test_alignment_import_item(
     ],
 )
 def test_alignment_import_item_aretomo(
-    create_config: Callable[[str], DepositionImportConfig],
+    config_generator: Callable[[str], DepositionImportConfig],
     add_alignment_metadata: Callable[[str, int], None],
     validate_dataframe: Callable[[str, str], None],
     validate_metadata: Callable[[dict, str], None],
@@ -190,7 +190,7 @@ def test_alignment_import_item_aretomo(
     deposition_id: int,
     id_prefix: int,
 ) -> None:
-    config = create_config("dataset2.yaml")
+    config = config_generator("dataset2.yaml")
     parents = get_parents(config)
     dataset_name = parents.get("dataset").name
     run_name = parents.get("run").name
@@ -251,12 +251,12 @@ def test_alignment_import_item_aretomo(
 
 
 def test_default_alignment_import_with_tomograms(
-    create_config: Callable[[str], DepositionImportConfig],
+    config_generator: Callable[[str], DepositionImportConfig],
     s3_client: S3Client,
     test_output_bucket: str,
     validate_metadata: Callable[[dict, str], None],
 ) -> None:
-    config = create_config("alignments/alignment1.yaml")
+    config = config_generator("alignments/alignment1.yaml")
     parents = get_parents(config)
 
     alignments = list(AlignmentImporter.finder(config, **parents))
@@ -289,11 +289,11 @@ def test_default_alignment_import_with_tomograms(
 
 
 def test_default_alignment_import_without_tomograms(
-    create_config: Callable[[str], DepositionImportConfig],
+    config_generator: Callable[[str], DepositionImportConfig],
     s3_client: S3Client,
     test_output_bucket: str,
 ) -> None:
-    config = create_config("alignments/alignment2.yaml")
+    config = config_generator("alignments/alignment2.yaml")
     parents = get_parents(config)
 
     alignments = list(AlignmentImporter.finder(config, **parents))
@@ -309,11 +309,11 @@ def test_default_alignment_import_without_tomograms(
 
 
 def test_custom_alignment_import_without_tomograms(
-    create_config: Callable[[str], DepositionImportConfig],
+    config_generator: Callable[[str], DepositionImportConfig],
     s3_client: S3Client,
     test_output_bucket: str,
 ) -> None:
-    config = create_config("alignments/alignment3.yaml")
+    config = config_generator("alignments/alignment3.yaml")
     parents = get_parents(config)
 
     alignments = list(AlignmentImporter.finder(config, **parents))
@@ -329,12 +329,12 @@ def test_custom_alignment_import_without_tomograms(
 
 
 def test_custom_alignment_with_dimensions_import_without_tomograms(
-    create_config: Callable[[str], DepositionImportConfig],
+    config_generator: Callable[[str], DepositionImportConfig],
     test_output_bucket: str,
     validate_dataframe: Callable[[str, str, int], None],
     validate_metadata: Callable[[dict, str, int], None],
 ) -> None:
-    config = create_config("alignments/alignment4.yaml")
+    config = config_generator("alignments/alignment4.yaml")
     parents = get_parents(config)
 
     alignments = list(AlignmentImporter.finder(config, **parents))
@@ -389,11 +389,11 @@ def test_custom_alignment_with_dimensions_import_without_tomograms(
 
 
 def test_allow_import_is_false(
-    create_config: Callable[[str], DepositionImportConfig],
+    config_generator: Callable[[str], DepositionImportConfig],
     test_output_bucket: str,
     s3_client: S3Client,
 ) -> None:
-    config = create_config("alignments/alignment4.yaml")
+    config = config_generator("alignments/alignment4.yaml")
     parents = get_parents(config)
 
     alignments = list(AlignmentImporter.finder(config, **parents))
