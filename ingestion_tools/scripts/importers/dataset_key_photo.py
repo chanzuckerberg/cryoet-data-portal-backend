@@ -37,4 +37,8 @@ class DatasetKeyPhotoImporter(BaseKeyPhotoImporter):
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:
-        return [{"sources": [{"literal": {"value": ["snapshot", "thumbnail"]}}]}]
+        return [{"sources": [{"literal": {"value": cls.get_default_sources()}}]}]
+
+    @classmethod
+    def get_default_sources(cls) -> list[dict] | list[str] | str | None:
+        return ["snapshot", "thumbnail"]

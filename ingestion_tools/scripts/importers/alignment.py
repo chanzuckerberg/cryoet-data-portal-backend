@@ -149,7 +149,16 @@ class AlignmentImporter(BaseFileImporter):
 
     @classmethod
     def get_default_config(cls) -> list[dict]:
-        return [{"metadata": cls.get_default_metadata(), "sources": [{"literal": {"value": ["default"]}}]}]
+        return [
+            {
+                "metadata": cls.get_default_metadata(),
+                "sources": [{"literal": {"value": cls.get_default_sources()}}],
+            },
+        ]
+
+    @classmethod
+    def get_default_sources(cls) -> list[str]:
+        return ["default"]
 
     @classmethod
     def get_default_metadata(cls) -> dict[str, Any]:

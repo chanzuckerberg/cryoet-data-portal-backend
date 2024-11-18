@@ -139,6 +139,15 @@ class BaseImporter:
         return None
 
     @classmethod
+    def get_default_sources(cls) -> list[dict] | list[str] | str | None:
+        """
+        Returns a default source for the importer. This value is set as default source for the importer if entries
+        exists for the importer entity in the configuration but doesn't have a matching entry in the source s3 bucket.
+        :return:
+        """
+        return None
+
+    @classmethod
     def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
         """
         Returns the name, path and a dictionary of name and paths for the importer. This method is used to override the
