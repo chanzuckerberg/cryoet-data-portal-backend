@@ -1,9 +1,3 @@
-dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: s3://input_bucket/invalid-snapshot.gif
-        thumbnail: s3://input_bucket/invalid-thumbnail.gif
 datasets:
 - sources:
   - literal:
