@@ -1,4 +1,3 @@
-
 import numpy
 import pytest
 from importers.dataset import DatasetImporter
@@ -47,12 +46,15 @@ def test_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket: str, s3
     image_keys = {"snapshot", "thumbnail"}
     for key in image_keys:
         assert key in metadata
-        assert metadata[key] == f"10001/Images/{key}.png"
-        assert f"{key}.png" in s3_files
+        assert metadata[key] == f"10001/Images/{key}.gif"
+        assert f"{key}.gif" in s3_files
 
 
 def test_key_photo_import_from_tomogram(
-    s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client, add_tomo_image: None,
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    s3_client: S3Client,
+    add_tomo_image: None,
 ) -> None:
     config_file = "tests/fixtures/dataset2.yaml"
     output_prefix = "output"
