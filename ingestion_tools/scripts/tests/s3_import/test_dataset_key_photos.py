@@ -50,6 +50,29 @@ def test_dataset_key_photo_import_http(s3_fs: FileSystemApi, test_output_bucket:
         assert f"{key}.gif" in s3_files
 
 
+def test_dataset_key_photo_import_s3(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:
+    config_file = "tests/fixtures/dataset/valid_s3_keyphoto.yaml"
+    output_prefix = "output"
+    output_path = f"{test_output_bucket}/{output_prefix}"
+    input_bucket = "test-public-bucket"
+    config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket, IMPORTERS)
+    key_photos = list(DatasetKeyPhotoImporter.finder(config, **get_parents(config)))
+
+    for item in key_photos:
+        item.import_item()
+
+    # Check that the metadata is correct
+    metadata = key_photos[0].get_metadata()
+    # Check actual s3 files
+    s3_files = get_children(s3_client, test_output_bucket, f"{output_prefix}/10001/Images")
+    assert len(metadata) == 2
+    image_keys = {"snapshot", "thumbnail"}
+    for key in image_keys:
+        assert key in metadata
+        assert metadata[key] == f"10001/Images/{key}.gif"
+        assert f"{key}.gif" in s3_files
+
+
 def test_dataset_key_photo_import_from_tomogram(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
@@ -78,13 +101,13 @@ def test_dataset_key_photo_import_from_tomogram(
         assert f"{key}.png" in s3_files
 
 
-def test_dataset_key_photo_import_for_invalid_source(
+def test_dataset_key_photo_import_for_invalid_s3_source(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
     add_tomo_image: None,
 ) -> None:
-    config_file = "tests/fixtures/dataset/invalid_dataset_keyphoto.yaml"
+    config_file = "tests/fixtures/dataset/invalid_s3_keyphoto.yaml"
     output_prefix = "output"
     output_path = f"{test_output_bucket}/{output_prefix}"
     input_bucket = "test-public-bucket"
@@ -94,9 +117,33 @@ def test_dataset_key_photo_import_for_invalid_source(
     for item in key_photos:
         item.import_item()
 
-    # Check that the metadata is correct
     metadata = key_photos[0].get_metadata()
-    # Check actual s3 files
+    s3_files = get_children(s3_client, test_output_bucket, f"{output_prefix}/10001/Images")
+    assert len(metadata) == 2
+    image_keys = {"snapshot", "thumbnail"}
+    for key in image_keys:
+        assert key in metadata
+        assert metadata[key] == f"10001/Images/{key}.png"
+        assert f"{key}.png" in s3_files
+
+
+def test_dataset_key_photo_import_for_invalid_http_source(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    s3_client: S3Client,
+    add_tomo_image: None,
+) -> None:
+    config_file = "tests/fixtures/dataset/invalid_http_keyphoto.yaml"
+    output_prefix = "output"
+    output_path = f"{test_output_bucket}/{output_prefix}"
+    input_bucket = "test-public-bucket"
+    config = DepositionImportConfig(s3_fs, config_file, output_path, input_bucket, IMPORTERS)
+    key_photos = list(DatasetKeyPhotoImporter.finder(config, **get_parents(config)))
+
+    for item in key_photos:
+        item.import_item()
+
+    metadata = key_photos[0].get_metadata()
     s3_files = get_children(s3_client, test_output_bucket, f"{output_prefix}/10001/Images")
     assert len(metadata) == 2
     image_keys = {"snapshot", "thumbnail"}

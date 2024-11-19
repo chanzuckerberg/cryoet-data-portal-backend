@@ -1,0 +1,33 @@
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: test-public-bucket/input_bucket/snapshot.gif
+        thumbnail: test-public-bucket/input_bucket/thumbnail.gif
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10001'
+depositions:
+- sources:
+  - literal:
+      value:
+      - '10301'
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/TS_*.rec
+      name_regex: (.*).rec
+standardization_config:
+  source_prefix: input_bucket/10001_input
+tomograms:
+- sources:
+  - source_glob:
+      list_glob: tomograms/{run_name}.rec
+      match_regex: .*\.rec
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 13.48
