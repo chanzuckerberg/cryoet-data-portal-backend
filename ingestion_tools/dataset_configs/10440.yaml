@@ -94,7 +94,12 @@ depositions:
   - literal:
       value:
       - 10310
-
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_snapshot.png"
 alignments:
 - metadata:
     format: ARETOMO3
@@ -318,6 +323,13 @@ datasets:
   - literal:
       value:
       - '10440'
+
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
 
 frames:
 - sources:
