@@ -18,14 +18,14 @@ from common.fs import FileSystemApi
 from tests.s3_import.util import get_data_from_s3, list_dir
 
 
-def get_parents(config: DepositionImportConfig) -> dict[str, BaseImporter]:
+def get_parents(config: DepositionImportConfig, run_index: int = 0) -> dict[str, BaseImporter]:
     depositions = list(DepositionImporter.finder(config))
     datasets = list(DatasetImporter.finder(config, deposition=depositions[0]))
     runs = list(RunImporter.finder(config, dataset=datasets[0]))
     return {
         "deposition": depositions[0],
         "dataset": datasets[0],
-        "run": runs[0],
+        "run": runs[run_index],
     }
 
 
@@ -282,6 +282,44 @@ def test_default_alignment_import_with_tomograms(
         "tilt_path": None,
         "tiltx_path": None,
         "volume_dimension": {"x": 13.48 * 6, "y": 13.48 * 8, "z": 13.48 * 10},
+        "volume_offset": {"x": 0, "y": 0, "z": 0},
+        "x_rotation_offset": 0,
+    }
+    validate_metadata(expected, os.path.join(prefix, "100"))
+
+
+def test_default_alignment_import_when_config_invalid_source_exists(
+    config_generator: Callable[[str], DepositionImportConfig],
+    s3_client: S3Client,
+    test_output_bucket: str,
+    validate_metadata: Callable[[dict, str], None],
+) -> None:
+    config = config_generator("dataset1.yaml")
+    parents = get_parents(config, run_index=1)
+
+    alignments = list(AlignmentImporter.finder(config, **parents))
+    for alignment in alignments:
+        alignment.import_item()
+        alignment.import_metadata()
+
+    dataset_name = parents.get("dataset").name
+    run_name = parents.get("run").name
+    prefix = f"output/{dataset_name}/{run_name}/Alignments/"
+    alignment_files = [
+        basename(item) for item in list_dir(s3_client, test_output_bucket, prefix) if not item.endswith(".json")
+    ]
+    assert alignment_files == []
+    expected = {
+        "affine_transformation_matrix": [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]],
+        "alignment_path": None,
+        "alignment_type": "GLOBAL",
+        "deposition_id": "10301",
+        "is_portal_standard": False,
+        "per_section_alignment_parameters": [],
+        "tilt_offset": 0,
+        "tilt_path": None,
+        "tiltx_path": None,
+        "volume_dimension": {"x": 13.48 * 4, "y": 13.48 * 4, "z": 13.48 * 4},
         "volume_offset": {"x": 0, "y": 0, "z": 0},
         "x_rotation_offset": 0,
     }

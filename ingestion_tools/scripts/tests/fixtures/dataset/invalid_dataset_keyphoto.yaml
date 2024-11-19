@@ -1,0 +1,18 @@
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: http://nginx:80/input_bucket/invalid-snapshot.gif
+        thumbnail: http://nginx:80/input_bucket/invalid-thumbnail.gif
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10001'
+depositions:
+- sources:
+  - literal:
+      value:
+      - '10301'
+standardization_config:
+  source_prefix: input_bucket/10001_input
