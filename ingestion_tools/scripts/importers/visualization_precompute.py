@@ -35,11 +35,7 @@ class AnnotationVisualizationImporter(BaseImporter):
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:
-        return [{"sources": [{"literal": {"value": cls.get_default_sources()}}]}]
-
-    @classmethod
-    def get_default_sources(cls) -> list[str]:
-        return ["neuroglancer"]
+        return [{"sources": [{"literal": {"value": ["neuroglancer"]}}]}]
 
 
 class BaseAnnotationPrecompute:

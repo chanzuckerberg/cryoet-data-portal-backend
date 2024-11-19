@@ -117,13 +117,13 @@ class BaseImporter:
     @classmethod
     def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
         finder_configs = config.get_object_configs(cls.type_key)
-        for finder in finder_configs:
-            metadata = finder.get("metadata", {})
-            sources = finder.get("sources", [])
-            for source in sources:
-                source_finder_factory = cls.finder_factory(source, cls)
-                for item in source_finder_factory.find(config, metadata, **parents):
-                    yield item
+        item_found = False
+        for item in cls._finder_execution(finder_configs, config, **parents):
+            item_found = True
+            yield item
+        if not item_found and (default_config := cls.get_default_config()):
+            for item in cls._finder_execution(default_config, config, **parents):
+                yield item
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:
@@ -139,15 +139,6 @@ class BaseImporter:
         return None
 
     @classmethod
-    def get_default_sources(cls) -> list[dict] | list[str] | str | None:
-        """
-        Returns a default source for the importer. This value is set as default source for the importer if entries
-        exists for the importer entity in the configuration but doesn't have a matching entry in the source s3 bucket.
-        :return:
-        """
-        return None
-
-    @classmethod
     def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
         """
         Returns the name, path and a dictionary of name and paths for the importer. This method is used to override the
@@ -159,6 +150,21 @@ class BaseImporter:
         :return:
         """
         NotImplemented("Subclasses must implement this method")
+
+    @classmethod
+    def _finder_execution(
+        cls,
+        finder_configs: list[dict],
+        config: DepositionImportConfig,
+        **parents: dict[str, "BaseImporter"],
+    ) -> list["BaseImporter"]:
+        for finder in finder_configs:
+            metadata = finder.get("metadata", {})
+            sources = finder.get("sources", [])
+            for source in sources:
+                source_finder_factory = cls.finder_factory(source, cls)
+                for item in source_finder_factory.find(config, metadata, **parents):
+                    yield item
 
 
 class VolumeImporter(BaseImporter):
