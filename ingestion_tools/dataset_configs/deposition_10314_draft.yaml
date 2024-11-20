@@ -1,0 +1,253 @@
+depositions:
+- metadata:
+    authors: &deposition_authors
+      - ORCID: 0000-0002-3739-8863
+        corresponding_author_status: true
+        name: Mart G. F. Last
+        primary_author_status: true
+      - ORCID: 0000-0001-9794-067X
+        corresponding_author_status: false
+        name: Lenard M. Voortman
+        primary_author_status: false
+      - ORCID: 0000-0002-1990-2333
+        corresponding_author_status: True
+        name: Thomas H. Sharp
+        primary_author_status: false
+    cross_references:
+      publications: 10.7554/eLife.98552.2
+    dates: &id002
+      deposition_date: '2024-06-04'
+      last_modified_date: '2024-06-04'
+      release_date: '2024-06-04'
+    deposition_description: #TODO
+    deposition_identifier: 10314
+    deposition_title: #TODO
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10314
+alignments:
+- sources:
+  - destination_glob:
+      list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+      match_regex: .*
+      name_regex: (.*)
+annotations:
+- metadata: &annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data
+    annotation_object:
+      id: GO:0005840
+      name: ribosome
+    annotation_publications: 10.7554/eLife.98552.2
+    annotation_software: Ais
+    authors: *deposition_authors
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: false
+    method_links:
+    - custom_name: Ais on GitHub
+      link: https://www.github.com/bionanopatterning/Ais
+      link_type: source_code
+    - custom_name: Pom on GitHub
+      link: https://www.github.com/bionanopatterning/Pom
+      link_type: source_code
+    - custom_name: Ais on PyPI
+      link: https://pypi.org/project/Ais-cryoET/
+      link_type: source_code
+    - custom_name: Pom on PyPI
+      link: https://pypi.org/project/Pom-cryoET/
+      link_type: source_code
+    method_type: automated
+    version: 1.0
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Ribosome.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Membrane.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0005832
+      name: chaperonin-containing T-complex
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__TRiC.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0000502
+      name: proteasome complex
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Proteasome.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0045259
+      name: F1-F0 complex
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__ATP synthase.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0048492
+      name: RubisCO complex
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__RuBisCo.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0005737
+      name: cytoplasm
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Cytoplasm.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0005739
+      name: mitochondrion
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Mitochondrion.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0005635
+      name: nuclear envelope
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Nuclear Envelope.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0005654
+      name: nucleoplasm
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Nucleoplasm.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:1990732
+      name: pyrenoid
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      #TODO: what is this?
+      glob_string: '{run_name}_bin2__Pyrenoid tube.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0009579
+      name: thylakoid
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Thylakoid.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:1990732
+      name: pyrenoid
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Pyrenoid.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0009570
+      name: chloroplast stroma
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Stroma.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0005811
+      name: lipid droplet
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Lipid droplets.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0005618
+      name: cell wall
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      #TODO: confirm this is correct
+      glob_string: '{run_name}_bin2__Dense layer.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_object:
+      id: GO:0005783
+      name: endoplasmic reticulum
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Endoplasmic reticulum.mrc'
+      is_visualization_default: true
+datasets:
+- sources:
+  - source_glob:
+      list_glob: 1030?
+      match_regex: (10301|10302)$
+      name_regex: (.*)
+
+runs:
+- sources:
+  - source_glob:
+      list_glob: '{dataset_name}/*'
+      match_regex: .*
+      name_regex: (.*)
+standardization_config:
+  deposition_id: 10314
+  source_prefix: mart_last_11_2024/
+version: 1.1.0
+voxel_spacings:
+- sources:
+  - destination_glob:
+      list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+      match_regex: .*
+      name_regex: VoxelSpacing(.*)
