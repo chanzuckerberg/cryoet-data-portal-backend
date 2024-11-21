@@ -138,7 +138,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    processing_software: ''
+    processing_software: null
     reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1

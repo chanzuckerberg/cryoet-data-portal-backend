@@ -356,7 +356,7 @@ def to_tomogram(
     tomogram["reconstruction_software"] = normalize_invalid_to_none(tomogram.get("reconstruction_software"))
     tomogram["align_software"] = "+".join(tomogram.pop("align_softwares", []))
     tomogram["processing"] = normalize_processing(tomogram.get("processing"))
-    tomogram["processing_software"] = tomogram.get("processing_software") or ""
+
     tomogram["voxel_spacing"] = round(tomogram["voxel_spacing"], 3) if "voxel_spacing" in tomogram else None
 
     return tomogram
