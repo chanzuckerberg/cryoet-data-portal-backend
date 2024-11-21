@@ -117,21 +117,21 @@ class BaseImporter:
     @classmethod
     def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
         finder_configs = config.get_object_configs(cls.type_key)
-        for finder in finder_configs:
-            metadata = finder.get("metadata", {})
-            sources = finder.get("sources", [])
-            for source in sources:
-                source_finder_factory = cls.finder_factory(source, cls)
-                for item in source_finder_factory.find(config, metadata, **parents):
-                    yield item
+        item_found = False
+        for item in cls._finder_execution(finder_configs, config, **parents):
+            item_found = True
+            yield item
+        if not item_found and (default_config := cls.get_default_config()):
+            for item in cls._finder_execution(default_config, config, **parents):
+                yield item
 
     @classmethod
     def get_default_config(cls) -> list[dict] | None:
         """
         Returns a default configuration for the importer. This value is set as default configuration for the importer
-        if no entry exists for it in the configuration.
-        Override this method in subclasses where a default configuration is required even when a user does not provide
-        a configuration.
+        if no entry exists for it in the configuration or if the source finders aren't able to find any matches.
+        Override this method in subclasses where an entity is always required even if there is no config provided or an
+        invalid config source is provided.
 
         Returns:
         list[dict] | None: The default configuration for the importer. If no entry exists, returns None.
@@ -150,6 +150,21 @@ class BaseImporter:
         :return:
         """
         NotImplemented("Subclasses must implement this method")
+
+    @classmethod
+    def _finder_execution(
+        cls,
+        finder_configs: list[dict],
+        config: DepositionImportConfig,
+        **parents: dict[str, "BaseImporter"],
+    ) -> list["BaseImporter"]:
+        for finder in finder_configs:
+            metadata = finder.get("metadata", {})
+            sources = finder.get("sources", [])
+            for source in sources:
+                source_finder_factory = cls.finder_factory(source, cls)
+                for item in source_finder_factory.find(config, metadata, **parents):
+                    yield item
 
 
 class VolumeImporter(BaseImporter):

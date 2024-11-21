@@ -1,6 +1,8 @@
 import os
 from typing import Optional
 
+import requests
+
 from common.finders import DefaultImporterFactory
 from importers.base_importer import BaseKeyPhotoImporter
 from importers.key_image import KeyImageImporter
@@ -17,7 +19,7 @@ class DatasetKeyPhotoImporter(BaseKeyPhotoImporter):
     dir_path = "{dataset_name}/Images"
 
     def get_image_src_path(self) -> str:
-        image_src = self.path or self.get_first_valid_tomo_key_photo(self.name)
+        image_src = self.path if self.file_exists(self.path) else self.get_first_valid_tomo_key_photo(self.name)
         if not image_src:
             raise RuntimeError("Image source file not found")
         return image_src
@@ -34,3 +36,15 @@ class DatasetKeyPhotoImporter(BaseKeyPhotoImporter):
                         if self.config.fs.exists(img_path):
                             return img_path
         return None
+
+    def file_exists(self, path: str) -> bool:
+        if not path:
+            return False
+        elif path.startswith(("http://", "https://")):
+            response = requests.head(path)
+            return response.status_code == 200
+        return self.config.fs.exists(path)
+
+    @classmethod
+    def get_default_config(cls) -> list[dict] | None:
+        return [{"sources": [{"literal": {"value": ["snapshot", "thumbnail"]}}]}]

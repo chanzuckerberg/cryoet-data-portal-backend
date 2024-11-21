@@ -80,8 +80,6 @@ class DepositionImportConfig:
             for item in object_classes:
                 if config.get(item.plural_key):
                     self.object_configs[item.type_key] = config.pop(item.plural_key)
-                elif item_default_config := item.get_default_config():
-                    self.object_configs[item.type_key] = item_default_config
 
             # Copy the remaining standardization config keys over to this object.
             for k, v in config.get("standardization_config", {}).items():
@@ -230,7 +228,7 @@ class DepositionImportConfig:
         path = os.path.join(output_prefix, get_importer_output_path(key).format(**glob_vars))
 
         # If the path contains a wildcard, we don't want to create the directory
-        if '*' in path or '?' in path:
+        if "*" in path or "?" in path:
             return path
 
         if ".json" in path or ".mrc" in path or ".zarr" in path:
