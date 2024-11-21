@@ -251,6 +251,14 @@ datasets:
   - literal:
       value:
       - '10441'
+
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+
 runs:
 - sources:
   - source_glob:
