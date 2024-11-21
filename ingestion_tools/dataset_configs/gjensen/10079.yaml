@@ -148,7 +148,7 @@ tomograms:
       y: 0
       z: 0
     processing: raw
-    processing_software: null
+    processing_software: ''
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1

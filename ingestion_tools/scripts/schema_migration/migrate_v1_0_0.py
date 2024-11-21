@@ -141,32 +141,22 @@ def upgrade(data: dict[str, Any]) -> dict[str, Any]:
                 ],
             },
         ]
-    if not data.get("key_images") and [d for d in data["datasets"] if d.get("metadata")]:
-        if standardization_config.get("tomo_key_photo_glob"):
-            # TODO what if we don't have key images defined?
-            data["key_images"] = [
-                {
-                    "sources": [
-                        {
-                            "source_glob": {
-                                "list_glob": standardization_config["tomo_key_photo_glob"],
-                            },
+    if (
+        not data.get("key_images")
+        and [d for d in data["datasets"] if d.get("metadata")]
+        and standardization_config.get("tomo_key_photo_glob")
+    ):
+        data["key_images"] = [
+            {
+                "sources": [
+                    {
+                        "source_glob": {
+                            "list_glob": standardization_config["tomo_key_photo_glob"],
                         },
-                    ],
-                },
-            ]
-        else:
-            data["key_images"] = [
-                {
-                    "sources": [
-                        {
-                            "literal": {
-                                "value": ["from_tomogram"],
-                            },  # This is just a placeholder when keyphotos are created from their parent tomos.
-                        },
-                    ],
-                },
-            ]
+                    },
+                ],
+            },
+        ]
     if not data.get("rawtilts") and standardization_config.get("rawtlt_files"):
         data["rawtilts"] = [
             {
