@@ -299,7 +299,7 @@ deposition_keyphotos:
   - literal:
       value:
         snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10300_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10300_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10300_thumbnail.png"
 frames:
 - sources:
   - source_glob:

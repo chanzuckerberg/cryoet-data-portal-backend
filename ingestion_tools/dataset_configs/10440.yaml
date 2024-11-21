@@ -99,7 +99,7 @@ deposition_keyphotos:
   - literal:
       value:
         snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_thumbnail.png"
 alignments:
 - metadata:
     format: ARETOMO3
