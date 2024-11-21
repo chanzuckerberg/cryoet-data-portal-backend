@@ -129,9 +129,9 @@ class BaseImporter:
     def get_default_config(cls) -> list[dict] | None:
         """
         Returns a default configuration for the importer. This value is set as default configuration for the importer
-        if no entry exists for it in the configuration.
-        Override this method in subclasses where a default configuration is required even when a user does not provide
-        a configuration.
+        if no entry exists for it in the configuration or if the source finders aren't able to find any matches.
+        Override this method in subclasses where an entity is always required even if there is no config provided or an
+        invalid config source is provided.
 
         Returns:
         list[dict] | None: The default configuration for the importer. If no entry exists, returns None.
