@@ -1,0 +1,56 @@
+annotations:
+  - metadata:
+      annotation_object:
+        id: GO:0015627
+        name: type II protein secretion system complex
+        description: ~
+        state: ~
+      dates: &repo-dates
+        deposition_date: 2024-11-22
+        last_modified_date: 2024-11-22
+        release_date: 2024-11-22
+      annotation_method: "manual labeling."
+      method_type: manual
+      annotation_publications: ~
+      ground_truth_status: True
+      authors: &annotation_authors
+        - name: Mohammed Kaplan
+          corresponding_author_status: true
+      annotation_software: "IMOD"
+      version: 1.0
+      confidence:
+        precision: ~
+        recall: ~
+      is_curator_recommended: True
+    sources:
+      - OrientedPoint:
+          file_format: mod
+
+datasets:
+- sources:
+  - source_glob:
+      list_glob: '*'                  # Matches all directories or datasets
+      match_regex: .*                # Matches all files within those directories
+      name_regex: (.*)               # Captures everything for downstream use
+runs:
+- sources:
+  - source_glob:
+      list_glob: '{dataset_name}/*'  # Dynamically matches files within a dataset directory
+      match_regex: .*_.*_t2ss\.mod     # Matches filenames in the format (run_name)_(run_id)_(target_file).mod
+      name_regex: (.*?)_(.*?)_t2ss\.mod # Captures run_name, run_id, and target_file as separate groups
+voxel_spacings:
+- sources:
+  - destination_glob:
+      list_glob: '{run_output_path}/Tomograms/VoxelSpacing*'
+      match_regex: .*                # Matches all voxel spacing files
+      name_regex: VoxelSpacing(.*)  # Captures numeric or descriptive parts after 'VoxelSpacing'
+standardization_config:
+  deposition_id: #TODO
+  source_prefix: 'braxton_owens_05_2024/t2ss'
+depositions:
+  - sources:
+    - source_glob:
+        list_glob: 'deposition_t2ss.yaml' # Shared deposition file
+        match_regex: .*                 # Matches all contents of the file
+        name_regex: (.*)                # Captures its name or content
+version: "1.0"
