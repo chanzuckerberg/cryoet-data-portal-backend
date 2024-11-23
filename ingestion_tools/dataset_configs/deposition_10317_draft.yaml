@@ -1,8 +1,8 @@
 annotations:
   - metadata:
       annotation_object:
-        id: GO:0009425
-        name: bacterial-type flagellum basal body
+        id: GO:0015627
+        name: type II protein secretion system complex
         description: ~
         state: ~
       dates: &repo-dates
@@ -36,8 +36,8 @@ runs:
 - sources:
   - source_glob:
       list_glob: '{dataset_name}/*'  # Dynamically matches files within a dataset directory
-      match_regex: .*_.*_.FM\.mod     # Matches filenames in the format (run_name)_(run_id)_(target_file).mod
-      name_regex: (.*?)_(.*?)_FM\.mod # Captures run_name, run_id, and target_file as separate groups
+      match_regex: .*_.*_t2ss\.mod     # Matches filenames in the format (run_name)_(run_id)_(target_file).mod
+      name_regex: (.*?)_(.*?)_t2ss\.mod # Captures run_name, run_id, and target_file as separate groups
 voxel_spacings:
 - sources:
   - destination_glob:
@@ -45,12 +45,12 @@ voxel_spacings:
       match_regex: .*                # Matches all voxel spacing files
       name_regex: VoxelSpacing(.*)  # Captures numeric or descriptive parts after 'VoxelSpacing'
 standardization_config:
-  deposition_id: #TODO
-  source_prefix: 'braxton_owens_05_2024/full_motors'
+  deposition_id: 10317
+  source_prefix: 'braxton_owens_05_2024/t2ss'
 depositions:
   - sources:
     - source_glob:
-        list_glob: 'deposition_FM.yaml' # Shared deposition file
+        list_glob: 'deposition_t2ss.yaml' # Shared deposition file
         match_regex: .*                 # Matches all contents of the file
         name_regex: (.*)                # Captures its name or content
 version: "1.0"
