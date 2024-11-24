@@ -159,8 +159,8 @@ annotations:
 - metadata:
     <<: *annotation_metadata
     annotation_object:
-      id: GO:1990732
-      name: pyrenoid
+      id: GO:0160223
+      name: pyrenoid tubule
   sources:
   - SegmentationMask:
       file_format: mrc
