@@ -95,7 +95,7 @@ datasets:
         primary_author_status: false
         corresponding_author_status: true
         ORCID: 0000-0002-8402-0134
-    dataset_description: #TODO
+    dataset_description: A description. #TODO
     dataset_identifier: 10443
     dataset_title: Cryo-ET of isolated segments of synaptic terminals, called synaptosomes, from purified rat hippocampi
     dates: *id002
@@ -160,7 +160,7 @@ runs:
 
 standardization_config:
   deposition_id: 10313
-  source_prefix: CZII/20241120_synaptosome/
+  source_prefix: CZII/20241124_synaptosome/
   run_data_map_file: run_to_data_map.tsv
 
 tiltseries:
@@ -211,8 +211,7 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: &id003
-      #TODO
+    authors: &id003 #TODO
     ctf_corrected: true
     dates: *id002
     fiducial_alignment_status: NON_FIDUCIAL
