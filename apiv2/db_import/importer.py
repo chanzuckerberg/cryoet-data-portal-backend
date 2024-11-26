@@ -6,7 +6,7 @@ import click
 from botocore import UNSIGNED
 from botocore.config import Config
 from db_import.common.config import DBImportConfig
-from db_import.importers.alignment import AlignmentImporter
+from db_import.importers.alignment import AlignmentImporter, PerSectionAlignmentParametersImporter
 from db_import.importers.annotation import (
     AnnotationAuthorImporter,
     AnnotationFileImporter,
@@ -45,6 +45,7 @@ def db_import_options(func):
     options.append(click.option("--import-depositions", is_flag=True, default=False))
     options.append(click.option("--import-runs", is_flag=True, default=False))
     options.append(click.option("--import-alignments", is_flag=True, default=False))
+    options.append(click.option("--import-per-section-alignment-parameters", is_flag=True, default=False))
     options.append(click.option("--import-gains", is_flag=True, default=False))
     options.append(click.option("--import-frames", is_flag=True, default=False))
     options.append(click.option("--import-tiltseries", is_flag=True, default=False))
@@ -92,6 +93,7 @@ def load(
     import_depositions: bool,
     import_runs: bool,
     import_alignments: bool,
+    import_per_section_alignment_parameters: bool,
     import_gains: bool,
     import_frames: bool,
     import_tiltseries: bool,
@@ -118,6 +120,7 @@ def load(
         import_depositions,
         import_runs,
         import_alignments,
+        import_per_section_alignment_parameters,
         import_gains,
         import_frames,
         import_tiltseries,
@@ -145,6 +148,7 @@ def load_func(
     import_depositions: bool = False,
     import_runs: bool = False,
     import_alignments: bool = False,
+    import_per_section_alignment_parameters: bool = False,
     import_gains: bool = False,
     import_frames: bool = False,
     import_tiltseries: bool = False,
@@ -169,6 +173,7 @@ def load_func(
         import_depositions = True
         import_runs = True
         import_alignments = True
+        import_per_section_alignment_parameters = True
         import_gains = True
         import_frames = True
         import_tiltseries = True
@@ -246,7 +251,13 @@ def load_func(
                 tiltseries_cleaner.remove_stale_objects()
             if import_alignments:
                 alignment_importer = AlignmentImporter(config, **parents)
-                alignment_importer.import_items()
+                for alignment_obj in alignment_importer.import_items():
+                    if import_per_section_alignment_parameters:
+                        parents = {"run": run_obj, "alignment": alignment_obj}
+                        per_section_alignment_parameters_importer = PerSectionAlignmentParametersImporter(
+                            config, **parents,
+                        )
+                        per_section_alignment_parameters_importer.import_items()
 
             if not import_tomogram_voxel_spacing:
                 continue

@@ -3,12 +3,7 @@
   "method_type": "patch_tracking",
   "per_section_alignment_parameters": [
     {
-      "in_plane_rotation": [
-        0.1,
-        0.2,
-        -0.3,
-        0.4
-      ],
+      "in_plane_rotation": [0.1, 0.2, -0.3, 0.4],
       "x_offset": -4.345,
       "y_offset": 6.789,
       "z_index": 0,
@@ -16,13 +11,8 @@
       "volume_x_rotation": 0
     },
     {
-      "in_plane_rotation": [
-        0.33,
-        0.44,
-        -0.55,
-        0.66
-      ],
-      "x_offset": -3.210,
+      "in_plane_rotation": [0.33, 0.44, -0.55, 0.66],
+      "x_offset": -3.21,
       "y_offset": 4.321,
       "z_index": 1,
       "tilt_angle": null,
@@ -33,39 +23,17 @@
   "tilt_path": null,
   "tiltx_path": null,
   "tiltseries_path": "test-public-bucket/30001/RUN1/TiltSeries/100/tiltseries_metadata.json",
-  "files": [
-    "test-public-bucket/30001/RUN1/Alignments/100/aln1.xf"
-  ],
+  "files": ["test-public-bucket/30001/RUN1/Alignments/100/aln1.xf"],
   "volume_dimension": {
     "x": 900,
     "y": 908,
     "z": 500
   },
   "affine_transformation_matrix": [
-    [
-      1,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      1,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      1,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      1
-    ]
+    [1, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1]
   ],
   "alignment_type": "GLOBAL",
   "is_portal_standard": false,
@@ -76,6 +44,7 @@
   },
   "tilt_offset": 0,
   "x_rotation_offset": 0,
-  "deposition_id": 301,
-  "last_updated_at": 1728675677
+  "deposition_id": 300,
+  "last_updated_at": 1728675677,
+  "tiltseries_id": 501
 }

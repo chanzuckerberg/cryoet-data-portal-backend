@@ -2,6 +2,7 @@ from datetime import date, datetime
 
 import sqlalchemy as sa
 from database.models import (
+    Alignment,
     Annotation,
     AnnotationAuthor,
     AnnotationFile,
@@ -18,6 +19,7 @@ from database.models import (
     TomogramAuthor,
     TomogramVoxelSpacing,
 )
+from database.models.per_section_alignment_parameters import PerSectionAlignmentParameters
 
 DATASET_ID = 30001
 DATASET_AUTHOR_ID = 301
@@ -36,10 +38,13 @@ ANNOTATION_ID = 602
 ANNOTATION_FILE_ID = 701
 ANNOTATION_AUTHOR_ID = 702
 ANNOTATION_METHOD_LINK_ID = 802
+ALIGNMENT_ID = 801
+PER_SECTION_ALIGNMENT_PARAMETERS_ID = 901
 
 STALE_RUN_ID = 902
 STALE_TOMOGRAM_ID = 903
 STALE_ANNOTATION_ID = 904
+STALE_ALIGNMENT_ID = 1004
 
 
 def model_to_dict(sa_object):
@@ -605,5 +610,83 @@ def populate_stale_annotation_authors(session: sa.orm.Session) -> None:
             name="Stale Author",
             corresponding_author_status=True,
             author_list_order=3,
+        ),
+    )
+
+
+@write_data
+def populate_alignments(session: sa.orm.Session) -> Alignment:
+    populate_tiltseries(session)
+    return Alignment(
+        id=ALIGNMENT_ID,
+        tiltseries_id=TILTSERIES_ID,
+        alignment_type="GLOBAL",
+        volume_x_dimension=6300,
+        volume_y_dimension=6300,
+        volume_z_dimension=2000,
+        volume_x_offset=0,
+        volume_y_offset=0,
+        volume_z_offset=0,
+        tilt_offset=0,
+        x_rotation_offset=0,
+        affine_transformation_matrix="[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]",
+        s3_alignment_metadata="alignment_metadata.json",
+        https_alignment_metadata="alignment_metadata.json",
+        is_portal_standard=True,
+    )
+
+
+@write_data
+def populate_stale_alignments(session: sa.orm.Session) -> Alignment:
+    populate_stale_tiltseries(session)
+    return Alignment(
+        id=STALE_ALIGNMENT_ID,
+        tiltseries_id=TILTSERIES_ID,
+        alignment_type="GLOBAL",
+        volume_x_dimension=6300,
+        volume_y_dimension=6300,
+        volume_z_dimension=2000,
+        volume_x_offset=0,
+        volume_y_offset=0,
+        volume_z_offset=0,
+        tilt_offset=0,
+        x_rotation_offset=0,
+        affine_transformation_matrix="{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}",
+        s3_alignment_metadata="foo",
+        https_alignment_metadata="foo",
+        is_portal_standard=True,
+    )
+
+
+@write_data
+def populate_per_section_alignment_parameters(session: sa.orm.Session) -> PerSectionAlignmentParameters:
+    populate_alignments(session)
+    session.add(
+        PerSectionAlignmentParameters(
+            id=PER_SECTION_ALIGNMENT_PARAMETERS_ID,
+            alignment_id=ALIGNMENT_ID,
+            in_plane_rotation=[0.1, 0.2, -0.3, 0.4],
+            x_offset=-4.345,
+            y_offset=6.789,
+            z_index=0,
+            tilt_angle=None,
+            volume_x_rotation=0,
+        ),
+    )
+
+
+@write_data
+def populate_stale_per_section_alignment_parameters(session: sa.orm.Session) -> PerSectionAlignmentParameters:
+    populate_stale_alignments(session)
+    session.add(
+        PerSectionAlignmentParameters(
+            id=PER_SECTION_ALIGNMENT_PARAMETERS_ID,
+            alignment_id=STALE_ALIGNMENT_ID,
+            in_plane_rotation=[0.1, 0.2, -0.3, 0.4],
+            x_offset=-4.345,
+            y_offset=6.789,
+            z_index=7,
+            tilt_angle=None,
+            volume_x_rotation=0,
         ),
     )
