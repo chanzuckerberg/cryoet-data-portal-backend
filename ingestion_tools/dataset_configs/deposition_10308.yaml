@@ -68,6 +68,12 @@ depositions:
   - literal:
       value:
       - 10308
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10308_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10308_thumbnail.png"
 runs:
 - sources:
   - source_glob:

@@ -60,12 +60,6 @@ alignments:
   - source_multi_glob:
       list_globs:
       - alignments/{run_name}.aln
-dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: http://nginx:80/input_bucket/snapshot.gif
-        thumbnail: http://nginx:80/input_bucket/thumbnail.gif
 datasets:
 - metadata:
     authors: &id002
@@ -115,12 +109,6 @@ depositions:
   - literal:
       value:
       - '10301'
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: http://nginx:80/input_bucket/snapshot.gif
-        thumbnail: http://nginx:80/input_bucket/thumbnail.gif
 frames:
 - sources:
   - source_multi_glob:
