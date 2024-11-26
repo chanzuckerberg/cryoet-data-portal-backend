@@ -15,7 +15,7 @@ import zarr
 from mrcfile.mrcfile import MrcFile
 from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
-from skimage.transform import downscale_local_mean
+from skimage.transform import downscale_local_mean, resize_local_mean
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi, S3Filesystem
@@ -242,14 +242,25 @@ class OMEZarrReader(VolumeReader):
 
 
 class TomoConverter:
-    def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
+    def __init__(
+        self,
+        fs: FileSystemApi,
+        filename: str,
+        header_only: bool = False,
+        scale_0_dims: tuple[int, int, int] | None = None,
+    ):
         if ".zarr" in filename:
             self.volume_reader = OMEZarrReader(fs, filename, header_only)
         else:
             self.volume_reader = MRCReader(fs, filename, header_only)
+        self.scale_0_dims = scale_0_dims
 
     def get_pyramid_base_data(self) -> np.ndarray:
-        return self.volume_reader.get_pyramid_base_data()
+        """Returns the base data for the pyramid. Resizes the data to scale_0_dims if it is set."""
+        if self.scale_0_dims is not None:
+            return resize_local_mean(self.volume_reader.get_pyramid_base_data(), self.scale_0_dims, preserve_range=True)
+        else:
+            return self.volume_reader.get_pyramid_base_data()
 
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
@@ -375,12 +386,45 @@ class TomoConverter:
 
 
 class MaskConverter(TomoConverter):
-    def __init__(self, fs: FileSystemApi, filename: str, label: int = 1, header_only: bool = False):
-        super().__init__(fs, filename, header_only)
+    def __init__(
+        self,
+        fs: FileSystemApi,
+        filename: str,
+        label: int = 1,
+        header_only: bool = False,
+        scale_0_dims: tuple[int, int, int] | None = None,
+        threshold: float | None = None,
+    ):
+        super().__init__(fs=fs, filename=filename, header_only=header_only, scale_0_dims=scale_0_dims)
         self.label = label
+        self.threshold = threshold
 
     def get_pyramid_base_data(self) -> np.ndarray:
-        return (self.volume_reader.get_pyramid_base_data() == self.label).astype(np.int8)
+        # When thresholding, do it after scaling. When already binary, extract the mask before scaling.
+        if self.threshold is not None and self.scale_0_dims is not None:
+            scale_before = True
+            scale_after = False
+        elif self.threshold is None and self.scale_0_dims is not None:
+            scale_before = False
+            scale_after = True
+        else:
+            scale_before = False
+            scale_after = False
+
+        if scale_before:
+            data = resize_local_mean(self.volume_reader.get_pyramid_base_data(), self.scale_0_dims, preserve_range=True)
+        else:
+            data = self.volume_reader.get_pyramid_base_data()
+
+        if self.threshold is not None:
+            data = (data >= self.threshold).astype(np.int8)
+
+        data = (data == self.label).astype(np.int8)
+
+        if scale_after:
+            data = resize_local_mean(data, self.scale_0_dims, preserve_range=True)
+
+        return self.scaled_data_transformation(data)
 
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
@@ -389,7 +433,10 @@ class MaskConverter(TomoConverter):
         return (data > 0).astype(np.int8)
 
     def has_label(self) -> bool:
-        return np.any(self.volume_reader.data == self.label)
+        if self.threshold is not None:
+            return bool(np.any(self.volume_reader.get_pyramid_base_data() >= self.threshold))
+        else:
+            return bool(np.any(self.volume_reader.get_pyramid_base_data() == self.label))
 
 
 def get_volume_metadata(config: DepositionImportConfig, output_prefix: str) -> dict[str, Any]:
@@ -426,10 +473,16 @@ def get_volume_info(fs: FileSystemApi, tomo_filename: str) -> VolumeInfo:
     return TomoConverter(fs, tomo_filename, header_only=True).get_volume_info()
 
 
-def get_converter(fs: FileSystemApi, tomo_filename: str, label: int | None = None) -> TomoConverter | MaskConverter:
+def get_converter(
+    fs: FileSystemApi,
+    tomo_filename: str,
+    label: int | None = None,
+    scale_0_dims: tuple[int, int, int] | None = None,
+    threshold: float | None = None,
+) -> TomoConverter | MaskConverter:
     if label is not None:
-        return MaskConverter(fs, tomo_filename, label)
-    return TomoConverter(fs, tomo_filename)
+        return MaskConverter(fs, tomo_filename, label, scale_0_dims=scale_0_dims, threshold=threshold)
+    return TomoConverter(fs, tomo_filename, scale_0_dims=scale_0_dims)
 
 
 def make_pyramids(
@@ -442,8 +495,10 @@ def make_pyramids(
     header_mapper: Callable[[np.array], None] = None,
     voxel_spacing=None,
     label: int = None,
+    scale_0_dims=None,
+    threshold: float | None = None,
 ):
-    tc = get_converter(fs, tomo_filename, label)
+    tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold)
     pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
     _ = tc.pyramid_to_omezarr(
         fs,
