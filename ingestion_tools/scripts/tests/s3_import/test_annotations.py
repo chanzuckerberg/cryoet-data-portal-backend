@@ -106,7 +106,7 @@ def voxel_spacing_importer_factory(deposition_config: DepositionImportConfig) ->
     vs = VoxelSpacingImporter(
         config=deposition_config,
         metadata={},
-        name="10.0",
+        name="14.08",
         path="vs1",
         parents={**run.parents, **{"run": run}},
     )
@@ -1306,6 +1306,73 @@ ingest_mask_test_cases = [
             },
         ],
     },
+    {
+        "case": "SemanticSegmentationMask, mask_label==3, rescale=True, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 3,
+                "rescale": True,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "SemanticSegmentationMask, small mask, mask_label==2, rescale=True, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 2,
+                "rescale": True,
+                "glob_string": "annotations/small_semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[1, 1, 1, 1], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[1, 1, 1, 1], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
+    {
+        "case": "SemanticSegmentationMask, small probability map, rescale=True, thresh=0.5, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 1,
+                "rescale": True,
+                "threshold": 0.5,
+                "glob_string": "annotations/small_probability_map.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[1, 1, 1, 1], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[1, 1, 1, 1], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
 ]
 
 
@@ -1335,6 +1402,8 @@ def test_ingest_segmentationmask(
         parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
         identifier=100,
         mask_label=case["source_cfg"]["SemanticSegmentationMask"].get("mask_label"),
+        rescale=case["source_cfg"]["SemanticSegmentationMask"].get("rescale"),
+        threshold=case["source_cfg"]["SemanticSegmentationMask"].get("threshold"),
         file_format=anno_config["sources"][0]["SemanticSegmentationMask"]["file_format"],
         alignment_metadata_path="foo",
     )
@@ -1407,7 +1476,7 @@ def test_ingest_triangular_mesh(
 
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Reconstructions/VoxelSpacing10.000/Annotations/100/some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing14.080/Annotations/100/some_protein-1.0_triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "alignment_metadata_path": "foo",
@@ -1476,7 +1545,7 @@ def test_ingest_triangular_mesh_hff(
     anno.import_metadata()
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Reconstructions/VoxelSpacing10.000/Annotations/100/some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing14.080/Annotations/100/some_protein-1.0_triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "alignment_metadata_path": "foo",

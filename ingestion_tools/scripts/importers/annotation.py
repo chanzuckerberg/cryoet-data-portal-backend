@@ -292,6 +292,9 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
         self.rescale = rescale
         self.threshold = threshold
 
+        if mask_label != 1 and threshold is not None:
+            raise ValueError("Thresholding and selecting by label are mutually exclusive")
+
     def convert(self, output_prefix: str):
         output_dims = self.get_output_dim() if self.rescale else None
         return make_pyramids(
@@ -327,6 +330,9 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
         self.mask_label = mask_label
         self.rescale = rescale
         self.threshold = threshold
+
+        if mask_label != 1 and threshold is not None:
+            raise ValueError("Thresholding and selecting by label are mutually exclusive")
 
     def convert(self, output_prefix: str):
         output_dims = self.get_output_dim() if self.rescale else None
