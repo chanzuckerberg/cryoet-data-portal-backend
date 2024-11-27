@@ -52,6 +52,8 @@ class AlignmentItem(ItemDBImporter):
         self.model_args["https_alignment_metadata"] = self.get_https_url(self.input_data["file"])
         if self.input_data.get("tiltseries_path"):
             self.model_args["tiltseries_id"] = self.config.get_tiltseries_by_path(self.input_data["tiltseries_path"])
+        if not self.model_args["tiltseries_id"]:
+            raise Exception("tiltseries id is required")
         self.model_args["run_id"] = self.input_data["run"].id
 
 

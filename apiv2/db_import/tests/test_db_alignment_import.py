@@ -5,6 +5,7 @@ from database import models
 from db_import.tests.populate_db import (
     DATASET_ID,
     RUN1_ID,
+    TILTSERIES_ID,
     populate_alignments,
     populate_per_section_alignment_parameters,
     populate_stale_alignments,
@@ -20,10 +21,10 @@ from platformics.database.models.base import Base
 def expected_alignments(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
-            "id": 1,
+            "id": 801,
             "run_id": RUN1_ID,
+            "tiltseries_id": TILTSERIES_ID,
             "deposition_id": 300,
-            "tiltseries_id": None,
             "alignment_method": "patch_tracking",
             "alignment_type": "GLOBAL",
             "volume_x_dimension": 900,
@@ -48,7 +49,7 @@ def expected_per_section_alignment_parameters() -> list[dict[str, Any]]:
         {
             "in_plane_rotation": [0.1, 0.2, -0.3, 0.4],
             "x_offset": -4.345,
-            "y_offset": 6.789,
+            "y_offset": 5.789,
             "z_index": 0,
             "tilt_angle": None,
             "volume_x_rotation": 0.0,
@@ -110,21 +111,19 @@ def test_import_per_section_alignment_parameters(
 ) -> None:
     populate_per_section_alignment_parameters(sync_db_session)
     sync_db_session.commit()
+    actual = verify_dataset_import(import_alignments=True)
     expected_per_section_alignments_iter = iter(expected_per_section_alignment_parameters)
-    verify_dataset_import(import_alignments=True)
-    actual_run = sync_db_session.get(models.Run, RUN1_ID)
 
-    print("DEBUG**", actual_run)
-
-    for tiltseries in actual_run.tiltseries:
-        for alignment in tiltseries.alignments:
-            print("DEBUG: alignment", alignment.id)
-            for per_section_alignment in alignment.per_section_alignments:
-                print("DEBUG: per_section_alignment", per_section_alignment.in_plane_rotation)
-                expected = next(expected_per_section_alignments_iter)
-                if "alignment_id" not in expected:
-                    expected["alignment_id"] = alignment.id
-                verify_model(per_section_alignment, expected)
+    for run in sorted(actual.runs, key=lambda x: x.name):
+        for tiltseries in run.tiltseries:
+            for alignment in tiltseries.alignments:
+                print("DEBUG: alignment", alignment.id)
+                for per_section_alignment in alignment.per_section_alignments:
+                    print("DEBUG: per_section_alignment", per_section_alignment.in_plane_rotation)
+                    expected = next(expected_per_section_alignments_iter)
+                    if "alignment_id" not in expected:
+                        expected["alignment_id"] = alignment.id
+                    verify_model(per_section_alignment, expected)
 
 
 def test_import_per_section_alignment_parameters_stale_deletion(
