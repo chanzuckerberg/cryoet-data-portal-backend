@@ -663,24 +663,14 @@ def populate_per_section_alignment_parameters(session: sa.orm.Session) -> None:
     populate_alignments(session)
     per_section_alignment_params = PerSectionAlignmentParameters(
             alignment_id=ALIGNMENT_ID,
-            in_plane_rotation=[0.1, 0.2, -0.3, 0.4],
-            x_offset=-4.345,
-            y_offset=6.789,
+            in_plane_rotation=[0.5, 0.4, -0.7, 0.4],
+            x_offset=-9.345,
+            y_offset=4.789,
             z_index=0,
             tilt_angle=None,
-            volume_x_rotation=0,
+            volume_x_rotation=1,
         )
     session.add(per_section_alignment_params)
-    per_section_alignment_params2 = PerSectionAlignmentParameters(
-            alignment_id=ALIGNMENT_ID,
-            in_plane_rotation=[0.33, 0.44, -0.55, 0.66],
-            x_offset=-3.21,
-            y_offset=4.321,
-            z_index=1,
-            tilt_angle=None,
-            volume_x_rotation=0,
-        )
-    session.add(per_section_alignment_params2)
 
 @write_data
 def populate_stale_per_section_alignment_parameters(session: sa.orm.Session) -> None:

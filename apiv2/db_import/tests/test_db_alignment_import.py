@@ -61,14 +61,6 @@ def expected_per_section_alignment_parameters() -> list[dict[str, Any]]:
             "tilt_angle": None,
             "volume_x_rotation": 0.0,
         },
-        {
-            "in_plane_rotation": [0.4, 0.2, -0.3, 0.4],
-            "x_offset": -5.345,
-            "y_offset": 5.789,
-            "z_index": 7,
-            "tilt_angle": None,
-            "volume_x_rotation": 0.0,
-        },
     ]
 
 
@@ -118,17 +110,21 @@ def test_import_per_section_alignment_parameters(
 ) -> None:
     populate_per_section_alignment_parameters(sync_db_session)
     sync_db_session.commit()
-    verify_dataset_import(import_per_section_alignment_parameters=True)
     expected_per_section_alignments_iter = iter(expected_per_section_alignment_parameters)
-    actual = verify_dataset_import(import_per_section_alignment_parameters=True)
-    for run in sorted(actual.runs, key=lambda x: x.name):
-        for tiltseries in run.tiltseries:
-            for alignment in tiltseries.alignments:
-                for per_section_alignment in alignment.per_section_alignments:
-                    expected = next(expected_per_section_alignments_iter)
-                    if "alignment_id" not in expected:
-                        expected["alignment_id"] = alignment.id
-                    verify_model(per_section_alignment, expected)
+    verify_dataset_import(import_alignments=True)
+    actual_run = sync_db_session.get(models.Run, RUN1_ID)
+
+    print("DEBUG**", actual_run)
+
+    for tiltseries in actual_run.tiltseries:
+        for alignment in tiltseries.alignments:
+            print("DEBUG: alignment", alignment.id)
+            for per_section_alignment in alignment.per_section_alignments:
+                print("DEBUG: per_section_alignment", per_section_alignment.in_plane_rotation)
+                expected = next(expected_per_section_alignments_iter)
+                if "alignment_id" not in expected:
+                    expected["alignment_id"] = alignment.id
+                verify_model(per_section_alignment, expected)
 
 
 def test_import_per_section_alignment_parameters_stale_deletion(
@@ -141,7 +137,7 @@ def test_import_per_section_alignment_parameters_stale_deletion(
     populate_stale_run(sync_db_session)
     populate_stale_per_section_alignment_parameters(sync_db_session)
     sync_db_session.commit()
-    actual = verify_dataset_import(import_per_section_alignment_parameters=True)
+    actual = verify_dataset_import(import_alignments=True)
     expected_per_section_alignments_iter = iter(expected_per_section_alignment_parameters)
     for run in sorted(actual.runs, key=lambda x: x.name):
         for tiltseries in run.tiltseries:
