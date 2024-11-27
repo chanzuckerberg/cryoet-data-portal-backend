@@ -418,8 +418,8 @@ class MaskConverter(TomoConverter):
 
         if self.threshold is not None:
             data = (data >= self.threshold).astype(np.int8)
-
-        data = (data == self.label).astype(np.int8)
+        else:
+            data = (data == self.label).astype(np.int8)
 
         if scale_after:
             data = resize_local_mean(data, self.scale_0_dims, preserve_range=True)
