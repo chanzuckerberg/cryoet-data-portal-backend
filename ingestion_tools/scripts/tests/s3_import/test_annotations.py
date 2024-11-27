@@ -1373,6 +1373,29 @@ ingest_mask_test_cases = [
             },
         ],
     },
+    {
+        "case": "SemanticSegmentationMask, small probability map, rescale=False, thresh=0.7, MRC",
+        "source_cfg": {
+            "SemanticSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "mask_label": 1,
+                "rescale": False,
+                "threshold": 0.7,
+                "glob_string": "annotations/large_probability_map.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[1, 1, 1, 1], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[1, 1, 1, 1], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+            },
+        ],
+    },
 ]
 
 
