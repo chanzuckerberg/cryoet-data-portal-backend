@@ -370,7 +370,7 @@ tiltseries:
     acceleration_voltage: 300000
     binning_from_frames: float {tilt_series_binning_from_frames}
     camera:
-      manufacturer: GATAN
+      manufacturer: Gatan
       model: K3
     data_acquisition_software: '{tilt_series_acquisition_software}'
     is_aligned: false
