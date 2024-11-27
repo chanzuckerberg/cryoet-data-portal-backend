@@ -271,6 +271,7 @@ class VolumeAnnotationSource(BaseAnnotationSource):
         return metadata
 
 
+# TODO: Refactor to remove duplications in SemanticSegmentationMaskAnnotation and SegmentationMaskAnnotation
 class SegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
     mask_label: int
