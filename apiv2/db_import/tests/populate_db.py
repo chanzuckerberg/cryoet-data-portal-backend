@@ -40,12 +40,12 @@ ANNOTATION_AUTHOR_ID = 702
 ANNOTATION_METHOD_LINK_ID = 802
 ALIGNMENT_ID = 801
 PER_SECTION_ALIGNMENT_PARAMETERS_ID = 901
+PER_SECTION_ALIGNMENT_PARAMETERS_ID2 = 902
 
 STALE_RUN_ID = 902
 STALE_TOMOGRAM_ID = 903
 STALE_ANNOTATION_ID = 904
 STALE_ALIGNMENT_ID = 1004
-
 
 def model_to_dict(sa_object):
     return {item.key: getattr(sa_object, item.key) for item in sa.inspect(sa_object).mapper.column_attrs}
@@ -661,16 +661,26 @@ def populate_stale_alignments(session: sa.orm.Session) -> Alignment:
 @write_data
 def populate_per_section_alignment_parameters(session: sa.orm.Session) -> PerSectionAlignmentParameters:
     populate_alignments(session)
+    default_kwargs = {
+        "in_plane_rotation": [0.1, 0.2, -0.3, 0.4],
+        "x_offset": -4.345,
+        "y_offset": 6.789,
+        "z_index": 0,
+        "tilt_angle": None,
+        "volume_x_rotation": 0,
+    }
     session.add(
         PerSectionAlignmentParameters(
             id=PER_SECTION_ALIGNMENT_PARAMETERS_ID,
             alignment_id=ALIGNMENT_ID,
-            in_plane_rotation=[0.1, 0.2, -0.3, 0.4],
-            x_offset=-4.345,
-            y_offset=6.789,
-            z_index=0,
-            tilt_angle=None,
-            volume_x_rotation=0,
+            **default_kwargs,
+        ),
+    )
+    session.add(
+        PerSectionAlignmentParameters(
+            id=PER_SECTION_ALIGNMENT_PARAMETERS_ID2,
+            alignment_id=ALIGNMENT_ID,
+            **default_kwargs,
         ),
     )
 
@@ -678,15 +688,22 @@ def populate_per_section_alignment_parameters(session: sa.orm.Session) -> PerSec
 @write_data
 def populate_stale_per_section_alignment_parameters(session: sa.orm.Session) -> PerSectionAlignmentParameters:
     populate_stale_alignments(session)
+    default_kwargs = {
+        "alignment_id": STALE_ALIGNMENT_ID,
+        "in_plane_rotation": [0.1, 0.2, -0.3, 0.4],
+        "x_offset": -4.345,
+        "y_offset": 6.789,
+        "z_index": 0,
+        "tilt_angle": None,
+        "volume_x_rotation": 0,
+    }
     session.add(
         PerSectionAlignmentParameters(
-            id=PER_SECTION_ALIGNMENT_PARAMETERS_ID,
-            alignment_id=STALE_ALIGNMENT_ID,
-            in_plane_rotation=[0.1, 0.2, -0.3, 0.4],
-            x_offset=-4.345,
-            y_offset=6.789,
-            z_index=7,
-            tilt_angle=None,
-            volume_x_rotation=0,
+            **default_kwargs,
+        ),
+    )
+    session.add(
+        PerSectionAlignmentParameters(
+            **default_kwargs,
         ),
     )
