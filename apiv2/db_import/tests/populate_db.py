@@ -13,13 +13,13 @@ from database.models import (
     DatasetFunding,
     Deposition,
     DepositionAuthor,
+    PerSectionAlignmentParameters,
     Run,
     Tiltseries,
     Tomogram,
     TomogramAuthor,
     TomogramVoxelSpacing,
 )
-from database.models.per_section_alignment_parameters import PerSectionAlignmentParameters
 
 DATASET_ID = 30001
 DATASET_AUTHOR_ID = 301
@@ -619,6 +619,8 @@ def populate_alignments(session: sa.orm.Session) -> Alignment:
     populate_tiltseries(session)
     return Alignment(
         id=ALIGNMENT_ID,
+        run_id=RUN1_ID,
+        deposition_id=DEPOSITION_ID1,
         tiltseries_id=TILTSERIES_ID,
         alignment_type="GLOBAL",
         volume_x_dimension=6300,
@@ -638,10 +640,13 @@ def populate_alignments(session: sa.orm.Session) -> Alignment:
 
 @write_data
 def populate_stale_alignments(session: sa.orm.Session) -> Alignment:
+    populate_deposition2(session)
     populate_stale_tiltseries(session)
     return Alignment(
         id=STALE_ALIGNMENT_ID,
         tiltseries_id=TILTSERIES_ID,
+        deposition_id=DEPOSITION_ID2,
+        run_id=RUN1_ID,
         alignment_type="GLOBAL",
         volume_x_dimension=6300,
         volume_y_dimension=6300,
@@ -659,34 +664,35 @@ def populate_stale_alignments(session: sa.orm.Session) -> Alignment:
 
 
 @write_data
-def populate_per_section_alignment_parameters(session: sa.orm.Session) -> PerSectionAlignmentParameters:
+def populate_per_section_alignment_parameters(session: sa.orm.Session) -> None:
     populate_alignments(session)
-    session.add(
-        PerSectionAlignmentParameters(
-            id=PER_SECTION_ALIGNMENT_PARAMETERS_ID,
-            alignment_id=ALIGNMENT_ID,
-            in_plane_rotation=[0.1, 0.2, -0.3, 0.4],
-            x_offset=-4.345,
-            y_offset=6.789,
-            z_index=0,
-            tilt_angle=None,
-            volume_x_rotation=0,
-        ),
+    per_section_alignment_params = PerSectionAlignmentParameters(
+        alignment_id=ALIGNMENT_ID,
+        in_plane_rotation=[0.5, 0.4, -0.7, 0.4],
+        x_offset=-9.345,
+        y_offset=4.789,
+        z_index=0,
+        tilt_angle=None,
+        volume_x_rotation=1,
     )
+    session.add(per_section_alignment_params)
 
 
 @write_data
-def populate_stale_per_section_alignment_parameters(session: sa.orm.Session) -> PerSectionAlignmentParameters:
+def populate_stale_per_section_alignment_parameters(session: sa.orm.Session) -> None:
     populate_stale_alignments(session)
+    default_kwargs = {
+        "in_plane_rotation": [0.4, 0.2, -0.3, 0.4],
+        "x_offset": -5.345,
+        "y_offset": 5.789,
+        "z_index": 7,
+        "tilt_angle": None,
+        "volume_x_rotation": 0,
+    }
     session.add(
         PerSectionAlignmentParameters(
             id=PER_SECTION_ALIGNMENT_PARAMETERS_ID,
             alignment_id=STALE_ALIGNMENT_ID,
-            in_plane_rotation=[0.1, 0.2, -0.3, 0.4],
-            x_offset=-4.345,
-            y_offset=6.789,
-            z_index=7,
-            tilt_angle=None,
-            volume_x_rotation=0,
+            **default_kwargs,
         ),
     )
