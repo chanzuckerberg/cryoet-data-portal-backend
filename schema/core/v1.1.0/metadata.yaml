@@ -664,6 +664,12 @@ classes:
       mask_label:
         exact_mappings:
           - cdp-common:annotation_source_file_mask_label
+      rescale:
+        exact_mappings:
+          - cdp-common:annotation_source_file_rescale
+      threshold:
+        exact_mappings:
+          - cdp-common:annotation_source_file_threshold
 
   AnnotationTriangularMeshFile:
     is_a: AnnotationSourceFile

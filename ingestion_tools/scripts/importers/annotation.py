@@ -245,6 +245,19 @@ class BaseAnnotationSource(AnnotationImporter):
 class VolumeAnnotationSource(BaseAnnotationSource):
     valid_file_formats: list[str] = ["mrc", "zarr"]
 
+    def get_output_dim(self) -> tuple[int, int, int]:
+        """Returns the dimensions of the output volume at the Annotation's VoxelSpacing."""
+        alignment = list(AlignmentImporter.finder(self.config, **self.parents))[0]
+        dims = alignment.get_extra_metadata()["volume_dimension"]
+        voxel_spacing = self.parents["voxel_spacing"].as_float()
+
+        dims = (
+            int(round(dims["z"] / voxel_spacing)),
+            int(round(dims["y"] / voxel_spacing)),
+            int(round(dims["x"] / voxel_spacing)),
+        )
+        return dims
+
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
             {
@@ -258,13 +271,18 @@ class VolumeAnnotationSource(BaseAnnotationSource):
         return metadata
 
 
+# TODO: Refactor to remove duplications in SemanticSegmentationMaskAnnotation and SegmentationMaskAnnotation
 class SegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
     mask_label: int
+    rescale: bool = False
+    threshold: float | None
 
     def __init__(
         self,
         mask_label: int | None = None,
+        rescale: bool = False,
+        threshold: float | None = None,
         *args,
         **kwargs,
     ) -> None:
@@ -272,8 +290,14 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
         if not mask_label:
             mask_label = 1
         self.mask_label = mask_label
+        self.rescale = rescale
+        self.threshold = threshold
+
+        if mask_label != 1 and threshold is not None:
+            raise ValueError("Thresholding and selecting by label are mutually exclusive")
 
     def convert(self, output_prefix: str):
+        output_dims = self.get_output_dim() if self.rescale else None
         return make_pyramids(
             self.config.fs,
             self.get_output_filename(output_prefix),
@@ -282,16 +306,22 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
+            scale_0_dims=output_dims,
+            threshold=self.threshold,
         )
 
 
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
     mask_label: int
+    rescale: bool = False
+    threshold: float | None
 
     def __init__(
         self,
         mask_label: int | None = None,
+        rescale: bool = False,
+        threshold: float | None = None,
         *args,
         **kwargs,
     ) -> None:
@@ -299,8 +329,14 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
         if not mask_label:
             mask_label = 1
         self.mask_label = mask_label
+        self.rescale = rescale
+        self.threshold = threshold
+
+        if mask_label != 1 and threshold is not None:
+            raise ValueError("Thresholding and selecting by label are mutually exclusive")
 
     def convert(self, output_prefix: str):
+        output_dims = self.get_output_dim() if self.rescale else None
         return make_pyramids(
             self.config.fs,
             self.get_output_filename(output_prefix),
@@ -309,6 +345,8 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
+            scale_0_dims=output_dims,
+            threshold=self.threshold,
         )
 
     def is_valid(self) -> bool:
