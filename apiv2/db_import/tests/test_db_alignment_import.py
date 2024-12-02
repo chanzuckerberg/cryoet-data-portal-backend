@@ -81,6 +81,8 @@ def test_import_alignments(
             if "run_id" not in expected:
                 expected["run_id"] = run.id
             verify_model(alignment, expected)
+            assert len(run.alignments) == len(expected_alignments)
+
 
 
 def test_import_alignments_stale_deletion(
@@ -101,6 +103,8 @@ def test_import_alignments_stale_deletion(
             if "run_id" not in expected:
                 expected["run_id"] = run.id
             verify_model(alignment, expected)
+            assert len(run.alignments) == len(expected_alignments)
+
 
 
 def test_import_per_section_alignment_parameters(
@@ -122,6 +126,7 @@ def test_import_per_section_alignment_parameters(
                     if "alignment_id" not in expected:
                         expected["alignment_id"] = alignment.id
                     verify_model(per_section_alignment, expected)
+                    assert len(alignment.per_section_alignments) == len(expected_per_section_alignment_parameters)
 
 
 def test_import_per_section_alignment_parameters_stale_deletion(
@@ -144,3 +149,4 @@ def test_import_per_section_alignment_parameters_stale_deletion(
                     if "alignment_id" not in expected:
                         expected["alignment_id"] = alignment.id
                     verify_model(per_section_alignment, expected)
+                    assert len(alignment.per_section_alignments) == len(expected_per_section_alignment_parameters)
