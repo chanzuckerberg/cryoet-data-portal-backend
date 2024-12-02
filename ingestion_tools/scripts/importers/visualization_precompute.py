@@ -2,8 +2,6 @@ import os
 from pathlib import Path
 from typing import Any
 
-from cryoet_data_portal_neuroglancer.precompute import points, segmentation_mask
-
 from common import colors
 from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
@@ -90,6 +88,8 @@ class PointAnnotationPrecompute(BaseAnnotationPrecompute):
         precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         metadata = self.annotation.metadata
         tmp_path = fs.localwritable(precompute_path)
+        from cryoet_data_portal_neuroglancer.precompute import points
+
         points.encode_annotation(
             self.annotation.get_output_data(annotation_path),
             metadata,
@@ -136,6 +136,8 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
         precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         tmp_path = fs.localwritable(precompute_path)
         zarr_file_path = fs.destformat(self.annotation.get_output_filename(annotation_path, "zarr"))
+        from cryoet_data_portal_neuroglancer.precompute import segmentation_mask
+
         segmentation_mask.encode_segmentation(
             zarr_file_path,
             Path(tmp_path),
