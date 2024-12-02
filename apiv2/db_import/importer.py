@@ -6,7 +6,7 @@ import click
 from botocore import UNSIGNED
 from botocore.config import Config
 from db_import.common.config import DBImportConfig
-from db_import.importers.alignment import AlignmentImporter
+from db_import.importers.alignment import AlignmentImporter, PerSectionAlignmentParametersImporter
 from db_import.importers.annotation import (
     AnnotationAuthorImporter,
     AnnotationFileImporter,
@@ -179,6 +179,7 @@ def load_func(
         import_annotations = max(import_annotations, import_annotation_authors, import_annotation_method_links)
         import_tomograms = max(import_tomograms, import_tomogram_authors)
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
+        import_tiltseries = max(import_tiltseries, import_alignments)
         import_runs = max(
             import_runs,
             import_alignments,
@@ -246,7 +247,14 @@ def load_func(
                 tiltseries_cleaner.remove_stale_objects()
             if import_alignments:
                 alignment_importer = AlignmentImporter(config, **parents)
-                alignment_importer.import_items()
+                for alignment_obj in alignment_importer.import_items():
+                    parents = {"run": run_obj, "alignment": alignment_obj}
+                    per_section_alignment_parameters_importer = PerSectionAlignmentParametersImporter(
+                        config,
+                        **parents,
+                    )
+                    per_section_alignment_parameters_importer.import_items()
+
 
             if not import_tomogram_voxel_spacing:
                 continue
