@@ -1065,6 +1065,20 @@
                         "integer",
                         "null"
                     ]
+                },
+                "rescale": {
+                    "description": "Whether the annotation file needs to be rescaled.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "threshold": {
+                    "description": "The threshold for a segmentation mask annotation file.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
                 }
             },
             "required": [
