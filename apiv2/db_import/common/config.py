@@ -58,7 +58,7 @@ class DBImportConfig:
         session = self.get_db_session()
         for item in session.scalars(
             sa.select(models.Alignment).where(
-                models.Alignment.s3_alignment_metadata == path & models.Alignment.run_id == run_id,
+                (models.Alignment.s3_alignment_metadata == path) & (models.Alignment.run_id == run_id),
             ),
         ).all():
             return item.id
