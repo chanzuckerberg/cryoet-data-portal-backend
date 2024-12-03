@@ -3457,6 +3457,29 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
+    rescale: Optional[bool] = Field(
+        False,
+        description="""Whether the annotation file needs to be rescaled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "rescale",
+                "domain_of": ["AnnotationSemanticSegmentationMaskFile"],
+                "exact_mappings": ["cdp-common:annotation_source_file_rescale"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    threshold: Optional[float] = Field(
+        None,
+        description="""The threshold for a segmentation mask annotation file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "threshold",
+                "domain_of": ["AnnotationSemanticSegmentationMaskFile"],
+                "exact_mappings": ["cdp-common:annotation_source_file_threshold"],
+            }
+        },
+    )
     file_format: str = Field(
         ...,
         description="""File format for this file""",

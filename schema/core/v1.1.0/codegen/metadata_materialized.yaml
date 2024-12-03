@@ -3453,6 +3453,33 @@ classes:
         range: integer
         inlined: true
         inlined_as_list: true
+      rescale:
+        name: rescale
+        description: Whether the annotation file needs to be rescaled.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_rescale
+        ifabsent: 'False'
+        alias: rescale
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSemanticSegmentationMaskFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      threshold:
+        name: threshold
+        description: The threshold for a segmentation mask annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_threshold
+        alias: threshold
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSemanticSegmentationMaskFile
+        range: float
+        inlined: true
+        inlined_as_list: true
       file_format:
         name: file_format
         description: File format for this file

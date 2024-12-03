@@ -727,6 +727,13 @@ slots:
     range: integer
     description: The mask label for a semantic segmentation mask annotation file.
     ifabsent: 'int(1)'
+  annotation_source_file_rescale:
+    range: boolean
+    description: Whether the annotation file needs to be rescaled.
+    ifabsent: false
+  annotation_source_file_threshold:
+    range: float
+    description: The threshold for a segmentation mask annotation file.
   annotation_source_file_scale_factor:
     range: float
     description: The scale factor for a mesh annotation file.
