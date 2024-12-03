@@ -5,8 +5,8 @@ alignments:
   sources:
   - source_multi_glob:
       list_globs:
-      - Data_Set_1/{run_name}/aligned_tilt_series/*.st.aln
-      - Data_Set_2/{run_name}/aligned_tilt_series/*.st.aln
+      - Data_Set_1/{run_name}/aligned_tilt_series/*.aln
+      - Data_Set_2/{run_name}/aligned_tilt_series/*.aln
 annotations:
 - metadata:
     annotation_method: Each organelle was segmented as a separate region of interest
