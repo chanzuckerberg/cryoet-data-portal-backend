@@ -56,11 +56,11 @@ class DBImportConfig:
     @lru_cache  # noqa
     def get_alignment_by_path(self, path: str, run_id: int) -> int | None:
         session = self.get_db_session()
-        for item in session.scalars(
-            sa.select(models.Alignment).where(
-                (models.Alignment.s3_alignment_metadata == path) & (models.Alignment.run_id == run_id),
-            ),
-        ).all():
+        where_clauses = [
+            models.Alignment.run_id == run_id,
+            models.Alignment.s3_alignment_metadata == path,
+        ]
+        for item in session.scalars(sa.select(models.Alignment).where(sa.and_(*where_clauses))).all():
             return item.id
 
     @lru_cache  # noqa
@@ -70,7 +70,10 @@ class DBImportConfig:
         escaped_path = os.path.dirname(path).replace("_", "\\_")
         path = os.path.join(self.s3_prefix, escaped_path, "%")
         try:
-            where_clauses = [models.Tiltseries.s3_mrc_file.like(path), models.Tiltseries.run_id == run_id]
+            where_clauses = [
+                models.Tiltseries.run_id == run_id,
+                models.Tiltseries.s3_mrc_file.like(path),
+            ]
             item = session.scalars(sa.select(models.Tiltseries).where(sa.and_(*where_clauses))).one()
             return item.id
         except NoResultFound:
