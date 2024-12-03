@@ -1,0 +1,85 @@
+alignments:
+- sources:
+  - destination_glob:
+      list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+      match_regex: .*
+      name_regex: (.*)
+
+annotations:
+  - metadata:
+      annotation_method: manual labeling.
+      annotation_object:
+        id: GO:0009425
+        name: bacterial-type flagellum basal body
+      annotation_software: IMOD
+      authors: &id001
+      - corresponding_author_status: true
+        name: Mohammed Kaplan
+        primary_author_status: true
+      dates: &id002
+        deposition_date: '2024-12-03'
+        last_modified_date: '2024-12-03'
+        release_date: '2024-12-03'
+      method_links:
+        - custom_name: IMOD home page
+          link: https://bio3d.colorado.edu/imod/
+          link_type: website
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_type: manual
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          file_format: mod
+          glob_string: '{dataset_name}/{run_name}_*_FM.mod'
+          is_visualization_default: true
+          order: xyz
+
+datasets:
+- sources:
+  - source_glob:
+      list_glob: 10???
+      match_regex: .*
+      name_regex: (.*)
+
+depositions:
+  - metadata:
+      authors: *id001
+      dates: *id002
+      deposition_description: Manual annotations of complete bacterial-type flagellum basal bodies,
+        created and pre-oriented using IMOD.
+      deposition_identifier: 10315
+      deposition_title: Manual annotations of complete bacterial-type flagellum basal bodies
+      deposition_types:
+          - annotation
+    sources:
+    - literal:
+        value:
+          - 10315
+
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10315_snapshot.png"
+        thumbnail: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10315_thumbnail.png"
+
+runs:
+- sources:
+  - source_glob:
+      list_glob: '{dataset_name}/*'
+      match_regex: .*
+      name_regex: (.*?)_.*?_FM\.mod
+
+voxel_spacings:
+- sources:
+  - destination_glob:
+      list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+      match_regex: .*
+      name_regex: VoxelSpacing(.*)
+
+standardization_config:
+  deposition_id: 10315
+  source_prefix: 'braxton_owens_05_2024/full_motors'
+
+version: 1.1.0
