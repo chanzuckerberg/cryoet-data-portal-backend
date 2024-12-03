@@ -46,7 +46,7 @@ class TomogramIdentifierHelper(IdentifierHelper):
                 metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path", "")),
                 metadata.get("reconstruction_method", ""),
                 metadata.get("processing", ""),
-                metadata.get("processing_software", ""),
+                metadata.get("processing_software", "") or "",
                 str(metadata.get("deposition_id", int(parents["deposition"].name))),
             ],
         )
