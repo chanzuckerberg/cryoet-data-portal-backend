@@ -53,10 +53,11 @@ class TomogramItem(ItemDBImporter):
 
     def load_computed_fields(self):
         https_prefix = self.config.https_prefix
+        run_id = self.input_data["run"].id
         extra_data = {
             "ctf_corrected": bool(self.input_data.get("ctf_corrected")),
             "tomogram_voxel_spacing_id": self.input_data["tomogram_voxel_spacing"].id,
-            "run_id": self.input_data["run"].id,
+            "run_id": run_id,
             "fiducial_alignment_status": normalize_fiducial_alignment(
                 self.input_data.get("fiducial_alignment_status", False),
             ),
@@ -68,7 +69,7 @@ class TomogramItem(ItemDBImporter):
             "https_mrc_file": self.get_https_url(self.input_data["mrc_file"]),
             # TODO: Add alignment_id once we have an alignment importer.
             "alignment_id": self.config.get_alignment_by_path(
-                self.get_s3_url(self.input_data["alignment_metadata_path"]),
+                self.get_s3_url(self.input_data["alignment_metadata_path"]), run_id,
             ),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,

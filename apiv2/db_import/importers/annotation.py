@@ -75,7 +75,9 @@ class AnnotationFileItem(ItemDBImporter):
         self.model_args["annotation_shape_id"] = self.input_data["annotation_shape"].id
         self.model_args["tomogram_voxel_spacing_id"] = self.input_data["tomogram_voxel_spacing"].id
         if alignment_path:
-            self.model_args["alignment_id"] = self.config.get_alignment_by_path(alignment_path)
+            self.model_args["alignment_id"] = self.config.get_alignment_by_path(
+                alignment_path, self.input_data["run"].id,
+            )
         self.model_args["source"] = self.calculate_source()
         self.model_args["s3_path"] = self.get_s3_url(self.input_data["path"])
         self.model_args["https_path"] = self.get_https_url(self.input_data["path"])
