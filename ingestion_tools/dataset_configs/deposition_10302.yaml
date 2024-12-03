@@ -44,10 +44,10 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: Manual annotations of flagellar basal body, created and
+    deposition_description: Manual annotations of partial bacterial-type flagellum basal bodies, created and
       pre-oriented using IMOD.
     deposition_identifier: 10302
-    deposition_title: Manual annotations of flagellar basal body
+    deposition_title: Manual annotations of partial bacterial-type flagellum basal bodies
     deposition_types:
     - annotation
   sources:
