@@ -6,7 +6,7 @@ Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2
 """
 
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Optional, Annotated
 
 import strawberry
 from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
@@ -33,6 +33,12 @@ These are only used in aggregate queries.
 class AnnotationGroupByOptions:
     run: Optional[RunGroupByOptions] = None
     deposition: Optional[DepositionGroupByOptions] = None
+    annotation_shapes: Optional[
+        Annotated[
+            "AnnotationShapeGroupByOptions",
+            strawberry.lazy("graphql_api.helpers.annotation_shape"),
+        ]
+    ] = None
     s3_metadata_path: Optional[str] = None
     https_metadata_path: Optional[str] = None
     annotation_publication: Optional[str] = None
@@ -68,7 +74,21 @@ def build_annotation_groupby_output(
         group_object = AnnotationGroupByOptions()
 
     key = keys.pop(0)
+    from graphql_api.helpers.annotation_shape import build_annotation_shape_groupby_output
     match key:
+        case "annotation_shapes":
+            if getattr(group_object, key):
+                value = build_annotation_shape_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = build_annotation_shape_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
         case "run":
             if getattr(group_object, key):
                 value = build_run_groupby_output(
