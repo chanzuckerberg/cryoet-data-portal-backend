@@ -5,15 +5,15 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.run as run_helper
 import strawberry
-from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
 
 if TYPE_CHECKING:
-    from api.types.run import Run
+    from graphql_api.helpers.run import RunGroupByOptions
 else:
-    Run = "Run"
+    RunGroupByOptions = "RunGroupByOptions"
 
 
 """
@@ -24,7 +24,7 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class GainFileGroupByOptions:
-    run: Optional[RunGroupByOptions] = None
+    run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     s3_file_path: Optional[str] = None
     https_file_path: Optional[str] = None
     id: Optional[int] = None
@@ -46,13 +46,13 @@ def build_gain_file_groupby_output(
     match key:
         case "run":
             if getattr(group_object, key):
-                value = build_run_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_run_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     None,
                     keys,
                     value,

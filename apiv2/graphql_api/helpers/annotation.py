@@ -6,21 +6,28 @@ Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2
 """
 
 import datetime
-from typing import TYPE_CHECKING, Any, Optional, Annotated
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.annotation_author as annotation_author_helper
+import graphql_api.helpers.annotation_method_link as annotation_method_link_helper
+import graphql_api.helpers.annotation_shape as annotation_shape_helper
+import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.run as run_helper
 import strawberry
-from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
-from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
 from support.enums import annotation_method_type_enum
 
 if TYPE_CHECKING:
-    from api.types.run import Run
+    from graphql_api.helpers.annotation_author import AnnotationAuthorGroupByOptions
+    from graphql_api.helpers.annotation_method_link import AnnotationMethodLinkGroupByOptions
+    from graphql_api.helpers.annotation_shape import AnnotationShapeGroupByOptions
+    from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
 else:
-    Run = "Run"
-if TYPE_CHECKING:
-    from api.types.deposition import Deposition
-else:
-    Deposition = "Deposition"
+    RunGroupByOptions = "RunGroupByOptions"
+    AnnotationShapeGroupByOptions = "AnnotationShapeGroupByOptions"
+    AnnotationMethodLinkGroupByOptions = "AnnotationMethodLinkGroupByOptions"
+    AnnotationAuthorGroupByOptions = "AnnotationAuthorGroupByOptions"
+    DepositionGroupByOptions = "DepositionGroupByOptions"
 
 
 """
@@ -31,14 +38,19 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class AnnotationGroupByOptions:
-    run: Optional[RunGroupByOptions] = None
-    deposition: Optional[DepositionGroupByOptions] = None
+    run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     annotation_shapes: Optional[
-        Annotated[
-            "AnnotationShapeGroupByOptions",
-            strawberry.lazy("graphql_api.helpers.annotation_shape"),
-        ]
+        Annotated["AnnotationShapeGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_shape")]
     ] = None
+    method_links: Optional[
+        Annotated["AnnotationMethodLinkGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_method_link")]
+    ] = None
+    authors: Optional[
+        Annotated["AnnotationAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_author")]
+    ] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
+        None
+    )
     s3_metadata_path: Optional[str] = None
     https_metadata_path: Optional[str] = None
     annotation_publication: Optional[str] = None
@@ -74,43 +86,68 @@ def build_annotation_groupby_output(
         group_object = AnnotationGroupByOptions()
 
     key = keys.pop(0)
-    from graphql_api.helpers.annotation_shape import build_annotation_shape_groupby_output
     match key:
-        case "annotation_shapes":
+        case "run":
             if getattr(group_object, key):
-                value = build_annotation_shape_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_annotation_shape_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     None,
                     keys,
                     value,
                 )
-        case "run":
+        case "annotation_shapes":
             if getattr(group_object, key):
-                value = build_run_groupby_output(
+                value = annotation_shape_helper.build_annotation_shape_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_run_groupby_output(
+                value = annotation_shape_helper.build_annotation_shape_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "annotation_method_links":
+            if getattr(group_object, key):
+                value = annotation_method_link_helper.build_annotation_method_link_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = annotation_method_link_helper.build_annotation_method_link_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "annotation_authors":
+            if getattr(group_object, key):
+                value = annotation_author_helper.build_annotation_author_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = annotation_author_helper.build_annotation_author_groupby_output(
                     None,
                     keys,
                     value,
                 )
         case "deposition":
             if getattr(group_object, key):
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     None,
                     keys,
                     value,

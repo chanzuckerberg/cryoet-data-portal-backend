@@ -5,21 +5,22 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.alignment as alignment_helper
+import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.run as run_helper
 import strawberry
-from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
-from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
 from support.enums import tiltseries_microscope_manufacturer_enum
 
 if TYPE_CHECKING:
-    from api.types.run import Run
+    from graphql_api.helpers.alignment import AlignmentGroupByOptions
+    from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
 else:
-    Run = "Run"
-if TYPE_CHECKING:
-    from api.types.deposition import Deposition
-else:
-    Deposition = "Deposition"
+    AlignmentGroupByOptions = "AlignmentGroupByOptions"
+    RunGroupByOptions = "RunGroupByOptions"
+    DepositionGroupByOptions = "DepositionGroupByOptions"
 
 
 """
@@ -30,8 +31,11 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class TiltseriesGroupByOptions:
-    run: Optional[RunGroupByOptions] = None
-    deposition: Optional[DepositionGroupByOptions] = None
+    alignments: Optional[Annotated["AlignmentGroupByOptions", strawberry.lazy("graphql_api.helpers.alignment")]] = None
+    run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
+        None
+    )
     s3_omezarr_dir: Optional[str] = None
     s3_mrc_file: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
@@ -79,28 +83,41 @@ def build_tiltseries_groupby_output(
 
     key = keys.pop(0)
     match key:
-        case "run":
+        case "alignments":
             if getattr(group_object, key):
-                value = build_run_groupby_output(
+                value = alignment_helper.build_alignment_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_run_groupby_output(
+                value = alignment_helper.build_alignment_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "run":
+            if getattr(group_object, key):
+                value = run_helper.build_run_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = run_helper.build_run_groupby_output(
                     None,
                     keys,
                     value,
                 )
         case "deposition":
             if getattr(group_object, key):
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     None,
                     keys,
                     value,

@@ -5,15 +5,15 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.tomogram as tomogram_helper
 import strawberry
-from graphql_api.helpers.tomogram import TomogramGroupByOptions, build_tomogram_groupby_output
 
 if TYPE_CHECKING:
-    from api.types.tomogram import Tomogram
+    from graphql_api.helpers.tomogram import TomogramGroupByOptions
 else:
-    Tomogram = "Tomogram"
+    TomogramGroupByOptions = "TomogramGroupByOptions"
 
 
 """
@@ -24,7 +24,7 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class TomogramAuthorGroupByOptions:
-    tomogram: Optional[TomogramGroupByOptions] = None
+    tomogram: Optional[Annotated["TomogramGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram")]] = None
     id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None
@@ -53,13 +53,13 @@ def build_tomogram_author_groupby_output(
     match key:
         case "tomogram":
             if getattr(group_object, key):
-                value = build_tomogram_groupby_output(
+                value = tomogram_helper.build_tomogram_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_tomogram_groupby_output(
+                value = tomogram_helper.build_tomogram_groupby_output(
                     None,
                     keys,
                     value,

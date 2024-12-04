@@ -5,20 +5,18 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.run as run_helper
 import strawberry
-from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
-from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
 
 if TYPE_CHECKING:
-    from api.types.deposition import Deposition
+    from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
 else:
-    Deposition = "Deposition"
-if TYPE_CHECKING:
-    from api.types.run import Run
-else:
-    Run = "Run"
+    DepositionGroupByOptions = "DepositionGroupByOptions"
+    RunGroupByOptions = "RunGroupByOptions"
 
 
 """
@@ -29,8 +27,10 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class FrameGroupByOptions:
-    deposition: Optional[DepositionGroupByOptions] = None
-    run: Optional[RunGroupByOptions] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
+        None
+    )
+    run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     raw_angle: Optional[float] = None
     acquisition_order: Optional[int] = None
     dose: Optional[float] = None
@@ -56,26 +56,26 @@ def build_frame_groupby_output(
     match key:
         case "deposition":
             if getattr(group_object, key):
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     None,
                     keys,
                     value,
                 )
         case "run":
             if getattr(group_object, key):
-                value = build_run_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_run_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     None,
                     keys,
                     value,

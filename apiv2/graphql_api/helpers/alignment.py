@@ -5,26 +5,31 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.annotation_file as annotation_file_helper
+import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.per_section_alignment_parameters as per_section_alignment_parameters_helper
+import graphql_api.helpers.run as run_helper
+import graphql_api.helpers.tiltseries as tiltseries_helper
+import graphql_api.helpers.tomogram as tomogram_helper
 import strawberry
-from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
-from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
-from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions, build_tiltseries_groupby_output
 from support.enums import alignment_method_type_enum, alignment_type_enum
 
 if TYPE_CHECKING:
-    from api.types.deposition import Deposition
+    from graphql_api.helpers.annotation_file import AnnotationFileGroupByOptions
+    from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.per_section_alignment_parameters import PerSectionAlignmentParametersGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
+    from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions
+    from graphql_api.helpers.tomogram import TomogramGroupByOptions
 else:
-    Deposition = "Deposition"
-if TYPE_CHECKING:
-    from api.types.tiltseries import Tiltseries
-else:
-    Tiltseries = "Tiltseries"
-if TYPE_CHECKING:
-    from api.types.run import Run
-else:
-    Run = "Run"
+    AnnotationFileGroupByOptions = "AnnotationFileGroupByOptions"
+    PerSectionAlignmentParametersGroupByOptions = "PerSectionAlignmentParametersGroupByOptions"
+    DepositionGroupByOptions = "DepositionGroupByOptions"
+    TiltseriesGroupByOptions = "TiltseriesGroupByOptions"
+    TomogramGroupByOptions = "TomogramGroupByOptions"
+    RunGroupByOptions = "RunGroupByOptions"
 
 
 """
@@ -35,9 +40,23 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class AlignmentGroupByOptions:
-    deposition: Optional[DepositionGroupByOptions] = None
-    tiltseries: Optional[TiltseriesGroupByOptions] = None
-    run: Optional[RunGroupByOptions] = None
+    annotation_files: Optional[
+        Annotated["AnnotationFileGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_file")]
+    ] = None
+    per_section_alignments: Optional[
+        Annotated[
+            "PerSectionAlignmentParametersGroupByOptions",
+            strawberry.lazy("graphql_api.helpers.per_section_alignment_parameters"),
+        ]
+    ] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
+        None
+    )
+    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = (
+        None
+    )
+    tomograms: Optional[Annotated["TomogramGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram")]] = None
+    run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     alignment_type: Optional[alignment_type_enum] = None
     alignment_method: Optional[alignment_method_type_enum] = None
     volume_x_dimension: Optional[float] = None
@@ -69,41 +88,80 @@ def build_alignment_groupby_output(
 
     key = keys.pop(0)
     match key:
-        case "deposition":
+        case "annotation_files":
             if getattr(group_object, key):
-                value = build_deposition_groupby_output(
+                value = annotation_file_helper.build_annotation_file_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_deposition_groupby_output(
+                value = annotation_file_helper.build_annotation_file_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "per_section_alignment_parameters":
+            if getattr(group_object, key):
+                value = per_section_alignment_parameters_helper.build_per_section_alignment_parameters_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = per_section_alignment_parameters_helper.build_per_section_alignment_parameters_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "deposition":
+            if getattr(group_object, key):
+                value = deposition_helper.build_deposition_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = deposition_helper.build_deposition_groupby_output(
                     None,
                     keys,
                     value,
                 )
         case "tiltseries":
             if getattr(group_object, key):
-                value = build_tiltseries_groupby_output(
+                value = tiltseries_helper.build_tiltseries_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_tiltseries_groupby_output(
+                value = tiltseries_helper.build_tiltseries_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "tomograms":
+            if getattr(group_object, key):
+                value = tomogram_helper.build_tomogram_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = tomogram_helper.build_tomogram_groupby_output(
                     None,
                     keys,
                     value,
                 )
         case "run":
             if getattr(group_object, key):
-                value = build_run_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_run_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     None,
                     keys,
                     value,
