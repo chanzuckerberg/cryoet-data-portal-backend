@@ -218,6 +218,15 @@ def tomogram_metadata(tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
     with filesystem.open(tomo_meta_file, "r") as f:
         return json.load(f)
 
+@pytest.fixture(scope="session")
+def all_vs_tomogram_metadata(voxel_dir: str, filesystem: FileSystemApi) -> list[Dict]:
+    """Load all tomogram metadata for this voxel spacing."""
+    metadatas = []
+    for item in filesystem.glob(os.path.join(voxel_dir, "Tomograms/*/tomogram_metadata.json")):
+        with filesystem.open(item, "r") as f:
+            metadatas.append(json.load(f))
+    return metadatas
+
 
 # ==================================================================================================
 # Neuroglancer fixtures
@@ -225,10 +234,13 @@ def tomogram_metadata(tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
 
 
 @pytest.fixture(scope="session")
-def neuroglancer_config(neuroglancer_config_file: str, filesystem: FileSystemApi) -> Dict:
+def neuroglancer_configs(neuroglancer_config_files: List[str], filesystem: FileSystemApi) -> Dict:
     """Load the neuroglancer config."""
-    with filesystem.open(neuroglancer_config_file, "r") as f:
-        return json.load(f)
+    configs = []
+    for file in neuroglancer_config_files:
+        with filesystem.open(file, "r") as f:
+            configs.append(json.load(f))
+    return configs
 
 
 # ==================================================================================================
@@ -246,6 +258,35 @@ def annotation_metadata(annotation_metadata_files: List[str], filesystem: FileSy
             metadata_objs[file] = json.load(f)
 
     return metadata_objs
+
+def load_metadata_dict(files_dict: Dict[str, str], filesystem: FileSystemApi) -> Dict[str, Dict]:
+    """Load the annotation metadata, keyed by path."""
+    metadata_objs = {}
+    for anno_fname, file in files_dict.items():
+        with filesystem.open(file, "r") as f:
+            metadata_objs[anno_fname] = json.load(f)
+
+    return metadata_objs
+
+@pytest.fixture(scope="session")
+def point_annotation_files_to_metadata(point_annotation_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(point_annotation_files_to_metadata_files, filesystem)
+
+@pytest.fixture(scope="session")
+def oriented_point_annotation_files_to_metadata(oriented_point_annotation_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(oriented_point_annotation_files_to_metadata_files, filesystem)
+
+@pytest.fixture(scope="session")
+def instance_seg_annotation_files_to_metadata(instance_seg_annotation_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(instance_seg_annotation_files_to_metadata_files, filesystem)
+
+@pytest.fixture(scope="session")
+def seg_mask_annotation_files_to_metadata(seg_mask_annotation_mrc_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(seg_mask_annotation_mrc_files_to_metadata_files, filesystem)
 
 
 def get_ndjson_annotations(
