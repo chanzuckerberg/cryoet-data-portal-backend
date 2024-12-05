@@ -69,7 +69,7 @@ def get_voxel_spacing_files(
     A helper function to retrieve all valid voxel spacing files across all dataset + runs.
     """
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        voxel_spacing_file_template = f"s3://{bucket}/{{}}/{{}}/Tomograms/{voxel_spacing_glob}"
+        voxel_spacing_file_template = f"s3://{bucket}/{{}}/{{}}/Reconstructions/{voxel_spacing_glob}"
 
         voxel_spacing_files_lists = executor.map(
             lambda dataset_run_tuple: fs.glob(
@@ -127,6 +127,35 @@ def dataset_run_tiltseries_combinations(
 
     return files
 
+def dataset_run_tomogram_combinations(
+    fs: S3Filesystem,
+    bucket: str,
+    dataset_run_voxel_spacing_combinations: List[Tuple[str, str, str]],
+) -> List[Tuple[str, str, str]]:
+    files = []
+
+    def get_tomogram_files(context_tuple) -> List[Tuple[str, str, str]]:
+        glob_str = f"s3://{bucket}/{context_tuple[0]}/{context_tuple[1]}/Reconstructions/VoxelSpacing{context_tuple[2]}/Tomograms/*"
+        files = []
+        for item in fs.glob(glob_str):
+            tomo_dir = os.path.basename(item)
+            files.append((*context_tuple, tomo_dir))
+        return files
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+
+        files_lists = executor.map(
+            get_tomogram_files,
+            dataset_run_voxel_spacing_combinations,
+        )
+        files = [
+            res_tuple
+            for res_list in files_lists
+            for res_tuple in res_list
+        ]
+
+    return files
+
 def dataset_run_spacing_combinations(
     bucket: str,
     dataset_run_combinations: List[Tuple[str, str]],
@@ -142,7 +171,7 @@ def dataset_run_spacing_combinations(
     for dataset_run_tuple in dataset_run_combinations:
         for vs in voxel_spacings:
             if (
-                f"{bucket}/{dataset_run_tuple[0]}/{dataset_run_tuple[1]}/Tomograms/VoxelSpacing{vs}"
+                f"{bucket}/{dataset_run_tuple[0]}/{dataset_run_tuple[1]}/Reconstructions/VoxelSpacing{vs}"
                 in voxel_spacing_files
             ):
                 combos.append(dataset_run_tuple + (vs,))
@@ -197,6 +226,13 @@ def pytest_configure(config: pytest.Config) -> None:
         pytest.dataset_run_combinations
     )
     print("Dataset, run, and tiltseries: %s", pytest.dataset_run_tiltseries_combinations)
+
+    pytest.dataset_run_tomogram_combinations = dataset_run_tomogram_combinations(
+        fs,
+        bucket,
+        pytest.dataset_run_spacing_combinations
+    )
+    print("Dataset, run, vs, and tomogram: %s", pytest.dataset_run_tomogram_combinations)
 
     # Register markers
     config.addinivalue_line("markers", "annotation: Tests concerning the annotation data.")
