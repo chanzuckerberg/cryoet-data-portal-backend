@@ -127,9 +127,9 @@ def gain_files(run_name: str, gain_dir: str, filesystem: FileSystemApi) -> List[
 
 
 @pytest.fixture(scope="session")
-def tiltseries_dir(run_dir: str, filesystem: FileSystemApi) -> str:
+def tiltseries_dir(run_dir: str, ts_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries"""
-    dst = f"{run_dir}/TiltSeries"
+    dst = f"{run_dir}/TiltSeries/{ts_dir}"
     if filesystem.exists(dst):
         return dst
     else:
@@ -141,7 +141,7 @@ def tiltseries_meta_file(
     tiltseries_dir: str,
     filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/tiltseries_metadata.json"""
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/tiltseries_metadata.json"""
     dst = f"{tiltseries_dir}/tiltseries_metadata.json"
     if filesystem.exists(dst):
         return dst
@@ -152,12 +152,13 @@ def tiltseries_meta_file(
 @pytest.fixture(scope="session")
 def tiltseries_mrc_file(
     tiltseries_dir: str,
+    bucket: str,
     tiltseries_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].mrc"""
-    # TODO FIXME List[str] mrc_files should really just become str mrc_file, and then adjust this fixture accordingly
-    file = f"{tiltseries_dir}/{tiltseries_metadata['mrc_files'][0]}"
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].mrc"""
+
+    file = os.path.join(bucket, tiltseries_metadata['mrc_file'])
     if not filesystem.exists(file):
         pytest.fail(f"Tilt series mrc file not found: {file}")
     return file
@@ -166,11 +167,12 @@ def tiltseries_mrc_file(
 @pytest.fixture(scope="session")
 def tiltseries_zarr_file(
     tiltseries_dir: str,
+    bucket: str,
     tiltseries_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].zarr"""
-    file = f"{tiltseries_dir}/{tiltseries_metadata['omezarr_dir']}"
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].zarr"""
+    file = os.path.join(bucket, tiltseries_metadata['omezarr_dir'])
     if not filesystem.exists(file):
         pytest.fail(f"Tilt series Zarr file not found: {file}")
     return file
@@ -180,7 +182,7 @@ def tiltseries_zarr_file(
 def tiltseries_basename(
     tiltseries_zarr_file: str,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name]"""
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name]"""
     return os.path.splitext(tiltseries_zarr_file)[0]
 
 
@@ -198,7 +200,7 @@ def tiltseries_mdoc_file(tiltseries_dir: str, filesystem: FileSystemApi) -> str:
 
 @pytest.fixture(scope="session")
 def tiltseries_tilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].tlt"""
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].tlt"""
     tlt_files = filesystem.glob(f"{tiltseries_basename}.tlt")
     if len(tlt_files) == 0:
         pytest.skip("No tlt file found.")
@@ -207,7 +209,7 @@ def tiltseries_tilt_file(tiltseries_basename: str, filesystem: FileSystemApi) ->
 
 @pytest.fixture(scope="session")
 def tiltseries_rawtilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_name].rawtlt"""
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].rawtlt"""
     rawtlt_files = filesystem.glob(f"{tiltseries_basename}.rawtlt")
     if len(rawtlt_files) == 0:
         pytest.skip("No rawtlt file found.")
@@ -235,9 +237,9 @@ def voxel_dir(
     voxel_spacing: str,
     filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]"""
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]"""
 
-    dst = f"{tomograms_dir}/VoxelSpacing{voxel_spacing}"
+    dst = f"{tomograms_dir}/Reconstructions/VoxelSpacing{voxel_spacing}"
 
     if filesystem.exists(dst):
         return dst
@@ -247,7 +249,7 @@ def voxel_dir(
 
 @pytest.fixture(scope="session")
 def tomo_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram"""
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/CanonicalTomogram"""
     dst = f"{voxel_dir}/CanonicalTomogram"
     if filesystem.exists(dst):
         return dst
@@ -260,7 +262,7 @@ def tomo_meta_file(
     tomo_dir: str,
     filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/tomogram_metadata.json"""
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/CanonicalTomogram/tomogram_metadata.json"""
     dst = f"{tomo_dir}/tomogram_metadata.json"
     if filesystem.exists(dst):
         return dst
@@ -274,9 +276,8 @@ def tomo_mrc_file(
     tomogram_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].mrc"""
-    # TODO FIXME List[str] mrc_files should really just become str mrc_file, and then adjust this fixture accordingly
-    file = f"{tomo_dir}/{tomogram_metadata['mrc_files'][0]}"
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].mrc"""
+    file = f"{tomo_dir}/{tomogram_metadata['mrc_file']}"
     if not filesystem.exists(file):
         pytest.fail(f"Tomogram mrc file not found: {file}")
     return file
@@ -288,7 +289,7 @@ def tomo_zarr_file(
     tomogram_metadata: Dict,
     filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].zarr"""
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/CanonicalTomogram/[tomo_name].zarr"""
     file = f"{tomo_dir}/{tomogram_metadata['omezarr_dir']}"
     if not filesystem.exists(file):
         pytest.fail(f"Tomogram Zarr file not found: {file}")
@@ -302,7 +303,7 @@ def tomo_zarr_file(
 
 @pytest.fixture(scope="session")
 def neuroglancer_dir(tomo_dir: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/"""
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/CanonicalTomogram/"""
     return tomo_dir
 
 
@@ -311,7 +312,7 @@ def neuroglancer_config_file(
     neuroglancer_dir: str,
     filesystem: FileSystemApi,
 ) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/CanonicalTomogram/neuroglancer_config.json"""
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/CanonicalTomogram/neuroglancer_config.json"""
     dst = f"{neuroglancer_dir}/neuroglancer_config.json"
     if filesystem.exists(dst):
         return dst
@@ -326,7 +327,7 @@ def neuroglancer_config_file(
 
 @pytest.fixture(scope="session")
 def annotations_dir(voxel_dir: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations"""
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations"""
     dst = f"{voxel_dir}/Annotations"
     if filesystem.exists(dst):
         return dst
@@ -353,7 +354,7 @@ def annotation_files(
 
 @pytest.fixture(scope="session")
 def annotation_metadata_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].json"""
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].json"""
     return filesystem.glob(f"{annotations_dir}/*.json")
 
 
@@ -365,7 +366,7 @@ def get_annotation_files_to_metadata_files(
     name: str,
     format: Optional[str] = None,
 ) -> Dict[str, str]:
-    """[Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].*
+    """[Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].*
     Helper function for retrieving annotation files and their corresponding metadata files.
     Fails the test if the annotation file is not found for a given metadata file OR if there are any remaining annotation files.
     Returns a dictionary of annotation files, annotation_filename -> metadata_filename.
@@ -400,7 +401,7 @@ def get_annotation_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def point_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
     """
-    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_point.ndjson
+    [Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/*_point.ndjson
 
     Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
     if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
@@ -428,7 +429,7 @@ def point_annotation_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def oriented_point_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
     """
-    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_orientedpoint.ndjson
+    [Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/*_orientedpoint.ndjson
 
     Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
     if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
@@ -456,7 +457,7 @@ def oriented_point_annotation_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def instance_seg_annotation_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
     """
-    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_instancesegmentation.ndjson
+    [Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/*_instancesegmentation.ndjson
 
     Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
     if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
@@ -484,7 +485,7 @@ def instance_seg_annotation_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def seg_mask_annotation_mrc_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
     """
-    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.mrc
+    [Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.mrc
 
     Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
     if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
@@ -513,7 +514,7 @@ def seg_mask_annotation_mrc_files_to_metadata_files(
 @pytest.fixture(scope="session")
 def seg_mask_annotation_zarr_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
     """
-    [Dataset]/[ExperimentRun]/Tomograms/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.zarr
+    [Dataset]/[ExperimentRun]/Tomograms/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/*_segmentationmask.zarr
 
     Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
     if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.

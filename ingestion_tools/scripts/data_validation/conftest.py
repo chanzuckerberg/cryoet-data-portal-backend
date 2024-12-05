@@ -98,6 +98,35 @@ def get_voxel_spacings_set(voxel_spacing_files: List[str]) -> List[str]:
     return list(set(voxel_spacings))
 
 
+def dataset_run_tiltseries_combinations(
+    fs: S3Filesystem,
+    bucket: str,
+    dataset_run_combinations: List[Tuple[str, str]],
+) -> List[Tuple[str, str, str]]:
+    files = []
+
+    def get_tiltseries_files(dataset_run_tuple) -> List[Tuple[str, str, str]]:
+        glob_str = f"s3://{bucket}/{dataset_run_tuple[0]}/{dataset_run_tuple[1]}/TiltSeries/*"
+        files = []
+        for item in fs.glob(glob_str):
+            tiltseries_dir = os.path.basename(item)
+            files.append((*dataset_run_tuple, tiltseries_dir))
+        return files
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+
+        files_lists = executor.map(
+            get_tiltseries_files,
+            dataset_run_combinations,
+        )
+        files = [
+            res_tuple
+            for res_list in files_lists
+            for res_tuple in res_list
+        ]
+
+    return files
+
 def dataset_run_spacing_combinations(
     bucket: str,
     dataset_run_combinations: List[Tuple[str, str]],
@@ -160,8 +189,14 @@ def pytest_configure(config: pytest.Config) -> None:
         pytest.voxel_spacing,
         voxel_spacing_files,
     )
-
     print("Dataset, run, and voxel spacing combinations: %s", pytest.dataset_run_spacing_combinations)
+
+    pytest.dataset_run_tiltseries_combinations = dataset_run_tiltseries_combinations(
+        fs,
+        bucket,
+        pytest.dataset_run_combinations
+    )
+    print("Dataset, run, and tiltseries: %s", pytest.dataset_run_tiltseries_combinations)
 
     # Register markers
     config.addinivalue_line("markers", "annotation: Tests concerning the annotation data.")
