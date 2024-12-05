@@ -71,7 +71,7 @@ runs:
 
 standardization_config:
   deposition_id: 10316
-  source_prefix: braxton_owens_05_2024/t2ss
+  source_prefix: "braxton_owens_05_2024/CZII_size_exclusion/t2ss"
 
 version: 1.1.0
 voxel_spacings:
