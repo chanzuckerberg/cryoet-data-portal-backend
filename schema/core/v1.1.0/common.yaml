@@ -15,7 +15,6 @@ imports:
 default_prefix: cdp-common
 default_range: Any
 
-
 slots:
   # ============================================================================
   # Snapshot / Thumbnail
@@ -53,7 +52,6 @@ slots:
     description: >-
       The date a piece of data was last modified on the cryoET data portal.
   # ============================================================================
-
   # ============================================================================
   # Author slots
   # ============================================================================
@@ -92,7 +90,7 @@ slots:
     description: >-
       A Research Organization Registry (ROR) identifier.
     range: string
-    pattern: '^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
+    pattern: "^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$"
     recommended: true
 
   author_corresponding_author_status:
@@ -113,8 +111,6 @@ slots:
     description: >-
       The position of the author in the author list.
   # ============================================================================
-
-
   # ============================================================================
   # Deposition slots
   # ============================================================================
@@ -142,7 +138,6 @@ slots:
     description: >-
       Type of data in the deposition (e.g. dataset, annotation, tomogram)
   # ============================================================================
-
   # ============================================================================
   # Dataset slots
   # ============================================================================
@@ -181,7 +176,6 @@ slots:
     description: >-
       The HTTPS directory path where this dataset is contained.
   # ============================================================================
-
   # ============================================================================
   # Funding information slots
   # ============================================================================
@@ -284,7 +278,6 @@ slots:
       Describes other setup not covered by sample preparation or grid preparation that may make this dataset unique in
       the same publication.
   # ============================================================================
-
   # ============================================================================
   # Run slots
   # ============================================================================
@@ -329,7 +322,7 @@ slots:
       - range: tiltseries_camera_acquire_mode_enum
     description: Camera acquisition mode
   tiltseries_camera_manufacturer:
-    range: string
+    range: tiltseries_camera_manufacturer_enum
     required: true
     description: Name of the camera manufacturer
   tiltseries_camera_model:
@@ -476,7 +469,6 @@ slots:
       symbol: e^-/Å^2
   # ============================================================================
 
-
   # ============================================================================
   # Tomogram slots
   # ============================================================================
@@ -605,7 +597,7 @@ slots:
     description: Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive
     unit:
       descriptive_name: percentage
-      symbol: '%'
+      symbol: "%"
   annotation_confidence_recall:
     range: float
     minimum_value: 0
@@ -613,7 +605,7 @@ slots:
     description: Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly
     unit:
       descriptive_name: percentage
-      symbol: '%'
+      symbol: "%"
   #deposition_date (date): Date when an annotation set is initially received by the Data Portal.
   annotation_ground_truth_status:
     range: boolean
@@ -708,7 +700,7 @@ slots:
   annotation_source_file_binning:
     range: float
     description: The binning factor for a point / oriented point / instance segmentation annotation file.
-    ifabsent: 'float(1)'
+    ifabsent: "float(1)"
     minimum_value: 0
   annotation_source_file_columns:
     range: string
@@ -728,7 +720,7 @@ slots:
   annotation_source_file_mask_label:
     range: integer
     description: The mask label for a semantic segmentation mask annotation file.
-    ifabsent: 'int(1)'
+    ifabsent: "int(1)"
   annotation_source_file_rescale:
     range: boolean
     description: Whether the annotation file needs to be rescaled.
@@ -739,7 +731,7 @@ slots:
   annotation_source_file_scale_factor:
     range: float
     description: The scale factor for a mesh annotation file.
-    ifabsent: 'float(1)'
+    ifabsent: "float(1)"
     minimum_value: 0
   annotation_source_file_mesh_name:
     range: string
@@ -812,7 +804,6 @@ slots:
     unit:
       descriptive_name: voxels
       symbol: voxel
-
 
 enums:
   # ============================================================================
@@ -930,6 +921,18 @@ enums:
       cds:
         description: Correlated double sampling mode
 
+  tiltseries_camera_manufacturer_enum:
+    description: Camera manufacturer
+    permissible_values:
+      Gatan:
+        description: Gatan Inc.
+      FEI:
+        description: FEI Company
+      TFS:
+        description: Thermo Fisher Scientific
+      SIMULATED:
+        description: Simulated data
+
   tiltseries_microscope_manufacturer_enum:
     description: Microscope manufacturer
     permissible_values:
@@ -1005,42 +1008,42 @@ types:
     description: A URL or S3 URI
     base: str
     # TODO: Temporary pattern allowing cryoetportal-rawdatasets-dev, but will be removed in the future
-    pattern: '^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$'
+    pattern: "^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$"
 
   ORCID:
     description: A unique, persistent identifier for researchers, provided by ORCID.
     base: str
-    pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+    pattern: "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"
 
   BTO_ID:
     description: A BRENDA Tissue Ontology identifier
     base: str
-    pattern: '^BTO:[0-9]{7}$'
+    pattern: "^BTO:[0-9]{7}$"
 
   CL_ID:
     description: A Cell Ontology identifier
     base: str
-    pattern: '^CL:[0-9]{7}$'
+    pattern: "^CL:[0-9]{7}$"
 
   GO_ID:
     description: A Gene Ontology identifier
     base: str
-    pattern: '^GO:[0-9]{7}$'
+    pattern: "^GO:[0-9]{7}$"
 
   UNIPROT_ID:
     description: A UniProt identifier
     base: str
-    pattern: '^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$'
+    pattern: "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$"
 
   WORMBASE_ID:
     description: A WormBase identifier
     base: str
-    pattern: 'WBStrain[0-9]{8}$'
+    pattern: "WBStrain[0-9]{8}$"
 
   ONTOLOGY_ID:
     description: An ontology identifier
     base: str
-    pattern: '^[a-zA-Z]+:[0-9]+$'
+    pattern: "^[a-zA-Z]+:[0-9]+$"
 
   DOI:
     description: A Digital Object Identifier
@@ -1055,17 +1058,17 @@ types:
   EMPIAR_ID:
     description: An Electron Microscopy Public Image Archive identifier
     base: str
-    pattern: '^EMPIAR-[0-9]+$'
+    pattern: "^EMPIAR-[0-9]+$"
 
   EMDB_ID:
     description: An Electron Microscopy Data Bank identifier
     base: str
-    pattern: '^EMD-[0-9]{4,5}$'
+    pattern: "^EMD-[0-9]{4,5}$"
 
   PDB_ID:
     description: A Protein Data Bank identifier
     base: str
-    pattern: '^PDB-[0-9a-zA-Z]{4,8}$'
+    pattern: "^PDB-[0-9a-zA-Z]{4,8}$"
 
   EMPIAR_EMDB_PDB_LIST:
     description: A list of EMPIAR, EMDB, and PDB identifiers
