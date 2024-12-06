@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2
 {% set related_fields = cls.related_fields | unique(attribute='related_class.name') | list %}
 {% set ignored_fields = [cls.name] %}
 
-from typing import Any, Optional, TYPE_CHECKING
+from typing import Any, Optional, TYPE_CHECKING, Annotated
 import strawberry
 import datetime
 import uuid
@@ -22,19 +22,25 @@ from support.enums import
 {%- endfor %}
 
 {%- for field in cls.related_fields %}
-    {%- if field.related_class.name not in ignored_fields and not field.multivalued and not field.is_virtual_relationship and not field.type == "File" %}
-from graphql_api.helpers.{{ field.related_class.snake_name }} import {{ field.related_class.name }}GroupByOptions, build_{{ field.related_class.snake_name }}_groupby_output
+    {%- if field.related_class.name not in ignored_fields and not field.type == "File" %}
+import graphql_api.helpers.{{ field.related_class.snake_name }} as {{ field.related_class.snake_name }}_helper
     {%- endif %}
 {%- endfor %}
 
-{%- for field in cls.related_fields %}
-    {%- if field.related_class.name not in ignored_fields and not field.multivalued and not field.is_virtual_relationship %}
+{%- if cls.related_fields | length >= 1 %}
 if TYPE_CHECKING:
-    from api.types.{{ field.related_class.snake_name }} import {{ field.related_class.name }}
-else:
-    {{ field.related_class.name }} = "{{ field.related_class.name }}"
+{%- for field in cls.related_fields %}
+    {%- if field.related_class.name not in ignored_fields %}
+    from graphql_api.helpers.{{ field.related_class.snake_name }} import {{ field.related_class.name }}GroupByOptions
     {%- endif %}
 {%- endfor %}
+else:
+{%- for field in cls.related_fields %}
+    {%- if field.related_class.name not in ignored_fields %}
+    {{ field.related_class.name }}GroupByOptions = "{{ field.related_class.name }}GroupByOptions"
+    {%- endif %}
+{%- endfor %}
+{%- endif %}
 
 
 """
@@ -45,11 +51,11 @@ These are only used in aggregate queries.
 @strawberry.type
 class {{ cls.name }}GroupByOptions:
 {%- for attr in cls.visible_fields %}
-    {%- if attr.type != "File" and not attr.multivalued and not attr.is_virtual_relationship %}
+    {%- if attr.type != "File" %}
         {%- if attr.inverse %}
-    {{ attr.name }}: Optional[{{ attr.related_class.name }}GroupByOptions] = None
+    {{ attr.name }}: Optional[Annotated["{{ attr.related_class.name }}GroupByOptions", strawberry.lazy("graphql_api.helpers.{{ attr.related_class.snake_name }}")]] = None
         {%- elif attr.type == cls.name %}
-    {{ attr.name }}: Optional["{{ cls.name }}GroupByOptions"] = None
+    {{ attr.name }}: Optional["{{attr.related_class.snake_name}}_helper.{{ cls.name }}GroupByOptions"] = None
         {%- else %}
             {%- if attr.type == "string" %}
     {{ attr.name }}: Optional[str] = None
@@ -86,17 +92,21 @@ def build_{{ cls.snake_name }}_groupby_output(
     key = keys.pop(0)
     match key:
 {%- for attr in cls.visible_fields %}
-    {%- if attr.type != "File" and not attr.multivalued and not attr.is_virtual_relationship %}
+    {%- if attr.type != "File" %}
         {%- if attr.inverse %}
+        {%- if attr.multivalued or attr.is_virtual_relationship %}
+        case "{{ attr.related_class.plural_snake_name }}":
+        {%- else %}
         case "{{ attr.related_class.snake_name }}":
+        {%- endif %}
             if getattr(group_object, key):
-                value = build_{{ attr.related_class.snake_name }}_groupby_output(
+                value = {{ attr.related_class.snake_name }}_helper.build_{{ attr.related_class.snake_name }}_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_{{ attr.related_class.snake_name }}_groupby_output(
+                value = {{ attr.related_class.snake_name }}_helper.build_{{ attr.related_class.snake_name }}_groupby_output(
                     None,
                     keys,
                     value,

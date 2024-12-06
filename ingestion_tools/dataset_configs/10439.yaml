@@ -32,7 +32,7 @@ annotations:
     - custom_name: polnet on GitHub
       link: https://github.com/anmartinezs/polnet
       link_type: source_code
-    method_type: hybrid
+    method_type: simulated
     version: 1.0
   sources:
   - SemanticSegmentationMask:
@@ -53,7 +53,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *id003
-    method_type: hybrid
+    method_type: simulated
     version: 1.0
   sources:
   - SemanticSegmentationMask:
@@ -80,7 +80,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *id003
-    method_type: hybrid
+    method_type: simulated
     version: 1.0
   sources:
   - SemanticSegmentationMask:
@@ -107,7 +107,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *id003
-    method_type: hybrid
+    method_type: simulated
     version: 1.0
   sources:
   - SemanticSegmentationMask:
@@ -134,7 +134,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *id003
-    method_type: hybrid
+    method_type: simulated
     version: 1.0
   sources:
   - SemanticSegmentationMask:
@@ -161,7 +161,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *id003
-    method_type: hybrid
+    method_type: simulated
     version: 1.0
   sources:
   - SemanticSegmentationMask:
@@ -189,7 +189,7 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *id003
-    method_type: hybrid
+    method_type: simulated
     version: 1.0
   sources:
   - SemanticSegmentationMask:
@@ -252,6 +252,12 @@ depositions:
   - literal:
       value:
       - 10309
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_thumbnail.png"
 runs:
 - sources:
   - source_glob:

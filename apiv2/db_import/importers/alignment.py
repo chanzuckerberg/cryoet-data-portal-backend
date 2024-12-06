@@ -2,7 +2,7 @@ import os
 from typing import Any
 
 from database import models
-from db_import.common.finders import MetadataFileFinder
+from db_import.common.finders import JsonDataFinder, MetadataFileFinder
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 
 # Alignment Fields
@@ -46,12 +46,16 @@ class AlignmentItem(ItemDBImporter):
     model_class = models.Alignment
 
     def load_computed_fields(self):
+        run_id = self.input_data["run"].id
         if self.model_args["alignment_method"] == "undefined":
             self.model_args["alignment_method"] = None
         self.model_args["s3_alignment_metadata"] = self.get_s3_url(self.input_data["file"])
         self.model_args["https_alignment_metadata"] = self.get_https_url(self.input_data["file"])
         if self.input_data.get("tiltseries_path"):
-            self.model_args["tiltseries_id"] = self.config.get_tiltseries_by_path(self.input_data["tiltseries_path"])
+            self.model_args["tiltseries_id"] = self.config.get_tiltseries_by_path(
+                self.input_data["tiltseries_path"],
+                run_id,
+            )
         self.model_args["run_id"] = self.input_data["run"].id
 
 
@@ -72,4 +76,41 @@ class AlignmentImporter(IntegratedDBImporter):
         return {
             "path": os.path.join(self.run.s3_prefix, "Alignments/"),
             "file_glob": "*/alignment_metadata.json",
+        }
+
+
+class PerSectionAlignmentParametersItem(ItemDBImporter):
+    id_fields = ["alignment_id", "z_index"]
+    model_class = models.PerSectionAlignmentParameters
+    direct_mapped_fields = {
+        "z_index": ["z_index"],
+        "tilt_angle": ["tilt_angle"],
+        "volume_x_rotation": ["volume_x_rotation"],
+        "in_plane_rotation": ["in_plane_rotation"],
+        "x_offset": ["x_offset"],
+        "y_offset": ["y_offset"],
+    }
+
+    def load_computed_fields(self):
+        self.model_args["alignment_id"] = self.input_data["alignment"].id
+
+
+class PerSectionAlignmentParametersImporter(IntegratedDBImporter):
+    finder = JsonDataFinder
+    row_importer = PerSectionAlignmentParametersItem
+    clean_up_siblings = True
+
+    def __init__(self, config, alignment: models.Alignment, **unused_parents):
+        self.alignment = alignment
+        self.config = config
+        self.parents = {"alignment": alignment}
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"alignment_id": self.alignment.id}
+
+    def get_finder_args(self) -> dict[str, Any]:
+        metadata_path = self.alignment.s3_alignment_metadata
+        return {
+            "path": self.convert_to_finder_path(metadata_path),
+            "list_key": ["per_section_alignment_parameters"],
         }

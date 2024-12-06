@@ -1,22 +1,12 @@
 alignments:
 - metadata:
-    format: IMOD
-    method_type: projection_matching
-  sources:
-  - source_multi_glob:
-      list_globs:
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xf
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.tlt
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.com
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.xtilt
-      - Data_Set_2/{run_name}/aligned_tilt_series/*_IMOD/*.com
-- metadata:
     format: ARETOMO3
     method_type: projection_matching
   sources:
   - source_multi_glob:
       list_globs:
-      - Data_Set_2/{run_name}/aligned_tilt_series/*.st.aln
+      - Data_Set_1/{run_name}/aligned_tilt_series/*.aln
+      - Data_Set_2/{run_name}/aligned_tilt_series/*.aln
 annotations:
 - metadata:
     annotation_method: Each organelle was segmented as a separate region of interest
@@ -339,6 +329,12 @@ depositions:
   - literal:
       value:
       - 10307
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10307_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10307_thumbnail.png"
 frames:
 - sources:
   - source_glob:
@@ -353,15 +349,8 @@ rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - Data_Set_2/{run_name}/tilt_series/*.st.rawtlt
-  - source_multi_glob:
-      list_globs:
       - Data_Set_1/{run_name}/tilt_series/*.mrc.tlt
-      - Data_Set_1/{run_name}/aligned_tilt_series/*.st.aln
-      - Data_Set_1/{run_name}/aligned_tilt_series/*_Imod/*.xf
-      - Data_Set_1/{run_name}/aligned_tilt_series/*_Imod/*.xtilt
-      - Data_Set_1/{run_name}/aligned_tilt_series/*_Imod/*.tlt
-      - Data_Set_1/{run_name}/aligned_tilt_series/*_Imod/*.com
+      - Data_Set_2/{run_name}/tilt_series/*.st.rawtlt
 runs:
 - sources:
   - source_glob:

@@ -10,7 +10,7 @@
         0.4
       ],
       "x_offset": -4.345,
-      "y_offset": 6.789,
+      "y_offset": 5.789,
       "z_index": 0,
       "tilt_angle": null,
       "volume_x_rotation": 0
@@ -22,17 +22,17 @@
         -0.55,
         0.66
       ],
-      "x_offset": -3.210,
+      "x_offset": -3.21,
       "y_offset": 4.321,
       "z_index": 1,
       "tilt_angle": null,
       "volume_x_rotation": 0
     }
   ],
-  "alignment_path": "test-public-bucket/30001/RUN1/Alignments/100/aln1.xf",
+  "alignment_path": "30001/RUN1/Alignments/100/aln1.xf",
   "tilt_path": null,
   "tiltx_path": null,
-  "tiltseries_path": "test-public-bucket/30001/RUN1/TiltSeries/100/tiltseries_metadata.json",
+  "tiltseries_path": "30001/RUN1/TiltSeries/100/tiltseries_metadata.json",
   "files": [
     "test-public-bucket/30001/RUN1/Alignments/100/aln1.xf"
   ],
@@ -76,6 +76,6 @@
   },
   "tilt_offset": 0,
   "x_rotation_offset": 0,
-  "deposition_id": 301,
+  "deposition_id": 300,
   "last_updated_at": 1728675677
 }
