@@ -5,15 +5,15 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.dataset as dataset_helper
 import strawberry
-from graphql_api.helpers.dataset import DatasetGroupByOptions, build_dataset_groupby_output
 
 if TYPE_CHECKING:
-    from api.types.dataset import Dataset
+    from graphql_api.helpers.dataset import DatasetGroupByOptions
 else:
-    Dataset = "Dataset"
+    DatasetGroupByOptions = "DatasetGroupByOptions"
 
 
 """
@@ -24,7 +24,7 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class DatasetAuthorGroupByOptions:
-    dataset: Optional[DatasetGroupByOptions] = None
+    dataset: Optional[Annotated["DatasetGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset")]] = None
     id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None
@@ -53,13 +53,13 @@ def build_dataset_author_groupby_output(
     match key:
         case "dataset":
             if getattr(group_object, key):
-                value = build_dataset_groupby_output(
+                value = dataset_helper.build_dataset_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_dataset_groupby_output(
+                value = dataset_helper.build_dataset_groupby_output(
                     None,
                     keys,
                     value,

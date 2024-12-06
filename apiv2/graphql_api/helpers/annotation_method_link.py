@@ -5,16 +5,16 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.annotation as annotation_helper
 import strawberry
-from graphql_api.helpers.annotation import AnnotationGroupByOptions, build_annotation_groupby_output
 from support.enums import annotation_method_link_type_enum
 
 if TYPE_CHECKING:
-    from api.types.annotation import Annotation
+    from graphql_api.helpers.annotation import AnnotationGroupByOptions
 else:
-    Annotation = "Annotation"
+    AnnotationGroupByOptions = "AnnotationGroupByOptions"
 
 
 """
@@ -25,7 +25,9 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class AnnotationMethodLinkGroupByOptions:
-    annotation: Optional[AnnotationGroupByOptions] = None
+    annotation: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = (
+        None
+    )
     link_type: Optional[annotation_method_link_type_enum] = None
     name: Optional[str] = None
     link: Optional[str] = None
@@ -48,13 +50,13 @@ def build_annotation_method_link_groupby_output(
     match key:
         case "annotation":
             if getattr(group_object, key):
-                value = build_annotation_groupby_output(
+                value = annotation_helper.build_annotation_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_annotation_groupby_output(
+                value = annotation_helper.build_annotation_groupby_output(
                     None,
                     keys,
                     value,
