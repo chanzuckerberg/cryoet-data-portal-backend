@@ -60,8 +60,8 @@ deposition_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10317_snapshot.png"
-        thumbnail: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10317_thumbnail.png"
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10317_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10317_thumbnail.png"
 
 runs:
 - sources:
