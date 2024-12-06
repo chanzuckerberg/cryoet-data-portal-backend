@@ -36,7 +36,7 @@ alignments:
       name_regex: (.*)
 annotations:
 - metadata: &annotation_metadata
-    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data
+    annotation_method: Convolutional neural network trained on manually annotated input data
     annotation_object:
       id: GO:0005840
       name: ribosome
@@ -68,6 +68,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
     annotation_object:
       id: GO:0016020
       name: membrane
@@ -78,6 +79,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
     annotation_object:
       id: GO:0005832
       name: chaperonin-containing T-complex
@@ -88,6 +90,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
     annotation_object:
       id: GO:0000502
       name: proteasome complex
@@ -98,6 +101,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
     annotation_object:
       id: GO:0045259
       name: F1-F0 complex
@@ -108,6 +112,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
     annotation_object:
       id: GO:0048492
       name: RubisCO complex
@@ -118,6 +123,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0005737
       name: cytoplasm
@@ -128,6 +134,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0005739
       name: mitochondrion
@@ -138,6 +145,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0005635
       name: nuclear envelope
@@ -148,6 +156,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0005654
       name: nucleoplasm
@@ -158,6 +167,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0160223
       name: pyrenoid tubule
@@ -169,6 +179,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0009579
       name: thylakoid
@@ -179,6 +190,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:1990732
       name: pyrenoid
@@ -189,6 +201,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0009570
       name: chloroplast stroma
@@ -199,6 +212,7 @@ annotations:
       is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0005811
       name: lipid droplet
@@ -207,19 +221,21 @@ annotations:
       file_format: mrc
       glob_string: '{run_name}_bin2__Lipid droplets.mrc'
       is_visualization_default: true
+#- metadata:
+#    <<: *annotation_metadata
+#    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+#    annotation_object:
+#      id: GO:0005618
+#      name: cell wall
+#  sources:
+#  - SegmentationMask:
+#      file_format: mrc
+#      #TODO: confirm this is correct
+#      glob_string: '{run_name}_bin2__Dense layer.mrc'
+#      is_visualization_default: true
 - metadata:
     <<: *annotation_metadata
-    annotation_object:
-      id: GO:0005618
-      name: cell wall
-  sources:
-  - SegmentationMask:
-      file_format: mrc
-      #TODO: confirm this is correct
-      glob_string: '{run_name}_bin2__Dense layer.mrc'
-      is_visualization_default: true
-- metadata:
-    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
       id: GO:0005783
       name: endoplasmic reticulum
@@ -228,12 +244,103 @@ annotations:
       file_format: mrc
       glob_string: '{run_name}_bin2__Endoplasmic reticulum.mrc'
       is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005643
+      name: nuclear pore
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__NPC.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005794
+      name: Golgi apparatus
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Golgi.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0031410
+      name: cytoplasmic vesicle
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Vesicle.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0031410
+      name: cytoplasmic vesicle
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Vesicle.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005618
+      name: cell wall
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Cell wall.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005929
+      name: cilium
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Cilium.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0043036
+      name: starch grain
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Starch granule.mrc'
+      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0009707
+      name: chloroplast outer membrane
+  sources:
+  - SegmentationMask:
+      file_format: mrc
+      glob_string: '{run_name}_bin2__Chloroplast membrane.mrc'
+      is_visualization_default: true
+
+
 datasets:
 - sources:
   - source_glob:
       list_glob: 1030?
       match_regex: (10301|10302)$
       name_regex: (.*)
+
 
 runs:
 - sources:
