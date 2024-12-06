@@ -4,19 +4,20 @@ alignments:
       list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
       match_regex: .*
       name_regex: (.*)
+
 annotations:
 - metadata:
     annotation_method: manual labeling.
     annotation_object:
-      id: GO:0009431
-      name: flagellar basal body, MS ring
+      id: GO:0043684
+      name: type IV secretion system complex
     annotation_software: IMOD
     authors: &id001
     - corresponding_author_status: true
       name: Mohammed Kaplan
       primary_author_status: true
     dates: &id002
-      deposition_date: '2024-05-20'
+      deposition_date: '2024-12-03'
       last_modified_date: '2024-12-03'
       release_date: '2024-12-03'
     method_links:
@@ -31,7 +32,7 @@ annotations:
   - OrientedPoint:
       binning: 1
       file_format: mod
-      glob_string: '{dataset_name}/{run_name}_*MS.mod'
+      glob_string: '{dataset_name}/{run_name}_*T4SS.mod'
       is_visualization_default: true
       order: xyz
 datasets:
@@ -44,33 +45,34 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: Manual annotations of partial bacterial-type flagellum basal bodies, created and
+    deposition_description: Manual annotations of type IV protein secretion system complexes, created and
       pre-oriented using IMOD.
-    deposition_identifier: 10302
-    deposition_title: Manual annotations of partial bacterial-type flagellum basal bodies
+    deposition_identifier: 10317
+    deposition_title: Manual annotations of type IV protein secretion system complexes
     deposition_types:
     - annotation
   sources:
   - literal:
       value:
-      - 10302
+      - 10317
+
 deposition_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10302_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10302_thumbnail.png"
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10317_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10317_thumbnail.png"
 
 runs:
 - sources:
   - source_glob:
       list_glob: '{dataset_name}/*'
       match_regex: .*
-      name_regex: (.*?)_.*?_MS.mod
+      name_regex: (.*?)_.*?_T4SS.mod
 
 standardization_config:
-  deposition_id: 10302
-  source_prefix: "braxton_owens_05_2024/CZII_size_exclusion/ms_rings"
+  deposition_id: 10317
+  source_prefix: "braxton_owens_05_2024/CZII_size_exclusion/t4ss"
 
 version: 1.1.0
 voxel_spacings:
