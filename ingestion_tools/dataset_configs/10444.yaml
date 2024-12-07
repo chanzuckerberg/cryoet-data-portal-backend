@@ -195,7 +195,7 @@ runs:
 standardization_config:
   deposition_id: 10318
   source_prefix: CZII/20241206_lysosome_orange/
-  run_data_map_file: run_to_data_map.tsv
+  run_data_map_file: run_to_data_map_updated_quality_updated.tsv
 
 tiltseries:
 - metadata:
