@@ -384,23 +384,22 @@ annotations:
 
 datasets:
 - sources:
-  - destination_glob:
-      list_glob: '1030?'
-      match_regex: '^(10301|10302)$'
-      name_regex: (.*)
+  - literal:
+      value:
+        - '10302'
 
 runs:
 - sources:
   - source_glob:
-      list_glob: '.*.mrc'
+      list_glob: '*.mrc'
       match_regex: '.*'
       name_regex: '(.*?)_bin2__.*.mrc'
 
 standardization_config:
   deposition_id: 10314
-  source_prefix: mart_last_11_2024/
+  source_prefix: 'mart_last_11_2024/'
 
-version: 1.1.0
+version: '1.1.0'
 voxel_spacings:
 - sources:
   - destination_glob:
