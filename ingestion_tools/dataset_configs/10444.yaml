@@ -113,8 +113,8 @@ dataset_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot: null
-        thumbnail: null
+        snapshot: cryoetportal-rawdatasets-dev/CZII/20241206_lysosome_orange/10444-key-photo-snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/CZII/20241206_lysosome_orange/10444-key-photo-thumbnail.png
 
 annotations:
 - metadata:
