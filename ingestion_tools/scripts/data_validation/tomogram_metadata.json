@@ -1,0 +1,93 @@
+{
+    "affine_transformation_matrix": [
+        [
+            1,
+            0,
+            0,
+            0
+        ],
+        [
+            0,
+            1,
+            0,
+            0
+        ],
+        [
+            0,
+            0,
+            1,
+            0
+        ],
+        [
+            0,
+            0,
+            0,
+            1
+        ]
+    ],
+    "align_software": "IMOD",
+    "authors": [
+        {
+            "corresponding_author_status": false,
+            "name": "William Nicolas",
+            "primary_author_status": true
+        },
+        {
+            "corresponding_author_status": true,
+            "name": "Grant Jensen",
+            "primary_author_status": false
+        }
+    ],
+    "ctf_corrected": null,
+    "dates": {
+        "deposition_date": "2023-10-01",
+        "last_modified_date": "2023-12-01",
+        "release_date": "2023-12-01"
+    },
+    "fiducial_alignment_status": "FIDUCIAL",
+    "is_visualization_default": true,
+    "offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "processing": "raw",
+    "processing_software": null,
+    "reconstruction_method": "WBP",
+    "reconstruction_software": "IMOD",
+    "tomogram_version": 1,
+    "voxel_spacing": 21.64,
+    "scales": [
+        {
+            "z": 176,
+            "y": 928,
+            "x": 960
+        },
+        {
+            "z": 88,
+            "y": 464,
+            "x": 480
+        },
+        {
+            "z": 44,
+            "y": 232,
+            "x": 240
+        }
+    ],
+    "size": {
+        "z": 176,
+        "y": 928,
+        "x": 960
+    },
+    "omezarr_dir": "10027/wnj2019-02-21-4/Reconstructions/VoxelSpacing21.640/Tomograms/100/wnj2019-02-21-4.zarr",
+    "mrc_file": "10027/wnj2019-02-21-4/Reconstructions/VoxelSpacing21.640/Tomograms/100/wnj2019-02-21-4.mrc",
+    "run_name": "wnj2019-02-21-4",
+    "key_photo": {
+        "snapshot": "10027/wnj2019-02-21-4/Reconstructions/VoxelSpacing21.640/Images/100/key-photo-snapshot.png",
+        "thumbnail": "10027/wnj2019-02-21-4/Reconstructions/VoxelSpacing21.640/Images/100/key-photo-thumbnail.png"
+    },
+    "alignment_metadata_path": "10027/wnj2019-02-21-4/Alignments/100/alignment_metadata.json",
+    "neuroglancer_config_path": "10027/wnj2019-02-21-4/Reconstructions/VoxelSpacing21.640/NeuroglancerPrecompute/100-neuroglancer_config.json",
+    "deposition_id": 10018,
+    "last_updated_at": 1729206105
+}

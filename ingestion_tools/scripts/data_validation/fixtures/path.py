@@ -187,9 +187,9 @@ def tiltseries_basename(
 
 
 @pytest.fixture(scope="session")
-def tiltseries_mdoc_file(tiltseries_dir: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/*.mdoc"""
-    mdoc_files = filesystem.glob(f"{tiltseries_dir}/*.mdoc")
+def frames_mdoc_file(frames_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Frames/*.mdoc"""
+    mdoc_files = filesystem.glob(f"{frames_dir}/*.mdoc")
     if len(mdoc_files) == 1:
         return mdoc_files[0]
     elif len(mdoc_files) > 1:

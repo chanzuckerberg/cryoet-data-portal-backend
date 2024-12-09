@@ -59,10 +59,10 @@ class TestFrame(HelperTestMRCHeader):
     def test_mdoc_numsubframes(
         self,
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
-        tiltseries_mdoc: pd.DataFrame,
+        frames_mdoc: pd.DataFrame,
     ):
         errors = []
-        for _, row in tiltseries_mdoc.iterrows():
+        for _, row in frames_mdoc.iterrows():
             frame_file = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
             if frame_file not in frames_headers:
                 # Frame file does not exist, this will get caught by a test_tilt_angles test
