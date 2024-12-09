@@ -1,13 +1,12 @@
-# cryoET data portal metadata schema
+# Schema of the CryoET data portal
 
-This directory contains the metadata schema for the cryoET data portal. Browse contained classes [here](metadata_docs/index.md).
+## CryoET data portal directory structure
 
 Metadata file and directory layout specs:
 
-
 <pre>
 .
-├── [dataset_identifier]/
+├── [dataset_id]/
 │   ├── [run_name]/
 │   │   ├── Alignments/
 │   │   │   └── [alignment_id]/
@@ -22,28 +21,28 @@ Metadata file and directory layout specs:
 │   │   ├── Reconstructions/
 │   │   │   └── VoxelSpacingXX.XXX/
 │   │   │       ├── Annotations/
-│   │   │       │   └── <anno-id>/
+│   │   │       │   └── [annotation_id]/
 │   │   │       │       ├── annotation_files
 │   │   │       │       └── <annotation_key>.json (metadata file)
 │   │   │       ├── Images/
-│   │   │       │   └── <tomo-id>/
+│   │   │       │   └── [tomogram_id]/
 │   │   │       │       ├── key-photo-expanded.png
 │   │   │       │       ├── key-photo-original.png
 │   │   │       │       ├── key-photo-thumbnail.png
 │   │   │       │       └── key-photo-snapshot.png
 │   │   │       ├── NeuroglancerPrecompute/
-│   │   │       │   ├── <anno-id>-shape_precompute
-│   │   │       │   └── <tomo-id>-neuroglancer-config.json
+│   │   │       │   ├── [annotation_id]-shape_precompute
+│   │   │       │   └── [tomogram_id]-neuroglancer-config.json
 │   │   │       └── Tomograms/
-│   │   │           └── <tomo-id>/
+│   │   │           └── [tomogram_id]/
 │   │   │               ├── tomogram-metadata.json
-│   │   │               ├── <run-name>.zarr/
+│   │   │               ├── [run_name].zarr/
 │   │   │               │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale
-│   │   │               └── <run-name>.mrc
+│   │   │               └── [run_name].mrc
 │   │   ├── TiltSeries/
-│   │   │   └── <ts-id>/
-│   │   │       ├── <run-name>.mrc
-│   │   │       ├── <run-name>.zarr/
+│   │   │   └── [tiltseries_id]/
+│   │   │       ├── [run_name].mrc
+│   │   │       ├── [run_name].zarr/
 │   │   │       │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale
 │   │   │       ├── tiltseries_metadata.json
 │   │   │       └── [name_in_source].rawtlt
@@ -53,48 +52,27 @@ Metadata file and directory layout specs:
 │   │   └── thumbnail.png
 │   └── dataset_metadata.json
 └── DepositionMetadata/
-    └── <deposition-id>/
+    └── [deposition-id]/
         ├── deposition_metadata.json
         └── Images/
             ├── snapshot.png
             └── thumbnail.png
 </pre>
 
-<pre>
-[dataset_identifier]/
-|-- <a href="metadata_docs/Dataset.md">dataset_metadata.json</a>
-|-- [run_name]/
-|   |-- run_metadata.json
-|   |-- Frames/
-|   |   |-- [tiff|eer|mrc]
-|   |   |-- Gain_reference.mrc|dm4
-|   |   |-- frame_acquisition_order.json
-|   |-- TiltSeries/
-|   |   |-- <a href="metadata_docs/TiltSeries.md">tiltseries_metadata.json</a>
-|   |   |-- [run_name].mrc
-|   |   |-- [run_name].zarr/
-|   |   |   |-- [subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale]
-|   |   |-- [run_name].mdoc [optional, sometimes]
-|   |   |-- [run_name].rawtlt [optional, sometimes]
-|   |   |-- [run_name].tlt [optional, sometimes]
-|   |-- Tomograms/
-|   |   |-- VoxelSpacing[xx.yyy]
-|   |   |   |-- CanonicalTomogram
-|   |   |   |   |-- <a href="metadata_docs/Tomogram.md">tomogram_metadata.json</a>
-|   |   |   |   |-- neuroglancer_config.json
-|   |   |   |   |-- [run_name].mrc
-|   |   |   |   |-- [run_name].xf [optional, sometimes]
-|   |   |   |   |-- [run_name].zarr/
-|   |   |   |   |   |-- [subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale]
-|   |   |   |-- Annotations/
-|   |   |   |   |-- XXX_[object_name]_[version]_point.ndjson
-|   |   |   |   |-- <a href="metadata_docs/Annotation.md">XXX_[object_name]_[version].json</a>
-|   |   |   |   |-- YYY_[object_name]_[version]_segmentationmask.mrc
-|   |   |   |   |-- YYY_[object_name]_[version]_segmentationmask.zarr
-|   |   |   |   |   |-- [subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale]
-|   |   |   |   |-- <a href="metadata_docs/Annotation.md">YYY_[object_name]_[version].json</a>
+## Setting up your schema environment
 
-</pre>
+The dependencies for the schema are managed using [poetry](https://python-poetry.org/). Install poetry if you don't have it already.
+Poetry provides an easy way to create a virtual environment with shell and install your dependencies. This ensures that same versions of the dependencies are used across different environments, as all the dependencies are tracked in the poetry.lock file.
+
+```bash
+# Make the schema your working directory
+cd schema
+# Initialize the poetry shell
+poetry shell
+# Install the dependencies
+poetry install
+```
+
 
 ## Building the schema and docs
 
@@ -112,13 +90,24 @@ cd schema/
 make build-docs
 ```
 
-## Building the ingestion config validation
-If you have updated any of the core yamls or the ingestion config yamls, you will need to rebuild the ingestion config validation schema. To do this, run the following command:
+## Building the ingestion config schema validation
+If you have updated any of the core yamls or the ingestion_config yamls, you will need to rebuild the ingestion config validation schema. To do this, run the following command:
 
 ```bash
 cd schema/
 make build-ingestion-config
 ```
+This will clean the existing codegen files for the current version of ingestion config and regenerate the files again.
+
+
+## Building the api config schema
+If you have updated any of the core yamls or the api yamls, you will need to rebuild the api schema. To do this, run the following command:
+
+```bash
+cd schema/
+make build-api
+```
+
 
 ## Upgrading schema versions (api/, core/, and ingestion_config/)
 
