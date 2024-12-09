@@ -533,6 +533,20 @@ class TiltseriesCameraAcquireModeEnum(str, Enum):
     cds = "cds"
 
 
+class TiltseriesCameraManufacturerEnum(str, Enum):
+    """
+    Camera manufacturer
+    """
+    # Gatan Inc.
+    Gatan = "Gatan"
+    # FEI Company
+    FEI = "FEI"
+    # Thermo Fisher Scientific
+    TFS = "TFS"
+    # Simulated data
+    simulated = "simulated"
+
+
 class TiltseriesMicroscopeManufacturerEnum(str, Enum):
     """
     Microscope manufacturer
@@ -1062,7 +1076,7 @@ class CameraDetails(ConfiguredBaseModel):
                     {'range': 'tiltseries_camera_acquire_mode_enum'}],
          'domain_of': ['CameraDetails'],
          'exact_mappings': ['cdp-common:tiltseries_camera_acquire_mode']} })
-    manufacturer: str = Field(..., description="""Name of the camera manufacturer""", json_schema_extra = { "linkml_meta": {'alias': 'manufacturer',
+    manufacturer: TiltseriesCameraManufacturerEnum = Field(..., description="""Name of the camera manufacturer""", json_schema_extra = { "linkml_meta": {'alias': 'manufacturer',
          'domain_of': ['CameraDetails', 'MicroscopeDetails'],
          'exact_mappings': ['cdp-common:tiltseries_camera_manufacturer']} })
     model: str = Field(..., description="""Camera model name""", json_schema_extra = { "linkml_meta": {'alias': 'model',
@@ -1079,6 +1093,18 @@ class CameraDetails(ConfiguredBaseModel):
         elif isinstance(v,str):
             if not pattern.match(v):
                 raise ValueError(f"Invalid acquire_mode format: {v}")
+        return v
+
+    @field_validator('manufacturer')
+    def pattern_manufacturer(cls, v):
+        pattern=re.compile(r"(^Gatan$)|(^FEI$)|(^TFS$)|(^simulated$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid manufacturer format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid manufacturer format: {v}")
         return v
 
 
