@@ -106,7 +106,7 @@ def voxel_spacing_importer_factory(deposition_config: DepositionImportConfig) ->
     vs = VoxelSpacingImporter(
         config=deposition_config,
         metadata={},
-        name="1.1234",
+        name="1.1234",  # Hardcoding this to match the value in fixtures/annotations/anno_config.yaml
         path="vs1",
         parents={**run.parents, **{"run": run}},
     )
