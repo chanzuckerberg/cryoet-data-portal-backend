@@ -537,8 +537,8 @@ enums:
       TFS:
         text: TFS
         description: Thermo Fisher Scientific
-      SIMULATED:
-        text: SIMULATED
+      simulated:
+        text: simulated
         description: Simulated data
   tiltseries_microscope_manufacturer_enum:
     name: tiltseries_microscope_manufacturer_enum

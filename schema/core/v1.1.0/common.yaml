@@ -939,7 +939,7 @@ enums:
         description: FEI Company
       TFS:
         description: Thermo Fisher Scientific
-      SIMULATED:
+      simulated:
         description: Simulated data
 
   tiltseries_microscope_manufacturer_enum:

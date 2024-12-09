@@ -638,7 +638,7 @@ class TiltseriesCameraManufacturerEnum(str, Enum):
     # Thermo Fisher Scientific
     TFS = "TFS"
     # Simulated data
-    SIMULATED = "SIMULATED"
+    simulated = "simulated"
 
 
 class TiltseriesMicroscopeManufacturerEnum(str, Enum):
@@ -1584,7 +1584,7 @@ class CameraDetails(ConfiguredBaseModel):
 
     @field_validator("manufacturer")
     def pattern_manufacturer(cls, v):
-        pattern = re.compile(r"(^Gatan$)|(^FEI$)|(^TFS$)|(^SIMULATED$)")
+        pattern = re.compile(r"(^Gatan$)|(^FEI$)|(^TFS$)|(^simulated$)")
         if isinstance(v, list):
             for element in v:
                 if not pattern.match(element):
@@ -4884,4 +4884,3 @@ CrossReferencesMixin.model_rebuild()
 CrossReferences.model_rebuild()
 AuthorMixin.model_rebuild()
 Author.model_rebuild()
-

@@ -81,7 +81,7 @@ VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 CAMERA_MANUFACTURER_TO_MODEL = {
     ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
     ("Gatan"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
-    ("SIMULATED"): ["SIMULATED"],
+    ("simulated"): ["simulated"],
 }
 SOURCE_FILTER_FIELDS = {"parent_filters", "exclude"}
 

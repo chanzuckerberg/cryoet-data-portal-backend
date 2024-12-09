@@ -1473,7 +1473,7 @@
                 "manufacturer": {
                     "$ref": "#/$defs/TiltseriesCameraManufacturerEnum",
                     "description": "Name of the camera manufacturer",
-                    "pattern": "(^Gatan$)|(^FEI$)|(^TFS$)|(^SIMULATED$)"
+                    "pattern": "(^Gatan$)|(^FEI$)|(^TFS$)|(^simulated$)"
                 },
                 "model": {
                     "description": "Camera model name",
@@ -4672,7 +4672,7 @@
                 "Gatan",
                 "FEI",
                 "TFS",
-                "SIMULATED"
+                "simulated"
             ],
             "title": "TiltseriesCameraManufacturerEnum",
             "type": "string"
