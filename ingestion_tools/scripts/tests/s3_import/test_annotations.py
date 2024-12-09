@@ -106,7 +106,7 @@ def voxel_spacing_importer_factory(deposition_config: DepositionImportConfig) ->
     vs = VoxelSpacingImporter(
         config=deposition_config,
         metadata={},
-        name="14.08",
+        name="1.1234",
         path="vs1",
         parents={**run.parents, **{"run": run}},
     )
@@ -1499,7 +1499,7 @@ def test_ingest_triangular_mesh(
 
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Reconstructions/VoxelSpacing14.080/Annotations/100/some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing1.123/Annotations/100/some_protein-1.0_triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "alignment_metadata_path": "foo",
@@ -1568,7 +1568,7 @@ def test_ingest_triangular_mesh_hff(
     anno.import_metadata()
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Reconstructions/VoxelSpacing14.080/Annotations/100/some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing1.123/Annotations/100/some_protein-1.0_triangularmesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "alignment_metadata_path": "foo",
