@@ -1471,8 +1471,9 @@
                     "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^counting$)|(^superresolution$)|(^linear$)|(^cds$))"
                 },
                 "manufacturer": {
+                    "$ref": "#/$defs/TiltseriesCameraManufacturerEnum",
                     "description": "Name of the camera manufacturer",
-                    "type": "string"
+                    "pattern": "(^Gatan$)|(^FEI$)|(^TFS$)|(^SIMULATED$)"
                 },
                 "model": {
                     "description": "Camera model name",
@@ -4663,6 +4664,17 @@
                 "cds"
             ],
             "title": "TiltseriesCameraAcquireModeEnum",
+            "type": "string"
+        },
+        "TiltseriesCameraManufacturerEnum": {
+            "description": "Camera manufacturer",
+            "enum": [
+                "Gatan",
+                "FEI",
+                "TFS",
+                "SIMULATED"
+            ],
+            "title": "TiltseriesCameraManufacturerEnum",
             "type": "string"
         },
         "TiltseriesMicroscopeManufacturerEnum": {
