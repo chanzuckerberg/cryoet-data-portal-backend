@@ -1,11 +1,5 @@
-import io
-
-import pytest
-import requests
-from PIL import Image
 from typing import List
 
-from common.fs import FileSystemApi
 ANGLE_TOLERANCE = 0.05
 
 

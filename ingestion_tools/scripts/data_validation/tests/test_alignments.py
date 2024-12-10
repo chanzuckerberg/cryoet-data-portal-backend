@@ -1,15 +1,13 @@
-from typing import Dict, List, Union
+from typing import Dict, List
 
 import allure
 import numpy as np
 import pandas as pd
 import pytest
-import tifffile
 from helper_angles import helper_angles_injection_errors
-from mrcfile.mrcinterpreter import MrcInterpreter
 
 
-@pytest.mark.tilt_angles
+@pytest.mark.alignment
 @pytest.mark.parametrize("dataset, run_name, aln_dir", pytest.dataset_run_alignment_combinations, scope="session")
 class TestAlignments:
     """
@@ -36,18 +34,18 @@ class TestAlignments:
             alignment_tiltseries_metadata["tilt_range"]["max"] + alignment_tiltseries_metadata["tilt_step"],
             alignment_tiltseries_metadata["tilt_step"],
         ).tolist()
-        
+
 
     ### BEGIN Tilt .tlt tests ###
-    @allure.title("Tilt: angles exist.")
+    @allure.title("Alignment: angles exist.")
     def test_tilt_count(self, alignment_tilt: pd.DataFrame):
         assert len(alignment_tilt) > 0
 
-    @allure.title("Tilt: angles are within the expected range [-90, 90].")
+    @allure.title("Alignment: angles are within the expected range [-90, 90].")
     def test_tilt_angle_range(self, alignment_tilt: pd.DataFrame):
         assert all(-90 <= angle <= 90 for angle in alignment_tilt["TiltAngle"])
 
-    @allure.title("Tilt: every tilt angle maps to a raw tilt angle.")
+    @allure.title("Alignment: every tilt angle maps to a raw tilt angle.")
     def test_tilt_raw_tilt(self, alignment_tilt: pd.DataFrame, alignment_tiltseries_raw_tilt: pd.DataFrame):
         errors = helper_angles_injection_errors(
             alignment_tilt["TiltAngle"].to_list(),
@@ -57,7 +55,7 @@ class TestAlignments:
         )
         assert len(errors) == 0, "\n".join(errors)
 
-    @allure.title("Tilt: every tilt angle maps to a mdoc tilt angle.")
+    @allure.title("Alignment: every tilt angle maps to a mdoc tilt angle.")
     def test_tilt_mdoc(self, alignment_tilt: pd.DataFrame, frames_mdoc: pd.DataFrame):
         errors = helper_angles_injection_errors(
             alignment_tilt["TiltAngle"].to_list(),
@@ -73,7 +71,7 @@ class TestAlignments:
     def test_tilt_tiltseries_metadata(self, alignment_tilt: pd.DataFrame, alignment_tiltseries_metadata: Dict):
         assert len(alignment_tilt) <= alignment_tiltseries_metadata["size"]["z"]
 
-    @allure.title("Tilt: angles correspond to the tilt_range + tilt_step metadata field.")
+    @allure.title("Alignment: angles correspond to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the tilt file.")
     def test_tilt_tiltseries_range(
         self, alignment_tilt: pd.DataFrame, alignment_tiltseries_metadata: Dict, alignment_tiltseries_metadata_range: List[float],
