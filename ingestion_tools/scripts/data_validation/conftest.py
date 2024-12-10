@@ -223,14 +223,14 @@ def pytest_configure(config: pytest.Config) -> None:
     pytest.dataset_run_tiltseries_combinations = dataset_run_tiltseries_combinations(
         fs,
         bucket,
-        pytest.dataset_run_combinations
+        pytest.dataset_run_combinations,
     )
     print("Dataset, run, and tiltseries: %s", pytest.dataset_run_tiltseries_combinations)
 
     pytest.dataset_run_tomogram_combinations = dataset_run_tomogram_combinations(
         fs,
         bucket,
-        pytest.dataset_run_spacing_combinations
+        pytest.dataset_run_spacing_combinations,
     )
     print("Dataset, run, vs, and tomogram: %s", pytest.dataset_run_tomogram_combinations)
 
