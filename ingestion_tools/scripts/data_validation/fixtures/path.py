@@ -134,6 +134,31 @@ def tiltseries_dir(run_dir: str, ts_dir: str, filesystem: FileSystemApi) -> str:
     else:
         pytest.skip(f"TiltSeries directory not found: {dst}")
 
+@pytest.fixture(scope="session")
+def alignment_dir(run_dir: str, aln_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Alignments/[aln_dir]"""
+    dst = f"{run_dir}/Alignments/{aln_dir}"
+    if filesystem.exists(dst):
+        return dst
+    else:
+        pytest.skip(f"Alignment directory not found: {dst}")
+
+@pytest.fixture(scope="session")
+def alignment_tiltseries_metadata_file(alignment_metadata: Dict, bucket: str) -> str:
+    """Load the tiltseries metadata for this alignment"""
+    if "tiltseries_path" not in alignment_metadata:
+        pytest.skip("No tiltseries path in alignment metadata")
+    return f"{bucket}/{alignment_metadata['tiltseries_path']}"
+
+@pytest.fixture(scope="session")
+def alignment_tiltseries_rawtilt_file(alignment_tiltseries_metadata_file: Dict, filesystem: FileSystemApi) -> str:
+    """Load the tiltseries metadata for this alignment"""
+    ts_dir = os.path.dirname(alignment_tiltseries_metadata_file)
+    files = filesystem.glob(f"{ts_dir}/*.rawtlt")
+    if len(files) == 0:
+        pytest.skip("No rawtlt files found.")
+    return files[0]
+
 
 @pytest.fixture(scope="session")
 def tiltseries_meta_file(
@@ -198,9 +223,17 @@ def frames_mdoc_file(frames_dir: str, filesystem: FileSystemApi) -> str:
 
 
 @pytest.fixture(scope="session")
-def tiltseries_tilt_file(tiltseries_basename: str, filesystem: FileSystemApi) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].tlt"""
-    tlt_files = filesystem.glob(f"{tiltseries_basename}.tlt")
+def alignment_metadata_file(alignment_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Alignments/[alignment_dir]/[run_name].tlt"""
+    metadata_file = filesystem.glob(f"{alignment_dir}/alignment_metadata.json")
+    if len(metadata_file) == 0:
+        pytest.skip("No alignment metadata file found.")
+    return metadata_file[0]
+
+@pytest.fixture(scope="session")
+def alignment_tilt_file(alignment_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Alignments/[alignment_dir]/[run_name].tlt"""
+    tlt_files = filesystem.glob(f"{alignment_dir}/*.tlt")
     if len(tlt_files) == 0:
         pytest.skip("No tlt file found.")
     return tlt_files[0]

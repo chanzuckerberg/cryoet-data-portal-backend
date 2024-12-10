@@ -148,7 +148,7 @@ def gain_headers(
 
 
 # ==================================================================================================
-# Tiltseries & RawTilt / Tilt fixtures
+# Tiltseries & RawTilt fixtures
 # ==================================================================================================
 
 
@@ -171,24 +171,47 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
     with filesystem.open(tiltseries_meta_file, "r") as f:
         return json.load(f)
 
+@pytest.fixture(scope="session")
+def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the tiltseries raw tilt."""
+    with filesystem.open(tiltseries_rawtilt_file, "r") as f:
+        return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
 
+
+# ==================================================================================================
+# Frames fixtures
+# ==================================================================================================
 @pytest.fixture(scope="session")
 def frames_mdoc(frames_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries mdoc files and return a concatenated DataFrame."""
     return mdocfile.read(filesystem.localreadable(frames_mdoc_file))
 
 
+# ==================================================================================================
+# Alignment & Tilt fixtures
+# ==================================================================================================
 @pytest.fixture(scope="session")
-def tiltseries_tilt(tiltseries_tilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
-    """Load the tiltseries tilt."""
-    with filesystem.open(tiltseries_tilt_file, "r") as f:
+def alignment_metadata(alignment_metadata_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the alignment metadata."""
+    with filesystem.open(alignment_metadata_file, "r") as f:
+        return json.load(f)
+
+@pytest.fixture(scope="session")
+def alignment_tiltseries_metadata(alignment_tiltseries_metadata_file: Dict, filesystem: FileSystemApi) -> Dict:
+    """Load the tiltseries metadata for this alignment"""
+    with filesystem.open(alignment_tiltseries_metadata_file, "r") as f:
+        return json.load(f)
+
+@pytest.fixture(scope="session")
+def alignment_tilt(alignment_tilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the alignment tilt."""
+    with filesystem.open(alignment_tilt_file, "r") as f:
         return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
 
-
 @pytest.fixture(scope="session")
-def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
-    """Load the tiltseries raw tilt."""
-    with filesystem.open(tiltseries_rawtilt_file, "r") as f:
+def alignment_tiltseries_raw_tilt(alignment_tiltseries_rawtilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the tiltseries raw tilt for this alignment."""
+    with filesystem.open(alignment_tiltseries_rawtilt_file, "r") as f:
         return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
 
 

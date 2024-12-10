@@ -127,6 +127,35 @@ def dataset_run_tiltseries_combinations(
 
     return files
 
+def dataset_run_alignment_combinations(
+    fs: S3Filesystem,
+    bucket: str,
+    dataset_run_combinations: List[Tuple[str, str]],
+) -> List[Tuple[str, str, str]]:
+    files = []
+
+    def get_alignment_files(dataset_run_tuple) -> List[Tuple[str, str, str]]:
+        glob_str = f"s3://{bucket}/{dataset_run_tuple[0]}/{dataset_run_tuple[1]}/Alignments/*"
+        files = []
+        for item in fs.glob(glob_str):
+            found_dir = os.path.basename(item)
+            files.append((*dataset_run_tuple, found_dir))
+        return files
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+
+        files_lists = executor.map(
+            get_alignment_files,
+            dataset_run_combinations,
+        )
+        files = [
+            res_tuple
+            for res_list in files_lists
+            for res_tuple in res_list
+        ]
+
+    return files
+
 def dataset_run_tomogram_combinations(
     fs: S3Filesystem,
     bucket: str,
@@ -226,6 +255,13 @@ def pytest_configure(config: pytest.Config) -> None:
         pytest.dataset_run_combinations,
     )
     print("Dataset, run, and tiltseries: %s", pytest.dataset_run_tiltseries_combinations)
+
+    pytest.dataset_run_alignment_combinations = dataset_run_alignment_combinations(
+        fs,
+        bucket,
+        pytest.dataset_run_combinations,
+    )
+    print("Dataset, run, and alignment: %s", pytest.dataset_run_alignment_combinations)
 
     pytest.dataset_run_tomogram_combinations = dataset_run_tomogram_combinations(
         fs,
