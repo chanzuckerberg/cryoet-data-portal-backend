@@ -53,8 +53,9 @@ class TestOrientedPointAnnotations:
     def test_contained_in_tomo(
         self,
         oriented_point_annotations: Dict[str, List[Dict]],
-        tomogram_metadata: Dict,
+        oriented_point_annotation_files_to_metadata: Dict[str, str],
+        all_vs_tomogram_metadata: Dict,
     ):
-        contained_in_tomo(oriented_point_annotations, tomogram_metadata)
+        contained_in_tomo(oriented_point_annotations, oriented_point_annotation_files_to_metadata, all_vs_tomogram_metadata)
 
     ### END Tomogram-consistency tests ###

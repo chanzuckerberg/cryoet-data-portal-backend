@@ -25,8 +25,9 @@ class TestPointAnnotations:
     def test_contained_in_tomo(
         self,
         point_annotations: Dict[str, List[Dict]],
-        tomogram_metadata: Dict,
+        point_annotation_files_to_metadata: Dict[str, str],
+        all_vs_tomogram_metadata: Dict,
     ):
-        contained_in_tomo(point_annotations, tomogram_metadata)
+        contained_in_tomo(point_annotations, point_annotation_files_to_metadata, all_vs_tomogram_metadata)
 
     ### END Tomogram-consistency tests ###

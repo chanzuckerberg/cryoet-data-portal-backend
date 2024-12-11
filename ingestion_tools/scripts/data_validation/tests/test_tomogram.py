@@ -21,7 +21,7 @@ MIN_SNAPSHOT_WIDTH = 512 * 3 / 4  # account for 4:3 aspect ratio
 
 
 @pytest.mark.tomogram
-@pytest.mark.parametrize("dataset, run_name, voxel_spacing", pytest.dataset_run_spacing_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, voxel_spacing, tomodir", pytest.dataset_run_tomogram_combinations, scope="session")
 class TestTomogram(HelperTestMRCZarrHeader):
 
     @pytest.fixture(autouse=True)
@@ -96,7 +96,7 @@ class TestTomogram(HelperTestMRCZarrHeader):
         tomo_zarr_header: Dict[str, Dict[str, Dict]],
     ):
         assert len(tomo_zarr_header) == 1
-        assert tomogram_metadata["omezarr_dir"] == os.path.basename(
+        assert os.path.basename(tomogram_metadata["omezarr_dir"]) == os.path.basename(
             list(tomo_zarr_header.keys())[0],
         )
 
@@ -106,8 +106,7 @@ class TestTomogram(HelperTestMRCZarrHeader):
         tomogram_metadata: Dict,
         tomo_mrc_header: Dict[str, MrcInterpreter],
     ):
-        assert len(tomogram_metadata["mrc_files"]) == 1
         assert len(tomo_mrc_header) == 1
-        assert tomogram_metadata["mrc_files"][0] == os.path.basename(
+        assert os.path.basename(tomogram_metadata["mrc_file"]) == os.path.basename(
             list(tomo_mrc_header.keys())[0],
         )
