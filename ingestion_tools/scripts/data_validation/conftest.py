@@ -98,48 +98,20 @@ def get_voxel_spacings_set(voxel_spacing_files: List[str]) -> List[str]:
     return list(set(voxel_spacings))
 
 
-def dataset_run_tiltseries_combinations(
+def get_glob_combinations(
+    format_str: str,
     fs: S3Filesystem,
     bucket: str,
     dataset_run_combinations: List[Tuple[str, str]],
 ) -> List[Tuple[str, str, str]]:
     files = []
 
-    def get_tiltseries_files(dataset_run_tuple) -> List[Tuple[str, str, str]]:
-        glob_str = f"s3://{bucket}/{dataset_run_tuple[0]}/{dataset_run_tuple[1]}/TiltSeries/*"
-        files = []
-        for item in fs.glob(glob_str):
-            tiltseries_dir = os.path.basename(item)
-            files.append((*dataset_run_tuple, tiltseries_dir))
-        return files
-
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-
-        files_lists = executor.map(
-            get_tiltseries_files,
-            dataset_run_combinations,
-        )
-        files = [
-            res_tuple
-            for res_list in files_lists
-            for res_tuple in res_list
-        ]
-
-    return files
-
-def dataset_run_alignment_combinations(
-    fs: S3Filesystem,
-    bucket: str,
-    dataset_run_combinations: List[Tuple[str, str]],
-) -> List[Tuple[str, str, str]]:
-    files = []
-
-    def get_alignment_files(dataset_run_tuple) -> List[Tuple[str, str, str]]:
-        glob_str = f"s3://{bucket}/{dataset_run_tuple[0]}/{dataset_run_tuple[1]}/Alignments/*"
+    def get_alignment_files(context_tuple) -> List[Tuple[str, str, str]]:
+        glob_str = f"s3://{bucket}/{format_str}".format(*context_tuple)
         files = []
         for item in fs.glob(glob_str):
             found_dir = os.path.basename(item)
-            files.append((*dataset_run_tuple, found_dir))
+            files.append((*context_tuple, found_dir))
         return files
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -147,35 +119,6 @@ def dataset_run_alignment_combinations(
         files_lists = executor.map(
             get_alignment_files,
             dataset_run_combinations,
-        )
-        files = [
-            res_tuple
-            for res_list in files_lists
-            for res_tuple in res_list
-        ]
-
-    return files
-
-def dataset_run_tomogram_combinations(
-    fs: S3Filesystem,
-    bucket: str,
-    dataset_run_voxel_spacing_combinations: List[Tuple[str, str, str]],
-) -> List[Tuple[str, str, str]]:
-    files = []
-
-    def get_tomogram_files(context_tuple) -> List[Tuple[str, str, str]]:
-        glob_str = f"s3://{bucket}/{context_tuple[0]}/{context_tuple[1]}/Reconstructions/VoxelSpacing{context_tuple[2]}/Tomograms/*"
-        files = []
-        for item in fs.glob(glob_str):
-            tomo_dir = os.path.basename(item)
-            files.append((*context_tuple, tomo_dir))
-        return files
-
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-
-        files_lists = executor.map(
-            get_tomogram_files,
-            dataset_run_voxel_spacing_combinations,
         )
         files = [
             res_tuple
@@ -249,21 +192,24 @@ def pytest_configure(config: pytest.Config) -> None:
     )
     print("Dataset, run, and voxel spacing combinations: %s", pytest.dataset_run_spacing_combinations)
 
-    pytest.dataset_run_tiltseries_combinations = dataset_run_tiltseries_combinations(
+    pytest.dataset_run_tiltseries_combinations = get_glob_combinations(
+        "{}/{}/TiltSeries/*",
         fs,
         bucket,
         pytest.dataset_run_combinations,
     )
     print("Dataset, run, and tiltseries: %s", pytest.dataset_run_tiltseries_combinations)
 
-    pytest.dataset_run_alignment_combinations = dataset_run_alignment_combinations(
+    pytest.dataset_run_alignment_combinations = get_glob_combinations(
+        "{}/{}/Alignments/*",
         fs,
         bucket,
         pytest.dataset_run_combinations,
     )
     print("Dataset, run, and alignment: %s", pytest.dataset_run_alignment_combinations)
 
-    pytest.dataset_run_tomogram_combinations = dataset_run_tomogram_combinations(
+    pytest.dataset_run_tomogram_combinations = get_glob_combinations(
+        "{}/{}/Reconstructions/VoxelSpacing{}/Tomograms/*",
         fs,
         bucket,
         pytest.dataset_run_spacing_combinations,
