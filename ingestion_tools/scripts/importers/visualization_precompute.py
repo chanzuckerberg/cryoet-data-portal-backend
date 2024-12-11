@@ -88,8 +88,8 @@ class PointAnnotationPrecompute(BaseAnnotationPrecompute):
         precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         metadata = self.annotation.metadata
         tmp_path = fs.localwritable(precompute_path)
-        # Importing this at runtime instead of compile time since the dependencies of this
-        # module prevent any of our data ingestion scripts from being executed on darwin/ARM
+        # Importing this at runtime instead of compile time since zfpy (a dependency of this
+        # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.precompute import points
 
         points.encode_annotation(
@@ -138,6 +138,8 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
         precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         tmp_path = fs.localwritable(precompute_path)
         zarr_file_path = fs.destformat(self.annotation.get_output_filename(annotation_path, "zarr"))
+        # Importing this at runtime instead of compile time since zfpy (a dependency of this
+        # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.precompute import segmentation_mask
 
         segmentation_mask.encode_segmentation(
