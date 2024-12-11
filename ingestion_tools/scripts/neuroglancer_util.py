@@ -36,8 +36,25 @@ def print_neuroglancer_links(run_id: int, client: cdp.Client, dest_fileserver: s
 @click.argument("run_id", required=True, type=int)
 @click.argument("graphql_url", required=False, type=str, default=STAGING_GRAPHQL_URL)
 @click.argument("output_fileserver", required=False, type=str, default=STAGING_FILESERVER)
-@click.option("--print-link", type=bool, is_flag=True, default=False)
-def translate_env(run_id: int, graphql_url, output_fileserver: str, print_link: bool):
+@click.option(
+    "--print-link", type=bool, is_flag=True, default=False, help="print the neuroglancer link to the consoles",
+)
+def translate_env(run_id: int, graphql_url, output_fileserver: str, print_link: bool) -> None:
+    """
+    Translate the neuroglancer links from one environment to another
+
+    @param run_id: id of the run in the environment where we are fetching the neuroglancer config
+
+    @param graphql_url: graphql url of the environment the client should point to, defaults to staging
+
+    @param output_fileserver: fileserver of the environment the client should point to, defaults to staging
+
+    @param print_link: print the neuroglancer link to the consoles
+
+    This can be called from the command line as follows:
+
+      python3 neuroglancer_util.py translate-env 123 --print-link
+    """
     print_neuroglancer_links(run_id, cdp.Client(graphql_url), output_fileserver, print_link)
 
 
