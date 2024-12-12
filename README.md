@@ -10,7 +10,7 @@ Read more about CZI's CryoET Data Portal [here](https://chanzuckerberg.github.io
 
 **Note**: Before you begin to install any Python packages, make sure you have activated your Python virtual environment.
 
-1. From the root of the repo - create a new virtual env (using [venv](https://docs.python.org/3/library/venv.html) or your preferred virtual env tool) with python 3.12
+1. From the root of the repo - create a new virtual env in Python 3.12 (i.e. using [venv](https://docs.python.org/3/library/venv.html))
 1. Make sure you have docker installed and running on your machine
 1. Install pre-commit: `pre-commit install` or check doc [here](https://pre-commit.com/)
 1. Set up your machine to be able to work with AWS using the instructions [here](https://czi.atlassian.net/wiki/spaces/DC/pages/332892073/Getting+started+with+AWS). Please ensure to follow the step 3 `AWS CLI access` instructions all the way to the bottom so that you are also set up for SSH access.
@@ -29,11 +29,13 @@ Wait another ~10s and then visit http://localhost:9695/ in your browser.
 
 To get started with `apiv2`, running the API server, updating schema and debugging follow the documentation [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/tree/main/apiv2).
 
+### Schema Definition
+
+`apiv2` schema definition can be found [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/edit/main/apiv2/schema/schema.yaml). Metadata file and directory layout specs are documented [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/schema/README.md).
+
 ### Ingestion Setup
 
-Follow the steps [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/ingestion_tools/README.md) to install all necessary requirements, and follow the instructions on how to run.
-
-Documentation for running data ingestion scripts can be found [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/tree/main/ingestion_tools/docs/running_data_ingestion.md)
+Follow the steps [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/ingestion_tools/README.md) to install all necessary requirements, then follow the documentation for running data ingestion scripts [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/tree/main/ingestion_tools/docs/running_data_ingestion.md)
 
 ### Testing
 
@@ -41,7 +43,7 @@ For setting up local test infra, seed local database and running the test suite,
 
 ### Deployment
 
-For pre-deployment, creating `rdev` and deploying to staging/prod - follow the guideline [here](docs/deployment.md).
+For pre-deployment, creating `rdev` and deploying to staging/prod - follow the guidelines [here](docs/deployment.md).
 
 ## Related Repos
 
