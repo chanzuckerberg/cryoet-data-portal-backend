@@ -1,6 +1,12 @@
 # Ingestion utilities
 
-This package contains ingestion scripts, libraries, and configurations for converting raw research datasets into a format compatible with the CryoET Data Portal.
+This package contains ingestion scripts, libraries, and configurations for converting raw research datasets into a format compatible with the CryoET Data Portal. It also has scripts for other utilities for transforming configs.
+
+### Setup Docker
+
+If you don't already have docker setup, follow the instructions provided [here](https://www.docker.com/get-started/).
+
+`docker compose` utility is needed to execute the make commands, as the local application requires multiple containers to run simultaneously. Learn more about docker compose [here](https://docs.docker.com/compose/). To install `docker compose` follow the instructions provided [here](https://docs.docker.com/compose/install/).
 
 
 ## Setting up your local python environment
@@ -20,6 +26,7 @@ $VENV_PATH/bin/pip install -U pip setuptools
 # Install poetry
 pip install poetry
 ```
+
 ### Ensuring your python version is compatible with the project
 
 To ensure that your python version is compatible with the project, you can check the python version in the pyproject.toml file.
