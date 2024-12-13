@@ -2158,8 +2158,8 @@ classes:
         required: false
         minimum_value: 0
         unit:
-          symbol: voxel
-          descriptive_name: voxels
+          symbol: pixel
+          descriptive_name: pixels
       size_y:
         name: size_y
         description: Number of pixels in the 3D data medium axis
@@ -2170,8 +2170,8 @@ classes:
         required: false
         minimum_value: 0
         unit:
-          symbol: voxel
-          descriptive_name: voxels
+          symbol: pixel
+          descriptive_name: pixels
       size_z:
         name: size_z
         description: Number of pixels in the 3D data slow axis
@@ -2181,9 +2181,6 @@ classes:
         range: integer
         required: false
         minimum_value: 0
-        unit:
-          symbol: voxel
-          descriptive_name: voxels
   TomogramAuthor:
     name: TomogramAuthor
     annotations:
