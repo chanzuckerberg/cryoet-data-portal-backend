@@ -6421,6 +6421,33 @@
             },
             {
               "defaultValue": null,
+              "name": "sizeX",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "sizeY",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "sizeZ",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -9879,6 +9906,33 @@
             },
             {
               "defaultValue": null,
+              "name": "sizeX",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "sizeY",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "sizeZ",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "id",
               "type": {
                 "kind": "ENUM",
@@ -11530,6 +11584,15 @@
             },
             {
               "args": [],
+              "name": "annotationFiles",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationFileGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "shapeType",
               "type": {
                 "kind": "ENUM",
@@ -11562,6 +11625,33 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "RunGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "annotationShapes",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationShapeGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "methodLinks",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationMethodLinkGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "authors",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationAuthorGroupByOptions",
                 "ofType": null
               }
             },
@@ -11766,10 +11856,82 @@
           "fields": [
             {
               "args": [],
+              "name": "alignments",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AlignmentGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "annotations",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "dataset",
               "type": {
                 "kind": "OBJECT",
                 "name": "DatasetGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "frames",
+              "type": {
+                "kind": "OBJECT",
+                "name": "FrameGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "gainFiles",
+              "type": {
+                "kind": "OBJECT",
+                "name": "GainFileGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "frameAcquisitionFiles",
+              "type": {
+                "kind": "OBJECT",
+                "name": "FrameAcquisitionFileGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltseries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TiltseriesGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomogramVoxelSpacings",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramVoxelSpacingGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomograms",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramGroupByOptions",
                 "ofType": null
               }
             },
@@ -11821,10 +11983,1151 @@
           "fields": [
             {
               "args": [],
+              "name": "annotationFiles",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationFileGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "perSectionAlignments",
+              "type": {
+                "kind": "OBJECT",
+                "name": "PerSectionAlignmentParametersGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "deposition",
               "type": {
                 "kind": "OBJECT",
                 "name": "DepositionGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltseries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TiltseriesGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomograms",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "run",
+              "type": {
+                "kind": "OBJECT",
+                "name": "RunGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "alignmentType",
+              "type": {
+                "kind": "ENUM",
+                "name": "alignment_type_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "alignmentMethod",
+              "type": {
+                "kind": "ENUM",
+                "name": "alignment_method_type_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "volumeXDimension",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "volumeYDimension",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "volumeZDimension",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "volumeXOffset",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "volumeYOffset",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "volumeZOffset",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "xRotationOffset",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltOffset",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affineTransformationMatrix",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3AlignmentMetadata",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsAlignmentMetadata",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "isPortalStandard",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "AlignmentGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "alignment",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AlignmentGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "annotationShape",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationShapeGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomogramVoxelSpacing",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramVoxelSpacingGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "format",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3Path",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsPath",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "isVisualizationDefault",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "source",
+              "type": {
+                "kind": "ENUM",
+                "name": "annotation_file_source_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "AnnotationFileGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "annotationFiles",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationFileGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "run",
+              "type": {
+                "kind": "OBJECT",
+                "name": "RunGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomograms",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "voxelSpacing",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3Prefix",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsPrefix",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "TomogramVoxelSpacingGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "alignment",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AlignmentGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "authors",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramAuthorGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "deposition",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DepositionGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "run",
+              "type": {
+                "kind": "OBJECT",
+                "name": "RunGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomogramVoxelSpacing",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramVoxelSpacingGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeX",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeY",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeZ",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "voxelSpacing",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fiducialAlignmentStatus",
+              "type": {
+                "kind": "ENUM",
+                "name": "fiducial_alignment_status_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "reconstructionMethod",
+              "type": {
+                "kind": "ENUM",
+                "name": "tomogram_reconstruction_method_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "processing",
+              "type": {
+                "kind": "ENUM",
+                "name": "tomogram_processing_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomogramVersion",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "processingSoftware",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "reconstructionSoftware",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "isPortalStandard",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "isAuthorSubmitted",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "isVisualizationDefault",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3OmezarrDir",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsOmezarrDir",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3MrcFile",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsMrcFile",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "scale0Dimensions",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "scale1Dimensions",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "scale2Dimensions",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "ctfCorrected",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "offsetX",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "offsetY",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "offsetZ",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoThumbnailUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "neuroglancerConfig",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "publications",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "relatedDatabaseEntries",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "depositionDate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "releaseDate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "lastModifiedDate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "TomogramGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "tomogram",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "authorListOrder",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "email",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationName",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationAddress",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationIdentifier",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "correspondingAuthorStatus",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "primaryAuthorStatus",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "TomogramAuthorGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "authors",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DepositionAuthorGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "alignments",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AlignmentGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "annotations",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "datasets",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DatasetGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "frames",
+              "type": {
+                "kind": "OBJECT",
+                "name": "FrameGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltseries",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TiltseriesGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tomograms",
+              "type": {
+                "kind": "OBJECT",
+                "name": "TomogramGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "title",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "description",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "depositionTypes",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DepositionTypeGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "depositionPublications",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "relatedDatabaseEntries",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "depositionDate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "releaseDate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "lastModifiedDate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "keyPhotoThumbnailUrl",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "DepositionGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "deposition",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DepositionGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "authorListOrder",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "email",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationName",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationAddress",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationIdentifier",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "correspondingAuthorStatus",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "primaryAuthorStatus",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "DepositionAuthorGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "deposition",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DepositionGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fundingSources",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DatasetFundingGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "authors",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DatasetAuthorGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "runs",
+              "type": {
+                "kind": "OBJECT",
+                "name": "RunGroupByOptions",
                 "ofType": null
               }
             },
@@ -12074,7 +13377,16 @@
           "fields": [
             {
               "args": [],
-              "name": "title",
+              "name": "dataset",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DatasetGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fundingAgencyName",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -12083,70 +13395,7 @@
             },
             {
               "args": [],
-              "name": "description",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "depositionPublications",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "relatedDatabaseEntries",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "depositionDate",
-              "type": {
-                "kind": "SCALAR",
-                "name": "DateTime",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "releaseDate",
-              "type": {
-                "kind": "SCALAR",
-                "name": "DateTime",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "lastModifiedDate",
-              "type": {
-                "kind": "SCALAR",
-                "name": "DateTime",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "keyPhotoUrl",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "keyPhotoThumbnailUrl",
+              "name": "grantId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -12166,7 +13415,941 @@
           "inputFields": null,
           "interfaces": [],
           "kind": "OBJECT",
-          "name": "DepositionGroupByOptions",
+          "name": "DatasetFundingGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "dataset",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DatasetGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "authorListOrder",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "email",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationName",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationAddress",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationIdentifier",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "correspondingAuthorStatus",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "primaryAuthorStatus",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "DatasetAuthorGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "deposition",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DepositionGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "run",
+              "type": {
+                "kind": "OBJECT",
+                "name": "RunGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "rawAngle",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "acquisitionOrder",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "dose",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "isGainCorrected",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3FramePath",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsFramePath",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "FrameGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "alignments",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AlignmentGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "run",
+              "type": {
+                "kind": "OBJECT",
+                "name": "RunGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "deposition",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DepositionGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3OmezarrDir",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3MrcFile",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsOmezarrDir",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsMrcFile",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3AngleList",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsAngleList",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "accelerationVoltage",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sphericalAberrationConstant",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "microscopeManufacturer",
+              "type": {
+                "kind": "ENUM",
+                "name": "tiltseries_microscope_manufacturer_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "microscopeModel",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "microscopeEnergyFilter",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "microscopePhasePlate",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "microscopeImageCorrector",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "microscopeAdditionalInfo",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "cameraManufacturer",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "cameraModel",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltMin",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltMax",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltRange",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltStep",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltingScheme",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltAxis",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "totalFlux",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "dataAcquisitionSoftware",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "relatedEmpiarEntry",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "binningFromFrames",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltSeriesQuality",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "isAligned",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "pixelSpacing",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "alignedTiltseriesBinning",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeX",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeY",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeZ",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "TiltseriesGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "deposition",
+              "type": {
+                "kind": "OBJECT",
+                "name": "DepositionGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "type",
+              "type": {
+                "kind": "ENUM",
+                "name": "deposition_types_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "DepositionTypeGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "alignment",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AlignmentGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "zIndex",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "xOffset",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "yOffset",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "volumeXRotation",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "inPlaneRotation",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Float",
+                        "ofType": null
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "args": [],
+              "name": "tiltAngle",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "PerSectionAlignmentParametersGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "run",
+              "type": {
+                "kind": "OBJECT",
+                "name": "RunGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3FilePath",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsFilePath",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "GainFileGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "run",
+              "type": {
+                "kind": "OBJECT",
+                "name": "RunGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "s3MdocPath",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "httpsMdocPath",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "FrameAcquisitionFileGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "annotation",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "linkType",
+              "type": {
+                "kind": "ENUM",
+                "name": "annotation_method_link_type_enum",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "link",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "AnnotationMethodLinkGroupByOptions",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": [
+            {
+              "args": [],
+              "name": "annotation",
+              "type": {
+                "kind": "OBJECT",
+                "name": "AnnotationGroupByOptions",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "id",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "authorListOrder",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "name",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "email",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationName",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationAddress",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "affiliationIdentifier",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "correspondingAuthorStatus",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "primaryAuthorStatus",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "kind": "OBJECT",
+          "name": "AnnotationAuthorGroupByOptions",
           "possibleTypes": null
         },
         {
@@ -12635,61 +14818,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AnnotationMethodLinkMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "annotation",
-              "type": {
-                "kind": "OBJECT",
-                "name": "AnnotationGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "linkType",
-              "type": {
-                "kind": "ENUM",
-                "name": "annotation_method_link_type_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "link",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "AnnotationMethodLinkGroupByOptions",
           "possibleTypes": null
         },
         {
@@ -13323,115 +15451,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AnnotationAuthorMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "annotation",
-              "type": {
-                "kind": "OBJECT",
-                "name": "AnnotationGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "authorListOrder",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "orcid",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "email",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationName",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationAddress",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationIdentifier",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "correspondingAuthorStatus",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "primaryAuthorStatus",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "AnnotationAuthorGroupByOptions",
           "possibleTypes": null
         },
         {
@@ -14998,115 +17017,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "deposition",
-              "type": {
-                "kind": "OBJECT",
-                "name": "DepositionGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "authorListOrder",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "orcid",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "email",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationName",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationAddress",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationIdentifier",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "correspondingAuthorStatus",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "primaryAuthorStatus",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "DepositionAuthorGroupByOptions",
-          "possibleTypes": null
-        },
-        {
           "enumValues": [
             {
               "name": "deposition"
@@ -15484,485 +17394,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AlignmentMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "deposition",
-              "type": {
-                "kind": "OBJECT",
-                "name": "DepositionGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltseries",
-              "type": {
-                "kind": "OBJECT",
-                "name": "TiltseriesGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "run",
-              "type": {
-                "kind": "OBJECT",
-                "name": "RunGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "alignmentType",
-              "type": {
-                "kind": "ENUM",
-                "name": "alignment_type_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "alignmentMethod",
-              "type": {
-                "kind": "ENUM",
-                "name": "alignment_method_type_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "volumeXDimension",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "volumeYDimension",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "volumeZDimension",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "volumeXOffset",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "volumeYOffset",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "volumeZOffset",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "xRotationOffset",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltOffset",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affineTransformationMatrix",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3AlignmentMetadata",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsAlignmentMetadata",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isPortalStandard",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "AlignmentGroupByOptions",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "run",
-              "type": {
-                "kind": "OBJECT",
-                "name": "RunGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "deposition",
-              "type": {
-                "kind": "OBJECT",
-                "name": "DepositionGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3OmezarrDir",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3MrcFile",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsOmezarrDir",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsMrcFile",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3AngleList",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsAngleList",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "accelerationVoltage",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "sphericalAberrationConstant",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "microscopeManufacturer",
-              "type": {
-                "kind": "ENUM",
-                "name": "tiltseries_microscope_manufacturer_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "microscopeModel",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "microscopeEnergyFilter",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "microscopePhasePlate",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "microscopeImageCorrector",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "microscopeAdditionalInfo",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "cameraManufacturer",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "cameraModel",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltMin",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltMax",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltRange",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltStep",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltingScheme",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltAxis",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "totalFlux",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "dataAcquisitionSoftware",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "relatedEmpiarEntry",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "binningFromFrames",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltSeriesQuality",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isAligned",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "pixelSpacing",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "alignedTiltseriesBinning",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "TiltseriesGroupByOptions",
           "possibleTypes": null
         },
         {
@@ -17675,52 +19106,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "dataset",
-              "type": {
-                "kind": "OBJECT",
-                "name": "DatasetGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "fundingAgencyName",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "grantId",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "DatasetFundingGroupByOptions",
-          "possibleTypes": null
-        },
-        {
           "enumValues": [
             {
               "name": "dataset"
@@ -18348,115 +19733,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "DatasetAuthorMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "dataset",
-              "type": {
-                "kind": "OBJECT",
-                "name": "DatasetGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "authorListOrder",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "orcid",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "email",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationName",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationAddress",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationIdentifier",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "correspondingAuthorStatus",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "primaryAuthorStatus",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "DatasetAuthorGroupByOptions",
           "possibleTypes": null
         },
         {
@@ -19932,97 +21208,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "deposition",
-              "type": {
-                "kind": "OBJECT",
-                "name": "DepositionGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "run",
-              "type": {
-                "kind": "OBJECT",
-                "name": "RunGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "rawAngle",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "acquisitionOrder",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "dose",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isGainCorrected",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3FramePath",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsFramePath",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "FrameGroupByOptions",
-          "possibleTypes": null
-        },
-        {
           "enumValues": [
             {
               "name": "deposition"
@@ -20698,6 +21883,33 @@
                 "name": "Int",
                 "ofType": null
               }
+            },
+            {
+              "args": [],
+              "name": "sizeX",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeY",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeZ",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             }
           ],
           "inputFields": null,
@@ -20950,6 +22162,33 @@
             {
               "args": [],
               "name": "alignedTiltseriesBinning",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeX",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeY",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeZ",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
@@ -21229,6 +22468,33 @@
             },
             {
               "args": [],
+              "name": "sizeX",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeY",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "sizeZ",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -21343,6 +22609,15 @@
             },
             {
               "name": "alignedTiltseriesBinning"
+            },
+            {
+              "name": "sizeX"
+            },
+            {
+              "name": "sizeY"
+            },
+            {
+              "name": "sizeZ"
             },
             {
               "name": "id"
@@ -23118,522 +24393,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "tomogram",
-              "type": {
-                "kind": "OBJECT",
-                "name": "TomogramGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "authorListOrder",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "orcid",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "email",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationName",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationAddress",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "affiliationIdentifier",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "correspondingAuthorStatus",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "primaryAuthorStatus",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "TomogramAuthorGroupByOptions",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "alignment",
-              "type": {
-                "kind": "OBJECT",
-                "name": "AlignmentGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "deposition",
-              "type": {
-                "kind": "OBJECT",
-                "name": "DepositionGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "run",
-              "type": {
-                "kind": "OBJECT",
-                "name": "RunGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tomogramVoxelSpacing",
-              "type": {
-                "kind": "OBJECT",
-                "name": "TomogramVoxelSpacingGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "name",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "sizeX",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "sizeY",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "sizeZ",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "voxelSpacing",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "fiducialAlignmentStatus",
-              "type": {
-                "kind": "ENUM",
-                "name": "fiducial_alignment_status_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "reconstructionMethod",
-              "type": {
-                "kind": "ENUM",
-                "name": "tomogram_reconstruction_method_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "processing",
-              "type": {
-                "kind": "ENUM",
-                "name": "tomogram_processing_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tomogramVersion",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "processingSoftware",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "reconstructionSoftware",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isPortalStandard",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isAuthorSubmitted",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isVisualizationDefault",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3OmezarrDir",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsOmezarrDir",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3MrcFile",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsMrcFile",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "scale0Dimensions",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "scale1Dimensions",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "scale2Dimensions",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "ctfCorrected",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "offsetX",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "offsetY",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "offsetZ",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "keyPhotoUrl",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "keyPhotoThumbnailUrl",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "neuroglancerConfig",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "publications",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "relatedDatabaseEntries",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "depositionDate",
-              "type": {
-                "kind": "SCALAR",
-                "name": "DateTime",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "releaseDate",
-              "type": {
-                "kind": "SCALAR",
-                "name": "DateTime",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "lastModifiedDate",
-              "type": {
-                "kind": "SCALAR",
-                "name": "DateTime",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "TomogramGroupByOptions",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "run",
-              "type": {
-                "kind": "OBJECT",
-                "name": "RunGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "voxelSpacing",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3Prefix",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsPrefix",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "TomogramVoxelSpacingGroupByOptions",
-          "possibleTypes": null
-        },
-        {
           "enumValues": [
             {
               "name": "tomogram"
@@ -24279,97 +25038,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AnnotationFileMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "alignment",
-              "type": {
-                "kind": "OBJECT",
-                "name": "AlignmentGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "annotationShape",
-              "type": {
-                "kind": "OBJECT",
-                "name": "AnnotationShapeGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "tomogramVoxelSpacing",
-              "type": {
-                "kind": "OBJECT",
-                "name": "TomogramVoxelSpacingGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "format",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3Path",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsPath",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "isVisualizationDefault",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "source",
-              "type": {
-                "kind": "ENUM",
-                "name": "annotation_file_source_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "AnnotationFileGroupByOptions",
           "possibleTypes": null
         },
         {
@@ -25397,43 +26065,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "deposition",
-              "type": {
-                "kind": "OBJECT",
-                "name": "DepositionGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "type",
-              "type": {
-                "kind": "ENUM",
-                "name": "deposition_types_enum",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "DepositionTypeGroupByOptions",
-          "possibleTypes": null
-        },
-        {
           "enumValues": [
             {
               "name": "deposition"
@@ -26041,104 +26672,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "alignment",
-              "type": {
-                "kind": "OBJECT",
-                "name": "AlignmentGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "zIndex",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "xOffset",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "yOffset",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "volumeXRotation",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "inPlaneRotation",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "LIST",
-                    "name": null,
-                    "ofType": {
-                      "kind": "NON_NULL",
-                      "name": null,
-                      "ofType": {
-                        "kind": "SCALAR",
-                        "name": "Float",
-                        "ofType": null
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "args": [],
-              "name": "tiltAngle",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "PerSectionAlignmentParametersGroupByOptions",
-          "possibleTypes": null
-        },
-        {
           "enumValues": [
             {
               "name": "alignment"
@@ -26480,52 +27013,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "GainFileMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "run",
-              "type": {
-                "kind": "OBJECT",
-                "name": "RunGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3FilePath",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsFilePath",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "GainFileGroupByOptions",
           "possibleTypes": null
         },
         {
@@ -26976,52 +27463,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "FrameAcquisitionFileMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "name": "run",
-              "type": {
-                "kind": "OBJECT",
-                "name": "RunGroupByOptions",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "s3MdocPath",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "httpsMdocPath",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "FrameAcquisitionFileGroupByOptions",
           "possibleTypes": null
         },
         {
@@ -34170,6 +34611,33 @@
               }
             },
             {
+              "defaultValue": "null",
+              "name": "sizeX",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "sizeY",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "sizeZ",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
               "defaultValue": null,
               "name": "id",
               "type": {
@@ -34474,6 +34942,33 @@
             {
               "defaultValue": "null",
               "name": "alignedTiltseriesBinning",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "sizeX",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "sizeY",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "sizeZ",
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",

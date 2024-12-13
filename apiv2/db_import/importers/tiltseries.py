@@ -54,6 +54,9 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "related_empiar_entry": ["related_empiar_entry"],
             "tilt_series_quality": ["tilt_series_quality"],
             "aligned_tiltseries_binning": ["aligned_tiltseries_binning"],
+            "size_x": ["size", "x"],
+            "size_y": ["size", "y"],
+            "size_z": ["size", "z"],
         }
 
     def get_first_match_file_name(self, file_extension_pattern: str):

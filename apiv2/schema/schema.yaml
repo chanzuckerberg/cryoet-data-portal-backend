@@ -2148,6 +2148,42 @@ classes:
           - tiltseries_aligned_tiltseries_binning
         range: integer
         minimum_value: 0
+      size_x:
+        name: size_x
+        description: Number of pixels in the 3D data fast axis
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - api_tiltseries_size_x
+        range: integer
+        required: false
+        minimum_value: 0
+        unit:
+          symbol: voxel
+          descriptive_name: voxels
+      size_y:
+        name: size_y
+        description: Number of pixels in the 3D data medium axis
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - api_tiltseries_size_y
+        range: integer
+        required: false
+        minimum_value: 0
+        unit:
+          symbol: voxel
+          descriptive_name: voxels
+      size_z:
+        name: size_z
+        description: Number of pixels in the 3D data slow axis
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - api_tiltseries_size_z
+        range: integer
+        required: false
+        minimum_value: 0
+        unit:
+          symbol: voxel
+          descriptive_name: voxels
   TomogramAuthor:
     name: TomogramAuthor
     annotations:

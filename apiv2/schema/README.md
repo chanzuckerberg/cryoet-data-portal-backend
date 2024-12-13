@@ -85,6 +85,9 @@ Tiltseries {
     boolean is_aligned
     float pixel_spacing
     integer aligned_tiltseries_binning
+    integer size_x
+    integer size_y
+    integer size_z
     integer id
 }
 Run {
