@@ -31,7 +31,7 @@ To get started with `apiv2`, running the API server, updating schema and debuggi
 
 ### Schema Definition
 
-`apiv2` schema definition can be found [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/edit/main/apiv2/schema/schema.yaml). Metadata file and directory layout specs are documented [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/schema/README.md).
+`apiv2` schema definition can be found [here](https://github.com/chanzuckerberg/cryoet-data-portal-backend/edit/main/apiv2/schema/).
 
 ### Ingestion Setup
 
@@ -39,7 +39,7 @@ Follow the steps [here](https://github.com/chanzuckerberg/cryoet-data-portal-bac
 
 ### Testing
 
-For setting up local test infra, seed local database and running the test suite, follow the documentation [here](test_infra/README.md)
+For setting up local test infra, seed local database and running the test suite, follow the documentation [here](apiv2/README.md)
 
 ### Deployment
 
