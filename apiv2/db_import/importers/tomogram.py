@@ -69,7 +69,8 @@ class TomogramItem(ItemDBImporter):
             "https_mrc_file": self.get_https_url(self.input_data["mrc_file"]),
             # TODO: Add alignment_id once we have an alignment importer.
             "alignment_id": self.config.get_alignment_by_path(
-                self.get_s3_url(self.input_data["alignment_metadata_path"]), run_id,
+                self.get_s3_url(self.input_data["alignment_metadata_path"]),
+                run_id,
             ),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
