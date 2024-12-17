@@ -43,7 +43,7 @@ For setting up local test infra, seed local database and running the test suite,
 
 ### Deployment
 
-For pre-deployment, creating `rdev` and deploying to staging/prod - follow the guidelines [here](docs/deployment.md).
+For pre-deployment, creating `rdev` and deploying to staging/prod - follow the guidelines [here](apiv2/deployment.md).
 
 ## Related Repos
 
