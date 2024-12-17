@@ -42,6 +42,7 @@ update-schema: codegen alembic-autogenerate alembic-upgrade-head
 	docker compose up -d
 	sleep 5 # wait for the app to reload after having files updated.
 	docker compose exec $(APP_CONTAINER) python3 -m sgqlc.introspection --exclude-deprecated --exclude-description http://localhost:9009/graphql graphql_api/schema.json
+	cd .. && pre-commit run --all-files
 
 .PHONY: seed-moto
 seed-moto: ## Seed the moto db by running the ./bin/seed_moto.sh script
