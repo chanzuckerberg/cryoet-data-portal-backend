@@ -12,7 +12,7 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.tiltseries
-@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, ts_dir", pytest.dataset_run_tiltseries_combinations, scope="session")
 class TestTiltseries(HelperTestMRCZarrHeader):
 
     @pytest.fixture(autouse=True)
@@ -89,7 +89,7 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         tiltseries_zarr_metadata: Dict[str, Dict[str, Dict]],
     ):
         assert len(tiltseries_zarr_metadata) == 1
-        assert tiltseries_metadata["omezarr_dir"] == os.path.basename(list(tiltseries_zarr_metadata.keys())[0])
+        assert os.path.basename(tiltseries_metadata["omezarr_dir"]) == os.path.basename(list(tiltseries_zarr_metadata.keys())[0])
 
     @allure.title("Tiltseries: metadata MRC file matches the actual file.")
     def test_mrc_matches(
@@ -97,8 +97,7 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         tiltseries_metadata: Dict,
         tiltseries_mrc_header: Dict[str, MrcInterpreter],
     ):
-        assert len(tiltseries_metadata["mrc_files"]) == 1
         assert len(tiltseries_mrc_header) == 1
-        assert tiltseries_metadata["mrc_files"][0] == os.path.basename(list(tiltseries_mrc_header.keys())[0])
+        assert os.path.basename(tiltseries_metadata["mrc_file"]) == os.path.basename(list(tiltseries_mrc_header.keys())[0])
 
     ### END metadata-MRC/Zarr consistency tests ###
