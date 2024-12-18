@@ -6,34 +6,28 @@ Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2
 """
 
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.alignment as alignment_helper
+import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.run as run_helper
+import graphql_api.helpers.tomogram_author as tomogram_author_helper
+import graphql_api.helpers.tomogram_voxel_spacing as tomogram_voxel_spacing_helper
 import strawberry
-from graphql_api.helpers.alignment import AlignmentGroupByOptions, build_alignment_groupby_output
-from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
-from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
-from graphql_api.helpers.tomogram_voxel_spacing import (
-    TomogramVoxelSpacingGroupByOptions,
-    build_tomogram_voxel_spacing_groupby_output,
-)
 from support.enums import fiducial_alignment_status_enum, tomogram_processing_enum, tomogram_reconstruction_method_enum
 
 if TYPE_CHECKING:
-    from api.types.alignment import Alignment
+    from graphql_api.helpers.alignment import AlignmentGroupByOptions
+    from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
+    from graphql_api.helpers.tomogram_author import TomogramAuthorGroupByOptions
+    from graphql_api.helpers.tomogram_voxel_spacing import TomogramVoxelSpacingGroupByOptions
 else:
-    Alignment = "Alignment"
-if TYPE_CHECKING:
-    from api.types.deposition import Deposition
-else:
-    Deposition = "Deposition"
-if TYPE_CHECKING:
-    from api.types.run import Run
-else:
-    Run = "Run"
-if TYPE_CHECKING:
-    from api.types.tomogram_voxel_spacing import TomogramVoxelSpacing
-else:
-    TomogramVoxelSpacing = "TomogramVoxelSpacing"
+    AlignmentGroupByOptions = "AlignmentGroupByOptions"
+    TomogramAuthorGroupByOptions = "TomogramAuthorGroupByOptions"
+    DepositionGroupByOptions = "DepositionGroupByOptions"
+    RunGroupByOptions = "RunGroupByOptions"
+    TomogramVoxelSpacingGroupByOptions = "TomogramVoxelSpacingGroupByOptions"
 
 
 """
@@ -44,10 +38,17 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class TomogramGroupByOptions:
-    alignment: Optional[AlignmentGroupByOptions] = None
-    deposition: Optional[DepositionGroupByOptions] = None
-    run: Optional[RunGroupByOptions] = None
-    tomogram_voxel_spacing: Optional[TomogramVoxelSpacingGroupByOptions] = None
+    alignment: Optional[Annotated["AlignmentGroupByOptions", strawberry.lazy("graphql_api.helpers.alignment")]] = None
+    authors: Optional[
+        Annotated["TomogramAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_author")]
+    ] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
+        None
+    )
+    run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
+    tomogram_voxel_spacing: Optional[
+        Annotated["TomogramVoxelSpacingGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_voxel_spacing")]
+    ] = None
     name: Optional[str] = None
     size_x: Optional[int] = None
     size_y: Optional[int] = None
@@ -100,52 +101,65 @@ def build_tomogram_groupby_output(
     match key:
         case "alignment":
             if getattr(group_object, key):
-                value = build_alignment_groupby_output(
+                value = alignment_helper.build_alignment_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_alignment_groupby_output(
+                value = alignment_helper.build_alignment_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "tomogram_authors":
+            if getattr(group_object, key):
+                value = tomogram_author_helper.build_tomogram_author_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = tomogram_author_helper.build_tomogram_author_groupby_output(
                     None,
                     keys,
                     value,
                 )
         case "deposition":
             if getattr(group_object, key):
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     None,
                     keys,
                     value,
                 )
         case "run":
             if getattr(group_object, key):
-                value = build_run_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_run_groupby_output(
+                value = run_helper.build_run_groupby_output(
                     None,
                     keys,
                     value,
                 )
         case "tomogram_voxel_spacing":
             if getattr(group_object, key):
-                value = build_tomogram_voxel_spacing_groupby_output(
+                value = tomogram_voxel_spacing_helper.build_tomogram_voxel_spacing_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_tomogram_voxel_spacing_groupby_output(
+                value = tomogram_voxel_spacing_helper.build_tomogram_voxel_spacing_groupby_output(
                     None,
                     keys,
                     value,

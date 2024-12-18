@@ -197,6 +197,24 @@ class TiltseriesCreateInputValidator(BaseModel):
             ge=0,
         ),
     ]
+    size_x: Annotated[
+        int | None,
+        Field(
+            ge=0,
+        ),
+    ]
+    size_y: Annotated[
+        int | None,
+        Field(
+            ge=0,
+        ),
+    ]
+    size_z: Annotated[
+        int | None,
+        Field(
+            ge=0,
+        ),
+    ]
     id: Annotated[int, Field()]
 
 
@@ -377,6 +395,24 @@ class TiltseriesUpdateInputValidator(BaseModel):
         ),
     ]
     aligned_tiltseries_binning: Annotated[
+        int | None,
+        Field(
+            ge=0,
+        ),
+    ]
+    size_x: Annotated[
+        int | None,
+        Field(
+            ge=0,
+        ),
+    ]
+    size_y: Annotated[
+        int | None,
+        Field(
+            ge=0,
+        ),
+    ]
+    size_z: Annotated[
         int | None,
         Field(
             ge=0,

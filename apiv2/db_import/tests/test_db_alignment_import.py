@@ -84,7 +84,6 @@ def test_import_alignments(
             assert len(run.alignments) == len(expected_alignments)
 
 
-
 def test_import_alignments_stale_deletion(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
@@ -104,7 +103,6 @@ def test_import_alignments_stale_deletion(
                 expected["run_id"] = run.id
             verify_model(alignment, expected)
             assert len(run.alignments) == len(expected_alignments)
-
 
 
 def test_import_per_section_alignment_parameters(

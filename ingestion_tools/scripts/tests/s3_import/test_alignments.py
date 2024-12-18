@@ -281,7 +281,7 @@ def test_default_alignment_import_with_tomograms(
         "tilt_offset": 0,
         "tilt_path": None,
         "tiltx_path": None,
-        "volume_dimension": {"x": 13.48 * 6, "y": 13.48 * 8, "z": 13.48 * 10},
+        "volume_dimension": {"x": 4.123 * 6, "y": 4.123 * 8, "z": 4.123 * 10},
         "volume_offset": {"x": 0, "y": 0, "z": 0},
         "x_rotation_offset": 0,
     }

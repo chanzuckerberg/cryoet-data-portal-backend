@@ -46,12 +46,16 @@ class AlignmentItem(ItemDBImporter):
     model_class = models.Alignment
 
     def load_computed_fields(self):
+        run_id = self.input_data["run"].id
         if self.model_args["alignment_method"] == "undefined":
             self.model_args["alignment_method"] = None
         self.model_args["s3_alignment_metadata"] = self.get_s3_url(self.input_data["file"])
         self.model_args["https_alignment_metadata"] = self.get_https_url(self.input_data["file"])
         if self.input_data.get("tiltseries_path"):
-            self.model_args["tiltseries_id"] = self.config.get_tiltseries_by_path(self.input_data["tiltseries_path"])
+            self.model_args["tiltseries_id"] = self.config.get_tiltseries_by_path(
+                self.input_data["tiltseries_path"],
+                run_id,
+            )
         self.model_args["run_id"] = self.input_data["run"].id
 
 

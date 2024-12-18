@@ -6,16 +6,25 @@ Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2
 """
 
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.dataset_author as dataset_author_helper
+import graphql_api.helpers.dataset_funding as dataset_funding_helper
+import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.run as run_helper
 import strawberry
-from graphql_api.helpers.deposition import DepositionGroupByOptions, build_deposition_groupby_output
 from support.enums import sample_type_enum
 
 if TYPE_CHECKING:
-    from api.types.deposition import Deposition
+    from graphql_api.helpers.dataset_author import DatasetAuthorGroupByOptions
+    from graphql_api.helpers.dataset_funding import DatasetFundingGroupByOptions
+    from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
 else:
-    Deposition = "Deposition"
+    DepositionGroupByOptions = "DepositionGroupByOptions"
+    DatasetFundingGroupByOptions = "DatasetFundingGroupByOptions"
+    DatasetAuthorGroupByOptions = "DatasetAuthorGroupByOptions"
+    RunGroupByOptions = "RunGroupByOptions"
 
 
 """
@@ -26,7 +35,16 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class DatasetGroupByOptions:
-    deposition: Optional[DepositionGroupByOptions] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
+        None
+    )
+    funding_sources: Optional[
+        Annotated["DatasetFundingGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset_funding")]
+    ] = None
+    authors: Optional[
+        Annotated["DatasetAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset_author")]
+    ] = None
+    runs: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     title: Optional[str] = None
     description: Optional[str] = None
     organism_name: Optional[str] = None
@@ -71,13 +89,52 @@ def build_dataset_groupby_output(
     match key:
         case "deposition":
             if getattr(group_object, key):
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_deposition_groupby_output(
+                value = deposition_helper.build_deposition_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "dataset_funding":
+            if getattr(group_object, key):
+                value = dataset_funding_helper.build_dataset_funding_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = dataset_funding_helper.build_dataset_funding_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "dataset_authors":
+            if getattr(group_object, key):
+                value = dataset_author_helper.build_dataset_author_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = dataset_author_helper.build_dataset_author_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "runs":
+            if getattr(group_object, key):
+                value = run_helper.build_run_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = run_helper.build_run_groupby_output(
                     None,
                     keys,
                     value,

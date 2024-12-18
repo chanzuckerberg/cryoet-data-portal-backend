@@ -255,7 +255,6 @@ def load_func(
                     )
                     per_section_alignment_parameters_importer.import_items()
 
-
             if not import_tomogram_voxel_spacing:
                 continue
 

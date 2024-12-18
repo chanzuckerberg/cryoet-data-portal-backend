@@ -192,6 +192,9 @@ class TiltseriesWhereClause(TypedDict):
     is_aligned: Optional[BoolComparators] | None
     pixel_spacing: Optional[FloatComparators] | None
     aligned_tiltseries_binning: Optional[IntComparators] | None
+    size_x: Optional[IntComparators] | None
+    size_y: Optional[IntComparators] | None
+    size_z: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -234,6 +237,9 @@ class TiltseriesOrderByClause(TypedDict):
     is_aligned: Optional[orderBy] | None
     pixel_spacing: Optional[orderBy] | None
     aligned_tiltseries_binning: Optional[orderBy] | None
+    size_x: Optional[orderBy] | None
+    size_y: Optional[orderBy] | None
+    size_z: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -315,6 +321,9 @@ class Tiltseries(EntityInterface):
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
+    size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
+    size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
+    size_z: Optional[int] = strawberry.field(description="Number of pixels in the 3D data slow axis", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -350,6 +359,9 @@ class TiltseriesNumericalColumns:
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
+    size_x: Optional[int] = None
+    size_y: Optional[int] = None
+    size_z: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -388,6 +400,9 @@ class TiltseriesMinMaxColumns:
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
+    size_x: Optional[int] = None
+    size_y: Optional[int] = None
+    size_z: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -431,6 +446,9 @@ class TiltseriesCountColumns(enum.Enum):
     isAligned = "is_aligned"
     pixelSpacing = "pixel_spacing"
     alignedTiltseriesBinning = "aligned_tiltseries_binning"
+    sizeX = "size_x"
+    sizeY = "size_y"
+    sizeZ = "size_z"
     id = "id"
 
 
@@ -538,6 +556,9 @@ class TiltseriesCreateInput:
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
+    size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
+    size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
+    size_z: Optional[int] = strawberry.field(description="Number of pixels in the 3D data slow axis", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -608,6 +629,9 @@ class TiltseriesUpdateInput:
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
+    size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
+    size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
+    size_z: Optional[int] = strawberry.field(description="Number of pixels in the 3D data slow axis", default=None)
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
