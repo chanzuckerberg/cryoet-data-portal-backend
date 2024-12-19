@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 import sys
 import tarfile
@@ -82,6 +83,8 @@ def main(
     for dataset in datasets:
         now = datetime.datetime.now().isoformat(sep="_", timespec="seconds").replace(":", "-")
 
+        version = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # HH:MM:SS
+
         # Accumulate test results here
         localdir_raw = f"{local_dir}/{dataset}_raw/{now}"
         # Generate report here
@@ -91,6 +94,17 @@ def main(
         os.system(
             f"pytest {'--dist loadscope -n auto' if multiprocessing else '--dist no'} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
         )
+        # Allure needs this file in order to generate reports with history
+        with open(f"{localdir_raw}/executor.json", "w") as fh:
+            fh.write(
+                json.dumps(
+                    {
+                        "reportName": f"Build {dataset}",
+                        "buildOrder": version,
+                        "name": f"Portal Validation for dataset {dataset}",
+                    },
+                ),
+            )
 
         # Get the history from S3 (Must do this before generating the report)
         remote_tar_report = f"{output_bucket}/{output_dir}/{dataset}.tar.gz"
