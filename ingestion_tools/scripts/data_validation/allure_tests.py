@@ -104,6 +104,7 @@ def main(
 
         # Compress and upload the new report
         os.system(f"tar -czf {tar_report} {localdir_rep}")
+        os.system(f"aws s3 sync {localdir_rep} s3://{output_bucket}/{output_dir}/{dataset}/")
         fs.s3fs.put(tar_report, remote_tar_report, recursive=True)
         os.remove(tar_report)
 
