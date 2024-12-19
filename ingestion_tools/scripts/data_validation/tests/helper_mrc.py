@@ -53,7 +53,7 @@ class HelperTestMRCHeader:
     mrc_headers: Dict[str, MrcInterpreter] = None
     spacing: float = None
     skip_z_axis_checks: bool = False
-    permitted_mrc_datatypes: list = [np.int8, np.int16, np.float32, np.float64]
+    permitted_mrc_datatypes: list = [np.int8, np.uint16, np.int16, np.float32, np.float64]
 
     def mrc_header_helper(
         self,

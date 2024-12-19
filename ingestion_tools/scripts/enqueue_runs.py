@@ -520,6 +520,47 @@ def execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl
         wait(futures)
 
 
+def execute_validate(
+    ctx,
+    env: str,
+    dataset_ids: list[str],
+    input_bucket: str,
+    output_bucket: str,
+    output_dir: str,
+    swipe_wdl_key: str,
+):
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for dataset_id in dataset_ids:
+            print(f"Processing {dataset_id}...")
+
+            execution_name = f"{int(time.time())}-validate-{env}-{dataset_id}"
+
+            # execution name greater than 80 chars causes boto ValidationException
+            if len(execution_name) > 80:
+                execution_name = execution_name[-80:]
+
+            wdl_args = {
+                "dataset": dataset_id,
+                "input_bucket": input_bucket,
+                "output_bucket": output_bucket,
+                "output_dir": output_dir,
+                "extra_args": "",
+            }
+            futures.append(
+                workerpool.submit(
+                    partial(
+                        run_job,
+                        execution_name,
+                        wdl_args,
+                        swipe_wdl_key=swipe_wdl_key,
+                        **ctx.obj,
+                    ),
+                ),
+            )
+        wait(futures)
+
+
 @cli.command(name="sync", cls=OrderedSyncFilters)
 @click.option("--input-bucket", required=True, type=str, default="cryoet-data-portal-staging")
 @click.option("--output-bucket", required=True, type=str, default="cryoet-data-portal-public")
@@ -596,6 +637,51 @@ def sync(
             swipe_wdl_key,
             "depositions_metadata",
         )
+
+
+@cli.command(name="validate")
+@click.argument("dataset_id", nargs=-1, required=True, type=str)
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="validate_dataset-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
+)
+@enqueue_common_options
+@click.pass_context
+def validate(
+    ctx,
+    dataset_id: list[str],
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    # The environment flag only switches which bucket we're validating
+    input_bucket = "cryoet-data-portal-public"
+    output_dir = "prod_validation"
+    env = "prod"
+    if kwargs.get("environment") == "staging":
+        env = "staging"
+        input_bucket = "cryoet-data-portal-staging"
+        output_dir = "staging_validation"
+
+    # We always run validation in the staging env.
+    kwargs["environment"] = "staging"
+    handle_common_options(ctx, kwargs)
+
+    # Default to using a lot less memory than the ingestion job.
+    if not ctx.obj.get("memory"):
+        ctx.obj["memory"] = 4000
+
+    execute_validate(
+        ctx=ctx,
+        env=env,
+        dataset_ids=dataset_id,
+        input_bucket=input_bucket,
+        output_bucket="cryoet-data-portal-staging",
+        output_dir=output_dir,
+        swipe_wdl_key=swipe_wdl_key,
+    )
 
 
 @cli.command()
