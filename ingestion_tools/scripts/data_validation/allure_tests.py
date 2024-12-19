@@ -83,7 +83,7 @@ def main(
     for dataset in datasets:
         now = datetime.datetime.now().isoformat(sep="_", timespec="seconds").replace(":", "-")
 
-        version = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # HH:MM:SS
+        version = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # Needs to parse-able as an int.
 
         # Accumulate test results here
         localdir_raw = f"{local_dir}/{dataset}_raw/{now}"
