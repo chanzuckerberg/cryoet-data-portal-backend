@@ -19,6 +19,13 @@ If you believe you have found a security issue, please responsibly disclose by c
 2. Set up your machine to be able to work with AWS using the instructions [here](https://czi.atlassian.net/wiki/spaces/DC/pages/332892073/Getting+started+with+AWS). Please ensure to follow the step 3 `AWS CLI access` instructions all the way to the bottom so that you are also set up for SSH access.
 3. [install jq](https://stedolan.github.io/jq/download/). If brew is installed run `brew install jq`.
 
+### PR Guidelines
+1. PR name should follow the conventional commit format. For example, `feat: add new annotation type` or `fix: fixing error from x`.
+2. PR description should be detailed and should follow the template provided.
+3. PR should have at least one approved reviewer.
+4. PR should pass all the checks before merging.
+5. PR should be squashed and merged.
+
 ### Common Commands
 
 | Command                                                                                 | Description                                                             |
