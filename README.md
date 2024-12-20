@@ -49,7 +49,7 @@ Environment variables are set using the command `export <name>=<value>`.
 
 
 
-#### Building the image
+### Building the image
 
 The base image is built using Github actions whenever a relevant code change is merged into main. The image build is tagged as `main`.
 
