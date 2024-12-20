@@ -44,7 +44,7 @@ Environment variables are set using the command `export <name>=<value>`.
 
 #### Building the image
 
-The base image is built using Github actions whenever a relevant code change is merged into main. The image build is tagged as latest.
+The base image is built using Github actions whenever a relevant code change is merged into main. The image build is tagged as `main`.
 
 In the rare event a new build of the image needs to be built without Github Actions, follow the steps below to build the images locally and push it to remote, replacing `<tag-for-build>` with the desired tag for the image.:
 ```bash
