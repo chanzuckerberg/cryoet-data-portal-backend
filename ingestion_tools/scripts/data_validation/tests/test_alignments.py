@@ -35,7 +35,6 @@ class TestAlignments:
             alignment_tiltseries_metadata["tilt_step"],
         ).tolist()
 
-
     ### BEGIN Tilt .tlt tests ###
     @allure.title("Alignment: angles exist.")
     def test_tilt_count(self, alignment_tilt: pd.DataFrame):
@@ -66,7 +65,7 @@ class TestAlignments:
         assert len(errors) == 0, "\n".join(errors)
 
     @allure.title(
-        "Raw tilt: number of raw tilt angles are less than or equal to tiltseries size['z'] (implied to be the number of frames files).",
+        "Raw tilt: number of raw tilt angles are must be equal to tiltseries size['z'] (implied to be the number of frames files).",
     )
     def test_tilt_tiltseries_metadata(self, alignment_tilt: pd.DataFrame, alignment_tiltseries_metadata: Dict):
         assert len(alignment_tilt) <= alignment_tiltseries_metadata["size"]["z"]
@@ -74,7 +73,10 @@ class TestAlignments:
     @allure.title("Alignment: angles correspond to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the tilt file.")
     def test_tilt_tiltseries_range(
-        self, alignment_tilt: pd.DataFrame, alignment_tiltseries_metadata: Dict, alignment_tiltseries_metadata_range: List[float],
+        self,
+        alignment_tilt: pd.DataFrame,
+        alignment_tiltseries_metadata: Dict,
+        alignment_tiltseries_metadata_range: List[float],
     ):
         errors = helper_angles_injection_errors(
             alignment_tilt["TiltAngle"].to_list(),
