@@ -83,7 +83,10 @@ def convert_where_clauses_to_sql(
     # Create a dictionary with the keys as the related field/field names
     # The values are dict of {order_by: {"field": ..., "index": ...}, where: {...}, group_by: [...]}
     all_joins = defaultdict(dict)  # type: ignore
+    # Keep track of the joins we need to execute in order to make filtering by relationships work.
     where_joins = defaultdict(dict)  # type: ignore
+    # Keep track of the joins we need to execute to handle filtering on related aggregates.
+    aggregate_joins = defaultdict(dict)  # type: ignore
     for item in order_by:
         for col, v in item["field"].items():
             if col in mapper.relationships:  # type: ignore
@@ -95,6 +98,9 @@ def convert_where_clauses_to_sql(
     for col, v in where_clause.items():
         if col in mapper.relationships:  # type: ignore
             where_joins[col]["where"] = v
+        elif col.rstrip("_aggregate") in mapper.relationships:
+            col_name = col.rstrip("_aggregate")
+            aggregate_joins[col_name] = v
         else:
             local_where_clauses[col] = v
     authz_client.modify_where_clause(principal, action, sa_model, local_where_clauses)
@@ -130,6 +136,68 @@ def convert_where_clauses_to_sql(
         for local, remote in relationship.local_remote_pairs:
             subquery = subquery.filter((getattr(sa_model, local.key) == getattr(query_alias, remote.key)))
         query = query.where(subquery.exists())
+    # Handle filtering on aggregates
+    for aggregate_field, aggregate_info in aggregate_joins.items():
+        relationship = mapper.relationships[aggregate_field]  # type: ignore
+        related_cls = relationship.mapper.entity
+        # PROB DONE:
+        # TODO 1 -- handle not getting an "arguments" value
+        # TODO 2 -- handle 'distinct' flag
+
+        # STILL TODO
+        # TODO 3 -- handle `having` clause
+        # TODO 4 -- handle not getting an aguments AND/OR a filter field.
+        try:
+            # We only support count for filtered aggregates right now, so we can
+            # keep this code simple for now.
+            agg_where = aggregate_info["count"]["filter"]
+        except KeyError:
+            agg_where = []
+
+        class Dummy:
+            def get(self, key):
+                try:
+                    return getattr(self, key)
+                except AttributeError:
+                    return None
+        
+        xxx = Dummy()
+        xxx.name = 'count'
+        xxx.arguments = None
+        if "arguments" in aggregate_info["count"]:
+            yyy = Dummy()
+            yyy.columns = aggregate_info["count"]["arguments"].name
+            if "distinct" in aggregate_info["count"]:
+                yyy.distinct = aggregate_info["count"]["distinct"]
+            else:
+                yyy.distinct = False
+            xxx.arguments = yyy
+        subquery, _order_by = get_aggregate_db_query(
+            related_cls,
+            action,
+            authz_client,
+            principal,
+            agg_where,
+            [xxx],
+            None,
+            depth,
+        )
+        query_alias = aliased(related_cls, subquery)  # type: ignore
+        for local, remote in relationship.local_remote_pairs:
+            # TODO THIS IS JOINING TABLES INSIDE THE SUBQUERY INSTEAD OF MAKING A CORRELATED SUBQUERY
+            # AND IT IT SUPER WRONG AND NEEDS FIXING
+            subquery = subquery.filter((getattr(sa_model, local.key) == getattr(query_alias, remote.key)))
+        if "predicate" in aggregate_info["count"]:
+            subquery = subquery.subquery()
+            import sqlalchemy as sa
+            newquery = sa.select(subquery.columns.count)
+            for comparator, value in aggregate_info["count"]["predicate"].items():
+                sa_comparator = operator_map[comparator]
+                newquery = newquery.filter(getattr(subquery.columns.count, sa_comparator)(value))
+            query = query.where(newquery.exists())
+        else:
+            query = query.where(subquery.exists())
+
     # Handle aggregating and sorting on related fields.
     for join_field, join_info in all_joins.items():
         relationship = mapper.relationships[join_field]  # type: ignore
