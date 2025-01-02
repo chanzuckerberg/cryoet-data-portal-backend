@@ -7,7 +7,6 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
-
 import datetime
 import enum
 import typing
@@ -443,6 +442,19 @@ class RunWhereClause(TypedDict):
     id: Optional[IntComparators] | None
 
 
+@strawberry.input
+class RunAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["RunCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[RunWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class RunAggregateWhereClause(TypedDict):
+    count: Optional[RunAggregateWhereClauseCount] | None
+
+
 """
 Supported ORDER BY clause attributes
 """
@@ -464,32 +476,26 @@ Define Run type
 
 @strawberry.type(description=None)
 class Run(EntityInterface):
-    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_rows
-    )  # type:ignore
+    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
     alignments_aggregate: Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_aggregate_rows
-    )  # type:ignore
+        load_alignment_aggregate_rows  # type:ignore
+    )
     annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
+        load_annotation_rows  # type:ignore
+    )
     annotations_aggregate: Optional[
         Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]
     ] = load_annotation_aggregate_rows  # type:ignore
-    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_rows
-    )  # type:ignore
+    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type:ignore
     dataset_id: int
     frames: Sequence[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
     frames_aggregate: Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]] = (
-        load_frame_aggregate_rows
-    )  # type:ignore
-    gain_files: Sequence[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]] = (
-        load_gain_file_rows
-    )  # type:ignore
+        load_frame_aggregate_rows  # type:ignore
+    )
+    gain_files: Sequence[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]] = load_gain_file_rows  # type:ignore
     gain_files_aggregate: Optional[Annotated["GainFileAggregate", strawberry.lazy("graphql_api.types.gain_file")]] = (
-        load_gain_file_aggregate_rows
-    )  # type:ignore
+        load_gain_file_aggregate_rows  # type:ignore
+    )
     frame_acquisition_files: Sequence[
         Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
     ] = load_frame_acquisition_file_rows  # type:ignore
@@ -497,8 +503,8 @@ class Run(EntityInterface):
         Annotated["FrameAcquisitionFileAggregate", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
     ] = load_frame_acquisition_file_aggregate_rows  # type:ignore
     tiltseries: Sequence[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows
-    )  # type:ignore
+        load_tiltseries_rows  # type:ignore
+    )
     tiltseries_aggregate: Optional[
         Annotated["TiltseriesAggregate", strawberry.lazy("graphql_api.types.tiltseries")]
     ] = load_tiltseries_aggregate_rows  # type:ignore
@@ -508,12 +514,10 @@ class Run(EntityInterface):
     tomogram_voxel_spacings_aggregate: Optional[
         Annotated["TomogramVoxelSpacingAggregate", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
     ] = load_tomogram_voxel_spacing_aggregate_rows  # type:ignore
-    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_rows
-    )  # type:ignore
+    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type:ignore
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_aggregate_rows
-    )  # type:ignore
+        load_tomogram_aggregate_rows  # type:ignore
+    )
     name: str = strawberry.field(description="Short name for this experiment run")
     s3_prefix: str = strawberry.field(description="The S3 public bucket path where this run is contained")
     https_prefix: str = strawberry.field(description="The HTTPS directory path where this run is contained url")
@@ -727,7 +731,9 @@ async def resolve_runs_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(db.Run, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
+    rows = await get_aggregate_db_rows(
+        db.Run, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+    )  # type: ignore
     aggregate_output = format_run_aggregate_output(rows)
     return aggregate_output
 
@@ -752,7 +758,13 @@ async def create_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
+            db.Dataset,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.dataset_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
@@ -794,7 +806,13 @@ async def update_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
+            db.Dataset,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.dataset_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
