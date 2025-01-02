@@ -444,6 +444,8 @@ class RunWhereClause(TypedDict):
 
 @strawberry.input
 class RunAggregateWhereClauseCount(TypedDict):
+    # TODO FIXME - this includes related cols for some reason??!?
+    # Should it only include local cols???
     arguments: Optional["RunCountColumns"] | None
     distinct: Optional[bool] | None
     filter: Optional[RunWhereClause] | None
@@ -452,7 +454,7 @@ class RunAggregateWhereClauseCount(TypedDict):
 
 @strawberry.input
 class RunAggregateWhereClause(TypedDict):
-    count: Optional[RunAggregateWhereClauseCount] | None
+    count: RunAggregateWhereClauseCount | None
 
 
 """
