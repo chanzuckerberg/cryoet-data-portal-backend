@@ -37,7 +37,7 @@ WDL files in this folder typically follow this naming convention:
   - sync: Syncs data between different environments.
   - validate: Validates the ingested data.
 
-For more about WDL, visit [OpenWDL](https://openwdl.org/).
+For more about WDL, visit [miniwdl](https://miniwdl.readthedocs.io/en/latest/).
 
 
 ## scripts

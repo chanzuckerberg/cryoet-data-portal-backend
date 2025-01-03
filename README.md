@@ -48,7 +48,7 @@ This module contains all the code related to the process of importing datasets i
 This module is responsible for maintaining the schemas used in both the ingestion configuration and the API. It is implemented using LinkML.
 
 ### test_infra
-This module has resources for testing locally.
+This module has resources required for setting up mock resources for testing, such as files needed for setting up the mock s3 and nginx (mock http servers). This is used by both the ingestion_tools and apiv2 modules.
 
 
 ## Common Commands

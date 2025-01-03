@@ -9,10 +9,8 @@ There is no fixed release cycle for updates. Changes merged into the main branch
 
 The ingestion process is automated using GitHub Actions. Here’s a breakdown of what happens:
 
-1. When changes are merged into main, the GitHub Actions workflow is triggered.
-2. The workflow builds a Docker image and pushes it to the Amazon Elastic Container Registry (ECR) with the main tag.
-
-If no specific tags are provided for batch ingestion, the process defaults to using the `main` tag.
+1. When changes are merged into main, the [GitHub Actions workflow](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/709e8a006b542abe824edc394281059dda29a757/.github/workflows/push-ingestor-build.yaml) is triggered.
+2. The workflow builds a Docker image and pushes it to the Amazon Elastic Container Registry (ECR) with the `main` tag.
 
 
 ## Testing Changes in AWS Before Merging
@@ -42,3 +40,13 @@ Once this is done, your image will be available in AWS and ready for use in test
 ------------------
 
 By following these steps, you can ensure that your changes are properly tested in a staging-like environment before they are merged into the main branch.
+
+## How to use the tags in execution?
+
+The tag of the images can be used when queuing up a job in AWS with the  `--ecr-tag` option. For example, to use an image tagged `db-new-feature` instead of the `main` for a db-import execution:
+
+```
+python3 enqueue_runs.py db-import --import-dataset --include-dataset 10000 --ecr-tag db-new-feature
+```
+
+If no specific `--ecr-tags` are provided when queuing up the jobs, it defaults to using the `main` tag. For more on this, refer to [the enqueue documentation](./enqueue_runs.md).
