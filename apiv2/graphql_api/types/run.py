@@ -454,7 +454,7 @@ class RunAggregateWhereClauseCount(TypedDict):
 
 @strawberry.input
 class RunAggregateWhereClause(TypedDict):
-    count: RunAggregateWhereClauseCount | None
+    count: RunAggregateWhereClauseCount
 
 
 """

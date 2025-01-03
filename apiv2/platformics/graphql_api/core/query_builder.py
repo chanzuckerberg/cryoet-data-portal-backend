@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql import Select
 from typing_extensions import TypedDict
+from strawberry.types.nodes import SelectedField
 
 from platformics.database.models.base import Base
 from platformics.graphql_api.core.errors import PlatformicsError
@@ -140,47 +141,27 @@ def convert_where_clauses_to_sql(
     for aggregate_field, aggregate_info in aggregate_joins.items():
         relationship = mapper.relationships[aggregate_field]  # type: ignore
         related_cls = relationship.mapper.entity
-        # PROB DONE:
-        # TODO 1 -- handle not getting an "arguments" value
-        # TODO 2 -- handle 'distinct' flag
+        # We only support `count` for filtered aggregates right now, so we can
+        # make simple assumptions here.
+        count_input = aggregate_info.get("count", {})
+        agg_where = count_input.get("filter", [])
 
-        # STILL TODO
-        # TODO 3 -- handle `having` clause
-        # TODO 4 -- handle not getting an aguments AND/OR a filter field.
-        try:
-            # We only support count for filtered aggregates right now, so we can
-            # keep this code simple for now.
-            agg_where = aggregate_info["count"]["filter"]
-        except KeyError:
-            agg_where = []
-
-        class Dummy:
-            def get(self, key):
-                try:
-                    return getattr(self, key)
-                except AttributeError:
-                    return None
-        
-        xxx = Dummy()
-        xxx.name = 'count'
-        xxx.arguments = None
-        predicates = aggregate_info["count"]["predicate"]
-        if "arguments" in aggregate_info["count"]:
-            yyy = Dummy()
-            yyy.columns = aggregate_info["count"]["arguments"].name
-            if "distinct" in aggregate_info["count"]:
-                yyy.distinct = aggregate_info["count"]["distinct"]
-            else:
-                yyy.distinct = False
-            xxx.arguments = yyy
-            xxx.predicates = predicates
+        # This is a set of arguments we're passing to SelectedField to make this query look
+        # like the input structure from `XxxAggregate` gql fields
+        arguments = {}
+        arguments["having"] = count_input.get("predicate", {})
+        arguments["distinct"] = count_input.get("distinct", False)
+        if "arguments" in count_input:
+            arguments["columns"] = count_input["arguments"].name
+        # TODO - it would be better if query builder didn't depend on our GQL schema structure so much
+        aggregate_config = SelectedField(name="count", arguments=arguments, directives=None, selections=None)
         subquery, _order_by = get_aggregate_db_query(
             related_cls,
             action,
             authz_client,
             principal,
             agg_where,
-            [xxx],
+            [aggregate_config],
             None,
             depth,
         )
@@ -351,18 +332,15 @@ def get_aggregate_db_query(
             # Otherwise, default to counting the primary key
             col = model_cls.id
             count_fn = agg_fn(model_cls.id)  # type: ignore
-            if aggregator.arguments:
-                if colname := strcase.to_snake(aggregator.arguments.get("columns")):
+            if gql_colname := aggregator.arguments.get("columns"):
+                if colname := strcase.to_snake(gql_colname):
                     col = getattr(model_cls, colname)
                 if aggregator.arguments.get("distinct"):
                     count_fn = agg_fn(distinct(col))  # type: ignore
             aggregate_query_fields.append(count_fn.label("count"))
             # Support HAVING clauses, this is only used by aggregate filters for now.
-            try:
-                predicates = aggregator.predicates
-            except AttributeError:
-                predicates = {}
-            for comparator, value in predicates.items():
+            having = aggregator.arguments.get("having", {})
+            for comparator, value in having.items():
                 sa_comparator = operator_map[comparator]
                 query = query.having(getattr(count_fn, sa_comparator)(value))
 
@@ -395,7 +373,7 @@ async def get_aggregate_db_rows(
     authz_client: AuthzClient,
     principal: Principal,
     where: Any,
-    aggregate: Any,
+    aggregate: list[SelectedField],
     order_by: Optional[list[tuple[ColumnElement[Any], ...]]] = None,
     group_by: Optional[ColumnElement[Any]] | Optional[list[Any]] = None,
     action: AuthzAction = AuthzAction.VIEW,
