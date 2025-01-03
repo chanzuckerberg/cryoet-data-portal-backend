@@ -83,4 +83,6 @@ If you don't already have docker setup, follow the instructions provided [here](
 | `make ingestor-test-s3`                                                                 | Runs unit tests for s3 ingestion.                                       |
 | `make ingestor-test-db`                                                                 | Runs unit tests for db ingestion for api v1.                            |
 | `AWS_PROFILE=<relevant-aws-profile> make push-local-ingestor-build tag=<tag-for-build>` | Builds and pushes image of ingestor to remote ECR.                      |
-| `AWS_PROFILE=<relevant-aws-profile> make push-ingestor-build tag=<tag-for-build> region=<AWS-REGION>` | Pushes image of ingestor to remote ECR.                      |
+| `AWS_PROFILE=<relevant-aws-profile> make push-ingestor-build tag=<tag-for-build> region=<AWS-REGION>` | Pushes image of ingestor to remote ECR.                   |
+
+**Note**: These commands will need to be run from the root level of the repository.
