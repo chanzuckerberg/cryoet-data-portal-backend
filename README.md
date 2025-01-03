@@ -38,18 +38,17 @@ This module contains the v1 version of the GraphQL API for the CryoET backend. I
 ### apiv2
 This module contains the v2 version of the GraphQL API for the CryoET backend. It is implemented using **Platformics**, offering more features over v1.
 
-
 ### docs
 This folder contains high-level documentation covering the overall architecture, and related processes.
-
 
 ### ingestion_tools
 This module contains all the code related to the process of importing datasets into the backend, transforming the data into standardized format, validating the standardized data. It also contains the yamls that are used for configuring the ingestion process.
 
-
 ### schema
 This module is responsible for maintaining the schemas used in both the ingestion configuration and the API. It is implemented using LinkML.
 
+### test_infra
+This module has resources for testing locally.
 
 
 ## Common Commands
