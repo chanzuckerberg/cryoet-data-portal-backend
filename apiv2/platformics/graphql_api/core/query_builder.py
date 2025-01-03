@@ -12,12 +12,14 @@ from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql import Select
+from strawberry.types.nodes import SelectedField
 from typing_extensions import TypedDict
 
 from platformics.database.models.base import Base
 from platformics.graphql_api.core.errors import PlatformicsError
 from platformics.graphql_api.core.query_input_types import aggregator_map, operator_map, orderBy
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+from platformics.support import sqlalchemy_helpers
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
@@ -83,7 +85,10 @@ def convert_where_clauses_to_sql(
     # Create a dictionary with the keys as the related field/field names
     # The values are dict of {order_by: {"field": ..., "index": ...}, where: {...}, group_by: [...]}
     all_joins = defaultdict(dict)  # type: ignore
+    # Keep track of the joins we need to execute in order to make filtering by relationships work.
     where_joins = defaultdict(dict)  # type: ignore
+    # Keep track of the joins we need to execute to handle filtering on related aggregates.
+    aggregate_joins = defaultdict(dict)  # type: ignore
     for item in order_by:
         for col, v in item["field"].items():
             if col in mapper.relationships:  # type: ignore
@@ -95,6 +100,9 @@ def convert_where_clauses_to_sql(
     for col, v in where_clause.items():
         if col in mapper.relationships:  # type: ignore
             where_joins[col]["where"] = v
+        elif col.removesuffix("_aggregate") in mapper.relationships:
+            col_name = col.removesuffix("_aggregate")
+            aggregate_joins[col_name] = v
         else:
             local_where_clauses[col] = v
     authz_client.modify_where_clause(principal, action, sa_model, local_where_clauses)
@@ -130,6 +138,39 @@ def convert_where_clauses_to_sql(
         for local, remote in relationship.local_remote_pairs:
             subquery = subquery.filter((getattr(sa_model, local.key) == getattr(query_alias, remote.key)))
         query = query.where(subquery.exists())
+    # Handle filtering on aggregates
+    for aggregate_field, aggregate_info in aggregate_joins.items():
+        relationship = mapper.relationships[aggregate_field]  # type: ignore
+        related_cls = relationship.mapper.entity
+        # We only support `count` for filtered aggregates right now, so we can
+        # make simple assumptions here.
+        count_input = aggregate_info.get("count", {})
+        agg_where = count_input.get("filter", [])
+
+        # This is a set of arguments we're passing to SelectedField to make this query look
+        # like the input structure from `XxxAggregate` gql fields
+        arguments = {}
+        arguments["having"] = count_input.get("predicate", {})
+        arguments["distinct"] = count_input.get("distinct", False)
+        if "arguments" in count_input:
+            arguments["columns"] = count_input["arguments"].name
+        # TODO - it would be better if query builder didn't depend on our GQL schema structure so much
+        aggregate_config = SelectedField(name="count", arguments=arguments, directives=None, selections=None)
+        subquery, _order_by = get_aggregate_db_query(
+            related_cls,
+            action,
+            authz_client,
+            principal,
+            agg_where,
+            [aggregate_config],
+            None,
+            depth,
+        )
+        query_alias = aliased(related_cls, subquery)  # type: ignore
+        for local, remote in relationship.local_remote_pairs:
+            subquery = subquery.filter((getattr(sa_model, local.key) == getattr(query_alias, remote.key)))
+        query = query.where(subquery.exists())
+
     # Handle aggregating and sorting on related fields.
     for join_field, join_info in all_joins.items():
         relationship = mapper.relationships[join_field]  # type: ignore
@@ -290,14 +331,20 @@ def get_aggregate_db_query(
         if aggregator.name == "count":
             # If provided "distinct" or "columns" arguments, use them to construct the count query
             # Otherwise, default to counting the primary key
-            col = model_cls.id
-            count_fn = agg_fn(model_cls.id)  # type: ignore
-            if aggregator.arguments:
-                if colname := strcase.to_snake(aggregator.arguments.get("columns")):
-                    col = getattr(model_cls, colname)
+            _, col = sqlalchemy_helpers.get_primary_key(model_cls)
+            count_fn = agg_fn(col)  # type: ignore
+            if gql_colname := aggregator.arguments.get("columns"):
+                snake_field = strcase.to_snake(gql_colname)
+                col = getattr(model_cls, snake_field)
                 if aggregator.arguments.get("distinct"):
                     count_fn = agg_fn(distinct(col))  # type: ignore
             aggregate_query_fields.append(count_fn.label("count"))
+            # Support HAVING clauses, this is only used by aggregate filters for now.
+            having = aggregator.arguments.get("having", {})
+            for comparator, value in having.items():
+                sa_comparator = operator_map[comparator]
+                query = query.having(getattr(count_fn, sa_comparator)(value))
+
         else:
             for col in aggregator.selections:
                 col_name = strcase.to_snake(col.name)
@@ -327,7 +374,7 @@ async def get_aggregate_db_rows(
     authz_client: AuthzClient,
     principal: Principal,
     where: Any,
-    aggregate: Any,
+    aggregate: list[SelectedField],
     order_by: Optional[list[tuple[ColumnElement[Any], ...]]] = None,
     group_by: Optional[ColumnElement[Any]] | Optional[list[Any]] = None,
     action: AuthzAction = AuthzAction.VIEW,

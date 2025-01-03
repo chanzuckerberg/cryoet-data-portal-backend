@@ -44,15 +44,22 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
+    from graphql_api.types.deposition import (
+        Deposition,
+        DepositionAggregateWhereClause,
+        DepositionOrderByClause,
+        DepositionWhereClause,
+    )
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
 
     pass
 else:
     DepositionWhereClause = "DepositionWhereClause"
+    DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
     RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
     pass
@@ -224,8 +231,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class FrameCountColumns(enum.Enum):
-    deposition = "deposition"
-    run = "run"
     rawAngle = "raw_angle"
     acquisitionOrder = "acquisition_order"
     dose = "dose"
@@ -233,6 +238,24 @@ class FrameCountColumns(enum.Enum):
     s3FramePath = "s3_frame_path"
     httpsFramePath = "https_frame_path"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class FrameAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["FrameCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[FrameWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class FrameAggregateWhereClause(TypedDict):
+    count: FrameAggregateWhereClauseCount
 
 
 """

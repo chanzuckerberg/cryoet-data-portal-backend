@@ -49,12 +49,28 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
-    from graphql_api.types.tomogram_author import TomogramAuthor, TomogramAuthorOrderByClause, TomogramAuthorWhereClause
+    from graphql_api.types.alignment import (
+        Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
+    )
+    from graphql_api.types.deposition import (
+        Deposition,
+        DepositionAggregateWhereClause,
+        DepositionOrderByClause,
+        DepositionWhereClause,
+    )
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
+    from graphql_api.types.tomogram_author import (
+        TomogramAuthor,
+        TomogramAuthorAggregateWhereClause,
+        TomogramAuthorOrderByClause,
+        TomogramAuthorWhereClause,
+    )
     from graphql_api.types.tomogram_voxel_spacing import (
         TomogramVoxelSpacing,
+        TomogramVoxelSpacingAggregateWhereClause,
         TomogramVoxelSpacingOrderByClause,
         TomogramVoxelSpacingWhereClause,
     )
@@ -62,18 +78,23 @@ if TYPE_CHECKING:
     pass
 else:
     AlignmentWhereClause = "AlignmentWhereClause"
+    AlignmentAggregateWhereClause = "AlignmentAggregateWhereClause"
     Alignment = "Alignment"
     AlignmentOrderByClause = "AlignmentOrderByClause"
     TomogramAuthorWhereClause = "TomogramAuthorWhereClause"
+    TomogramAuthorAggregateWhereClause = "TomogramAuthorAggregateWhereClause"
     TomogramAuthor = "TomogramAuthor"
     TomogramAuthorOrderByClause = "TomogramAuthorOrderByClause"
     DepositionWhereClause = "DepositionWhereClause"
+    DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
     RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
     TomogramVoxelSpacingWhereClause = "TomogramVoxelSpacingWhereClause"
+    TomogramVoxelSpacingAggregateWhereClause = "TomogramVoxelSpacingAggregateWhereClause"
     TomogramVoxelSpacing = "TomogramVoxelSpacing"
     TomogramVoxelSpacingOrderByClause = "TomogramVoxelSpacingOrderByClause"
     pass
@@ -212,6 +233,10 @@ class TomogramWhereClause(TypedDict):
     alignment_id: Optional[IntComparators] | None
     authors: (
         Optional[Annotated["TomogramAuthorWhereClause", strawberry.lazy("graphql_api.types.tomogram_author")]] | None
+    )
+    authors_aggregate: (
+        Optional[Annotated["TomogramAuthorAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram_author")]]
+        | None
     )
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
     deposition_id: Optional[IntComparators] | None
@@ -495,11 +520,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class TomogramCountColumns(enum.Enum):
-    alignment = "alignment"
-    authors = "authors"
-    deposition = "deposition"
-    run = "run"
-    tomogramVoxelSpacing = "tomogram_voxel_spacing"
     name = "name"
     sizeX = "size_x"
     sizeY = "size_y"
@@ -534,6 +554,24 @@ class TomogramCountColumns(enum.Enum):
     depositionDate = "deposition_date"
     releaseDate = "release_date"
     lastModifiedDate = "last_modified_date"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class TomogramAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["TomogramCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[TomogramWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class TomogramAggregateWhereClause(TypedDict):
+    count: TomogramAggregateWhereClauseCount
 
 
 """

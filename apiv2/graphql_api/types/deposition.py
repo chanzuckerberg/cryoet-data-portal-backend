@@ -52,43 +52,77 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
-    from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
-    from graphql_api.types.dataset import Dataset, DatasetOrderByClause, DatasetWhereClause
+    from graphql_api.types.alignment import (
+        Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
+    )
+    from graphql_api.types.annotation import (
+        Annotation,
+        AnnotationAggregateWhereClause,
+        AnnotationOrderByClause,
+        AnnotationWhereClause,
+    )
+    from graphql_api.types.dataset import Dataset, DatasetAggregateWhereClause, DatasetOrderByClause, DatasetWhereClause
     from graphql_api.types.deposition_author import (
         DepositionAuthor,
+        DepositionAuthorAggregateWhereClause,
         DepositionAuthorOrderByClause,
         DepositionAuthorWhereClause,
     )
-    from graphql_api.types.deposition_type import DepositionType, DepositionTypeOrderByClause, DepositionTypeWhereClause
-    from graphql_api.types.frame import Frame, FrameOrderByClause, FrameWhereClause
-    from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
-    from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
+    from graphql_api.types.deposition_type import (
+        DepositionType,
+        DepositionTypeAggregateWhereClause,
+        DepositionTypeOrderByClause,
+        DepositionTypeWhereClause,
+    )
+    from graphql_api.types.frame import Frame, FrameAggregateWhereClause, FrameOrderByClause, FrameWhereClause
+    from graphql_api.types.tiltseries import (
+        Tiltseries,
+        TiltseriesAggregateWhereClause,
+        TiltseriesOrderByClause,
+        TiltseriesWhereClause,
+    )
+    from graphql_api.types.tomogram import (
+        Tomogram,
+        TomogramAggregateWhereClause,
+        TomogramOrderByClause,
+        TomogramWhereClause,
+    )
 
     pass
 else:
     DepositionAuthorWhereClause = "DepositionAuthorWhereClause"
+    DepositionAuthorAggregateWhereClause = "DepositionAuthorAggregateWhereClause"
     DepositionAuthor = "DepositionAuthor"
     DepositionAuthorOrderByClause = "DepositionAuthorOrderByClause"
     AlignmentWhereClause = "AlignmentWhereClause"
+    AlignmentAggregateWhereClause = "AlignmentAggregateWhereClause"
     Alignment = "Alignment"
     AlignmentOrderByClause = "AlignmentOrderByClause"
     AnnotationWhereClause = "AnnotationWhereClause"
+    AnnotationAggregateWhereClause = "AnnotationAggregateWhereClause"
     Annotation = "Annotation"
     AnnotationOrderByClause = "AnnotationOrderByClause"
     DatasetWhereClause = "DatasetWhereClause"
+    DatasetAggregateWhereClause = "DatasetAggregateWhereClause"
     Dataset = "Dataset"
     DatasetOrderByClause = "DatasetOrderByClause"
     FrameWhereClause = "FrameWhereClause"
+    FrameAggregateWhereClause = "FrameAggregateWhereClause"
     Frame = "Frame"
     FrameOrderByClause = "FrameOrderByClause"
     TiltseriesWhereClause = "TiltseriesWhereClause"
+    TiltseriesAggregateWhereClause = "TiltseriesAggregateWhereClause"
     Tiltseries = "Tiltseries"
     TiltseriesOrderByClause = "TiltseriesOrderByClause"
     TomogramWhereClause = "TomogramWhereClause"
+    TomogramAggregateWhereClause = "TomogramAggregateWhereClause"
     Tomogram = "Tomogram"
     TomogramOrderByClause = "TomogramOrderByClause"
     DepositionTypeWhereClause = "DepositionTypeWhereClause"
+    DepositionTypeAggregateWhereClause = "DepositionTypeAggregateWhereClause"
     DepositionType = "DepositionType"
     DepositionTypeOrderByClause = "DepositionTypeOrderByClause"
     pass
@@ -387,16 +421,44 @@ class DepositionWhereClause(TypedDict):
         Optional[Annotated["DepositionAuthorWhereClause", strawberry.lazy("graphql_api.types.deposition_author")]]
         | None
     )
+    authors_aggregate: (
+        Optional[
+            Annotated["DepositionAuthorAggregateWhereClause", strawberry.lazy("graphql_api.types.deposition_author")]
+        ]
+        | None
+    )
     alignments: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    alignments_aggregate: (
+        Optional[Annotated["AlignmentAggregateWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    )
     annotations: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    annotations_aggregate: (
+        Optional[Annotated["AnnotationAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    )
     datasets: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
+    datasets_aggregate: (
+        Optional[Annotated["DatasetAggregateWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
+    )
     frames: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    frames_aggregate: (
+        Optional[Annotated["FrameAggregateWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    )
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
+    tiltseries_aggregate: (
+        Optional[Annotated["TiltseriesAggregateWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
+    )
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    tomograms_aggregate: (
+        Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    )
     title: Optional[StrComparators] | None
     description: Optional[StrComparators] | None
     deposition_types: (
         Optional[Annotated["DepositionTypeWhereClause", strawberry.lazy("graphql_api.types.deposition_type")]] | None
+    )
+    deposition_types_aggregate: (
+        Optional[Annotated["DepositionTypeAggregateWhereClause", strawberry.lazy("graphql_api.types.deposition_type")]]
+        | None
     )
     deposition_publications: Optional[StrComparators] | None
     related_database_entries: Optional[StrComparators] | None
@@ -547,16 +609,8 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class DepositionCountColumns(enum.Enum):
-    authors = "authors"
-    alignments = "alignments"
-    annotations = "annotations"
-    datasets = "datasets"
-    frames = "frames"
-    tiltseries = "tiltseries"
-    tomograms = "tomograms"
     title = "title"
     description = "description"
-    depositionTypes = "deposition_types"
     depositionPublications = "deposition_publications"
     relatedDatabaseEntries = "related_database_entries"
     depositionDate = "deposition_date"
@@ -565,6 +619,24 @@ class DepositionCountColumns(enum.Enum):
     keyPhotoUrl = "key_photo_url"
     keyPhotoThumbnailUrl = "key_photo_thumbnail_url"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class DepositionAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["DepositionCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[DepositionWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class DepositionAggregateWhereClause(TypedDict):
+    count: DepositionAggregateWhereClauseCount
 
 
 """

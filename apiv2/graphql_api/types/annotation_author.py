@@ -43,11 +43,17 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
+    from graphql_api.types.annotation import (
+        Annotation,
+        AnnotationAggregateWhereClause,
+        AnnotationOrderByClause,
+        AnnotationWhereClause,
+    )
 
     pass
 else:
     AnnotationWhereClause = "AnnotationWhereClause"
+    AnnotationAggregateWhereClause = "AnnotationAggregateWhereClause"
     Annotation = "Annotation"
     AnnotationOrderByClause = "AnnotationOrderByClause"
     pass
@@ -221,7 +227,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class AnnotationAuthorCountColumns(enum.Enum):
-    annotation = "annotation"
     id = "id"
     authorListOrder = "author_list_order"
     orcid = "orcid"
@@ -232,6 +237,24 @@ class AnnotationAuthorCountColumns(enum.Enum):
     affiliationIdentifier = "affiliation_identifier"
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class AnnotationAuthorAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["AnnotationAuthorCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[AnnotationAuthorWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class AnnotationAuthorAggregateWhereClause(TypedDict):
+    count: AnnotationAuthorAggregateWhereClauseCount
 
 
 """

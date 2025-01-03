@@ -42,11 +42,12 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.dataset import Dataset, DatasetOrderByClause, DatasetWhereClause
+    from graphql_api.types.dataset import Dataset, DatasetAggregateWhereClause, DatasetOrderByClause, DatasetWhereClause
 
     pass
 else:
     DatasetWhereClause = "DatasetWhereClause"
+    DatasetAggregateWhereClause = "DatasetAggregateWhereClause"
     Dataset = "Dataset"
     DatasetOrderByClause = "DatasetOrderByClause"
     pass
@@ -178,10 +179,27 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class DatasetFundingCountColumns(enum.Enum):
-    dataset = "dataset"
     fundingAgencyName = "funding_agency_name"
     grantId = "grant_id"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class DatasetFundingAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["DatasetFundingCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[DatasetFundingWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class DatasetFundingAggregateWhereClause(TypedDict):
+    count: DatasetFundingAggregateWhereClauseCount
 
 
 """

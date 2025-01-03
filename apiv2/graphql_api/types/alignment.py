@@ -53,35 +53,62 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.annotation_file import AnnotationFile, AnnotationFileOrderByClause, AnnotationFileWhereClause
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
+    from graphql_api.types.annotation_file import (
+        AnnotationFile,
+        AnnotationFileAggregateWhereClause,
+        AnnotationFileOrderByClause,
+        AnnotationFileWhereClause,
+    )
+    from graphql_api.types.deposition import (
+        Deposition,
+        DepositionAggregateWhereClause,
+        DepositionOrderByClause,
+        DepositionWhereClause,
+    )
     from graphql_api.types.per_section_alignment_parameters import (
         PerSectionAlignmentParameters,
+        PerSectionAlignmentParametersAggregateWhereClause,
         PerSectionAlignmentParametersOrderByClause,
         PerSectionAlignmentParametersWhereClause,
     )
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
-    from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
-    from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
+    from graphql_api.types.tiltseries import (
+        Tiltseries,
+        TiltseriesAggregateWhereClause,
+        TiltseriesOrderByClause,
+        TiltseriesWhereClause,
+    )
+    from graphql_api.types.tomogram import (
+        Tomogram,
+        TomogramAggregateWhereClause,
+        TomogramOrderByClause,
+        TomogramWhereClause,
+    )
 
     pass
 else:
     AnnotationFileWhereClause = "AnnotationFileWhereClause"
+    AnnotationFileAggregateWhereClause = "AnnotationFileAggregateWhereClause"
     AnnotationFile = "AnnotationFile"
     AnnotationFileOrderByClause = "AnnotationFileOrderByClause"
     PerSectionAlignmentParametersWhereClause = "PerSectionAlignmentParametersWhereClause"
+    PerSectionAlignmentParametersAggregateWhereClause = "PerSectionAlignmentParametersAggregateWhereClause"
     PerSectionAlignmentParameters = "PerSectionAlignmentParameters"
     PerSectionAlignmentParametersOrderByClause = "PerSectionAlignmentParametersOrderByClause"
     DepositionWhereClause = "DepositionWhereClause"
+    DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
     TiltseriesWhereClause = "TiltseriesWhereClause"
+    TiltseriesAggregateWhereClause = "TiltseriesAggregateWhereClause"
     Tiltseries = "Tiltseries"
     TiltseriesOrderByClause = "TiltseriesOrderByClause"
     TomogramWhereClause = "TomogramWhereClause"
+    TomogramAggregateWhereClause = "TomogramAggregateWhereClause"
     Tomogram = "Tomogram"
     TomogramOrderByClause = "TomogramOrderByClause"
     RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
     pass
@@ -289,10 +316,23 @@ class AlignmentWhereClause(TypedDict):
     annotation_files: (
         Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
     )
+    annotation_files_aggregate: (
+        Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]]
+        | None
+    )
     per_section_alignments: (
         Optional[
             Annotated[
                 "PerSectionAlignmentParametersWhereClause",
+                strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
+            ]
+        ]
+        | None
+    )
+    per_section_alignments_aggregate: (
+        Optional[
+            Annotated[
+                "PerSectionAlignmentParametersAggregateWhereClause",
                 strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
             ]
         ]
@@ -303,6 +343,9 @@ class AlignmentWhereClause(TypedDict):
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     tiltseries_id: Optional[IntComparators] | None
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    tomograms_aggregate: (
+        Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     run_id: Optional[IntComparators] | None
     alignment_type: Optional[EnumComparators[alignment_type_enum]] | None
@@ -491,12 +534,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class AlignmentCountColumns(enum.Enum):
-    annotationFiles = "annotation_files"
-    perSectionAlignments = "per_section_alignments"
-    deposition = "deposition"
-    tiltseries = "tiltseries"
-    tomograms = "tomograms"
-    run = "run"
     alignmentType = "alignment_type"
     alignmentMethod = "alignment_method"
     volumeXDimension = "volume_x_dimension"
@@ -512,6 +549,24 @@ class AlignmentCountColumns(enum.Enum):
     httpsAlignmentMetadata = "https_alignment_metadata"
     isPortalStandard = "is_portal_standard"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class AlignmentAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["AlignmentCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[AlignmentWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class AlignmentAggregateWhereClause(TypedDict):
+    count: AlignmentAggregateWhereClauseCount
 
 
 """

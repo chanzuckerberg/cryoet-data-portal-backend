@@ -56,37 +56,50 @@ T = typing.TypeVar("T")
 if TYPE_CHECKING:
     from graphql_api.types.annotation_author import (
         AnnotationAuthor,
+        AnnotationAuthorAggregateWhereClause,
         AnnotationAuthorOrderByClause,
         AnnotationAuthorWhereClause,
     )
     from graphql_api.types.annotation_method_link import (
         AnnotationMethodLink,
+        AnnotationMethodLinkAggregateWhereClause,
         AnnotationMethodLinkOrderByClause,
         AnnotationMethodLinkWhereClause,
     )
     from graphql_api.types.annotation_shape import (
         AnnotationShape,
+        AnnotationShapeAggregateWhereClause,
         AnnotationShapeOrderByClause,
         AnnotationShapeWhereClause,
     )
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
+    from graphql_api.types.deposition import (
+        Deposition,
+        DepositionAggregateWhereClause,
+        DepositionOrderByClause,
+        DepositionWhereClause,
+    )
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
 
     pass
 else:
     RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
     AnnotationShapeWhereClause = "AnnotationShapeWhereClause"
+    AnnotationShapeAggregateWhereClause = "AnnotationShapeAggregateWhereClause"
     AnnotationShape = "AnnotationShape"
     AnnotationShapeOrderByClause = "AnnotationShapeOrderByClause"
     AnnotationMethodLinkWhereClause = "AnnotationMethodLinkWhereClause"
+    AnnotationMethodLinkAggregateWhereClause = "AnnotationMethodLinkAggregateWhereClause"
     AnnotationMethodLink = "AnnotationMethodLink"
     AnnotationMethodLinkOrderByClause = "AnnotationMethodLinkOrderByClause"
     AnnotationAuthorWhereClause = "AnnotationAuthorWhereClause"
+    AnnotationAuthorAggregateWhereClause = "AnnotationAuthorAggregateWhereClause"
     AnnotationAuthor = "AnnotationAuthor"
     AnnotationAuthorOrderByClause = "AnnotationAuthorOrderByClause"
     DepositionWhereClause = "DepositionWhereClause"
+    DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
     pass
@@ -270,14 +283,34 @@ class AnnotationWhereClause(TypedDict):
     annotation_shapes: (
         Optional[Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
     )
+    annotation_shapes_aggregate: (
+        Optional[
+            Annotated["AnnotationShapeAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]
+        ]
+        | None
+    )
     method_links: (
         Optional[
             Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")]
         ]
         | None
     )
+    method_links_aggregate: (
+        Optional[
+            Annotated[
+                "AnnotationMethodLinkAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link"),
+            ]
+        ]
+        | None
+    )
     authors: (
         Optional[Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")]]
+        | None
+    )
+    authors_aggregate: (
+        Optional[
+            Annotated["AnnotationAuthorAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_author")]
+        ]
         | None
     )
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
@@ -484,11 +517,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class AnnotationCountColumns(enum.Enum):
-    run = "run"
-    annotationShapes = "annotation_shapes"
-    methodLinks = "method_links"
-    authors = "authors"
-    deposition = "deposition"
     s3MetadataPath = "s3_metadata_path"
     httpsMetadataPath = "https_metadata_path"
     annotationPublication = "annotation_publication"
@@ -509,6 +537,24 @@ class AnnotationCountColumns(enum.Enum):
     releaseDate = "release_date"
     lastModifiedDate = "last_modified_date"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class AnnotationAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["AnnotationCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[AnnotationWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class AnnotationAggregateWhereClause(TypedDict):
+    count: AnnotationAggregateWhereClauseCount
 
 
 """

@@ -49,23 +49,42 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.dataset_author import DatasetAuthor, DatasetAuthorOrderByClause, DatasetAuthorWhereClause
-    from graphql_api.types.dataset_funding import DatasetFunding, DatasetFundingOrderByClause, DatasetFundingWhereClause
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
+    from graphql_api.types.dataset_author import (
+        DatasetAuthor,
+        DatasetAuthorAggregateWhereClause,
+        DatasetAuthorOrderByClause,
+        DatasetAuthorWhereClause,
+    )
+    from graphql_api.types.dataset_funding import (
+        DatasetFunding,
+        DatasetFundingAggregateWhereClause,
+        DatasetFundingOrderByClause,
+        DatasetFundingWhereClause,
+    )
+    from graphql_api.types.deposition import (
+        Deposition,
+        DepositionAggregateWhereClause,
+        DepositionOrderByClause,
+        DepositionWhereClause,
+    )
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
 
     pass
 else:
     DepositionWhereClause = "DepositionWhereClause"
+    DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
     DatasetFundingWhereClause = "DatasetFundingWhereClause"
+    DatasetFundingAggregateWhereClause = "DatasetFundingAggregateWhereClause"
     DatasetFunding = "DatasetFunding"
     DatasetFundingOrderByClause = "DatasetFundingOrderByClause"
     DatasetAuthorWhereClause = "DatasetAuthorWhereClause"
+    DatasetAuthorAggregateWhereClause = "DatasetAuthorAggregateWhereClause"
     DatasetAuthor = "DatasetAuthor"
     DatasetAuthorOrderByClause = "DatasetAuthorOrderByClause"
     RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
     pass
@@ -220,8 +239,17 @@ class DatasetWhereClause(TypedDict):
     funding_sources: (
         Optional[Annotated["DatasetFundingWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")]] | None
     )
+    funding_sources_aggregate: (
+        Optional[Annotated["DatasetFundingAggregateWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")]]
+        | None
+    )
     authors: Optional[Annotated["DatasetAuthorWhereClause", strawberry.lazy("graphql_api.types.dataset_author")]] | None
+    authors_aggregate: (
+        Optional[Annotated["DatasetAuthorAggregateWhereClause", strawberry.lazy("graphql_api.types.dataset_author")]]
+        | None
+    )
     runs: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    runs_aggregate: Optional[Annotated["RunAggregateWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     title: Optional[StrComparators] | None
     description: Optional[StrComparators] | None
     organism_name: Optional[StrComparators] | None
@@ -448,10 +476,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class DatasetCountColumns(enum.Enum):
-    deposition = "deposition"
-    fundingSources = "funding_sources"
-    authors = "authors"
-    runs = "runs"
     title = "title"
     description = "description"
     organismName = "organism_name"
@@ -478,6 +502,24 @@ class DatasetCountColumns(enum.Enum):
     s3Prefix = "s3_prefix"
     httpsPrefix = "https_prefix"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class DatasetAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["DatasetCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[DatasetWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class DatasetAggregateWhereClause(TypedDict):
+    count: DatasetAggregateWhereClauseCount
 
 
 """

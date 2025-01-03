@@ -52,19 +52,32 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.annotation_file import AnnotationFile, AnnotationFileOrderByClause, AnnotationFileWhereClause
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
-    from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
+    from graphql_api.types.annotation_file import (
+        AnnotationFile,
+        AnnotationFileAggregateWhereClause,
+        AnnotationFileOrderByClause,
+        AnnotationFileWhereClause,
+    )
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
+    from graphql_api.types.tomogram import (
+        Tomogram,
+        TomogramAggregateWhereClause,
+        TomogramOrderByClause,
+        TomogramWhereClause,
+    )
 
     pass
 else:
     AnnotationFileWhereClause = "AnnotationFileWhereClause"
+    AnnotationFileAggregateWhereClause = "AnnotationFileAggregateWhereClause"
     AnnotationFile = "AnnotationFile"
     AnnotationFileOrderByClause = "AnnotationFileOrderByClause"
     RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
     TomogramWhereClause = "TomogramWhereClause"
+    TomogramAggregateWhereClause = "TomogramAggregateWhereClause"
     Tomogram = "Tomogram"
     TomogramOrderByClause = "TomogramOrderByClause"
     pass
@@ -183,9 +196,16 @@ class TomogramVoxelSpacingWhereClause(TypedDict):
     annotation_files: (
         Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
     )
+    annotation_files_aggregate: (
+        Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]]
+        | None
+    )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     run_id: Optional[IntComparators] | None
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    tomograms_aggregate: (
+        Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    )
     voxel_spacing: Optional[FloatComparators] | None
     s3_prefix: Optional[StrComparators] | None
     https_prefix: Optional[StrComparators] | None
@@ -281,13 +301,28 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class TomogramVoxelSpacingCountColumns(enum.Enum):
-    annotationFiles = "annotation_files"
-    run = "run"
-    tomograms = "tomograms"
     voxelSpacing = "voxel_spacing"
     s3Prefix = "s3_prefix"
     httpsPrefix = "https_prefix"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class TomogramVoxelSpacingAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["TomogramVoxelSpacingCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[TomogramVoxelSpacingWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class TomogramVoxelSpacingAggregateWhereClause(TypedDict):
+    count: TomogramVoxelSpacingAggregateWhereClauseCount
 
 
 """

@@ -48,11 +48,17 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
+    from graphql_api.types.alignment import (
+        Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
+    )
 
     pass
 else:
     AlignmentWhereClause = "AlignmentWhereClause"
+    AlignmentAggregateWhereClause = "AlignmentAggregateWhereClause"
     Alignment = "Alignment"
     AlignmentOrderByClause = "AlignmentOrderByClause"
     pass
@@ -207,7 +213,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class PerSectionAlignmentParametersCountColumns(enum.Enum):
-    alignment = "alignment"
     zIndex = "z_index"
     xOffset = "x_offset"
     yOffset = "y_offset"
@@ -215,6 +220,24 @@ class PerSectionAlignmentParametersCountColumns(enum.Enum):
     inPlaneRotation = "in_plane_rotation"
     tiltAngle = "tilt_angle"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class PerSectionAlignmentParametersAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["PerSectionAlignmentParametersCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[PerSectionAlignmentParametersWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class PerSectionAlignmentParametersAggregateWhereClause(TypedDict):
+    count: PerSectionAlignmentParametersAggregateWhereClauseCount
 
 
 """

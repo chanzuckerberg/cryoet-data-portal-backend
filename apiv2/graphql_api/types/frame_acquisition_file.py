@@ -48,11 +48,12 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
 
     pass
 else:
     RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
     pass
@@ -180,10 +181,27 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class FrameAcquisitionFileCountColumns(enum.Enum):
-    run = "run"
     s3MdocPath = "s3_mdoc_path"
     httpsMdocPath = "https_mdoc_path"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class FrameAcquisitionFileAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["FrameAcquisitionFileCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[FrameAcquisitionFileWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class FrameAcquisitionFileAggregateWhereClause(TypedDict):
+    count: FrameAcquisitionFileAggregateWhereClauseCount
 
 
 """

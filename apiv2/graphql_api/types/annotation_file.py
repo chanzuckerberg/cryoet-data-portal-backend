@@ -45,14 +45,21 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
+    from graphql_api.types.alignment import (
+        Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
+    )
     from graphql_api.types.annotation_shape import (
         AnnotationShape,
+        AnnotationShapeAggregateWhereClause,
         AnnotationShapeOrderByClause,
         AnnotationShapeWhereClause,
     )
     from graphql_api.types.tomogram_voxel_spacing import (
         TomogramVoxelSpacing,
+        TomogramVoxelSpacingAggregateWhereClause,
         TomogramVoxelSpacingOrderByClause,
         TomogramVoxelSpacingWhereClause,
     )
@@ -60,12 +67,15 @@ if TYPE_CHECKING:
     pass
 else:
     AlignmentWhereClause = "AlignmentWhereClause"
+    AlignmentAggregateWhereClause = "AlignmentAggregateWhereClause"
     Alignment = "Alignment"
     AlignmentOrderByClause = "AlignmentOrderByClause"
     AnnotationShapeWhereClause = "AnnotationShapeWhereClause"
+    AnnotationShapeAggregateWhereClause = "AnnotationShapeAggregateWhereClause"
     AnnotationShape = "AnnotationShape"
     AnnotationShapeOrderByClause = "AnnotationShapeOrderByClause"
     TomogramVoxelSpacingWhereClause = "TomogramVoxelSpacingWhereClause"
+    TomogramVoxelSpacingAggregateWhereClause = "TomogramVoxelSpacingAggregateWhereClause"
     TomogramVoxelSpacing = "TomogramVoxelSpacing"
     TomogramVoxelSpacingOrderByClause = "TomogramVoxelSpacingOrderByClause"
     pass
@@ -276,15 +286,30 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class AnnotationFileCountColumns(enum.Enum):
-    alignment = "alignment"
-    annotationShape = "annotation_shape"
-    tomogramVoxelSpacing = "tomogram_voxel_spacing"
     format = "format"
     s3Path = "s3_path"
     httpsPath = "https_path"
     isVisualizationDefault = "is_visualization_default"
     source = "source"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class AnnotationFileAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["AnnotationFileCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[AnnotationFileWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class AnnotationFileAggregateWhereClause(TypedDict):
+    count: AnnotationFileAggregateWhereClauseCount
 
 
 """

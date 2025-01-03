@@ -43,11 +43,17 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
+    from graphql_api.types.deposition import (
+        Deposition,
+        DepositionAggregateWhereClause,
+        DepositionOrderByClause,
+        DepositionWhereClause,
+    )
 
     pass
 else:
     DepositionWhereClause = "DepositionWhereClause"
+    DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
     pass
@@ -177,9 +183,26 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class DepositionTypeCountColumns(enum.Enum):
-    deposition = "deposition"
     type = "type"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class DepositionTypeAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["DepositionTypeCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[DepositionTypeWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class DepositionTypeAggregateWhereClause(TypedDict):
+    count: DepositionTypeAggregateWhereClauseCount
 
 
 """
