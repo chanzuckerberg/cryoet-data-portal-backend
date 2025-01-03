@@ -12,8 +12,8 @@ from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql import Select
-from typing_extensions import TypedDict
 from strawberry.types.nodes import SelectedField
+from typing_extensions import TypedDict
 
 from platformics.database.models.base import Base
 from platformics.graphql_api.core.errors import PlatformicsError
@@ -99,8 +99,8 @@ def convert_where_clauses_to_sql(
     for col, v in where_clause.items():
         if col in mapper.relationships:  # type: ignore
             where_joins[col]["where"] = v
-        elif col.rstrip("_aggregate") in mapper.relationships:
-            col_name = col.rstrip("_aggregate")
+        elif col.removesuffix("_aggregate") in mapper.relationships:
+            col_name = col.removesuffix("_aggregate")
             aggregate_joins[col_name] = v
         else:
             local_where_clauses[col] = v
