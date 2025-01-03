@@ -11,19 +11,19 @@ This folder holds the configuration files used during the data ingestion process
 - If the file name is a number (e.g., 12345.yaml), it corresponds to the dataset with the same ID.
 - If the file name starts with deposition_ (e.g., deposition_12345.yaml), it corresponds to the deposition with the ID specified in the file name.
 
-For more information on datasets and depositions refer [here](https://chanzuckerberg.github.io/cryoet-data-portal/cryoet_data_portal_docsite_data.html). 
+For more information on datasets and depositions refer [here](https://chanzuckerberg.github.io/cryoet-data-portal/cryoet_data_portal_docsite_data.html).
 
-### Validation 
+### Validation
 
 Configuration file validation is handled by the [schema section](https://github.com/chanzuckerberg/cryoet-data-portal-backend/tree/main/schema/) of the repository.
 
 
-## docs 
+## docs
 
 This folder contains documentation related to the ingestion tools and processes.
 
 
-## infra 
+## infra
 
 This folder contains WDL (Workflow Description Language) files that specify executions. These files define the steps and order of operations in the data ingestion pipeline.
 
@@ -37,14 +37,14 @@ WDL files in this folder typically follow this naming convention:
   - sync: Syncs data between different environments.
   - validate: Validates the ingested data.
 
-For more about WDL, visit [OpenWDL](https://openwdl.org/). 
+For more about WDL, visit [OpenWDL](https://openwdl.org/).
 
 
 ## scripts
 
 This folder contains all the scripts that power the workflows. It is organized into different modules:
 
-#### data_validation 
+#### data_validation
 This module contains scripts for validating data. Instructions for running the validation tests can be found in the README within this folder.
 
 #### importers
@@ -55,4 +55,3 @@ This module contains scripts for ingesting data:
 
 #### schema_migration
 This module helps keep schema configurations up to date as they evolve. It includes tools for managing schema changes.
-

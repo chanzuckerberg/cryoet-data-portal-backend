@@ -1,4 +1,4 @@
-# Releasing updates to Ingestion 
+# Releasing updates to Ingestion
 
 There is no fixed release cycle for updates. Changes merged into the main branch are automatically picked up and incorporated into the subsequent ingestion process.
 

@@ -40,7 +40,7 @@ This module contains the v2 version of the GraphQL API for the CryoET backend. I
 
 
 ### docs
-This folder contains high-level documentation covering the overall architecture, and related processes. 
+This folder contains high-level documentation covering the overall architecture, and related processes.
 
 
 ### ingestion_tools

@@ -1,6 +1,6 @@
 # Ingestion utilities
 
-This package contains scripts, libraries, and configurations for converting raw research datasets into a format compatible with the CryoET Data Portal. 
+This package contains scripts, libraries, and configurations for converting raw research datasets into a format compatible with the CryoET Data Portal.
 
 
 ## Start here
@@ -23,7 +23,7 @@ If you're new to CryoET and the data ingestion process, here are some helpful re
 ## Setting Up Your Local Python Environment
 
 ### Prerequisites
-- Python 3.11+ 
+- Python 3.11+
 
 
 To set up your local python environment for ingestion tools, follow these steps:
@@ -67,7 +67,7 @@ poetry install
 
 ## Useful Commands
 
-There are make commands available to run the ingestor, tests for the ingestion, pushing the image to remote, etc. They require docker to run. 
+There are make commands available to run the ingestor, tests for the ingestion, pushing the image to remote, etc. They require docker to run.
 
 ### Setup Docker
 
@@ -84,4 +84,3 @@ If you don't already have docker setup, follow the instructions provided [here](
 | `make ingestor-test-db`                                                                 | Runs unit tests for db ingestion for api v1.                            |
 | `AWS_PROFILE=<relevant-aws-profile> make push-local-ingestor-build tag=<tag-for-build>` | Builds and pushes image of ingestor to remote ECR.                      |
 | `AWS_PROFILE=<relevant-aws-profile> make push-ingestor-build tag=<tag-for-build> region=<AWS-REGION>` | Pushes image of ingestor to remote ECR.                      |
-
