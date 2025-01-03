@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -56,20 +57,47 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
-    from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
-    from graphql_api.types.dataset import Dataset, DatasetOrderByClause, DatasetWhereClause
-    from graphql_api.types.frame import Frame, FrameOrderByClause, FrameWhereClause
+    from graphql_api.types.alignment import (
+        Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
+    )
+    from graphql_api.types.annotation import (
+        Annotation,
+        AnnotationAggregateWhereClause,
+        AnnotationOrderByClause,
+        AnnotationWhereClause,
+    )
+    from graphql_api.types.dataset import Dataset, DatasetAggregateWhereClause, DatasetOrderByClause, DatasetWhereClause
+    from graphql_api.types.frame import Frame, FrameAggregateWhereClause, FrameOrderByClause, FrameWhereClause
     from graphql_api.types.frame_acquisition_file import (
         FrameAcquisitionFile,
+        FrameAcquisitionFileAggregateWhereClause,
         FrameAcquisitionFileOrderByClause,
         FrameAcquisitionFileWhereClause,
     )
-    from graphql_api.types.gain_file import GainFile, GainFileOrderByClause, GainFileWhereClause
-    from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
-    from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
+    from graphql_api.types.gain_file import (
+        GainFile,
+        GainFileAggregateWhereClause,
+        GainFileOrderByClause,
+        GainFileWhereClause,
+    )
+    from graphql_api.types.tiltseries import (
+        Tiltseries,
+        TiltseriesAggregateWhereClause,
+        TiltseriesOrderByClause,
+        TiltseriesWhereClause,
+    )
+    from graphql_api.types.tomogram import (
+        Tomogram,
+        TomogramAggregateWhereClause,
+        TomogramOrderByClause,
+        TomogramWhereClause,
+    )
     from graphql_api.types.tomogram_voxel_spacing import (
         TomogramVoxelSpacing,
+        TomogramVoxelSpacingAggregateWhereClause,
         TomogramVoxelSpacingOrderByClause,
         TomogramVoxelSpacingWhereClause,
     )
@@ -77,30 +105,39 @@ if TYPE_CHECKING:
     pass
 else:
     AlignmentWhereClause = "AlignmentWhereClause"
+    AlignmentAggregateWhereClause = "AlignmentAggregateWhereClause"
     Alignment = "Alignment"
     AlignmentOrderByClause = "AlignmentOrderByClause"
     AnnotationWhereClause = "AnnotationWhereClause"
+    AnnotationAggregateWhereClause = "AnnotationAggregateWhereClause"
     Annotation = "Annotation"
     AnnotationOrderByClause = "AnnotationOrderByClause"
     DatasetWhereClause = "DatasetWhereClause"
+    DatasetAggregateWhereClause = "DatasetAggregateWhereClause"
     Dataset = "Dataset"
     DatasetOrderByClause = "DatasetOrderByClause"
     FrameWhereClause = "FrameWhereClause"
+    FrameAggregateWhereClause = "FrameAggregateWhereClause"
     Frame = "Frame"
     FrameOrderByClause = "FrameOrderByClause"
     GainFileWhereClause = "GainFileWhereClause"
+    GainFileAggregateWhereClause = "GainFileAggregateWhereClause"
     GainFile = "GainFile"
     GainFileOrderByClause = "GainFileOrderByClause"
     FrameAcquisitionFileWhereClause = "FrameAcquisitionFileWhereClause"
+    FrameAcquisitionFileAggregateWhereClause = "FrameAcquisitionFileAggregateWhereClause"
     FrameAcquisitionFile = "FrameAcquisitionFile"
     FrameAcquisitionFileOrderByClause = "FrameAcquisitionFileOrderByClause"
     TiltseriesWhereClause = "TiltseriesWhereClause"
+    TiltseriesAggregateWhereClause = "TiltseriesAggregateWhereClause"
     Tiltseries = "Tiltseries"
     TiltseriesOrderByClause = "TiltseriesOrderByClause"
     TomogramVoxelSpacingWhereClause = "TomogramVoxelSpacingWhereClause"
+    TomogramVoxelSpacingAggregateWhereClause = "TomogramVoxelSpacingAggregateWhereClause"
     TomogramVoxelSpacing = "TomogramVoxelSpacing"
     TomogramVoxelSpacingOrderByClause = "TomogramVoxelSpacingOrderByClause"
     TomogramWhereClause = "TomogramWhereClause"
+    TomogramAggregateWhereClause = "TomogramAggregateWhereClause"
     Tomogram = "Tomogram"
     TomogramOrderByClause = "TomogramOrderByClause"
     pass
@@ -417,44 +454,63 @@ Supported WHERE clause attributes
 @strawberry.input
 class RunWhereClause(TypedDict):
     alignments: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    alignments_aggregate: (
+        Optional[Annotated["AlignmentAggregateWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    )
     annotations: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    annotations_aggregate: (
+        Optional[Annotated["AnnotationAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    )
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
     dataset_id: Optional[IntComparators] | None
     frames: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    frames_aggregate: (
+        Optional[Annotated["FrameAggregateWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    )
     gain_files: Optional[Annotated["GainFileWhereClause", strawberry.lazy("graphql_api.types.gain_file")]] | None
+    gain_files_aggregate: (
+        Optional[Annotated["GainFileAggregateWhereClause", strawberry.lazy("graphql_api.types.gain_file")]] | None
+    )
     frame_acquisition_files: (
         Optional[
             Annotated["FrameAcquisitionFileWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
         ]
         | None
     )
+    frame_acquisition_files_aggregate: (
+        Optional[
+            Annotated[
+                "FrameAcquisitionFileAggregateWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file"),
+            ]
+        ]
+        | None
+    )
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
+    tiltseries_aggregate: (
+        Optional[Annotated["TiltseriesAggregateWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
+    )
     tomogram_voxel_spacings: (
         Optional[
             Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
         ]
         | None
     )
+    tomogram_voxel_spacings_aggregate: (
+        Optional[
+            Annotated[
+                "TomogramVoxelSpacingAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing"),
+            ]
+        ]
+        | None
+    )
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    tomograms_aggregate: (
+        Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    )
     name: Optional[StrComparators] | None
     s3_prefix: Optional[StrComparators] | None
     https_prefix: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
-
-
-@strawberry.input
-class RunAggregateWhereClauseCount(TypedDict):
-    # TODO FIXME - this includes related cols for some reason??!?
-    # Should it only include local cols???
-    arguments: Optional["RunCountColumns"] | None
-    distinct: Optional[bool] | None
-    filter: Optional[RunWhereClause] | None
-    predicate: Optional[IntComparators] | None
-
-
-@strawberry.input
-class RunAggregateWhereClause(TypedDict):
-    count: RunAggregateWhereClauseCount
 
 
 """
@@ -478,26 +534,32 @@ Define Run type
 
 @strawberry.type(description=None)
 class Run(EntityInterface):
-    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
+    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
+        load_alignment_rows
+    )  # type:ignore
     alignments_aggregate: Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_aggregate_rows  # type:ignore
-    )
+        load_alignment_aggregate_rows
+    )  # type:ignore
     annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows  # type:ignore
-    )
+        load_annotation_rows
+    )  # type:ignore
     annotations_aggregate: Optional[
         Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]
     ] = load_annotation_aggregate_rows  # type:ignore
-    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type:ignore
+    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
+        load_dataset_rows
+    )  # type:ignore
     dataset_id: int
     frames: Sequence[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
     frames_aggregate: Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]] = (
-        load_frame_aggregate_rows  # type:ignore
-    )
-    gain_files: Sequence[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]] = load_gain_file_rows  # type:ignore
+        load_frame_aggregate_rows
+    )  # type:ignore
+    gain_files: Sequence[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]] = (
+        load_gain_file_rows
+    )  # type:ignore
     gain_files_aggregate: Optional[Annotated["GainFileAggregate", strawberry.lazy("graphql_api.types.gain_file")]] = (
-        load_gain_file_aggregate_rows  # type:ignore
-    )
+        load_gain_file_aggregate_rows
+    )  # type:ignore
     frame_acquisition_files: Sequence[
         Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
     ] = load_frame_acquisition_file_rows  # type:ignore
@@ -505,8 +567,8 @@ class Run(EntityInterface):
         Annotated["FrameAcquisitionFileAggregate", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
     ] = load_frame_acquisition_file_aggregate_rows  # type:ignore
     tiltseries: Sequence[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows  # type:ignore
-    )
+        load_tiltseries_rows
+    )  # type:ignore
     tiltseries_aggregate: Optional[
         Annotated["TiltseriesAggregate", strawberry.lazy("graphql_api.types.tiltseries")]
     ] = load_tiltseries_aggregate_rows  # type:ignore
@@ -516,10 +578,12 @@ class Run(EntityInterface):
     tomogram_voxel_spacings_aggregate: Optional[
         Annotated["TomogramVoxelSpacingAggregate", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
     ] = load_tomogram_voxel_spacing_aggregate_rows  # type:ignore
-    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type:ignore
+    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
+        load_tomogram_rows
+    )  # type:ignore
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_aggregate_rows  # type:ignore
-    )
+        load_tomogram_aggregate_rows
+    )  # type:ignore
     name: str = strawberry.field(description="Short name for this experiment run")
     s3_prefix: str = strawberry.field(description="The S3 public bucket path where this run is contained")
     https_prefix: str = strawberry.field(description="The HTTPS directory path where this run is contained url")
@@ -567,19 +631,28 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class RunCountColumns(enum.Enum):
-    alignments = "alignments"
-    annotations = "annotations"
-    dataset = "dataset"
-    frames = "frames"
-    gainFiles = "gain_files"
-    frameAcquisitionFiles = "frame_acquisition_files"
-    tiltseries = "tiltseries"
-    tomogramVoxelSpacings = "tomogram_voxel_spacings"
-    tomograms = "tomograms"
     name = "name"
     s3Prefix = "s3_prefix"
     httpsPrefix = "https_prefix"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class RunAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["RunCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[RunWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class RunAggregateWhereClause(TypedDict):
+    count: RunAggregateWhereClauseCount
 
 
 """
@@ -733,9 +806,7 @@ async def resolve_runs_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.Run, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.Run, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_run_aggregate_output(rows)
     return aggregate_output
 
@@ -760,13 +831,7 @@ async def create_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.dataset_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
@@ -808,13 +873,7 @@ async def update_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.dataset_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")

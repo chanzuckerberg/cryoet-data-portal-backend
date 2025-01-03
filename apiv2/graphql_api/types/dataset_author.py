@@ -43,11 +43,12 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.dataset import Dataset, DatasetOrderByClause, DatasetWhereClause
+    from graphql_api.types.dataset import Dataset, DatasetAggregateWhereClause, DatasetOrderByClause, DatasetWhereClause
 
     pass
 else:
     DatasetWhereClause = "DatasetWhereClause"
+    DatasetAggregateWhereClause = "DatasetAggregateWhereClause"
     Dataset = "Dataset"
     DatasetOrderByClause = "DatasetOrderByClause"
     pass
@@ -218,7 +219,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class DatasetAuthorCountColumns(enum.Enum):
-    dataset = "dataset"
     id = "id"
     authorListOrder = "author_list_order"
     orcid = "orcid"
@@ -229,6 +229,24 @@ class DatasetAuthorCountColumns(enum.Enum):
     affiliationIdentifier = "affiliation_identifier"
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class DatasetAuthorAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["DatasetAuthorCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[DatasetAuthorWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class DatasetAuthorAggregateWhereClause(TypedDict):
+    count: DatasetAuthorAggregateWhereClauseCount
 
 
 """

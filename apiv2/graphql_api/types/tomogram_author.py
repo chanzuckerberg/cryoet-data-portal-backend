@@ -43,11 +43,17 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
+    from graphql_api.types.tomogram import (
+        Tomogram,
+        TomogramAggregateWhereClause,
+        TomogramOrderByClause,
+        TomogramWhereClause,
+    )
 
     pass
 else:
     TomogramWhereClause = "TomogramWhereClause"
+    TomogramAggregateWhereClause = "TomogramAggregateWhereClause"
     Tomogram = "Tomogram"
     TomogramOrderByClause = "TomogramOrderByClause"
     pass
@@ -217,7 +223,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class TomogramAuthorCountColumns(enum.Enum):
-    tomogram = "tomogram"
     id = "id"
     authorListOrder = "author_list_order"
     orcid = "orcid"
@@ -228,6 +233,24 @@ class TomogramAuthorCountColumns(enum.Enum):
     affiliationIdentifier = "affiliation_identifier"
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class TomogramAuthorAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["TomogramAuthorCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[TomogramAuthorWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class TomogramAuthorAggregateWhereClause(TypedDict):
+    count: TomogramAuthorAggregateWhereClauseCount
 
 
 """
