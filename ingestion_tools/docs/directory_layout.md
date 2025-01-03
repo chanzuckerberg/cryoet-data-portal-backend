@@ -55,3 +55,6 @@ This module contains scripts for ingesting data:
 
 #### schema_migration
 This module helps keep schema configurations up to date as they evolve. It includes tools for managing schema changes.
+
+### utils
+Scripts that are less frequently used are stored here.
