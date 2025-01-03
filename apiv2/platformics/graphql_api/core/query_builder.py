@@ -19,6 +19,7 @@ from platformics.database.models.base import Base
 from platformics.graphql_api.core.errors import PlatformicsError
 from platformics.graphql_api.core.query_input_types import aggregator_map, operator_map, orderBy
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+from platformics.support import sqlalchemy_helpers
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
@@ -330,11 +331,11 @@ def get_aggregate_db_query(
         if aggregator.name == "count":
             # If provided "distinct" or "columns" arguments, use them to construct the count query
             # Otherwise, default to counting the primary key
-            col = model_cls.id
-            count_fn = agg_fn(model_cls.id)  # type: ignore
+            _, col = sqlalchemy_helpers.get_primary_key(model_cls)
+            count_fn = agg_fn(col)  # type: ignore
             if gql_colname := aggregator.arguments.get("columns"):
-                if colname := strcase.to_snake(gql_colname):
-                    col = getattr(model_cls, colname)
+                snake_field = strcase.to_snake(gql_colname)
+                col = getattr(model_cls, snake_field)
                 if aggregator.arguments.get("distinct"):
                     count_fn = agg_fn(distinct(col))  # type: ignore
             aggregate_query_fields.append(count_fn.label("count"))
