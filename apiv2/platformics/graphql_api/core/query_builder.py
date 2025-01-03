@@ -164,6 +164,7 @@ def convert_where_clauses_to_sql(
         xxx = Dummy()
         xxx.name = 'count'
         xxx.arguments = None
+        predicates = aggregate_info["count"]["predicate"]
         if "arguments" in aggregate_info["count"]:
             yyy = Dummy()
             yyy.columns = aggregate_info["count"]["arguments"].name
@@ -172,6 +173,7 @@ def convert_where_clauses_to_sql(
             else:
                 yyy.distinct = False
             xxx.arguments = yyy
+            xxx.predicates = predicates
         subquery, _order_by = get_aggregate_db_query(
             related_cls,
             action,
@@ -184,19 +186,8 @@ def convert_where_clauses_to_sql(
         )
         query_alias = aliased(related_cls, subquery)  # type: ignore
         for local, remote in relationship.local_remote_pairs:
-            # TODO THIS IS JOINING TABLES INSIDE THE SUBQUERY INSTEAD OF MAKING A CORRELATED SUBQUERY
-            # AND IT IT SUPER WRONG AND NEEDS FIXING
             subquery = subquery.filter((getattr(sa_model, local.key) == getattr(query_alias, remote.key)))
-        if "predicate" in aggregate_info["count"]:
-            subquery = subquery.subquery()
-            import sqlalchemy as sa
-            newquery = sa.select(subquery.columns.count)
-            for comparator, value in aggregate_info["count"]["predicate"].items():
-                sa_comparator = operator_map[comparator]
-                newquery = newquery.filter(getattr(subquery.columns.count, sa_comparator)(value))
-            query = query.where(newquery.exists())
-        else:
-            query = query.where(subquery.exists())
+        query = query.where(subquery.exists())
 
     # Handle aggregating and sorting on related fields.
     for join_field, join_info in all_joins.items():
@@ -366,6 +357,15 @@ def get_aggregate_db_query(
                 if aggregator.arguments.get("distinct"):
                     count_fn = agg_fn(distinct(col))  # type: ignore
             aggregate_query_fields.append(count_fn.label("count"))
+            # Support HAVING clauses, this is only used by aggregate filters for now.
+            try:
+                predicates = aggregator.predicates
+            except AttributeError:
+                predicates = {}
+            for comparator, value in predicates.items():
+                sa_comparator = operator_map[comparator]
+                query = query.having(getattr(count_fn, sa_comparator)(value))
+
         else:
             for col in aggregator.selections:
                 col_name = strcase.to_snake(col.name)
