@@ -518,6 +518,47 @@ def execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl
         wait(futures)
 
 
+def execute_validate(
+    ctx,
+    env: str,
+    dataset_ids: list[str],
+    input_bucket: str,
+    output_bucket: str,
+    output_dir: str,
+    swipe_wdl_key: str,
+):
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for dataset_id in dataset_ids:
+            print(f"Processing {dataset_id}...")
+
+            execution_name = f"{int(time.time())}-validate-{env}-{dataset_id}"
+
+            # execution name greater than 80 chars causes boto ValidationException
+            if len(execution_name) > 80:
+                execution_name = execution_name[-80:]
+
+            wdl_args = {
+                "dataset": dataset_id,
+                "input_bucket": input_bucket,
+                "output_bucket": output_bucket,
+                "output_dir": output_dir,
+                "extra_args": "",
+            }
+            futures.append(
+                workerpool.submit(
+                    partial(
+                        run_job,
+                        execution_name,
+                        wdl_args,
+                        swipe_wdl_key=swipe_wdl_key,
+                        **ctx.obj,
+                    ),
+                ),
+            )
+        wait(futures)
+
+
 @cli.command(name="sync", cls=OrderedSyncFilters)
 @click.option("--input-bucket", required=True, type=str, default="cryoet-data-portal-staging")
 @click.option("--output-bucket", required=True, type=str, default="cryoet-data-portal-public")
@@ -594,6 +635,134 @@ def sync(
             swipe_wdl_key,
             "depositions_metadata",
         )
+
+
+@cli.command(name="validate")
+@click.argument("dataset_id", nargs=-1, required=True, type=str)
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="validate_dataset-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
+)
+@enqueue_common_options
+@click.pass_context
+def validate(
+    ctx,
+    dataset_id: list[str],
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    # The environment flag only switches which bucket we're validating
+    input_bucket = "cryoet-data-portal-public"
+    output_dir = "prod_validation"
+    env = "prod"
+    if kwargs.get("environment") == "staging":
+        env = "staging"
+        input_bucket = "cryoet-data-portal-staging"
+        output_dir = "staging_validation"
+
+    # We always run validation in the staging env.
+    kwargs["environment"] = "staging"
+    handle_common_options(ctx, kwargs)
+
+    # Default to using a lot less memory than the ingestion job.
+    if not ctx.obj.get("memory"):
+        ctx.obj["memory"] = 4000
+
+    execute_validate(
+        ctx=ctx,
+        env=env,
+        dataset_ids=dataset_id,
+        input_bucket=input_bucket,
+        output_bucket="cryoet-data-portal-staging",
+        output_dir=output_dir,
+        swipe_wdl_key=swipe_wdl_key,
+    )
+
+
+@cli.command()
+@click.argument("config_file", required=True, type=str)
+@click.argument("output_bucket", required=True, type=str)
+@click.option("--migrate-everything", is_flag=True, default=False)
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="schema_migrate-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
+)
+@enqueue_common_options
+@migrate_common_options
+@click.pass_context
+def migrate(
+    ctx,
+    config_file: str,
+    output_bucket: str,
+    migrate_everything: bool,
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    handle_common_options(ctx, kwargs)
+    fs_mode = "s3"
+    fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=False)
+
+    config = DepositionImportConfig(fs, config_file, output_bucket, output_bucket, IMPORTERS)
+    # config.load_map_files()
+    filter_runs = [re.compile(pattern) for pattern in kwargs.get("filter_run_name", [])]
+    exclude_runs = [re.compile(pattern) for pattern in kwargs.get("exclude_run_name", [])]
+    filter_datasets = [re.compile(pattern) for pattern in kwargs.get("filter_dataset_name", [])]
+    exclude_datasets = [re.compile(pattern) for pattern in kwargs.get("exclude_dataset_name", [])]
+
+    # Always iterate over depostions, datasets and runs.
+    for dataset in DatasetImporter.finder(config):
+        if list(filter(lambda x: x.match(dataset.name), exclude_datasets)):
+            print(f"Excluding {dataset.name}..")
+            continue
+        if filter_datasets and not list(filter(lambda x: x.match(dataset.name), filter_datasets)):
+            print(f"Skipping {dataset.name}..")
+            continue
+        print(f"Processing dataset: {dataset.name}")
+
+        futures = []
+        with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+            finder = DestinationFilteredMetadataFinder([], RunImporter)
+            for result_path in finder.find(config, {"dataset_name": dataset.name, "run_name": "*"}):
+                run_name = os.path.basename(os.path.dirname(result_path))
+                if list(filter(lambda x: x.match(run_name), exclude_runs)):
+                    print(f"Excluding {run_name}..")
+                    continue
+                if filter_runs and not list(filter(lambda x: x.match(run_name), filter_runs)):
+                    print(f"Skipping {run_name}..")
+                    continue
+                print(f"Processing {run_name}...")
+
+                per_run_args = {}
+                excluded_args = ["filter_dataset_name", "filter_run_name"]
+                for k, v in kwargs.items():
+                    if any(substring in k for substring in excluded_args):
+                        break
+                    per_run_args[k] = v
+                new_args = to_args(migrate_everything=migrate_everything, **per_run_args)  # make a copy
+                new_args.append(f"--filter-dataset-name '^{dataset.name}$'")
+                new_args.append(f"--filter-run-name '^{run_name}$'")
+
+                dataset_id = dataset.name
+                execution_name = f"{int(time.time())}-migrate-ds{dataset_id}-run{run_name}"
+
+                # execution name greater than 80 chars causes boto ValidationException
+                if len(execution_name) > 80:
+                    execution_name = execution_name[-80:]
+
+                wdl_args = {"config_file": config_file, "output_bucket": output_bucket, "flags": " ".join(new_args)}
+
+                futures.append(
+                    workerpool.submit(
+                        partial(run_job, execution_name, wdl_args, swipe_wdl_key=swipe_wdl_key, **ctx.obj),
+                    ),
+                )
+            wait(futures)
 
 
 if __name__ == "__main__":

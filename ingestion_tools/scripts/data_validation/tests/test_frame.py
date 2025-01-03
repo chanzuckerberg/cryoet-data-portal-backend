@@ -52,17 +52,54 @@ class TestFrame(HelperTestMRCHeader):
     def test_consistent(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
         return helper_tiff_mrc_consistent(frames_headers)
 
-    ### END Self-consistency tests ###
+    ### BEGIN MDOC tests ###
+    @allure.title("Mdoc: tilt angles are within the expected range [-90, 90].")
+    def test_frames_mdoc_range(self, frames_mdoc: pd.DataFrame):
+        assert frames_mdoc["TiltAngle"].min() >= -90
+        assert frames_mdoc["TiltAngle"].max() <= 90
 
-    ### BEGIN Tiltseries consistency tests ###
+    @allure.title("Mdoc: number of mdoc tilt angles equals number of frames files.")
+    def test_mdoc_frames(self, frames_mdoc: pd.DataFrame, frames_files: List[str]):
+        assert len(frames_mdoc) == len(frames_files)
+
+    @allure.title("Mdoc: Every mdoc tilt angle matches a frames file (one-to-one).")
+    def test_mdoc_frame_paths(
+        self,
+        frames_files: List[str],
+        frames_mdoc: pd.DataFrame,
+    ):
+        standardize_frames_files = [os.path.basename(f) for f in frames_files]
+        standardized_mdoc_entries = [
+            os.path.basename(str(row["SubFramePath"]).replace("\\", "/")) for _, row in frames_mdoc.iterrows()
+        ]
+
+        mdoc_with_missing_frames = [
+            entry for entry in standardized_mdoc_entries if entry not in standardize_frames_files
+        ]
+        frames_with_missing_mdoc = [
+            entry for entry in standardize_frames_files if entry not in standardized_mdoc_entries
+        ]
+
+        errors = []
+        if len(standardize_frames_files) != len(standardized_mdoc_entries):
+            errors.append(
+                f"# of mdoc entries ({len(standardized_mdoc_entries)}) != # of frames files ({len(standardize_frames_files)})",
+            )
+        if mdoc_with_missing_frames:
+            errors.append(f"mdoc entries do not have frames files: {mdoc_with_missing_frames}")
+        if frames_with_missing_mdoc:
+            errors.append(f"Frames files do not have mdoc entries: {frames_with_missing_mdoc}")
+
+        assert len(errors) == 0, "\n".join(errors)
+
     @allure.title("Frames: number of subframes in mdoc matches the number of subframes in the frame file.")
     def test_mdoc_numsubframes(
         self,
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
-        tiltseries_mdoc: pd.DataFrame,
+        frames_mdoc: pd.DataFrame,
     ):
         errors = []
-        for _, row in tiltseries_mdoc.iterrows():
+        for _, row in frames_mdoc.iterrows():
             frame_file = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
             if frame_file not in frames_headers:
                 # Frame file does not exist, this will get caught by a test_tilt_angles test
@@ -84,22 +121,7 @@ class TestFrame(HelperTestMRCHeader):
 
         assert not errors, "\n".join(errors)
 
-    @allure.title("Frames: tiltseries pixel spacing is an integer multiple of the frame pixel spacing.")
-    def test_tiltseries_pixel_spacing(
-        self,
-        frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
-        tiltseries_metadata: Dict,
-    ):
-        for frame_file, frame_header in frames_headers.items():
-            if isinstance(frame_header, MrcInterpreter):
-                # only need to check the first frame, since we check that all frames have the same pixel spacing
-                assert tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["x"] == pytest.approx(
-                    round(tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["x"]),
-                    abs=0.001,
-                ), f"Pixel spacing does not match tiltseries metadata, {frame_file}"
-                return
-
-    ### END Tiltseries consistency tests ###
+    ### END Self-consistency tests ###
 
 
 ### Helper functions (used in other test classes) ###
