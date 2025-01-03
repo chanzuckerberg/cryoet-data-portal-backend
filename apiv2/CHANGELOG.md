@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.6.0...apiv2-v1.6.1) (2025-01-03)
+
+
+### Bug Fixes
+
+* scrape script overwriting existing data ([709e8a0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/709e8a006b542abe824edc394281059dda29a757))
+* scrape script overwriting existing v2 data ([#390](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/390)) ([709e8a0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/709e8a006b542abe824edc394281059dda29a757))
+
 ## [1.6.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.5.0...apiv2-v1.6.0) (2024-12-17)
 
 
