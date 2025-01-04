@@ -25,14 +25,27 @@ else:
 
 
 class BaseImporter:
+    """
+    Base class for importing deposition entities.
+
+    Attributes:
+        type_key (str): Specifies the type of importer.
+        plural_key (str): The plural value of the type key. This will be matched against the import flag.
+        cached_find_results (dict[str, BaseImporter]): Caches results of find operations.
+        finder_factory (DepositionObjectImporterFactory | None): The finder factory to be employed by the importer.
+        parents (dict[str, BaseImporter]): Parent importers of the current importer.
+        has_metadata (bool): Indicates if the importer supports metadata import.
+        dir_path (str | None): Path in the destination for the entity.
+        metadata_path (str | None): Path in the destination for the metadata file.
+    """
     type_key: str
     plural_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
     finder_factory: DepositionObjectImporterFactory | None = None
     parents: dict[str, "BaseImporter"]
     has_metadata: bool = False
-    dir_path: str = None
-    metadata_path: str = None
+    dir_path: str | None = None
+    metadata_path: str | None = None
 
     def __init__(
         self,
@@ -61,6 +74,13 @@ class BaseImporter:
         return self.parents[type_key]
 
     def get_glob_vars(self) -> dict[str, Any]:
+        """
+        Retrieves values that are supported for globbing a file from the current importer and all its parents. Some of the
+        supported values include path, name, id (if the importer supports it), etc.
+
+        Returns:
+           dict[str, Any]: A dictionary containing glob variables.
+        """
         glob_vars = {}
         glob_vars[f"{self.type_key}_path"] = self.path
         glob_vars[f"{self.type_key}_name"] = self.name
@@ -103,12 +123,30 @@ class BaseImporter:
         return self.parent_getter("annotation")
 
     def get_output_path(self) -> str:
+        """
+        Retrieves the output path for the current importer.
+
+        This method constructs the output path by combining the base output path
+        from the configuration with self.dir_path string formatted with the required values.
+        Returns:
+            str: The constructed output path.
+        """
         return self.config.get_output_path(self)
 
     def get_base_metadata(self) -> dict[str, Any]:
+        """
+        Retrieves a deep copy od the metadata for the importer specified in the config. For tiltseries and tomograms
+        importers the metadata is expanded to support any string replacements.
+        """
         return self.config.get_expanded_metadata(self)
 
     def get_metadata_path(self) -> str:
+        """
+        Retrieves the metadata path for the current importer.
+
+        Returns:
+           str: The constructed metadata path.
+        """
         return self.config.get_metadata_path(self)
 
     def is_import_allowed(self):
@@ -116,6 +154,12 @@ class BaseImporter:
 
     @classmethod
     def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
+        """
+        Finds the importer entities based on the configuration source specified. If no items are found, but a default
+        entry exists, then the default entry is returned.
+        Returns:
+            list[BaseImporter]: A list of importer entities.
+        """
         finder_configs = config.get_object_configs(cls.type_key)
         item_found = False
         for item in cls._finder_execution(finder_configs, config, **parents):
@@ -158,6 +202,10 @@ class BaseImporter:
         config: DepositionImportConfig,
         **parents: dict[str, "BaseImporter"],
     ) -> list["BaseImporter"]:
+        """
+        Executes the finder action for the importer. The configuration is used for determining the type of finder to be
+        used.
+        """
         for finder in finder_configs:
             metadata = finder.get("metadata", {})
             sources = finder.get("sources", [])
@@ -168,6 +216,15 @@ class BaseImporter:
 
 
 class VolumeImporter(BaseImporter):
+    """
+    A class for importing volume data.
+
+    This class extends the BaseImporter to handle the import of volume data, including scaling and metadata handling.
+
+    Attributes:
+        volume_filename (str): The filename of the volume to be imported.
+        identifier (Any): An identifier for the volume importer.
+    """
     def __init__(
         self,
         path: str,
@@ -179,6 +236,11 @@ class VolumeImporter(BaseImporter):
         self.identifier = None
 
     def get_voxel_size(self) -> float:
+        """
+        Retrieves the voxel size of the source volume.
+        Returns:
+            float: voxel size of the source.
+        """
         return get_voxel_size(self.config.fs, self.volume_filename)
 
     def get_output_volume_info(self) -> VolumeInfo:
@@ -192,6 +254,16 @@ class VolumeImporter(BaseImporter):
         write_mrc: bool = True,
         voxel_spacing: float | None = None,
     ) -> dict[str, Any]:
+        """
+        Scales the MRC file into a pyramid volume and optionally writes it to MRC and Zarr formats.
+        The mrc file written is the most detailed level of the pyramid.
+        The zarr file written is the full pyramid.
+        Args:
+            scale_z_axis (bool): Whether to scale the z-axis.
+            write_zarr (bool): Whether to write the zarr file.
+            write_mrc (bool): Whether to write the mrc file.
+            voxel_spacing (float): The voxel spacing of the volume.
+        """
         output_prefix = self.get_output_path()
         return make_pyramids(
             self.config.fs,
@@ -220,6 +292,10 @@ class VolumeImporter(BaseImporter):
 
 
 class BaseFileImporter(BaseImporter):
+    """
+    This class extends the BaseImporter to handle the import of files. This is suited for case where no transformations
+    are required, and source files can be copied to the destination.
+    """
     def import_item(self) -> None:
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
@@ -229,6 +305,10 @@ class BaseFileImporter(BaseImporter):
 
 
 class BaseKeyPhotoImporter(BaseImporter):
+    """
+   This class extends the BaseImporter to handle the import of key photos. This importer supports copying of images from
+   a source, and generating the image based on its parent importer.
+   """
     image_keys = ["snapshot", "thumbnail"]
 
     def import_item(self) -> None:
@@ -250,6 +330,9 @@ class BaseKeyPhotoImporter(BaseImporter):
         copy_by_src(image_src, dest_path, self.config.fs)
 
     def get_metadata(self) -> dict[str, str]:
+        """
+        Retrieves the path for the current importer's pre-defined keys.
+        """
         path = self.config.get_output_path(self)
         image_files = self.config.fs.glob(f"{path}/*")
         return {key: self.get_image_file(image_files, f"{path}/{key}") for key in self.image_keys}
