@@ -5,6 +5,7 @@ description = "Ingestion tools for the CZI Imaging Institute CryoET Data Portal"
 authors = [
     "CZI Imaging Team <cryoetdataportal@chanzuckerberg.com>"
 ]
+package-mode = false
 license = "MIT"
 readme = "README.md"
 classifiers = [
