@@ -21,6 +21,8 @@ classifiers = [
 ]
 
 [tool.poetry]
+name = "ingestion_tools"
+version = "0.1.0"
 package-mode = false
 
 [project.urls]
