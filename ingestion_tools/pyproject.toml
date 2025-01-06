@@ -1,12 +1,11 @@
-[tool.poetry]
+[project]
 name = "ingestion_tools"
 version = "0.1.0"
 description = "Ingestion tools for the CZI Imaging Institute CryoET Data Portal"
 authors = [
-    "CZI Imaging Team <cryoetdataportal@chanzuckerberg.com>"
+    {name = "CZI Imaging Team", email= "cryoetdataportal@chanzuckerberg.com"}
 ]
-package-mode = false
-license = "MIT"
+license = { text = "MIT" }
 readme = "README.md"
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -20,6 +19,9 @@ classifiers = [
     "Operating System :: MacOS :: MacOS X",
     "Programming Language :: Python :: 3.11",
 ]
+
+[tool.poetry]
+package-mode = false
 
 [project.urls]
 homepage = "https://cryoetdataportal.czscience.com/"
