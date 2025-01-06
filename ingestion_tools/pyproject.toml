@@ -1,11 +1,11 @@
-[tool.poetry]
+[project]
 name = "ingestion_tools"
 version = "0.1.0"
 description = "Ingestion tools for the CZI Imaging Institute CryoET Data Portal"
 authors = [
-    "CZI Imaging Team <cryoetdataportal@chanzuckerberg.com>"
+    {name = "CZI Imaging Team", email="cryoetdataportal@chanzuckerberg.com"}
 ]
-license = "MIT"
+license = {text = "MIT"}
 readme = "README.md"
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -20,12 +20,21 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 
+[build-system]
+requires = ["poetry-core==2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "ingestion_tools"
+version = "0.1.0"
+package-mode = false
+
 [project.urls]
 homepage = "https://cryoetdataportal.czscience.com/"
 repository = "https://github.com/chanzuckerberg/cryoet-data-portal-backend"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 peewee = "3.16.2"
 boto3 = "*"
 botocore = "*"
@@ -44,7 +53,7 @@ imageio = "^2.33.1"
 pytest = "^8.3.2"
 boto3-stubs = {extras = ["s3"], version = "^1.34.34"}
 mypy = "^1.8.0"
-cryoet-data-portal-neuroglancer = { git = "https://github.com/chanzuckerberg/cryoet-data-portal-neuroglancer.git", tag = "v1.0.0" }
+cryoet-data-portal-neuroglancer = { git = "https://github.com/chanzuckerberg/cryoet-data-portal-neuroglancer.git", branch = "jgadling/poetry-patch" }
 distinctipy = "^1.3.4"
 imodmodel = "0.0.12"
 mdocfile = "^0.1.2"
@@ -59,7 +68,7 @@ cryoet-alignment = "0.0.7"
 
 [tool.black]
 line-length = 120
-target_version = ['py311']
+target_version = ['py312']
 
 [tool.ruff]
 line-length = 120

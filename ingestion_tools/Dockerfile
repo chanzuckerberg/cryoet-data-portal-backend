@@ -1,4 +1,4 @@
-FROM python:3.11.6-bookworm
+FROM python:3.12-bookworm
 
 WORKDIR /usr/src/app
 RUN mkdir ingestion_tools
@@ -21,11 +21,11 @@ RUN wget http://crt.sectigo.com/SectigoRSAOrganizationValidationSecureServerCA.c
 # Install the AWS CLI
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && rm -rf ./aws
 
-ENV IMOD_DIR /usr/local/IMOD
+ENV IMOD_DIR=/usr/local/IMOD
 
 # Get our packaging house in order
 RUN pip install --upgrade pip
-ENV POETRY_VERSION=1.8.3
+ENV POETRY_VERSION=2.0.0
 RUN python3 -m pip install --no-cache-dir poetry==$POETRY_VERSION
 
 # Install our dependencies
