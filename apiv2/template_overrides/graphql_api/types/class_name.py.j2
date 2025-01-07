@@ -144,7 +144,7 @@ T = typing.TypeVar("T")
 if TYPE_CHECKING:
     {%- for related_field in related_fields %}
         {%- if related_field.related_class.name not in ignored_fields %}
-    from graphql_api.types.{{related_field.related_class.snake_name}} import ({{related_field.related_class.name}}OrderByClause, {{related_field.related_class.name}}WhereClause, {{related_field.related_class.name}})
+    from graphql_api.types.{{related_field.related_class.snake_name}} import ({{related_field.related_class.name}}OrderByClause, {{related_field.related_class.name}}AggregateWhereClause, {{related_field.related_class.name}}WhereClause, {{related_field.related_class.name}})
         {%- endif %}
     {%- endfor %}
     pass
@@ -152,6 +152,7 @@ else:
     {%- for related_field in related_fields %}
         {%- if related_field.related_class.name not in ignored_fields %}
     {{related_field.related_class.name}}WhereClause = "{{related_field.related_class.name}}WhereClause"
+    {{related_field.related_class.name}}AggregateWhereClause = "{{related_field.related_class.name}}AggregateWhereClause"
     {{related_field.related_class.name}} = "{{related_field.related_class.name}}"
     {{related_field.related_class.name}}OrderByClause = "{{related_field.related_class.name}}OrderByClause"
         {%- endif %}
@@ -283,6 +284,9 @@ class {{ cls.name }}WhereClause(TypedDict):
         {%- if attr.inverse and not attr.multivalued %}
     {{ attr.name }}_id : Optional[{{ getComparators(attr.related_class.identifier) }}] | None
         {%- endif %}
+        {%- if attr.is_virtual_relationship %}
+    {{ attr.name }}_aggregate : Optional[Annotated["{{ attr.type }}AggregateWhereClause", strawberry.lazy("graphql_api.types.{{ attr.related_class.snake_name }}")]] | None
+        {%- endif %}
     {%- endfor %}
 
 """
@@ -378,8 +382,25 @@ Define enum of all columns to support count and count(distinct) aggregations
 @strawberry.enum
 class {{ cls.name }}CountColumns(enum.Enum):
     {%- for attr in cls.visible_fields %}
+        {%- if not attr.is_entity %}
     {{ attr.camel_name }} = "{{ attr.name }}"
+        {%- endif %}
     {%- endfor %}
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+@strawberry.input
+class {{ cls.name }}AggregateWhereClauseCount(TypedDict):
+    arguments: Optional["{{ cls.name }}CountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[{{ cls.name }}WhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class {{ cls.name }}AggregateWhereClause(TypedDict):
+    count: {{ cls.name }}AggregateWhereClauseCount
 
 """
 All supported aggregation functions

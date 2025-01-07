@@ -45,15 +45,27 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
-    from graphql_api.types.annotation_file import AnnotationFile, AnnotationFileOrderByClause, AnnotationFileWhereClause
+    from graphql_api.types.annotation import (
+        Annotation,
+        AnnotationAggregateWhereClause,
+        AnnotationOrderByClause,
+        AnnotationWhereClause,
+    )
+    from graphql_api.types.annotation_file import (
+        AnnotationFile,
+        AnnotationFileAggregateWhereClause,
+        AnnotationFileOrderByClause,
+        AnnotationFileWhereClause,
+    )
 
     pass
 else:
     AnnotationWhereClause = "AnnotationWhereClause"
+    AnnotationAggregateWhereClause = "AnnotationAggregateWhereClause"
     Annotation = "Annotation"
     AnnotationOrderByClause = "AnnotationOrderByClause"
     AnnotationFileWhereClause = "AnnotationFileWhereClause"
+    AnnotationFileAggregateWhereClause = "AnnotationFileAggregateWhereClause"
     AnnotationFile = "AnnotationFile"
     AnnotationFileOrderByClause = "AnnotationFileOrderByClause"
     pass
@@ -146,6 +158,10 @@ class AnnotationShapeWhereClause(TypedDict):
     annotation_files: (
         Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
     )
+    annotation_files_aggregate: (
+        Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]]
+        | None
+    )
     shape_type: Optional[EnumComparators[annotation_file_shape_type_enum]] | None
     id: Optional[IntComparators] | None
 
@@ -226,10 +242,26 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class AnnotationShapeCountColumns(enum.Enum):
-    annotation = "annotation"
-    annotationFiles = "annotation_files"
     shapeType = "shape_type"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class AnnotationShapeAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["AnnotationShapeCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[AnnotationShapeWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class AnnotationShapeAggregateWhereClause(TypedDict):
+    count: AnnotationShapeAggregateWhereClauseCount
 
 
 """
