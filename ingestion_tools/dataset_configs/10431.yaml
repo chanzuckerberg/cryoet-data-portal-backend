@@ -8,8 +8,6 @@ alignments:
       - alignmentfiles/{run_name}_bin8_align_fid.tlt
       - alignmentfiles/{run_name}_bin8_align_fid.xf
 
-annotations: []
-
 collection_metadata:
 - sources:
   - source_glob:
@@ -52,7 +50,7 @@ datasets:
       with 0.7 bar of paraformaldehyde prior to vitrification.
     dataset_identifier: 10431
     dataset_title: Unroofing Grid06
-    dates:
+    dates: &dataset_dates
       deposition_date: '2024-07-01'
       last_modified_date: '2024-07-01'
       release_date: '2024-07-05'
@@ -77,6 +75,40 @@ datasets:
   - literal:
       value:
       - '10431'
+
+annotations: []
+#TODO: Uncomment when RELION 5 support is added
+#  - metadata:
+#      annotation_method: Segmentation using EMAN2, refinement using Dynamo and RELION
+#      annotation_object:
+#        id: GO:0030118
+#        name: clathrin coat
+#      annotation_publications: 10.1101/2024.06.27.600657
+#      annotation_software: EMAN2, Dynamo, RELION 4, RELION 5
+#      method_links:
+#        - custom_name: EMAN2 website
+#          link: https://blake.bcm.edu/emanwiki/EMAN2
+#          link_type: website
+#        - custom_name: Dynamo website
+#          link: https://www.dynamo-em.org//w/index.php?title=Main_Page
+#          link_type: source_code
+#        - custom_name: RELION on GitHub
+#          link: https://github.com/3dem/relion
+#          link_type: source_code
+#      authors: *id001
+#      dates: *dataset_dates
+#      ground_truth_status: false
+#      is_curator_recommended: true
+#      method_type: hybrid
+#      version: 1.0
+#    sources:
+#      - OrientedPoint:
+#          binning: 10
+#          file_format: relion5_star
+#          glob_strings:
+#            - 'clathrin_aqb1_refined_particles.star'
+#          is_visualization_default: true
+#          order: xyz
 
 depositions:
 - sources:
