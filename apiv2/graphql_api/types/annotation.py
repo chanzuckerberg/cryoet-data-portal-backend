@@ -48,6 +48,7 @@ from platformics.graphql_api.core.query_input_types import (
 )
 from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
@@ -151,7 +152,7 @@ async def load_annotation_shape_aggregate_rows(
     info: Info,
     where: Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")] | None = None,
 ) -> Optional[Annotated["AnnotationShapeAggregate", strawberry.lazy("graphql_api.types.annotation_shape")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["annotation_shapes"]
@@ -191,7 +192,7 @@ async def load_annotation_method_link_aggregate_rows(
         Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")] | None
     ) = None,
 ) -> Optional[Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["method_links"]
@@ -229,7 +230,7 @@ async def load_annotation_author_aggregate_rows(
         Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")] | None
     ) = None,
 ) -> Optional[Annotated["AnnotationAuthorAggregate", strawberry.lazy("graphql_api.types.annotation_author")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["authors"]
@@ -812,10 +813,7 @@ async def resolve_annotations_aggregate(
     """
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
-    selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
-    groupby_selections = groupby_selections[0].selections if groupby_selections else []
+    aggregate_selections, groupby_selections = get_aggregate_selections(info.selected_fields)
 
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")

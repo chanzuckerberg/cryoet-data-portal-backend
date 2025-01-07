@@ -8,11 +8,7 @@ import pytest
 
 from platformics.database.connect import SyncDB
 from platformics.test_infra.factories.base import SessionStorage
-from test_infra.factories.annotation import AnnotationFactory
-from test_infra.factories.deposition import DepositionFactory
 from test_infra.factories.dataset import DatasetFactory
-from test_infra.factories.annotation_shape import AnnotationShapeFactory
-from test_infra.factories.dataset import DatasetFactory, DepositionFactory
 from test_infra.factories.run import RunFactory
 
 date_now = datetime.datetime.now()
