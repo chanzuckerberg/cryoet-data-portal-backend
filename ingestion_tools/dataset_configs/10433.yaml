@@ -1,15 +1,20 @@
-annotations: []
-collection_metadata:
-- sources:
+alignments:
+- metadata:
+    format: IMOD
+    method_type: fiducial_based
+  sources:
   - source_multi_glob:
       list_globs:
-      - mdocs/{mdoc_name}
-dataset_keyphotos:
+      - alignmentfiles/{run_name}_bin8_align_fid.tlt
+      - alignmentfiles/{run_name}_bin8_align_fid.xf
+
+annotations: []
+
+collection_metadata:
 - sources:
-  - literal:
-      value:
-        snapshot: null
-        thumbnail: null
+  - source_glob:
+      list_glob: 'mdocs/{mdoc_name}'
+
 datasets:
 - metadata:
     authors: &id001
@@ -72,25 +77,37 @@ datasets:
   - literal:
       value:
       - '10433'
+
 depositions:
 - sources:
   - literal:
       value:
       - 10306
+
 frames:
 - sources:
   - source_glob:
       list_glob: frames/{frame_prefix}*.tif
+
+gains: []
+
+rawtilts:
+  - sources:
+    - source_glob:
+        list_glob: 'rawtilts/{run_name}.rawtlt'
+
 runs:
 - sources:
   - source_glob:
       list_glob: tomograms_bin8/*
       match_regex: \.rec$
       name_regex: (.*)_bin8_align.rec
+
 standardization_config:
   deposition_id: 10306
   run_data_map_file: run_to_data_map.tsv
   source_prefix: kem_sochacki_06_2024/grid08/
+
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
@@ -117,7 +134,9 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: validation_placeholder/for_unavailable_ts.st
+      list_glob: 'raw_tilt_series/{run_name}_bin8_align.st'
+      match_regex: ^.*\.st$
+
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -158,7 +177,9 @@ tomograms:
   - source_glob:
       list_glob: tomograms_bin8/{run_name}_bin8_align.rec
       match_regex: (.*)\.rec
+
 version: 1.1.0
+
 voxel_spacings:
 - sources:
   - literal:
