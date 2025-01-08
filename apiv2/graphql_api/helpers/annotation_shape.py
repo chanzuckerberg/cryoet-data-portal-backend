@@ -5,16 +5,19 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.annotation as annotation_helper
+import graphql_api.helpers.annotation_file as annotation_file_helper
 import strawberry
-from graphql_api.helpers.annotation import AnnotationGroupByOptions, build_annotation_groupby_output
 from support.enums import annotation_file_shape_type_enum
 
 if TYPE_CHECKING:
-    from api.types.annotation import Annotation
+    from graphql_api.helpers.annotation import AnnotationGroupByOptions
+    from graphql_api.helpers.annotation_file import AnnotationFileGroupByOptions
 else:
-    Annotation = "Annotation"
+    AnnotationGroupByOptions = "AnnotationGroupByOptions"
+    AnnotationFileGroupByOptions = "AnnotationFileGroupByOptions"
 
 
 """
@@ -25,7 +28,12 @@ These are only used in aggregate queries.
 
 @strawberry.type
 class AnnotationShapeGroupByOptions:
-    annotation: Optional[AnnotationGroupByOptions] = None
+    annotation: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = (
+        None
+    )
+    annotation_files: Optional[
+        Annotated["AnnotationFileGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_file")]
+    ] = None
     shape_type: Optional[annotation_file_shape_type_enum] = None
     id: Optional[int] = None
 
@@ -46,13 +54,26 @@ def build_annotation_shape_groupby_output(
     match key:
         case "annotation":
             if getattr(group_object, key):
-                value = build_annotation_groupby_output(
+                value = annotation_helper.build_annotation_groupby_output(
                     getattr(group_object, key),
                     keys,
                     value,
                 )
             else:
-                value = build_annotation_groupby_output(
+                value = annotation_helper.build_annotation_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "annotation_files":
+            if getattr(group_object, key):
+                value = annotation_file_helper.build_annotation_file_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = annotation_file_helper.build_annotation_file_groupby_output(
                     None,
                     keys,
                     value,

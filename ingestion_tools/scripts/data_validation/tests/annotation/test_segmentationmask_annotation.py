@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 
 import allure
 import numpy as np
@@ -27,13 +27,25 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
 
     ### BEGIN Tomogram-consistency tests ###
     @allure.title("Segmentation mask: volumes are contained within the tomogram dimensions.")
-    def test_contained_in_tomo(self, tomogram_metadata: Dict):
-        def check_contained_in_tomo(header, _interpreter, _mrc_filename, tomogram_metadata):
-            del _interpreter, _mrc_filename
-            assert header.nx == tomogram_metadata["size"]["x"]
-            assert header.ny == tomogram_metadata["size"]["y"]
-            assert header.nz == tomogram_metadata["size"]["z"]
+    def test_contained_in_tomo(self,
+                               seg_mask_annotation_mrc_files: List,
+                               seg_mask_annotation_files_to_metadata: Dict,
+                               all_vs_tomogram_metadata: Dict):
 
-        self.mrc_header_helper(check_contained_in_tomo, tomogram_metadata=tomogram_metadata)
+        tomo_metadata = {}
+        for filename, metadata in seg_mask_annotation_files_to_metadata.items():
+            for tomo_data in all_vs_tomogram_metadata:
+                if metadata["alignment_metadata_path"] == tomo_data["alignment_metadata_path"]:
+                    tomo_metadata[filename] = tomo_data
+                    break
+
+        def check_contained_in_tomo(header, _interpreter, _mrc_filename, tomogram_metadata):
+            this_tomo_metadata = tomo_metadata[_mrc_filename]
+            del _interpreter, _mrc_filename
+            assert header.nx == this_tomo_metadata["size"]["x"]
+            assert header.ny == this_tomo_metadata["size"]["y"]
+            assert header.nz == this_tomo_metadata["size"]["z"]
+
+        self.mrc_header_helper(check_contained_in_tomo, tomogram_metadata=tomo_metadata)
 
     ### END Tomogram-consistency tests ###

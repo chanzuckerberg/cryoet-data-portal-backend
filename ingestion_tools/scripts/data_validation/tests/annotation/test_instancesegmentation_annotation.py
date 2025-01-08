@@ -33,8 +33,9 @@ class TestInstanceSegmentationAnnotations:
     def test_contained_in_tomo(
         self,
         instance_seg_annotations: Dict[str, List[Dict]],
-        tomogram_metadata: Dict,
+        instance_seg_annotation_files_to_metadata: Dict[str, str],
+        all_vs_tomogram_metadata: Dict,
     ):
-        contained_in_tomo(instance_seg_annotations, tomogram_metadata)
+        contained_in_tomo(instance_seg_annotations, instance_seg_annotation_files_to_metadata, all_vs_tomogram_metadata)
 
     ### END Tomogram-consistency tests ###

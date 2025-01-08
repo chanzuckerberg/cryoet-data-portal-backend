@@ -27,6 +27,7 @@ def cli():
 
 def db_import_options(func):
     options = []
+    options.append(click.option("--import-alignments", is_flag=True, default=False))
     options.append(click.option("--import-annotations", is_flag=True, default=False))
     options.append(click.option("--import-annotation-authors", is_flag=True, default=False))
     options.append(click.option("--import-dataset-authors", is_flag=True, default=False))
@@ -78,6 +79,7 @@ def load(
     anonymous: bool,
     debug: bool,
     filter_dataset: list[str],
+    import_alignments: bool, # noqa
     import_annotations: bool,
     import_annotation_authors: bool,
     import_dataset_authors: bool,

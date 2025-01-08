@@ -25,14 +25,14 @@ ENV IMOD_DIR /usr/local/IMOD
 
 # Get our packaging house in order
 RUN pip install --upgrade pip
-ENV POETRY_VERSION=1.8.3
+ENV POETRY_VERSION=2.0.0
 RUN python3 -m pip install --no-cache-dir poetry==$POETRY_VERSION
 
 # Install our dependencies
 COPY pyproject.toml poetry.lock ./
 RUN poetry config virtualenvs.create false
 ENV PYTHONPATH=.
-RUN poetry install
+RUN poetry install --no-root
 
 COPY . ./ingestion_tools/
 WORKDIR /usr/src/app/ingestion_tools/scripts

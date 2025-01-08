@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.6.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.5.0...apiv2-v1.6.0) (2024-12-17)
+
+
+### Features
+
+* Support for Per Section Alignment Parameters DB Import ([#369](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/369)) ([ce2643c](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/ce2643cadf643a18455405996d2856753a0ccbed))
+* Support grouping aggregate results by 1:many relationships ([#376](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/376)) ([db82957](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/db82957625a4eab20e4fa02fa9790b90539336ae))
+
+
+### Bug Fixes
+
+* Adding is_visualization_default field to tomo ingestion ([#350](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/350)) ([a65209f](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a65209fd2bf3ba80589be5cdc7f709930bb251fd))
+* Make sure we support multiple grants for a given funding agency. ([#357](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/357)) ([b4441ea](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/b4441eafc1f0081378f3bc3fc2c214784abf8e99))
+* remove tiltseries_id check from alignment importer ([#374](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/374)) ([1a3a50c](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/1a3a50c0bbcd31489a1426b132cf1c48edb23294))
+* Support running v2 db import via batch job. ([#356](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/356)) ([a832d2f](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a832d2f541c6413ad295b5386eaf9c76675490fb))
+
 ## [1.5.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.4.0...apiv2-v1.5.0) (2024-11-06)
 
 

@@ -17,20 +17,13 @@ from platformics.database.connect import init_sync_db
 
 
 # Adapted from https://github.com/sqlalchemy/sqlalchemy/wiki/UniqueObject
-def get_or_create(session, cls, row_id, filters, data):
+def create_if_not_exists(session, cls, row_id, filters, data):
     query = session.query(cls)
     for filter in filters:
         query = query.where(filter)
     obj = query.first()
-    if obj:
-        for k, v in data.items():
-            try:
-                setattr(obj, k, v)
-            except:
-                print(cls)
-                print(data)
-                raise
-    else:
+    # Only create if record doesn't exist. Don't update existing object states.
+    if not obj:
         obj = cls(id=row_id, **data)
         session.add(obj)
     return obj
@@ -146,7 +139,7 @@ def add(session, model, item, parents):
             "annotation_id": parents["annotation_id"],
             "shape_type": remote_item["shape_type"],
         }
-        shape = get_or_create(
+        shape = create_if_not_exists(
             session,
             models.AnnotationShape,
             remote_item[
@@ -340,7 +333,7 @@ def add(session, model, item, parents):
             "s3_prefix": remote_item["s3_prefix"],
             "https_prefix": remote_item["https_prefix"],
         }
-    item = get_or_create(
+    item = create_if_not_exists(
         session,
         model,
         new_item_id,  # Use the possibly-mutated value assigned above
@@ -374,16 +367,13 @@ def fetch_method_links(client_url, annotation):
     headers = {
         "Content-type": "application/json",
     }
-    query = (
-        """
+    query = """
         query MyQuery {
             annotations(where: {id: {_eq: %d }}) {
                 method_links
             }
         }
-    """
-        % annotation.id
-    )
+    """ % annotation.id
     payload = json.dumps({"query": query, "variables": None, "operationName": "MyQuery"})
     res = requests.post(client_url, headers=headers, data=payload)
     data = res.json()
@@ -462,7 +452,6 @@ def db_import_dataset(client_url, db_uri, dataset_id: int):
 )
 @click.option("--parallelism", help="how many processes to run in parallel", required=True, default=10, type=int)
 def do_import(env, import_dataset, import_deposition, db_uri, import_all_depositions, skip_until, parallelism):
-    futures = []
     if env not in ["prod", "staging", "local"]:
         print("Env must be 'prod' or 'staging' or 'local'")
         exit(1)
@@ -478,6 +467,7 @@ def do_import(env, import_dataset, import_deposition, db_uri, import_all_deposit
 
     client = cdp.Client(client_url)
 
+    futures = []
     with ProcessPoolExecutor(max_workers=parallelism) as workerpool:
         if import_all_depositions or import_deposition:
             depositions = cdp.Deposition.find(client)

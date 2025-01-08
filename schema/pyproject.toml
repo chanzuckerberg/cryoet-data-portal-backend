@@ -1,3 +1,12 @@
+[project]
+name = "schema_manager"
+version = "1.0"
+description = "Tools for managing schema of the CryoET Data Portal"
+authors = [
+    {name="CZI Imaging Team", email="cryoetdataportal@chanzuckerberg.com"},
+]
+license = { text = "MIT" }
+
 [tool.poetry]
 name = "schema_manager"
 version = "1.0"
@@ -5,11 +14,11 @@ description = "Tools for managing schema of the CryoET Data Portal"
 authors = [
     "CZI Imaging Team <cryoetdataportal@chanzuckerberg.com>"
 ]
-license = "MIT"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
-aiohttp = "^3.9.5"
+aiohttp = "^3.10.11"
 async-lru = "^2.0.4"
 click = "^8.1.7"
 linkml = "^1.8.2"
@@ -60,3 +69,7 @@ show_error_codes = true
 ignore_missing_imports = true
 warn_unreachable = true
 strict = true
+
+[build-system]
+requires = ["poetry-core==2.0.0"]
+build-backend = "poetry.core.masonry.api"
