@@ -1,7 +1,7 @@
 {
   "voxel_spacing": 12.300,
   "reconstruction_method": "WBP",
-  "reconstruction_software": "IMOD",
+  "reconstruction_software": "AreTomo 1.0",
   "fiducial_alignment_status": "FIDUCIAL",
   "ctf_corrected": true,
   "processing": "raw",
