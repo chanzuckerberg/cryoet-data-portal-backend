@@ -97,13 +97,6 @@ datasets:
       value:
       - '10443'
 
-dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: null
-        thumbnail: null
-
 annotations:
 - metadata:
     annotation_method: Prediction using membrain-seg without rescaling and weights
@@ -153,9 +146,8 @@ annotations:
 
 collection_metadata:
 - sources:
-  - source_multi_glob:
-      list_globs:
-        - '{run_name}.mdoc'
+  - source_glob:
+      list_glob: '{run_name}.mdoc'
 
 frames:
 - sources:
@@ -169,9 +161,8 @@ gains:
 
 rawtilts:
 - sources:
-  - source_multi_glob:
-      list_globs:
-        - '{run_name}_st.rawtlt'
+  - source_glob:
+      list_glob: '{run_name}_st.rawtlt'
 
 runs:
 - sources:
