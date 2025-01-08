@@ -15,7 +15,7 @@ $ python3 -m db_import.importer load --postgres_url postgresql://postgres:postgr
 ```
 
 ## Architecture
-**NOTE - we're currently partway through a migration!** The old base importer classes in `importers/base_importer.py` are being deprecated in favor of the base classes in `/importers/base.py` and the docs here reflect the newer functionality.
+**NOTE - we're currently partway through a refactor!** The old base importer classes in `importers/base_importer.py` are being deprecated in favor of the base classes in `/importers/base.py` and the docs here reflect the newer functionality.
 
 The architecture of the database importer tool is *similar* to the [architecture of the S3 ingestion tool](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/ingestion_tools/docs/s3_ingestion.md#how-are-the-different-entities-related) tool:
 1. We have a top-level script `importer.py` that processes the data in the portal hierarchically
