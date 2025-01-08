@@ -5,7 +5,7 @@ Test basic queries and mutations
 import datetime
 
 import pytest
-from conftest import deep_eq
+from tests.helpers import deep_eq
 
 from platformics.database.connect import SyncDB
 from platformics.test_infra.factories.base import SessionStorage
