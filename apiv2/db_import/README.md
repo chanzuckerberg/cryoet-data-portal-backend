@@ -7,14 +7,14 @@ To run database ingestion in staging/prod, please see the [docs for launching db
 To run database ingestion locally, for testing or demonstration purposes:
 
 ```
-make apiv2-init # If you don't have a local dev environment running already
-export AWS_PROFILE=cryoet-dev # ANY valid aws credentials will do, since the data we're reading is in a public bucket
-cd apiv2
-python3 -m db_import.importer load --postgres_url postgresql://postgres:postgres@localhost:5432/cryoetv2 cryoet-data-portal-public https://localhost:8080 --import-everything --s3-prefix 10002 --import-depositions --deposition-id 10301 --deposition-id 10303
+$ make apiv2-init # From the root of the repo, if you don't have a local dev environment running already
+$ export AWS_PROFILE=cryoet-dev # ANY valid aws credentials will do, since the data we're reading is in a public bucket
+$ cd apiv2
+$ python3 -m db_import.importer load --postgres_url postgresql://postgres:postgres@localhost:5432/cryoetv2 cryoet-data-portal-public https://localhost:8080 --import-everything --s3-prefix 10002 --import-depositions --deposition-id 10301 --deposition-id 10303
 ```
 
 ## Architecture
-*** NOTE - we're currently partway through a migration!** The old base importer classes in `importers/base_importer.py` are being deprecated in favor of the base classes in `/importers/base.py` and the docs here reflect the newer functionality.
+**NOTE - we're currently partway through a migration!** The old base importer classes in `importers/base_importer.py` are being deprecated in favor of the base classes in `/importers/base.py` and the docs here reflect the newer functionality.
 
 The architecture of the database importer tool is *similar* to the [architecture of the S3 ingestion tool](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/ingestion_tools/docs/s3_ingestion.md#how-are-the-different-entities-related) tool:
 1. We have a top-level script `importer.py` that processes the data in the portal hierarchically
@@ -27,7 +27,7 @@ The architecture of the database importer tool is *similar* to the [architecture
 Tests for DB importers generally do something along the lines of:
 
 1. Populate the database with some stale data, meaning some rows that should be modified by a relevant importer, and some that should be deleted.
-2. Perform ingestion of a given type. The data we ingest comes from `test_infra/test_files` at the root of this repo. The seeded data in step one *should not match* the pre-populated data in step 1, this is because we want to ensure that we can accurately *update*, *delete* and *create* database rows that match the data in the "fake" s3 bucket represented by our `test_infra` directory.
+2. Perform ingestion of a given type. The data we ingest comes from `test_infra/test_files` at the root of this repo. The seeded data in step one **should not match** the pre-populated data in step 1, this is because we want to ensure that we can accurately **update**, **delete** and **create** database rows that match the data in the "fake" s3 bucket represented by our `test_infra` directory.
 3. Validate that new rows were created, stale rows were updated, and unneeded rows were deleted during ingestion, and that all fields match the expected values from `test_infra/test_files`
 
 **NOTE** that if you change any files in `test_infra/test_files` you'll need to run `test_infra/seed_moto.sh` to upload the changes to the moto server we use for testing
