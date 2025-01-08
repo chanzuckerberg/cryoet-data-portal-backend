@@ -3,8 +3,9 @@
 S3 is the source of truth for all the data in the CryoET data portal, but we provide a nice GraphQL API that makes it easy to query the portal for specific metadata. To accomplish this, we've built a utility that's aware of the portal's expected directory structure and writes most of the metadata that it finds to a PostgreSQL database. The code for this utility is in this directory.
 
 ## How to run this tool
-To run database ingestion in staging/prod, please see the [docs for launching db ingestion in our batch cluster](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/ingestion_tools/docs/enqueue_runs.md#database-ingestion-db-import-subcommand)
-To run database ingestion locally, for testing or demonstration purposes:
+To run database ingestion in staging/prod, please see the [docs for launching db ingestion in our batch cluster](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/ingestion_tools/docs/enqueue_runs.md#database-ingestion-db-import-subcommand).
+
+To run database ingestion from production locally, for testing or demonstration purposes:
 
 ```
 $ make apiv2-init # From the root of the repo, if you don't have a local dev environment running already
