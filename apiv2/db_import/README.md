@@ -32,4 +32,3 @@ Tests for DB importers generally do something along the lines of:
 3. Validate that new rows were created, stale rows were updated, and unneeded rows were deleted during ingestion, and that all fields match the expected values from `test_infra/test_files`
 
 **NOTE** that if you change any files in `test_infra/test_files` you'll need to run `test_infra/seed_moto.sh` to upload the changes to the moto server we use for testing
-

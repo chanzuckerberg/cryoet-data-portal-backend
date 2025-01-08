@@ -18,13 +18,13 @@ From the `apiv2` directory, run:
 $ make test
 
 # Just run ingestion tests
-$ FILE=db_import make test-file 
+$ FILE=db_import make test-file
 
 # Just run apiv2 tests
-$ FILE=tests make test-file 
+$ FILE=tests make test-file
 
 # Run a single test file
-$ FILE=tests/test_aggregates.py make test-file 
+$ FILE=tests/test_aggregates.py make test-file
 ```
 
 ## Common Commands
