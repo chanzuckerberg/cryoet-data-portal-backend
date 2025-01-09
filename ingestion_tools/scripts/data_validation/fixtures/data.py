@@ -148,7 +148,7 @@ def gain_headers(
 
 
 # ==================================================================================================
-# Tiltseries & RawTilt / Tilt fixtures
+# Tiltseries & RawTilt fixtures
 # ==================================================================================================
 
 
@@ -171,24 +171,47 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
     with filesystem.open(tiltseries_meta_file, "r") as f:
         return json.load(f)
 
-
-@pytest.fixture(scope="session")
-def tiltseries_mdoc(tiltseries_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
-    """Load the tiltseries mdoc files and return a concatenated DataFrame."""
-    return mdocfile.read(filesystem.localreadable(tiltseries_mdoc_file))
-
-
-@pytest.fixture(scope="session")
-def tiltseries_tilt(tiltseries_tilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
-    """Load the tiltseries tilt."""
-    with filesystem.open(tiltseries_tilt_file, "r") as f:
-        return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
-
-
 @pytest.fixture(scope="session")
 def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries raw tilt."""
     with filesystem.open(tiltseries_rawtilt_file, "r") as f:
+        return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
+
+
+# ==================================================================================================
+# Frames fixtures
+# ==================================================================================================
+@pytest.fixture(scope="session")
+def frames_mdoc(frames_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the tiltseries mdoc files and return a concatenated DataFrame."""
+    return mdocfile.read(filesystem.localreadable(frames_mdoc_file))
+
+
+# ==================================================================================================
+# Alignment & Tilt fixtures
+# ==================================================================================================
+@pytest.fixture(scope="session")
+def alignment_metadata(alignment_metadata_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the alignment metadata."""
+    with filesystem.open(alignment_metadata_file, "r") as f:
+        return json.load(f)
+
+@pytest.fixture(scope="session")
+def alignment_tiltseries_metadata(alignment_tiltseries_metadata_file: Dict, filesystem: FileSystemApi) -> Dict:
+    """Load the tiltseries metadata for this alignment"""
+    with filesystem.open(alignment_tiltseries_metadata_file, "r") as f:
+        return json.load(f)
+
+@pytest.fixture(scope="session")
+def alignment_tilt(alignment_tilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the alignment tilt."""
+    with filesystem.open(alignment_tilt_file, "r") as f:
+        return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
+
+@pytest.fixture(scope="session")
+def alignment_tiltseries_raw_tilt(alignment_tiltseries_rawtilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+    """Load the tiltseries raw tilt for this alignment."""
+    with filesystem.open(alignment_tiltseries_rawtilt_file, "r") as f:
         return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
 
 
@@ -218,6 +241,15 @@ def tomogram_metadata(tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
     with filesystem.open(tomo_meta_file, "r") as f:
         return json.load(f)
 
+@pytest.fixture(scope="session")
+def all_vs_tomogram_metadata(voxel_dir: str, filesystem: FileSystemApi) -> list[Dict]:
+    """Load all tomogram metadata for this voxel spacing."""
+    metadatas = []
+    for item in filesystem.glob(os.path.join(voxel_dir, "Tomograms/*/tomogram_metadata.json")):
+        with filesystem.open(item, "r") as f:
+            metadatas.append(json.load(f))
+    return metadatas
+
 
 # ==================================================================================================
 # Neuroglancer fixtures
@@ -225,10 +257,13 @@ def tomogram_metadata(tomo_meta_file: str, filesystem: FileSystemApi) -> Dict:
 
 
 @pytest.fixture(scope="session")
-def neuroglancer_config(neuroglancer_config_file: str, filesystem: FileSystemApi) -> Dict:
+def neuroglancer_configs(neuroglancer_config_files: List[str], filesystem: FileSystemApi) -> Dict:
     """Load the neuroglancer config."""
-    with filesystem.open(neuroglancer_config_file, "r") as f:
-        return json.load(f)
+    configs = []
+    for file in neuroglancer_config_files:
+        with filesystem.open(file, "r") as f:
+            configs.append(json.load(f))
+    return configs
 
 
 # ==================================================================================================
@@ -246,6 +281,35 @@ def annotation_metadata(annotation_metadata_files: List[str], filesystem: FileSy
             metadata_objs[file] = json.load(f)
 
     return metadata_objs
+
+def load_metadata_dict(files_dict: Dict[str, str], filesystem: FileSystemApi) -> Dict[str, Dict]:
+    """Load the annotation metadata, keyed by path."""
+    metadata_objs = {}
+    for anno_fname, file in files_dict.items():
+        with filesystem.open(file, "r") as f:
+            metadata_objs[anno_fname] = json.load(f)
+
+    return metadata_objs
+
+@pytest.fixture(scope="session")
+def point_annotation_files_to_metadata(point_annotation_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(point_annotation_files_to_metadata_files, filesystem)
+
+@pytest.fixture(scope="session")
+def oriented_point_annotation_files_to_metadata(oriented_point_annotation_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(oriented_point_annotation_files_to_metadata_files, filesystem)
+
+@pytest.fixture(scope="session")
+def instance_seg_annotation_files_to_metadata(instance_seg_annotation_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(instance_seg_annotation_files_to_metadata_files, filesystem)
+
+@pytest.fixture(scope="session")
+def seg_mask_annotation_files_to_metadata(seg_mask_annotation_mrc_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(seg_mask_annotation_mrc_files_to_metadata_files, filesystem)
 
 
 def get_ndjson_annotations(

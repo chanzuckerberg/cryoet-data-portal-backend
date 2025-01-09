@@ -94,7 +94,7 @@ tiltseries:
     acceleration_voltage: 300000
     binning_from_frames: 1
     camera:
-      manufacturer: GATAN
+      manufacturer: Gatan
       model: K3
     data_acquisition_software: SerialEM
     is_aligned: false

@@ -57,20 +57,47 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
-    from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
-    from graphql_api.types.dataset import Dataset, DatasetOrderByClause, DatasetWhereClause
-    from graphql_api.types.frame import Frame, FrameOrderByClause, FrameWhereClause
+    from graphql_api.types.alignment import (
+        Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
+    )
+    from graphql_api.types.annotation import (
+        Annotation,
+        AnnotationAggregateWhereClause,
+        AnnotationOrderByClause,
+        AnnotationWhereClause,
+    )
+    from graphql_api.types.dataset import Dataset, DatasetAggregateWhereClause, DatasetOrderByClause, DatasetWhereClause
+    from graphql_api.types.frame import Frame, FrameAggregateWhereClause, FrameOrderByClause, FrameWhereClause
     from graphql_api.types.frame_acquisition_file import (
         FrameAcquisitionFile,
+        FrameAcquisitionFileAggregateWhereClause,
         FrameAcquisitionFileOrderByClause,
         FrameAcquisitionFileWhereClause,
     )
-    from graphql_api.types.gain_file import GainFile, GainFileOrderByClause, GainFileWhereClause
-    from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
-    from graphql_api.types.tomogram import Tomogram, TomogramOrderByClause, TomogramWhereClause
+    from graphql_api.types.gain_file import (
+        GainFile,
+        GainFileAggregateWhereClause,
+        GainFileOrderByClause,
+        GainFileWhereClause,
+    )
+    from graphql_api.types.tiltseries import (
+        Tiltseries,
+        TiltseriesAggregateWhereClause,
+        TiltseriesOrderByClause,
+        TiltseriesWhereClause,
+    )
+    from graphql_api.types.tomogram import (
+        Tomogram,
+        TomogramAggregateWhereClause,
+        TomogramOrderByClause,
+        TomogramWhereClause,
+    )
     from graphql_api.types.tomogram_voxel_spacing import (
         TomogramVoxelSpacing,
+        TomogramVoxelSpacingAggregateWhereClause,
         TomogramVoxelSpacingOrderByClause,
         TomogramVoxelSpacingWhereClause,
     )
@@ -78,30 +105,39 @@ if TYPE_CHECKING:
     pass
 else:
     AlignmentWhereClause = "AlignmentWhereClause"
+    AlignmentAggregateWhereClause = "AlignmentAggregateWhereClause"
     Alignment = "Alignment"
     AlignmentOrderByClause = "AlignmentOrderByClause"
     AnnotationWhereClause = "AnnotationWhereClause"
+    AnnotationAggregateWhereClause = "AnnotationAggregateWhereClause"
     Annotation = "Annotation"
     AnnotationOrderByClause = "AnnotationOrderByClause"
     DatasetWhereClause = "DatasetWhereClause"
+    DatasetAggregateWhereClause = "DatasetAggregateWhereClause"
     Dataset = "Dataset"
     DatasetOrderByClause = "DatasetOrderByClause"
     FrameWhereClause = "FrameWhereClause"
+    FrameAggregateWhereClause = "FrameAggregateWhereClause"
     Frame = "Frame"
     FrameOrderByClause = "FrameOrderByClause"
     GainFileWhereClause = "GainFileWhereClause"
+    GainFileAggregateWhereClause = "GainFileAggregateWhereClause"
     GainFile = "GainFile"
     GainFileOrderByClause = "GainFileOrderByClause"
     FrameAcquisitionFileWhereClause = "FrameAcquisitionFileWhereClause"
+    FrameAcquisitionFileAggregateWhereClause = "FrameAcquisitionFileAggregateWhereClause"
     FrameAcquisitionFile = "FrameAcquisitionFile"
     FrameAcquisitionFileOrderByClause = "FrameAcquisitionFileOrderByClause"
     TiltseriesWhereClause = "TiltseriesWhereClause"
+    TiltseriesAggregateWhereClause = "TiltseriesAggregateWhereClause"
     Tiltseries = "Tiltseries"
     TiltseriesOrderByClause = "TiltseriesOrderByClause"
     TomogramVoxelSpacingWhereClause = "TomogramVoxelSpacingWhereClause"
+    TomogramVoxelSpacingAggregateWhereClause = "TomogramVoxelSpacingAggregateWhereClause"
     TomogramVoxelSpacing = "TomogramVoxelSpacing"
     TomogramVoxelSpacingOrderByClause = "TomogramVoxelSpacingOrderByClause"
     TomogramWhereClause = "TomogramWhereClause"
+    TomogramAggregateWhereClause = "TomogramAggregateWhereClause"
     Tomogram = "Tomogram"
     TomogramOrderByClause = "TomogramOrderByClause"
     pass
@@ -418,25 +454,59 @@ Supported WHERE clause attributes
 @strawberry.input
 class RunWhereClause(TypedDict):
     alignments: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    alignments_aggregate: (
+        Optional[Annotated["AlignmentAggregateWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    )
     annotations: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    annotations_aggregate: (
+        Optional[Annotated["AnnotationAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    )
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
     dataset_id: Optional[IntComparators] | None
     frames: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    frames_aggregate: (
+        Optional[Annotated["FrameAggregateWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    )
     gain_files: Optional[Annotated["GainFileWhereClause", strawberry.lazy("graphql_api.types.gain_file")]] | None
+    gain_files_aggregate: (
+        Optional[Annotated["GainFileAggregateWhereClause", strawberry.lazy("graphql_api.types.gain_file")]] | None
+    )
     frame_acquisition_files: (
         Optional[
             Annotated["FrameAcquisitionFileWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
         ]
         | None
     )
+    frame_acquisition_files_aggregate: (
+        Optional[
+            Annotated[
+                "FrameAcquisitionFileAggregateWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file"),
+            ]
+        ]
+        | None
+    )
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
+    tiltseries_aggregate: (
+        Optional[Annotated["TiltseriesAggregateWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
+    )
     tomogram_voxel_spacings: (
         Optional[
             Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
         ]
         | None
     )
+    tomogram_voxel_spacings_aggregate: (
+        Optional[
+            Annotated[
+                "TomogramVoxelSpacingAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing"),
+            ]
+        ]
+        | None
+    )
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    tomograms_aggregate: (
+        Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
+    )
     name: Optional[StrComparators] | None
     s3_prefix: Optional[StrComparators] | None
     https_prefix: Optional[StrComparators] | None
@@ -561,19 +631,28 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class RunCountColumns(enum.Enum):
-    alignments = "alignments"
-    annotations = "annotations"
-    dataset = "dataset"
-    frames = "frames"
-    gainFiles = "gain_files"
-    frameAcquisitionFiles = "frame_acquisition_files"
-    tiltseries = "tiltseries"
-    tomogramVoxelSpacings = "tomogram_voxel_spacings"
-    tomograms = "tomograms"
     name = "name"
     s3Prefix = "s3_prefix"
     httpsPrefix = "https_prefix"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class RunAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["RunCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[RunWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class RunAggregateWhereClause(TypedDict):
+    count: RunAggregateWhereClauseCount
 
 
 """

@@ -67,7 +67,7 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "voxel_spacing": 12.3,
         "fiducial_alignment_status": "FIDUCIAL",
         "reconstruction_method": "WBP",
-        "reconstruction_software": "IMOD",
+        "reconstruction_software": "AreTomo 1.0",
         "processing": "raw",
         "processing_software": "tomo3D",
         "tomogram_version": 1.0,

@@ -48,19 +48,32 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.alignment import Alignment, AlignmentOrderByClause, AlignmentWhereClause
-    from graphql_api.types.deposition import Deposition, DepositionOrderByClause, DepositionWhereClause
-    from graphql_api.types.run import Run, RunOrderByClause, RunWhereClause
+    from graphql_api.types.alignment import (
+        Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
+    )
+    from graphql_api.types.deposition import (
+        Deposition,
+        DepositionAggregateWhereClause,
+        DepositionOrderByClause,
+        DepositionWhereClause,
+    )
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
 
     pass
 else:
     AlignmentWhereClause = "AlignmentWhereClause"
+    AlignmentAggregateWhereClause = "AlignmentAggregateWhereClause"
     Alignment = "Alignment"
     AlignmentOrderByClause = "AlignmentOrderByClause"
     RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
     DepositionWhereClause = "DepositionWhereClause"
+    DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
     pass
@@ -158,6 +171,9 @@ Supported WHERE clause attributes
 @strawberry.input
 class TiltseriesWhereClause(TypedDict):
     alignments: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    alignments_aggregate: (
+        Optional[Annotated["AlignmentAggregateWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
+    )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     run_id: Optional[IntComparators] | None
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
@@ -192,6 +208,9 @@ class TiltseriesWhereClause(TypedDict):
     is_aligned: Optional[BoolComparators] | None
     pixel_spacing: Optional[FloatComparators] | None
     aligned_tiltseries_binning: Optional[IntComparators] | None
+    size_x: Optional[IntComparators] | None
+    size_y: Optional[IntComparators] | None
+    size_z: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -234,6 +253,9 @@ class TiltseriesOrderByClause(TypedDict):
     is_aligned: Optional[orderBy] | None
     pixel_spacing: Optional[orderBy] | None
     aligned_tiltseries_binning: Optional[orderBy] | None
+    size_x: Optional[orderBy] | None
+    size_y: Optional[orderBy] | None
+    size_z: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -315,6 +337,9 @@ class Tiltseries(EntityInterface):
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
+    size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
+    size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
+    size_z: Optional[int] = strawberry.field(description="Number of pixels in the 3D data slow axis", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -350,6 +375,9 @@ class TiltseriesNumericalColumns:
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
+    size_x: Optional[int] = None
+    size_y: Optional[int] = None
+    size_z: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -388,6 +416,9 @@ class TiltseriesMinMaxColumns:
     tilt_series_quality: Optional[int] = None
     pixel_spacing: Optional[float] = None
     aligned_tiltseries_binning: Optional[int] = None
+    size_x: Optional[int] = None
+    size_y: Optional[int] = None
+    size_z: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -398,9 +429,6 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class TiltseriesCountColumns(enum.Enum):
-    alignments = "alignments"
-    run = "run"
-    deposition = "deposition"
     s3OmezarrDir = "s3_omezarr_dir"
     s3MrcFile = "s3_mrc_file"
     httpsOmezarrDir = "https_omezarr_dir"
@@ -431,7 +459,28 @@ class TiltseriesCountColumns(enum.Enum):
     isAligned = "is_aligned"
     pixelSpacing = "pixel_spacing"
     alignedTiltseriesBinning = "aligned_tiltseries_binning"
+    sizeX = "size_x"
+    sizeY = "size_y"
+    sizeZ = "size_z"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class TiltseriesAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["TiltseriesCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[TiltseriesWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class TiltseriesAggregateWhereClause(TypedDict):
+    count: TiltseriesAggregateWhereClauseCount
 
 
 """
@@ -538,6 +587,9 @@ class TiltseriesCreateInput:
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
+    size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
+    size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
+    size_z: Optional[int] = strawberry.field(description="Number of pixels in the 3D data slow axis", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -608,6 +660,9 @@ class TiltseriesUpdateInput:
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
         description="Binning factor of the aligned tilt series", default=None,
     )
+    size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
+    size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
+    size_z: Optional[int] = strawberry.field(description="Number of pixels in the 3D data slow axis", default=None)
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 

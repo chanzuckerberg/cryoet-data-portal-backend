@@ -215,8 +215,11 @@ type AlignmentEdge {
 }
 
 type AlignmentGroupByOptions {
+  annotationFiles: AnnotationFileGroupByOptions
+  perSectionAlignments: PerSectionAlignmentParametersGroupByOptions
   deposition: DepositionGroupByOptions
   tiltseries: TiltseriesGroupByOptions
+  tomograms: TomogramGroupByOptions
   run: RunGroupByOptions
   alignmentType: alignment_type_enum
   alignmentMethod: alignment_method_type_enum
@@ -1113,6 +1116,9 @@ input AnnotationFileWhereClauseMutations {
 
 type AnnotationGroupByOptions {
   run: RunGroupByOptions
+  annotationShapes: AnnotationShapeGroupByOptions
+  methodLinks: AnnotationMethodLinkGroupByOptions
+  authors: AnnotationAuthorGroupByOptions
   deposition: DepositionGroupByOptions
   s3MetadataPath: String
   httpsMetadataPath: String
@@ -1412,6 +1418,7 @@ type AnnotationShapeEdge {
 
 type AnnotationShapeGroupByOptions {
   annotation: AnnotationGroupByOptions
+  annotationFiles: AnnotationFileGroupByOptions
   shapeType: annotation_file_shape_type_enum
   id: Int
 }
@@ -2309,6 +2316,9 @@ input DatasetFundingWhereClauseMutations {
 
 type DatasetGroupByOptions {
   deposition: DepositionGroupByOptions
+  fundingSources: DatasetFundingGroupByOptions
+  authors: DatasetAuthorGroupByOptions
+  runs: RunGroupByOptions
   title: String
   description: String
   organismName: String
@@ -3019,8 +3029,16 @@ input DepositionCreateInput {
 }
 
 type DepositionGroupByOptions {
+  authors: DepositionAuthorGroupByOptions
+  alignments: AlignmentGroupByOptions
+  annotations: AnnotationGroupByOptions
+  datasets: DatasetGroupByOptions
+  frames: FrameGroupByOptions
+  tiltseries: TiltseriesGroupByOptions
+  tomograms: TomogramGroupByOptions
   title: String
   description: String
+  depositionTypes: DepositionTypeGroupByOptions
   depositionPublications: String
   relatedDatabaseEntries: String
   depositionDate: DateTime
@@ -4249,7 +4267,15 @@ type RunEdge {
 }
 
 type RunGroupByOptions {
+  alignments: AlignmentGroupByOptions
+  annotations: AnnotationGroupByOptions
   dataset: DatasetGroupByOptions
+  frames: FrameGroupByOptions
+  gainFiles: GainFileGroupByOptions
+  frameAcquisitionFiles: FrameAcquisitionFileGroupByOptions
+  tiltseries: TiltseriesGroupByOptions
+  tomogramVoxelSpacings: TomogramVoxelSpacingGroupByOptions
+  tomograms: TomogramGroupByOptions
   name: String
   s3Prefix: String
   httpsPrefix: String
@@ -4470,6 +4496,15 @@ type Tiltseries implements EntityInterface & Node {
 
   """Binning factor of the aligned tilt series"""
   alignedTiltseriesBinning: Int
+
+  """Number of pixels in the 3D data fast axis"""
+  sizeX: Int
+
+  """Number of pixels in the 3D data medium axis"""
+  sizeY: Int
+
+  """Number of pixels in the 3D data slow axis"""
+  sizeZ: Int
 }
 
 type TiltseriesAggregate {
@@ -4530,6 +4565,9 @@ enum TiltseriesCountColumns {
   isAligned
   pixelSpacing
   alignedTiltseriesBinning
+  sizeX
+  sizeY
+  sizeZ
   id
 }
 
@@ -4635,6 +4673,15 @@ input TiltseriesCreateInput {
   """Binning factor of the aligned tilt series"""
   alignedTiltseriesBinning: Int = null
 
+  """Number of pixels in the 3D data fast axis"""
+  sizeX: Int = null
+
+  """Number of pixels in the 3D data medium axis"""
+  sizeY: Int = null
+
+  """Number of pixels in the 3D data slow axis"""
+  sizeZ: Int = null
+
   """Numeric identifier (May change!)"""
   id: Int!
 }
@@ -4649,6 +4696,7 @@ type TiltseriesEdge {
 }
 
 type TiltseriesGroupByOptions {
+  alignments: AlignmentGroupByOptions
   run: RunGroupByOptions
   deposition: DepositionGroupByOptions
   s3OmezarrDir: String
@@ -4681,6 +4729,9 @@ type TiltseriesGroupByOptions {
   isAligned: Boolean
   pixelSpacing: Float
   alignedTiltseriesBinning: Int
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   id: Int
 }
 
@@ -4713,6 +4764,9 @@ type TiltseriesMinMaxColumns {
   tiltSeriesQuality: Int
   pixelSpacing: Float
   alignedTiltseriesBinning: Int
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   id: Int
 }
 
@@ -4729,6 +4783,9 @@ type TiltseriesNumericalColumns {
   tiltSeriesQuality: Int
   pixelSpacing: Float
   alignedTiltseriesBinning: Int
+  sizeX: Int
+  sizeY: Int
+  sizeZ: Int
   id: Int
 }
 
@@ -4765,6 +4822,9 @@ input TiltseriesOrderByClause {
   isAligned: orderBy
   pixelSpacing: orderBy
   alignedTiltseriesBinning: orderBy
+  sizeX: orderBy
+  sizeY: orderBy
+  sizeZ: orderBy
   id: orderBy
 }
 
@@ -4870,6 +4930,15 @@ input TiltseriesUpdateInput {
   """Binning factor of the aligned tilt series"""
   alignedTiltseriesBinning: Int = null
 
+  """Number of pixels in the 3D data fast axis"""
+  sizeX: Int = null
+
+  """Number of pixels in the 3D data medium axis"""
+  sizeY: Int = null
+
+  """Number of pixels in the 3D data slow axis"""
+  sizeZ: Int = null
+
   """Numeric identifier (May change!)"""
   id: Int
 }
@@ -4910,6 +4979,9 @@ input TiltseriesWhereClause {
   isAligned: BoolComparators
   pixelSpacing: FloatComparators
   alignedTiltseriesBinning: IntComparators
+  sizeX: IntComparators
+  sizeY: IntComparators
+  sizeZ: IntComparators
   id: IntComparators
 }
 
@@ -5501,6 +5573,7 @@ type TomogramEdge {
 
 type TomogramGroupByOptions {
   alignment: AlignmentGroupByOptions
+  authors: TomogramAuthorGroupByOptions
   deposition: DepositionGroupByOptions
   run: RunGroupByOptions
   tomogramVoxelSpacing: TomogramVoxelSpacingGroupByOptions
@@ -5872,7 +5945,9 @@ type TomogramVoxelSpacingEdge {
 }
 
 type TomogramVoxelSpacingGroupByOptions {
+  annotationFiles: AnnotationFileGroupByOptions
   run: RunGroupByOptions
+  tomograms: TomogramGroupByOptions
   voxelSpacing: Float
   s3Prefix: String
   httpsPrefix: String

@@ -50,11 +50,17 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.annotation import Annotation, AnnotationOrderByClause, AnnotationWhereClause
+    from graphql_api.types.annotation import (
+        Annotation,
+        AnnotationAggregateWhereClause,
+        AnnotationOrderByClause,
+        AnnotationWhereClause,
+    )
 
     pass
 else:
     AnnotationWhereClause = "AnnotationWhereClause"
+    AnnotationAggregateWhereClause = "AnnotationAggregateWhereClause"
     Annotation = "Annotation"
     AnnotationOrderByClause = "AnnotationOrderByClause"
     pass
@@ -193,11 +199,28 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class AnnotationMethodLinkCountColumns(enum.Enum):
-    annotation = "annotation"
     linkType = "link_type"
     name = "name"
     link = "link"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class AnnotationMethodLinkAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["AnnotationMethodLinkCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[AnnotationMethodLinkWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class AnnotationMethodLinkAggregateWhereClause(TypedDict):
+    count: AnnotationMethodLinkAggregateWhereClauseCount
 
 
 """
