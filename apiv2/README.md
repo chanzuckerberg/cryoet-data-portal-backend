@@ -40,6 +40,9 @@ $ FILE=tests/test_aggregates.py make test-file
 | `make clean`                      | Removes all the docker containers started by this application.                                |
 
 ## How to make changes to the schema
+
+**NOTE:** Most schema changes will require accompanying changes to the `db_import` scripts to support the new fields!
+
 ```
 # First, make any necessary changes to `apiv2/schema/schema.yaml`, then run this to generate new code & migrations and apply them:
 cd apiv2
@@ -51,6 +54,7 @@ pre-commit run --all-files
 
 # Then commit all changed files, *including* any new migrations!
 git commit -am "chore: Updating schema to add X feature"
+
 ```
 
 ## Creating an rdev stack
