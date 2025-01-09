@@ -30,6 +30,12 @@ depositions:
   - literal:
       value:
       - 10314
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_snapshot.png"
+        thumbnail: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_thumbnail.png"
 alignments:
 - sources:
   - destination_glob:
@@ -384,9 +390,10 @@ annotations:
 
 datasets:
 - sources:
-  - literal:
-      value:
-        - '10302'
+  - destination_glob:
+      list_glob: '{output_path}/10302'
+      match_regex: '.*'
+      name_regex: '(.*)'
 
 runs:
 - sources:
