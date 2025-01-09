@@ -94,6 +94,7 @@ import typing
 from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
 import platformics.database.models as base_db
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
 import datetime
@@ -211,7 +212,7 @@ async def load_{{ related_field.related_class.snake_name }}_aggregate_rows(
     info: Info,
     where: Annotated["{{ related_field.type }}WhereClause", strawberry.lazy("graphql_api.types.{{ related_field.related_class.snake_name }}")] | None = None,
 ) -> Optional[Annotated["{{ related_field.related_class.name }}Aggregate", strawberry.lazy("graphql_api.types.{{ related_field.related_class.snake_name }}")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.{{ cls.name }})
     relationship = mapper.relationships["{{ related_field.name }}"]
@@ -531,10 +532,7 @@ async def resolve_{{ cls.plural_snake_name }}_aggregate(
     """
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
-    selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if getattr(selection, "name") != "groupBy"]
-    groupby_selections = [selection for selection in selections if getattr(selection, "name") == "groupBy"]
-    groupby_selections = groupby_selections[0].selections if groupby_selections else []
+    aggregate_selections, groupby_selections = get_aggregate_selections(info.selected_fields)
 
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
