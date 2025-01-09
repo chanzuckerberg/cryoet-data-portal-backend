@@ -265,8 +265,10 @@ class TomogramWhereClause(TypedDict):
     is_visualization_default: Optional[BoolComparators] | None
     s3_omezarr_dir: Optional[StrComparators] | None
     https_omezarr_dir: Optional[StrComparators] | None
+    file_size_omezarr: Optional[IntComparators] | None
     s3_mrc_file: Optional[StrComparators] | None
     https_mrc_file: Optional[StrComparators] | None
+    file_size_mrc: Optional[IntComparators] | None
     scale0_dimensions: Optional[StrComparators] | None
     scale1_dimensions: Optional[StrComparators] | None
     scale2_dimensions: Optional[StrComparators] | None
@@ -317,8 +319,10 @@ class TomogramOrderByClause(TypedDict):
     is_visualization_default: Optional[orderBy] | None
     s3_omezarr_dir: Optional[orderBy] | None
     https_omezarr_dir: Optional[orderBy] | None
+    file_size_omezarr: Optional[orderBy] | None
     s3_mrc_file: Optional[orderBy] | None
     https_mrc_file: Optional[orderBy] | None
+    file_size_mrc: Optional[orderBy] | None
     scale0_dimensions: Optional[orderBy] | None
     scale1_dimensions: Optional[orderBy] | None
     scale2_dimensions: Optional[orderBy] | None
@@ -401,12 +405,14 @@ class Tomogram(EntityInterface):
     https_omezarr_dir: Optional[str] = strawberry.field(
         description="HTTPS path to this tomogram in multiscale OME-Zarr format", default=None,
     )
+    file_size_omezarr: Optional[int] = strawberry.field(description="Size of the OME-Zarr file in bytes", default=None)
     s3_mrc_file: Optional[str] = strawberry.field(
         description="S3 path to this tomogram in MRC format (no scaling)", default=None,
     )
     https_mrc_file: Optional[str] = strawberry.field(
         description="HTTPS path to this tomogram in MRC format (no scaling)", default=None,
     )
+    file_size_mrc: Optional[int] = strawberry.field(description="Size of the MRC file in bytes", default=None)
     scale0_dimensions: Optional[str] = strawberry.field(
         description="comma separated x,y,z dimensions of the unscaled tomogram", default=None,
     )
@@ -471,6 +477,8 @@ class TomogramNumericalColumns:
     size_z: Optional[int] = None
     voxel_spacing: Optional[float] = None
     tomogram_version: Optional[float] = None
+    file_size_omezarr: Optional[int] = None
+    file_size_mrc: Optional[int] = None
     offset_x: Optional[int] = None
     offset_y: Optional[int] = None
     offset_z: Optional[int] = None
@@ -494,8 +502,10 @@ class TomogramMinMaxColumns:
     reconstruction_software: Optional[str] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
+    file_size_omezarr: Optional[int] = None
     s3_mrc_file: Optional[str] = None
     https_mrc_file: Optional[str] = None
+    file_size_mrc: Optional[int] = None
     scale0_dimensions: Optional[str] = None
     scale1_dimensions: Optional[str] = None
     scale2_dimensions: Optional[str] = None
@@ -536,8 +546,10 @@ class TomogramCountColumns(enum.Enum):
     isVisualizationDefault = "is_visualization_default"
     s3OmezarrDir = "s3_omezarr_dir"
     httpsOmezarrDir = "https_omezarr_dir"
+    fileSizeOmezarr = "file_size_omezarr"
     s3MrcFile = "s3_mrc_file"
     httpsMrcFile = "https_mrc_file"
+    fileSizeMrc = "file_size_mrc"
     scale0Dimensions = "scale0_dimensions"
     scale1Dimensions = "scale1_dimensions"
     scale2Dimensions = "scale2_dimensions"
@@ -660,12 +672,14 @@ class TomogramCreateInput:
     https_omezarr_dir: Optional[str] = strawberry.field(
         description="HTTPS path to this tomogram in multiscale OME-Zarr format", default=None,
     )
+    file_size_omezarr: Optional[int] = strawberry.field(description="Size of the OME-Zarr file in bytes", default=None)
     s3_mrc_file: Optional[str] = strawberry.field(
         description="S3 path to this tomogram in MRC format (no scaling)", default=None,
     )
     https_mrc_file: Optional[str] = strawberry.field(
         description="HTTPS path to this tomogram in MRC format (no scaling)", default=None,
     )
+    file_size_mrc: Optional[int] = strawberry.field(description="Size of the MRC file in bytes", default=None)
     scale0_dimensions: Optional[str] = strawberry.field(
         description="comma separated x,y,z dimensions of the unscaled tomogram", default=None,
     )
@@ -752,12 +766,14 @@ class TomogramUpdateInput:
     https_omezarr_dir: Optional[str] = strawberry.field(
         description="HTTPS path to this tomogram in multiscale OME-Zarr format", default=None,
     )
+    file_size_omezarr: Optional[int] = strawberry.field(description="Size of the OME-Zarr file in bytes", default=None)
     s3_mrc_file: Optional[str] = strawberry.field(
         description="S3 path to this tomogram in MRC format (no scaling)", default=None,
     )
     https_mrc_file: Optional[str] = strawberry.field(
         description="HTTPS path to this tomogram in MRC format (no scaling)", default=None,
     )
+    file_size_mrc: Optional[int] = strawberry.field(description="Size of the MRC file in bytes", default=None)
     scale0_dimensions: Optional[str] = strawberry.field(
         description="comma separated x,y,z dimensions of the unscaled tomogram", default=None,
     )

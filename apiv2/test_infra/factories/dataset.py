@@ -59,4 +59,5 @@ class DatasetFactory(CommonFactory):
     related_database_entries = fuzzy.FuzzyText()
     s3_prefix = fuzzy.FuzzyText()
     https_prefix = fuzzy.FuzzyText()
+    file_size = fuzzy.FuzzyInteger(1, 1000)
     id = fuzzy.FuzzyInteger(1, 1000)

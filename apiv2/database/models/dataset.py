@@ -85,4 +85,5 @@ class Dataset(Base):
     related_database_entries: Mapped[str] = mapped_column(String, nullable=True)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
     https_prefix: Mapped[str] = mapped_column(String, nullable=False)
+    file_size: Mapped[int] = mapped_column(Integer, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, primary_key=True)

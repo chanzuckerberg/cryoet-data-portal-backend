@@ -37,6 +37,7 @@ class FrameGroupByOptions:
     is_gain_corrected: Optional[bool] = None
     s3_frame_path: Optional[str] = None
     https_frame_path: Optional[str] = None
+    file_size: Optional[int] = None
     id: Optional[int] = None
 
 

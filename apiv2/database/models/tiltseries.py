@@ -54,7 +54,9 @@ class Tiltseries(Base):
         back_populates="tiltseries",
     )
     s3_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
+    file_size_omezarr: Mapped[int] = mapped_column(Integer, nullable=True)
     s3_mrc_file: Mapped[str] = mapped_column(String, nullable=True)
+    file_size_mrc: Mapped[int] = mapped_column(Integer, nullable=True)
     https_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
     https_mrc_file: Mapped[str] = mapped_column(String, nullable=True)
     s3_angle_list: Mapped[str] = mapped_column(String, nullable=True)

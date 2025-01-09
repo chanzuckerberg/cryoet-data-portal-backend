@@ -49,4 +49,5 @@ class Frame(Base):
     is_gain_corrected: Mapped[bool] = mapped_column(Boolean, nullable=True)
     s3_frame_path: Mapped[str] = mapped_column(String, nullable=False)
     https_frame_path: Mapped[str] = mapped_column(String, nullable=False)
+    file_size: Mapped[int] = mapped_column(Integer, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

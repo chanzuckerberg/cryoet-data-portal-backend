@@ -17,8 +17,10 @@ Tomogram {
     boolean is_visualization_default
     string s3_omezarr_dir
     string https_omezarr_dir
+    integer file_size_omezarr
     string s3_mrc_file
     string https_mrc_file
+    integer file_size_mrc
     string scale0_dimensions
     string scale1_dimensions
     string scale2_dimensions
@@ -56,7 +58,9 @@ TomogramAuthor {
 }
 Tiltseries {
     string s3_omezarr_dir
+    integer file_size_omezarr
     string s3_mrc_file
+    integer file_size_mrc
     string https_omezarr_dir
     string https_mrc_file
     string s3_angle_list
@@ -128,6 +132,7 @@ Frame {
     boolean is_gain_corrected
     string s3_frame_path
     string https_frame_path
+    integer file_size
     integer id
 }
 Deposition {
@@ -180,6 +185,7 @@ Dataset {
     string related_database_entries
     string s3_prefix
     string https_prefix
+    integer file_size
     integer id
 }
 DatasetFunding {
@@ -228,6 +234,7 @@ AnnotationShape {
 AnnotationFile {
     string format
     string s3_path
+    integer file_size
     string https_path
     boolean is_visualization_default
     annotation_file_source_enum source

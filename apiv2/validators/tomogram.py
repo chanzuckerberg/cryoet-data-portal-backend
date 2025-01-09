@@ -84,6 +84,7 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size_omezarr: Annotated[int | None, Field()]
     s3_mrc_file: Annotated[
         str | None,
         StringConstraints(
@@ -96,6 +97,7 @@ class TomogramCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size_mrc: Annotated[int | None, Field()]
     scale0_dimensions: Annotated[
         str | None,
         StringConstraints(
@@ -224,6 +226,7 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size_omezarr: Annotated[int | None, Field()]
     s3_mrc_file: Annotated[
         str | None,
         StringConstraints(
@@ -236,6 +239,7 @@ class TomogramUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size_mrc: Annotated[int | None, Field()]
     scale0_dimensions: Annotated[
         str | None,
         StringConstraints(
