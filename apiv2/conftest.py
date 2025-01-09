@@ -69,7 +69,6 @@ def get_db_uri(
 
 @pytest.fixture()
 def test_db_uri(test_db: NoopExecutor) -> str:
-
     return get_db_uri(
         db_host=test_db.host,
         db_port=test_db.port,

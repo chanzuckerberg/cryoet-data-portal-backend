@@ -18,6 +18,9 @@ class DatasetKeyPhotoImporter(BaseKeyPhotoImporter):
     has_metadata = False
     dir_path = "{dataset_name}/Images"
 
+    def is_import_allowed(self) -> bool:
+        return self.get_dataset().is_import_allowed()
+
     def get_image_src_path(self) -> str:
         image_src = self.path if self.file_exists(self.path) else self.get_first_valid_tomo_key_photo(self.name)
         if not image_src:
