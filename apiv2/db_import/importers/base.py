@@ -47,6 +47,24 @@ class ItemDBImporter:
             input_path = input_path[len(self.config.bucket_name) + 1 :]
         return os.path.join(self.config.s3_prefix, input_path)
 
+    def get_file_size(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+
+        total_size = 0
+        try:
+            response = self.config.s3_client.list_objects_v2(Bucket=self.config.bucket_name, Prefix=input_path)
+            if 'Contents' in response:
+                for obj in response['Contents']:
+                    total_size += obj['Size']
+
+            total_size_mb = round(total_size / (1024 * 1024))
+            return total_size_mb if total_size_mb > 1 else None
+        except Exception as e:
+            print(f"Error retrieving folder size: {e}")
+            return None
+
     def _map_direct_fields(self):
         """Iterate over `self.direct_mapped_fields` and populate model args based on the data we find in the input dict."""
         for db_key, _ in self.direct_mapped_fields.items():

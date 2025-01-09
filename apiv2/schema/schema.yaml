@@ -850,8 +850,8 @@ classes:
         range: integer
         minimum_value: 0
         unit:
-          symbol: B
-          descriptive_name: bytes
+          symbol: MB
+          descriptive_name: megabytes
       https_path:
         name: https_path
         description: HTTPS path for this annotation file
@@ -1430,8 +1430,8 @@ classes:
         range: integer
         minimum_value: 0
         unit:
-          symbol: B
-          descriptive_name: bytes
+          symbol: MB
+          descriptive_name: megabytes
     slot_usage:
       id:
         description: An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
@@ -1697,8 +1697,8 @@ classes:
         range: integer
         minimum_value: 0
         unit:
-          symbol: B
-          descriptive_name: bytes
+          symbol: MB
+          descriptive_name: megabytes
   PerSectionAlignmentParameters:
     name: PerSectionAlignmentParameters
     annotations:
@@ -1918,8 +1918,8 @@ classes:
         range: integer
         minimum_value: 0
         unit:
-          symbol: B
-          descriptive_name: bytes
+          symbol: MB
+          descriptive_name: megabytes
       s3_mrc_file:
         name: s3_mrc_file
         description: S3 path to this tiltseries in MRC format (no scaling)
@@ -1936,8 +1936,8 @@ classes:
         range: integer
         minimum_value: 0
         unit:
-          symbol: B
-          descriptive_name: bytes
+          symbol: MB
+          descriptive_name: megabytes
       https_omezarr_dir:
         name: https_omezarr_dir
         description: HTTPS path to this tiltseries in multiscale OME-Zarr format
@@ -2495,8 +2495,8 @@ classes:
           - tomogram_file_size_omezarr
         range: integer
         unit:
-          symbol: B
-          descriptive_name: bytes
+          symbol: MB
+          descriptive_name: megabytes
       s3_mrc_file:
         name: s3_mrc_file
         description: S3 path to this tomogram in MRC format (no scaling)
@@ -2519,8 +2519,8 @@ classes:
           - tomogram_file_size_mrc
         range: integer
         unit:
-          symbol: B
-          descriptive_name: bytes
+          symbol: MB
+          descriptive_name: megabytes
       scale0_dimensions:
         name: scale0_dimensions
         description: comma separated x,y,z dimensions of the unscaled tomogram
