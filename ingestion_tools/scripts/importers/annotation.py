@@ -352,7 +352,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
     def is_valid(self) -> bool:
         try:
             input_file = self.path
-            return check_mask_for_label(self.config.fs, input_file, self.mask_label)
+            return check_mask_for_label(self.config.fs, input_file, self.mask_label, threshold=self.threshold)
         except Exception:
             return False
 
