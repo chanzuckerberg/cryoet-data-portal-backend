@@ -16,7 +16,7 @@ depositions:
     cross_references:
       publications: 10.7554/eLife.98552.2
     dates: &id002
-      deposition_date: '2024-11-20'
+      deposition_date: '2025-01-01'
       last_modified_date: '2025-01-09'
       release_date: '2025-01-09'
     deposition_description: Comprehensive semi-supervised automated annotations of macromolecules and organelles in
