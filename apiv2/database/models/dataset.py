@@ -8,7 +8,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import DateTime, Enum, ForeignKey, Integer, String
+from sqlalchemy import BigInteger, DateTime, Enum, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import sample_type_enum
 
@@ -37,7 +37,7 @@ class Dataset(Base):
     __tablename__ = "dataset"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=False, index=True)
+    deposition_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("deposition.id"), nullable=False, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
@@ -63,7 +63,7 @@ class Dataset(Base):
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
     organism_name: Mapped[str] = mapped_column(String, nullable=True)
-    organism_taxid: Mapped[int] = mapped_column(Integer, nullable=True)
+    organism_taxid: Mapped[int] = mapped_column(BigInteger, nullable=True)
     tissue_name: Mapped[str] = mapped_column(String, nullable=True)
     tissue_id: Mapped[str] = mapped_column(String, nullable=True)
     cell_name: Mapped[str] = mapped_column(String, nullable=True)
@@ -85,5 +85,5 @@ class Dataset(Base):
     related_database_entries: Mapped[str] = mapped_column(String, nullable=True)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
     https_prefix: Mapped[str] = mapped_column(String, nullable=False)
-    file_size: Mapped[int] = mapped_column(Integer, nullable=True)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, primary_key=True)
+    file_size: Mapped[int] = mapped_column(BigInteger, nullable=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, primary_key=True)

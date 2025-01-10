@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, Float, ForeignKey, Integer, String
+from sqlalchemy import BigInteger, Boolean, Float, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from platformics.database.models.base import Base
@@ -31,23 +31,23 @@ class Frame(Base):
     __tablename__ = "frame"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=False, index=True)
+    deposition_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("deposition.id"), nullable=False, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
         back_populates="frames",
     )
-    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
+    run_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("run.id"), nullable=False, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
         foreign_keys=run_id,
         back_populates="frames",
     )
     raw_angle: Mapped[float] = mapped_column(Float, nullable=True)
-    acquisition_order: Mapped[int] = mapped_column(Integer, nullable=True)
+    acquisition_order: Mapped[int] = mapped_column(BigInteger, nullable=True)
     dose: Mapped[float] = mapped_column(Float, nullable=True)
     is_gain_corrected: Mapped[bool] = mapped_column(Boolean, nullable=True)
     s3_frame_path: Mapped[str] = mapped_column(String, nullable=False)
     https_frame_path: Mapped[str] = mapped_column(String, nullable=False)
-    file_size: Mapped[int] = mapped_column(Integer, nullable=True)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    file_size: Mapped[int] = mapped_column(BigInteger, nullable=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

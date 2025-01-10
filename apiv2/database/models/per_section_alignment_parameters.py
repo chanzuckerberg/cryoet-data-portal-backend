@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Float, ForeignKey, Integer
+from sqlalchemy import BigInteger, Float, ForeignKey
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -30,16 +30,16 @@ class PerSectionAlignmentParameters(Base):
     __tablename__ = "per_section_alignment_parameters"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    alignment_id: Mapped[int] = mapped_column(Integer, ForeignKey("alignment.id"), nullable=False, index=True)
+    alignment_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("alignment.id"), nullable=False, index=True)
     alignment: Mapped["Alignment"] = relationship(
         "Alignment",
         foreign_keys=alignment_id,
         back_populates="per_section_alignments",
     )
-    z_index: Mapped[int] = mapped_column(Integer, nullable=False)
+    z_index: Mapped[int] = mapped_column(BigInteger, nullable=False)
     x_offset: Mapped[float] = mapped_column(Float, nullable=True)
     y_offset: Mapped[float] = mapped_column(Float, nullable=True)
     volume_x_rotation: Mapped[float] = mapped_column(Float, nullable=True)
     in_plane_rotation: Mapped[JSONB] = mapped_column(JSONB, nullable=True)
     tilt_angle: Mapped[float] = mapped_column(Float, nullable=True)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

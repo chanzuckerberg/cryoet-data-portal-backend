@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
+from sqlalchemy import BigInteger, Boolean, Enum, Float, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import tiltseries_microscope_manufacturer_enum
 
@@ -41,27 +41,27 @@ class Tiltseries(Base):
         foreign_keys="Alignment.tiltseries_id",
         cascade="all, delete-orphan",
     )
-    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
+    run_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("run.id"), nullable=False, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
         foreign_keys=run_id,
         back_populates="tiltseries",
     )
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
+    deposition_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("deposition.id"), nullable=True, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
         back_populates="tiltseries",
     )
     s3_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
-    file_size_omezarr: Mapped[int] = mapped_column(Integer, nullable=True)
+    file_size_omezarr: Mapped[int] = mapped_column(BigInteger, nullable=True)
     s3_mrc_file: Mapped[str] = mapped_column(String, nullable=True)
-    file_size_mrc: Mapped[int] = mapped_column(Integer, nullable=True)
+    file_size_mrc: Mapped[int] = mapped_column(BigInteger, nullable=True)
     https_omezarr_dir: Mapped[str] = mapped_column(String, nullable=True)
     https_mrc_file: Mapped[str] = mapped_column(String, nullable=True)
     s3_angle_list: Mapped[str] = mapped_column(String, nullable=True)
     https_angle_list: Mapped[str] = mapped_column(String, nullable=True)
-    acceleration_voltage: Mapped[int] = mapped_column(Integer, nullable=False)
+    acceleration_voltage: Mapped[int] = mapped_column(BigInteger, nullable=False)
     spherical_aberration_constant: Mapped[float] = mapped_column(Float, nullable=False)
     microscope_manufacturer: Mapped[tiltseries_microscope_manufacturer_enum] = mapped_column(
         Enum(tiltseries_microscope_manufacturer_enum, native_enum=False), nullable=False,
@@ -83,11 +83,11 @@ class Tiltseries(Base):
     data_acquisition_software: Mapped[str] = mapped_column(String, nullable=False)
     related_empiar_entry: Mapped[str] = mapped_column(String, nullable=True)
     binning_from_frames: Mapped[float] = mapped_column(Float, nullable=True)
-    tilt_series_quality: Mapped[int] = mapped_column(Integer, nullable=False)
+    tilt_series_quality: Mapped[int] = mapped_column(BigInteger, nullable=False)
     is_aligned: Mapped[bool] = mapped_column(Boolean, nullable=False)
     pixel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
-    aligned_tiltseries_binning: Mapped[int] = mapped_column(Integer, nullable=True)
-    size_x: Mapped[int] = mapped_column(Integer, nullable=True)
-    size_y: Mapped[int] = mapped_column(Integer, nullable=True)
-    size_z: Mapped[int] = mapped_column(Integer, nullable=True)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    aligned_tiltseries_binning: Mapped[int] = mapped_column(BigInteger, nullable=True)
+    size_x: Mapped[int] = mapped_column(BigInteger, nullable=True)
+    size_y: Mapped[int] = mapped_column(BigInteger, nullable=True)
+    size_z: Mapped[int] = mapped_column(BigInteger, nullable=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

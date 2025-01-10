@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Enum, ForeignKey, Integer
+from sqlalchemy import BigInteger, Enum, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import annotation_file_shape_type_enum
 
@@ -32,7 +32,7 @@ class AnnotationShape(Base):
     __tablename__ = "annotation_shape"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    annotation_id: Mapped[int] = mapped_column(Integer, ForeignKey("annotation.id"), nullable=True, index=True)
+    annotation_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("annotation.id"), nullable=True, index=True)
     annotation: Mapped["Annotation"] = relationship(
         "Annotation",
         foreign_keys=annotation_id,
@@ -48,4 +48,4 @@ class AnnotationShape(Base):
     shape_type: Mapped[annotation_file_shape_type_enum] = mapped_column(
         Enum(annotation_file_shape_type_enum, native_enum=False), nullable=True,
     )
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

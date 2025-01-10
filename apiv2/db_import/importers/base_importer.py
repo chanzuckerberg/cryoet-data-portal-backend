@@ -87,15 +87,15 @@ class BaseDBImporter:
         total_size = 0
         try:
             response = self.config.s3_client.list_objects_v2(Bucket=self.config.bucket_name, Prefix=input_path)
-            if 'Contents' in response:
-                for obj in response['Contents']:
-                    total_size += obj['Size']
+            if "Contents" in response:
+                for obj in response["Contents"]:
+                    total_size += obj["Size"]
 
-            total_size_mb = round(total_size / (1024 * 1024))
-            return total_size_mb if total_size_mb > 1 else None
+            return total_size
         except Exception as e:
             print(f"Error retrieving folder size: {e}")
             return None
+
 
 class StaleDeletionDBImporter(BaseDBImporter):
     """
