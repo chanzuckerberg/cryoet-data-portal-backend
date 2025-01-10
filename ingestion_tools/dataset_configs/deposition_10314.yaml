@@ -14,7 +14,7 @@ depositions:
         name: Thomas H. Sharp
         primary_author_status: false
     cross_references:
-      publications: 10.7554/eLife.98552.2
+      publications: 10.7554/eLife.98552.3
     dates: &id002
       deposition_date: '2025-01-01'
       last_modified_date: '2025-01-09'
@@ -48,7 +48,7 @@ annotations:
     annotation_object:
       id: GO:0005840
       name: ribosome
-    annotation_publications: 10.7554/eLife.98552.2
+    annotation_publications: 10.7554/eLife.98552.3
     annotation_software: Ais
     authors: *deposition_authors
     dates: *id002
