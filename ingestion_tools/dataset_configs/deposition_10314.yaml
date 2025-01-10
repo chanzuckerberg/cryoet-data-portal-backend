@@ -391,8 +391,8 @@ annotations:
 datasets:
 - sources:
   - destination_glob:
-      list_glob: '{output_path}/10302'
-      match_regex: '.*'
+      list_glob: '{output_path}/1030?'
+      match_regex: '(10301|10302)'
       name_regex: '(.*)'
 
 runs:
