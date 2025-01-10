@@ -326,19 +326,6 @@ annotations:
     <<: *annotation_metadata
     annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
     annotation_object:
-      id: GO:0031410
-      name: cytoplasmic vesicle
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: '{run_name}_bin2__Vesicle.mrc'
-      is_visualization_default: true
-      rescale: true
-      threshold: 0.5
-- metadata:
-    <<: *annotation_metadata
-    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
-    annotation_object:
       id: GO:0005618
       name: cell wall
   sources:
