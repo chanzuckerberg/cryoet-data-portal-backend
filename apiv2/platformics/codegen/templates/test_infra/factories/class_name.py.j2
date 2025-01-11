@@ -100,7 +100,12 @@ class {{ cls.name }}Factory(CommonFactory):
                 {%- elif field.type == "Array2dFloat" %}
     {{ field.name }} = factory.LazyAttribute(lambda o: [ [random.uniform(1, 100) for _ in range(5)] ] * random.randint(2, 5) )
                 {%- elif field.type == "integer" %}
+                    {% if field.identifier %}
+    # Auto increment integer identifiers starting with 1
+    {{ field.name }} = factory.Sequence(lambda n: n + 1)
+                    {% else %}
     {{ field.name }} = fuzzy.FuzzyInteger(1, 1000)
+                    {% endif %}
                 {%- elif field.type == "float" %}
     {{ field.name }} = fuzzy.FuzzyFloat(1, 100)
                 {%- elif field.type == cls.name %}{#

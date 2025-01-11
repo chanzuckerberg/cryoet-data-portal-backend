@@ -37,4 +37,6 @@ class DepositionFactory(CommonFactory):
     last_modified_date = factory.Faker("date")
     key_photo_url = fuzzy.FuzzyText()
     key_photo_thumbnail_url = fuzzy.FuzzyText()
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

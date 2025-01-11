@@ -34,4 +34,6 @@ class GainFileFactory(CommonFactory):
     )
     s3_file_path = fuzzy.FuzzyText()
     https_file_path = fuzzy.FuzzyText()
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)
