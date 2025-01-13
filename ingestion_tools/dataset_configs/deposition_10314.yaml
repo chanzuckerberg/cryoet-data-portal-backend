@@ -41,8 +41,8 @@ deposition_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_snapshot.png"
-        thumbnail: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_thumbnail.png"
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_thumbnail.png"
 alignments:
 - sources:
   - destination_glob:
