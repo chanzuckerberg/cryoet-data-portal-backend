@@ -35,7 +35,7 @@ EXPORT AWS_PROFILE=cryoet-dev
 python3 enqueue_runs.py queue --help
 
 # Example
-python3 enqueue_runs.py queue dataset_configs/10000.yaml cryoetportal-rawdatasets-dev cryoetportal-output-test --import-everything
+python3 enqueue_runs.py queue ../dataset_configs/10000.yaml cryoetportal-rawdatasets-dev cryoetportal-output-test --import-everything
 ```
 
 

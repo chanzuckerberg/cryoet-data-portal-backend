@@ -66,7 +66,7 @@ test: ## Run tests
 	$(docker_compose) exec $(APP_CONTAINER) pytest -vvv
 
 .PHONY: test-file
-test-file: init ## Run tests for a specific file, ex: make test-file FILE=tests/test_file.py
+test-file: ## Run tests for a specific file, ex: make test-file FILE=tests/test_file.py
 	$(docker_compose) exec $(APP_CONTAINER) pytest -vvv $(FILE)
 
 .PHONY: restart

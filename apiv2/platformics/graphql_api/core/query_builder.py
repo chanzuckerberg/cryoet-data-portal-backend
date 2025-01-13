@@ -18,6 +18,7 @@ from typing_extensions import TypedDict
 from platformics.database.models.base import Base
 from platformics.graphql_api.core.errors import PlatformicsError
 from platformics.graphql_api.core.query_input_types import aggregator_map, operator_map, orderBy
+from platformics.graphql_api.core.strawberry_helpers import filter_meta_fields
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from platformics.support import sqlalchemy_helpers
 
@@ -106,10 +107,10 @@ def convert_where_clauses_to_sql(
         else:
             local_where_clauses[col] = v
     authz_client.modify_where_clause(principal, action, sa_model, local_where_clauses)
-    for group in group_by:  # type: ignore
+    for group in filter_meta_fields(group_by):  # type: ignore
         col = strcase.to_snake(group.name)
         if col in mapper.relationships:  # type: ignore
-            all_joins[col]["group_by"] = group.selections
+            all_joins[col]["group_by"] = filter_meta_fields(group.selections)
         else:
             local_group_by.append(getattr(sa_model, col))
 
@@ -315,6 +316,7 @@ def get_aggregate_db_query(
     return a SQLAlchemy query that performs the aggregations, with results
     limited based on the where clause, and which entities the user has access to.
     """
+    aggregate = filter_meta_fields(aggregate)
     if not depth:
         depth = 0
     depth += 1
@@ -346,7 +348,7 @@ def get_aggregate_db_query(
                 query = query.having(getattr(count_fn, sa_comparator)(value))
 
         else:
-            for col in aggregator.selections:
+            for col in filter_meta_fields(aggregator.selections):
                 col_name = strcase.to_snake(col.name)
                 aggregate_query_fields.append(
                     agg_fn(getattr(model_cls, col_name)).label(f"{aggregator.name}_{col_name}"),  # type: ignore
