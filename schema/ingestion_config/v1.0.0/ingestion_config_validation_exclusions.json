@@ -1,6 +1,6 @@
 {
     "AnnotationObject": {
-        "id": ["GO:0160201", "GO:0160202"],
+        "id": ["GO:0160201", "GO:0160202", "GO:0160223"],
         "name": [
             "microtubule doublet 48 nm repeat",
             "microtubule doublet 96 nm repeat",
