@@ -54,4 +54,6 @@ class AlignmentFactory(CommonFactory):
     s3_alignment_metadata = fuzzy.FuzzyText()
     https_alignment_metadata = fuzzy.FuzzyText()
     is_portal_standard = factory.Faker("boolean")
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)
