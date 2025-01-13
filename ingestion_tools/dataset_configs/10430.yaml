@@ -41,8 +41,8 @@ datasets:
       id: CL:0000010
       name: cultured cell
     cross_references:
-      publications: 10.1101/2024.06.27.600657
-      related_database_entries: EMD-44921, EMD-44909, EMD-44922
+      publications: 10.1038/s41467-025-56045-z, 10.1101/2024.06.27.600657
+      related_database_entries: EMD-44921, EMD-44909, EMD-44922, EMD-46973
     dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
       contains 10 grids. This is grid 5 of 10 and contains apical membranes of HEK293
       Trex cells.  The cell line is stably expressing Dynamin 1 (K44A)- GFP on a tetracycline
