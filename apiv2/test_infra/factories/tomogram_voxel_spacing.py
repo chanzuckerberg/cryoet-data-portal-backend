@@ -35,4 +35,6 @@ class TomogramVoxelSpacingFactory(CommonFactory):
     voxel_spacing = fuzzy.FuzzyFloat(1, 100)
     s3_prefix = fuzzy.FuzzyText()
     https_prefix = fuzzy.FuzzyText()
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

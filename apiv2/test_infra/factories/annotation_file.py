@@ -46,4 +46,6 @@ class AnnotationFileFactory(CommonFactory):
     https_path = fuzzy.FuzzyText()
     is_visualization_default = factory.Faker("boolean")
     source = fuzzy.FuzzyChoice(["dataset_author", "community", "portal_standard"])
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

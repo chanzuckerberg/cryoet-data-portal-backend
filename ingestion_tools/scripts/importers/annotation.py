@@ -248,7 +248,9 @@ class VolumeAnnotationSource(BaseAnnotationSource):
     def get_output_dim(self) -> tuple[int, int, int]:
         """Returns the dimensions of the output volume at the Annotation's VoxelSpacing."""
         alignment = list(AlignmentImporter.finder(self.config, **self.parents))[0]
-        dims = alignment.get_extra_metadata()["volume_dimension"]
+        dims = alignment.metadata.get("volume_dimension", None)
+        if not dims:
+            dims = alignment.get_extra_metadata()["volume_dimension"]
         voxel_spacing = self.parents["voxel_spacing"].as_float()
 
         dims = (
@@ -352,7 +354,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
     def is_valid(self) -> bool:
         try:
             input_file = self.path
-            return check_mask_for_label(self.config.fs, input_file, self.mask_label)
+            return check_mask_for_label(self.config.fs, input_file, self.mask_label, threshold=self.threshold)
         except Exception:
             return False
 

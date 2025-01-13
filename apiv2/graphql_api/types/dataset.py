@@ -43,6 +43,7 @@ from platformics.graphql_api.core.query_input_types import (
 )
 from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
@@ -138,7 +139,7 @@ async def load_dataset_funding_aggregate_rows(
     info: Info,
     where: Annotated["DatasetFundingWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")] | None = None,
 ) -> Optional[Annotated["DatasetFundingAggregate", strawberry.lazy("graphql_api.types.dataset_funding")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Dataset)
     relationship = mapper.relationships["funding_sources"]
@@ -170,7 +171,7 @@ async def load_dataset_author_aggregate_rows(
     info: Info,
     where: Annotated["DatasetAuthorWhereClause", strawberry.lazy("graphql_api.types.dataset_author")] | None = None,
 ) -> Optional[Annotated["DatasetAuthorAggregate", strawberry.lazy("graphql_api.types.dataset_author")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Dataset)
     relationship = mapper.relationships["authors"]
@@ -200,7 +201,7 @@ async def load_run_aggregate_rows(
     info: Info,
     where: Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")] | None = None,
 ) -> Optional[Annotated["RunAggregate", strawberry.lazy("graphql_api.types.run")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Dataset)
     relationship = mapper.relationships["runs"]
@@ -805,10 +806,7 @@ async def resolve_datasets_aggregate(
     """
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
-    selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
-    groupby_selections = groupby_selections[0].selections if groupby_selections else []
+    aggregate_selections, groupby_selections = get_aggregate_selections(info.selected_fields)
 
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")

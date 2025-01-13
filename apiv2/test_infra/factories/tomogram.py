@@ -45,9 +45,13 @@ class TomogramFactory(CommonFactory):
         TomogramVoxelSpacingFactory,
     )
     name = fuzzy.FuzzyText()
+
     size_x = fuzzy.FuzzyInteger(1, 1000)
+
     size_y = fuzzy.FuzzyInteger(1, 1000)
+
     size_z = fuzzy.FuzzyInteger(1, 1000)
+
     voxel_spacing = fuzzy.FuzzyFloat(1, 100)
     fiducial_alignment_status = fuzzy.FuzzyChoice(["FIDUCIAL", "NON_FIDUCIAL"])
     reconstruction_method = fuzzy.FuzzyChoice(["SART", "Fourier Space", "SIRT", "WBP", "Unknown"])
@@ -68,15 +72,22 @@ class TomogramFactory(CommonFactory):
     scale1_dimensions = fuzzy.FuzzyText()
     scale2_dimensions = fuzzy.FuzzyText()
     ctf_corrected = factory.Faker("boolean")
+
     offset_x = fuzzy.FuzzyInteger(1, 1000)
+
     offset_y = fuzzy.FuzzyInteger(1, 1000)
+
     offset_z = fuzzy.FuzzyInteger(1, 1000)
+
     key_photo_url = fuzzy.FuzzyText()
     key_photo_thumbnail_url = fuzzy.FuzzyText()
     neuroglancer_config = fuzzy.FuzzyText()
     publications = fuzzy.FuzzyText()
     related_database_entries = fuzzy.FuzzyText()
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)
+
     deposition_date = factory.Faker("date")
     release_date = factory.Faker("date")
     last_modified_date = factory.Faker("date")

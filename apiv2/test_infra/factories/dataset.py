@@ -35,7 +35,9 @@ class DatasetFactory(CommonFactory):
     title = fuzzy.FuzzyText()
     description = fuzzy.FuzzyText()
     organism_name = fuzzy.FuzzyText()
+
     organism_taxid = fuzzy.FuzzyInteger(1, 1000)
+
     tissue_name = fuzzy.FuzzyText()
     tissue_id = fuzzy.FuzzyText()
     cell_name = fuzzy.FuzzyText()
@@ -60,4 +62,5 @@ class DatasetFactory(CommonFactory):
     s3_prefix = fuzzy.FuzzyText()
     https_prefix = fuzzy.FuzzyText()
     file_size = fuzzy.FuzzyInteger(1, 1000)
-    id = fuzzy.FuzzyInteger(1, 1000)
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

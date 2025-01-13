@@ -45,7 +45,9 @@ class AnnotationFactory(CommonFactory):
     object_name = fuzzy.FuzzyText()
     object_description = fuzzy.FuzzyText()
     object_state = fuzzy.FuzzyText()
+
     object_count = fuzzy.FuzzyInteger(1, 1000)
+
     confidence_precision = fuzzy.FuzzyFloat(1, 100)
     confidence_recall = fuzzy.FuzzyFloat(1, 100)
     ground_truth_used = fuzzy.FuzzyText()
@@ -55,4 +57,6 @@ class AnnotationFactory(CommonFactory):
     deposition_date = factory.Faker("date")
     release_date = factory.Faker("date")
     last_modified_date = factory.Faker("date")
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

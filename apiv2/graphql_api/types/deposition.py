@@ -46,6 +46,7 @@ from platformics.graphql_api.core.query_input_types import (
 )
 from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
@@ -165,7 +166,7 @@ async def load_deposition_author_aggregate_rows(
         Annotated["DepositionAuthorWhereClause", strawberry.lazy("graphql_api.types.deposition_author")] | None
     ) = None,
 ) -> Optional[Annotated["DepositionAuthorAggregate", strawberry.lazy("graphql_api.types.deposition_author")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["authors"]
@@ -195,7 +196,7 @@ async def load_alignment_aggregate_rows(
     info: Info,
     where: Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")] | None = None,
 ) -> Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["alignments"]
@@ -227,7 +228,7 @@ async def load_annotation_aggregate_rows(
     info: Info,
     where: Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")] | None = None,
 ) -> Optional[Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["annotations"]
@@ -257,7 +258,7 @@ async def load_dataset_aggregate_rows(
     info: Info,
     where: Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")] | None = None,
 ) -> Optional[Annotated["DatasetAggregate", strawberry.lazy("graphql_api.types.dataset")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["datasets"]
@@ -287,7 +288,7 @@ async def load_frame_aggregate_rows(
     info: Info,
     where: Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")] | None = None,
 ) -> Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["frames"]
@@ -319,7 +320,7 @@ async def load_tiltseries_aggregate_rows(
     info: Info,
     where: Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")] | None = None,
 ) -> Optional[Annotated["TiltseriesAggregate", strawberry.lazy("graphql_api.types.tiltseries")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["tiltseries"]
@@ -349,7 +350,7 @@ async def load_tomogram_aggregate_rows(
     info: Info,
     where: Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")] | None = None,
 ) -> Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["tomograms"]
@@ -383,7 +384,7 @@ async def load_deposition_type_aggregate_rows(
     info: Info,
     where: Annotated["DepositionTypeWhereClause", strawberry.lazy("graphql_api.types.deposition_type")] | None = None,
 ) -> Optional[Annotated["DepositionTypeAggregate", strawberry.lazy("graphql_api.types.deposition_type")]]:
-    selections = info.selected_fields[0].selections[0].selections
+    selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["deposition_types"]
@@ -806,10 +807,7 @@ async def resolve_depositions_aggregate(
     """
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
-    selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
-    groupby_selections = groupby_selections[0].selections if groupby_selections else []
+    aggregate_selections, groupby_selections = get_aggregate_selections(info.selected_fields)
 
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")

@@ -114,7 +114,7 @@ def build_tomogram_groupby_output(
                     keys,
                     value,
                 )
-        case "tomogram_authors":
+        case "authors":
             if getattr(group_object, key):
                 value = tomogram_author_helper.build_tomogram_author_groupby_output(
                     getattr(group_object, key),

@@ -62,7 +62,7 @@ class TomogramItem(ItemDBImporter):
                 self.input_data.get("fiducial_alignment_status", False),
             ),
             "reconstruction_method": self.normalize_to_unknown_str(self.input_data.get("reconstruction_method")),
-            "reconstruction_software": self.normalize_to_unknown_str(self.input_data.get("reconstruction_software")),
+            "reconstruction_software": self.input_data.get("reconstruction_software") or "Unknown",
             "s3_omezarr_dir": self.get_s3_url(self.input_data["omezarr_dir"]),
             "https_omezarr_dir": self.get_https_url(self.input_data["omezarr_dir"]),
             "s3_mrc_file": self.get_s3_url(self.input_data["mrc_file"]),

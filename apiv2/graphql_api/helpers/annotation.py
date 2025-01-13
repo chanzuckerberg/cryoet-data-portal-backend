@@ -113,7 +113,7 @@ def build_annotation_groupby_output(
                     keys,
                     value,
                 )
-        case "annotation_method_links":
+        case "method_links":
             if getattr(group_object, key):
                 value = annotation_method_link_helper.build_annotation_method_link_groupby_output(
                     getattr(group_object, key),
@@ -126,7 +126,7 @@ def build_annotation_groupby_output(
                     keys,
                     value,
                 )
-        case "annotation_authors":
+        case "authors":
             if getattr(group_object, key):
                 value = annotation_author_helper.build_annotation_author_groupby_output(
                     getattr(group_object, key),

@@ -34,7 +34,9 @@ class PerSectionAlignmentParametersFactory(CommonFactory):
     alignment = factory.SubFactory(
         AlignmentFactory,
     )
+
     z_index = fuzzy.FuzzyInteger(1, 1000)
+
     x_offset = fuzzy.FuzzyFloat(1, 100)
     y_offset = fuzzy.FuzzyFloat(1, 100)
     volume_x_rotation = fuzzy.FuzzyFloat(1, 100)
@@ -42,4 +44,6 @@ class PerSectionAlignmentParametersFactory(CommonFactory):
         lambda o: [[random.uniform(1, 100) for _ in range(5)]] * random.randint(2, 5),
     )
     tilt_angle = fuzzy.FuzzyFloat(1, 100)
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

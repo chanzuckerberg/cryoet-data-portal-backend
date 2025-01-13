@@ -42,6 +42,7 @@ from platformics.graphql_api.core.query_input_types import (
 )
 from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
@@ -405,10 +406,7 @@ async def resolve_per_section_alignment_parameters_aggregate(
     """
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
-    selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
-    groupby_selections = groupby_selections[0].selections if groupby_selections else []
+    aggregate_selections, groupby_selections = get_aggregate_selections(info.selected_fields)
 
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")

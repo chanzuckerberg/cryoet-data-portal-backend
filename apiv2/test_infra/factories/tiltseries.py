@@ -44,7 +44,9 @@ class TiltseriesFactory(CommonFactory):
     https_mrc_file = fuzzy.FuzzyText()
     s3_angle_list = fuzzy.FuzzyText()
     https_angle_list = fuzzy.FuzzyText()
+
     acceleration_voltage = fuzzy.FuzzyInteger(1, 1000)
+
     spherical_aberration_constant = fuzzy.FuzzyFloat(1, 100)
     microscope_manufacturer = fuzzy.FuzzyChoice(["FEI", "TFS", "JEOL", "SIMULATED"])
     microscope_model = fuzzy.FuzzyText()
@@ -64,11 +66,19 @@ class TiltseriesFactory(CommonFactory):
     data_acquisition_software = fuzzy.FuzzyText()
     related_empiar_entry = fuzzy.FuzzyText()
     binning_from_frames = fuzzy.FuzzyFloat(1, 100)
+
     tilt_series_quality = fuzzy.FuzzyInteger(1, 1000)
+
     is_aligned = factory.Faker("boolean")
     pixel_spacing = fuzzy.FuzzyFloat(1, 100)
+
     aligned_tiltseries_binning = fuzzy.FuzzyInteger(1, 1000)
+
     size_x = fuzzy.FuzzyInteger(1, 1000)
+
     size_y = fuzzy.FuzzyInteger(1, 1000)
+
     size_z = fuzzy.FuzzyInteger(1, 1000)
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)
