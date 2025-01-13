@@ -81,6 +81,13 @@ datasets:
       value:
       - '10432'
 
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/kem_sochacki_06_2024/grid07/dataset_keyphotos/key-photo-snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/kem_sochacki_06_2024/grid07/dataset_keyphotos/key-photo-thumbnail.png
+
 depositions:
 - sources:
   - literal:
