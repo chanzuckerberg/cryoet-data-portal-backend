@@ -1,5 +1,5 @@
 {
-  "voxel_spacing": 12.300,
+  "voxel_spacing": 12.3,
   "reconstruction_method": "WBP",
   "reconstruction_software": "AreTomo 1.0",
   "fiducial_alignment_status": "FIDUCIAL",
