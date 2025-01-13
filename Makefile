@@ -54,7 +54,7 @@ ingestor-test-s3:
 
 .PHONY: apiv2-test
 apiv2-test:  ## Run apiv2 tests
-	$(docker_compose) exec graphql-api pytest -vvv
+	$(docker_compose) exec graphql-api pytest -vvv -s db_import/tests/test_db_dataset_import.py::test_import_dataset_new
 
 .PHONY: push-local-ingestor-build
 push-local-ingestor-build:
