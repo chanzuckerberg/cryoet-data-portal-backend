@@ -514,6 +514,7 @@ def check_mask_for_label(
     fs: FileSystemApi,
     tomo_filename: str,
     label: int,
+    threshold: float | None = None,
 ) -> bool:
-    mc = MaskConverter(fs, tomo_filename, label)
+    mc = MaskConverter(fs, tomo_filename, label, threshold=threshold)
     return mc.has_label()
