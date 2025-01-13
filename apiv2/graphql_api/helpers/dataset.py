@@ -100,7 +100,7 @@ def build_dataset_groupby_output(
                     keys,
                     value,
                 )
-        case "dataset_funding":
+        case "funding_sources":
             if getattr(group_object, key):
                 value = dataset_funding_helper.build_dataset_funding_groupby_output(
                     getattr(group_object, key),
@@ -113,7 +113,7 @@ def build_dataset_groupby_output(
                     keys,
                     value,
                 )
-        case "dataset_authors":
+        case "authors":
             if getattr(group_object, key):
                 value = dataset_author_helper.build_dataset_author_groupby_output(
                     getattr(group_object, key),

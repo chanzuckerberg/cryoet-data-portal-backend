@@ -94,11 +94,7 @@ def build_{{ cls.snake_name }}_groupby_output(
 {%- for attr in cls.visible_fields %}
     {%- if attr.type != "File" %}
         {%- if attr.inverse %}
-        {%- if attr.multivalued or attr.is_virtual_relationship %}
-        case "{{ attr.related_class.plural_snake_name }}":
-        {%- else %}
-        case "{{ attr.related_class.snake_name }}":
-        {%- endif %}
+        case "{{ attr.name }}":
             if getattr(group_object, key):
                 value = {{ attr.related_class.snake_name }}_helper.build_{{ attr.related_class.snake_name }}_groupby_output(
                     getattr(group_object, key),
