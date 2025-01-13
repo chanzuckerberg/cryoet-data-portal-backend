@@ -443,11 +443,13 @@ def queue(
 
                     dataset_id = dataset.name
                     deposition_id = deposition.name
-                    execution_name = f"{int(time.time())}-dep{deposition_id}-ds{dataset_id}-run{run.name}"
+                    prefix = f"{int(time.time())}-dep{deposition_id}-ds{dataset_id}"
+                    execution_name = f"{prefix}-run{run.name}"
 
                     # execution name greater than 80 chars causes boto ValidationException
                     if len(execution_name) > 80:
-                        execution_name = execution_name[-80:]
+                        run_size = 80 - len(prefix)
+                        execution_name = f"{prefix}-run{run.name[-run_size:]}"
 
                     wdl_args = {
                         "config_file": config_file,
