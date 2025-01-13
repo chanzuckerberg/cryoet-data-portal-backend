@@ -53,11 +53,28 @@ class ItemDBImporter:
             input_path = input_path[len(self.config.bucket_name) + 1 :]
 
         total_size = 0
+        continuation_token = None
         try:
-            response = self.config.s3_client.list_objects_v2(Bucket=self.config.bucket_name, Prefix=input_path)
-            if "Contents" in response:
-                for obj in response["Contents"]:
-                    total_size += obj["Size"]
+            while True:
+                if continuation_token:
+                    response = self.config.s3_client.list_objects_v2(
+                        Bucket=self.config.bucket_name,
+                        Prefix=input_path,
+                        ContinuationToken=continuation_token,
+                    )
+                else:
+                    response = self.config.s3_client.list_objects_v2(
+                        Bucket=self.config.bucket_name,
+                        Prefix=input_path,
+                    )
+
+                if "Contents" in response:
+                    for obj in response["Contents"]:
+                        total_size += obj["Size"]
+
+                continuation_token = response.get("NextContinuationToken")
+                if not continuation_token:
+                    break
 
             return total_size
         except Exception as e:

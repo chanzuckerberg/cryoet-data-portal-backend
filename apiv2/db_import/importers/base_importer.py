@@ -84,17 +84,51 @@ class BaseDBImporter:
         if input_path.startswith(self.config.bucket_name):
             input_path = input_path[len(self.config.bucket_name) + 1 :]
 
+
         total_size = 0
+        continuation_token = None
         try:
-            response = self.config.s3_client.list_objects_v2(Bucket=self.config.bucket_name, Prefix=input_path)
-            if "Contents" in response:
-                for obj in response["Contents"]:
-                    total_size += obj["Size"]
+            while True:
+                if continuation_token:
+                    response = self.config.s3_client.list_objects_v2(
+                        Bucket=self.config.bucket_name,
+                        Prefix=input_path,
+                        ContinuationToken=continuation_token,
+                    )
+                else:
+                    response = self.config.s3_client.list_objects_v2(
+                        Bucket=self.config.bucket_name,
+                        Prefix=input_path,
+                    )
+
+                if "Contents" in response:
+                    for obj in response["Contents"]:
+                        total_size += obj["Size"]
+
+                continuation_token = response.get("NextContinuationToken")
+                if not continuation_token:
+                    break
 
             return total_size
         except Exception as e:
             print(f"Error retrieving folder size: {e}")
             return None
+
+        # total_size = 0
+        # try:
+        #     # response = self.config.s3_client.list_objects_v2(Bucket=self.config.bucket_name, Prefix=input_path)
+        #     paginator = self.config.s3_client.get_paginator('list_objects_v2')
+        #     pages = paginator.paginate(Bucket='bucket', Prefix='prefix')
+        #     for page in pages:
+        #         if "Contents" in page:
+        #             for obj in page["Contents"]:
+        #                 total_size += obj["Size"]
+
+
+        #     return total_size
+        # except Exception as e:
+        #     print(f"Error retrieving folder size: {e}")
+        #     return None
 
 
 class StaleDeletionDBImporter(BaseDBImporter):
