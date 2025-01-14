@@ -448,7 +448,7 @@ def queue(
 
                     # execution name greater than 80 chars causes boto ValidationException
                     if len(execution_name) > 80:
-                        run_size = 80 - len(prefix)
+                        run_size = 76 - len(prefix)
                         execution_name = f"{prefix}-run{run.name[-run_size:]}"
 
                     wdl_args = {
