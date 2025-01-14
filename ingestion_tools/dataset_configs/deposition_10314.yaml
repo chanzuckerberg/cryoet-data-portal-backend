@@ -51,7 +51,7 @@ alignments:
       name_regex: (.*)
 annotations:
 - metadata: &annotation_metadata
-    annotation_method: Convolutional neural network trained on manually annotated input data
+    annotation_method: Convolutional neural network trained on manually annotated input data.
     annotation_object:
       id: GO:0005840
       name: ribosome
