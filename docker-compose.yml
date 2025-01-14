@@ -6,7 +6,7 @@ services:
     volumes:
       - ./test_infra/test_files:/usr/share/nginx/html
   motoserver:
-    image: motoserver/moto:4.1.0
+    image: motoserver/moto:5.0.26
     ports:
       - "5566:5566"
     environment:
@@ -17,7 +17,7 @@ services:
   db:
     image: postgres:14.2
     healthcheck:
-      test: ['CMD', 'pg_isready', '-d', 'cryoet', '-U', 'postgres']
+      test: ["CMD", "pg_isready", "-d", "cryoet", "-U", "postgres"]
     environment:
       POSTGRES_INITDB_ARGS: --data-checksums
       POSTGRES_DB: cryoet
@@ -32,7 +32,7 @@ services:
     volumes:
       - ./test_infra:/test_infra
     ports:
-      - '5432:5432'
+      - "5432:5432"
   cryoet-api:
     platform: linux/arm64
     profiles: ["api", "apiv1"]
@@ -49,12 +49,12 @@ services:
       db:
         condition: service_healthy
     environment:
-      HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
       HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:postgres@db:5432/cryoet
       HASURA_GRAPHQL_ADMIN_SECRET: secret
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
     ports:
-      - '8080:8080'
+      - "8080:8080"
   hasura-console:
     platform: linux/arm64
     profiles: ["api", "apiv1"]
@@ -76,8 +76,8 @@ services:
       --api-port 9693
       --console-hge-endpoint http://localhost:8080
     ports:
-      - '9695:9695'
-      - '9693:9693'
+      - "9695:9695"
+      - "9693:9693"
     depends_on:
       cryoet-api:
         condition: service_healthy
@@ -91,8 +91,7 @@ services:
       - "3693:3693"
     volumes:
       - ./apiv2/cerbos:/var/policies/cerbos/
-    command:
-      ["server", "--config", "/var/policies/cerbos/config.yaml"]
+    command: ["server", "--config", "/var/policies/cerbos/config.yaml"]
   graphql-api:
     image: "graphql-api"
     profiles: ["api", "apiv2"]

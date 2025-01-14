@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy import BigInteger, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from platformics.database.models.base import Base
@@ -51,7 +51,7 @@ class Run(Base):
     annotations: Mapped[list[Annotation]] = relationship(
         "Annotation", back_populates="run", uselist=True, foreign_keys="Annotation.run_id", cascade="all, delete-orphan",
     )
-    dataset_id: Mapped[int] = mapped_column(Integer, ForeignKey("dataset.id"), nullable=False, index=True)
+    dataset_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("dataset.id"), nullable=False, index=True)
     dataset: Mapped["Dataset"] = relationship(
         "Dataset",
         foreign_keys=dataset_id,
@@ -86,4 +86,4 @@ class Run(Base):
     name: Mapped[str] = mapped_column(String, nullable=False)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
     https_prefix: Mapped[str] = mapped_column(String, nullable=False)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

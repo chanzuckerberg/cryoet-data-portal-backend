@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy import BigInteger, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from platformics.database.models.base import Base
@@ -29,7 +29,7 @@ class GainFile(Base):
     __tablename__ = "gain_file"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
+    run_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("run.id"), nullable=False, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
         foreign_keys=run_id,
@@ -37,4 +37,4 @@ class GainFile(Base):
     )
     s3_file_path: Mapped[str] = mapped_column(String, nullable=False)
     https_file_path: Mapped[str] = mapped_column(String, nullable=False)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

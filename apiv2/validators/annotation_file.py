@@ -33,6 +33,12 @@ class AnnotationFileCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size: Annotated[
+        int | None,
+        Field(
+            ge=0,
+        ),
+    ]
     https_path: Annotated[
         str,
         StringConstraints(
@@ -60,6 +66,12 @@ class AnnotationFileUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
+        ),
+    ]
+    file_size: Annotated[
+        int | None,
+        Field(
+            ge=0,
         ),
     ]
     https_path: Annotated[

@@ -179,6 +179,7 @@ class AnnotationFileWhereClause(TypedDict):
     tomogram_voxel_spacing_id: Optional[IntComparators] | None
     format: Optional[StrComparators] | None
     s3_path: Optional[StrComparators] | None
+    file_size: Optional[IntComparators] | None
     https_path: Optional[StrComparators] | None
     is_visualization_default: Optional[BoolComparators] | None
     source: Optional[EnumComparators[annotation_file_source_enum]] | None
@@ -205,6 +206,7 @@ class AnnotationFileOrderByClause(TypedDict):
     )
     format: Optional[orderBy] | None
     s3_path: Optional[orderBy] | None
+    file_size: Optional[orderBy] | None
     https_path: Optional[orderBy] | None
     is_visualization_default: Optional[orderBy] | None
     source: Optional[orderBy] | None
@@ -232,6 +234,7 @@ class AnnotationFile(EntityInterface):
     tomogram_voxel_spacing_id: Optional[int]
     format: str = strawberry.field(description="File format for this file")
     s3_path: str = strawberry.field(description="s3 path of the annotation file")
+    file_size: Optional[int] = strawberry.field(description="Size of the file in bytes", default=None)
     https_path: str = strawberry.field(description="HTTPS path for this annotation file")
     is_visualization_default: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice of default annotation to display in visualization for an object",
@@ -264,6 +267,7 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class AnnotationFileNumericalColumns:
+    file_size: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -276,6 +280,7 @@ Define columns that support min/max aggregations
 class AnnotationFileMinMaxColumns:
     format: Optional[str] = None
     s3_path: Optional[str] = None
+    file_size: Optional[int] = None
     https_path: Optional[str] = None
     id: Optional[int] = None
 
@@ -289,6 +294,7 @@ Define enum of all columns to support count and count(distinct) aggregations
 class AnnotationFileCountColumns(enum.Enum):
     format = "format"
     s3Path = "s3_path"
+    fileSize = "file_size"
     httpsPath = "https_path"
     isVisualizationDefault = "is_visualization_default"
     source = "source"
@@ -365,6 +371,7 @@ class AnnotationFileCreateInput:
     )
     format: str = strawberry.field(description="File format for this file")
     s3_path: str = strawberry.field(description="s3 path of the annotation file")
+    file_size: Optional[int] = strawberry.field(description="Size of the file in bytes", default=None)
     https_path: str = strawberry.field(description="HTTPS path for this annotation file")
     is_visualization_default: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice of default annotation to display in visualization for an object",
@@ -388,6 +395,7 @@ class AnnotationFileUpdateInput:
     )
     format: Optional[str] = strawberry.field(description="File format for this file")
     s3_path: Optional[str] = strawberry.field(description="s3 path of the annotation file")
+    file_size: Optional[int] = strawberry.field(description="Size of the file in bytes", default=None)
     https_path: Optional[str] = strawberry.field(description="HTTPS path for this annotation file")
     is_visualization_default: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice of default annotation to display in visualization for an object",

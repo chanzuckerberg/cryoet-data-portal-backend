@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Enum, ForeignKey, Integer
+from sqlalchemy import BigInteger, Enum, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import deposition_types_enum
 
@@ -30,11 +30,11 @@ class DepositionType(Base):
     __tablename__ = "deposition_type"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=False, index=True)
+    deposition_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("deposition.id"), nullable=False, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
         back_populates="deposition_types",
     )
     type: Mapped[deposition_types_enum] = mapped_column(Enum(deposition_types_enum, native_enum=False), nullable=True)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

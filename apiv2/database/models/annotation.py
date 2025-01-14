@@ -8,7 +8,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, DateTime, Enum, Float, ForeignKey, Integer, String
+from sqlalchemy import BigInteger, Boolean, DateTime, Enum, Float, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import annotation_method_type_enum
 
@@ -39,7 +39,7 @@ class Annotation(Base):
     __tablename__ = "annotation"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=True, index=True)
+    run_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("run.id"), nullable=True, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
         foreign_keys=run_id,
@@ -66,7 +66,7 @@ class Annotation(Base):
         foreign_keys="AnnotationAuthor.annotation_id",
         cascade="all, delete-orphan",
     )
-    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
+    deposition_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("deposition.id"), nullable=True, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
@@ -81,7 +81,7 @@ class Annotation(Base):
     object_name: Mapped[str] = mapped_column(String, nullable=False)
     object_description: Mapped[str] = mapped_column(String, nullable=True)
     object_state: Mapped[str] = mapped_column(String, nullable=True)
-    object_count: Mapped[int] = mapped_column(Integer, nullable=True)
+    object_count: Mapped[int] = mapped_column(BigInteger, nullable=True)
     confidence_precision: Mapped[float] = mapped_column(Float, nullable=True)
     confidence_recall: Mapped[float] = mapped_column(Float, nullable=True)
     ground_truth_used: Mapped[str] = mapped_column(String, nullable=True)
@@ -93,4 +93,4 @@ class Annotation(Base):
     deposition_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     release_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     last_modified_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

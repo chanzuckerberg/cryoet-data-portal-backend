@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Float, ForeignKey, Integer, String
+from sqlalchemy import BigInteger, Float, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from platformics.database.models.base import Base
@@ -40,7 +40,7 @@ class TomogramVoxelSpacing(Base):
         foreign_keys="AnnotationFile.tomogram_voxel_spacing_id",
         cascade="all, delete-orphan",
     )
-    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=True, index=True)
+    run_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("run.id"), nullable=True, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
         foreign_keys=run_id,
@@ -56,4 +56,4 @@ class TomogramVoxelSpacing(Base):
     voxel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)
     https_prefix: Mapped[str] = mapped_column(String, nullable=False)
-    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)

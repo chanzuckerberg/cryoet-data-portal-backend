@@ -79,10 +79,12 @@ class TiltSeriesDBImporter(BaseDBImporter):
         if mrc_path := self.metadata.get("mrc_file"):
             extra_data["s3_mrc_file"] = self.get_s3_url(mrc_path)
             extra_data["https_mrc_file"] = self.get_https_url(mrc_path)
+            extra_data["file_size_mrc"] = self.get_file_size(mrc_path)
 
         if omezarr_path := self.metadata.get("omezarr_dir"):
             extra_data["s3_omezarr_dir"] = self.get_s3_url(omezarr_path)
             extra_data["https_omezarr_dir"] = self.get_https_url(omezarr_path)
+            extra_data["file_size_omezarr"] = self.get_file_size(omezarr_path)
 
         if angle_list := self.get_first_match_file_name("*.rawtlt") or self.get_first_match_file_name("*.tlt"):
             extra_data["s3_angle_list"] = self.get_s3_url(angle_list)

@@ -14,7 +14,7 @@ import datetime
 from typing import TYPE_CHECKING
 
 from platformics.database.models.base import Base
-from sqlalchemy import ForeignKey, String, Float, Integer, Enum, Boolean, DateTime
+from sqlalchemy import ForeignKey, String, Float, BigInteger, Enum, Boolean, DateTime
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
@@ -68,7 +68,7 @@ class {{cls.name}}({%- if cls.is_a %}{{cls.is_a}}{%- else %}Base{%- endif %}):
     "uuid": ("UUID", "uuid.UUID"),
     "string": ("String", "str"),
     "Array2dFloat": ("JSONB", "JSONB"),
-    "integer": ("Integer", "int"),
+    "integer": ("BigInteger", "int"),
     "float": ("Float", "float"),
     "boolean": ("Boolean", "bool"),
     "date": ("DateTime(timezone=True)", "datetime.datetime"),

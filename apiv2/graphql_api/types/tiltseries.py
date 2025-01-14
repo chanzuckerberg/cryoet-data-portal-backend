@@ -180,7 +180,9 @@ class TiltseriesWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
     deposition_id: Optional[IntComparators] | None
     s3_omezarr_dir: Optional[StrComparators] | None
+    file_size_omezarr: Optional[IntComparators] | None
     s3_mrc_file: Optional[StrComparators] | None
+    file_size_mrc: Optional[IntComparators] | None
     https_omezarr_dir: Optional[StrComparators] | None
     https_mrc_file: Optional[StrComparators] | None
     s3_angle_list: Optional[StrComparators] | None
@@ -225,7 +227,9 @@ class TiltseriesOrderByClause(TypedDict):
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
     s3_omezarr_dir: Optional[orderBy] | None
+    file_size_omezarr: Optional[orderBy] | None
     s3_mrc_file: Optional[orderBy] | None
+    file_size_mrc: Optional[orderBy] | None
     https_omezarr_dir: Optional[orderBy] | None
     https_mrc_file: Optional[orderBy] | None
     s3_angle_list: Optional[orderBy] | None
@@ -282,9 +286,11 @@ class Tiltseries(EntityInterface):
     s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
+    file_size_omezarr: Optional[int] = strawberry.field(description="Size of the OME-Zarr file in bytes", default=None)
     s3_mrc_file: Optional[str] = strawberry.field(
         description="S3 path to this tiltseries in MRC format (no scaling)", default=None,
     )
+    file_size_mrc: Optional[int] = strawberry.field(description="Size of the MRC file in bytes", default=None)
     https_omezarr_dir: Optional[str] = strawberry.field(
         description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
@@ -364,6 +370,8 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class TiltseriesNumericalColumns:
+    file_size_omezarr: Optional[int] = None
+    file_size_mrc: Optional[int] = None
     acceleration_voltage: Optional[int] = None
     spherical_aberration_constant: Optional[float] = None
     tilt_min: Optional[float] = None
@@ -390,7 +398,9 @@ Define columns that support min/max aggregations
 @strawberry.type
 class TiltseriesMinMaxColumns:
     s3_omezarr_dir: Optional[str] = None
+    file_size_omezarr: Optional[int] = None
     s3_mrc_file: Optional[str] = None
+    file_size_mrc: Optional[int] = None
     https_omezarr_dir: Optional[str] = None
     https_mrc_file: Optional[str] = None
     s3_angle_list: Optional[str] = None
@@ -431,7 +441,9 @@ Define enum of all columns to support count and count(distinct) aggregations
 @strawberry.enum
 class TiltseriesCountColumns(enum.Enum):
     s3OmezarrDir = "s3_omezarr_dir"
+    fileSizeOmezarr = "file_size_omezarr"
     s3MrcFile = "s3_mrc_file"
+    fileSizeMrc = "file_size_mrc"
     httpsOmezarrDir = "https_omezarr_dir"
     httpsMrcFile = "https_mrc_file"
     s3AngleList = "s3_angle_list"
@@ -532,9 +544,11 @@ class TiltseriesCreateInput:
     s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
+    file_size_omezarr: Optional[int] = strawberry.field(description="Size of the OME-Zarr file in bytes", default=None)
     s3_mrc_file: Optional[str] = strawberry.field(
         description="S3 path to this tiltseries in MRC format (no scaling)", default=None,
     )
+    file_size_mrc: Optional[int] = strawberry.field(description="Size of the MRC file in bytes", default=None)
     https_omezarr_dir: Optional[str] = strawberry.field(
         description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
@@ -601,9 +615,11 @@ class TiltseriesUpdateInput:
     s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
+    file_size_omezarr: Optional[int] = strawberry.field(description="Size of the OME-Zarr file in bytes", default=None)
     s3_mrc_file: Optional[str] = strawberry.field(
         description="S3 path to this tiltseries in MRC format (no scaling)", default=None,
     )
+    file_size_mrc: Optional[int] = strawberry.field(description="Size of the MRC file in bytes", default=None)
     https_omezarr_dir: Optional[str] = strawberry.field(
         description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
