@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.7.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.6.0...apiv2-v1.7.0) (2025-01-14)
+
+
+### Features
+
+* support filtering on related aggregates ([#394](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/394)) ([8885ab7](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/8885ab734a8f753ddaaf3b4f08f780f3b08f7ac4))
+
+
+### Bug Fixes
+
+* Don't replace spaces with underscores for reconstruction software. ([#402](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/402)) ([e253f1f](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/e253f1fa2e31c0e7909933dd2b88ead3d3708a87))
+* Fix for spurious test failures. ([#410](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/410)) ([fedd776](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/fedd77611f15f8c2dd33bd1b1e57108f7d5f8456))
+* fix response handling for grouping by related fields  ([#409](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/409)) ([7ef1563](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/7ef1563367b1a7499834537cb09fe85ab3fa4c76))
+* scrape script overwriting existing data ([709e8a0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/709e8a006b542abe824edc394281059dda29a757))
+* scrape script overwriting existing v2 data ([#390](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/390)) ([709e8a0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/709e8a006b542abe824edc394281059dda29a757))
+* support __typename fields in gql queries ([#397](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/397)) ([6ea76ea](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/6ea76eab06864914ce16cbbd81da844f13e172e2))
+
 ## [1.6.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.5.0...apiv2-v1.6.0) (2024-12-17)
 
 
