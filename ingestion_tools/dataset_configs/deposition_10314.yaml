@@ -1,0 +1,415 @@
+depositions:
+- metadata:
+    authors: &deposition_authors
+      - ORCID: 0000-0002-3739-8863
+        corresponding_author_status: true
+        name: Mart G. F. Last
+        primary_author_status: true
+      - ORCID: 0000-0001-9794-067X
+        corresponding_author_status: false
+        name: Lenard M. Voortman
+        primary_author_status: false
+      - ORCID: 0000-0002-1990-2333
+        corresponding_author_status: True
+        name: Thomas H. Sharp
+        primary_author_status: false
+    cross_references:
+      publications: 10.7554/eLife.98552.3
+    dates: &id002
+      deposition_date: '2025-01-01'
+      last_modified_date: '2025-01-09'
+      release_date: '2025-01-09'
+    deposition_description: These segmentations of 23 different organelles and macromolecular structures across the
+      1829 volumes in the C. reinhardtii dataset were generated as a part of a project that explored the scaling of data
+      analyses in cryoET. On the basis of these comprehensive segmentations the dataset was also 'summarized' and
+      represented a searchable database (see method links).
+
+      All segmentations were generated using convolutional neural networks. Networks to segment macromolecules
+      (membrane, ribosome, F1-F0 complex, RuBisCo complex, chaperonin-containing T complex, and proteasome complex) were
+      prepared using Ais (check method links for network weights). The remaining features were segmented by a single
+      network that was prepared using Pom.
+    deposition_identifier: 10314
+    deposition_title: Comprehensive semi-supervised automated annotations of macromolecules and organelles in
+      C. reinhardtii tomograms
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10314
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_thumbnail.png"
+alignments:
+- sources:
+  - destination_glob:
+      list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+      match_regex: .*
+      name_regex: (.*)
+annotations:
+- metadata: &annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
+    annotation_object:
+      id: GO:0005840
+      name: ribosome
+    annotation_publications: 10.7554/eLife.98552.3
+    annotation_software: Ais
+    authors: *deposition_authors
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: false
+    method_links:
+    - custom_name: Ais on GitHub
+      link: https://www.github.com/bionanopatterning/Ais
+      link_type: source_code
+    - custom_name: Pom on GitHub
+      link: https://www.github.com/bionanopatterning/Pom
+      link_type: source_code
+    - custom_name: Pre-trained weights for Ais
+      link: https://aiscryoet.org/
+      link_type: models_weights
+    - custom_name: CryoPOM website
+      link: https://cryopom.streamlit.app/
+      link_type: website
+    - custom_name: Ais on PyPI
+      link: https://pypi.org/project/Ais-cryoET/
+      link_type: source_code
+    - custom_name: Pom on PyPI
+      link: https://pypi.org/project/Pom-cryoET/
+      link_type: source_code
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Ribosome.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 128
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Membrane.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 128
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
+    annotation_object:
+      id: GO:0005832
+      name: chaperonin-containing T-complex
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__TRiC.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 128
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
+    annotation_object:
+      id: GO:0000502
+      name: proteasome complex
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Proteasome.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 128
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
+    annotation_object:
+      id: GO:0045259
+      name: F1-F0 complex
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__ATP synthase.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 128
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on manually annotated input data.
+    annotation_object:
+      id: GO:0048492
+      name: RubisCO complex
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__RuBisCo.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 128
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005737
+      name: cytoplasm
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Cytoplasm.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005739
+      name: mitochondrion
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Mitochondrion.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005635
+      name: nuclear envelope
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Nuclear envelope.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005654
+      name: nucleoplasm
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Nucleoplasm.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0160223
+      name: pyrenoid tubule
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Pyrenoid tube.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0009579
+      name: thylakoid
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Thylakoid.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:1990732
+      name: pyrenoid
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Pyrenoid.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0009570
+      name: chloroplast stroma
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Stroma.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005811
+      name: lipid droplet
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Lipid droplet.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+#- metadata:
+#    <<: *annotation_metadata
+#    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+#    annotation_object:
+#      id: GO:0005618
+#      name: cell wall
+#  sources:
+#  - SemanticSegmentationMask:
+#      file_format: mrc
+#      #TODO: confirm this is correct
+#      glob_string: '{run_name}_bin2__Dense layer.mrc'
+#      is_visualization_default: true
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005783
+      name: endoplasmic reticulum
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Endoplasmic reticulum.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005643
+      name: nuclear pore
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__NPC.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005794
+      name: Golgi apparatus
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Golgi.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0031410
+      name: cytoplasmic vesicle
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Vesicle.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005618
+      name: cell wall
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Cell wall.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0005929
+      name: cilium
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Cilium.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0043036
+      name: starch grain
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Starch granule.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    <<: *annotation_metadata
+    annotation_method: Convolutional neural network trained on both manually and automatically annotated training data.
+    annotation_object:
+      id: GO:0009707
+      name: chloroplast outer membrane
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: '{dataset_name}/{run_name}_bin2__Chloroplast membrane.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+
+datasets:
+- sources:
+  - source_glob:
+      list_glob: '1030?'
+      match_regex: '.*'
+      name_regex: '(.*)'
+
+runs:
+- sources:
+  - source_glob:
+      list_glob: '{dataset_name}/*.mrc'
+      match_regex: '.*'
+      name_regex: '(.*?)_bin2__.*.mrc'
+
+standardization_config:
+  deposition_id: 10314
+  source_prefix: 'mart_last_11_2024/'
+
+version: '1.1.0'
+voxel_spacings:
+- sources:
+  - destination_glob:
+      list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+      match_regex: '.*'
+      name_regex: 'VoxelSpacing(.*)'
