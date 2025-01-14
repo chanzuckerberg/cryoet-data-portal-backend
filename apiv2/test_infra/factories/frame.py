@@ -37,9 +37,13 @@ class FrameFactory(CommonFactory):
         RunFactory,
     )
     raw_angle = fuzzy.FuzzyFloat(1, 100)
+
     acquisition_order = fuzzy.FuzzyInteger(1, 1000)
+
     dose = fuzzy.FuzzyFloat(1, 100)
     is_gain_corrected = factory.Faker("boolean")
     s3_frame_path = fuzzy.FuzzyText()
     https_frame_path = fuzzy.FuzzyText()
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

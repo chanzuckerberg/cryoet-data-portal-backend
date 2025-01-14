@@ -88,7 +88,7 @@ def build_deposition_groupby_output(
 
     key = keys.pop(0)
     match key:
-        case "deposition_authors":
+        case "authors":
             if getattr(group_object, key):
                 value = deposition_author_helper.build_deposition_author_groupby_output(
                     getattr(group_object, key),

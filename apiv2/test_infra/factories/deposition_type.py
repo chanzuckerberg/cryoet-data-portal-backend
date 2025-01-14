@@ -33,4 +33,6 @@ class DepositionTypeFactory(CommonFactory):
         DepositionFactory,
     )
     type = fuzzy.FuzzyChoice(["annotation", "dataset", "tomogram"])
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

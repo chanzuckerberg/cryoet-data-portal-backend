@@ -101,7 +101,7 @@ def build_alignment_groupby_output(
                     keys,
                     value,
                 )
-        case "per_section_alignment_parameters":
+        case "per_section_alignments":
             if getattr(group_object, key):
                 value = per_section_alignment_parameters_helper.build_per_section_alignment_parameters_groupby_output(
                     getattr(group_object, key),

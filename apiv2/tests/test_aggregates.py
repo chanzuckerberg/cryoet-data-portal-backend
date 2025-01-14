@@ -5,12 +5,15 @@ Test basic queries and mutations
 import datetime
 
 import pytest
+from tests.helpers import deep_eq
 
 from platformics.database.connect import SyncDB
 from platformics.test_infra.factories.base import SessionStorage
 from test_infra.factories.annotation import AnnotationFactory
 from test_infra.factories.annotation_shape import AnnotationShapeFactory
-from test_infra.factories.dataset import DatasetFactory, DepositionFactory
+from test_infra.factories.dataset import DatasetFactory
+from test_infra.factories.dataset_author import DatasetAuthorFactory
+from test_infra.factories.deposition import DepositionFactory
 from test_infra.factories.run import RunFactory
 
 date_now = datetime.datetime.now()
@@ -237,3 +240,54 @@ async def test_manytoone_groupby_aggregate(
     assert len(dep2_aggs) == 3
     for item in dep2_aggs:
         assert item["count"] == 1
+
+
+@pytest.mark.asyncio
+async def test_group_by_custom_relationship_field_names(
+    sync_db: SyncDB,
+    gql_client,
+) -> None:
+    """
+    The relationship between Dataset and DatasetAuthor is called Dataset.authors rather than Dataset.dataset_authors
+    There was a bug where the groupby output processing was assuming that related group_by fields in our SQL queries
+    would be named with the remote TABLE name instead of the RELATIONSHIP field name. This test ensures that we're
+    deserializing query outputs properly when table names and field names don't match.
+    """
+
+    # Create mock data
+    with sync_db.session() as session:
+        SessionStorage.set_session(session)
+        d1 = DatasetFactory.create()
+        DatasetAuthorFactory.create(dataset=d1, name="Bob", orcid=111)
+        DatasetAuthorFactory.create(dataset=d1, name="Jane", orcid=222)
+        d2 = DatasetFactory.create()
+        DatasetAuthorFactory.create(dataset=d2, name="Jane", orcid=222)
+        DatasetAuthorFactory.create(dataset=d2, name="Sarah", orcid=333)
+
+    # Fetch all datasets that have at least one run
+    query = """
+        query MyQuery {
+          datasetsAggregate {
+            aggregate {
+              count
+              groupBy {
+                authors {
+                  name
+                  orcid
+                }
+              }
+            }
+          }
+        }
+    """
+    output = await gql_client.query(query)
+
+    expected = [
+        {"count": 1, "groupBy": {"authors": {"name": "Bob", "orcid": "111"}}},
+        {"count": 2, "groupBy": {"authors": {"name": "Jane", "orcid": "222"}}},
+        {"count": 1, "groupBy": {"authors": {"name": "Sarah", "orcid": "333"}}},
+    ]
+    sorted_output = sorted(
+        output["data"]["datasetsAggregate"]["aggregate"], key=lambda x: x["groupBy"]["authors"]["name"],
+    )
+    assert deep_eq(sorted_output, expected)

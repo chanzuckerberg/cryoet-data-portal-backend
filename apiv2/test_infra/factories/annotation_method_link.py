@@ -35,4 +35,6 @@ class AnnotationMethodLinkFactory(CommonFactory):
     link_type = fuzzy.FuzzyChoice(["documentation", "models_weights", "other", "source_code", "website"])
     name = fuzzy.FuzzyText()
     link = fuzzy.FuzzyText()
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)
