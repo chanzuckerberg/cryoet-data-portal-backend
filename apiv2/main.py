@@ -3,6 +3,7 @@ Launch the GraphQL server.
 """
 
 import os
+from typing import Union
 
 import strawberry
 import uvicorn
@@ -21,8 +22,19 @@ from platformics.graphql_api.setup import get_app, get_strawberry_config
 from platformics.security.authorization import Principal
 from platformics.settings import APISettings
 
+# This is needed because GraphQL does not support 64 bit integers
+# https://strawberry.rocks/docs/types/scalars#bigint-64-bit-integers
+BigInt = strawberry.scalar(
+    Union[int, str],  # type: ignore
+    serialize=lambda v: int(v),
+    parse_value=lambda v: str(v),
+    description="BigInt field",
+)
+
+
 settings = APISettings.model_validate({})  # Workaround for https://github.com/pydantic/pydantic/issues/3753
-schema = strawberry.Schema(query=Query, mutation=Mutation, config=get_strawberry_config(), extensions=[HandleErrors()])
+schema = strawberry.Schema(query=Query, mutation=Mutation, config=get_strawberry_config(), extensions=[HandleErrors()],     scalar_overrides={int: BigInt},
+)
 
 
 # Create and run app

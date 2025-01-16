@@ -11,7 +11,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
     "uuid": "strawberry.ID",
     "string": "str",
     "Array2dFloat": "List[List[float]]",
-    "integer": "int",
+    "integer": ("BigInteger", "int"),
     "float": "float",
     "boolean": "bool",
     "date": "datetime.datetime",
@@ -345,7 +345,7 @@ Define columns that support numerical aggregations
 class {{ cls.name }}NumericalColumns:
     {%- for attr in cls.numeric_fields %}
         {%- if attr.type == "integer" %}
-    {{ attr.name }}: {{ getType("int", False) }} = None
+    {{ attr.name }}: {{ getType("BigInteger", False) }} = None
         {%- elif attr.type == "float" %}
     {{ attr.name }}: {{ getType("float", False) }} = None
         {%- endif %}
@@ -359,7 +359,7 @@ Define columns that support min/max aggregations
 class {{ cls.name }}MinMaxColumns:
     {%- for attr in cls.visible_fields %}
         {%- if attr.type == "integer" %}
-    {{ attr.name }}: {{ getType("int", False) }} = None
+    {{ attr.name }}: {{ getType("BigInteger", False) }} = None
         {%- elif attr.type == "float" %}
     {{ attr.name }}: {{ getType("float", False) }} = None
         {%- elif attr.type == "string" %}
