@@ -33,7 +33,12 @@ BigInt = strawberry.scalar(
 
 
 settings = APISettings.model_validate({})  # Workaround for https://github.com/pydantic/pydantic/issues/3753
-schema = strawberry.Schema(query=Query, mutation=Mutation, config=get_strawberry_config(), extensions=[HandleErrors()],     scalar_overrides={int: BigInt},
+schema = strawberry.Schema(
+    query=Query,
+    mutation=Mutation,
+    config=get_strawberry_config(),
+    extensions=[HandleErrors()],
+    scalar_overrides={int: BigInt},
 )
 
 
