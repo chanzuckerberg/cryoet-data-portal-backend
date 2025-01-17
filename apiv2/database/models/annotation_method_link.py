@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import BigInteger, Enum, ForeignKey, String
+from sqlalchemy import Enum, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import annotation_method_link_type_enum
 
@@ -30,7 +30,7 @@ class AnnotationMethodLink(Base):
     __tablename__ = "annotation_method_link"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    annotation_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("annotation.id"), nullable=True, index=True)
+    annotation_id: Mapped[int] = mapped_column(Integer, ForeignKey("annotation.id"), nullable=True, index=True)
     annotation: Mapped["Annotation"] = relationship(
         "Annotation",
         foreign_keys=annotation_id,
@@ -41,4 +41,4 @@ class AnnotationMethodLink(Base):
     )
     name: Mapped[str] = mapped_column(String, nullable=True)
     link: Mapped[str] = mapped_column(String, nullable=False)
-    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

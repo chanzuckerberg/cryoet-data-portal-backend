@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import BigInteger, ForeignKey, String
+from sqlalchemy import ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from platformics.database.models.base import Base
@@ -29,7 +29,7 @@ class DatasetFunding(Base):
     __tablename__ = "dataset_funding"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
-    dataset_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("dataset.id"), nullable=True, index=True)
+    dataset_id: Mapped[int] = mapped_column(Integer, ForeignKey("dataset.id"), nullable=True, index=True)
     dataset: Mapped["Dataset"] = relationship(
         "Dataset",
         foreign_keys=dataset_id,
@@ -37,4 +37,4 @@ class DatasetFunding(Base):
     )
     funding_agency_name: Mapped[str] = mapped_column(String, nullable=True)
     grant_id: Mapped[str] = mapped_column(String, nullable=True)
-    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

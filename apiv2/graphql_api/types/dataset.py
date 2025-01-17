@@ -276,7 +276,6 @@ class DatasetWhereClause(TypedDict):
     related_database_entries: Optional[StrComparators] | None
     s3_prefix: Optional[StrComparators] | None
     https_prefix: Optional[StrComparators] | None
-    file_size: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -313,7 +312,6 @@ class DatasetOrderByClause(TypedDict):
     related_database_entries: Optional[orderBy] | None
     s3_prefix: Optional[orderBy] | None
     https_prefix: Optional[orderBy] | None
-    file_size: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -409,7 +407,6 @@ class Dataset(EntityInterface):
     )
     s3_prefix: str = strawberry.field(description="The S3 public bucket path where this dataset is contained")
     https_prefix: str = strawberry.field(description="The https directory path where this dataset is contained")
-    file_size: Optional[int] = strawberry.field(description="Size of the dataset in bytes", default=None)
     id: int = strawberry.field(
         description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
     )
@@ -436,7 +433,6 @@ Define columns that support numerical aggregations
 @strawberry.type
 class DatasetNumericalColumns:
     organism_taxid: Optional[int] = None
-    file_size: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -471,7 +467,6 @@ class DatasetMinMaxColumns:
     related_database_entries: Optional[str] = None
     s3_prefix: Optional[str] = None
     https_prefix: Optional[str] = None
-    file_size: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -507,7 +502,6 @@ class DatasetCountColumns(enum.Enum):
     relatedDatabaseEntries = "related_database_entries"
     s3Prefix = "s3_prefix"
     httpsPrefix = "https_prefix"
-    fileSize = "file_size"
     id = "id"
 
 
@@ -638,7 +632,6 @@ class DatasetCreateInput:
     )
     s3_prefix: str = strawberry.field(description="The S3 public bucket path where this dataset is contained")
     https_prefix: str = strawberry.field(description="The https directory path where this dataset is contained")
-    file_size: Optional[int] = strawberry.field(description="Size of the dataset in bytes", default=None)
     id: int = strawberry.field(
         description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
     )
@@ -716,7 +709,6 @@ class DatasetUpdateInput:
     https_prefix: Optional[str] = strawberry.field(
         description="The https directory path where this dataset is contained",
     )
-    file_size: Optional[int] = strawberry.field(description="Size of the dataset in bytes", default=None)
     id: Optional[int] = strawberry.field(
         description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
     )

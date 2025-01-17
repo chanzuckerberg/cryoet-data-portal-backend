@@ -65,10 +65,8 @@ class TomogramGroupByOptions:
     is_visualization_default: Optional[bool] = None
     s3_omezarr_dir: Optional[str] = None
     https_omezarr_dir: Optional[str] = None
-    file_size_omezarr: Optional[int] = None
     s3_mrc_file: Optional[str] = None
     https_mrc_file: Optional[str] = None
-    file_size_mrc: Optional[int] = None
     scale0_dimensions: Optional[str] = None
     scale1_dimensions: Optional[str] = None
     scale2_dimensions: Optional[str] = None

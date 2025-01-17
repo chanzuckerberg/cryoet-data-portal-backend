@@ -42,7 +42,6 @@ class AnnotationFileFactory(CommonFactory):
     )
     format = fuzzy.FuzzyText()
     s3_path = fuzzy.FuzzyText()
-    file_size = fuzzy.FuzzyInteger(1, 1000)
     https_path = fuzzy.FuzzyText()
     is_visualization_default = factory.Faker("boolean")
     source = fuzzy.FuzzyChoice(["dataset_author", "community", "portal_standard"])

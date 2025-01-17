@@ -40,7 +40,6 @@ class AnnotationFileGroupByOptions:
     ] = None
     format: Optional[str] = None
     s3_path: Optional[str] = None
-    file_size: Optional[int] = None
     https_path: Optional[str] = None
     is_visualization_default: Optional[bool] = None
     source: Optional[annotation_file_source_enum] = None

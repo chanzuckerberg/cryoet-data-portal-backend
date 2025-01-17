@@ -137,7 +137,6 @@ class FrameWhereClause(TypedDict):
     is_gain_corrected: Optional[BoolComparators] | None
     s3_frame_path: Optional[StrComparators] | None
     https_frame_path: Optional[StrComparators] | None
-    file_size: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -156,7 +155,6 @@ class FrameOrderByClause(TypedDict):
     is_gain_corrected: Optional[orderBy] | None
     s3_frame_path: Optional[orderBy] | None
     https_frame_path: Optional[orderBy] | None
-    file_size: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -183,7 +181,6 @@ class Frame(EntityInterface):
     )
     s3_frame_path: str = strawberry.field(description="S3 path to the frame file")
     https_frame_path: str = strawberry.field(description="HTTPS path to the frame file")
-    file_size: Optional[int] = strawberry.field(description="Size of the frame file in bytes", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -210,7 +207,6 @@ class FrameNumericalColumns:
     raw_angle: Optional[float] = None
     acquisition_order: Optional[int] = None
     dose: Optional[float] = None
-    file_size: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -226,7 +222,6 @@ class FrameMinMaxColumns:
     dose: Optional[float] = None
     s3_frame_path: Optional[str] = None
     https_frame_path: Optional[str] = None
-    file_size: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -243,7 +238,6 @@ class FrameCountColumns(enum.Enum):
     isGainCorrected = "is_gain_corrected"
     s3FramePath = "s3_frame_path"
     httpsFramePath = "https_frame_path"
-    fileSize = "file_size"
     id = "id"
 
 
@@ -318,7 +312,6 @@ class FrameCreateInput:
     )
     s3_frame_path: str = strawberry.field(description="S3 path to the frame file")
     https_frame_path: str = strawberry.field(description="HTTPS path to the frame file")
-    file_size: Optional[int] = strawberry.field(description="Size of the frame file in bytes", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -336,7 +329,6 @@ class FrameUpdateInput:
     )
     s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file")
     https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file")
-    file_size: Optional[int] = strawberry.field(description="Size of the frame file in bytes", default=None)
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 

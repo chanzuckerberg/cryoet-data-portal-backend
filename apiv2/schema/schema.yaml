@@ -841,17 +841,6 @@ classes:
           - api_s3_path
         range: string
         required: true
-      file_size:
-        name: file_size
-        description: Size of the file in bytes
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - api_file_size
-        range: integer
-        minimum_value: 0
-        unit:
-          symbol: B
-          descriptive_name: bytes
       https_path:
         name: https_path
         description: HTTPS path for this annotation file
@@ -1421,17 +1410,6 @@ classes:
           - api_https_prefix
         range: string
         required: true
-      file_size:
-        name: file_size
-        description: Size of the dataset in bytes
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - api_file_size
-        range: integer
-        minimum_value: 0
-        unit:
-          symbol: B
-          descriptive_name: bytes
     slot_usage:
       id:
         description: An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
@@ -1688,17 +1666,6 @@ classes:
         description: HTTPS path to the frame file
         range: string
         required: true
-      file_size:
-        name: file_size
-        description: Size of the frame file in bytes
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - api_frame_file_size
-        range: integer
-        minimum_value: 0
-        unit:
-          symbol: B
-          descriptive_name: bytes
   PerSectionAlignmentParameters:
     name: PerSectionAlignmentParameters
     annotations:
@@ -1909,17 +1876,6 @@ classes:
         exact_mappings:
           - tiltseries_s3_omezarr_dir
         range: string
-      file_size_omezarr:
-        name: file_size_omezarr
-        description: Size of the OME-Zarr file in bytes
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - tiltseries_file_size_omezarr
-        range: integer
-        minimum_value: 0
-        unit:
-          symbol: B
-          descriptive_name: bytes
       s3_mrc_file:
         name: s3_mrc_file
         description: S3 path to this tiltseries in MRC format (no scaling)
@@ -1927,17 +1883,6 @@ classes:
         exact_mappings:
           - tiltseries_s3_mrc_file
         range: string
-      file_size_mrc:
-        name: file_size_mrc
-        description: Size of the MRC file in bytes
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - tiltseries_file_size_mrc
-        range: integer
-        minimum_value: 0
-        unit:
-          symbol: B
-          descriptive_name: bytes
       https_omezarr_dir:
         name: https_omezarr_dir
         description: HTTPS path to this tiltseries in multiscale OME-Zarr format
@@ -2487,16 +2432,6 @@ classes:
         exact_mappings:
           - tomogram_https_omezarr_dir
         range: string
-      file_size_omezarr:
-        name: file_size_omezarr
-        description: Size of the OME-Zarr file in bytes
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - tomogram_file_size_omezarr
-        range: integer
-        unit:
-          symbol: B
-          descriptive_name: bytes
       s3_mrc_file:
         name: s3_mrc_file
         description: S3 path to this tomogram in MRC format (no scaling)
@@ -2511,16 +2446,6 @@ classes:
         exact_mappings:
           - tomogram_https_mrc_file
         range: string
-      file_size_mrc:
-        name: file_size_mrc
-        description: Size of the MRC file in bytes
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - tomogram_file_size_mrc
-        range: integer
-        unit:
-          symbol: B
-          descriptive_name: bytes
       scale0_dimensions:
         name: scale0_dimensions
         description: comma separated x,y,z dimensions of the unscaled tomogram
