@@ -54,6 +54,12 @@ def get_history(tar_report: str, destination: str, fs: FileSystemApi):
     type=str,
     help="Extra arguments to pass to pytest (in one string).",
 )
+@click.option(
+    "--update-s3/--no-update-s3",
+    is_flag=True,
+    default=True,
+    help="Write to S3 the results from this validation run.",
+)
 def main(
     local_dir: str,
     output_dir: str,
@@ -63,6 +69,7 @@ def main(
     multiprocessing: bool,
     history: bool,
     extra_args: str | None,
+    update_s3: bool,
 ):
     fs: S3Filesystem = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
 
@@ -91,8 +98,9 @@ def main(
         localdir_rep = f"{local_dir}/{dataset}/{now}"
 
         # Run tests and generate results
+        multiprocessing_args = "--dist loadscope -n auto" if multiprocessing else "--dist no"
         os.system(
-            f"pytest {'--dist loadscope -n auto' if multiprocessing else '--dist no'} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
+            f"pytest {multiprocessing_args} --datasets {dataset} --alluredir {localdir_raw} {extra_args}",
         )
         # Allure needs this file in order to generate reports with history
         with open(f"{localdir_raw}/executor.json", "w") as fh:
@@ -108,19 +116,23 @@ def main(
 
         # Get the history from S3 (Must do this before generating the report)
         remote_tar_report = f"{output_bucket}/{output_dir}/{dataset}.tar.gz"
-        tar_report = f"{localdir_rep}.tar.gz"
         if fs.exists(remote_tar_report):
             get_history(remote_tar_report, localdir_raw, fs)
-            fs.s3fs.rm(remote_tar_report, recursive=True)
+            if update_s3:
+                print(f"Removing old {remote_tar_report} from S3")
+                fs.s3fs.rm(remote_tar_report, recursive=True)
 
         # Generate the report
         os.system(f"allure generate --output {localdir_rep} {localdir_raw}")
 
-        # Compress and upload the new report
-        os.system(f"tar -czf {tar_report} {localdir_rep}")
-        os.system(f"aws s3 sync {localdir_rep} s3://{output_bucket}/{output_dir}/{dataset}/")
-        fs.s3fs.put(tar_report, remote_tar_report, recursive=True)
-        os.remove(tar_report)
+        if update_s3:
+            # Compress and upload the new report
+            tar_report = f"{localdir_rep}.tar.gz"
+            print(f"Compressing {localdir_rep} to {tar_report} and replacing {remote_tar_report}")
+            os.system(f"tar -czf {tar_report} {localdir_rep}")
+            os.system(f"aws s3 sync {localdir_rep} s3://{output_bucket}/{output_dir}/{dataset}/")
+            fs.s3fs.put(tar_report, remote_tar_report, recursive=True)
+            os.remove(tar_report)
 
 
 if __name__ == "__main__":

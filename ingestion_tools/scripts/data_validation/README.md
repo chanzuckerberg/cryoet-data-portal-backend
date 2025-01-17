@@ -100,6 +100,7 @@ python allure_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --ou
 --multiprocessing/--no-multiprocessing: Run tests in parallel with multiple workers (pytest-xdist). Default: `--multiprocessing`
 --history/--no-history: Save the history to S3 and retrieve the history of the report. If testing multiple datasets, saving history will result in longer execution time (each dataset has to be an individual `pytest` call). Default: `--history`
 --extra-args: Additional arguments to pass to pytest. See pytest arguments above.
+--update-s3/--no-update-s3: Update remote s3 directory to store the results from this validation run. Default: `--update-s3`
 ```
 
 ### Note for the --local-dir option: If the specified folder is in the data_validation folder (as is the default value), it should be added to the pytest call via `--ignore=[FOLDER_NAME]` or to the `pytest.ini` file to prevent pytest from wasting time trying to discover tests (we default ignore ./results in `pytest.ini`.)
