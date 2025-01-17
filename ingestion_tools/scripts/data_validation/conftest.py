@@ -17,6 +17,11 @@ from common.fs import FileSystemApi, S3Filesystem  # noqa: E402, F403
 # ============================================================================
 
 
+class CryoetTestEntities:
+    dataset: list[str] = []
+    run_names: list[str] = []
+
+
 def get_run_folders(fs: S3Filesystem, bucket: str, datasets: List[str], run_glob: str) -> List[str]:
     """
     A helper function to retrieve all valid run folders across all datasets.
@@ -167,19 +172,21 @@ def pytest_configure(config: pytest.Config) -> None:
     # Using pytest_generate_tests to parametrize the fixtures causes the per-run-fixtures to be run multiple times,
     # but setting the parameterizations as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
+    pytest.cryoet = CryoetTestEntities()
+
     if not config.getoption("--datasets"):
         dataset_raw = [os.path.basename(dataset) for dataset in fs.glob(f"s3://{config.getoption('--bucket')}/*")]
-        pytest.dataset = [dataset for dataset in dataset_raw if dataset.isdigit()]
+        pytest.cryoet.dataset = [dataset for dataset in dataset_raw if dataset.isdigit()]
     else:
-        pytest.dataset = [dataset for dataset in config.getoption("--datasets").split(",") if dataset.isdigit()]
+        pytest.cryoet.dataset = [dataset for dataset in config.getoption("--datasets").split(",") if dataset.isdigit()]
     bucket = config.getoption("--bucket")
     run_glob = config.getoption("--run-glob")
     voxel_spacing_glob = config.getoption("--voxel-spacing-glob")
-    print("Datasets: %s", pytest.dataset)
+    print("Datasets: %s", pytest.cryoet.dataset)
 
-    run_folders = get_run_folders(fs, bucket, pytest.dataset, run_glob)
+    run_folders = get_run_folders(fs, bucket, pytest.cryoet.dataset, run_glob)
     pytest.run_name = get_runs_set(run_folders)
-    pytest.dataset_run_combinations = dataset_run_combinations(bucket, pytest.dataset, pytest.run_name, run_folders)
+    pytest.dataset_run_combinations = dataset_run_combinations(bucket, pytest.cryoet.dataset, pytest.run_name, run_folders)
     print("Dataset and run combinations: %s", pytest.dataset_run_combinations)
 
     voxel_spacing_files = get_voxel_spacing_files(fs, bucket, pytest.dataset_run_combinations, voxel_spacing_glob)
@@ -217,6 +224,7 @@ def pytest_configure(config: pytest.Config) -> None:
     print("Dataset, run, vs, and tomogram: %s", pytest.dataset_run_tomogram_combinations)
 
     # Register markers
+    config.addinivalue_line("markers", "alignment: Tests concerning the alignment data.")
     config.addinivalue_line("markers", "annotation: Tests concerning the annotation data.")
     config.addinivalue_line("markers", "dataset: Tests concerning the dataset.")
     config.addinivalue_line("markers", "deposition: Tests concerning the deposition data.")
@@ -243,5 +251,5 @@ def pytest_runtest_makereport(item: pytest.Item):
     if "run_name" in item.fixturenames:
         allure.dynamic.feature(f"Run {item.callspec.params['run_name']}")
     if "dataset" in item.fixturenames:
-        allure.dynamic.epic(f"Dataset {pytest.dataset}")
+        allure.dynamic.epic(f"Dataset {pytest.cryoet.dataset}")
     yield
