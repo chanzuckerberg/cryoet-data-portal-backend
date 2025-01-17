@@ -8,7 +8,7 @@ from common.fs import FileSystemApi
 
 
 @pytest.mark.run
-@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name", pytest.cryoet.dataset_run_combinations, scope="session")
 class TestRun:
     @allure.title("Run: sanity check run metadata.")
     def test_metadata(self, run_name: str, run_metadata: Dict):

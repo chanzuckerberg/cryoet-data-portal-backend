@@ -8,7 +8,7 @@ from helper_angles import helper_angles_injection_errors
 
 
 @pytest.mark.alignment
-@pytest.mark.parametrize("dataset, run_name, aln_dir", pytest.dataset_run_alignment_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, aln_dir", pytest.cryoet.dataset_run_alignment_combinations, scope="session")
 class TestAlignments:
     """
     A class to test alignment tilt angle data. Only checking that the # of angles in these files are consistent with other files /

@@ -10,7 +10,7 @@ from common.fs import FileSystemApi
 
 
 @pytest.mark.dataset
-@pytest.mark.parametrize("dataset", pytest.dataset, scope="session")
+@pytest.mark.parametrize("dataset", pytest.cryoet.dataset, scope="session")
 class TestDataset:
     @allure.title("Dataset: sanity check dataset metadata.")
     def test_metadata(self, dataset_metadata: Dict):

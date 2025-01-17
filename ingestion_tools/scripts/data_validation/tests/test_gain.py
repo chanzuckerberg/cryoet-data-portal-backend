@@ -12,7 +12,7 @@ PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
 
 
 @pytest.mark.gain
-@pytest.mark.parametrize("dataset, run_name", pytest.dataset_run_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name", pytest.cryoet.dataset_run_combinations, scope="session")
 class TestGain(HelperTestMRCHeader):
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_header_class_variables(
