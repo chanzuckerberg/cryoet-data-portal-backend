@@ -121,17 +121,6 @@ type AlignmentAggregateFunctions {
   count(distinct: Boolean = false, columns: AlignmentCountColumns = null): Int
 }
 
-input AlignmentAggregateWhereClause {
-  count: AlignmentAggregateWhereClauseCount!
-}
-
-input AlignmentAggregateWhereClauseCount {
-  arguments: AlignmentCountColumns
-  distinct: Boolean
-  filter: AlignmentWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type AlignmentConnection {
   """Pagination data for this connection"""
@@ -142,6 +131,12 @@ type AlignmentConnection {
 }
 
 enum AlignmentCountColumns {
+  annotationFiles
+  perSectionAlignments
+  deposition
+  tiltseries
+  tomograms
+  run
   alignmentType
   alignmentMethod
   volumeXDimension
@@ -344,15 +339,12 @@ input AlignmentUpdateInput {
 
 input AlignmentWhereClause {
   annotationFiles: AnnotationFileWhereClause
-  annotationFilesAggregate: AnnotationFileAggregateWhereClause
   perSectionAlignments: PerSectionAlignmentParametersWhereClause
-  perSectionAlignmentsAggregate: PerSectionAlignmentParametersAggregateWhereClause
   deposition: DepositionWhereClause
   depositionId: IntComparators
   tiltseries: TiltseriesWhereClause
   tiltseriesId: IntComparators
   tomograms: TomogramWhereClause
-  tomogramsAggregate: TomogramAggregateWhereClause
   run: RunWhereClause
   runId: IntComparators
   alignmentType: Alignment_type_enumEnumComparators
@@ -556,17 +548,6 @@ type AnnotationAggregateFunctions {
   count(distinct: Boolean = false, columns: AnnotationCountColumns = null): Int
 }
 
-input AnnotationAggregateWhereClause {
-  count: AnnotationAggregateWhereClauseCount!
-}
-
-input AnnotationAggregateWhereClauseCount {
-  arguments: AnnotationCountColumns
-  distinct: Boolean
-  filter: AnnotationWhereClause
-  predicate: IntComparators
-}
-
 """Metadata for an annotation's authors"""
 type AnnotationAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
@@ -626,17 +607,6 @@ type AnnotationAuthorAggregateFunctions {
   count(distinct: Boolean = false, columns: AnnotationAuthorCountColumns = null): Int
 }
 
-input AnnotationAuthorAggregateWhereClause {
-  count: AnnotationAuthorAggregateWhereClauseCount!
-}
-
-input AnnotationAuthorAggregateWhereClauseCount {
-  arguments: AnnotationAuthorCountColumns
-  distinct: Boolean
-  filter: AnnotationAuthorWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type AnnotationAuthorConnection {
   """Pagination data for this connection"""
@@ -647,6 +617,7 @@ type AnnotationAuthorConnection {
 }
 
 enum AnnotationAuthorCountColumns {
+  annotation
   id
   authorListOrder
   orcid
@@ -823,6 +794,11 @@ type AnnotationConnection {
 }
 
 enum AnnotationCountColumns {
+  run
+  annotationShapes
+  methodLinks
+  authors
+  deposition
   s3MetadataPath
   httpsMetadataPath
   annotationPublication
@@ -959,9 +935,6 @@ type AnnotationFile implements EntityInterface & Node {
   """s3 path of the annotation file"""
   s3Path: String!
 
-  """Size of the file in bytes"""
-  fileSize: Int
-
   """HTTPS path for this annotation file"""
   httpsPath: String!
 
@@ -991,17 +964,6 @@ type AnnotationFileAggregateFunctions {
   count(distinct: Boolean = false, columns: AnnotationFileCountColumns = null): Int
 }
 
-input AnnotationFileAggregateWhereClause {
-  count: AnnotationFileAggregateWhereClauseCount!
-}
-
-input AnnotationFileAggregateWhereClauseCount {
-  arguments: AnnotationFileCountColumns
-  distinct: Boolean
-  filter: AnnotationFileWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type AnnotationFileConnection {
   """Pagination data for this connection"""
@@ -1012,9 +974,11 @@ type AnnotationFileConnection {
 }
 
 enum AnnotationFileCountColumns {
+  alignment
+  annotationShape
+  tomogramVoxelSpacing
   format
   s3Path
-  fileSize
   httpsPath
   isVisualizationDefault
   source
@@ -1036,9 +1000,6 @@ input AnnotationFileCreateInput {
 
   """s3 path of the annotation file"""
   s3Path: String!
-
-  """Size of the file in bytes"""
-  fileSize: Int = null
 
   """HTTPS path for this annotation file"""
   httpsPath: String!
@@ -1072,7 +1033,6 @@ type AnnotationFileGroupByOptions {
   tomogramVoxelSpacing: TomogramVoxelSpacingGroupByOptions
   format: String
   s3Path: String
-  fileSize: Int
   httpsPath: String
   isVisualizationDefault: Boolean
   source: annotation_file_source_enum
@@ -1082,13 +1042,11 @@ type AnnotationFileGroupByOptions {
 type AnnotationFileMinMaxColumns {
   format: String
   s3Path: String
-  fileSize: Int
   httpsPath: String
   id: Int
 }
 
 type AnnotationFileNumericalColumns {
-  fileSize: Int
   id: Int
 }
 
@@ -1098,7 +1056,6 @@ input AnnotationFileOrderByClause {
   tomogramVoxelSpacing: TomogramVoxelSpacingOrderByClause
   format: orderBy
   s3Path: orderBy
-  fileSize: orderBy
   httpsPath: orderBy
   isVisualizationDefault: orderBy
   source: orderBy
@@ -1120,9 +1077,6 @@ input AnnotationFileUpdateInput {
 
   """s3 path of the annotation file"""
   s3Path: String
-
-  """Size of the file in bytes"""
-  fileSize: Int = null
 
   """HTTPS path for this annotation file"""
   httpsPath: String
@@ -1150,7 +1104,6 @@ input AnnotationFileWhereClause {
   tomogramVoxelSpacingId: IntComparators
   format: StrComparators
   s3Path: StrComparators
-  fileSize: IntComparators
   httpsPath: StrComparators
   isVisualizationDefault: BoolComparators
   source: Annotation_file_source_enumEnumComparators
@@ -1226,17 +1179,6 @@ type AnnotationMethodLinkAggregateFunctions {
   count(distinct: Boolean = false, columns: AnnotationMethodLinkCountColumns = null): Int
 }
 
-input AnnotationMethodLinkAggregateWhereClause {
-  count: AnnotationMethodLinkAggregateWhereClauseCount!
-}
-
-input AnnotationMethodLinkAggregateWhereClauseCount {
-  arguments: AnnotationMethodLinkCountColumns
-  distinct: Boolean
-  filter: AnnotationMethodLinkWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type AnnotationMethodLinkConnection {
   """Pagination data for this connection"""
@@ -1247,6 +1189,7 @@ type AnnotationMethodLinkConnection {
 }
 
 enum AnnotationMethodLinkCountColumns {
+  annotation
   linkType
   name
   link
@@ -1435,17 +1378,6 @@ type AnnotationShapeAggregateFunctions {
   count(distinct: Boolean = false, columns: AnnotationShapeCountColumns = null): Int
 }
 
-input AnnotationShapeAggregateWhereClause {
-  count: AnnotationShapeAggregateWhereClauseCount!
-}
-
-input AnnotationShapeAggregateWhereClauseCount {
-  arguments: AnnotationShapeCountColumns
-  distinct: Boolean
-  filter: AnnotationShapeWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type AnnotationShapeConnection {
   """Pagination data for this connection"""
@@ -1456,6 +1388,8 @@ type AnnotationShapeConnection {
 }
 
 enum AnnotationShapeCountColumns {
+  annotation
+  annotationFiles
   shapeType
   id
 }
@@ -1520,7 +1454,6 @@ input AnnotationShapeWhereClause {
   annotation: AnnotationWhereClause
   annotationId: IntComparators
   annotationFiles: AnnotationFileWhereClause
-  annotationFilesAggregate: AnnotationFileAggregateWhereClause
   shapeType: Annotation_file_shape_type_enumEnumComparators
   id: IntComparators
 }
@@ -1618,11 +1551,8 @@ input AnnotationWhereClause {
   run: RunWhereClause
   runId: IntComparators
   annotationShapes: AnnotationShapeWhereClause
-  annotationShapesAggregate: AnnotationShapeAggregateWhereClause
   methodLinks: AnnotationMethodLinkWhereClause
-  methodLinksAggregate: AnnotationMethodLinkAggregateWhereClause
   authors: AnnotationAuthorWhereClause
-  authorsAggregate: AnnotationAuthorAggregateWhereClause
   deposition: DepositionWhereClause
   depositionId: IntComparators
   s3MetadataPath: StrComparators
@@ -1862,9 +1792,6 @@ type Dataset implements EntityInterface & Node {
 
   """The https directory path where this dataset is contained"""
   httpsPrefix: String!
-
-  """Size of the dataset in bytes"""
-  fileSize: Int
 }
 
 type DatasetAggregate {
@@ -1880,17 +1807,6 @@ type DatasetAggregateFunctions {
   max: DatasetMinMaxColumns
   groupBy: DatasetGroupByOptions
   count(distinct: Boolean = false, columns: DatasetCountColumns = null): Int
-}
-
-input DatasetAggregateWhereClause {
-  count: DatasetAggregateWhereClauseCount!
-}
-
-input DatasetAggregateWhereClauseCount {
-  arguments: DatasetCountColumns
-  distinct: Boolean
-  filter: DatasetWhereClause
-  predicate: IntComparators
 }
 
 """An author of a dataset"""
@@ -1950,17 +1866,6 @@ type DatasetAuthorAggregateFunctions {
   count(distinct: Boolean = false, columns: DatasetAuthorCountColumns = null): Int
 }
 
-input DatasetAuthorAggregateWhereClause {
-  count: DatasetAuthorAggregateWhereClauseCount!
-}
-
-input DatasetAuthorAggregateWhereClauseCount {
-  arguments: DatasetAuthorCountColumns
-  distinct: Boolean
-  filter: DatasetAuthorWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type DatasetAuthorConnection {
   """Pagination data for this connection"""
@@ -1971,6 +1876,7 @@ type DatasetAuthorConnection {
 }
 
 enum DatasetAuthorCountColumns {
+  dataset
   id
   authorListOrder
   orcid
@@ -2143,6 +2049,10 @@ type DatasetConnection {
 }
 
 enum DatasetCountColumns {
+  deposition
+  fundingSources
+  authors
+  runs
   title
   description
   organismName
@@ -2168,7 +2078,6 @@ enum DatasetCountColumns {
   relatedDatabaseEntries
   s3Prefix
   httpsPrefix
-  fileSize
   id
 }
 
@@ -2269,9 +2178,6 @@ input DatasetCreateInput {
   """The https directory path where this dataset is contained"""
   httpsPrefix: String!
 
-  """Size of the dataset in bytes"""
-  fileSize: Int = null
-
   """
   An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
   """
@@ -2319,17 +2225,6 @@ type DatasetFundingAggregateFunctions {
   count(distinct: Boolean = false, columns: DatasetFundingCountColumns = null): Int
 }
 
-input DatasetFundingAggregateWhereClause {
-  count: DatasetFundingAggregateWhereClauseCount!
-}
-
-input DatasetFundingAggregateWhereClauseCount {
-  arguments: DatasetFundingCountColumns
-  distinct: Boolean
-  filter: DatasetFundingWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type DatasetFundingConnection {
   """Pagination data for this connection"""
@@ -2340,6 +2235,7 @@ type DatasetFundingConnection {
 }
 
 enum DatasetFundingCountColumns {
+  dataset
   fundingAgencyName
   grantId
   id
@@ -2448,7 +2344,6 @@ type DatasetGroupByOptions {
   relatedDatabaseEntries: String
   s3Prefix: String
   httpsPrefix: String
-  fileSize: Int
   id: Int
 }
 
@@ -2477,13 +2372,11 @@ type DatasetMinMaxColumns {
   relatedDatabaseEntries: String
   s3Prefix: String
   httpsPrefix: String
-  fileSize: Int
   id: Int
 }
 
 type DatasetNumericalColumns {
   organismTaxid: Int
-  fileSize: Int
   id: Int
 }
 
@@ -2514,7 +2407,6 @@ input DatasetOrderByClause {
   relatedDatabaseEntries: orderBy
   s3Prefix: orderBy
   httpsPrefix: orderBy
-  fileSize: orderBy
   id: orderBy
 }
 
@@ -2615,9 +2507,6 @@ input DatasetUpdateInput {
   """The https directory path where this dataset is contained"""
   httpsPrefix: String
 
-  """Size of the dataset in bytes"""
-  fileSize: Int = null
-
   """
   An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
   """
@@ -2628,11 +2517,8 @@ input DatasetWhereClause {
   deposition: DepositionWhereClause
   depositionId: IntComparators
   fundingSources: DatasetFundingWhereClause
-  fundingSourcesAggregate: DatasetFundingAggregateWhereClause
   authors: DatasetAuthorWhereClause
-  authorsAggregate: DatasetAuthorAggregateWhereClause
   runs: RunWhereClause
-  runsAggregate: RunAggregateWhereClause
   title: StrComparators
   description: StrComparators
   organismName: StrComparators
@@ -2658,7 +2544,6 @@ input DatasetWhereClause {
   relatedDatabaseEntries: StrComparators
   s3Prefix: StrComparators
   httpsPrefix: StrComparators
-  fileSize: IntComparators
   id: IntComparators
 }
 
@@ -2923,17 +2808,6 @@ type DepositionAuthorAggregateFunctions {
   count(distinct: Boolean = false, columns: DepositionAuthorCountColumns = null): Int
 }
 
-input DepositionAuthorAggregateWhereClause {
-  count: DepositionAuthorAggregateWhereClauseCount!
-}
-
-input DepositionAuthorAggregateWhereClauseCount {
-  arguments: DepositionAuthorCountColumns
-  distinct: Boolean
-  filter: DepositionAuthorWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type DepositionAuthorConnection {
   """Pagination data for this connection"""
@@ -2944,6 +2818,7 @@ type DepositionAuthorConnection {
 }
 
 enum DepositionAuthorCountColumns {
+  deposition
   id
   authorListOrder
   orcid
@@ -3101,8 +2976,16 @@ input DepositionAuthorWhereClauseMutations {
 }
 
 enum DepositionCountColumns {
+  authors
+  alignments
+  annotations
+  datasets
+  frames
+  tiltseries
+  tomograms
   title
   description
+  depositionTypes
   depositionPublications
   relatedDatabaseEntries
   depositionDate
@@ -3226,17 +3109,6 @@ type DepositionTypeAggregateFunctions {
   count(distinct: Boolean = false, columns: DepositionTypeCountColumns = null): Int
 }
 
-input DepositionTypeAggregateWhereClause {
-  count: DepositionTypeAggregateWhereClauseCount!
-}
-
-input DepositionTypeAggregateWhereClauseCount {
-  arguments: DepositionTypeCountColumns
-  distinct: Boolean
-  filter: DepositionTypeWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type DepositionTypeConnection {
   """Pagination data for this connection"""
@@ -3247,6 +3119,7 @@ type DepositionTypeConnection {
 }
 
 enum DepositionTypeCountColumns {
+  deposition
   type
   id
 }
@@ -3349,23 +3222,15 @@ input DepositionUpdateInput {
 
 input DepositionWhereClause {
   authors: DepositionAuthorWhereClause
-  authorsAggregate: DepositionAuthorAggregateWhereClause
   alignments: AlignmentWhereClause
-  alignmentsAggregate: AlignmentAggregateWhereClause
   annotations: AnnotationWhereClause
-  annotationsAggregate: AnnotationAggregateWhereClause
   datasets: DatasetWhereClause
-  datasetsAggregate: DatasetAggregateWhereClause
   frames: FrameWhereClause
-  framesAggregate: FrameAggregateWhereClause
   tiltseries: TiltseriesWhereClause
-  tiltseriesAggregate: TiltseriesAggregateWhereClause
   tomograms: TomogramWhereClause
-  tomogramsAggregate: TomogramAggregateWhereClause
   title: StrComparators
   description: StrComparators
   depositionTypes: DepositionTypeWhereClause
-  depositionTypesAggregate: DepositionTypeAggregateWhereClause
   depositionPublications: StrComparators
   relatedDatabaseEntries: StrComparators
   depositionDate: DatetimeComparators
@@ -3449,9 +3314,6 @@ type Frame implements EntityInterface & Node {
 
   """HTTPS path to the frame file"""
   httpsFramePath: String!
-
-  """Size of the frame file in bytes"""
-  fileSize: Int
 }
 
 """
@@ -3488,17 +3350,6 @@ type FrameAcquisitionFileAggregateFunctions {
   count(distinct: Boolean = false, columns: FrameAcquisitionFileCountColumns = null): Int
 }
 
-input FrameAcquisitionFileAggregateWhereClause {
-  count: FrameAcquisitionFileAggregateWhereClauseCount!
-}
-
-input FrameAcquisitionFileAggregateWhereClauseCount {
-  arguments: FrameAcquisitionFileCountColumns
-  distinct: Boolean
-  filter: FrameAcquisitionFileWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type FrameAcquisitionFileConnection {
   """Pagination data for this connection"""
@@ -3509,6 +3360,7 @@ type FrameAcquisitionFileConnection {
 }
 
 enum FrameAcquisitionFileCountColumns {
+  run
   s3MdocPath
   httpsMdocPath
   id
@@ -3600,17 +3452,6 @@ type FrameAggregateFunctions {
   count(distinct: Boolean = false, columns: FrameCountColumns = null): Int
 }
 
-input FrameAggregateWhereClause {
-  count: FrameAggregateWhereClauseCount!
-}
-
-input FrameAggregateWhereClauseCount {
-  arguments: FrameCountColumns
-  distinct: Boolean
-  filter: FrameWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type FrameConnection {
   """Pagination data for this connection"""
@@ -3621,13 +3462,14 @@ type FrameConnection {
 }
 
 enum FrameCountColumns {
+  deposition
+  run
   rawAngle
   acquisitionOrder
   dose
   isGainCorrected
   s3FramePath
   httpsFramePath
-  fileSize
   id
 }
 
@@ -3653,9 +3495,6 @@ input FrameCreateInput {
   """HTTPS path to the frame file"""
   httpsFramePath: String!
 
-  """Size of the frame file in bytes"""
-  fileSize: Int = null
-
   """Numeric identifier (May change!)"""
   id: Int!
 }
@@ -3678,7 +3517,6 @@ type FrameGroupByOptions {
   isGainCorrected: Boolean
   s3FramePath: String
   httpsFramePath: String
-  fileSize: Int
   id: Int
 }
 
@@ -3688,7 +3526,6 @@ type FrameMinMaxColumns {
   dose: Float
   s3FramePath: String
   httpsFramePath: String
-  fileSize: Int
   id: Int
 }
 
@@ -3696,7 +3533,6 @@ type FrameNumericalColumns {
   rawAngle: Float
   acquisitionOrder: Int
   dose: Float
-  fileSize: Int
   id: Int
 }
 
@@ -3709,7 +3545,6 @@ input FrameOrderByClause {
   isGainCorrected: orderBy
   s3FramePath: orderBy
   httpsFramePath: orderBy
-  fileSize: orderBy
   id: orderBy
 }
 
@@ -3735,9 +3570,6 @@ input FrameUpdateInput {
   """HTTPS path to the frame file"""
   httpsFramePath: String
 
-  """Size of the frame file in bytes"""
-  fileSize: Int = null
-
   """Numeric identifier (May change!)"""
   id: Int
 }
@@ -3753,7 +3585,6 @@ input FrameWhereClause {
   isGainCorrected: BoolComparators
   s3FramePath: StrComparators
   httpsFramePath: StrComparators
-  fileSize: IntComparators
   id: IntComparators
 }
 
@@ -3793,17 +3624,6 @@ type GainFileAggregateFunctions {
   count(distinct: Boolean = false, columns: GainFileCountColumns = null): Int
 }
 
-input GainFileAggregateWhereClause {
-  count: GainFileAggregateWhereClauseCount!
-}
-
-input GainFileAggregateWhereClauseCount {
-  arguments: GainFileCountColumns
-  distinct: Boolean
-  filter: GainFileWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type GainFileConnection {
   """Pagination data for this connection"""
@@ -3814,6 +3634,7 @@ type GainFileConnection {
 }
 
 enum GainFileCountColumns {
+  run
   s3FilePath
   httpsFilePath
   id
@@ -4043,17 +3864,6 @@ type PerSectionAlignmentParametersAggregateFunctions {
   count(distinct: Boolean = false, columns: PerSectionAlignmentParametersCountColumns = null): Int
 }
 
-input PerSectionAlignmentParametersAggregateWhereClause {
-  count: PerSectionAlignmentParametersAggregateWhereClauseCount!
-}
-
-input PerSectionAlignmentParametersAggregateWhereClauseCount {
-  arguments: PerSectionAlignmentParametersCountColumns
-  distinct: Boolean
-  filter: PerSectionAlignmentParametersWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type PerSectionAlignmentParametersConnection {
   """Pagination data for this connection"""
@@ -4064,6 +3874,7 @@ type PerSectionAlignmentParametersConnection {
 }
 
 enum PerSectionAlignmentParametersCountColumns {
+  alignment
   zIndex
   xOffset
   yOffset
@@ -4404,17 +4215,6 @@ type RunAggregateFunctions {
   count(distinct: Boolean = false, columns: RunCountColumns = null): Int
 }
 
-input RunAggregateWhereClause {
-  count: RunAggregateWhereClauseCount!
-}
-
-input RunAggregateWhereClauseCount {
-  arguments: RunCountColumns
-  distinct: Boolean
-  filter: RunWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type RunConnection {
   """Pagination data for this connection"""
@@ -4425,6 +4225,15 @@ type RunConnection {
 }
 
 enum RunCountColumns {
+  alignments
+  annotations
+  dataset
+  frames
+  gainFiles
+  frameAcquisitionFiles
+  tiltseries
+  tomogramVoxelSpacings
+  tomograms
   name
   s3Prefix
   httpsPrefix
@@ -4511,23 +4320,15 @@ input RunUpdateInput {
 
 input RunWhereClause {
   alignments: AlignmentWhereClause
-  alignmentsAggregate: AlignmentAggregateWhereClause
   annotations: AnnotationWhereClause
-  annotationsAggregate: AnnotationAggregateWhereClause
   dataset: DatasetWhereClause
   datasetId: IntComparators
   frames: FrameWhereClause
-  framesAggregate: FrameAggregateWhereClause
   gainFiles: GainFileWhereClause
-  gainFilesAggregate: GainFileAggregateWhereClause
   frameAcquisitionFiles: FrameAcquisitionFileWhereClause
-  frameAcquisitionFilesAggregate: FrameAcquisitionFileAggregateWhereClause
   tiltseries: TiltseriesWhereClause
-  tiltseriesAggregate: TiltseriesAggregateWhereClause
   tomogramVoxelSpacings: TomogramVoxelSpacingWhereClause
-  tomogramVoxelSpacingsAggregate: TomogramVoxelSpacingAggregateWhereClause
   tomograms: TomogramWhereClause
-  tomogramsAggregate: TomogramAggregateWhereClause
   name: StrComparators
   s3Prefix: StrComparators
   httpsPrefix: StrComparators
@@ -4601,14 +4402,8 @@ type Tiltseries implements EntityInterface & Node {
   """S3 path to this tiltseries in multiscale OME-Zarr format"""
   s3OmezarrDir: String
 
-  """Size of the OME-Zarr file in bytes"""
-  fileSizeOmezarr: Int
-
   """S3 path to this tiltseries in MRC format (no scaling)"""
   s3MrcFile: String
-
-  """Size of the MRC file in bytes"""
-  fileSizeMrc: Int
 
   """HTTPS path to this tiltseries in multiscale OME-Zarr format"""
   httpsOmezarrDir: String
@@ -4727,17 +4522,6 @@ type TiltseriesAggregateFunctions {
   count(distinct: Boolean = false, columns: TiltseriesCountColumns = null): Int
 }
 
-input TiltseriesAggregateWhereClause {
-  count: TiltseriesAggregateWhereClauseCount!
-}
-
-input TiltseriesAggregateWhereClauseCount {
-  arguments: TiltseriesCountColumns
-  distinct: Boolean
-  filter: TiltseriesWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type TiltseriesConnection {
   """Pagination data for this connection"""
@@ -4748,10 +4532,11 @@ type TiltseriesConnection {
 }
 
 enum TiltseriesCountColumns {
+  alignments
+  run
+  deposition
   s3OmezarrDir
-  fileSizeOmezarr
   s3MrcFile
-  fileSizeMrc
   httpsOmezarrDir
   httpsMrcFile
   s3AngleList
@@ -4793,14 +4578,8 @@ input TiltseriesCreateInput {
   """S3 path to this tiltseries in multiscale OME-Zarr format"""
   s3OmezarrDir: String = null
 
-  """Size of the OME-Zarr file in bytes"""
-  fileSizeOmezarr: Int = null
-
   """S3 path to this tiltseries in MRC format (no scaling)"""
   s3MrcFile: String = null
-
-  """Size of the MRC file in bytes"""
-  fileSizeMrc: Int = null
 
   """HTTPS path to this tiltseries in multiscale OME-Zarr format"""
   httpsOmezarrDir: String = null
@@ -4921,9 +4700,7 @@ type TiltseriesGroupByOptions {
   run: RunGroupByOptions
   deposition: DepositionGroupByOptions
   s3OmezarrDir: String
-  fileSizeOmezarr: Int
   s3MrcFile: String
-  fileSizeMrc: Int
   httpsOmezarrDir: String
   httpsMrcFile: String
   s3AngleList: String
@@ -4960,9 +4737,7 @@ type TiltseriesGroupByOptions {
 
 type TiltseriesMinMaxColumns {
   s3OmezarrDir: String
-  fileSizeOmezarr: Int
   s3MrcFile: String
-  fileSizeMrc: Int
   httpsOmezarrDir: String
   httpsMrcFile: String
   s3AngleList: String
@@ -4996,8 +4771,6 @@ type TiltseriesMinMaxColumns {
 }
 
 type TiltseriesNumericalColumns {
-  fileSizeOmezarr: Int
-  fileSizeMrc: Int
   accelerationVoltage: Int
   sphericalAberrationConstant: Float
   tiltMin: Float
@@ -5020,9 +4793,7 @@ input TiltseriesOrderByClause {
   run: RunOrderByClause
   deposition: DepositionOrderByClause
   s3OmezarrDir: orderBy
-  fileSizeOmezarr: orderBy
   s3MrcFile: orderBy
-  fileSizeMrc: orderBy
   httpsOmezarrDir: orderBy
   httpsMrcFile: orderBy
   s3AngleList: orderBy
@@ -5064,14 +4835,8 @@ input TiltseriesUpdateInput {
   """S3 path to this tiltseries in multiscale OME-Zarr format"""
   s3OmezarrDir: String = null
 
-  """Size of the OME-Zarr file in bytes"""
-  fileSizeOmezarr: Int = null
-
   """S3 path to this tiltseries in MRC format (no scaling)"""
   s3MrcFile: String = null
-
-  """Size of the MRC file in bytes"""
-  fileSizeMrc: Int = null
 
   """HTTPS path to this tiltseries in multiscale OME-Zarr format"""
   httpsOmezarrDir: String = null
@@ -5180,15 +4945,12 @@ input TiltseriesUpdateInput {
 
 input TiltseriesWhereClause {
   alignments: AlignmentWhereClause
-  alignmentsAggregate: AlignmentAggregateWhereClause
   run: RunWhereClause
   runId: IntComparators
   deposition: DepositionWhereClause
   depositionId: IntComparators
   s3OmezarrDir: StrComparators
-  fileSizeOmezarr: IntComparators
   s3MrcFile: StrComparators
-  fileSizeMrc: IntComparators
   httpsOmezarrDir: StrComparators
   httpsMrcFile: StrComparators
   s3AngleList: StrComparators
@@ -5328,17 +5090,11 @@ type Tomogram implements EntityInterface & Node {
   """HTTPS path to this tomogram in multiscale OME-Zarr format"""
   httpsOmezarrDir: String
 
-  """Size of the OME-Zarr file in bytes"""
-  fileSizeOmezarr: Int
-
   """S3 path to this tomogram in MRC format (no scaling)"""
   s3MrcFile: String
 
   """HTTPS path to this tomogram in MRC format (no scaling)"""
   httpsMrcFile: String
-
-  """Size of the MRC file in bytes"""
-  fileSizeMrc: Int
 
   """comma separated x,y,z dimensions of the unscaled tomogram"""
   scale0Dimensions: String
@@ -5405,17 +5161,6 @@ type TomogramAggregateFunctions {
   count(distinct: Boolean = false, columns: TomogramCountColumns = null): Int
 }
 
-input TomogramAggregateWhereClause {
-  count: TomogramAggregateWhereClauseCount!
-}
-
-input TomogramAggregateWhereClauseCount {
-  arguments: TomogramCountColumns
-  distinct: Boolean
-  filter: TomogramWhereClause
-  predicate: IntComparators
-}
-
 """Author of a tomogram"""
 type TomogramAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
@@ -5471,17 +5216,6 @@ type TomogramAuthorAggregateFunctions {
   count(distinct: Boolean = false, columns: TomogramAuthorCountColumns = null): Int
 }
 
-input TomogramAuthorAggregateWhereClause {
-  count: TomogramAuthorAggregateWhereClauseCount!
-}
-
-input TomogramAuthorAggregateWhereClauseCount {
-  arguments: TomogramAuthorCountColumns
-  distinct: Boolean
-  filter: TomogramAuthorWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type TomogramAuthorConnection {
   """Pagination data for this connection"""
@@ -5492,6 +5226,7 @@ type TomogramAuthorConnection {
 }
 
 enum TomogramAuthorCountColumns {
+  tomogram
   id
   authorListOrder
   orcid
@@ -5660,6 +5395,11 @@ type TomogramConnection {
 }
 
 enum TomogramCountColumns {
+  alignment
+  authors
+  deposition
+  run
+  tomogramVoxelSpacing
   name
   sizeX
   sizeY
@@ -5676,10 +5416,8 @@ enum TomogramCountColumns {
   isVisualizationDefault
   s3OmezarrDir
   httpsOmezarrDir
-  fileSizeOmezarr
   s3MrcFile
   httpsMrcFile
-  fileSizeMrc
   scale0Dimensions
   scale1Dimensions
   scale2Dimensions
@@ -5765,17 +5503,11 @@ input TomogramCreateInput {
   """HTTPS path to this tomogram in multiscale OME-Zarr format"""
   httpsOmezarrDir: String = null
 
-  """Size of the OME-Zarr file in bytes"""
-  fileSizeOmezarr: Int = null
-
   """S3 path to this tomogram in MRC format (no scaling)"""
   s3MrcFile: String = null
 
   """HTTPS path to this tomogram in MRC format (no scaling)"""
   httpsMrcFile: String = null
-
-  """Size of the MRC file in bytes"""
-  fileSizeMrc: Int = null
 
   """comma separated x,y,z dimensions of the unscaled tomogram"""
   scale0Dimensions: String = null
@@ -5861,10 +5593,8 @@ type TomogramGroupByOptions {
   isVisualizationDefault: Boolean
   s3OmezarrDir: String
   httpsOmezarrDir: String
-  fileSizeOmezarr: Int
   s3MrcFile: String
   httpsMrcFile: String
-  fileSizeMrc: Int
   scale0Dimensions: String
   scale1Dimensions: String
   scale2Dimensions: String
@@ -5894,10 +5624,8 @@ type TomogramMinMaxColumns {
   reconstructionSoftware: String
   s3OmezarrDir: String
   httpsOmezarrDir: String
-  fileSizeOmezarr: Int
   s3MrcFile: String
   httpsMrcFile: String
-  fileSizeMrc: Int
   scale0Dimensions: String
   scale1Dimensions: String
   scale2Dimensions: String
@@ -5921,8 +5649,6 @@ type TomogramNumericalColumns {
   sizeZ: Int
   voxelSpacing: Float
   tomogramVersion: Float
-  fileSizeOmezarr: Int
-  fileSizeMrc: Int
   offsetX: Int
   offsetY: Int
   offsetZ: Int
@@ -5950,10 +5676,8 @@ input TomogramOrderByClause {
   isVisualizationDefault: orderBy
   s3OmezarrDir: orderBy
   httpsOmezarrDir: orderBy
-  fileSizeOmezarr: orderBy
   s3MrcFile: orderBy
   httpsMrcFile: orderBy
-  fileSizeMrc: orderBy
   scale0Dimensions: orderBy
   scale1Dimensions: orderBy
   scale2Dimensions: orderBy
@@ -6039,17 +5763,11 @@ input TomogramUpdateInput {
   """HTTPS path to this tomogram in multiscale OME-Zarr format"""
   httpsOmezarrDir: String = null
 
-  """Size of the OME-Zarr file in bytes"""
-  fileSizeOmezarr: Int = null
-
   """S3 path to this tomogram in MRC format (no scaling)"""
   s3MrcFile: String = null
 
   """HTTPS path to this tomogram in MRC format (no scaling)"""
   httpsMrcFile: String = null
-
-  """Size of the MRC file in bytes"""
-  fileSizeMrc: Int = null
 
   """comma separated x,y,z dimensions of the unscaled tomogram"""
   scale0Dimensions: String = null
@@ -6177,17 +5895,6 @@ type TomogramVoxelSpacingAggregateFunctions {
   count(distinct: Boolean = false, columns: TomogramVoxelSpacingCountColumns = null): Int
 }
 
-input TomogramVoxelSpacingAggregateWhereClause {
-  count: TomogramVoxelSpacingAggregateWhereClauseCount!
-}
-
-input TomogramVoxelSpacingAggregateWhereClauseCount {
-  arguments: TomogramVoxelSpacingCountColumns
-  distinct: Boolean
-  filter: TomogramVoxelSpacingWhereClause
-  predicate: IntComparators
-}
-
 """A connection to a list of items."""
 type TomogramVoxelSpacingConnection {
   """Pagination data for this connection"""
@@ -6198,6 +5905,9 @@ type TomogramVoxelSpacingConnection {
 }
 
 enum TomogramVoxelSpacingCountColumns {
+  annotationFiles
+  run
+  tomograms
   voxelSpacing
   s3Prefix
   httpsPrefix
@@ -6287,11 +5997,9 @@ input TomogramVoxelSpacingUpdateInput {
 
 input TomogramVoxelSpacingWhereClause {
   annotationFiles: AnnotationFileWhereClause
-  annotationFilesAggregate: AnnotationFileAggregateWhereClause
   run: RunWhereClause
   runId: IntComparators
   tomograms: TomogramWhereClause
-  tomogramsAggregate: TomogramAggregateWhereClause
   voxelSpacing: FloatComparators
   s3Prefix: StrComparators
   httpsPrefix: StrComparators
@@ -6306,7 +6014,6 @@ input TomogramWhereClause {
   alignment: AlignmentWhereClause
   alignmentId: IntComparators
   authors: TomogramAuthorWhereClause
-  authorsAggregate: TomogramAuthorAggregateWhereClause
   deposition: DepositionWhereClause
   depositionId: IntComparators
   run: RunWhereClause
@@ -6329,10 +6036,8 @@ input TomogramWhereClause {
   isVisualizationDefault: BoolComparators
   s3OmezarrDir: StrComparators
   httpsOmezarrDir: StrComparators
-  fileSizeOmezarr: IntComparators
   s3MrcFile: StrComparators
   httpsMrcFile: StrComparators
-  fileSizeMrc: IntComparators
   scale0Dimensions: StrComparators
   scale1Dimensions: StrComparators
   scale2Dimensions: StrComparators

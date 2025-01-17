@@ -8,7 +8,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import BigInteger, DateTime, String
+from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from platformics.database.models.base import Base
@@ -109,4 +109,4 @@ class Deposition(Base):
     last_modified_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     key_photo_url: Mapped[str] = mapped_column(String, nullable=True)
     key_photo_thumbnail_url: Mapped[str] = mapped_column(String, nullable=True)
-    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

@@ -37,9 +37,7 @@ class TiltseriesGroupByOptions:
         None
     )
     s3_omezarr_dir: Optional[str] = None
-    file_size_omezarr: Optional[int] = None
     s3_mrc_file: Optional[str] = None
-    file_size_mrc: Optional[int] = None
     https_omezarr_dir: Optional[str] = None
     https_mrc_file: Optional[str] = None
     s3_angle_list: Optional[str] = None

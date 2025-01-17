@@ -37,9 +37,7 @@ class TiltseriesFactory(CommonFactory):
         DepositionFactory,
     )
     s3_omezarr_dir = fuzzy.FuzzyText()
-    file_size_omezarr = fuzzy.FuzzyInteger(1, 1000)
     s3_mrc_file = fuzzy.FuzzyText()
-    file_size_mrc = fuzzy.FuzzyInteger(1, 1000)
     https_omezarr_dir = fuzzy.FuzzyText()
     https_mrc_file = fuzzy.FuzzyText()
     s3_angle_list = fuzzy.FuzzyText()

@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import BigInteger, Boolean, Enum, Float, ForeignKey, String
+from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import alignment_method_type_enum, alignment_type_enum
 
@@ -54,13 +54,13 @@ class Alignment(Base):
         foreign_keys="PerSectionAlignmentParameters.alignment_id",
         cascade="all, delete-orphan",
     )
-    deposition_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("deposition.id"), nullable=True, index=True)
+    deposition_id: Mapped[int] = mapped_column(Integer, ForeignKey("deposition.id"), nullable=True, index=True)
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
         back_populates="alignments",
     )
-    tiltseries_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("tiltseries.id"), nullable=True, index=True)
+    tiltseries_id: Mapped[int] = mapped_column(Integer, ForeignKey("tiltseries.id"), nullable=True, index=True)
     tiltseries: Mapped["Tiltseries"] = relationship(
         "Tiltseries",
         foreign_keys=tiltseries_id,
@@ -73,7 +73,7 @@ class Alignment(Base):
         foreign_keys="Tomogram.alignment_id",
         cascade="all, delete-orphan",
     )
-    run_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("run.id"), nullable=True, index=True)
+    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=True, index=True)
     run: Mapped["Run"] = relationship(
         "Run",
         foreign_keys=run_id,
@@ -97,4 +97,4 @@ class Alignment(Base):
     s3_alignment_metadata: Mapped[str] = mapped_column(String, nullable=True)
     https_alignment_metadata: Mapped[str] = mapped_column(String, nullable=True)
     is_portal_standard: Mapped[bool] = mapped_column(Boolean, nullable=True)
-    id: Mapped[int] = mapped_column(BigInteger, nullable=False, index=True, autoincrement=True, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

@@ -55,8 +55,6 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "size_z": 31,
             "size_y": 3838,
             "size_x": 3708,
-            "file_size_omezarr": 0,
-            "file_size_mrc": 0,
         },
         {
             "acceleration_voltage": 10000,
@@ -84,8 +82,6 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "tilt_step": 3,
             "tilting_scheme": "min to max tilt",
             "total_flux": 12,
-            "file_size_omezarr": 0,
-            "file_size_mrc": 0,
         },
     ]
 

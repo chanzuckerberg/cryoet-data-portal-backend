@@ -64,7 +64,6 @@ class DatasetDBImporter(BaseDBImporter):
         extra_data = {
             "s3_prefix": self.get_s3_url(self.dir_prefix),
             "https_prefix": self.get_https_url(self.dir_prefix),
-            "file_size": self.get_file_size(self.dir_prefix),
             "key_photo_url": None,
             "key_photo_thumbnail_url": None,
         }

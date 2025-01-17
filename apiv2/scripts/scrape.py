@@ -367,16 +367,13 @@ def fetch_method_links(client_url, annotation):
     headers = {
         "Content-type": "application/json",
     }
-    query = (
-        """
+    query = """
         query MyQuery {
             annotations(where: {id: {_eq: %d }}) {
                 method_links
             }
         }
-    """
-        % annotation.id
-    )
+    """ % annotation.id
     payload = json.dumps({"query": query, "variables": None, "operationName": "MyQuery"})
     res = requests.post(client_url, headers=headers, data=payload)
     data = res.json()

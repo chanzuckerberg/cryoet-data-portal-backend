@@ -24,7 +24,6 @@ class FrameItem(ItemDBImporter):
     def load_computed_fields(self):
         self.model_args["s3_frame_path"] = self.get_s3_url(self.input_data["file"])
         self.model_args["https_frame_path"] = self.get_https_url(self.input_data["file"])
-        self.model_args["file_size"] = self.get_file_size(self.input_data["file"])
         self.model_args["run_id"] = self.input_data["run"].id
         self.model_args["deposition_id"] = self.input_data["deposition"].id
 
