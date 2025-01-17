@@ -18,8 +18,35 @@ from common.fs import FileSystemApi, S3Filesystem  # noqa: E402, F403
 
 
 class CryoetTestEntities:
-    dataset: list[str] = []
-    run_names: list[str] = []
+
+    def __init__(self, config: pytest.Config, fs: S3Filesystem):
+        self._config = config
+        self._fs = fs
+        self._bucket = config.getoption('--bucket')
+        self._dataset: list[str] = None
+        self._dataset_run_combinations: List[Tuple[str, str]] = None
+
+    @property
+    def dataset(self) -> list[str]:
+        if self._dataset is None:
+            if dataset_option := self._config.getoption("--datasets"):
+                self._dataset = [dataset for dataset in dataset_option.split(",") if dataset.isdigit()]
+            else:
+                dataset_raw = [os.path.basename(dataset) for dataset in self._fs.glob(f"s3://{self._bucket}/*")]
+                self._dataset = [dataset for dataset in dataset_raw if dataset.isdigit()]
+            print("Datasets: %s", pytest.cryoet.dataset)
+        return self._dataset
+
+    @property
+    def dataset_run_combinations(self) -> List[Tuple[str, str]]:
+        if self._dataset_run_combinations is None:
+            run_glob = self._config.getoption("--run-glob")
+            run_folders = get_run_folders(self._fs, self._bucket, self.dataset, run_glob)
+            run_name = get_runs_set(run_folders)
+            self._dataset_run_combinations = dataset_run_combinations(self._bucket, self._dataset, run_name, run_folders)
+            print("Dataset and run combinations: %s", self._dataset_run_combinations)
+
+        return self._dataset_run_combinations
 
 
 def get_run_folders(fs: S3Filesystem, bucket: str, datasets: List[str], run_glob: str) -> List[str]:
@@ -172,28 +199,16 @@ def pytest_configure(config: pytest.Config) -> None:
     # Using pytest_generate_tests to parametrize the fixtures causes the per-run-fixtures to be run multiple times,
     # but setting the parameterizations as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
-    pytest.cryoet = CryoetTestEntities()
+    pytest.cryoet = CryoetTestEntities(config, fs)
 
-    if not config.getoption("--datasets"):
-        dataset_raw = [os.path.basename(dataset) for dataset in fs.glob(f"s3://{config.getoption('--bucket')}/*")]
-        pytest.cryoet.dataset = [dataset for dataset in dataset_raw if dataset.isdigit()]
-    else:
-        pytest.cryoet.dataset = [dataset for dataset in config.getoption("--datasets").split(",") if dataset.isdigit()]
     bucket = config.getoption("--bucket")
-    run_glob = config.getoption("--run-glob")
     voxel_spacing_glob = config.getoption("--voxel-spacing-glob")
-    print("Datasets: %s", pytest.cryoet.dataset)
 
-    run_folders = get_run_folders(fs, bucket, pytest.cryoet.dataset, run_glob)
-    pytest.run_name = get_runs_set(run_folders)
-    pytest.dataset_run_combinations = dataset_run_combinations(bucket, pytest.cryoet.dataset, pytest.run_name, run_folders)
-    print("Dataset and run combinations: %s", pytest.dataset_run_combinations)
-
-    voxel_spacing_files = get_voxel_spacing_files(fs, bucket, pytest.dataset_run_combinations, voxel_spacing_glob)
+    voxel_spacing_files = get_voxel_spacing_files(fs, bucket, pytest.cryoet.dataset_run_combinations, voxel_spacing_glob)
     pytest.voxel_spacing = get_voxel_spacings_set(voxel_spacing_files)
     pytest.dataset_run_spacing_combinations = dataset_run_spacing_combinations(
         bucket,
-        pytest.dataset_run_combinations,
+        pytest.cryoet.dataset_run_combinations,
         pytest.voxel_spacing,
         voxel_spacing_files,
     )
@@ -203,7 +218,7 @@ def pytest_configure(config: pytest.Config) -> None:
         "{}/{}/TiltSeries/*",
         fs,
         bucket,
-        pytest.dataset_run_combinations,
+        pytest.cryoet.dataset_run_combinations,
     )
     print("Dataset, run, and tiltseries: %s", pytest.dataset_run_tiltseries_combinations)
 
@@ -211,7 +226,7 @@ def pytest_configure(config: pytest.Config) -> None:
         "{}/{}/Alignments/*",
         fs,
         bucket,
-        pytest.dataset_run_combinations,
+        pytest.cryoet.dataset_run_combinations,
     )
     print("Dataset, run, and alignment: %s", pytest.dataset_run_alignment_combinations)
 
