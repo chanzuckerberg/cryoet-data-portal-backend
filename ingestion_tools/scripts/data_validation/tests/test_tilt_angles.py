@@ -12,7 +12,7 @@ ANGLE_TOLERANCE = 0.05
 
 
 @pytest.mark.tilt_angles
-@pytest.mark.parametrize("dataset, run_name, ts_dir", pytest.dataset_run_tiltseries_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, ts_dir", pytest.cryoet.dataset_run_tiltseries_combinations, scope="session")
 class TestTiltAngles:
     """
     A class to test tilt angle data. Only checking that the # of angles in these files are consistent with other files /

@@ -25,6 +25,11 @@ class CryoetTestEntities:
         self._bucket = config.getoption('--bucket')
         self._dataset: list[str] = None
         self._dataset_run_combinations: List[Tuple[str, str]] = None
+        self._dataset_run_spacing_combinations: List[Tuple[str, str, float]] = None
+        self._dataset_run_tiltseries_combinations: List[Tuple[str, str, str]] = None
+        self._dataset_run_alignment_combinations: List[Tuple[str, str, str]] = None
+        self._dataset_run_tomogram_combinations: List[Tuple[str, str, str]] = None
+
 
     @property
     def dataset(self) -> list[str]:
@@ -47,6 +52,50 @@ class CryoetTestEntities:
             print("Dataset and run combinations: %s", self._dataset_run_combinations)
 
         return self._dataset_run_combinations
+
+    @property
+    def dataset_run_spacing_combinations(self) ->  List[Tuple[str, str, float]]:
+        if self._dataset_run_spacing_combinations is None:
+            voxel_spacing_glob = self._config.getoption("--voxel-spacing-glob")
+            voxel_spacing_files = get_voxel_spacing_files(
+                self._fs, self._bucket, self.dataset_run_combinations, voxel_spacing_glob,
+            )
+            voxel_spacings = get_voxel_spacings_set(voxel_spacing_files)
+            self._dataset_run_spacing_combinations = dataset_run_spacing_combinations(
+                self._bucket, self.dataset_run_combinations, voxel_spacings, voxel_spacing_files,
+            )
+            print("Dataset, run, and voxel spacing combinations: %s", self._dataset_run_spacing_combinations)
+        return self._dataset_run_spacing_combinations
+
+    @property
+    def dataset_run_tiltseries_combinations(self) -> List[Tuple[str, str, str]]:
+        if self._dataset_run_tiltseries_combinations is None:
+            self._dataset_run_tiltseries_combinations = get_glob_combinations(
+        "{}/{}/TiltSeries/*", self._fs, self._bucket, self.dataset_run_combinations,
+            )
+            print("Dataset, run, and tiltseries: %s", self._dataset_run_tiltseries_combinations)
+        return self._dataset_run_tiltseries_combinations
+
+    @property
+    def dataset_run_alignment_combinations(self) -> List[Tuple[str, str, str]]:
+        if self._dataset_run_alignment_combinations is None:
+            self._dataset_run_alignment_combinations = get_glob_combinations(
+        "{}/{}/Alignments/*", self._fs, self._bucket, self.dataset_run_combinations,
+            )
+            print("Dataset, run, and alignment: %s", self._dataset_run_alignment_combinations)
+        return self._dataset_run_alignment_combinations
+
+    @property
+    def dataset_run_tomogram_combinations(self) -> List[Tuple[str, str, str]]:
+        if self._dataset_run_tomogram_combinations is None:
+            self._dataset_run_tomogram_combinations = get_glob_combinations(
+        "{}/{}/Reconstructions/VoxelSpacing{}/Tomograms/*",
+                self._fs,
+                self._bucket,
+                self.dataset_run_spacing_combinations,
+            )
+            print("Dataset, run, vs, and tomogram: %s", self._dataset_run_tomogram_combinations)
+        return self._dataset_run_tomogram_combinations
 
 
 def get_run_folders(fs: S3Filesystem, bucket: str, datasets: List[str], run_glob: str) -> List[str]:
@@ -200,43 +249,6 @@ def pytest_configure(config: pytest.Config) -> None:
     # but setting the parameterizations as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
     pytest.cryoet = CryoetTestEntities(config, fs)
-
-    bucket = config.getoption("--bucket")
-    voxel_spacing_glob = config.getoption("--voxel-spacing-glob")
-
-    voxel_spacing_files = get_voxel_spacing_files(fs, bucket, pytest.cryoet.dataset_run_combinations, voxel_spacing_glob)
-    pytest.voxel_spacing = get_voxel_spacings_set(voxel_spacing_files)
-    pytest.dataset_run_spacing_combinations = dataset_run_spacing_combinations(
-        bucket,
-        pytest.cryoet.dataset_run_combinations,
-        pytest.voxel_spacing,
-        voxel_spacing_files,
-    )
-    print("Dataset, run, and voxel spacing combinations: %s", pytest.dataset_run_spacing_combinations)
-
-    pytest.dataset_run_tiltseries_combinations = get_glob_combinations(
-        "{}/{}/TiltSeries/*",
-        fs,
-        bucket,
-        pytest.cryoet.dataset_run_combinations,
-    )
-    print("Dataset, run, and tiltseries: %s", pytest.dataset_run_tiltseries_combinations)
-
-    pytest.dataset_run_alignment_combinations = get_glob_combinations(
-        "{}/{}/Alignments/*",
-        fs,
-        bucket,
-        pytest.cryoet.dataset_run_combinations,
-    )
-    print("Dataset, run, and alignment: %s", pytest.dataset_run_alignment_combinations)
-
-    pytest.dataset_run_tomogram_combinations = get_glob_combinations(
-        "{}/{}/Reconstructions/VoxelSpacing{}/Tomograms/*",
-        fs,
-        bucket,
-        pytest.dataset_run_spacing_combinations,
-    )
-    print("Dataset, run, vs, and tomogram: %s", pytest.dataset_run_tomogram_combinations)
 
     # Register markers
     config.addinivalue_line("markers", "alignment: Tests concerning the alignment data.")

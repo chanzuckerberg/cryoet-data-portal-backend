@@ -12,7 +12,7 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.tiltseries
-@pytest.mark.parametrize("dataset, run_name, ts_dir", pytest.dataset_run_tiltseries_combinations, scope="session")
+@pytest.mark.parametrize("dataset, run_name, ts_dir", pytest.cryoet.dataset_run_tiltseries_combinations, scope="session")
 class TestTiltseries(HelperTestMRCZarrHeader):
 
     @pytest.fixture(autouse=True)
