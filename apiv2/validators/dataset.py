@@ -156,6 +156,7 @@ class DatasetCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size: Annotated[float | None, Field()]
     id: Annotated[int, Field()]
 
 
@@ -299,4 +300,5 @@ class DatasetUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size: Annotated[float | None, Field()]
     id: Annotated[int | None, Field()]

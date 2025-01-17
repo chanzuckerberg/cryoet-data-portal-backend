@@ -44,6 +44,7 @@ class FrameFactory(CommonFactory):
     is_gain_corrected = factory.Faker("boolean")
     s3_frame_path = fuzzy.FuzzyText()
     https_frame_path = fuzzy.FuzzyText()
+    file_size = fuzzy.FuzzyFloat(1, 100)
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)

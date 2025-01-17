@@ -61,6 +61,7 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "source": "community",
             "format": "ndjson",
             "is_visualization_default": True,
+            "file_size": 0,
         },
         {
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
@@ -69,6 +70,7 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "source": "community",
             "format": "mrc",
             "is_visualization_default": False,
+            "file_size": 0,
         },
         {
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
@@ -77,6 +79,7 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "source": "community",
             "format": "zarr",
             "is_visualization_default": False,
+            "file_size": 0,
         },
     ]
 

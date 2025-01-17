@@ -41,6 +41,7 @@ class FrameCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size: Annotated[float | None, Field()]
     id: Annotated[int, Field()]
 
 
@@ -71,4 +72,5 @@ class FrameUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size: Annotated[float | None, Field()]
     id: Annotated[int | None, Field()]

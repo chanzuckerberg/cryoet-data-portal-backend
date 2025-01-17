@@ -288,6 +288,7 @@ async def test_group_by_custom_relationship_field_names(
         {"count": 1, "groupBy": {"authors": {"name": "Sarah", "orcid": "333"}}},
     ]
     sorted_output = sorted(
-        output["data"]["datasetsAggregate"]["aggregate"], key=lambda x: x["groupBy"]["authors"]["name"],
+        output["data"]["datasetsAggregate"]["aggregate"],
+        key=lambda x: x["groupBy"]["authors"]["name"],
     )
     assert deep_eq(sorted_output, expected)

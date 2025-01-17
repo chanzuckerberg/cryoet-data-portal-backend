@@ -7,7 +7,7 @@ Make changes to the template codegen/templates/database/models/class_name.py.j2 
 
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, Enum, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import annotation_file_source_enum
 
@@ -58,6 +58,7 @@ class AnnotationFile(Base):
     )
     format: Mapped[str] = mapped_column(String, nullable=False)
     s3_path: Mapped[str] = mapped_column(String, nullable=False)
+    file_size: Mapped[float] = mapped_column(Float, nullable=True)
     https_path: Mapped[str] = mapped_column(String, nullable=False)
     is_visualization_default: Mapped[bool] = mapped_column(Boolean, nullable=True)
     source: Mapped[annotation_file_source_enum] = mapped_column(

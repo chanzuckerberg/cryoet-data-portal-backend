@@ -61,6 +61,7 @@ class DatasetFactory(CommonFactory):
     related_database_entries = fuzzy.FuzzyText()
     s3_prefix = fuzzy.FuzzyText()
     https_prefix = fuzzy.FuzzyText()
+    file_size = fuzzy.FuzzyFloat(1, 100)
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)

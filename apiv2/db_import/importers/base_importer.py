@@ -79,6 +79,25 @@ class BaseDBImporter:
             input_path = input_path[len(self.config.bucket_name) + 1 :]
         return os.path.join(self.config.s3_prefix, input_path)
 
+    def get_file_size(self, *input_path: tuple[str]) -> str:
+        input_path = os.path.join(*input_path)
+        if input_path.startswith(self.config.bucket_name):
+            input_path = input_path[len(self.config.bucket_name) + 1 :]
+
+        total_size = 0
+        try:
+            paginator = self.config.s3_client.get_paginator('list_objects_v2')
+            pages = paginator.paginate(Bucket=self.config.bucket_name, Prefix=input_path)
+            for page in pages:
+                if "Contents" in page:
+                    for obj in page["Contents"]:
+                        total_size += obj["Size"]
+
+
+            return total_size
+        except Exception as e:
+            print(f"Error retrieving folder size: {e}")
+            return None
 
 class StaleDeletionDBImporter(BaseDBImporter):
     """

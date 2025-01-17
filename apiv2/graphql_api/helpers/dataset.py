@@ -70,6 +70,7 @@ class DatasetGroupByOptions:
     related_database_entries: Optional[str] = None
     s3_prefix: Optional[str] = None
     https_prefix: Optional[str] = None
+    file_size: Optional[float] = None
     id: Optional[int] = None
 
 

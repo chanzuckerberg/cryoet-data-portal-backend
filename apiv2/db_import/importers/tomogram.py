@@ -65,8 +65,10 @@ class TomogramItem(ItemDBImporter):
             "reconstruction_software": self.input_data.get("reconstruction_software") or "Unknown",
             "s3_omezarr_dir": self.get_s3_url(self.input_data["omezarr_dir"]),
             "https_omezarr_dir": self.get_https_url(self.input_data["omezarr_dir"]),
+            "file_size_omezarr": self.get_file_size(self.input_data["omezarr_dir"]),
             "s3_mrc_file": self.get_s3_url(self.input_data["mrc_file"]),
             "https_mrc_file": self.get_https_url(self.input_data["mrc_file"]),
+            "file_size_mrc": self.get_file_size(self.input_data["mrc_file"]),
             # TODO: Add alignment_id once we have an alignment importer.
             "alignment_id": self.config.get_alignment_by_path(
                 self.get_s3_url(self.input_data["alignment_metadata_path"]),
