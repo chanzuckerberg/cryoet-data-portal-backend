@@ -118,9 +118,6 @@ def main(
         remote_tar_report = f"{output_bucket}/{output_dir}/{dataset}.tar.gz"
         if fs.exists(remote_tar_report):
             get_history(remote_tar_report, localdir_raw, fs)
-            if update_s3:
-                print(f"Removing old {remote_tar_report} from S3")
-                fs.s3fs.rm(remote_tar_report, recursive=True)
 
         # Generate the report
         os.system(f"allure generate --output {localdir_rep} {localdir_raw}")
