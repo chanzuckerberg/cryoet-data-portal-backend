@@ -95,7 +95,7 @@ def get_s3_client(
         "s3",
         region_name=settings.AWS_REGION,
         endpoint_url=settings.BOTO_ENDPOINT_URL,
-        config=Config(signature_version="s3v4"),
+        config=Config(signature_version="s3v4", retries={"max_attempts": 10, "mode": "adaptive"}),
     )
 
 

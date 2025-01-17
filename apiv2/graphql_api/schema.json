@@ -4104,6 +4104,15 @@
             },
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "httpsPath",
               "type": {
                 "kind": "NON_NULL",
@@ -4166,10 +4175,28 @@
             },
             {
               "defaultValue": null,
+              "name": "annotationFilesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationFileAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "perSectionAlignments",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "PerSectionAlignmentParametersWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "perSectionAlignmentsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "PerSectionAlignmentParametersAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -4215,6 +4242,15 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TomogramWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "tomogramsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -4455,6 +4491,15 @@
             },
             {
               "defaultValue": null,
+              "name": "fileSize",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FloatComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "httpsPath",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -4635,6 +4680,15 @@
             },
             {
               "defaultValue": null,
+              "name": "annotationFilesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationFileAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "shapeType",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -4690,6 +4744,15 @@
             },
             {
               "defaultValue": null,
+              "name": "annotationShapesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationShapeAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "methodLinks",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -4699,10 +4762,28 @@
             },
             {
               "defaultValue": null,
+              "name": "methodLinksAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationMethodLinkAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "authors",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "AnnotationAuthorWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "authorsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationAuthorAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -4925,10 +5006,28 @@
             },
             {
               "defaultValue": null,
+              "name": "alignmentsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AlignmentAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "annotations",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "AnnotationWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "annotationsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -4961,10 +5060,28 @@
             },
             {
               "defaultValue": null,
+              "name": "framesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FrameAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "gainFiles",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "GainFileWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "gainFilesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "GainFileAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -4979,10 +5096,28 @@
             },
             {
               "defaultValue": null,
+              "name": "frameAcquisitionFilesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FrameAcquisitionFileAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "tiltseries",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TiltseriesWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "tiltseriesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TiltseriesAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -4997,10 +5132,28 @@
             },
             {
               "defaultValue": null,
+              "name": "tomogramVoxelSpacingsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramVoxelSpacingAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "tomograms",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TomogramWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "tomogramsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -5052,6 +5205,269 @@
           "inputFields": [
             {
               "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "AlignmentAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AlignmentAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "AlignmentCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AlignmentWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AlignmentAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "alignmentType"
+            },
+            {
+              "name": "alignmentMethod"
+            },
+            {
+              "name": "volumeXDimension"
+            },
+            {
+              "name": "volumeYDimension"
+            },
+            {
+              "name": "volumeZDimension"
+            },
+            {
+              "name": "volumeXOffset"
+            },
+            {
+              "name": "volumeYOffset"
+            },
+            {
+              "name": "volumeZOffset"
+            },
+            {
+              "name": "xRotationOffset"
+            },
+            {
+              "name": "tiltOffset"
+            },
+            {
+              "name": "affineTransformationMatrix"
+            },
+            {
+              "name": "s3AlignmentMetadata"
+            },
+            {
+              "name": "httpsAlignmentMetadata"
+            },
+            {
+              "name": "isPortalStandard"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "AlignmentCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "AnnotationAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "AnnotationCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "s3MetadataPath"
+            },
+            {
+              "name": "httpsMetadataPath"
+            },
+            {
+              "name": "annotationPublication"
+            },
+            {
+              "name": "annotationMethod"
+            },
+            {
+              "name": "groundTruthStatus"
+            },
+            {
+              "name": "objectId"
+            },
+            {
+              "name": "objectName"
+            },
+            {
+              "name": "objectDescription"
+            },
+            {
+              "name": "objectState"
+            },
+            {
+              "name": "objectCount"
+            },
+            {
+              "name": "confidencePrecision"
+            },
+            {
+              "name": "confidenceRecall"
+            },
+            {
+              "name": "groundTruthUsed"
+            },
+            {
+              "name": "annotationSoftware"
+            },
+            {
+              "name": "isCuratorRecommended"
+            },
+            {
+              "name": "methodType"
+            },
+            {
+              "name": "depositionDate"
+            },
+            {
+              "name": "releaseDate"
+            },
+            {
+              "name": "lastModifiedDate"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "AnnotationCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
               "name": "deposition",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -5079,6 +5495,15 @@
             },
             {
               "defaultValue": null,
+              "name": "fundingSourcesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DatasetFundingAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "authors",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -5088,10 +5513,28 @@
             },
             {
               "defaultValue": null,
+              "name": "authorsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DatasetAuthorAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "runs",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "RunWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "runsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "RunAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -5322,6 +5765,15 @@
             },
             {
               "defaultValue": null,
+              "name": "fileSize",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FloatComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "id",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -5350,10 +5802,28 @@
             },
             {
               "defaultValue": null,
+              "name": "authorsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DepositionAuthorAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "alignments",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "AlignmentWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "alignmentsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AlignmentAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -5368,10 +5838,28 @@
             },
             {
               "defaultValue": null,
+              "name": "annotationsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "datasets",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "DatasetWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "datasetsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DatasetAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -5386,6 +5874,15 @@
             },
             {
               "defaultValue": null,
+              "name": "framesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FrameAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "tiltseries",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -5395,10 +5892,28 @@
             },
             {
               "defaultValue": null,
+              "name": "tiltseriesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TiltseriesAggregateWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "tomograms",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TomogramWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "tomogramsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -5426,6 +5941,15 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "DepositionTypeWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "depositionTypesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DepositionTypeAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -5881,6 +6405,275 @@
           "inputFields": [
             {
               "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DepositionAuthorAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DepositionAuthorAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "DepositionAuthorCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DepositionAuthorWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DepositionAuthorAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "authorListOrder"
+            },
+            {
+              "name": "orcid"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "email"
+            },
+            {
+              "name": "affiliationName"
+            },
+            {
+              "name": "affiliationAddress"
+            },
+            {
+              "name": "affiliationIdentifier"
+            },
+            {
+              "name": "correspondingAuthorStatus"
+            },
+            {
+              "name": "primaryAuthorStatus"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "DepositionAuthorCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DatasetAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DatasetAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "DatasetCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DatasetWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DatasetAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "title"
+            },
+            {
+              "name": "description"
+            },
+            {
+              "name": "organismName"
+            },
+            {
+              "name": "organismTaxid"
+            },
+            {
+              "name": "tissueName"
+            },
+            {
+              "name": "tissueId"
+            },
+            {
+              "name": "cellName"
+            },
+            {
+              "name": "cellTypeId"
+            },
+            {
+              "name": "cellStrainName"
+            },
+            {
+              "name": "cellStrainId"
+            },
+            {
+              "name": "sampleType"
+            },
+            {
+              "name": "samplePreparation"
+            },
+            {
+              "name": "gridPreparation"
+            },
+            {
+              "name": "otherSetup"
+            },
+            {
+              "name": "keyPhotoUrl"
+            },
+            {
+              "name": "keyPhotoThumbnailUrl"
+            },
+            {
+              "name": "cellComponentName"
+            },
+            {
+              "name": "cellComponentId"
+            },
+            {
+              "name": "depositionDate"
+            },
+            {
+              "name": "releaseDate"
+            },
+            {
+              "name": "lastModifiedDate"
+            },
+            {
+              "name": "datasetPublications"
+            },
+            {
+              "name": "relatedDatabaseEntries"
+            },
+            {
+              "name": "s3Prefix"
+            },
+            {
+              "name": "httpsPrefix"
+            },
+            {
+              "name": "fileSize"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "DatasetCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
               "name": "deposition",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -5966,6 +6759,15 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "fileSize",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FloatComparators",
                 "ofType": null
               }
             },
@@ -6106,10 +6908,122 @@
           "inputFields": [
             {
               "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "FrameAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "FrameAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "FrameCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FrameWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "FrameAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "rawAngle"
+            },
+            {
+              "name": "acquisitionOrder"
+            },
+            {
+              "name": "dose"
+            },
+            {
+              "name": "isGainCorrected"
+            },
+            {
+              "name": "s3FramePath"
+            },
+            {
+              "name": "httpsFramePath"
+            },
+            {
+              "name": "fileSize"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "FrameCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
               "name": "alignments",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "AlignmentWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "alignmentsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AlignmentAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -6160,10 +7074,28 @@
             },
             {
               "defaultValue": null,
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FloatComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "s3MrcFile",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FloatComparators",
                 "ofType": null
               }
             },
@@ -6596,6 +7528,193 @@
           "inputFields": [
             {
               "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TiltseriesAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TiltseriesAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "TiltseriesCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TiltseriesWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TiltseriesAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "s3OmezarrDir"
+            },
+            {
+              "name": "fileSizeOmezarr"
+            },
+            {
+              "name": "s3MrcFile"
+            },
+            {
+              "name": "fileSizeMrc"
+            },
+            {
+              "name": "httpsOmezarrDir"
+            },
+            {
+              "name": "httpsMrcFile"
+            },
+            {
+              "name": "s3AngleList"
+            },
+            {
+              "name": "httpsAngleList"
+            },
+            {
+              "name": "accelerationVoltage"
+            },
+            {
+              "name": "sphericalAberrationConstant"
+            },
+            {
+              "name": "microscopeManufacturer"
+            },
+            {
+              "name": "microscopeModel"
+            },
+            {
+              "name": "microscopeEnergyFilter"
+            },
+            {
+              "name": "microscopePhasePlate"
+            },
+            {
+              "name": "microscopeImageCorrector"
+            },
+            {
+              "name": "microscopeAdditionalInfo"
+            },
+            {
+              "name": "cameraManufacturer"
+            },
+            {
+              "name": "cameraModel"
+            },
+            {
+              "name": "tiltMin"
+            },
+            {
+              "name": "tiltMax"
+            },
+            {
+              "name": "tiltRange"
+            },
+            {
+              "name": "tiltStep"
+            },
+            {
+              "name": "tiltingScheme"
+            },
+            {
+              "name": "tiltAxis"
+            },
+            {
+              "name": "totalFlux"
+            },
+            {
+              "name": "dataAcquisitionSoftware"
+            },
+            {
+              "name": "relatedEmpiarEntry"
+            },
+            {
+              "name": "binningFromFrames"
+            },
+            {
+              "name": "tiltSeriesQuality"
+            },
+            {
+              "name": "isAligned"
+            },
+            {
+              "name": "pixelSpacing"
+            },
+            {
+              "name": "alignedTiltseriesBinning"
+            },
+            {
+              "name": "sizeX"
+            },
+            {
+              "name": "sizeY"
+            },
+            {
+              "name": "sizeZ"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "TiltseriesCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
               "name": "alignment",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -6618,6 +7737,15 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TomogramAuthorWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "authorsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramAuthorAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -6821,6 +7949,15 @@
             },
             {
               "defaultValue": null,
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FloatComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "s3MrcFile",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -6834,6 +7971,15 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FloatComparators",
                 "ofType": null
               }
             },
@@ -7111,10 +8257,128 @@
           "inputFields": [
             {
               "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TomogramAuthorAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TomogramAuthorAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "TomogramAuthorCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramAuthorWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TomogramAuthorAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "authorListOrder"
+            },
+            {
+              "name": "orcid"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "email"
+            },
+            {
+              "name": "affiliationName"
+            },
+            {
+              "name": "affiliationAddress"
+            },
+            {
+              "name": "affiliationIdentifier"
+            },
+            {
+              "name": "correspondingAuthorStatus"
+            },
+            {
+              "name": "primaryAuthorStatus"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "TomogramAuthorCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
               "name": "annotationFiles",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "AnnotationFileWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "annotationFilesAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationFileAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -7142,6 +8406,15 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "TomogramWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "tomogramsAggregate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramAggregateWhereClause",
                 "ofType": null
               }
             },
@@ -7185,6 +8458,293 @@
           "interfaces": null,
           "kind": "INPUT_OBJECT",
           "name": "TomogramVoxelSpacingWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "AnnotationFileAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationFileAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "AnnotationFileCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationFileWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationFileAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "format"
+            },
+            {
+              "name": "s3Path"
+            },
+            {
+              "name": "fileSize"
+            },
+            {
+              "name": "httpsPath"
+            },
+            {
+              "name": "isVisualizationDefault"
+            },
+            {
+              "name": "source"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "AnnotationFileCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TomogramAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TomogramAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "TomogramCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TomogramAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "sizeX"
+            },
+            {
+              "name": "sizeY"
+            },
+            {
+              "name": "sizeZ"
+            },
+            {
+              "name": "voxelSpacing"
+            },
+            {
+              "name": "fiducialAlignmentStatus"
+            },
+            {
+              "name": "reconstructionMethod"
+            },
+            {
+              "name": "processing"
+            },
+            {
+              "name": "tomogramVersion"
+            },
+            {
+              "name": "processingSoftware"
+            },
+            {
+              "name": "reconstructionSoftware"
+            },
+            {
+              "name": "isPortalStandard"
+            },
+            {
+              "name": "isAuthorSubmitted"
+            },
+            {
+              "name": "isVisualizationDefault"
+            },
+            {
+              "name": "s3OmezarrDir"
+            },
+            {
+              "name": "httpsOmezarrDir"
+            },
+            {
+              "name": "fileSizeOmezarr"
+            },
+            {
+              "name": "s3MrcFile"
+            },
+            {
+              "name": "httpsMrcFile"
+            },
+            {
+              "name": "fileSizeMrc"
+            },
+            {
+              "name": "scale0Dimensions"
+            },
+            {
+              "name": "scale1Dimensions"
+            },
+            {
+              "name": "scale2Dimensions"
+            },
+            {
+              "name": "ctfCorrected"
+            },
+            {
+              "name": "offsetX"
+            },
+            {
+              "name": "offsetY"
+            },
+            {
+              "name": "offsetZ"
+            },
+            {
+              "name": "keyPhotoUrl"
+            },
+            {
+              "name": "keyPhotoThumbnailUrl"
+            },
+            {
+              "name": "neuroglancerConfig"
+            },
+            {
+              "name": "publications"
+            },
+            {
+              "name": "relatedDatabaseEntries"
+            },
+            {
+              "name": "id"
+            },
+            {
+              "name": "depositionDate"
+            },
+            {
+              "name": "releaseDate"
+            },
+            {
+              "name": "lastModifiedDate"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "TomogramCountColumns",
           "possibleTypes": null
         },
         {
@@ -7862,6 +9422,91 @@
           "inputFields": [
             {
               "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DepositionTypeAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DepositionTypeAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "DepositionTypeCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DepositionTypeWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DepositionTypeAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "type"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "DepositionTypeCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
               "name": "dataset",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -7909,6 +9554,94 @@
           "interfaces": null,
           "kind": "INPUT_OBJECT",
           "name": "DatasetFundingWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DatasetFundingAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DatasetFundingAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "DatasetFundingCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DatasetFundingWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DatasetFundingAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "fundingAgencyName"
+            },
+            {
+              "name": "grantId"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "DatasetFundingCountColumns",
           "possibleTypes": null
         },
         {
@@ -8027,6 +9760,206 @@
           "interfaces": null,
           "kind": "INPUT_OBJECT",
           "name": "DatasetAuthorWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "DatasetAuthorAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DatasetAuthorAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "DatasetAuthorCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "DatasetAuthorWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "DatasetAuthorAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "authorListOrder"
+            },
+            {
+              "name": "orcid"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "email"
+            },
+            {
+              "name": "affiliationName"
+            },
+            {
+              "name": "affiliationAddress"
+            },
+            {
+              "name": "affiliationIdentifier"
+            },
+            {
+              "name": "correspondingAuthorStatus"
+            },
+            {
+              "name": "primaryAuthorStatus"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "DatasetAuthorCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "RunAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "RunAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "RunCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "RunWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "RunAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "s3Prefix"
+            },
+            {
+              "name": "httpsPrefix"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "RunCountColumns",
           "possibleTypes": null
         },
         {
@@ -8231,6 +10164,94 @@
           "inputFields": [
             {
               "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "GainFileAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "GainFileAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "GainFileCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "GainFileWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "GainFileAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "s3FilePath"
+            },
+            {
+              "name": "httpsFilePath"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "GainFileCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
               "name": "run",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -8278,6 +10299,270 @@
           "interfaces": null,
           "kind": "INPUT_OBJECT",
           "name": "FrameAcquisitionFileWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "FrameAcquisitionFileAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "FrameAcquisitionFileAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "FrameAcquisitionFileCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "FrameAcquisitionFileWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "FrameAcquisitionFileAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "s3MdocPath"
+            },
+            {
+              "name": "httpsMdocPath"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "FrameAcquisitionFileCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TomogramVoxelSpacingAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TomogramVoxelSpacingAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "TomogramVoxelSpacingCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TomogramVoxelSpacingWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "TomogramVoxelSpacingAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "voxelSpacing"
+            },
+            {
+              "name": "s3Prefix"
+            },
+            {
+              "name": "httpsPrefix"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "TomogramVoxelSpacingCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "AnnotationShapeAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationShapeAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "AnnotationShapeCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationShapeWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationShapeAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "shapeType"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "AnnotationShapeCountColumns",
           "possibleTypes": null
         },
         {
@@ -8482,6 +10767,97 @@
           "inputFields": [
             {
               "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "AnnotationMethodLinkAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationMethodLinkAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "AnnotationMethodLinkCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationMethodLinkWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationMethodLinkAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "linkType"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "link"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "AnnotationMethodLinkCountColumns",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
               "name": "annotation",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -8592,6 +10968,115 @@
           "interfaces": null,
           "kind": "INPUT_OBJECT",
           "name": "AnnotationAuthorWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "AnnotationAuthorAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationAuthorAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "AnnotationAuthorCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "AnnotationAuthorWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "AnnotationAuthorAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "id"
+            },
+            {
+              "name": "authorListOrder"
+            },
+            {
+              "name": "orcid"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "email"
+            },
+            {
+              "name": "affiliationName"
+            },
+            {
+              "name": "affiliationAddress"
+            },
+            {
+              "name": "affiliationIdentifier"
+            },
+            {
+              "name": "correspondingAuthorStatus"
+            },
+            {
+              "name": "primaryAuthorStatus"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "AnnotationAuthorCountColumns",
           "possibleTypes": null
         },
         {
@@ -9061,6 +11546,106 @@
           "interfaces": null,
           "kind": "INPUT_OBJECT",
           "name": "PerSectionAlignmentParametersWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "count",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "PerSectionAlignmentParametersAggregateWhereClauseCount",
+                  "ofType": null
+                }
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "PerSectionAlignmentParametersAggregateWhereClause",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": null,
+          "fields": null,
+          "inputFields": [
+            {
+              "defaultValue": null,
+              "name": "arguments",
+              "type": {
+                "kind": "ENUM",
+                "name": "PerSectionAlignmentParametersCountColumns",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "distinct",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "filter",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "PerSectionAlignmentParametersWhereClause",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "predicate",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "IntComparators",
+                "ofType": null
+              }
+            }
+          ],
+          "interfaces": null,
+          "kind": "INPUT_OBJECT",
+          "name": "PerSectionAlignmentParametersAggregateWhereClauseCount",
+          "possibleTypes": null
+        },
+        {
+          "enumValues": [
+            {
+              "name": "zIndex"
+            },
+            {
+              "name": "xOffset"
+            },
+            {
+              "name": "yOffset"
+            },
+            {
+              "name": "volumeXRotation"
+            },
+            {
+              "name": "inPlaneRotation"
+            },
+            {
+              "name": "tiltAngle"
+            },
+            {
+              "name": "id"
+            }
+          ],
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "kind": "ENUM",
+          "name": "PerSectionAlignmentParametersCountColumns",
           "possibleTypes": null
         },
         {
@@ -9645,7 +12230,25 @@
             },
             {
               "defaultValue": null,
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "s3MrcFile",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "fileSizeMrc",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -10233,6 +12836,15 @@
             {
               "defaultValue": null,
               "name": "httpsPrefix",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "fileSize",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -12227,6 +14839,15 @@
             },
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "httpsPath",
               "type": {
                 "kind": "SCALAR",
@@ -12535,6 +15156,15 @@
             },
             {
               "args": [],
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
@@ -12548,6 +15178,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -13358,6 +15997,15 @@
             },
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -13604,6 +16252,15 @@
             },
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -13659,10 +16316,28 @@
             },
             {
               "args": [],
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -14353,28 +17028,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": [
-            {
-              "name": "annotation"
-            },
-            {
-              "name": "annotationFiles"
-            },
-            {
-              "name": "shapeType"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "AnnotationShapeCountColumns",
-          "possibleTypes": null
-        },
-        {
           "enumValues": null,
           "fields": [
             {
@@ -14818,31 +17471,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AnnotationMethodLinkMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "annotation"
-            },
-            {
-              "name": "linkType"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "link"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "AnnotationMethodLinkCountColumns",
           "possibleTypes": null
         },
         {
@@ -15451,49 +18079,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AnnotationAuthorMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "annotation"
-            },
-            {
-              "name": "id"
-            },
-            {
-              "name": "authorListOrder"
-            },
-            {
-              "name": "orcid"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "email"
-            },
-            {
-              "name": "affiliationName"
-            },
-            {
-              "name": "affiliationAddress"
-            },
-            {
-              "name": "affiliationIdentifier"
-            },
-            {
-              "name": "correspondingAuthorStatus"
-            },
-            {
-              "name": "primaryAuthorStatus"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "AnnotationAuthorCountColumns",
           "possibleTypes": null
         },
         {
@@ -17017,49 +19602,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": [
-            {
-              "name": "deposition"
-            },
-            {
-              "name": "id"
-            },
-            {
-              "name": "authorListOrder"
-            },
-            {
-              "name": "orcid"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "email"
-            },
-            {
-              "name": "affiliationName"
-            },
-            {
-              "name": "affiliationAddress"
-            },
-            {
-              "name": "affiliationIdentifier"
-            },
-            {
-              "name": "correspondingAuthorStatus"
-            },
-            {
-              "name": "primaryAuthorStatus"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "DepositionAuthorCountColumns",
-          "possibleTypes": null
-        },
-        {
           "enumValues": null,
           "fields": [
             {
@@ -17394,79 +19936,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AlignmentMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "annotationFiles"
-            },
-            {
-              "name": "perSectionAlignments"
-            },
-            {
-              "name": "deposition"
-            },
-            {
-              "name": "tiltseries"
-            },
-            {
-              "name": "tomograms"
-            },
-            {
-              "name": "run"
-            },
-            {
-              "name": "alignmentType"
-            },
-            {
-              "name": "alignmentMethod"
-            },
-            {
-              "name": "volumeXDimension"
-            },
-            {
-              "name": "volumeYDimension"
-            },
-            {
-              "name": "volumeZDimension"
-            },
-            {
-              "name": "volumeXOffset"
-            },
-            {
-              "name": "volumeYOffset"
-            },
-            {
-              "name": "volumeZOffset"
-            },
-            {
-              "name": "xRotationOffset"
-            },
-            {
-              "name": "tiltOffset"
-            },
-            {
-              "name": "affineTransformationMatrix"
-            },
-            {
-              "name": "s3AlignmentMetadata"
-            },
-            {
-              "name": "httpsAlignmentMetadata"
-            },
-            {
-              "name": "isPortalStandard"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "AlignmentCountColumns",
           "possibleTypes": null
         },
         {
@@ -17884,91 +20353,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AnnotationMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "run"
-            },
-            {
-              "name": "annotationShapes"
-            },
-            {
-              "name": "methodLinks"
-            },
-            {
-              "name": "authors"
-            },
-            {
-              "name": "deposition"
-            },
-            {
-              "name": "s3MetadataPath"
-            },
-            {
-              "name": "httpsMetadataPath"
-            },
-            {
-              "name": "annotationPublication"
-            },
-            {
-              "name": "annotationMethod"
-            },
-            {
-              "name": "groundTruthStatus"
-            },
-            {
-              "name": "objectId"
-            },
-            {
-              "name": "objectName"
-            },
-            {
-              "name": "objectDescription"
-            },
-            {
-              "name": "objectState"
-            },
-            {
-              "name": "objectCount"
-            },
-            {
-              "name": "confidencePrecision"
-            },
-            {
-              "name": "confidenceRecall"
-            },
-            {
-              "name": "groundTruthUsed"
-            },
-            {
-              "name": "annotationSoftware"
-            },
-            {
-              "name": "isCuratorRecommended"
-            },
-            {
-              "name": "methodType"
-            },
-            {
-              "name": "depositionDate"
-            },
-            {
-              "name": "releaseDate"
-            },
-            {
-              "name": "lastModifiedDate"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "AnnotationCountColumns",
           "possibleTypes": null
         },
         {
@@ -18666,6 +21050,15 @@
                   "ofType": null
                 }
               }
+            },
+            {
+              "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
             }
           ],
           "inputFields": null,
@@ -19103,28 +21496,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "DatasetFundingMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "dataset"
-            },
-            {
-              "name": "fundingAgencyName"
-            },
-            {
-              "name": "grantId"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "DatasetFundingCountColumns",
           "possibleTypes": null
         },
         {
@@ -19736,49 +22107,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": [
-            {
-              "name": "dataset"
-            },
-            {
-              "name": "id"
-            },
-            {
-              "name": "authorListOrder"
-            },
-            {
-              "name": "orcid"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "email"
-            },
-            {
-              "name": "affiliationName"
-            },
-            {
-              "name": "affiliationAddress"
-            },
-            {
-              "name": "affiliationIdentifier"
-            },
-            {
-              "name": "correspondingAuthorStatus"
-            },
-            {
-              "name": "primaryAuthorStatus"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "DatasetAuthorCountColumns",
-          "possibleTypes": null
-        },
-        {
           "enumValues": null,
           "fields": [
             {
@@ -20052,55 +22380,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": [
-            {
-              "name": "alignments"
-            },
-            {
-              "name": "annotations"
-            },
-            {
-              "name": "dataset"
-            },
-            {
-              "name": "frames"
-            },
-            {
-              "name": "gainFiles"
-            },
-            {
-              "name": "frameAcquisitionFiles"
-            },
-            {
-              "name": "tiltseries"
-            },
-            {
-              "name": "tomogramVoxelSpacings"
-            },
-            {
-              "name": "tomograms"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "s3Prefix"
-            },
-            {
-              "name": "httpsPrefix"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "RunCountColumns",
-          "possibleTypes": null
-        },
-        {
           "enumValues": null,
           "fields": [
             {
@@ -20237,6 +22516,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Int",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -20477,6 +22765,15 @@
             },
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -20489,106 +22786,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "DatasetMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "deposition"
-            },
-            {
-              "name": "fundingSources"
-            },
-            {
-              "name": "authors"
-            },
-            {
-              "name": "runs"
-            },
-            {
-              "name": "title"
-            },
-            {
-              "name": "description"
-            },
-            {
-              "name": "organismName"
-            },
-            {
-              "name": "organismTaxid"
-            },
-            {
-              "name": "tissueName"
-            },
-            {
-              "name": "tissueId"
-            },
-            {
-              "name": "cellName"
-            },
-            {
-              "name": "cellTypeId"
-            },
-            {
-              "name": "cellStrainName"
-            },
-            {
-              "name": "cellStrainId"
-            },
-            {
-              "name": "sampleType"
-            },
-            {
-              "name": "samplePreparation"
-            },
-            {
-              "name": "gridPreparation"
-            },
-            {
-              "name": "otherSetup"
-            },
-            {
-              "name": "keyPhotoUrl"
-            },
-            {
-              "name": "keyPhotoThumbnailUrl"
-            },
-            {
-              "name": "cellComponentName"
-            },
-            {
-              "name": "cellComponentId"
-            },
-            {
-              "name": "depositionDate"
-            },
-            {
-              "name": "releaseDate"
-            },
-            {
-              "name": "lastModifiedDate"
-            },
-            {
-              "name": "datasetPublications"
-            },
-            {
-              "name": "relatedDatabaseEntries"
-            },
-            {
-              "name": "s3Prefix"
-            },
-            {
-              "name": "httpsPrefix"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "DatasetCountColumns",
           "possibleTypes": null
         },
         {
@@ -20859,6 +23056,15 @@
                   "ofType": null
                 }
               }
+            },
+            {
+              "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
             }
           ],
           "inputFields": null,
@@ -20948,6 +23154,15 @@
             {
               "defaultValue": null,
               "name": "httpsFramePath",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "fileSize",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -21129,6 +23344,15 @@
             },
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -21193,6 +23417,15 @@
             },
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -21205,43 +23438,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "FrameMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "deposition"
-            },
-            {
-              "name": "run"
-            },
-            {
-              "name": "rawAngle"
-            },
-            {
-              "name": "acquisitionOrder"
-            },
-            {
-              "name": "dose"
-            },
-            {
-              "name": "isGainCorrected"
-            },
-            {
-              "name": "s3FramePath"
-            },
-            {
-              "name": "httpsFramePath"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "FrameCountColumns",
           "possibleTypes": null
         },
         {
@@ -21553,10 +23749,28 @@
             },
             {
               "args": [],
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -22062,6 +24276,24 @@
           "fields": [
             {
               "args": [],
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "accelerationVoltage",
               "type": {
                 "kind": "SCALAR",
@@ -22225,10 +24457,28 @@
             },
             {
               "args": [],
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -22507,127 +24757,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "TiltseriesMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "alignments"
-            },
-            {
-              "name": "run"
-            },
-            {
-              "name": "deposition"
-            },
-            {
-              "name": "s3OmezarrDir"
-            },
-            {
-              "name": "s3MrcFile"
-            },
-            {
-              "name": "httpsOmezarrDir"
-            },
-            {
-              "name": "httpsMrcFile"
-            },
-            {
-              "name": "s3AngleList"
-            },
-            {
-              "name": "httpsAngleList"
-            },
-            {
-              "name": "accelerationVoltage"
-            },
-            {
-              "name": "sphericalAberrationConstant"
-            },
-            {
-              "name": "microscopeManufacturer"
-            },
-            {
-              "name": "microscopeModel"
-            },
-            {
-              "name": "microscopeEnergyFilter"
-            },
-            {
-              "name": "microscopePhasePlate"
-            },
-            {
-              "name": "microscopeImageCorrector"
-            },
-            {
-              "name": "microscopeAdditionalInfo"
-            },
-            {
-              "name": "cameraManufacturer"
-            },
-            {
-              "name": "cameraModel"
-            },
-            {
-              "name": "tiltMin"
-            },
-            {
-              "name": "tiltMax"
-            },
-            {
-              "name": "tiltRange"
-            },
-            {
-              "name": "tiltStep"
-            },
-            {
-              "name": "tiltingScheme"
-            },
-            {
-              "name": "tiltAxis"
-            },
-            {
-              "name": "totalFlux"
-            },
-            {
-              "name": "dataAcquisitionSoftware"
-            },
-            {
-              "name": "relatedEmpiarEntry"
-            },
-            {
-              "name": "binningFromFrames"
-            },
-            {
-              "name": "tiltSeriesQuality"
-            },
-            {
-              "name": "isAligned"
-            },
-            {
-              "name": "pixelSpacing"
-            },
-            {
-              "name": "alignedTiltseriesBinning"
-            },
-            {
-              "name": "sizeX"
-            },
-            {
-              "name": "sizeY"
-            },
-            {
-              "name": "sizeZ"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "TiltseriesCountColumns",
           "possibleTypes": null
         },
         {
@@ -23196,6 +25325,15 @@
             },
             {
               "args": [],
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
@@ -23209,6 +25347,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -23824,6 +25971,15 @@
             },
             {
               "defaultValue": null,
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "s3MrcFile",
               "type": {
                 "kind": "ENUM",
@@ -23834,6 +25990,15 @@
             {
               "defaultValue": null,
               "name": "httpsMrcFile",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "fileSizeMrc",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -24393,49 +26558,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": [
-            {
-              "name": "tomogram"
-            },
-            {
-              "name": "id"
-            },
-            {
-              "name": "authorListOrder"
-            },
-            {
-              "name": "orcid"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "email"
-            },
-            {
-              "name": "affiliationName"
-            },
-            {
-              "name": "affiliationAddress"
-            },
-            {
-              "name": "affiliationIdentifier"
-            },
-            {
-              "name": "correspondingAuthorStatus"
-            },
-            {
-              "name": "primaryAuthorStatus"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "TomogramAuthorCountColumns",
-          "possibleTypes": null
-        },
-        {
           "enumValues": null,
           "fields": [
             {
@@ -24807,6 +26929,15 @@
             },
             {
               "defaultValue": null,
+              "name": "fileSize",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "httpsPath",
               "type": {
                 "kind": "ENUM",
@@ -24980,6 +27111,15 @@
           "fields": [
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "id",
               "type": {
                 "kind": "SCALAR",
@@ -25017,6 +27157,15 @@
             },
             {
               "args": [],
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "httpsPath",
               "type": {
                 "kind": "SCALAR",
@@ -25038,43 +27187,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "AnnotationFileMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "alignment"
-            },
-            {
-              "name": "annotationShape"
-            },
-            {
-              "name": "tomogramVoxelSpacing"
-            },
-            {
-              "name": "format"
-            },
-            {
-              "name": "s3Path"
-            },
-            {
-              "name": "httpsPath"
-            },
-            {
-              "name": "isVisualizationDefault"
-            },
-            {
-              "name": "source"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "AnnotationFileCountColumns",
           "possibleTypes": null
         },
         {
@@ -25255,6 +27367,24 @@
             },
             {
               "args": [],
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "offsetX",
               "type": {
                 "kind": "SCALAR",
@@ -25391,6 +27521,15 @@
             },
             {
               "args": [],
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
@@ -25404,6 +27543,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -25547,133 +27695,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "TomogramMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "alignment"
-            },
-            {
-              "name": "authors"
-            },
-            {
-              "name": "deposition"
-            },
-            {
-              "name": "run"
-            },
-            {
-              "name": "tomogramVoxelSpacing"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "sizeX"
-            },
-            {
-              "name": "sizeY"
-            },
-            {
-              "name": "sizeZ"
-            },
-            {
-              "name": "voxelSpacing"
-            },
-            {
-              "name": "fiducialAlignmentStatus"
-            },
-            {
-              "name": "reconstructionMethod"
-            },
-            {
-              "name": "processing"
-            },
-            {
-              "name": "tomogramVersion"
-            },
-            {
-              "name": "processingSoftware"
-            },
-            {
-              "name": "reconstructionSoftware"
-            },
-            {
-              "name": "isPortalStandard"
-            },
-            {
-              "name": "isAuthorSubmitted"
-            },
-            {
-              "name": "isVisualizationDefault"
-            },
-            {
-              "name": "s3OmezarrDir"
-            },
-            {
-              "name": "httpsOmezarrDir"
-            },
-            {
-              "name": "s3MrcFile"
-            },
-            {
-              "name": "httpsMrcFile"
-            },
-            {
-              "name": "scale0Dimensions"
-            },
-            {
-              "name": "scale1Dimensions"
-            },
-            {
-              "name": "scale2Dimensions"
-            },
-            {
-              "name": "ctfCorrected"
-            },
-            {
-              "name": "offsetX"
-            },
-            {
-              "name": "offsetY"
-            },
-            {
-              "name": "offsetZ"
-            },
-            {
-              "name": "keyPhotoUrl"
-            },
-            {
-              "name": "keyPhotoThumbnailUrl"
-            },
-            {
-              "name": "neuroglancerConfig"
-            },
-            {
-              "name": "publications"
-            },
-            {
-              "name": "relatedDatabaseEntries"
-            },
-            {
-              "name": "id"
-            },
-            {
-              "name": "depositionDate"
-            },
-            {
-              "name": "releaseDate"
-            },
-            {
-              "name": "lastModifiedDate"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "TomogramCountColumns",
           "possibleTypes": null
         },
         {
@@ -26062,25 +28083,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "DepositionTypeMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "deposition"
-            },
-            {
-              "name": "type"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "DepositionTypeCountColumns",
           "possibleTypes": null
         },
         {
@@ -26672,40 +28674,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": [
-            {
-              "name": "alignment"
-            },
-            {
-              "name": "zIndex"
-            },
-            {
-              "name": "xOffset"
-            },
-            {
-              "name": "yOffset"
-            },
-            {
-              "name": "volumeXRotation"
-            },
-            {
-              "name": "inPlaneRotation"
-            },
-            {
-              "name": "tiltAngle"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "PerSectionAlignmentParametersCountColumns",
-          "possibleTypes": null
-        },
-        {
           "enumValues": null,
           "fields": [
             {
@@ -27013,28 +28981,6 @@
           "interfaces": [],
           "kind": "OBJECT",
           "name": "GainFileMinMaxColumns",
-          "possibleTypes": null
-        },
-        {
-          "enumValues": [
-            {
-              "name": "run"
-            },
-            {
-              "name": "s3FilePath"
-            },
-            {
-              "name": "httpsFilePath"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "GainFileCountColumns",
           "possibleTypes": null
         },
         {
@@ -27466,28 +29412,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": [
-            {
-              "name": "run"
-            },
-            {
-              "name": "s3MdocPath"
-            },
-            {
-              "name": "httpsMdocPath"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "FrameAcquisitionFileCountColumns",
-          "possibleTypes": null
-        },
-        {
           "enumValues": null,
           "fields": [
             {
@@ -27770,37 +29694,6 @@
           "possibleTypes": null
         },
         {
-          "enumValues": [
-            {
-              "name": "annotationFiles"
-            },
-            {
-              "name": "run"
-            },
-            {
-              "name": "tomograms"
-            },
-            {
-              "name": "voxelSpacing"
-            },
-            {
-              "name": "s3Prefix"
-            },
-            {
-              "name": "httpsPrefix"
-            },
-            {
-              "name": "id"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "TomogramVoxelSpacingCountColumns",
-          "possibleTypes": null
-        },
-        {
           "enumValues": null,
           "fields": null,
           "inputFields": [
@@ -28078,34 +29971,10 @@
         {
           "enumValues": [
             {
-              "name": "authors"
-            },
-            {
-              "name": "alignments"
-            },
-            {
-              "name": "annotations"
-            },
-            {
-              "name": "datasets"
-            },
-            {
-              "name": "frames"
-            },
-            {
-              "name": "tiltseries"
-            },
-            {
-              "name": "tomograms"
-            },
-            {
               "name": "title"
             },
             {
               "name": "description"
-            },
-            {
-              "name": "depositionTypes"
             },
             {
               "name": "depositionPublications"
@@ -31392,6 +33261,15 @@
               }
             },
             {
+              "defaultValue": "null",
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
               "defaultValue": null,
               "name": "httpsPath",
               "type": {
@@ -31487,6 +33365,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -32758,6 +34645,15 @@
               }
             },
             {
+              "defaultValue": "null",
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
               "defaultValue": null,
               "name": "id",
               "type": {
@@ -33011,6 +34907,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -33738,6 +35643,15 @@
               }
             },
             {
+              "defaultValue": "null",
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
               "defaultValue": null,
               "name": "id",
               "type": {
@@ -33829,6 +35743,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "fileSize",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -34279,10 +36202,28 @@
             },
             {
               "defaultValue": "null",
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -34689,10 +36630,28 @@
             },
             {
               "defaultValue": "null",
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -35625,6 +37584,15 @@
             },
             {
               "defaultValue": "null",
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
@@ -35638,6 +37606,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },
@@ -35993,6 +37970,15 @@
             },
             {
               "defaultValue": "null",
+              "name": "fileSizeOmezarr",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
               "name": "s3MrcFile",
               "type": {
                 "kind": "SCALAR",
@@ -36006,6 +37992,15 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "fileSizeMrc",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Float",
                 "ofType": null
               }
             },

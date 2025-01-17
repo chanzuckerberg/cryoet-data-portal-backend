@@ -82,6 +82,7 @@ class AnnotationFileItem(ItemDBImporter):
         self.model_args["source"] = self.calculate_source()
         self.model_args["s3_path"] = self.get_s3_url(self.input_data["path"])
         self.model_args["https_path"] = self.get_https_url(self.input_data["path"])
+        self.model_args["file_size"] = self.get_file_size(self.input_data["path"])
 
 
 class AnnotationImporter(IntegratedDBImporter):

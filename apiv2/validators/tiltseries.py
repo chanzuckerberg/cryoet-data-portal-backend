@@ -26,12 +26,14 @@ class TiltseriesCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size_omezarr: Annotated[float | None, Field()]
     s3_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
+    file_size_mrc: Annotated[float | None, Field()]
     https_omezarr_dir: Annotated[
         str | None,
         StringConstraints(
@@ -229,12 +231,14 @@ class TiltseriesUpdateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    file_size_omezarr: Annotated[float | None, Field()]
     s3_mrc_file: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
+    file_size_mrc: Annotated[float | None, Field()]
     https_omezarr_dir: Annotated[
         str | None,
         StringConstraints(
