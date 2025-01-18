@@ -4,10 +4,11 @@ from typing import Dict
 
 import allure
 import pytest
-from data_validation.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
-from data_validation.tests.test_deposition import HelperTestDeposition
 from fixtures.data import BINNING_FACTORS
 from mrcfile.mrcinterpreter import MrcInterpreter
+
+from data_validation.standardized.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination

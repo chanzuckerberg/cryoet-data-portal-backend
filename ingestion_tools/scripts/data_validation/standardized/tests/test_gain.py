@@ -4,9 +4,10 @@ from typing import Dict, List, Union
 import allure
 import pytest
 import tifffile
-from data_validation.tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
-from data_validation.tests.test_frame import PERMITTED_FRAME_EXTENSIONS, helper_tiff_mrc_consistent
 from mrcfile.mrcinterpreter import MrcInterpreter
+
+from data_validation.standardized.tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
+from data_validation.standardized.tests.test_frame import PERMITTED_FRAME_EXTENSIONS, helper_tiff_mrc_consistent
 
 PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
 

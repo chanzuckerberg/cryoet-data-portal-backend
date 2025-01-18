@@ -17,7 +17,7 @@ def pytest_addoption(parser: Parser) -> None:
         action="store",
     )
 
-    # Run Name and ID
+    # Run Name
     parser.addoption(
         "--run-glob",
         action="store",

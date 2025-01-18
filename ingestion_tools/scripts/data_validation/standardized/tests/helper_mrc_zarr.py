@@ -1,8 +1,9 @@
 import math
 
 import allure
-from data_validation.tests.helper_mrc import HelperTestMRCHeader
-from data_validation.tests.helper_zarr import HelperTestZarrHeader
+
+from data_validation.standardized.tests.helper_mrc import HelperTestMRCHeader
+from data_validation.standardized.tests.helper_zarr import HelperTestZarrHeader
 
 
 class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):

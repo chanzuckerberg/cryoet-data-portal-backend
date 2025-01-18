@@ -58,7 +58,7 @@ def get_history(tar_report: str, destination: str, fs: FileSystemApi):
     "--update-s3/--no-update-s3",
     is_flag=True,
     default=True,
-    help="Write to S3 the results from this validation run.",
+    help="Write to S3 the results from this validation session.",
 )
 def main(
     local_dir: str,

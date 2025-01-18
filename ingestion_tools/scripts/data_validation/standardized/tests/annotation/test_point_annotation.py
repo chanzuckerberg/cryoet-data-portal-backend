@@ -2,7 +2,8 @@ from typing import Dict, List
 
 import allure
 import pytest
-from data_validation.tests.annotation.helper_point import contained_in_tomo, point_count_consistent
+
+from data_validation.standardized.tests.annotation.helper_point import contained_in_tomo, point_count_consistent
 
 
 @pytest.mark.annotation

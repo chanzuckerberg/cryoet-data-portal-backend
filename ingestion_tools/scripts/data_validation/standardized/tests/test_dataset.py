@@ -2,11 +2,11 @@ from typing import Dict
 
 import allure
 import pytest
-from data_validation.tests.helper_images import check_photo_valid
-from data_validation.tests.helper_metadata import basic_metadata_check
-from data_validation.tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
+from data_validation.standardized.tests.helper_images import check_photo_valid
+from data_validation.standardized.tests.helper_metadata import basic_metadata_check
+from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 
 
 @pytest.mark.dataset

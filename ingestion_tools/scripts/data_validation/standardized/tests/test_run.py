@@ -2,9 +2,9 @@ from typing import Dict
 
 import allure
 import pytest
-from data_validation.tests.test_deposition import HelperTestDeposition
 
 from common.fs import FileSystemApi
+from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 
 
 @pytest.mark.run

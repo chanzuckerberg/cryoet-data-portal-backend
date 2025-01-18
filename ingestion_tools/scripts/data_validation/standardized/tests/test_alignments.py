@@ -4,7 +4,8 @@ import allure
 import numpy as np
 import pandas as pd
 import pytest
-from helper_angles import helper_angles_injection_errors
+
+from data_validation.standardized.tests.helper_angles import helper_angles_injection_errors
 
 
 @pytest.mark.alignment

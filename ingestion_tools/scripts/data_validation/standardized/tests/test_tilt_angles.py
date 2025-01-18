@@ -5,8 +5,9 @@ import numpy as np
 import pandas as pd
 import pytest
 import tifffile
-from helper_angles import helper_angles_injection_errors
 from mrcfile.mrcinterpreter import MrcInterpreter
+
+from data_validation.standardized.tests.helper_angles import helper_angles_injection_errors
 
 ANGLE_TOLERANCE = 0.05
 
