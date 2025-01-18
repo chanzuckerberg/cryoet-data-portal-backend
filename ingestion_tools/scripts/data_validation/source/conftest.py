@@ -1,64 +1,36 @@
 import os
-import re
-from typing import List
+import pathlib
 
 import pytest
-from importers.base_importer import BaseImporter
-from importers.dataset import DatasetImporter
-from importers.deposition import DepositionImporter
-from importers.run import RunImporter
 from importers.utils import IMPORTERS
 
-from common.config import DepositionImportConfig
-from common.fs import FileSystemApi
+from data_validation.source.fixtures.parameterized import CryoetTestEntities
 
 
-def get_entities(ingestion_config: DepositionImportConfig, importer_class: BaseImporter, parents: List[BaseImporter], request: pytest.FixtureRequest) -> List[BaseImporter]:
-    items = []
-    name_filter = request.config.getoption(f"--{importer_class.type_key}-name-filter")
-    name_regex = re.compile(name_filter) if name_filter else None
-    for parent in parents:
-        new_items = [
-            instance
-            for instance in importer_class.finder(ingestion_config, **{parent.type_key: parent})
-            if not name_regex or name_regex.match(instance.name)
-        ]
-        items.extend(new_items)
-    print(f"Found {len(items)} {importer_class.type_key} entities")
-    print([item.name for item in items])
-    return items
+def pytest_addoption(parser: pytest.Parser) -> None:
+    """Common options for all tests."""
+
+    # S3 or local
+    parser.addoption("--input-bucket", action="store", required=True)
+
+    # optional output path. Only needed if the config has destination globs.
+    parser.addoption("--output-bucket", action="store", default="cryoet-data-portal-staging")
+
+    # File path to the ingestion config file relative to the dataset_config
+    parser.addoption("--ingestion-config", action="store", type=pathlib.Path, required=True)
+
+    for importer in IMPORTERS:
+        parser.addoption(f"--filter-{importer.type_key}-name", action="store", default=None)
 
 
-@pytest.fixture(scope="session")
-def input_bucket(request: pytest.FixtureRequest) -> str:
-    return request.config.getoption("--input-bucket")
 
-
-@pytest.fixture(scope="session")
-def output_bucket(request: pytest.FixtureRequest) -> str:
-    return request.config.getoption("--output-bucket")
-
-
-@pytest.fixture(scope="session")
-def ingestion_config_path(request: pytest.FixtureRequest) -> str:
-    config_path = request.config.getoption("--ingestion-config")
+def ingestion_config_path(config: pytest.Config) -> str:
+    config_path = config.getoption("--ingestion-config")
     return os.path.abspath(os.path.join(os.getcwd(), "..", "..", "..", "dataset_configs", config_path))
 
-
-@pytest.fixture(scope="session")
-def ingestion_config(output_bucket: str, input_bucket: str, ingestion_config_path: str) -> DepositionImportConfig:
-    fs = FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)
-    return DepositionImportConfig(fs, ingestion_config_path, output_bucket, input_bucket, IMPORTERS)
-
-@pytest.fixture(scope="session")
-def deposition(ingestion_config: DepositionImportConfig, request: pytest.FixtureRequest) -> DepositionImporter:
-    depositions = list(DepositionImporter.finder(ingestion_config))
-    return depositions[0]
-
-@pytest.fixture(scope="session")
-def datasets(ingestion_config: DepositionImportConfig, deposition: DepositionImporter, request: pytest.FixtureRequest) -> List[DatasetImporter]:
-    return get_entities(ingestion_config, DatasetImporter, [deposition], request)
-
-@pytest.fixture(scope="session")
-def runs(ingestion_config: DepositionImportConfig, datasets: List[DatasetImporter], request: pytest.FixtureRequest) -> List[RunImporter]:
-    return get_entities(ingestion_config, RunImporter, datasets, request)
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure(config: pytest.Config) -> None:
+    # Using pytest_generate_tests to parametrize the fixtures causes the per-run-fixtures to be run multiple times,
+    # but setting the parameterization as labels and parametrizing the class with that label leads to desired outcome, i.e.
+    # re-use of the per-run fixtures.
+    pytest.cryoet = CryoetTestEntities(config, ingestion_config_path(config))

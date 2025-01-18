@@ -40,7 +40,7 @@ def mrc_allure_title(func):
 
 class HelperTestMRCHeader:
     """
-    This is a helper class that containts pytests for checking the header of an mrc file.
+    This is a helper class that contains pytests for checking the header of a mrc file.
     This class itself is not labeled as a pytest test class (why it starts Helper instead of Test), because
     we don't want to run these tests directly. Instead, this class is inherited by a class that is labeled
     as a pytest test class, and that class will run the tests in this class. In the pytest class, we will

@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.standardized.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.helpers.helper_mrc_zarr import HelperTestMRCZarrHeader
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination

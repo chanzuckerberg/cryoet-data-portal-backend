@@ -7,7 +7,7 @@ import pytest
 from fixtures.data import BINNING_FACTORS
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.standardized.tests.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.helpers.helper_mrc_zarr import HelperTestMRCZarrHeader
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 
 

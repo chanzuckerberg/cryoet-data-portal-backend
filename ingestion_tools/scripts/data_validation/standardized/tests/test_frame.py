@@ -8,7 +8,7 @@ import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.standardized.tests.helper_mrc import HelperTestMRCHeader, mrc_allure_title
+from data_validation.helpers.helper_mrc import HelperTestMRCHeader, mrc_allure_title
 
 PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".mrc.bz2"]
 
