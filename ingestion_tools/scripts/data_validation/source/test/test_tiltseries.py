@@ -1,24 +1,32 @@
 import pytest
 from importers.tiltseries import TiltSeriesImporter
 
+from data_validation.helpers.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.helpers.util import get_file_type, get_mrc_header, get_zarr_metadata
+
 
 @pytest.mark.parametrize("tiltseries", pytest.cryoet.tiltseries, ids=[ts.name for ts in pytest.cryoet.tiltseries], scope="session")
-class TestTiltSeries:
+class TestTiltSeries(HelperTestMRCZarrHeader):
 
-    @pytest.fixture(scope="class")
-    def pixel_spacing(self, tiltseries: TiltSeriesImporter):
-        return tiltseries.get_voxel_size()
+    @pytest.fixture(autouse=True)
+    def set_helper_test_mrc_zarr_header_class_variables(self, tiltseries: TiltSeriesImporter):
+        self.spacegroup = 0  # 2D image
+        self.file_type = get_file_type(tiltseries.name)
+        ts_file = tiltseries.volume_filename
 
-    @pytest.fixture(scope="class")
-    def tiltseries_file_type(self, tiltseries: TiltSeriesImporter) -> str:
-        if tiltseries.name.endswith(".zarr"):
-            return "zarr"
-        elif any(tiltseries.name.endswith(extension) for extension in [".mrc", ".st"]):
-            return "mrc"
-        return "unknown"
+        if tiltseries.allow_imports:
+            if self.file_type == "mrc":
+                self.mrc_headers = {ts_file: get_mrc_header(ts_file, tiltseries.config.fs, fail_test=False)}
+            elif self.file_type == "zarr":
+                self.zarr_headers = get_zarr_metadata(ts_file, tiltseries.config.fs, fail_test=False)
+        self.spacing = tiltseries.get_base_metadata().get("pixel_spacing")
+        self.skip_z_axis_checks = True
 
-    def test_tiltseries_file_type(self, tiltseries_file_type: str):
-        assert tiltseries_file_type != "unknown"
+    def test_file_type(self):
+        assert self.file_type != "unknown"
 
-    def test_tiltseries_pixel_spacing(self, pixel_spacing: float, tiltseries: TiltSeriesImporter):
-        assert pytest.approx(pixel_spacing, abs=0.001) == tiltseries.get_pixel_spacing()
+    def test_zarr_mrc_both_exist(self):
+        pytest.skip("Both formats won't exist for source data")
+
+    def test_zarr_mrc_volume_size(self):
+        pytest.skip("Both formats won't exist for source data")

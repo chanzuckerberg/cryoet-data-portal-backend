@@ -9,6 +9,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, List, Union
 
+import data_validation.helpers.util as helper_util
 import mdocfile
 import ndjson
 import pandas as pd
@@ -22,21 +23,9 @@ from common.fs import FileSystemApi
 # Helper functions
 # ==================================================================================================
 
-BINNING_FACTORS = [0, 1, 2]
-
 # block sizes are experimentally tested to be the fastest
-MRC_HEADER_BLOCK_SIZE = 2 * 2**10
 MRC_BZ2_HEADER_BLOCK_SIZE = 500 * 2**10
 TIFF_HEADER_BLOCK_SIZE = 100 * 2**10
-
-
-def get_mrc_header(mrcfile: str, fs: FileSystemApi) -> MrcInterpreter:
-    """Get the mrc file headers for a list of mrc files."""
-    try:
-        with fs.open(mrcfile, "rb", block_size=MRC_HEADER_BLOCK_SIZE) as f:
-            return MrcInterpreter(iostream=f, permissive=True, header_only=True)
-    except Exception as e:
-        pytest.fail(f"Failed to get header for {mrcfile}: {e}")
 
 
 def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
@@ -49,25 +38,9 @@ def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
         pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
 
 
-def get_zarr_metadata(zarrfile: str, fs: FileSystemApi) -> Dict[str, Dict]:
-    """Get the zattrs and zarray data for a zarr volume file."""
-    file_paths = fs.glob(os.path.join(zarrfile, "*"))
-    fsstore_children = {os.path.basename(file) for file in file_paths}
-    expected_fsstore_children = {"0", "1", "2", ".zattrs", ".zgroup"}
-    if expected_fsstore_children != fsstore_children:
-        pytest.fail(f"Expected zarr children: {expected_fsstore_children}, Actual zarr children: {fsstore_children}")
-
-    zarrays = {}
-    for binning in BINNING_FACTORS:
-        with fs.open(os.path.join(zarrfile, str(binning), ".zarray"), "r") as f:
-            zarrays[binning] = json.load(f)
-    with fs.open(os.path.join(zarrfile, ".zattrs"), "r") as f:
-        return {"zattrs": json.load(f), "zarrays": zarrays}
-
-
 def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
     if file.endswith(".mrc"):
-        return (file, get_mrc_header(file, filesystem))
+        return (file, helper_util.get_mrc_header(file, filesystem))
     elif file.endswith(".mrc.bz2"):
         return (file, get_mrc_bz2_header(file, filesystem))
     elif file.endswith((".tif", ".tiff", ".eer", ".gain")):
@@ -155,14 +128,14 @@ def gain_headers(
 @pytest.fixture(scope="session")
 def tiltseries_mrc_header(tiltseries_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tilt series."""
-    return {tiltseries_mrc_file: get_mrc_header(tiltseries_mrc_file, filesystem)}
+    return {tiltseries_mrc_file: helper_util.get_mrc_header(tiltseries_mrc_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
 def tiltseries_zarr_metadata(tiltseries_zarr_file: str, filesystem: FileSystemApi) -> Dict[str, Dict[str, Dict]]:
     """Get the zattrs and zarray data for a zarr tilt series.
     Dictionary structure: metadata = {tiltseries_a_filename: {"zattrs": Dict, "zarrays": Dict}"""
-    return {tiltseries_zarr_file: get_zarr_metadata(tiltseries_zarr_file, filesystem)}
+    return {tiltseries_zarr_file: helper_util.get_zarr_metadata(tiltseries_zarr_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
@@ -223,7 +196,7 @@ def alignment_tiltseries_raw_tilt(alignment_tiltseries_rawtilt_file: str, filesy
 @pytest.fixture(scope="session")
 def tomo_mrc_header(tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
     """Get the mrc file headers for a tomogram."""
-    return {tomo_mrc_file: get_mrc_header(tomo_mrc_file, filesystem)}
+    return {tomo_mrc_file: helper_util.get_mrc_header(tomo_mrc_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
@@ -232,7 +205,7 @@ def tomo_zarr_header(tomo_zarr_file: str, filesystem: FileSystemApi) -> Dict[str
     Get the zattrs and zarray data for a tomogram.
     Dictionary structure: headers = {tomo_a_filename: {"zattrs": Dict, "zarrays": Dict}}.
     """
-    return {tomo_zarr_file: get_zarr_metadata(tomo_zarr_file, filesystem)}
+    return {tomo_zarr_file: helper_util.get_zarr_metadata(tomo_zarr_file, filesystem)}
 
 
 @pytest.fixture(scope="session")
@@ -365,7 +338,7 @@ def seg_mask_annotation_mrc_headers(
     """Get the mrc file headers for an mrc annotation file."""
     headers = {}
     for mrc_filename in seg_mask_annotation_mrc_files:
-        headers[mrc_filename] = get_mrc_header(mrc_filename, filesystem)
+        headers[mrc_filename] = helper_util.get_mrc_header(mrc_filename, filesystem)
 
     return headers
 
@@ -381,6 +354,6 @@ def seg_mask_annotation_zarr_headers(
     """
     headers = {}
     for zarr_filename in seg_mask_annotation_zarr_files:
-        headers[zarr_filename] = get_zarr_metadata(zarr_filename, filesystem)
+        headers[zarr_filename] = helper_util.get_zarr_metadata(zarr_filename, filesystem)
 
     return headers

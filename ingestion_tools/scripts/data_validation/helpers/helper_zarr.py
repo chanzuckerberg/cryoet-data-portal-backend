@@ -3,7 +3,8 @@ from typing import Dict
 import allure
 import numpy as np
 import pytest
-from fixtures.data import BINNING_FACTORS
+
+from data_validation.helpers.util import BINNING_FACTORS
 
 ZATTRS_AXIS_ORDER = ["z", "y", "x"]
 SPACING_TOLERANCE = 0.001
@@ -28,6 +29,9 @@ class HelperTestZarrHeader:
         **kwargs,
     ):
         """Helper function to check the header of the zarr file."""
+        if not self.zarr_headers:
+            pytest.skip("No zarr headers to check")
+
         for zarr_filename, header_data in self.zarr_headers.items():
             print(f"Checking {zarr_filename}")
             check_func(header_data, zarr_filename, **kwargs)
