@@ -5,6 +5,7 @@ from importers.base_importer import BaseImporter
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.frame import FrameImporter
+from importers.gain import GainImporter
 from importers.run import RunImporter
 from importers.tiltseries import TiltSeriesImporter
 from importers.utils import IMPORTERS
@@ -25,6 +26,7 @@ class CryoetTestEntities:
         self._deposition: DepositionImporter = None
         self._dataset: list[DatasetImporter] = None
         self._runs: list[RunImporter] = None
+        self._gain: list[GainImporter] = None
         self._frames: list[FrameImporter] = None
         self._tiltseries: list[TiltSeriesImporter] = None
 
@@ -52,6 +54,12 @@ class CryoetTestEntities:
         if self._tiltseries is None:
             self._tiltseries = self._get_entities(TiltSeriesImporter, self.runs)
         return self._tiltseries
+
+    @property
+    def gain(self) -> list[GainImporter]:
+        if self._gain is None:
+            self._gain = self._get_entities(GainImporter, self.runs)
+        return self._gain
 
     @property
     def frames(self) -> list[FrameImporter]:
