@@ -31,22 +31,22 @@ class CryoetTestEntities:
         self._tiltseries: list[TiltSeriesImporter] = None
 
     @property
-    def deposition(self) -> DepositionImporter:
+    def depositions(self) -> DepositionImporter:
         if self._deposition is None:
             depositions = list(DepositionImporter.finder(self._ingestion_config))
             self._deposition = depositions[0]
         return self._deposition
 
     @property
-    def dataset(self) -> list[DatasetImporter]:
+    def datasets(self) -> list[DatasetImporter]:
         if self._dataset is None:
-            self._dataset = self._get_entities(DatasetImporter, [self.deposition])
+            self._dataset = self._get_entities(DatasetImporter, [self.depositions])
         return self._dataset
 
     @property
     def runs(self) -> list[RunImporter]:
         if self._runs is None:
-            self._runs = self._get_entities(RunImporter, self.dataset)
+            self._runs = self._get_entities(RunImporter, self.datasets)
         return self._runs
 
     @property
@@ -56,7 +56,7 @@ class CryoetTestEntities:
         return self._tiltseries
 
     @property
-    def gain(self) -> list[GainImporter]:
+    def gains(self) -> list[GainImporter]:
         if self._gain is None:
             self._gain = self._get_entities(GainImporter, self.runs)
         return self._gain

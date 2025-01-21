@@ -13,7 +13,7 @@ PERMITTED_SOURCE_GAIN_EXTENSIONS = PERMITTED_GAIN_EXTENSIONS + [".dm4"]
 
 
 @pytest.mark.gain
-@pytest.mark.parametrize("gain", pytest.cryoet.gain, ids=[ts.name for ts in pytest.cryoet.gain], scope="session")
+@pytest.mark.parametrize("gain", pytest.cryoet.gains, ids=[ts.name for ts in pytest.cryoet.gains], scope="session")
 class TestGain(HelperTestMRCHeader):
 
     @pytest.fixture(autouse=True)
