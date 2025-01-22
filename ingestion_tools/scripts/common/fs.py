@@ -1,5 +1,6 @@
 import contextlib
 import glob
+import mimetypes
 import os
 import os.path
 import shutil
@@ -128,7 +129,15 @@ class S3Filesystem(FileSystemApi):
                     return
         print(f"Pushing {path} to {remote_file}")
         self.s3fs.put(path, remote_file, recursive=True)
+        
+        # Determine the Content-Type based on the file's extension
+        content_type, _ = mimetypes.guess_type(path)
+        content_type = content_type or 'application/octet-stream'
 
+        # Set the Content-Type metadata
+        # https://s3fs.readthedocs.io/en/latest/api.html#s3fs.core.S3FileSystem.setxattr
+        self.s3fs.setxattr(remote_file, copy_kwargs={'ContentType': content_type})
+        
     def exists(self, path: str) -> bool:
         return self.s3fs.exists(path)
 
