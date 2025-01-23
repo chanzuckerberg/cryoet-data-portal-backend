@@ -143,7 +143,7 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: 'tilt_series/{run_name}_bin8_align.st'
+      list_glob: 'tilt_series/{mdoc_name}_bin8_align.st'
       match_regex: ^.*\.st$
 
 tomograms:
