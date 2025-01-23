@@ -38,6 +38,10 @@ annotations:
 
       is_visualization_default: true
       order: xyz
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: 'frames/{run_name}.mrc.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -124,6 +128,10 @@ gains:
 - sources:
   - source_glob:
       list_glob: frames/{run_name}/*.dm4
+rawtilts:
+  - sources:
+    - source_glob:
+        list_glob: '10499_TS_JJ/{mapped_tomo_name}/{mapped_tomo_name}.rawtlt'
 runs:
 - sources:
   - source_glob:
@@ -161,7 +169,8 @@ tiltseries:
     total_flux: 120
   sources:
   - source_glob:
-      list_glob: validation_placeholder/for_unavailable_ts.st
+      list_glob: 10499_TS_JJ/{mapped_tomo_name}/{mapped_tomo_name}.st
+      match_regex: (.*)\.st$
 tomograms:
 - metadata:
     affine_transformation_matrix:
