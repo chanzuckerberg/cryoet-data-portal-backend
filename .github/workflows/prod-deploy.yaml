@@ -14,7 +14,7 @@ jobs:
 #      cancel-in-progress: true
 
     name: deploy to prod
-    runs-on: [ARM64, self-hosted, Linux]
+    runs-on: [ARM64]
     environment: prod
     if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend'
     steps:
