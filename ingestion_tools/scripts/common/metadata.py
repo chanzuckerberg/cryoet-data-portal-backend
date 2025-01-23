@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Any
 
 from common.formats import tojson
-from common.fs import FileSystemApi
+from common.fs import FileSystemApi, S3FileSystem
 from common.merge import deep_merge
 
 
@@ -35,7 +35,13 @@ class MergedMetadata(BaseMetadata):
         metadata = deep_merge(self.metadata, merge_data)
         metadata = self.add_defaults(metadata)
         _, file_extension = os.path.splitext(filename)
-        kwargs = {"ContentType": "application/json"} if file_extension == ".json" else {}
+
+        # Below will add ContentType only if the filesystem is S3FileSystem
+        # This is to avoid adding ContentType to local filesystem, which will throw 
+        # an error when running ingestion tests
+        kwargs = {}
+        if file_extension == ".json" and isinstance(self.fs, S3FileSystem):
+            kwargs = {"ContentType": "application/json"}
         with self.fs.open(filename, "w", **kwargs) as fh:
             fh.write(tojson(metadata))
 
