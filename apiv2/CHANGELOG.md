@@ -1,18 +1,5 @@
 # Changelog
 
-## [1.8.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.7.0...apiv2-v1.8.0) (2025-01-17)
-
-
-### Features
-
-* Add file size ([#418](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/418)) ([3760c15](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/3760c150d5c4762073821932133d046f07c373c2))
-* Add file size to schema ([#401](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/401)) ([fc98398](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/fc98398745797c2e7fb9db32086b88194529c32b))
-
-
-### Reverts
-
-* Add file size to schema ([#401](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/401)) ([#417](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/417)) ([15a6d92](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/15a6d921c4e4b66e7ffa679db4093e768a3ad93d))
-
 ## [1.7.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.6.0...apiv2-v1.7.0) (2025-01-14)
 
 
