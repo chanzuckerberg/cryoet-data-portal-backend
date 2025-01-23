@@ -115,7 +115,8 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: validation_placeholder/for_unavailable_ts.st
+      list_glob: tomograms_bin10/{run_name}.mrc
+      match_regex: (.*)\.mrc
 tomograms:
 - metadata:
     affine_transformation_matrix:
