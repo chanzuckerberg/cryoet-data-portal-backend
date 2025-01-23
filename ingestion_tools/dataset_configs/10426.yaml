@@ -1,15 +1,20 @@
-annotations: []
-collection_metadata:
-- sources:
+alignments:
+- metadata:
+    format: IMOD
+    method_type: fiducial_based
+  sources:
   - source_multi_glob:
       list_globs:
-      - mdocs/{mdoc_name}
-dataset_keyphotos:
+      - alignmentfiles/{run_name}_binalign8_fid.tlt
+      - alignmentfiles/{run_name}_binalign8_fid.xf
+
+annotations: []
+
+collection_metadata:
 - sources:
-  - literal:
-      value:
-        snapshot: null
-        thumbnail: null
+  - source_glob:
+      list_glob: 'mdocs/{mdoc_name}'
+
 datasets:
 - metadata:
     authors: &id001
@@ -36,7 +41,8 @@ datasets:
       id: CL:0000010
       name: cultured cell
     cross_references: &id002
-      publications: 10.1101/2024.06.27.600657
+      publications: 10.1038/s41467-025-56045-z, 10.1101/2024.06.27.600657
+      related_database_entries: EMD-44921, EMD-44909, EMD-44922, EMD-46973
     dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
       contains 10 grids. This is grid 1 of 10 and contains basal membranes of HSC3
       cells.  The cell line expresses EGFR-GFP as described in Panilla-Macua et al.
@@ -44,11 +50,11 @@ datasets:
       300 R2/2, 2 nm carbon grids prior to removing the apical membrane and cytoplasm
       with 0.7 bar of paraformaldehyde prior to vitrification.
     dataset_identifier: 10426
-    dataset_title: Unroofing Grid01
-    dates: &id003
+    dataset_title: Plasma membranes isolated by unroofing - Grid 01
+    dates: &dates
       deposition_date: '2024-07-01'
-      last_modified_date: '2024-07-01'
-      release_date: '2024-07-05'
+      last_modified_date: '2025-01-08'
+      release_date: '2025-01-08'
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
       grant_id: 2021-234544
@@ -63,41 +69,63 @@ datasets:
       taxonomy_id: 9606
     sample_preparation: serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
       grids
-    sample_type: cell
+    sample_type: organelle
+    cell_component:
+      name: plasma membrane
+      id: GO:0005886
   sources:
   - literal:
       value:
       - '10426'
+
 depositions:
 - metadata:
     authors: *id001
     cross_references: *id002
-    dates: *id003
+    dates: *dates
     deposition_description: Cryo-electron tomography datasets used in the development
       and evaluation of the unroofing method for preparation of plasma membranes and
       associated proteins.
     deposition_identifier: 10306
-    deposition_title: Unroofed eukaryotic cells.
+    deposition_title: Human plasma membranes isolated using the unroofing method
     deposition_types:
     - dataset
   sources:
   - literal:
       value:
       - 10306
+
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10306_snapshot.png"
+        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10306_thumbnail.png"
+
 frames:
 - sources:
   - source_glob:
-      list_glob: frames/{frame_prefix}*.mrc
+      list_glob: 'frames/{frame_prefix}*.mrc'
+
+gains: []
+
+rawtilts:
+  - sources:
+    - source_glob:
+        list_glob: 'rawtilts/{run_name}.rawtlt'
+
 runs:
 - sources:
   - source_glob:
       list_glob: tomograms_bin8/*
       match_regex: \.rec$
       name_regex: (.*)_binalign8.rec
+
 standardization_config:
   deposition_id: 10306
   run_data_map_file: run_to_data_map.tsv
   source_prefix: kem_sochacki_06_2024/grid01/
+
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
@@ -124,7 +152,9 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: validation_placeholder/for_unavailable_ts.st
+      list_glob: 'tilt_series/{run_name}_binalign8.st'
+      match_regex: ^.*\.st$
+
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -146,7 +176,7 @@ tomograms:
       - 1
     authors: *id001
     ctf_corrected: false
-    dates: *id003
+    dates: *dates
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
@@ -160,9 +190,11 @@ tomograms:
     voxel_spacing: 8.66
   sources:
   - source_glob:
-      list_glob: tomograms_bin8/{run_name}_binalign8.rec
+      list_glob: 'tomograms_bin8/{run_name}_binalign8.rec'
       match_regex: (.*)\.rec
+
 version: 1.1.0
+
 voxel_spacings:
 - sources:
   - literal:

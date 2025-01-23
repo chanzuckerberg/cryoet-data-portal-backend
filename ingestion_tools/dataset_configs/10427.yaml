@@ -1,15 +1,20 @@
-annotations: []
-collection_metadata:
-- sources:
+alignments:
+- metadata:
+    format: IMOD
+    method_type: fiducial_based
+  sources:
   - source_multi_glob:
       list_globs:
-      - mdocs/{mdoc_name}
-dataset_keyphotos:
+      - alignmentfiles/{run_name}_binalign8_fid.tlt
+      - alignmentfiles/{run_name}_binalign8_fid.xf
+
+annotations: []
+
+collection_metadata:
 - sources:
-  - literal:
-      value:
-        snapshot: null
-        thumbnail: null
+  - source_glob:
+      list_glob: 'mdocs/{mdoc_name}'
+
 datasets:
 - metadata:
     authors: &id001
@@ -36,7 +41,8 @@ datasets:
       id: CL:0000010
       name: cultured cell
     cross_references:
-      publications: 10.1101/2024.06.27.600657
+      publications: 10.1038/s41467-025-56045-z, 10.1101/2024.06.27.600657
+      related_database_entries: EMD-44921, EMD-44909, EMD-44922, EMD-46973
     dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
       contains 10 grids. This is grid 2 of 10 and contains basal membranes of HSC3
       cells.  The cell line expresses EGFR-GFP as described in Panilla-Macua et al.
@@ -44,11 +50,11 @@ datasets:
       300 R2/2, 2 nm carbon grids prior to removing the apical membrane and cytoplasm
       with 0.7 bar of paraformaldehyde prior to vitrification.
     dataset_identifier: 10427
-    dataset_title: Unroofing Grid02
-    dates:
+    dataset_title: Plasma membranes isolated by unroofing - Grid 02
+    dates: &dates
       deposition_date: '2024-07-01'
-      last_modified_date: '2024-07-01'
-      release_date: '2024-07-05'
+      last_modified_date: '2025-01-08'
+      release_date: '2025-01-08'
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
       grant_id: 2021-234544
@@ -63,16 +69,28 @@ datasets:
       taxonomy_id: 9606
     sample_preparation: serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
       grids
-    sample_type: cell
+    sample_type: organelle
+    cell_component:
+      name: plasma membrane
+      id: GO:0005886
   sources:
   - literal:
       value:
       - '10427'
+
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/kem_sochacki_06_2024/grid02/dataset_keyphotos/key-photo-snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/kem_sochacki_06_2024/grid02/dataset_keyphotos/key-photo-thumbnail.png
+
 depositions:
 - sources:
   - literal:
       value:
       - 10306
+
 frames:
 - sources:
   - parent_filters:
@@ -229,16 +247,26 @@ frames:
     source_glob:
       list_glob: frames/*.tif
       match_regex: (tomo_unroof_control_c2d1_01692_\-50\.0\.tif|tomo_unroof_control_c2d1_01691_\-48\.0\.tif|tomo_unroof_control_c2d1_01690_\-46\.0\.tif|tomo_unroof_control_c2d1_01689_\-44\.0\.tif|tomo_unroof_control_c2d1_01688_\-42\.0\.tif|tomo_unroof_control_c2d1_01687_\-40\.0\.tif|tomo_unroof_control_c2d1_01686_\-38\.0\.tif|tomo_unroof_control_c2d1_01678_\-36\.0\.tif|tomo_unroof_control_c2d1_01677_\-34\.0\.tif|tomo_unroof_control_c2d1_01676_\-32\.0\.tif|tomo_unroof_control_c2d1_01672_\-30\.0\.tif|tomo_unroof_control_c2d1_01671_\-28\.0\.tif|tomo_unroof_control_c2d1_01670_\-26\.0\.tif|tomo_unroof_control_c2d1_01666_\-24\.0\.tif|tomo_unroof_control_c2d1_01665_\-22\.0\.tif|tomo_unroof_control_c2d1_01664_\-20\.0\.tif|tomo_unroof_control_c2d1_01660_\-18\.0\.tif|tomo_unroof_control_c2d1_01659_\-16\.0\.tif|tomo_unroof_control_c2d1_01658_\-14\.0\.tif|tomo_unroof_control_c2d1_01654_\-12\.0\.tif|tomo_unroof_control_c2d1_01653_\-10\.0\.tif|tomo_unroof_control_c2d1_01652_\-8\.0\.tif|tomo_unroof_control_c2d1_01648_\-6\.0\.tif|tomo_unroof_control_c2d1_01647_\-4\.0\.tif|tomo_unroof_control_c2d1_01646_\-2\.0\.tif|tomo_unroof_control_c2d1_01642_\-0\.0\.tif|tomo_unroof_control_c2d1_01643_2\.0\.tif|tomo_unroof_control_c2d1_01644_4\.0\.tif|tomo_unroof_control_c2d1_01645_6\.0\.tif|tomo_unroof_control_c2d1_01649_8\.0\.tif|tomo_unroof_control_c2d1_01650_10\.0\.tif|tomo_unroof_control_c2d1_01651_12\.0\.tif|tomo_unroof_control_c2d1_01655_14\.0\.tif|tomo_unroof_control_c2d1_01656_16\.0\.tif|tomo_unroof_control_c2d1_01657_18\.0\.tif|tomo_unroof_control_c2d1_01661_20\.0\.tif|tomo_unroof_control_c2d1_01662_22\.0\.tif|tomo_unroof_control_c2d1_01663_24\.0\.tif|tomo_unroof_control_c2d1_01667_26\.0\.tif|tomo_unroof_control_c2d1_01668_28\.0\.tif|tomo_unroof_control_c2d1_01669_30\.0\.tif|tomo_unroof_control_c2d1_01673_32\.0\.tif|tomo_unroof_control_c2d1_01674_34\.0\.tif|tomo_unroof_control_c2d1_01675_36\.0\.tif|tomo_unroof_control_c2d1_01679_38\.0\.tif|tomo_unroof_control_c2d1_01680_40\.0\.tif|tomo_unroof_control_c2d1_01681_42\.0\.tif|tomo_unroof_control_c2d1_01682_44\.0\.tif|tomo_unroof_control_c2d1_01683_46\.0\.tif|tomo_unroof_control_c2d1_01684_48\.0\.tif|tomo_unroof_control_c2d1_01685_50\.0\.tif)
+
+gains: []
+
+rawtilts:
+  - sources:
+    - source_glob:
+        list_glob: 'rawtilts/{run_name}.rawtlt'
+
 runs:
 - sources:
   - source_glob:
       list_glob: tomograms_bin8/*
       match_regex: \.rec$
       name_regex: (.*)_binalign8.rec
+
 standardization_config:
   deposition_id: 10306
   run_data_map_file: run_to_data_map.tsv
   source_prefix: kem_sochacki_06_2024/grid02/
+
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
@@ -265,7 +293,9 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: validation_placeholder/for_unavailable_ts.st
+      list_glob: 'tilt_series/{run_name}_binalign8.st'
+      match_regex: ^.*\.st$
+
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -287,10 +317,7 @@ tomograms:
       - 1
     authors: *id001
     ctf_corrected: false
-    dates:
-      deposition_date: '2024-07-01'
-      last_modified_date: '2024-07-01'
-      release_date: '2024-07-05'
+    dates: *dates
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
@@ -304,9 +331,11 @@ tomograms:
     voxel_spacing: 8.627
   sources:
   - source_glob:
-      list_glob: tomograms_bin8/{run_name}_binalign8.rec
+      list_glob: 'tomograms_bin8/{run_name}_binalign8.rec'
       match_regex: (.*)\.rec
+
 version: 1.1.0
+
 voxel_spacings:
 - sources:
   - literal:
