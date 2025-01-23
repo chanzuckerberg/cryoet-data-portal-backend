@@ -90,6 +90,10 @@ class S3Filesystem(FileSystemApi):
         return self.s3fs.glob(*args)
 
     def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
+        _, file_extension = os.path.splitext(path)
+        content_type = "application/json" if file_extension == ".json" else None
+        if content_type:
+            kwargs['ContentType'] = content_type
         return self.s3fs.open(path, mode, **kwargs)
 
     def localreadable(self, path: str) -> str:
