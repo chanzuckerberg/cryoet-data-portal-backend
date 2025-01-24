@@ -14,10 +14,14 @@ from tests.s3_import.util import create_config, get_children, get_data_from_s3, 
 def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[dict, str, int], None]:
     def validate(expected: dict, prefix: str) -> None:
         key = os.path.join(prefix, "tiltseries_metadata.json")
-        actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
+        result = get_data_from_s3(s3_client, test_output_bucket, key)
+        actual = json.loads(result["Body"].read())
+        content_type = result.get("ContentType", "")
+
         for key in expected:
             assert actual[key] == expected[key], f"Key {key} does not match"
 
+        assert content_type == "application/json"
     return validate
 
 

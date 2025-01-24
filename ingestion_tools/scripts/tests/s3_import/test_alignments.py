@@ -51,7 +51,7 @@ def validate_dataframe(
     s3_client: S3Client,
 ) -> Callable[[str, str, int], None]:
     def get_data_frame(bucket_name: str, path: str) -> pd.DataFrame:
-        body = get_data_from_s3(s3_client, bucket_name, path)
+        body = get_data_from_s3(s3_client, bucket_name, path)["Body"]
         return pd.read_csv(body, sep=r"\s+")
 
     def validate(prefix: str, filename: str) -> None:
@@ -72,9 +72,14 @@ def validate_metadata(
 ) -> Callable[[dict, str, int], None]:
     def validate(expected: dict, prefix: str) -> None:
         key = os.path.join(prefix, "alignment_metadata.json")
-        actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
+        result = get_data_from_s3(s3_client, test_output_bucket, key)
+        actual = json.loads(result["Body"].read())
+        content_type = result.get("ContentType", "")
+
         for key in expected:
             assert actual[key] == expected[key], f"Key {key} does not match"
+
+        assert content_type == "application/json"
 
     return validate
 

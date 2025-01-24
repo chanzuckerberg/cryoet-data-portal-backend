@@ -21,9 +21,9 @@ def test_frames_import(s3_fs: FileSystemApi, test_output_bucket: str, s3_client:
     source_filename = os.path.basename(frames[0].path)
     assert source_filename in actual_files
 
-    actual = get_data_from_s3(s3_client, test_output_bucket, os.path.join(prefix, source_filename)).readlines()
+    actual = get_data_from_s3(s3_client, test_output_bucket, os.path.join(prefix, source_filename))["Body"].readlines()
     source_file_path = "/".join(frames[0].path.split("/")[1:])
-    expected = get_data_from_s3(s3_client, "test-public-bucket", source_file_path).readlines()
+    expected = get_data_from_s3(s3_client, "test-public-bucket", source_file_path)["Body"].readlines()
     assert actual == expected
 
 

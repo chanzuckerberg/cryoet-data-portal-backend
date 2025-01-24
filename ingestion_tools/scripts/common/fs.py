@@ -185,6 +185,7 @@ class LocalFilesystem(FileSystemApi):
         return glob.glob(*args)
 
     def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
+        kwargs.pop("ContentType", None) # to avoid unexpected keyword argument
         return open(path, mode, **kwargs)  # noqa
 
     def localreadable(self, path: str) -> str:
