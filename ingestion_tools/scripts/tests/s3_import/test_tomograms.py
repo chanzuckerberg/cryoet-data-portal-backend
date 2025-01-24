@@ -10,20 +10,24 @@ from mypy_boto3_s3 import S3Client
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from tests.s3_import.util import create_config, get_children, get_data_from_s3, get_run_and_parents
+from tests.s3_import.util import (
+    create_config,
+    get_children,
+    get_data_from_s3,
+    get_raw_data_from_s3,
+    get_run_and_parents,
+)
 
 
 @pytest.fixture
 def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[dict, str, int], None]:
     def validate(expected: dict, prefix: str) -> None:
         key = os.path.join(prefix, "tomogram_metadata.json")
-        result = get_data_from_s3(s3_client, test_output_bucket, key)
-        actual = json.loads(result["Body"].read())
-        content_type = result.get("ContentType", "")
+        actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
+        content_type = get_raw_data_from_s3(s3_client, test_output_bucket, key)["ContentType"]
 
-        for key in expected:
-            assert actual[key] == expected[key], f"Key {key} does not match"
-
+        for k in expected:
+            assert actual[k] == expected[k], f"Key {k} does not match"
         assert content_type == "application/json"
 
     return validate

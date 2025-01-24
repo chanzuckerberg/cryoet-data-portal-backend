@@ -69,9 +69,7 @@ def validate_config(
 ) -> Callable[[str, dict[str, BaseImporter], list[dict]], None]:
     def validate(vs_path: str, parents: dict[str, BaseImporter], anno_layers: list[dict] = None) -> None:
         key = os.path.join(vs_path, "NeuroglancerPrecompute", "100-neuroglancer_config.json")
-        result = get_data_from_s3(s3_client, test_output_bucket, key)
-        actual = json.loads(result["Body"].read())
-
+        actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
         for key, val in expected_config_json.items():
             assert actual[key] == val, f"Key {key} does not match"
 
