@@ -25,10 +25,10 @@ class TestFrame(HelperTestMRCHeader):
         pytest.skip("Not applicable for frame files")
 
     def test_nversion(self):
-        pytest.skip("Not applicable for gain files")
+        pytest.skip("Not applicable for frame files")
 
     def test_mrc_spacing(self):
-        pytest.skip("Not applicable for gain files")
+        pytest.skip("Not applicable for frame files")
 
     ### BEGIN Self-consistency tests ###
     def test_extensions(self, frame: FrameImporter):
