@@ -18,7 +18,9 @@ TIFF_HEADER_BLOCK_SIZE = 100 * 2**10
 
 PERMITTED_FRAME_EXTENSIONS = [".mrc", ".tif", ".tiff", ".eer", ".mrc.bz2"]
 PERMITTED_GAIN_EXTENSIONS = PERMITTED_FRAME_EXTENSIONS + [".gain"]
-
+MRC_EXTENSION = ".mrc"
+MRC_BZ2_EXTENSION = ".mrc.bz2"
+TIFF_EXTENSIONS = (".tif", ".tiff", ".eer", ".gain")
 
 def get_file_type(filename: str) -> str:
     if filename.endswith(".zarr"):
@@ -57,23 +59,26 @@ def get_zarr_metadata(zarrfile: str, fs: FileSystemApi, fail_test: bool = True) 
         return {"zattrs": json.load(f), "zarrays": zarrays}
 
 
-def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
+def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi, fail_test: bool = True) -> MrcInterpreter:
     """Get the mrc file headers for a list of mrc files."""
     try:
         with fs.open(mrcbz2file, "rb", block_size=MRC_BZ2_HEADER_BLOCK_SIZE) as f, bz2.BZ2File(f) as mrcbz2:
             mrcbz2 = mrcbz2.read(MRC_BZ2_HEADER_BLOCK_SIZE)
             return MrcInterpreter(iostream=io.BytesIO(mrcbz2), permissive=True, header_only=True)
     except Exception as e:
-        pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
+        if fail_test:
+            pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
+        else:
+            return None
 
 
 
-def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
-    if file.endswith(".mrc"):
-        return file, get_mrc_header(file, filesystem)
-    elif file.endswith(".mrc.bz2"):
-        return file, get_mrc_bz2_header(file, filesystem)
-    elif file.endswith((".tif", ".tiff", ".eer", ".gain")):
+def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi, fail_test: bool = True):
+    if file.endswith(MRC_EXTENSION):
+        return file, get_mrc_header(file, filesystem, fail_test)
+    elif file.endswith(MRC_BZ2_EXTENSION):
+        return file, get_mrc_bz2_header(file, filesystem, fail_test)
+    elif file.endswith(TIFF_EXTENSIONS):
         with filesystem.open(file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, TiffFile(f) as tif:
             # The tif.pages must be converted to a list to actually read all the pages' data
             return file, list(tif.pages)
@@ -82,14 +87,16 @@ def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
 
 
 def get_tiff_mrc_headers(
-    files: list[str], filesystem: FileSystemApi,
+    files: list[str], filesystem: FileSystemApi, fail_test: bool = True,
 ) -> dict[str, list[TiffPage]| MrcInterpreter]:
 
     # Open the images in parallel
     with ThreadPoolExecutor() as executor:
         headers = {}
 
-        for header_filename, header_data in executor.map(_get_tiff_mrc_header, files, [filesystem] * len(files)):
+        for header_filename, header_data in executor.map(
+                _get_tiff_mrc_header, files, [filesystem] * len(files), [fail_test] * len(files),
+        ):
             if header_filename is None:
                 continue
             headers[header_filename] = header_data

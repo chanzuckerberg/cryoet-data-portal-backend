@@ -2,11 +2,8 @@
 Any fixtures involving loading data from the bucket.
 """
 
-import bz2
-import io
 import json
 import os
-from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, List, Union
 
 import data_validation.helpers.util as helper_util
@@ -18,55 +15,6 @@ import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 from common.fs import FileSystemApi
-
-# ==================================================================================================
-# Helper functions
-# ==================================================================================================
-
-# block sizes are experimentally tested to be the fastest
-MRC_BZ2_HEADER_BLOCK_SIZE = 500 * 2**10
-TIFF_HEADER_BLOCK_SIZE = 100 * 2**10
-
-
-def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi) -> MrcInterpreter:
-    """Get the mrc file headers for a list of mrc files."""
-    try:
-        with fs.open(mrcbz2file, "rb", block_size=MRC_BZ2_HEADER_BLOCK_SIZE) as f, bz2.BZ2File(f) as mrcbz2:
-            mrcbz2 = mrcbz2.read(MRC_BZ2_HEADER_BLOCK_SIZE)
-            return MrcInterpreter(iostream=io.BytesIO(mrcbz2), permissive=True, header_only=True)
-    except Exception as e:
-        pytest.fail(f"Failed to get header for {mrcbz2file}: {e}")
-
-
-def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi):
-    if file.endswith(".mrc"):
-        return (file, helper_util.get_mrc_header(file, filesystem))
-    elif file.endswith(".mrc.bz2"):
-        return (file, get_mrc_bz2_header(file, filesystem))
-    elif file.endswith((".tif", ".tiff", ".eer", ".gain")):
-        with filesystem.open(file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, tifffile.TiffFile(f) as tif:
-            # The tif.pages must be converted to a list to actually read all the pages' data
-            return (file, list(tif.pages))
-    else:
-        return (None, None)
-
-
-def get_tiff_mrc_headers(
-    files: List[str],
-    filesystem: FileSystemApi,
-) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
-
-    # Open the images in parallel
-    with ThreadPoolExecutor() as executor:
-        headers = {}
-
-        for header_filename, header_data in executor.map(_get_tiff_mrc_header, files, [filesystem] * len(files)):
-            if header_filename is None:
-                continue
-            headers[header_filename] = header_data
-
-        return headers
-
 
 # ==================================================================================================
 # Dataset fixtures
@@ -103,7 +51,7 @@ def frames_headers(
     filesystem: FileSystemApi,
 ) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
     """Get the headers for a list of frame files."""
-    return get_tiff_mrc_headers(frames_files, filesystem)
+    return helper_util.get_tiff_mrc_headers(frames_files, filesystem)
 
 
 # ==================================================================================================
@@ -117,7 +65,7 @@ def gain_headers(
     filesystem: FileSystemApi,
 ) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
     """Get the mrc file headers for a gain file."""
-    return get_tiff_mrc_headers(gain_files, filesystem)
+    return helper_util.get_tiff_mrc_headers(gain_files, filesystem)
 
 
 # ==================================================================================================

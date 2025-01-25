@@ -4,7 +4,7 @@ import pathlib
 import pytest
 from importers.utils import IMPORTERS
 
-from common.fs import FileSystemApi, S3Filesystem
+from data_validation.source.fixtures.data import *  # noqa: E402, F403
 from data_validation.source.fixtures.parameterized import CryoetTestEntities
 
 
@@ -34,7 +34,3 @@ def pytest_configure(config: pytest.Config) -> None:
     # but setting the parameterization as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
     pytest.cryoet = CryoetTestEntities(config, ingestion_config_path(config))
-
-@pytest.fixture(scope="session")
-def filesystem() -> S3Filesystem:
-    return FileSystemApi.get_fs_api(mode="s3", force_overwrite=False)

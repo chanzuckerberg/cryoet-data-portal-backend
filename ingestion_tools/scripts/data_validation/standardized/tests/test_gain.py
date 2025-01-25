@@ -8,7 +8,7 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 
 from data_validation.helpers.helper_mrc import HelperTestMRCHeader, mrc_allure_title
 from data_validation.helpers.helper_tiff_mrc import helper_tiff_mrc_consistent
-from data_validation.helpers.util import PERMITTED_FRAME_EXTENSIONS
+from data_validation.helpers.util import PERMITTED_GAIN_EXTENSIONS
 
 
 @pytest.mark.gain
@@ -41,8 +41,8 @@ class TestGain(HelperTestMRCHeader):
         errors = []
 
         for gain_file in gain_files:
-            if not any(gain_file.endswith(ext) for ext in PERMITTED_FRAME_EXTENSIONS):
-                errors.append(f"Invalid frame file extension: {gain_file}")
+            if not any(gain_file.endswith(ext) for ext in PERMITTED_GAIN_EXTENSIONS):
+                errors.append(f"Invalid gain file extension: {gain_file}")
 
         if errors:
             warnings.warn("\n".join(errors), stacklevel=2)

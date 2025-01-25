@@ -4,8 +4,6 @@ import pytest
 from importers.base_importer import BaseImporter
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
-from importers.frame import FrameImporter
-from importers.gain import GainImporter
 from importers.run import RunImporter
 from importers.tiltseries import TiltSeriesImporter
 from importers.utils import IMPORTERS
@@ -26,8 +24,6 @@ class CryoetTestEntities:
         self._deposition: DepositionImporter = None
         self._dataset: list[DatasetImporter] = None
         self._runs: list[RunImporter] = None
-        self._gain: list[GainImporter] = None
-        self._frames: list[FrameImporter] = None
         self._tiltseries: list[TiltSeriesImporter] = None
 
     @property
@@ -55,17 +51,14 @@ class CryoetTestEntities:
             self._tiltseries = self._get_entities(TiltSeriesImporter, self.runs)
         return self._tiltseries
 
-    @property
-    def gains(self) -> list[GainImporter]:
-        if self._gain is None:
-            self._gain = self._get_entities(GainImporter, self.runs)
-        return self._gain
-
-    @property
-    def frames(self) -> list[FrameImporter]:
-        if self._frames is None:
-            self._frames = self._get_entities(FrameImporter, self.runs)
-        return self._frames
+    def get_importable_entities(
+            self, importer_class: BaseImporter, parents: list[BaseImporter], attr: str = None,
+    ) -> list[str | BaseImporter]:
+        return [
+            object.__getattribute__(item, attr) if attr else importer_class
+            for item in self._get_entities(importer_class, parents)
+            if item.allow_imports
+        ]
 
     def _get_entities(self, importer_class: BaseImporter, parents: list[BaseImporter]) -> list[BaseImporter]:
         items = []

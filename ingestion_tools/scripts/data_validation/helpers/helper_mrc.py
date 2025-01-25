@@ -180,7 +180,10 @@ class HelperTestMRCHeader:
             # Unit cell z-size is 1
             assert header.mx == header.nx
             assert header.my == header.ny
-            assert header.mz == 1 if self.skip_z_axis_checks else header.mz == header.nz
+            if self.skip_z_axis_checks:
+                assert header.mz == 1
+            else:
+                assert header.mz == header.nz
 
             # Check that the unit cell angles specify cartesian system
             assert header.cellb.alpha == 90
