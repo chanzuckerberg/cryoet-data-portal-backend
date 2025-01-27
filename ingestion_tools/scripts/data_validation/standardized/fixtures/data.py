@@ -6,7 +6,7 @@ import json
 import os
 from typing import Dict, List, Union
 
-import data_validation.helpers.util as helper_util
+import data_validation.shared.util as helper_util
 import mdocfile
 import ndjson
 import pandas as pd

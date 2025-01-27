@@ -6,9 +6,9 @@ import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.helpers.helper_mrc import HelperTestMRCHeader, mrc_allure_title
-from data_validation.helpers.helper_tiff_mrc import helper_tiff_mrc_consistent
-from data_validation.helpers.util import PERMITTED_GAIN_EXTENSIONS
+from data_validation.shared.helper.helper_mrc import HelperTestMRCHeader, mrc_allure_title
+from data_validation.shared.helper.helper_tiff_mrc import helper_tiff_mrc_consistent
+from data_validation.shared.util import PERMITTED_GAIN_EXTENSIONS
 
 
 @pytest.mark.gain

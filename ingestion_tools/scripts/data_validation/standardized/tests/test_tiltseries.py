@@ -6,8 +6,8 @@ import allure
 import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.helpers.helper_mrc_zarr import HelperTestMRCZarrHeader
-from data_validation.helpers.util import BINNING_FACTORS
+from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.shared.util import BINNING_FACTORS
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 
 

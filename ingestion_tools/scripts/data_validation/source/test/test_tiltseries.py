@@ -2,8 +2,8 @@ import pytest
 from importers.tiltseries import TiltSeriesImporter
 from pyarrow._fs import FileSystem
 
-from data_validation.helpers.helper_mrc_zarr import HelperTestMRCZarrHeader
-from data_validation.helpers.util import get_file_type, get_mrc_header, get_zarr_metadata
+from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.shared.util import get_file_type, get_mrc_header, get_zarr_metadata
 
 
 @pytest.mark.tiltseries

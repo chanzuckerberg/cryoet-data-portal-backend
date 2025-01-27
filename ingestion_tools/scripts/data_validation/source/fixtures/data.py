@@ -1,5 +1,5 @@
 import pytest
-from data_validation.helpers.util import get_tiff_mrc_headers
+from data_validation.shared.util import get_tiff_mrc_headers
 from importers.collection_metadata import CollectionMetadataImporter
 from importers.frame import FrameImporter
 from importers.run import RunImporter

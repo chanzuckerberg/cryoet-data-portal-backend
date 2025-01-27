@@ -4,7 +4,7 @@ import allure
 import numpy as np
 import pytest
 
-from data_validation.helpers.util import BINNING_FACTORS
+from data_validation.shared.util import BINNING_FACTORS
 
 ZATTRS_AXIS_ORDER = ["z", "y", "x"]
 SPACING_TOLERANCE = 0.001

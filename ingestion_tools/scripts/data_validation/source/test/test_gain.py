@@ -7,9 +7,9 @@ from importers.run import RunImporter
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 from common.fs import S3Filesystem
-from data_validation.helpers.helper_mrc import HelperTestMRCHeader
-from data_validation.helpers.helper_tiff_mrc import helper_tiff_mrc_consistent
-from data_validation.helpers.util import (
+from data_validation.shared.helper.helper_mrc import HelperTestMRCHeader
+from data_validation.shared.helper.helper_tiff_mrc import helper_tiff_mrc_consistent
+from data_validation.shared.util import (
     MRC_EXTENSION,
     PERMITTED_GAIN_EXTENSIONS,
     get_mrc_header,

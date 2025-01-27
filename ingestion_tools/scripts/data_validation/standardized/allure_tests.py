@@ -7,7 +7,7 @@ import tarfile
 import click
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(CURRENT_DIR, ".."))
+sys.path.append(os.path.join(CURRENT_DIR, "..", ".."))
 from common.fs import FileSystemApi, S3Filesystem  # noqa: E402
 
 STAGING_BUCKET = "cryoet-data-portal-staging"

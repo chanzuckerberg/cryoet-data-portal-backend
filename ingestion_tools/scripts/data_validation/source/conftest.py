@@ -4,8 +4,9 @@ import pathlib
 import pytest
 from importers.utils import IMPORTERS
 
+from data_validation.shared.initializations import *  # noqa: E402, F403
 from data_validation.source.fixtures.data import *  # noqa: E402, F403
-from data_validation.source.fixtures.parameterized import CryoetTestEntities
+from data_validation.source.fixtures.parameterized import CryoetSourceEntities
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -33,4 +34,4 @@ def pytest_configure(config: pytest.Config) -> None:
     # Using pytest_generate_tests to parametrize the fixtures causes the per-run-fixtures to be run multiple times,
     # but setting the parameterization as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
-    pytest.cryoet = CryoetTestEntities(config, ingestion_config_path(config))
+    pytest.cryoet = CryoetSourceEntities(config, ingestion_config_path(config))

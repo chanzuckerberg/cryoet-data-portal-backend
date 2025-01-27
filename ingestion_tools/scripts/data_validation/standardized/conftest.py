@@ -1,34 +1,33 @@
 import concurrent.futures
 import os.path
-from typing import List, Tuple
 
-import allure
 import pytest
 
-# Local fixtures and common functions
-from fixtures.data import *  # noqa: E402, F403
-from fixtures.parser import *  # noqa: E402, F403
-from fixtures.path import *  # noqa: E402, F403
+from common.fs import FileSystemApi, S3Filesystem
+from data_validation.shared.initializations import *  # noqa: E402, F403
 
-from common.fs import FileSystemApi, S3Filesystem  # noqa: E402, F403
+# Local fixtures and common functions # noqa: E402, F403
+from data_validation.standardized.fixtures.data import *  # noqa: E402, F403
+from data_validation.standardized.fixtures.parser import *  # noqa: E402, F403
+from data_validation.standardized.fixtures.path import *  # noqa: E402, F403
 
 # ============================================================================
 # Pytest parametrized fixtures
 # ============================================================================
 
 
-class CryoetTestEntities:
+class CryoetStandardizedEntities:
 
     def __init__(self, config: pytest.Config, fs: S3Filesystem):
         self._config = config
         self._fs = fs
         self._bucket = config.getoption('--bucket')
         self._dataset: list[str] = None
-        self._dataset_run_combinations: List[Tuple[str, str]] = None
-        self._dataset_run_spacing_combinations: List[Tuple[str, str, float]] = None
-        self._dataset_run_tiltseries_combinations: List[Tuple[str, str, str]] = None
-        self._dataset_run_alignment_combinations: List[Tuple[str, str, str]] = None
-        self._dataset_run_tomogram_combinations: List[Tuple[str, str, str]] = None
+        self._dataset_run_combinations:list[tuple[str, str]] = None
+        self._dataset_run_spacing_combinations:list[tuple[str, str, float]] = None
+        self._dataset_run_tiltseries_combinations:list[tuple[str, str, str]] = None
+        self._dataset_run_alignment_combinations:list[tuple[str, str, str]] = None
+        self._dataset_run_tomogram_combinations:list[tuple[str, str, str]] = None
 
 
     @property
@@ -43,7 +42,7 @@ class CryoetTestEntities:
         return self._dataset
 
     @property
-    def dataset_run_combinations(self) -> List[Tuple[str, str]]:
+    def dataset_run_combinations(self) -> list[tuple[str, str]]:
         if self._dataset_run_combinations is None:
             run_glob = self._config.getoption("--run-glob")
             run_folders = get_run_folders(self._fs, self._bucket, self.dataset, run_glob)
@@ -54,7 +53,7 @@ class CryoetTestEntities:
         return self._dataset_run_combinations
 
     @property
-    def dataset_run_spacing_combinations(self) ->  List[Tuple[str, str, float]]:
+    def dataset_run_spacing_combinations(self) -> list[tuple[str, str, float]]:
         if self._dataset_run_spacing_combinations is None:
             voxel_spacing_glob = self._config.getoption("--voxel-spacing-glob")
             voxel_spacing_files = get_voxel_spacing_files(
@@ -68,7 +67,7 @@ class CryoetTestEntities:
         return self._dataset_run_spacing_combinations
 
     @property
-    def dataset_run_tiltseries_combinations(self) -> List[Tuple[str, str, str]]:
+    def dataset_run_tiltseries_combinations(self) ->list[tuple[str, str, str]]:
         if self._dataset_run_tiltseries_combinations is None:
             self._dataset_run_tiltseries_combinations = get_glob_combinations(
         "{}/{}/TiltSeries/*", self._fs, self._bucket, self.dataset_run_combinations,
@@ -77,7 +76,7 @@ class CryoetTestEntities:
         return self._dataset_run_tiltseries_combinations
 
     @property
-    def dataset_run_alignment_combinations(self) -> List[Tuple[str, str, str]]:
+    def dataset_run_alignment_combinations(self) ->list[tuple[str, str, str]]:
         if self._dataset_run_alignment_combinations is None:
             self._dataset_run_alignment_combinations = get_glob_combinations(
         "{}/{}/Alignments/*", self._fs, self._bucket, self.dataset_run_combinations,
@@ -86,7 +85,7 @@ class CryoetTestEntities:
         return self._dataset_run_alignment_combinations
 
     @property
-    def dataset_run_tomogram_combinations(self) -> List[Tuple[str, str, str]]:
+    def dataset_run_tomogram_combinations(self) ->list[tuple[str, str, str]]:
         if self._dataset_run_tomogram_combinations is None:
             self._dataset_run_tomogram_combinations = get_glob_combinations(
         "{}/{}/Reconstructions/VoxelSpacing{}/Tomograms/*",
@@ -98,7 +97,7 @@ class CryoetTestEntities:
         return self._dataset_run_tomogram_combinations
 
 
-def get_run_folders(fs: S3Filesystem, bucket: str, datasets: List[str], run_glob: str) -> List[str]:
+def get_run_folders(fs: S3Filesystem, bucket: str, datasets:list[str], run_glob: str) ->list[str]:
     """
     A helper function to retrieve all valid run folders across all datasets.
     """
@@ -118,17 +117,17 @@ def get_run_folders(fs: S3Filesystem, bucket: str, datasets: List[str], run_glob
         return run_folders
 
 
-def get_runs_set(run_folders: List[str]) -> List[str]:
+def get_runs_set(run_folders:list[str]) ->list[str]:
     """All runs that occur over all datasets."""
     return [os.path.basename(run_folder) for run_folder in run_folders]
 
 
 def dataset_run_combinations(
     bucket: str,
-    datasets: List[str],
-    runs: List[str],
-    run_folders: List[str],
-) -> List[Tuple[str, str]]:
+    datasets:list[str],
+    runs:list[str],
+    run_folders:list[str],
+) ->list[tuple[str, str]]:
     """All valid dataset and run combinations matching the run glob pattern across all datasets."""
     combos = []
 
@@ -143,9 +142,9 @@ def dataset_run_combinations(
 def get_voxel_spacing_files(
     fs: S3Filesystem,
     bucket: str,
-    dataset_run_combinations: List[Tuple[str, str]],
+    dataset_run_combinations:list[tuple[str, str]],
     voxel_spacing_glob: str,
-) -> List[str]:
+) ->list[str]:
     """
     A helper function to retrieve all valid voxel spacing files across all dataset + runs.
     """
@@ -167,7 +166,7 @@ def get_voxel_spacing_files(
         return voxel_spacing_files
 
 
-def get_voxel_spacings_set(voxel_spacing_files: List[str]) -> List[str]:
+def get_voxel_spacings_set(voxel_spacing_files:list[str]) ->list[str]:
     """
     All voxel spacings that occur over all datasets and runs.
     """
@@ -183,11 +182,11 @@ def get_glob_combinations(
     format_str: str,
     fs: S3Filesystem,
     bucket: str,
-    dataset_run_combinations: List[Tuple[str, str]],
-) -> List[Tuple[str, str, str]]:
+    dataset_run_combinations:list[tuple[str, str]],
+) ->list[tuple[str, str, str]]:
     files = []
 
-    def get_alignment_files(context_tuple) -> List[Tuple[str, str, str]]:
+    def get_alignment_files(context_tuple) ->list[tuple[str, str, str]]:
         glob_str = f"s3://{bucket}/{format_str}".format(*context_tuple)
         files = []
         for item in fs.glob(glob_str):
@@ -211,10 +210,10 @@ def get_glob_combinations(
 
 def dataset_run_spacing_combinations(
     bucket: str,
-    dataset_run_combinations: List[Tuple[str, str]],
-    voxel_spacings: List[float],
-    voxel_spacing_files: List[str],
-) -> List[Tuple[str, str, float]]:
+    dataset_run_combinations:list[tuple[str, str]],
+    voxel_spacings:list[float],
+    voxel_spacing_files:list[str],
+) ->list[tuple[str, str, float]]:
     """
     All valid dataset, run, and voxel spacing combinations. Returns a list of combinations in the form of
     (dataset, run_name, voxel_spacing).
@@ -247,18 +246,4 @@ def pytest_configure(config: pytest.Config) -> None:
     # Using pytest_generate_tests to parametrize the fixtures causes the per-run-fixtures to be run multiple times,
     # but setting the parameterizations as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
-    pytest.cryoet = CryoetTestEntities(config, fs)
-
-@pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item: pytest.Item):
-    """
-    This hook integrates allure to dynamically annotate the test reports with
-    details such as the dataset, run, and voxel spacing being tested.
-    """
-    if "voxel_spacing" in item.fixturenames:
-        allure.dynamic.story(f"VoxelSpacing {item.callspec.params['voxel_spacing']}")
-    if "run_name" in item.fixturenames:
-        allure.dynamic.feature(f"Run {item.callspec.params['run_name']}")
-    if "dataset" in item.fixturenames:
-        allure.dynamic.epic(f"Dataset {pytest.cryoet.dataset}")
-    yield
+    pytest.cryoet = CryoetStandardizedEntities(config, fs)

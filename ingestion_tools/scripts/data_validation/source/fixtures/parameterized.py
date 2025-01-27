@@ -15,7 +15,7 @@ from common.fs import FileSystemApi
 # Pytest parametrized fixtures
 # ============================================================================
 
-class CryoetTestEntities:
+class CryoetSourceEntities:
 
     def __init__(self, config: pytest.Config, ingestion_config_path: str):
         self._pytest_config = config
