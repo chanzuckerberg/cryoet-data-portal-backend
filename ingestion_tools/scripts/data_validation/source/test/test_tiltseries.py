@@ -1,3 +1,4 @@
+import allure
 import pytest
 from importers.tiltseries import TiltSeriesImporter
 from pyarrow._fs import FileSystem
@@ -33,11 +34,14 @@ class TestTiltSeries(HelperTestMRCZarrHeader):
         self.spacing = tiltseries.get_base_metadata().get("pixel_spacing")
         self.skip_z_axis_checks = True
 
+    @allure.title("Tiltseries: sanity check filetype.")
     def test_file_type(self):
         assert self.file_type != "unknown"
 
+    @allure.title("Zarr and MRC: files exist for each entity.")
     def test_zarr_mrc_both_exist(self):
         pytest.skip("Both formats won't exist for source data")
 
+    @allure.title("Zarr and MRC: headers are consistent.")
     def test_zarr_mrc_volume_size(self):
         pytest.skip("Both formats won't exist for source data")
