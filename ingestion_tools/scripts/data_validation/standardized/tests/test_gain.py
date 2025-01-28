@@ -1,4 +1,3 @@
-import warnings
 from typing import Dict, List, Union
 
 import allure
@@ -6,59 +5,19 @@ import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.shared.helper.helper_mrc import HelperTestMRCHeader, mrc_allure_title
-from data_validation.shared.helper.helper_tiff_mrc import helper_tiff_mrc_consistent
-from data_validation.shared.util import PERMITTED_GAIN_EXTENSIONS
+from data_validation.shared.helper.frame_helper import GainTestHelper
 
 
 @pytest.mark.gain
 @pytest.mark.parametrize("dataset, run_name", pytest.cryoet.dataset_run_combinations, scope="session")
-class TestGain(HelperTestMRCHeader):
+class TestGain(GainTestHelper):
+
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_header_class_variables(
         self,
         gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
     ):
-        self.spacegroup = 0  # 2D image
         self.mrc_headers = {k: v for k, v in gain_headers.items() if isinstance(v, MrcInterpreter)}
-
-    ### DON'T RUN SOME MRC HEADER TESTS ###
-    @mrc_allure_title
-    def test_nlabel(self):
-        pytest.skip("Not applicable for gain files")
-
-    @mrc_allure_title
-    def test_nversion(self):
-        pytest.skip("Not applicable for gain files")
-
-    @mrc_allure_title
-    def test_mrc_spacing(self):
-        pytest.skip("Not applicable for gain files")
-
-    ### BEGIN Self-consistency tests ###
-    @allure.title("Gain: files have valid extensions.")
-    def test_extensions(self, gain_files: List[str]):
-        errors = []
-
-        for gain_file in gain_files:
-            if not any(gain_file.endswith(ext) for ext in PERMITTED_GAIN_EXTENSIONS):
-                errors.append(f"Invalid gain file extension: {gain_file}")
-
-        if errors:
-            warnings.warn("\n".join(errors), stacklevel=2)
-
-    @allure.title("Gain: consistent dimensions and pixel spacings (MRC & TIFF).")
-    def test_consistent(self, gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
-        return helper_tiff_mrc_consistent(gain_headers)
-
-    def test_gain_nz(self):
-        def check_nz(header, _interpreter, _mrc_filename):
-            del _interpreter, _mrc_filename
-            assert header.nz == 1  # 2D image
-
-        self.mrc_header_helper(check_nz)
-
-    ### END Self-consistency tests ###
 
     ### BEGIN Frame-specific tests ###
     @allure.title("Gain: pixel spacing and dimensions match frames.")

@@ -8,50 +8,18 @@ import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.shared.helper.helper_mrc import HelperTestMRCHeader, mrc_allure_title
-from data_validation.shared.helper.helper_tiff_mrc import helper_tiff_mrc_consistent
-from data_validation.shared.util import PERMITTED_FRAME_EXTENSIONS
+from data_validation.shared.helper.frame_helper import FrameTestHelper
 
 
 @pytest.mark.frame
 @pytest.mark.parametrize("dataset, run_name", pytest.cryoet.dataset_run_combinations, scope="session")
-class TestFrame(HelperTestMRCHeader):
+class TestFrame(FrameTestHelper):
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_header_class_variables(
         self,
         frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
     ):
-        self.spacegroup = 0  # 2D image
         self.mrc_headers = {k: v for k, v in frames_headers.items() if isinstance(v, MrcInterpreter)}
-
-    ### DON'T RUN SOME MRC HEADER TESTS ###
-    @mrc_allure_title
-    def test_nlabel(self):
-        pytest.skip("Not applicable for frame files")
-
-    @mrc_allure_title
-    def test_nversion(self):
-        pytest.skip("Not applicable for frame files")
-
-    @mrc_allure_title
-    def test_mrc_spacing(self):
-        pytest.skip("Not applicable for frame files")
-
-    ### BEGIN Self-consistency tests ###
-    @allure.title("Frames: valid extensions.")
-    def test_extensions(self, frames_files: List[str]):
-        errors = []
-
-        for frame_file in frames_files:
-            if not any(frame_file.endswith(ext) for ext in PERMITTED_FRAME_EXTENSIONS):
-                errors.append(f"Invalid frame file extension: {frame_file}")
-
-        if errors:
-            warnings.warn("\n".join(errors), stacklevel=2)
-
-    @allure.title("Frames: consistent dimensions and pixel spacings (MRC & TIFF).")
-    def test_consistent(self, frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]):
-        return helper_tiff_mrc_consistent(frames_headers)
 
     ### BEGIN MDOC tests ###
     @allure.title("Mdoc: tilt angles are within the expected range [-90, 90].")
