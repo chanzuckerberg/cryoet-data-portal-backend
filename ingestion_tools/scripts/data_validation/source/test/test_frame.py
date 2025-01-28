@@ -2,7 +2,7 @@ import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tifffile import TiffPage
 
-from data_validation.shared.helper.frame_helper import FrameTestHelper
+from data_validation.shared.helper.twodee_helper import FrameTestHelper
 
 
 @pytest.mark.frame

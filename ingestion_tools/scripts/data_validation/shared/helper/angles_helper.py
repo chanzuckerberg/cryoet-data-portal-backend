@@ -1,15 +1,13 @@
-from typing import List
-
 ANGLE_TOLERANCE = 0.05
 
 
 # TODO FIXME account for double 0 sample
 def helper_angles_injection_errors(
-    domain_angles: List[float],
-    codomain_angles: List[float],
+    domain_angles: list[float],
+    codomain_angles: list[float],
     domain_name: str,
     codomain_name: str,
-) -> List[str]:
+) -> list[str]:
     """Helper function to check if all angles in the domain are in the codomain."""
     errors = []
     remaining_angles = codomain_angles.copy()

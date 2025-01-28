@@ -7,7 +7,7 @@ import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.standardized.tests.helper_angles import helper_angles_injection_errors
+from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
 
 ANGLE_TOLERANCE = 0.05
 

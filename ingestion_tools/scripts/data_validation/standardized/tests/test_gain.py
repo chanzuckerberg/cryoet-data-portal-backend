@@ -5,7 +5,7 @@ import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.shared.helper.frame_helper import GainTestHelper
+from data_validation.shared.helper.twodee_helper import GainTestHelper
 
 
 @pytest.mark.gain

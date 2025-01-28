@@ -5,7 +5,7 @@ from importers.run import RunImporter
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 from common.fs import S3Filesystem
-from data_validation.shared.helper.frame_helper import GainTestHelper
+from data_validation.shared.helper.twodee_helper import GainTestHelper
 from data_validation.shared.util import (
     MRC_EXTENSION,
     PERMITTED_GAIN_EXTENSIONS,
