@@ -93,9 +93,9 @@ def tiltseries_metadata(tiltseries_meta_file: str, filesystem: FileSystemApi) ->
         return json.load(f)
 
 @pytest.fixture(scope="session")
-def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+def raw_tilt_data(raw_tilt_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries raw tilt."""
-    with filesystem.open(tiltseries_rawtilt_file, "r") as f:
+    with filesystem.open(raw_tilt_file, "r") as f:
         return pd.read_csv(f, sep=r"\s+", header=None, names=["TiltAngle"])
 
 

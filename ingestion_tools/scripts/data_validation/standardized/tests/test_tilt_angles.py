@@ -1,20 +1,15 @@
-from typing import Dict, List, Union
-
 import allure
-import numpy as np
 import pandas as pd
 import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
-from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
-
-ANGLE_TOLERANCE = 0.05
+from data_validation.shared.helper.tilt_angles_helper import TiltAnglesHelper
 
 
 @pytest.mark.tilt_angles
 @pytest.mark.parametrize("dataset, run_name, ts_dir", pytest.cryoet.dataset_run_tiltseries_combinations, scope="session")
-class TestTiltAngles:
+class TestTiltAngles(TiltAnglesHelper):
     """
     A class to test tilt angle data. Only checking that the # of angles in these files are consistent with other files /
     data and that they properly map to other files / data. Other data validation tests is done in respective classes.
@@ -31,71 +26,22 @@ class TestTiltAngles:
         tiltseries metadata size["z"] == frames_count == # of frames files.
     """
 
-    ### BEGIN Fixtures ###
-    @pytest.fixture
-    def tiltseries_metadata_range(self, tiltseries_metadata: Dict) -> List[float]:
-        # add tilt_step to max because arange is end value exclusive
-        return np.arange(
-            tiltseries_metadata["tilt_range"]["min"],
-            tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
-            tiltseries_metadata["tilt_step"],
-        ).tolist()
-
-
     ### BEGIN Raw Tilt .rawtlt tests ###
-    @allure.title("Raw tilt: angles exist.")
-    def test_raw_tilt_count(self, tiltseries_raw_tilt: pd.DataFrame):
-        assert len(tiltseries_raw_tilt) > 0
-
-    @allure.title("Raw tilt: angles are within the expected range [-90, 90].")
-    def test_raw_tilt_angle_range(self, tiltseries_raw_tilt: pd.DataFrame):
-        assert all(-90 <= angle <= 90 for angle in tiltseries_raw_tilt["TiltAngle"])
-
-    @allure.title("Raw tilt: every raw tilt angle matches a mdoc tilt angle.")
-    def test_raw_tilt_mdoc(self, tiltseries_raw_tilt: pd.DataFrame, mdoc_data: pd.DataFrame):
-        errors = helper_angles_injection_errors(
-            tiltseries_raw_tilt["TiltAngle"].to_list(),
-            mdoc_data["TiltAngle"].to_list(),
-            "raw tilt file",
-            "mdoc file",
-        )
-        assert len(errors) == 0, "\n".join(errors)
 
     @allure.title(
         "Raw tilt: number of raw tilt angles are less than or equal to tiltseries size['z'] (implied to be the number of frames files).",
     )
-    def test_raw_tilt_tiltseries_metadata(self, tiltseries_raw_tilt: pd.DataFrame, tiltseries_metadata: Dict):
-        assert len(tiltseries_raw_tilt) <= tiltseries_metadata["size"]["z"]
+    def test_raw_tilt_tiltseries_metadata(self, raw_tilt_data: pd.DataFrame, tiltseries_metadata: dict):
+        assert len(raw_tilt_data) <= tiltseries_metadata["size"]["z"]
 
-    ### BEGIN MDOC tests ###
-
-    @allure.title("Mdoc: number of mdoc tilt angles equals tiltseries size['z'].")
-    def test_mdoc_tiltseries_metadata(self, tiltseries_metadata: Dict, mdoc_data: pd.DataFrame):
-        assert len(mdoc_data) == tiltseries_metadata["size"]["z"]
-
-    @allure.title("Mdoc: every mdoc tilt angle corresponds to the tilt_range + tilt_step metadata field.")
-    @allure.description("Not all angles in the tilt range must be present in the MDOC file.")
-    def test_mdoc_tiltseries_range(
-        self, tiltseries_metadata: Dict, mdoc_data: pd.DataFrame, tiltseries_metadata_range: List[float],
-    ):
-        errors = helper_angles_injection_errors(
-            mdoc_data["TiltAngle"].to_list(),
-            tiltseries_metadata_range,
-            "mdoc file",
-            "tiltseries metadata tilt_range",
-        )
-        assert len(errors) == 0, (
-            "\n".join(errors)
-            + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, with step {tiltseries_metadata['tilt_step']}"
-        )
 
     ### BEGIN Tiltseries consistency tests ###
     @allure.title("Frames: tiltseries pixel spacing is an integer multiple of the frame pixel spacing.")
     def test_tiltseries_pixel_spacing(
         self,
         dataset: str,
-        frames_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
-        tiltseries_metadata: Dict,
+        frames_headers: dict[str, list[tifffile.TiffPage] | MrcInterpreter],
+        tiltseries_metadata: dict,
     ):
         for frame_file, frame_header in frames_headers.items():
             if isinstance(frame_header, MrcInterpreter):

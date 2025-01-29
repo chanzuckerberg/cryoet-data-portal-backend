@@ -3,9 +3,12 @@ import os
 from typing import Dict
 
 import allure
+import numpy as np
+import pandas as pd
 import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 
+from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
 from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
 from data_validation.shared.util import BINNING_FACTORS
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
@@ -28,6 +31,15 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         self.zarr_headers = tiltseries_zarr_metadata
         self.spacing = tiltseries_metadata["pixel_spacing"]
         self.skip_z_axis_checks = True
+
+    @pytest.fixture
+    def tiltseries_metadata_range(self, tiltseries_metadata: dict) -> list[float]:
+        # add tilt_step to max because arange is end value exclusive
+        return np.arange(
+            tiltseries_metadata["tilt_range"]["min"],
+            tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
+            tiltseries_metadata["tilt_step"],
+        ).tolist()
 
     ### BEGIN metadata self-consistency tests ###
     @allure.title("Tiltseries: sanity check tiltseries metadata.")
@@ -102,3 +114,26 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         assert os.path.basename(tiltseries_metadata["mrc_file"]) == os.path.basename(list(tiltseries_mrc_header.keys())[0])
 
     ### END metadata-MRC/Zarr consistency tests ###
+
+    ### BEGIN metadata-mdoc consistency tests ###
+    @allure.title("Mdoc: number of mdoc tilt angles equals tiltseries size['z'].")
+    def test_mdoc_tiltseries_metadata(self, tiltseries_metadata: dict, mdoc_data: pd.DataFrame):
+        assert len(mdoc_data) <= tiltseries_metadata["size"]["z"]
+
+    @allure.title("Mdoc: every mdoc tilt angle corresponds to the tilt_range + tilt_step metadata field.")
+    @allure.description("Not all angles in the tilt range must be present in the MDOC file.")
+    def test_mdoc_tiltseries_range(
+            self, tiltseries_metadata: dict, mdoc_data: pd.DataFrame, tiltseries_metadata_range: list[float],
+    ):
+        errors = helper_angles_injection_errors(
+            mdoc_data["TiltAngle"].to_list(),
+            tiltseries_metadata_range,
+            "mdoc file",
+            "tiltseries metadata tilt_range",
+        )
+        assert len(errors) == 0, (
+                "\n".join(errors)
+                + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, "
+                  f"with step {tiltseries_metadata['tilt_step']}"
+        )
+    ### END metadata-mdoc consistency tests ###

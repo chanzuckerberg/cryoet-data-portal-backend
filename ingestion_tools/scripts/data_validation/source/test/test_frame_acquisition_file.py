@@ -12,3 +12,5 @@ class TestFrameAcquisitionFile(MdocTestHelper):
     def test_mdoc_file_count(self, mdoc_file: str, frames_files: list[str], tiltseries_files: list[str]):
         if frames_files or tiltseries_files:
             assert mdoc_file  is not None
+        else:
+            pytest.skip("No tiltseries or frame files")
