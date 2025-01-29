@@ -3,6 +3,7 @@ import pathlib
 
 import allure
 import pytest
+from importers.base_importer import BaseImporter
 from importers.utils import IMPORTERS
 
 from data_validation.source.fixtures.data import *  # noqa: E402, F403
@@ -43,10 +44,18 @@ def pytest_runtest_makereport(item: pytest.Item):
     This hook integrates allure to dynamically annotate the test reports with
     details such as the dataset, run, and voxel spacing being tested.
     """
+    if "run" in item.fixturenames:
+        run = item.callspec.params['run']
+        allure.dynamic.feature(f"Run {run.name}")
+        allure.dynamic.epic(f"Dataset {run.get_dataset().name}")
+    elif "tiltseries" in item.fixturenames:
+        run_children = [val for val in item.callspec.params.values() if isinstance(val, BaseImporter)]
+        if run_children:
+            run = run_children[0].get_run()
+            allure.dynamic.feature(f"Run {run.name}")
+            allure.dynamic.epic(f"Dataset {run.get_dataset().name}")
+
     if "voxel_spacing" in item.fixturenames:
         allure.dynamic.story(f"VoxelSpacing {item.callspec.params['voxel_spacing'].name}")
-    if "run" in item.fixturenames:
-        allure.dynamic.feature(f"Run {item.callspec.params['run'].name}")
-    if "run" in item.fixturenames:
-        allure.dynamic.epic(f"Dataset {item.callspec.params['run'].get_dataset().name}")
+
     yield

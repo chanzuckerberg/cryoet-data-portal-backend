@@ -10,8 +10,8 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 class MdocTestHelper:
 
     ### BEGIN MDOC tests ###
+    @allure.title("Mdoc: tilt angles are within the expected range [-90, 90].")
     def test_frames_mdoc_range(self, mdoc_data: pd.DataFrame):
-        allure.dynamic.title("Mdoc: tilt angles are within the expected range [-90, 90].")
         assert mdoc_data["TiltAngle"].min() >= -90
         assert mdoc_data["TiltAngle"].max() <= 90
 
