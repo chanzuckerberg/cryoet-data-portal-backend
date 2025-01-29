@@ -15,7 +15,7 @@ from mypy_boto3_s3 import S3Client
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from tests.s3_import.util import get_data_from_s3, list_dir
+from tests.s3_import.util import get_data_from_s3, get_raw_data_from_s3, list_dir
 
 
 def get_parents(config: DepositionImportConfig, run_index: int = 0) -> dict[str, BaseImporter]:
@@ -73,8 +73,11 @@ def validate_metadata(
     def validate(expected: dict, prefix: str) -> None:
         key = os.path.join(prefix, "alignment_metadata.json")
         actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
-        for key in expected:
-            assert actual[key] == expected[key], f"Key {key} does not match"
+        content_type = get_raw_data_from_s3(s3_client, test_output_bucket, key)["ContentType"]
+
+        for k in expected:
+            assert actual[k] == expected[k], f"Key {k} does not match"
+        assert content_type == "application/json"
 
     return validate
 

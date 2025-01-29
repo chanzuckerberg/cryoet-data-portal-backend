@@ -47,6 +47,10 @@ def get_data_from_s3(s3_client: S3Client, bucket_name: str, path: str) -> Stream
     return s3_client.get_object(Bucket=bucket_name, Key=path)["Body"]
 
 
+def get_raw_data_from_s3(s3_client: S3Client, bucket_name: str, path: str) -> StreamingBody:
+    return s3_client.get_object(Bucket=bucket_name, Key=path)
+
+
 def get_children(s3_client: S3Client, bucket: str, prefix: str, recurse: bool = False) -> set[str]:
     all_descendants = {os.path.relpath(item, prefix) for item in list_dir(s3_client, bucket, prefix)}
     if recurse:

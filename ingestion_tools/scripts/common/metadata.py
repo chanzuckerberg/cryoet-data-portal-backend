@@ -25,7 +25,8 @@ class BaseMetadata:
     def write_metadata(self, filename: str, is_json=True) -> None:
         metadata = deepcopy(self.metadata)
         metadata = self.add_defaults(metadata)
-        with self.fs.open(filename, "w") as fh:
+        kwargs = {"ContentType": "application/json"} if is_json else {}
+        with self.fs.open(filename, "w", **kwargs) as fh:
             data = tojson(metadata) if is_json else self.metadata
             fh.write(data)
 
@@ -34,7 +35,8 @@ class MergedMetadata(BaseMetadata):
     def write_metadata(self, filename: str, merge_data: dict[str, Any]) -> None:
         metadata = deep_merge(self.metadata, merge_data)
         metadata = self.add_defaults(metadata)
-        with self.fs.open(filename, "w") as fh:
+        kwargs = {"ContentType": "application/json"}
+        with self.fs.open(filename, "w", **kwargs) as fh:
             fh.write(tojson(metadata))
 
 
