@@ -1,3 +1,5 @@
+import os
+
 import numpy
 import pytest
 from importers.dataset import DatasetImporter
@@ -9,7 +11,7 @@ from PIL import Image
 
 from common.config import BaseImporter, DepositionImportConfig
 from common.fs import FileSystemApi
-from tests.s3_import.util import get_children
+from tests.s3_import.util import get_children, get_raw_data_from_s3
 
 
 @pytest.fixture
@@ -80,7 +82,9 @@ def test_dataset_key_photo_import_from_valid_config_source(
         assert key in metadata
         assert metadata[key] == f"10001/Images/{key}.gif"
         assert f"{key}.gif" in s3_files
-
+        file_path = os.path.join("output", metadata[key])
+        content_type = get_raw_data_from_s3(s3_client, test_output_bucket, file_path)["ContentType"]
+        assert content_type == "image/gif"
 
 @pytest.mark.parametrize(
     "keyphoto_source",
@@ -123,8 +127,6 @@ def test_dataset_key_photo_import_from_tomogram_keyphoto(
         assert key in metadata
         assert metadata[key] == f"10001/Images/{key}.png"
         assert f"{key}.png" in s3_files
-
-
 # Raises runtime exception because no tomogram key photo exists
 def test_dataset_key_photo_import_for_no_tomogram_keyphoto_exists(
     ingestion_config: DepositionImportConfig,
