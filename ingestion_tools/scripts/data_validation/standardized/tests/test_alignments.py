@@ -56,10 +56,10 @@ class TestAlignments:
         assert len(errors) == 0, "\n".join(errors)
 
     @allure.title("Alignment: every tilt angle maps to a mdoc tilt angle.")
-    def test_tilt_mdoc(self, alignment_tilt: pd.DataFrame, frames_mdoc: pd.DataFrame):
+    def test_tilt_mdoc(self, alignment_tilt: pd.DataFrame, mdoc_data: pd.DataFrame):
         errors = helper_angles_injection_errors(
             alignment_tilt["TiltAngle"].to_list(),
-            frames_mdoc["TiltAngle"].to_list(),
+            mdoc_data["TiltAngle"].to_list(),
             "tilt file",
             "mdoc file",
         )

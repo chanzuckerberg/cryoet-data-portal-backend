@@ -103,9 +103,9 @@ def tiltseries_raw_tilt(tiltseries_rawtilt_file: str, filesystem: FileSystemApi)
 # Frames fixtures
 # ==================================================================================================
 @pytest.fixture(scope="session")
-def frames_mdoc(frames_mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
+def mdoc_data(mdoc_file: str, filesystem: FileSystemApi) -> pd.DataFrame:
     """Load the tiltseries mdoc files and return a concatenated DataFrame."""
-    return mdocfile.read(filesystem.localreadable(frames_mdoc_file))
+    return mdocfile.read(filesystem.localreadable(mdoc_file))
 
 
 # ==================================================================================================

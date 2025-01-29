@@ -1,3 +1,4 @@
+import allure
 import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 from tifffile import TiffPage
@@ -15,4 +16,10 @@ class TestFrame(FrameTestHelper):
 
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_header_class_variables(self, frame_mrc_headers: dict[str, MrcInterpreter]):
-        self.mrc_headers = frame_mrc_headers.items()
+        self.mrc_headers = frame_mrc_headers
+
+    @allure.title("Mdoc file exists when frames or tiltseries are present")
+    def test_frames_have_mdoc(self, frames_files: list[str], mdoc_file: str):
+        if len(frames_files) == 0:
+            pytest.skip("No frame files")
+        assert mdoc_file is not None
