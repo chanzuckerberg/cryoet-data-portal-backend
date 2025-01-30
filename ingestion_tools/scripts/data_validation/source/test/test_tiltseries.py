@@ -1,9 +1,10 @@
 import allure
 import pytest
+from importers.base_importer import RunImporter
 from importers.tiltseries import TiltSeriesImporter
-from pyarrow._fs import FileSystem
 
-from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
+from common.fs import FileSystemApi
+from data_validation.shared.helper.tiltseries_helper import TiltSeriesHelper
 from data_validation.shared.util import get_file_type, get_mrc_header, get_zarr_metadata
 
 
@@ -14,15 +15,23 @@ from data_validation.shared.util import get_file_type, get_mrc_header, get_zarr_
     ids=[f"{ts.get_run().name}-{ts.identifier}" for ts in pytest.cryoet.tiltseries],
     scope="session",
 )
-class TestTiltSeries(HelperTestMRCZarrHeader):
+class TestTiltSeries(TiltSeriesHelper):
+
+    @pytest.fixture(scope="session")
+    def run(self, tiltseries: TiltSeriesImporter) -> RunImporter:
+        return tiltseries.get_run()
+
+    @pytest.fixture
+    def tiltseries_metadata(self, tiltseries: TiltSeriesImporter) -> dict:
+        return tiltseries.get_base_metadata()
 
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_zarr_header_class_variables(
             self,
             tiltseries: list[TiltSeriesImporter],
-            filesystem: FileSystem,
+            tiltseries_metadata: dict,
+            filesystem: FileSystemApi,
     ):
-        self.spacegroup = 0  # 2D image
         self.file_type = get_file_type(tiltseries.name)
         file_path = tiltseries.volume_filename
 
@@ -31,7 +40,7 @@ class TestTiltSeries(HelperTestMRCZarrHeader):
                 self.mrc_headers = {file_path: get_mrc_header(file_path, filesystem, fail_test=False)}
             elif self.file_type == "zarr":
                 self.zarr_headers = get_zarr_metadata(file_path, filesystem, fail_test=False)
-        self.spacing = tiltseries.get_base_metadata().get("pixel_spacing")
+        self.spacing = tiltseries_metadata.get("pixel_spacing")
         self.skip_z_axis_checks = True
 
     @allure.title("Tiltseries: sanity check filetype.")

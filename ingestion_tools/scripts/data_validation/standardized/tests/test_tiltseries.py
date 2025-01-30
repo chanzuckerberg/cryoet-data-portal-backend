@@ -9,7 +9,7 @@ import pytest
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
-from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
+from data_validation.shared.helper.tiltseries_helper import TiltSeriesHelper
 from data_validation.shared.util import BINNING_FACTORS
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 
@@ -17,7 +17,7 @@ from data_validation.standardized.tests.test_deposition import HelperTestDeposit
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.tiltseries
 @pytest.mark.parametrize("dataset, run_name, ts_dir", pytest.cryoet.dataset_run_tiltseries_combinations, scope="session")
-class TestTiltseries(HelperTestMRCZarrHeader):
+class TestTiltseries(TiltSeriesHelper):
 
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_zarr_header_class_variables(
@@ -26,7 +26,6 @@ class TestTiltseries(HelperTestMRCZarrHeader):
         tiltseries_zarr_metadata: Dict[str, Dict[str, Dict]],
         tiltseries_metadata: Dict,
     ):
-        self.spacegroup = 0  # 2D image
         self.mrc_headers = tiltseries_mrc_header
         self.zarr_headers = tiltseries_zarr_metadata
         self.spacing = tiltseries_metadata["pixel_spacing"]
@@ -136,4 +135,5 @@ class TestTiltseries(HelperTestMRCZarrHeader):
                 + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, "
                   f"with step {tiltseries_metadata['tilt_step']}"
         )
+
     ### END metadata-mdoc consistency tests ###

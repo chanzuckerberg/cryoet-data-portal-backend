@@ -44,7 +44,7 @@ def pytest_runtest_makereport(item: pytest.Item):
     This hook integrates allure to dynamically annotate the test reports with
     details such as the dataset, run, and voxel spacing being tested.
     """
-    if "run" in item.fixturenames:
+    if "run" in item.fixturenames and "run" in item.callspec.params:
         run = item.callspec.params['run']
         allure.dynamic.feature(f"Run {run.name}")
         allure.dynamic.epic(f"Dataset {run.get_dataset().name}")
