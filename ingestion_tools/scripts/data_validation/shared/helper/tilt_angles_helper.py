@@ -27,6 +27,10 @@ class TiltAnglesHelper:
     def test_raw_tilt_angle_range(self, raw_tilt_data: pd.DataFrame):
         assert all(-90 <= angle <= 90 for angle in raw_tilt_data["TiltAngle"])
 
+    @allure.title("Raw tilt: # raw tilt angle not greater than # mdoc sections")
+    def test_raw_tilt_mdoc_entries(self, raw_tilt_data: pd.DataFrame, mdoc_data: pd.DataFrame):
+        assert len(mdoc_data) >= len(raw_tilt_data)
+
     @allure.title("Raw tilt: every raw tilt angle matches a mdoc tilt angle.")
     def test_raw_tilt_mdoc(self, raw_tilt_data: pd.DataFrame, mdoc_data: pd.DataFrame):
         errors = helper_angles_injection_errors(

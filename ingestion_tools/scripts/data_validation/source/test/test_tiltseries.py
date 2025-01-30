@@ -1,9 +1,11 @@
 import allure
+import pandas as pd
 import pytest
 from importers.base_importer import RunImporter
 from importers.tiltseries import TiltSeriesImporter
 
 from common.fs import FileSystemApi
+from common.image import get_volume_info
 from data_validation.shared.helper.tiltseries_helper import TiltSeriesHelper
 from data_validation.shared.util import get_file_type, get_mrc_header, get_zarr_metadata
 
@@ -28,7 +30,7 @@ class TestTiltSeries(TiltSeriesHelper):
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_zarr_header_class_variables(
             self,
-            tiltseries: list[TiltSeriesImporter],
+            tiltseries: TiltSeriesImporter,
             tiltseries_metadata: dict,
             filesystem: FileSystemApi,
     ):
@@ -54,3 +56,8 @@ class TestTiltSeries(TiltSeriesHelper):
     @allure.title("Zarr and MRC: headers are consistent.")
     def test_zarr_mrc_volume_size(self):
         pytest.skip("Both formats won't exist for source data")
+
+    @allure.title("Tiltseries: the number of rawtlt entries should match the number of z-sections")
+    def test_z_index_consistency(self, tiltseries: TiltSeriesImporter, filesystem: FileSystemApi, raw_tilt_data: pd.DataFrame):
+        volume_info = get_volume_info(filesystem, tiltseries.volume_filename)
+        assert len(raw_tilt_data) == volume_info.zend - volume_info.zstart
