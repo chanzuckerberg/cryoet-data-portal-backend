@@ -1,6 +1,6 @@
 ## S3 Data Validation Test Scripts
 
-Pytest-based data validation tests for the various data entities in the S3 buckets of the CryoET Data Portal. Fetches run folders and voxel spacing files efficiently from the S3 bucket and parametrizes tests based on the dataset and voxel spacing combinations found in the bucket. Utilizes pytest-xdist's multiprocessing features to run tests quicker. See below for more information.
+Pytest-based data validation tests for the various output data entities in the S3 buckets of the CryoET Data Portal. Fetches run folders and voxel spacing files efficiently from the S3 bucket and parametrizes tests based on the dataset and voxel spacing combinations found in the bucket. Utilizes pytest-xdist's multiprocessing features to run tests quicker. See below for more information.
 
 ### Writing New Tests
 
@@ -29,6 +29,7 @@ Available marks:
 - dataset
 - deposition
 - frame
+- mdoc
 - gain
 - run
 - tiltseries

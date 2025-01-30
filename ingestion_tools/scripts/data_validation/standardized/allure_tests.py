@@ -41,7 +41,7 @@ def main(
     for dataset in datasets:
         additional_parameters = [
             f"--datasets {dataset}",
-            f"--bucket {kwargs['input_bucket']}",
+            f"--bucket {updated_kwargs['input_bucket']}",
         ]
 
         execute_allure_tests(
