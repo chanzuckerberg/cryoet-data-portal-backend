@@ -1,6 +1,6 @@
-## S3 Data Validation Test Scripts
+## S3 Source Validation Test Scripts
 
-Pytest-based data validation tests for the various output data entities in the S3 buckets of the CryoET Data Portal. Fetches run folders and voxel spacing files efficiently from the S3 bucket and parametrizes tests based on the dataset and voxel spacing combinations found in the bucket. Utilizes pytest-xdist's multiprocessing features to run tests quicker. See below for more information.
+Pytest-based data validation tests for the source data entities in the S3 buckets of the CryoET Data Portal. Fetches test entites from the S3 bucket using the ingestion config and parametrizes tests based on the combinations found in the source bucket. Utilizes pytest-xdist's multiprocessing features to run tests quicker. See below for more information.
 
 ### Writing New Tests
 
@@ -11,12 +11,11 @@ If new `helper_*` files are added, make sure to update the `__init__.py` file an
 To run (from this directory):
 
 ```
-pytest --bucket [BUCKET_NAME] --datasets [DATASET_ID] --run-glob [RUN_GLOB] --voxel-spacing-glob [VOXEL_SPACING_GLOB]
+pytest --input-bucket [BUCKET_NAME] --ingestion-config [CONFIG_FILE] --run-filter-name [regex value] --frame-filter-name [regex-value]
 
-bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
-datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
-run-glob: A glob pattern to match the run directories to validate. Default: `*`
-voxel-spacing-glob: A glob pattern to match the voxel spacing directories to validate. Default: `*`
+input-bucket: The S3 bucket where the data is stored. No default value available.
+ingestion-config: The name of the ingestion config file, relative to the dataset_config folder
+run-filter-name: Similar to the ingestion, the tests can be filtered by any entities name.
 ```
 
 Custom Marks:
@@ -25,17 +24,11 @@ Tests are marked according to the type of data they validate. Use `-m MARK` to s
 
 Available marks:
 
-- annotation
-- dataset
-- deposition
 - frame
 - mdoc
 - gain
-- run
 - tiltseries
-- tilt_angles (spans multiple entities: .tlt, .rawtlt, .mdoc, tiltseries_metadata.json, frames.)
-- tomogram
-- voxel_spacing
+- tilt_angles
 
 Additional pytest helpful parameters:
 
@@ -52,34 +45,22 @@ Additional pytest helpful parameters:
 
 ### Examples
 
-Run all data validation for dataset 10027.
+Run all data validation for ingestion config 10000.yaml:
 
 ```
-pytest --datasets 10027 -s -v
+pytest --ingestion-config 10000.yaml --input-bucket cryoetportal-rawdatasets-dev
 ```
 
-Run all data validation for datasets 10040 and 10041.
+Run all data validation, with multiple workers, for ingestion config 10000.yaml.
 
 ```
-pytest --datasets 10040,10041 -s -v
+pytest --ingestion-config 10000.yaml --input-bucket cryoetportal-rawdatasets-dev -s -v -n auto --dist loadscope
 ```
 
-Run all data validation, with multiple workers, for dataset 10200.
+Run frames and mdoc validation for run "TS_026" in ingestion config 10000.yaml
 
 ```
-pytest --datasets 10200 -s -v -n auto --dist loadscope
-```
-
-Run tiltseries and tomogram validation for run "TS_026" in dataset 10000.
-
-```
-pytest --datasets 10000 --run-glob "TS_026" -s -v -m tiltseries -m tomogram
-```
-
-Run data validation for run "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" in dataset 10301, skipping TestGain validation.
-
-```
-pytest --datasets 10301 --run-glob "17072022_BrnoKrios_Arctis_p3ar_grid_Position_76" -s -v -k "not TestGain"
+pytest --ingestion-config 10000.yaml --input-bucket cryoetportal-rawdatasets-dev   --filter-run-name TS_026 -s -v -m "mdoc or frame"
 ```
 
 ### Allure + Pytest
@@ -94,10 +75,10 @@ To run (from this directory):
 python allure_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
 
 --local-dir: Local directory to store the results. Default: `./results`
---input-bucket: The S3 bucket where the data is stored. Default: `cryoet-data-portal-staging`
+--input-bucket: The S3 bucket where the data is stored.
 --output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-output-test`
---output-dir: The remote s3 directory to store the results. Default: `data_validation`
---datasets: A comma-separated list of dataset IDs to validate. If not provided, all datasets will be validated.
+--output-dir: The remote s3 directory to store the results. Default: `source_validation`
+--ingestion-config: The path of the ingestion config file, relative to the dataset_config folder.
 --multiprocessing/--no-multiprocessing: Run tests in parallel with multiple workers (pytest-xdist). Default: `--multiprocessing`
 --history/--no-history: Save the history to S3 and retrieve the history of the report. If testing multiple datasets, saving history will result in longer execution time (each dataset has to be an individual `pytest` call). Default: `--history`
 --extra-args: Additional arguments to pass to pytest. See pytest arguments above.
@@ -108,26 +89,27 @@ python allure_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --ou
 
 ### Examples
 
-Run all data validation for datasets 10027 and 10200, and save the test results to S3.
+Run all data validation for ingestion config 10000.yaml, and save the test results to S3.
 
 ```
-python allure_tests.py --datasets 10027,10200
+python allure_tests.py --ingestion-config 10000.yaml --input-bucket cryoetportal-rawdatasets-dev
 ```
 
-Run only tiltseries validation for all datasets, and save the test results to S3.
+Run only mdoc validation for ingestion config 10000.yaml, and save the test results to S3.
 
 ```
-python allure_tests.py --extra-args "-k TestTiltseries"
+python allure_tests.py --ingestion-config 10000.yaml --input-bucket cryoetportal-rawdatasets-dev --extra-args "-m mdoc"
 ```
 
 Run on a smaller dataset, so no need for multiprocessing (multiprocessing worker setup overhead makes it slower than no multiprocessing).
 
 ```
-python allure_tests.py --datasets 10031 --no-multiprocessing
+python allure_tests.py --datasets gjensen/10027.yaml --input-bucket cryoetportal-rawdatasets-dev --no-multiprocessing
 ```
 
-Run all data validation for everything, and save the test results to S3 (not recommended, can take very long, on the scale of a day possibly).
+
+Run all data validation for ingestion config 10000.yaml only locally, and don't push the test results to S3.
 
 ```
-python allure_tests.py
+python allure_tests.py --ingestion-config 10000.yaml --input-bucket cryoetportal-rawdatasets-dev --no-update-s3
 ```
