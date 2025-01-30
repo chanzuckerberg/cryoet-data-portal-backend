@@ -1,4 +1,3 @@
-import os
 import pathlib
 
 import allure
@@ -28,7 +27,8 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
 def ingestion_config_path(config: pytest.Config) -> str:
     config_path = config.getoption("--ingestion-config")
-    return os.path.abspath(os.path.join(os.getcwd(), "..", "..", "..", "dataset_configs", config_path))
+    # config_path = os.path.abspath(os.path.join(os.getcwd(), "..", "..", "..", "dataset_configs", config_path))
+    return config_path
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure(config: pytest.Config) -> None:
@@ -36,6 +36,15 @@ def pytest_configure(config: pytest.Config) -> None:
     # but setting the parameterization as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
     pytest.cryoet = CryoetSourceEntities(config, ingestion_config_path(config))
+    # Register markers
+    config.addinivalue_line("markers", "frame: Tests concerning the frames.")
+    config.addinivalue_line("markers", "gain: Tests concerning the gain files.")
+    config.addinivalue_line("markers", "mdoc: Tests concerning the runs.")
+    config.addinivalue_line("markers", "tiltseries: Tests concerning the tiltseries.")
+    config.addinivalue_line(
+        "markers",
+        "tilt_angles: Tests concerning the tilt angle (spans multiple entities: .rawtlt, .mdoc, tiltseries_metadata, frames).",
+    )
 
 
 @pytest.hookimpl(hookwrapper=True)

@@ -247,6 +247,21 @@ def pytest_configure(config: pytest.Config) -> None:
     # but setting the parameterizations as labels and parametrizing the class with that label leads to desired outcome, i.e.
     # re-use of the per-run fixtures.
     pytest.cryoet = CryoetStandardizedEntities(config, fs)
+    # Register markers
+    config.addinivalue_line("markers", "alignment: Tests concerning the alignment data.")
+    config.addinivalue_line("markers", "annotation: Tests concerning the annotation data.")
+    config.addinivalue_line("markers", "dataset: Tests concerning the dataset.")
+    config.addinivalue_line("markers", "deposition: Tests concerning the deposition data.")
+    config.addinivalue_line("markers", "frame: Tests concerning the frames.")
+    config.addinivalue_line("markers", "gain: Tests concerning the gain files.")
+    config.addinivalue_line("markers", "run: Tests concerning the runs.")
+    config.addinivalue_line("markers", "tiltseries: Tests concerning the tiltseries.")
+    config.addinivalue_line(
+        "markers",
+        "tilt_angles: Tests concerning the tilt angle (spans multiple entities: .tlt, .rawtlt, .mdoc, tiltseries_metadata.json, frames).",
+    )
+    config.addinivalue_line("markers", "tomogram: Tests concerning the tomogram.")
+    config.addinivalue_line("markers", "voxel_spacing: Tests concerning voxel spacings.")
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item: pytest.Item):

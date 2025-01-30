@@ -17,7 +17,7 @@ DEFAULT_OVERRIDES = {
 @click.option(
     "--ingestion-config",
     type=str,
-    help="Path to the ingestion config file relative to dataset_config folder.",
+    help="Path to the ingestion config file.",
 )
 @common_options
 def main(
@@ -27,8 +27,8 @@ def main(
     config_name = os.path.basename(ingestion_config).split(".")[0]
     updated_kwargs = update_with_default(kwargs, DEFAULT_OVERRIDES)
     additional_parameters = [
-        f"--ingestion-config {ingestion_config}",
         f"--input-bucket {updated_kwargs['input_bucket']}",
+        f"--ingestion-config {ingestion_config}",
     ]
 
     execute_allure_tests(

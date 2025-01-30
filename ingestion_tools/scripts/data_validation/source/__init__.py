@@ -4,7 +4,8 @@ import sys
 import pytest
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(CURRENT_DIR)
+# For making references to dataset_config folder
+sys.path.append(os.path.join(CURRENT_DIR, "..", "..", ".."))
 
 # For better assertion errors in the helper functions
 pytest.register_assert_rewrite(
