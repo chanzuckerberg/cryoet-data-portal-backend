@@ -7,13 +7,6 @@ alignments:
       list_globs:
       - '{run_name}/AreTomo/{run_name}_dose-filt.tlt'
       - '{run_name}/AreTomo/{run_name}_dose-filt.xf'
-- metadata:
-    format: ARETOMO3
-    method_type: patch_tracking
-  sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
 annotations:
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -198,6 +191,12 @@ collection_metadata:
   - source_multi_glob:
       list_globs:
       - '{run_name}/{run_name}.mdoc'
+ctf:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
 dataset_keyphotos:
 - sources:
   - literal:
