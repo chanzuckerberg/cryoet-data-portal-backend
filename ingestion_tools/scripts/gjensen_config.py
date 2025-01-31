@@ -174,7 +174,7 @@ def to_standardization_config(
         "frames_glob": None,
         "gain_glob": None,
         "rawtlt_files": [
-            "{run_name}/rawdata/*.mdoc",
+            "{run_name}/*/*.mdoc", # The mdoc files can be in rawdata or file_* folders
             "{run_name}/generated/*.mdoc",
             "{run_name}/file_*/*.rawtlt",
             "{run_name}/generated/*.rawtlt",

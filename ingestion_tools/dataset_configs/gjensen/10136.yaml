@@ -3,8 +3,8 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
-      - GJensen_full/{run_name}/generated/*.mdoc
+      - '{run_name}/*/*.mdoc'
+      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
