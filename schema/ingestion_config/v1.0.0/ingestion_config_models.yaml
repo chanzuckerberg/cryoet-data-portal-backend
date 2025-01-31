@@ -61,6 +61,10 @@ classes:
         description: Metadata for the collection.
         range: CollectionMetadataEntity
         multivalued: true
+      ctf:
+        description: CTF for the dataset.
+        multivalued: true
+        range: CtfEntity
       dataset_keyphotos:
         description: Key photos for the dataset.
         multivalued: true
@@ -362,6 +366,41 @@ classes:
 
   CollectionMetadataParent:
     description: A filter for a parent class of a collection_metadata source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    slots:
+      - dataset
+      - deposition
+      - run
+
+  CtfEntity:
+    description: A ctf entity.
+    attributes:
+      metadata:
+        range: Ctf
+      sources:
+        multivalued: true
+        range: CtfSource
+        required: true
+
+  CtfSource:
+    description: A ctf source.
+    is_a: StandardSource
+    attributes:
+      parent_filters:
+        description: Permitted parent filters for a ctf source.
+        range: CtfParentFilters
+
+  CtfParentFilters:
+    description: Types of parent filters for a ctf source.
+    attributes:
+      include:
+        description: Include files for the parent of a ctf source (regexes).
+        range: CtfParent
+      exclude:
+        description: Exclude files for the parent of a ctf source (regexes).
+        range: CtfParent
+
+  CtfParent:
+    description: A filter for a parent class of a ctf source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
     slots:
       - dataset
       - deposition

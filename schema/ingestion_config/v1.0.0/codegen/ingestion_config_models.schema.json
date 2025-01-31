@@ -1767,6 +1767,16 @@
                         "null"
                     ]
                 },
+                "ctf": {
+                    "description": "A ctf entity.",
+                    "items": {
+                        "$ref": "#/$defs/CtfEntity"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "dataset_keyphotos": {
                     "description": "A dataset key photo entity.",
                     "items": {
@@ -1953,6 +1963,36 @@
             "title": "Ctf",
             "type": "object"
         },
+        "CtfEntity": {
+            "additionalProperties": false,
+            "description": "A ctf entity.",
+            "properties": {
+                "metadata": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Ctf"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A ctf entity."
+                },
+                "sources": {
+                    "description": "A ctf source.",
+                    "items": {
+                        "$ref": "#/$defs/CtfSource"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "CtfEntity",
+            "type": "object"
+        },
         "CtfFormatEnum": {
             "description": "Used to determine what ctf parser to use.",
             "enum": [
@@ -1960,6 +2000,147 @@
             ],
             "title": "CtfFormatEnum",
             "type": "string"
+        },
+        "CtfParent": {
+            "additionalProperties": false,
+            "description": "A filter for a parent class of a ctf source. For a given attribute, it can only be used if the current class is a subclass of the attribute.",
+            "properties": {
+                "dataset": {
+                    "description": "Include or exclude datasets for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "deposition": {
+                    "description": "Include or exclude depositions for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "run": {
+                    "description": "Include or exclude runs for a source.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "CtfParent",
+            "type": "object"
+        },
+        "CtfParentFilters": {
+            "additionalProperties": false,
+            "description": "Types of parent filters for a ctf source.",
+            "properties": {
+                "exclude": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CtfParent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A filter for a parent class of a ctf source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                },
+                "include": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CtfParent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A filter for a parent class of a ctf source. For a given attribute, it can only be used if the current class is a subclass of the attribute."
+                }
+            },
+            "title": "CtfParentFilters",
+            "type": "object"
+        },
+        "CtfSource": {
+            "additionalProperties": false,
+            "description": "A ctf source.",
+            "properties": {
+                "destination_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DestinationGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the output / destination directory."
+                },
+                "exclude": {
+                    "description": "Exclude files from the source that match (regexes).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "literal": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/StandardLiteral"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A literal class with a value attribute."
+                },
+                "parent_filters": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CtfParentFilters"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Types of parent filters for a ctf source."
+                },
+                "source_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory."
+                },
+                "source_multi_glob": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SourceMultiGlob"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A glob class for finding files in the source directory (with multiple globs)."
+                }
+            },
+            "title": "CtfSource",
+            "type": "object"
         },
         "Dataset": {
             "additionalProperties": false,
@@ -5411,6 +5592,16 @@
             "description": "A collection_metadata entity.",
             "items": {
                 "$ref": "#/$defs/CollectionMetadataEntity"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "ctf": {
+            "description": "A ctf entity.",
+            "items": {
+                "$ref": "#/$defs/CtfEntity"
             },
             "type": [
                 "array",
