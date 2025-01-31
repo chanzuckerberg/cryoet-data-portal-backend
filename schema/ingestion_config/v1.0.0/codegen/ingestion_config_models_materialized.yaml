@@ -4,8 +4,8 @@ id: cdp-ingestion-config
 version: 1.1.0
 imports:
 - linkml:types
-- ../../../core/v1.1.0/codegen/metadata_materialized
-- ../../../core/v1.1.0/common
+- ../../../core/v2.0.0/codegen/metadata_materialized
+- ../../../core/v2.0.0/common
 prefixes:
   linkml:
     prefix_prefix: linkml
@@ -364,10 +364,10 @@ enums:
     permissible_values:
       LOCAL:
         text: LOCAL
-        description: Local alignment
+        description: per-section non-rigid alignment available
       GLOBAL:
         text: GLOBAL
-        description: Global alignment
+        description: only per-section rigid alignment available
   alignment_format_enum:
     name: alignment_format_enum
     description: Used to determine what alignment alogrithm to use.
@@ -375,12 +375,10 @@ enums:
     permissible_values:
       IMOD:
         text: IMOD
-        description: IMOD was used for the alignment. Supported file formats are (xf,
-          tlt, tilt.com, news.com, xtilt)
+        description: formats (xf, tlt, com)
       ARETOMO3:
         text: ARETOMO3
-        description: ARETOMO3 was used for the alignment. Supported file formats are
-          (aln, txt, csv)
+        description: formats (aln)
   alignment_method_type_enum:
     name: alignment_method_type_enum
     description: Used to determine how the alignment was done.
@@ -398,6 +396,20 @@ enums:
       undefined:
         text: undefined
         description: how alignment was done is unknown
+  annotation_file_source_enum:
+    name: annotation_file_source_enum
+    description: How the annotation file was acquired
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      dataset_author:
+        text: dataset_author
+        description: Annotation submitted by dataset author
+      community:
+        text: community
+        description: Annotation submitted by community member
+      portal_standard:
+        text: portal_standard
+        description: Annotation submitted by portal standardization
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
@@ -434,12 +446,6 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
-      TriangularMesh:
-        text: TriangularMesh
-        description: A mesh of triangles
-      TriangularMeshGroup:
-        text: TriangularMeshGroup
-        description: A group of triangular meshes
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -462,6 +468,14 @@ enums:
         text: website
         description: Links to a website of the method or tool used to generate the
           annotation.
+  ctf_format_enum:
+    name: ctf_format_enum
+    description: Used to determine what ctf parser to use.
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      CTFFIND:
+        text: CTFFIND
+        description: formats ctffind file formats
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has
@@ -610,6 +624,9 @@ enums:
       CANONICAL:
         text: CANONICAL
         description: Canonical tomogram (basis geometry for all annotations)
+      UNKNOWN:
+        text: UNKNOWN
+        description: Tomogram's was not submitted by the dataset author
 slots:
   annotation:
     name: annotation
@@ -1185,7 +1202,7 @@ classes:
     attributes:
       value:
         name: value
-        description: The value for the literal.
+        description: A placeholder for any type of data.
         from_schema: cdp-ingestion-config
         alias: value
         owner: StandardLiteral
@@ -1241,7 +1258,7 @@ classes:
         minimum_cardinality: 1
       value:
         name: value
-        description: The value for the filter.
+        description: A placeholder for any type of data.
         from_schema: cdp-ingestion-config
         alias: value
         owner: DestinationMetadataFilterKeyPair
@@ -5546,6 +5563,7 @@ classes:
         inlined_as_list: true
   Any:
     name: Any
+    description: A placeholder for any type of data.
     from_schema: cdp-ingestion-config
     class_uri: linkml:Any
   DateStampedEntityMixin:

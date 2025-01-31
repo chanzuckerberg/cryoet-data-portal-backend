@@ -262,19 +262,19 @@ types:
     name: StringFormattedString
     description: A formatted string (variable) that represents a string.
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   FloatFormattedString:
     name: FloatFormattedString
     description: A formatted string that represents a floating point number.
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   IntegerFormattedString:
     name: IntegerFormattedString
     description: A formatted string that represents an integer.
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
   VersionString:
     name: VersionString
@@ -286,31 +286,31 @@ types:
     name: URLorS3URI
     description: A URL or S3 URI
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
   ORCID:
     name: ORCID
     description: A unique, persistent identifier for researchers, provided by ORCID.
     from_schema: metadata
-    base: string
+    base: str
     pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
   BTO_ID:
     name: BTO_ID
     description: A BRENDA Tissue Ontology identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^BTO:[0-9]{7}$
   CL_ID:
     name: CL_ID
     description: A Cell Ontology identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^CL:[0-9]{7}$
   GO_ID:
     name: GO_ID
     description: A Gene Ontology identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^GO:[0-9]{7}$
   UNIPROT_ID:
     name: UNIPROT_ID
@@ -322,57 +322,96 @@ types:
     name: WORMBASE_ID
     description: A WormBase identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: WBStrain[0-9]{8}$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^[a-zA-Z]+:[0-9]+$
   DOI:
     name: DOI
     description: A Digital Object Identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+$
   DOI_LIST:
     name: DOI_LIST
     description: A list of Digital Object Identifiers
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$
   EMPIAR_ID:
     name: EMPIAR_ID
     description: An Electron Microscopy Public Image Archive identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^EMPIAR-[0-9]+$
   EMDB_ID:
     name: EMDB_ID
     description: An Electron Microscopy Data Bank identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^EMD-[0-9]{4,5}$
   PDB_ID:
     name: PDB_ID
     description: A Protein Data Bank identifier
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^PDB-[0-9a-zA-Z]{4,8}$
   EMPIAR_EMDB_PDB_LIST:
     name: EMPIAR_EMDB_PDB_LIST
     description: A list of EMPIAR, EMDB, and PDB identifiers
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$
   EMPIAR_EMDB_DOI_PDB_LIST:
     name: EMPIAR_EMDB_DOI_PDB_LIST
     description: A list of EMPIAR, EMDB, DOI, and PDB identifiers
     from_schema: metadata
-    base: string
+    base: str
     pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$
 enums:
+  alignment_type_enum:
+    name: alignment_type_enum
+    description: Type of alignment
+    from_schema: metadata
+    permissible_values:
+      LOCAL:
+        text: LOCAL
+        description: per-section non-rigid alignment available
+      GLOBAL:
+        text: GLOBAL
+        description: only per-section rigid alignment available
+  alignment_format_enum:
+    name: alignment_format_enum
+    description: Used to determine what alignment alogrithm to use.
+    from_schema: metadata
+    permissible_values:
+      IMOD:
+        text: IMOD
+        description: formats (xf, tlt, com)
+      ARETOMO3:
+        text: ARETOMO3
+        description: formats (aln)
+  alignment_method_type_enum:
+    name: alignment_method_type_enum
+    description: Used to determine how the alignment was done.
+    from_schema: metadata
+    permissible_values:
+      fiducial_based:
+        text: fiducial_based
+        description: alignment was done based on fiducial markers
+      patch_tracking:
+        text: patch_tracking
+        description: alignment was done based on patch tracking
+      projection_matching:
+        text: projection_matching
+        description: alignment was done based on image projection
+      undefined:
+        text: undefined
+        description: how alignment was done is unknown
   annotation_file_source_enum:
     name: annotation_file_source_enum
     description: How the annotation file was acquired
@@ -445,6 +484,14 @@ enums:
         text: website
         description: Links to a website of the method or tool used to generate the
           annotation.
+  ctf_format_enum:
+    name: ctf_format_enum
+    description: Used to determine what ctf parser to use.
+    from_schema: metadata
+    permissible_values:
+      CTFFIND:
+        text: CTFFIND
+        description: formats ctffind file formats
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has
@@ -506,6 +553,23 @@ enums:
       cds:
         text: cds
         description: Correlated double sampling mode
+  tiltseries_camera_manufacturer_enum:
+    name: tiltseries_camera_manufacturer_enum
+    description: Camera manufacturer
+    from_schema: metadata
+    permissible_values:
+      Gatan:
+        text: Gatan
+        description: Gatan Inc.
+      FEI:
+        text: FEI
+        description: FEI Company
+      TFS:
+        text: TFS
+        description: Thermo Fisher Scientific
+      simulated:
+        text: simulated
+        description: Simulated data
   tiltseries_microscope_manufacturer_enum:
     name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
@@ -579,17 +643,6 @@ enums:
       UNKNOWN:
         text: UNKNOWN
         description: Tomogram's was not submitted by the dataset author
-  alignment_type_enum:
-    name: alignment_type_enum
-    description: Type of alignment
-    from_schema: metadata
-    permissible_values:
-      LOCAL:
-        text: LOCAL
-        description: per-section non-rigid alignment available
-      GLOBAL:
-        text: GLOBAL
-        description: only per-section rigid alignment available
 classes:
   PicturePath:
     name: PicturePath
@@ -666,6 +719,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         range: string
         required: true
         inlined: true
@@ -850,6 +904,7 @@ classes:
         owner: DateStampedEntity
         domain_of:
         - DateStampedEntity
+        - Tomogram
         range: DateStamp
         required: true
         inlined: true
@@ -965,6 +1020,7 @@ classes:
         owner: CrossReferencedEntity
         domain_of:
         - CrossReferencedEntity
+        - Tomogram
         range: CrossReferences
         inlined: true
         inlined_as_list: true
@@ -1006,6 +1062,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
         range: string
         required: true
@@ -1047,6 +1104,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
         range: string
         required: true
@@ -1092,6 +1150,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
         range: string
         required: true
@@ -1136,6 +1195,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
         range: string
         required: true
@@ -1183,6 +1243,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
         range: string
         required: true
@@ -1390,6 +1451,7 @@ classes:
         owner: Dataset
         domain_of:
         - DateStampedEntity
+        - Tomogram
         range: DateStamp
         required: true
         inlined: true
@@ -1432,6 +1494,7 @@ classes:
         owner: Dataset
         domain_of:
         - CrossReferencedEntity
+        - Tomogram
         range: CrossReferences
         inlined: true
         inlined_as_list: true
@@ -1627,6 +1690,7 @@ classes:
         owner: Deposition
         domain_of:
         - DateStampedEntity
+        - Tomogram
         range: DateStamp
         required: true
         inlined: true
@@ -1654,6 +1718,7 @@ classes:
         owner: Deposition
         domain_of:
         - CrossReferencedEntity
+        - Tomogram
         range: CrossReferences
         inlined: true
         inlined_as_list: true
@@ -1690,10 +1755,11 @@ classes:
         domain_of:
         - CameraDetails
         - MicroscopeDetails
-        range: string
+        range: tiltseries_camera_manufacturer_enum
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: (^Gatan$)|(^FEI$)|(^TFS$)|(^simulated$)
       model:
         name: model
         description: Camera model name
@@ -1738,11 +1804,17 @@ classes:
         - CameraDetails
         - MicroscopeDetails
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
-        pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        pattern: (^FEI$)|(^TFS$)|(^JEOL$)|(^SIMULATED$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+          ]*$)
         any_of:
-        - range: tiltseries_microscope_manufacturer
+        - description: Name of the microscope manufacturer
+          exact_mappings:
+          - cdp-common:tiltseries_microscope_manufacturer
+          range: tiltseries_microscope_manufacturer_enum
+          required: true
         - range: StringFormattedString
       model:
         name: model
@@ -1818,11 +1890,26 @@ classes:
         domain_of:
         - TiltRange
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: -90
+        maximum_value: 90
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: °
+          descriptive_name: degrees
         any_of:
-        - range: tiltseries_tilt_min
+        - description: Minimal tilt angle in degrees
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_min
+          range: float
+          required: true
+          minimum_value: -90
+          maximum_value: 90
+          unit:
+            symbol: °
+            descriptive_name: degrees
         - range: FloatFormattedString
       max:
         name: max
@@ -1833,11 +1920,26 @@ classes:
         domain_of:
         - TiltRange
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: -90
+        maximum_value: 90
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: °
+          descriptive_name: degrees
         any_of:
-        - range: tiltseries_tilt_max
+        - description: Maximal tilt angle in degrees
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_max
+          range: float
+          required: true
+          minimum_value: -90
+          maximum_value: 90
+          unit:
+            symbol: °
+            descriptive_name: degrees
         - range: FloatFormattedString
   TiltSeries:
     name: TiltSeries
@@ -1874,9 +1976,14 @@ classes:
         range: Any
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         any_of:
-        - range: tiltseries_aligned_tiltseries_binning
+        - description: Binning factor of the aligned tilt series
+          exact_mappings:
+          - cdp-common:tiltseries_aligned_tiltseries_binning
+          range: float
+          minimum_value: 0
         - range: FloatFormattedString
       binning_from_frames:
         name: binning_from_frames
@@ -1890,9 +1997,14 @@ classes:
         range: Any
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         any_of:
-        - range: tiltseries_binning_from_frames
+        - description: Describes the binning factor from frames to tilt series file
+          exact_mappings:
+          - cdp-common:tiltseries_binning_from_frames
+          range: float
+          minimum_value: 0
         - range: FloatFormattedString
       camera:
         name: camera
@@ -1996,11 +2108,24 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: mm
+          descriptive_name: millimeters
         any_of:
-        - range: tiltseries_spherical_aberration_constant
+        - description: Spherical Aberration Constant of the objective lens in millimeters
+          exact_mappings:
+          - cdp-common:tiltseries_spherical_aberration_constant
+          range: float
+          required: true
+          minimum_value: 0
+          unit:
+            symbol: mm
+            descriptive_name: millimeters
         - range: FloatFormattedString
       tilt_alignment_software:
         name: tilt_alignment_software
@@ -2024,11 +2149,26 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: -360
+        maximum_value: 360
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: °
+          descriptive_name: degrees
         any_of:
-        - range: tiltseries_tilt_axis
+        - description: Rotation angle in degrees
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_axis
+          range: float
+          required: true
+          minimum_value: -360
+          maximum_value: 360
+          unit:
+            symbol: °
+            descriptive_name: degrees
         - range: FloatFormattedString
       tilt_range:
         name: tilt_range
@@ -2051,11 +2191,21 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 1
+        maximum_value: 5
         pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         any_of:
-        - range: tiltseries_tilt_series_quality
+        - description: Author assessment of tilt series quality within the dataset
+            (1-5, 5 is best)
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_series_quality
+          range: integer
+          required: true
+          minimum_value: 1
+          maximum_value: 5
         - range: IntegerFormattedString
       tilt_step:
         name: tilt_step
@@ -2066,11 +2216,26 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
+        maximum_value: 90
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: °
+          descriptive_name: degrees
         any_of:
-        - range: tiltseries_tilt_step
+        - description: Tilt step in degrees
+          exact_mappings:
+          - cdp-common:tiltseries_tilt_step
+          range: float
+          required: true
+          minimum_value: 0
+          maximum_value: 90
+          unit:
+            symbol: °
+            descriptive_name: degrees
         - range: FloatFormattedString
       tilting_scheme:
         name: tilting_scheme
@@ -2095,11 +2260,25 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: e^-/Å^2
+          descriptive_name: electrons per square Angstrom
         any_of:
-        - range: tiltseries_total_flux
+        - description: Number of Electrons reaching the specimen in a square Angstrom
+            area for the entire tilt series
+          exact_mappings:
+          - cdp-common:tiltseries_total_flux
+          range: float
+          required: true
+          minimum_value: 0
+          unit:
+            symbol: e^-/Å^2
+            descriptive_name: electrons per square Angstrom
         - range: FloatFormattedString
       pixel_spacing:
         name: pixel_spacing
@@ -2110,11 +2289,24 @@ classes:
         domain_of:
         - TiltSeries
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0.001
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: Å/px
+          descriptive_name: Angstroms per pixel
         any_of:
-        - range: tiltseries_pixel_spacing
+        - description: Pixel spacing for the tilt series
+          exact_mappings:
+          - cdp-common:tiltseries_pixel_spacing
+          range: float
+          required: true
+          minimum_value: 0.001
+          unit:
+            symbol: Å/px
+            descriptive_name: Angstroms per pixel
         - range: FloatFormattedString
   TomogramSize:
     name: TomogramSize
@@ -2130,6 +2322,8 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2147,6 +2341,8 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2165,6 +2361,8 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2188,6 +2386,8 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2204,6 +2404,8 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2220,6 +2422,8 @@ classes:
         domain_of:
         - TomogramSize
         - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
         range: integer
         required: true
         inlined: true
@@ -2243,11 +2447,24 @@ classes:
         domain_of:
         - Tomogram
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
+        minimum_value: 0.001
         pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: Å/voxel
+          descriptive_name: Angstroms per voxel
         any_of:
-        - range: tomogram_voxel_spacing
+        - description: Voxel spacing equal in all three axes in angstroms
+          exact_mappings:
+          - cdp-common:tomogram_voxel_spacing
+          range: float
+          required: true
+          minimum_value: 0.001
+          unit:
+            symbol: Å/voxel
+            descriptive_name: Angstroms per voxel
         - range: FloatFormattedString
       fiducial_alignment_status:
         name: fiducial_alignment_status
@@ -2258,11 +2475,17 @@ classes:
         domain_of:
         - Tomogram
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
-        pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        pattern: (^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)
         any_of:
-        - range: tomogram_fiducial_alignment_status
+        - description: Whether the tomographic alignment was computed based on fiducial
+            markers.
+          exact_mappings:
+          - cdp-common:tomogram_fiducial_alignment_status
+          range: fiducial_alignment_status_enum
+          required: true
         - range: StringFormattedString
       ctf_corrected:
         name: ctf_corrected
@@ -2300,11 +2523,17 @@ classes:
         domain_of:
         - Tomogram
         range: Any
+        required: true
         inlined: true
         inlined_as_list: true
-        pattern: ^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        pattern: (^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\{[a-zA-Z0-9_-]+\}[
+          ]*$)
         any_of:
-        - range: tomogram_reconstruction_method
+        - description: Describe reconstruction method (WBP, SART, SIRT)
+          exact_mappings:
+          - cdp-common:tomogram_reconstruction_method
+          range: tomogram_reconstruction_method_enum
+          required: true
         - range: StringFormattedString
       reconstruction_software:
         name: reconstruction_software
@@ -2377,6 +2606,7 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
+        - Alignment
         range: float
         inlined: true
         inlined_as_list: true
@@ -2400,7 +2630,49 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
+        - Alignment
         range: TomogramOffset
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: Whether the tomogram is the default for visualization.
+        from_schema: metadata
+        ifabsent: 'True'
+        alias: is_visualization_default
+        owner: Tomogram
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        required: true
+        inlined: true
+        inlined_as_list: true
+      cross_references:
+        name: cross_references
+        description: A set of cross-references to other databases and publications.
+        from_schema: metadata
+        alias: cross_references
+        owner: Tomogram
+        domain_of:
+        - CrossReferencedEntity
+        - Tomogram
+        range: CrossReferences
+        required: false
+        inlined: true
+        inlined_as_list: true
+      dates:
+        name: dates
+        description: A set of dates at which a data item was deposited, published
+          and last modified.
+        from_schema: metadata
+        alias: dates
+        owner: Tomogram
+        domain_of:
+        - DateStampedEntity
+        - Tomogram
+        range: DateStamp
         required: true
         inlined: true
         inlined_as_list: true
@@ -2518,6 +2790,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         - AuthorMixin
         range: string
         required: true
@@ -2661,8 +2934,25 @@ classes:
         alias: is_visualization_default
         owner: AnnotationSourceFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationSourceFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   AnnotationOrientedPointFile:
@@ -2702,6 +2992,7 @@ classes:
         owner: AnnotationOrientedPointFile
         domain_of:
         - AnnotationOrientedPointFile
+        - AnnotationPointFile
         range: string
         inlined: true
         inlined_as_list: true
@@ -2775,8 +3066,25 @@ classes:
         alias: is_visualization_default
         owner: AnnotationOrientedPointFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   AnnotationInstanceSegmentationFile:
@@ -2816,6 +3124,7 @@ classes:
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationOrientedPointFile
+        - AnnotationPointFile
         range: string
         inlined: true
         inlined_as_list: true
@@ -2889,8 +3198,25 @@ classes:
         alias: is_visualization_default
         owner: AnnotationInstanceSegmentationFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   AnnotationPointFile:
@@ -2947,6 +3273,21 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
+      filter_value:
+        name: filter_value
+        description: The filter value for an oriented point / instance segmentation
+          annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_filter_value
+        alias: filter_value
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
       file_format:
         name: file_format
         description: File format for this file
@@ -3002,8 +3343,25 @@ classes:
         alias: is_visualization_default
         owner: AnnotationPointFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   AnnotationSegmentationMaskFile:
@@ -3070,8 +3428,25 @@ classes:
         alias: is_visualization_default
         owner: AnnotationSegmentationMaskFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   AnnotationSemanticSegmentationMaskFile:
@@ -3095,6 +3470,33 @@ classes:
         domain_of:
         - AnnotationSemanticSegmentationMaskFile
         range: integer
+        inlined: true
+        inlined_as_list: true
+      rescale:
+        name: rescale
+        description: Whether the annotation file needs to be rescaled.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_rescale
+        ifabsent: 'False'
+        alias: rescale
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSemanticSegmentationMaskFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      threshold:
+        name: threshold
+        description: The threshold for a segmentation mask annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_threshold
+        alias: threshold
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSemanticSegmentationMaskFile
+        range: float
         inlined: true
         inlined_as_list: true
       file_format:
@@ -3152,8 +3554,247 @@ classes:
         alias: is_visualization_default
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
+        - Tomogram
         - AnnotationSourceFile
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
+  AnnotationTriangularMeshFile:
+    name: AnnotationTriangularMeshFile
+    description: File and sourcing data for a triangular mesh annotation. Annotation
+      that identifies an object.
+    from_schema: metadata
+    aliases:
+    - TriangularMesh
+    is_a: AnnotationSourceFile
+    attributes:
+      scale_factor:
+        name: scale_factor
+        description: The scale factor for a mesh annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_scale_factor
+        ifabsent: float(1)
+        alias: scale_factor
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      file_format:
+        name: file_format
+        description: File format for this file
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
+        alias: is_visualization_default
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
+  AnnotationTriangularMeshGroupFile:
+    name: AnnotationTriangularMeshGroupFile
+    description: File and sourcing data containing one or more triangular mesh annotations.
+    from_schema: metadata
+    aliases:
+    - TriangularMeshGroup
+    is_a: AnnotationSourceFile
+    attributes:
+      scale_factor:
+        name: scale_factor
+        description: The scale factor for a mesh annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_scale_factor
+        ifabsent: float(1)
+        alias: scale_factor
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      name:
+        name: name
+        description: The name that identifies to a single annotation mesh among multiple
+          meshes.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_mesh_name
+        alias: name
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
+        - AuthorMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
+      file_format:
+        name: file_format
+        description: File format for this file
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_format
+        alias: file_format
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
+        alias: is_visualization_default
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
         inlined: true
         inlined_as_list: true
   Annotation:
@@ -3286,6 +3927,7 @@ classes:
         owner: Annotation
         domain_of:
         - Annotation
+        - Alignment
         range: annotation_method_type_enum
         required: true
         inlined: true
@@ -3339,6 +3981,7 @@ classes:
         owner: Annotation
         domain_of:
         - DateStampedEntity
+        - Tomogram
         range: DateStamp
         required: true
         inlined: true
@@ -3358,6 +4001,327 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
+  AlignmentSize:
+    name: AlignmentSize
+    description: The size of an alignment in voxels in each dimension.
+    from_schema: metadata
+    attributes:
+      x:
+        name: x
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        alias: x
+        owner: AlignmentSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+        any_of:
+        - range: float
+        - range: FloatFormattedString
+      y:
+        name: y
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        alias: y
+        owner: AlignmentSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+        any_of:
+        - range: float
+        - range: FloatFormattedString
+      z:
+        name: z
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        alias: z
+        owner: AlignmentSize
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+        any_of:
+        - range: float
+        - range: FloatFormattedString
+  AlignmentOffset:
+    name: AlignmentOffset
+    description: The offset of a alignment in voxels in each dimension relative to
+      the canonical tomogram.
+    from_schema: metadata
+    attributes:
+      x:
+        name: x
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        ifabsent: float(0)
+        alias: x
+        owner: AlignmentOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+        any_of:
+        - range: float
+        - range: FloatFormattedString
+      y:
+        name: y
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        ifabsent: float(0)
+        alias: y
+        owner: AlignmentOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+        any_of:
+        - range: float
+        - range: FloatFormattedString
+      z:
+        name: z
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        ifabsent: float(0)
+        alias: z
+        owner: AlignmentOffset
+        domain_of:
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+        any_of:
+        - range: float
+        - range: FloatFormattedString
+  Alignment:
+    name: Alignment
+    from_schema: metadata
+    attributes:
+      alignment_type:
+        name: alignment_type
+        description: The type of alignment.
+        from_schema: metadata
+        alias: alignment_type
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: alignment_type_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^LOCAL$)|(^GLOBAL$)
+      offset:
+        name: offset
+        description: The offset of a alignment in voxels in each dimension relative
+          to the canonical tomogram.
+        from_schema: metadata
+        alias: offset
+        owner: Alignment
+        domain_of:
+        - Tomogram
+        - Alignment
+        range: AlignmentOffset
+        inlined: true
+        inlined_as_list: true
+      volume_dimesion:
+        name: volume_dimesion
+        description: The size of an alignment in voxels in each dimension.
+        from_schema: metadata
+        alias: volume_dimesion
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: AlignmentSize
+        inlined: true
+        inlined_as_list: true
+      x_rotation_offset:
+        name: x_rotation_offset
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        ifabsent: int(0)
+        alias: x_rotation_offset
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: Any
+        inlined: true
+        inlined_as_list: true
+        pattern: ^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        any_of:
+        - range: integer
+        - range: IntegerFormattedString
+      tilt_offset:
+        name: tilt_offset
+        description: The tilt offset relative to the tomogram.
+        from_schema: metadata
+        ifabsent: float(0.0)
+        alias: tilt_offset
+        owner: Alignment
+        domain_of:
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+      affine_transformation_matrix:
+        name: affine_transformation_matrix
+        description: The flip or rotation transformation of this author submitted
+          tomogram is indicated here. The default value if not present, is an identity
+          matrix.
+        from_schema: metadata
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+          - exact_cardinality: 4
+          - exact_cardinality: 4
+        alias: affine_transformation_matrix
+        owner: Alignment
+        domain_of:
+        - Tomogram
+        - Alignment
+        range: float
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the alignment is standardized for the portal.
+        from_schema: metadata
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: Alignment
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      format:
+        name: format
+        description: The format of the alignment.
+        from_schema: metadata
+        alias: format
+        owner: Alignment
+        domain_of:
+        - Alignment
+        - Ctf
+        range: alignment_format_enum
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^IMOD$)|(^ARETOMO3$)
+      method_type:
+        name: method_type
+        description: The alignment method type.
+        from_schema: metadata
+        alias: method_type
+        owner: Alignment
+        domain_of:
+        - Annotation
+        - Alignment
+        range: alignment_method_type_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)
+  Frame:
+    name: Frame
+    description: A frame entity.
+    from_schema: metadata
+    attributes:
+      dose_rate:
+        name: dose_rate
+        description: The dose exposure for a given frame.
+        from_schema: metadata
+        alias: dose_rate
+        owner: Frame
+        domain_of:
+        - Frame
+        range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
+      is_gain_corrected:
+        name: is_gain_corrected
+        description: Is the frame gain corrected
+        from_schema: metadata
+        alias: is_gain_corrected
+        owner: Frame
+        domain_of:
+        - Frame
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
+  Ctf:
+    name: Ctf
+    description: A ctf entity.
+    from_schema: metadata
+    attributes:
+      format:
+        name: format
+        description: The format of the ctf file.
+        from_schema: metadata
+        alias: format
+        owner: Ctf
+        domain_of:
+        - Alignment
+        - Ctf
+        range: ctf_format_enum
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^CTFFIND$
   Any:
     name: Any
     description: A placeholder for any type of data.
@@ -3490,6 +4454,7 @@ classes:
         - CellStrain
         - CellComponent
         - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
         range: string
         required: true
         inlined: true

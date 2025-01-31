@@ -63,8 +63,8 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-ingestion-config/',
      'description': 'Schema for ingestion configs',
      'id': 'cdp-ingestion-config',
      'imports': ['linkml:types',
-                 '../../../core/v1.1.0/codegen/metadata_materialized',
-                 '../../../core/v1.1.0/common'],
+                 '../../../core/v2.0.0/codegen/metadata_materialized',
+                 '../../../core/v2.0.0/common'],
      'name': 'cdp-ingestion-config',
      'prefixes': {'linkml': {'prefix_prefix': 'linkml',
                              'prefix_reference': 'https://w3id.org/linkml/'}},
@@ -407,9 +407,9 @@ class AlignmentTypeEnum(str, Enum):
     """
     Type of alignment
     """
-    # Local alignment
+    # per-section non-rigid alignment available
     LOCAL = "LOCAL"
-    # Global alignment
+    # only per-section rigid alignment available
     GLOBAL = "GLOBAL"
 
 
@@ -417,9 +417,9 @@ class AlignmentFormatEnum(str, Enum):
     """
     Used to determine what alignment alogrithm to use.
     """
-    # IMOD was used for the alignment. Supported file formats are (xf, tlt, tilt.com, news.com, xtilt)
+    # formats (xf, tlt, com)
     IMOD = "IMOD"
-    # ARETOMO3 was used for the alignment. Supported file formats are (aln, txt, csv)
+    # formats (aln)
     ARETOMO3 = "ARETOMO3"
 
 
@@ -435,6 +435,18 @@ class AlignmentMethodTypeEnum(str, Enum):
     projection_matching = "projection_matching"
     # how alignment was done is unknown
     undefined = "undefined"
+
+
+class AnnotationFileSourceEnum(str, Enum):
+    """
+    How the annotation file was acquired
+    """
+    # Annotation submitted by dataset author
+    dataset_author = "dataset_author"
+    # Annotation submitted by community member
+    community = "community"
+    # Annotation submitted by portal standardization
+    portal_standard = "portal_standard"
 
 
 class AnnotationMethodTypeEnum(str, Enum):
@@ -463,10 +475,6 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     Point = "Point"
     # A volume with labels for multiple instances
     InstanceSegmentation = "InstanceSegmentation"
-    # A mesh of triangles
-    TriangularMesh = "TriangularMesh"
-    # A group of triangular meshes
-    TriangularMeshGroup = "TriangularMeshGroup"
 
 
 class AnnotationMethodLinkTypeEnum(str, Enum):
@@ -483,6 +491,14 @@ class AnnotationMethodLinkTypeEnum(str, Enum):
     source_code = "source_code"
     # Links to a website of the method or tool used to generate the annotation.
     website = "website"
+
+
+class CtfFormatEnum(str, Enum):
+    """
+    Used to determine what ctf parser to use.
+    """
+    # formats ctffind file formats
+    CTFFIND = "CTFFIND"
 
 
 class DepositionTypesEnum(str, Enum):
@@ -605,6 +621,8 @@ class TomogramTypeEnum(str, Enum):
     """
     # Canonical tomogram (basis geometry for all annotations)
     CANONICAL = "CANONICAL"
+    # Tomogram's was not submitted by the dataset author
+    UNKNOWN = "UNKNOWN"
 
 
 
@@ -842,7 +860,7 @@ class CellStrain(ConfiguredBaseModel):
                        'AuthorMixin',
                        'Author'],
          'exact_mappings': ['cdp-common:cell_strain_name']} })
-    id: Optional[str] = Field(None, description="""Link to more information about the cell strain.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+    id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
          'any_of': [{'range': 'WORMBASE_ID'}, {'range': 'ONTOLOGY_ID'}],
          'domain_of': ['TissueDetails',
                        'CellType',
@@ -1071,7 +1089,7 @@ class CameraDetails(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    acquire_mode: Optional[Union[TiltseriesCameraAcquireModeEnum, str]] = Field(None, description="""Camera acquisition mode""", json_schema_extra = { "linkml_meta": {'alias': 'acquire_mode',
+    acquire_mode: Optional[Union[TiltseriesCameraAcquireModeEnum, str]] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'acquire_mode',
          'any_of': [{'range': 'StringFormattedString'},
                     {'range': 'tiltseries_camera_acquire_mode_enum'}],
          'domain_of': ['CameraDetails'],
@@ -1117,7 +1135,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
     additional_info: Optional[str] = Field(None, description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""", json_schema_extra = { "linkml_meta": {'alias': 'additional_info',
          'domain_of': ['MicroscopeDetails'],
          'exact_mappings': ['cdp-common:tiltseries_microscope_additional_info']} })
-    manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(..., description="""Name of the microscope manufacturer""", json_schema_extra = { "linkml_meta": {'alias': 'manufacturer',
+    manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'manufacturer',
          'any_of': [{'description': 'Name of the microscope manufacturer',
                      'exact_mappings': ['cdp-common:tiltseries_microscope_manufacturer'],
                      'range': 'tiltseries_microscope_manufacturer_enum',
@@ -1164,7 +1182,7 @@ class TiltRange(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    min: Union[float, str] = Field(..., description="""Minimal tilt angle in degrees""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'min',
+    min: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'min',
          'any_of': [{'description': 'Minimal tilt angle in degrees',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_min'],
                      'maximum_value': 90,
@@ -1175,7 +1193,7 @@ class TiltRange(ConfiguredBaseModel):
                     {'range': 'FloatFormattedString'}],
          'domain_of': ['TiltRange'],
          'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
-    max: Union[float, str] = Field(..., description="""Maximal tilt angle in degrees""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'max',
+    max: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'max',
          'any_of': [{'description': 'Maximal tilt angle in degrees',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_max'],
                      'maximum_value': 90,
@@ -1222,7 +1240,7 @@ class TiltSeries(ConfiguredBaseModel):
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_acceleration_voltage'],
          'unit': {'descriptive_name': 'volts', 'symbol': 'V'}} })
-    aligned_tiltseries_binning: Optional[Union[float, str]] = Field(1.0, description="""Binning factor of the aligned tilt series""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'aligned_tiltseries_binning',
+    aligned_tiltseries_binning: Optional[Union[float, str]] = Field(1.0, description="""A placeholder for any type of data.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'aligned_tiltseries_binning',
          'any_of': [{'description': 'Binning factor of the aligned tilt series',
                      'exact_mappings': ['cdp-common:tiltseries_aligned_tiltseries_binning'],
                      'minimum_value': 0,
@@ -1230,7 +1248,7 @@ class TiltSeries(ConfiguredBaseModel):
                     {'range': 'FloatFormattedString'}],
          'domain_of': ['TiltSeries'],
          'ifabsent': 'float(1)'} })
-    binning_from_frames: Optional[Union[float, str]] = Field(1.0, description="""Describes the binning factor from frames to tilt series file""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'binning_from_frames',
+    binning_from_frames: Optional[Union[float, str]] = Field(1.0, description="""A placeholder for any type of data.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'binning_from_frames',
          'any_of': [{'description': 'Describes the binning factor from frames to tilt '
                                     'series file',
                      'exact_mappings': ['cdp-common:tiltseries_binning_from_frames'],
@@ -1254,7 +1272,7 @@ class TiltSeries(ConfiguredBaseModel):
     related_empiar_entry: Optional[str] = Field(None, description="""If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier""", json_schema_extra = { "linkml_meta": {'alias': 'related_empiar_entry',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_related_empiar_entry']} })
-    spherical_aberration_constant: Union[float, str] = Field(..., description="""Spherical Aberration Constant of the objective lens in millimeters""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'spherical_aberration_constant',
+    spherical_aberration_constant: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'spherical_aberration_constant',
          'any_of': [{'description': 'Spherical Aberration Constant of the objective '
                                     'lens in millimeters',
                      'exact_mappings': ['cdp-common:tiltseries_spherical_aberration_constant'],
@@ -1268,7 +1286,7 @@ class TiltSeries(ConfiguredBaseModel):
     tilt_alignment_software: Optional[str] = Field(None, description="""Software used for tilt alignment""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_alignment_software',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_tilt_alignment_software']} })
-    tilt_axis: Union[float, str] = Field(..., description="""Rotation angle in degrees""", ge=-360, le=360, json_schema_extra = { "linkml_meta": {'alias': 'tilt_axis',
+    tilt_axis: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=-360, le=360, json_schema_extra = { "linkml_meta": {'alias': 'tilt_axis',
          'any_of': [{'description': 'Rotation angle in degrees',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_axis'],
                      'maximum_value': 360,
@@ -1280,7 +1298,7 @@ class TiltSeries(ConfiguredBaseModel):
          'domain_of': ['TiltSeries'],
          'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
     tilt_range: TiltRange = Field(..., description="""The range of tilt angles in the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_range', 'domain_of': ['TiltSeries']} })
-    tilt_series_quality: Union[int, str] = Field(..., description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""", ge=1, le=5, json_schema_extra = { "linkml_meta": {'alias': 'tilt_series_quality',
+    tilt_series_quality: Union[int, str] = Field(..., description="""A placeholder for any type of data.""", ge=1, le=5, json_schema_extra = { "linkml_meta": {'alias': 'tilt_series_quality',
          'any_of': [{'description': 'Author assessment of tilt series quality within '
                                     'the dataset (1-5, 5 is best)',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_series_quality'],
@@ -1290,7 +1308,7 @@ class TiltSeries(ConfiguredBaseModel):
                      'required': True},
                     {'range': 'IntegerFormattedString'}],
          'domain_of': ['TiltSeries']} })
-    tilt_step: Union[float, str] = Field(..., description="""Tilt step in degrees""", ge=0, le=90, json_schema_extra = { "linkml_meta": {'alias': 'tilt_step',
+    tilt_step: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0, le=90, json_schema_extra = { "linkml_meta": {'alias': 'tilt_step',
          'any_of': [{'description': 'Tilt step in degrees',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_step'],
                      'maximum_value': 90,
@@ -1304,7 +1322,7 @@ class TiltSeries(ConfiguredBaseModel):
     tilting_scheme: str = Field(..., description="""The order of stage tilting during acquisition of the data""", json_schema_extra = { "linkml_meta": {'alias': 'tilting_scheme',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_tilting_scheme']} })
-    total_flux: Union[float, str] = Field(..., description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'total_flux',
+    total_flux: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'total_flux',
          'any_of': [{'description': 'Number of Electrons reaching the specimen in a '
                                     'square Angstrom area for the entire tilt series',
                      'exact_mappings': ['cdp-common:tiltseries_total_flux'],
@@ -1317,7 +1335,7 @@ class TiltSeries(ConfiguredBaseModel):
          'domain_of': ['TiltSeries'],
          'unit': {'descriptive_name': 'electrons per square Angstrom',
                   'symbol': 'e^-/Å^2'}} })
-    pixel_spacing: Union[float, str] = Field(..., description="""Pixel spacing for the tilt series""", ge=0.001, json_schema_extra = { "linkml_meta": {'alias': 'pixel_spacing',
+    pixel_spacing: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0.001, json_schema_extra = { "linkml_meta": {'alias': 'pixel_spacing',
          'any_of': [{'description': 'Pixel spacing for the tilt series',
                      'exact_mappings': ['cdp-common:tiltseries_pixel_spacing'],
                      'minimum_value': 0.001,
@@ -1470,63 +1488,24 @@ class TomogramOffset(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Union[int, str] = Field(..., description="""x offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    x: int = Field(..., description="""x offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    y: Union[int, str] = Field(..., description="""y offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    y: int = Field(..., description="""y offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    z: Union[int, str] = Field(..., description="""z offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    z: int = Field(..., description="""z offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-
-    @field_validator('x')
-    def pattern_x(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
-        if isinstance(v,list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid x format: {element}")
-        elif isinstance(v,str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid x format: {v}")
-        return v
-
-    @field_validator('y')
-    def pattern_y(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
-        if isinstance(v,list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid y format: {element}")
-        elif isinstance(v,str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid y format: {v}")
-        return v
-
-    @field_validator('z')
-    def pattern_z(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
-        if isinstance(v,list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid z format: {element}")
-        elif isinstance(v,str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid z format: {v}")
-        return v
 
 
 class Tomogram(AuthoredEntity):
@@ -1535,7 +1514,7 @@ class Tomogram(AuthoredEntity):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixins': ['AuthoredEntity']})
 
-    voxel_spacing: Union[float, str] = Field(..., description="""Voxel spacing equal in all three axes in angstroms""", ge=0.001, json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacing',
+    voxel_spacing: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0.001, json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacing',
          'any_of': [{'description': 'Voxel spacing equal in all three axes in '
                                     'angstroms',
                      'exact_mappings': ['cdp-common:tomogram_voxel_spacing'],
@@ -1550,7 +1529,7 @@ class Tomogram(AuthoredEntity):
                        'KeyImageParent',
                        'TomogramParent'],
          'unit': {'descriptive_name': 'Angstroms per voxel', 'symbol': 'Å/voxel'}} })
-    fiducial_alignment_status: Union[FiducialAlignmentStatusEnum, str] = Field(..., description="""Whether the tomographic alignment was computed based on fiducial markers.""", json_schema_extra = { "linkml_meta": {'alias': 'fiducial_alignment_status',
+    fiducial_alignment_status: Union[FiducialAlignmentStatusEnum, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'fiducial_alignment_status',
          'any_of': [{'description': 'Whether the tomographic alignment was computed '
                                     'based on fiducial markers.',
                      'exact_mappings': ['cdp-common:tomogram_fiducial_alignment_status'],
@@ -1565,7 +1544,7 @@ class Tomogram(AuthoredEntity):
     align_software: Optional[str] = Field(None, description="""Software used for alignment""", json_schema_extra = { "linkml_meta": {'alias': 'align_software',
          'domain_of': ['Tomogram'],
          'exact_mappings': ['cdp-common:tomogram_align_software']} })
-    reconstruction_method: Union[TomogramReconstructionMethodEnum, str] = Field(..., description="""Describe reconstruction method (WBP, SART, SIRT)""", json_schema_extra = { "linkml_meta": {'alias': 'reconstruction_method',
+    reconstruction_method: Union[TomogramReconstructionMethodEnum, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'reconstruction_method',
          'any_of': [{'description': 'Describe reconstruction method (WBP, SART, SIRT)',
                      'exact_mappings': ['cdp-common:tomogram_reconstruction_method'],
                      'range': 'tomogram_reconstruction_method_enum',
@@ -1692,7 +1671,7 @@ class AnnotationObject(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    id: str = Field(..., description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+    id: str = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
          'any_of': [{'range': 'GO_ID'}, {'range': 'UNIPROT_ID'}],
          'domain_of': ['TissueDetails',
                        'CellType',
@@ -2423,31 +2402,31 @@ class AlignmentSize(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Union[int, str] = Field(..., description="""Number of pixels in the 3D data fast axis""", json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    x: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    y: Union[int, str] = Field(..., description="""Number of pixels in the 3D data medium axis""", json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    y: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    z: Union[int, str] = Field(..., description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""", json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    z: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
 
     @field_validator('x')
     def pattern_x(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2459,7 +2438,7 @@ class AlignmentSize(ConfiguredBaseModel):
 
     @field_validator('y')
     def pattern_y(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2471,7 +2450,7 @@ class AlignmentSize(ConfiguredBaseModel):
 
     @field_validator('z')
     def pattern_z(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2488,34 +2467,34 @@ class AlignmentOffset(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Union[int, str] = Field(0, description="""x offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    x: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'ifabsent': 'int(0)',
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    y: Union[int, str] = Field(0, description="""y offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'ifabsent': 'float(0)',
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    y: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'ifabsent': 'int(0)',
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    z: Union[int, str] = Field(0, description="""z offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'ifabsent': 'float(0)',
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    z: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'ifabsent': 'int(0)',
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+         'ifabsent': 'float(0)',
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
 
     @field_validator('x')
     def pattern_x(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2527,7 +2506,7 @@ class AlignmentOffset(ConfiguredBaseModel):
 
     @field_validator('y')
     def pattern_y(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2539,7 +2518,7 @@ class AlignmentOffset(ConfiguredBaseModel):
 
     @field_validator('z')
     def pattern_z(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2555,8 +2534,8 @@ class Alignment(ConfiguredBaseModel):
 
     alignment_type: Optional[AlignmentTypeEnum] = Field(None, description="""The type of alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'alignment_type', 'domain_of': ['Alignment']} })
     offset: Optional[AlignmentOffset] = Field(None, description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
-    volume_dimension: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimension', 'domain_of': ['Alignment']} })
-    x_rotation_offset: Optional[Union[int, str]] = Field(0, description="""The x rotation offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
+    volume_dimesion: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimesion', 'domain_of': ['Alignment']} })
+    x_rotation_offset: Optional[Union[int, str]] = Field(0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['Alignment'],
          'ifabsent': 'int(0)'} })
@@ -2576,7 +2555,7 @@ class Alignment(ConfiguredBaseModel):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'ifabsent': 'False'} })
-    format: AlignmentFormatEnum = Field(..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment']} })
+    format: AlignmentFormatEnum = Field(..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment', 'Ctf']} })
     method_type: Optional[AlignmentMethodTypeEnum] = Field(None, description="""The alignment method type.""", json_schema_extra = { "linkml_meta": {'alias': 'method_type', 'domain_of': ['Annotation', 'Alignment']} })
 
     @field_validator('alignment_type')
@@ -2634,10 +2613,29 @@ class Frame(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    dose: float = Field(..., description="""The dose.""", json_schema_extra = { "linkml_meta": {'alias': 'dose', 'domain_of': ['Frame']} })
-    defocus: float = Field(..., description="""The defocus.""", json_schema_extra = { "linkml_meta": {'alias': 'defocus', 'domain_of': ['Frame']} })
-    astigmatism: float = Field(..., description="""The astigmatism.""", json_schema_extra = { "linkml_meta": {'alias': 'astigmatism', 'domain_of': ['Frame']} })
-    astigmatic_angle: float = Field(..., description="""The astigmatic angle.""", json_schema_extra = { "linkml_meta": {'alias': 'astigmatic_angle', 'domain_of': ['Frame']} })
+    dose_rate: float = Field(..., description="""The dose exposure for a given frame.""", json_schema_extra = { "linkml_meta": {'alias': 'dose_rate', 'domain_of': ['Frame']} })
+    is_gain_corrected: Optional[bool] = Field(None, description="""Is the frame gain corrected""", json_schema_extra = { "linkml_meta": {'alias': 'is_gain_corrected', 'domain_of': ['Frame']} })
+
+
+class Ctf(ConfiguredBaseModel):
+    """
+    A ctf entity.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    format: CtfFormatEnum = Field(..., description="""The format of the ctf file.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment', 'Ctf']} })
+
+    @field_validator('format')
+    def pattern_format(cls, v):
+        pattern=re.compile(r"^CTFFIND$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid format format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid format format: {v}")
+        return v
 
 
 class DateStampedEntityMixin(ConfiguredBaseModel):
@@ -3109,7 +3107,7 @@ class StandardLiteral(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
-    value: List[Any] = Field(..., description="""The value for the literal.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'value',
+    value: List[Any] = Field(..., description="""A placeholder for any type of data.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'value',
          'domain_of': ['StandardLiteral',
                        'KeyPhotoLiteral',
                        'DestinationMetadataFilterKeyPair',
@@ -3136,7 +3134,7 @@ class DestinationMetadataFilterKeyPair(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     key: List[str] = Field(..., description="""The path of the key for the filter in the metadata file.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'key', 'domain_of': ['DestinationMetadataFilterKeyPair']} })
-    value: Any = Field(..., description="""The value for the filter.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
+    value: Any = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
          'domain_of': ['StandardLiteral',
                        'KeyPhotoLiteral',
                        'DestinationMetadataFilterKeyPair',
@@ -6891,6 +6889,7 @@ AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()
 Alignment.model_rebuild()
 Frame.model_rebuild()
+Ctf.model_rebuild()
 DateStampedEntityMixin.model_rebuild()
 DateStamp.model_rebuild()
 CrossReferencesMixin.model_rebuild()

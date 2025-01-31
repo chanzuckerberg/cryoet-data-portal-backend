@@ -61,7 +61,7 @@
                         "null"
                     ]
                 },
-                "volume_dimension": {
+                "volume_dimesion": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/AlignmentSize"
@@ -85,7 +85,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The x rotation offset relative to the tomogram.",
+                    "description": "A placeholder for any type of data.",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
@@ -152,43 +152,43 @@
                     "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "type": "integer"
+                            "type": "number"
                         },
                         {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
                         }
                     ],
-                    "description": "x offset relative to the canonical tomogram in pixels",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "y": {
                     "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "type": "integer"
+                            "type": "number"
                         },
                         {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
                         }
                     ],
-                    "description": "y offset relative to the canonical tomogram in pixels",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "z": {
                     "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "type": "integer"
+                            "type": "number"
                         },
                         {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
                         }
                     ],
-                    "description": "z offset relative to the canonical tomogram in pixels",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
             "required": [
@@ -275,43 +275,43 @@
                     "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "type": "integer"
+                            "type": "number"
                         },
                         {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
                         }
                     ],
-                    "description": "Number of pixels in the 3D data fast axis",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "y": {
                     "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "type": "integer"
+                            "type": "number"
                         },
                         {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
                         }
                     ],
-                    "description": "Number of pixels in the 3D data medium axis",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "z": {
                     "$ref": "#/$defs/Any",
                     "anyOf": [
                         {
-                            "type": "integer"
+                            "type": "number"
                         },
                         {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                             "type": "string"
                         }
                     ],
-                    "description": "Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
             "required": [
@@ -582,11 +582,19 @@
                 "SegmentationMask",
                 "OrientedPoint",
                 "Point",
-                "InstanceSegmentation",
-                "TriangularMesh",
-                "TriangularMeshGroup"
+                "InstanceSegmentation"
             ],
             "title": "AnnotationFileShapeTypeEnum",
+            "type": "string"
+        },
+        "AnnotationFileSourceEnum": {
+            "description": "How the annotation file was acquired",
+            "enum": [
+                "dataset_author",
+                "community",
+                "portal_standard"
+            ],
+            "title": "AnnotationFileSourceEnum",
             "type": "string"
         },
         "AnnotationInstanceSegmentationFile": {
@@ -731,7 +739,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.",
+                    "description": "A placeholder for any type of data.",
                     "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
                 },
                 "name": {
@@ -1356,7 +1364,7 @@
         },
         "Any": {
             "additionalProperties": true,
-            "description": "",
+            "description": "A placeholder for any type of data.",
             "title": "Any",
             "type": [
                 "null",
@@ -1467,7 +1475,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "Camera acquisition mode",
+                    "description": "A placeholder for any type of data.",
                     "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^counting$)|(^superresolution$)|(^linear$)|(^cds$))"
                 },
                 "manufacturer": {
@@ -1528,7 +1536,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "Link to more information about the cell strain.",
+                    "description": "A placeholder for any type of data.",
                     "pattern": "(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)"
                 },
                 "name": {
@@ -1928,6 +1936,30 @@
             },
             "title": "CrossReferences",
             "type": "object"
+        },
+        "Ctf": {
+            "additionalProperties": false,
+            "description": "A ctf entity.",
+            "properties": {
+                "format": {
+                    "$ref": "#/$defs/CtfFormatEnum",
+                    "description": "The format of the ctf file.",
+                    "pattern": "^CTFFIND$"
+                }
+            },
+            "required": [
+                "format"
+            ],
+            "title": "Ctf",
+            "type": "object"
+        },
+        "CtfFormatEnum": {
+            "description": "Used to determine what ctf parser to use.",
+            "enum": [
+                "CTFFIND"
+            ],
+            "title": "CtfFormatEnum",
+            "type": "string"
         },
         "Dataset": {
             "additionalProperties": false,
@@ -2787,7 +2819,7 @@
                 },
                 "value": {
                     "$ref": "#/$defs/Any",
-                    "description": "The value for the filter."
+                    "description": "A placeholder for any type of data."
                 }
             },
             "required": [
@@ -2902,28 +2934,20 @@
             "additionalProperties": false,
             "description": "A frame entity.",
             "properties": {
-                "astigmatic_angle": {
-                    "description": "The astigmatic angle.",
+                "dose_rate": {
+                    "description": "The dose exposure for a given frame.",
                     "type": "number"
                 },
-                "astigmatism": {
-                    "description": "The astigmatism.",
-                    "type": "number"
-                },
-                "defocus": {
-                    "description": "The defocus.",
-                    "type": "number"
-                },
-                "dose": {
-                    "description": "The dose.",
-                    "type": "number"
+                "is_gain_corrected": {
+                    "description": "Is the frame gain corrected",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
                 }
             },
             "required": [
-                "dose",
-                "defocus",
-                "astigmatism",
-                "astigmatic_angle"
+                "dose_rate"
             ],
             "title": "Frame",
             "type": "object"
@@ -3517,7 +3541,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Name of the microscope manufacturer",
+                    "description": "A placeholder for any type of data.",
                     "pattern": "(^FEI$)|(^TFS$)|(^JEOL$)|(^SIMULATED$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
                 },
                 "model": {
@@ -4074,7 +4098,7 @@
             "description": "A literal class with a value attribute.",
             "properties": {
                 "value": {
-                    "description": "The value for the literal.",
+                    "description": "A placeholder for any type of data.",
                     "items": {
                         "$ref": "#/$defs/Any"
                     },
@@ -4216,7 +4240,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Maximal tilt angle in degrees",
+                    "description": "A placeholder for any type of data.",
                     "maximum": 90,
                     "minimum": -90,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -4235,7 +4259,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Minimal tilt angle in degrees",
+                    "description": "A placeholder for any type of data.",
                     "maximum": 90,
                     "minimum": -90,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -4272,7 +4296,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "Binning factor of the aligned tilt series",
+                    "description": "A placeholder for any type of data.",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -4291,7 +4315,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "Describes the binning factor from frames to tilt series file",
+                    "description": "A placeholder for any type of data.",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -4335,7 +4359,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Pixel spacing for the tilt series",
+                    "description": "A placeholder for any type of data.",
                     "minimum": 0.001,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -4360,7 +4384,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Spherical Aberration Constant of the objective lens in millimeters",
+                    "description": "A placeholder for any type of data.",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -4385,7 +4409,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Rotation angle in degrees",
+                    "description": "A placeholder for any type of data.",
                     "maximum": 360,
                     "minimum": -360,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -4408,7 +4432,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
+                    "description": "A placeholder for any type of data.",
                     "maximum": 5,
                     "minimum": 1,
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -4427,7 +4451,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Tilt step in degrees",
+                    "description": "A placeholder for any type of data.",
                     "maximum": 90,
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -4449,7 +4473,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
+                    "description": "A placeholder for any type of data.",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
@@ -4781,7 +4805,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Whether the tomographic alignment was computed based on fiducial markers.",
+                    "description": "A placeholder for any type of data.",
                     "pattern": "(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
                 },
                 "is_visualization_default": {
@@ -4816,7 +4840,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Describe reconstruction method (WBP, SART, SIRT)",
+                    "description": "A placeholder for any type of data.",
                     "pattern": "(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
                 },
                 "reconstruction_software": {
@@ -4852,7 +4876,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Voxel spacing equal in all three axes in angstroms",
+                    "description": "A placeholder for any type of data.",
                     "minimum": 0.001,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
@@ -4936,46 +4960,16 @@
             "description": "The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.",
             "properties": {
                 "x": {
-                    "$ref": "#/$defs/Any",
-                    "anyOf": [
-                        {
-                            "type": "integer"
-                        },
-                        {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
-                            "type": "string"
-                        }
-                    ],
                     "description": "x offset data relative to the canonical tomogram in pixels",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "type": "integer"
                 },
                 "y": {
-                    "$ref": "#/$defs/Any",
-                    "anyOf": [
-                        {
-                            "type": "integer"
-                        },
-                        {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
-                            "type": "string"
-                        }
-                    ],
                     "description": "y offset data relative to the canonical tomogram in pixels",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "type": "integer"
                 },
                 "z": {
-                    "$ref": "#/$defs/Any",
-                    "anyOf": [
-                        {
-                            "type": "integer"
-                        },
-                        {
-                            "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
-                            "type": "string"
-                        }
-                    ],
                     "description": "z offset data relative to the canonical tomogram in pixels",
-                    "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
+                    "type": "integer"
                 }
             },
             "required": [
@@ -5201,7 +5195,8 @@
         "TomogramTypeEnum": {
             "description": "Tomogram type",
             "enum": [
-                "CANONICAL"
+                "CANONICAL",
+                "UNKNOWN"
             ],
             "title": "TomogramTypeEnum",
             "type": "string"

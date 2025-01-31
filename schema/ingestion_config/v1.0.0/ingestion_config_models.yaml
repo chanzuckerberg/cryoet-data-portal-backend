@@ -4,8 +4,8 @@ version: 1.1.0
 description: Schema for ingestion configs
 imports:
 - linkml:types
-- ../../core/v1.1.0/codegen/metadata_materialized
-- ../../core/v1.1.0/common
+- ../../core/v2.0.0/codegen/metadata_materialized
+- ../../core/v2.0.0/common
 prefixes:
   linkml:
     prefix_prefix: linkml
