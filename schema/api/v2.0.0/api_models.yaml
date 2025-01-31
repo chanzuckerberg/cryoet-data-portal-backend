@@ -75,13 +75,16 @@ classes:
         range: AnnotationFile
         inverse: AnnotationFile.alignment
         multivalued: true
+      deposition:
+        range: Deposition
+        inverse: Deposition.alignments
       per_section_alignments:
         range: PerSectionAlignmentParameters
         inverse: PerSectionAlignmentParameters.alignment
         multivalued: true
-      deposition:
-        range: Deposition
-        inverse: Deposition.alignments
+      run:
+        range: Run
+        inverse: Run.alignments
       tiltseries:
         range: Tiltseries
         inverse: Tiltseries.alignments
@@ -89,9 +92,6 @@ classes:
         range: Tomogram
         inverse: Tomogram.alignment
         multivalued: true
-      run:
-        range: Run
-        inverse: Run.alignments
       alignment:
         exact_mappings:
           - cdp-common:api_alignment

@@ -149,7 +149,7 @@ Tiltseries {
     string microscope_phase_plate
     string microscope_image_corrector
     string microscope_additional_info
-    string camera_manufacturer
+    tiltseries_camera_manufacturer_enum camera_manufacturer
     string camera_model
     float tilt_min
     float tilt_max
@@ -310,11 +310,11 @@ Frame ||--|o Deposition : "deposition"
 Frame ||--}o PerSectionParameters : "per_section_parameters"
 Frame ||--|o Run : "run"
 Alignment ||--}o AnnotationFile : "annotation_files"
-Alignment ||--}o PerSectionAlignmentParameters : "per_section_alignments"
 Alignment ||--|o Deposition : "deposition"
+Alignment ||--}o PerSectionAlignmentParameters : "per_section_alignments"
+Alignment ||--|o Run : "run"
 Alignment ||--|o Tiltseries : "tiltseries"
 Alignment ||--}o Tomogram : "tomograms"
-Alignment ||--|o Run : "run"
 PerSectionAlignmentParameters ||--|| Alignment : "alignment"
 DepositionAuthor ||--|o Deposition : "deposition"
 AnnotationAuthor ||--|o Annotation : "annotation"
