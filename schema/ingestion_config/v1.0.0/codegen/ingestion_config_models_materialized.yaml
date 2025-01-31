@@ -3526,11 +3526,9 @@ classes:
         - TomogramEntity
         - VoxelSpacingEntity
         range: FrameSource
-        required: true
         multivalued: true
         inlined: true
         inlined_as_list: true
-        minimum_cardinality: 1
       metadata:
         name: metadata
         description: A frame entity.

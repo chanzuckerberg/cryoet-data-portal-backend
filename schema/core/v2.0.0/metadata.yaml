@@ -875,7 +875,9 @@ classes:
     attributes:
       dose_rate:
         description: The dose exposure for a given frame.
-        range: float
+        any_of:
+        - range: float
+        - range: FloatFormattedString
         required: true
       is_gain_corrected:
         description: Is the frame gain corrected

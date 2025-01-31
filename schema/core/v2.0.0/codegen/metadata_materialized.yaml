@@ -4281,16 +4281,20 @@ classes:
     attributes:
       dose_rate:
         name: dose_rate
-        description: The dose exposure for a given frame.
+        description: A placeholder for any type of data.
         from_schema: metadata
         alias: dose_rate
         owner: Frame
         domain_of:
         - Frame
-        range: float
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
+        any_of:
+        - range: float
+        - range: FloatFormattedString
       is_gain_corrected:
         name: is_gain_corrected
         description: Is the frame gain corrected

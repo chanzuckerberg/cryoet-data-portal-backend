@@ -3116,8 +3116,18 @@
             "description": "A frame entity.",
             "properties": {
                 "dose_rate": {
-                    "description": "The dose exposure for a given frame.",
-                    "type": "number"
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "is_gain_corrected": {
                     "description": "Is the frame gain corrected",
@@ -3153,13 +3163,12 @@
                     "items": {
                         "$ref": "#/$defs/FrameSource"
                     },
-                    "minItems": 1,
-                    "type": "array"
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 }
             },
-            "required": [
-                "sources"
-            ],
             "title": "FrameEntity",
             "type": "object"
         },

@@ -4346,16 +4346,34 @@ class Frame(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    dose_rate: float = Field(
+    dose_rate: Union[float, str] = Field(
         ...,
-        description="""The dose exposure for a given frame.""",
-        json_schema_extra={"linkml_meta": {"alias": "dose_rate", "domain_of": ["Frame"]}},
+        description="""A placeholder for any type of data.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "dose_rate",
+                "any_of": [{"range": "float"}, {"range": "FloatFormattedString"}],
+                "domain_of": ["Frame"],
+            }
+        },
     )
     is_gain_corrected: Optional[bool] = Field(
         None,
         description="""Is the frame gain corrected""",
         json_schema_extra={"linkml_meta": {"alias": "is_gain_corrected", "domain_of": ["Frame"]}},
     )
+
+    @field_validator("dose_rate")
+    def pattern_dose_rate(cls, v):
+        pattern = re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid dose_rate format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid dose_rate format: {v}")
+        return v
 
 
 class Ctf(ConfiguredBaseModel):
