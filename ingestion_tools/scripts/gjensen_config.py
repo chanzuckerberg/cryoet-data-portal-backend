@@ -175,7 +175,9 @@ def to_standardization_config(
         "gain_glob": None,
         "rawtlt_files": [
             "{run_name}/rawdata/*.mdoc",
+            "{run_name}/generated/*.mdoc",
             "{run_name}/file_*/*.rawtlt",
+            "{run_name}/generated/*.rawtlt",
             f"{{run_name}}/{tlt_tomo_path}/*.rawtlt",
         ],
         "tiltseries_glob": "{run_name}/rawdata/*",
@@ -589,6 +591,8 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     """
     Create dataset configs for Grant Jensen datasets from the data czii-data-portal-processing repository. The db data
     is store in the path czii-data-portal-processing/src/data_portal_processing/jensendb.
+    Requires the latest version of https://github.com/czimaginginstitute/czii-data-portal-processing repository's
+    src/data_portal_processing/jensendb to be available locally.
     :param ctx:
     :param input_dir: Path to the local jensendb directory containing the input files. "
     :param output_dir: The output directory to store the dataset configs.

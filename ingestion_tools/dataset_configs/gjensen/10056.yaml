@@ -4,6 +4,7 @@ collection_metadata:
   - source_multi_glob:
       list_globs:
       - '{run_name}/rawdata/*.mdoc'
+      - GJensen_full/{run_name}/generated/*.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -71,6 +72,7 @@ rawtilts:
   - source_multi_glob:
       list_globs:
       - '{run_name}/file_*/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
       - '{run_name}/3dimage_*/*.rawtlt'
 runs:
 - sources:
