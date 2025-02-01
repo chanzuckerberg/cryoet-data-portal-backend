@@ -173,6 +173,7 @@ def to_standardization_config(
         "destination_prefix": str(dataset_id),
         "source_prefix": "GJensen_full",
         "frames_glob": None,
+        "frame_dose_rate": frame_dose_rate,
         "gain_glob": None,
         "rawtlt_files": [
             "{run_name}/*/*.mdoc", # The mdoc files can be in rawdata or file_* folders
@@ -192,9 +193,6 @@ def to_standardization_config(
         "run_regex": f'({"|".join(run_names)})$',
         "run_name_regex": "(.*)",
     }
-
-    if frame_dose_rate:
-        config["frame_dose_rate"] = frame_dose_rate
 
     if run_data_map:
         run_data_map_file = os.path.join(run_data_map_path, f"{dataset_id}.csv")
