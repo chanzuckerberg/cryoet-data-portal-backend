@@ -151,6 +151,7 @@ def to_standardization_config(
     run_tomo_map_path: str,
     run_frames_map_path: str,
     deposition_id: int | None,
+    frame_dose_rate: float | str | None,
 ) -> dict[str, Any]:
     """
     Creates standardization config entity.This adds all the required path globs and regexes needed for the sources.
@@ -191,6 +192,9 @@ def to_standardization_config(
         "run_regex": f'({"|".join(run_names)})$',
         "run_name_regex": "(.*)",
     }
+
+    if frame_dose_rate:
+        config["frame_dose_rate"] = frame_dose_rate
 
     if run_data_map:
         run_data_map_file = os.path.join(run_data_map_path, f"{dataset_id}.csv")
@@ -394,7 +398,7 @@ def to_config_by_run(
 
     if len(templates) == 0:
         return {}
-    elif len(templates) <= 1:
+    elif len(templates) == 1:
         return next(iter(templates.values()), {}).get("metadata")
 
     print(f"{dataset_id} has {len(templates)} configs for {prefix}")
@@ -570,6 +574,16 @@ def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
         int(key): update_cross_reference(val) for key, val in get_json_data(input_dir, "cross_references.json").items()
     }
 
+def get_frames_dose_rate_mapping(input_dir: str) -> dict[str, float]:
+    """
+    Get frame-dose mapping for run names. The data for this is sourced from the run_dose_rate_map.tsv file in
+    the input directory.
+    :param input_dir:
+    :return: dictionary mapping run name to dose rate
+    """
+    with open(os.path.join(input_dir, "run_dose_rate_map.tsv")) as csvfile:
+        reader = csv.DictReader(csvfile, delimiter="\t")
+        return {row["run_name"]: float(row["dose_rate"]) for row in reader}
 
 def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:
     for entity in entities:
@@ -581,6 +595,27 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
             if "run" not in source["parent_filters"]["exclude"]:
                 source["parent_filters"]["exclude"]["run"] = []
             source["parent_filters"]["exclude"]["run"].extend(runs_to_exclude)
+
+
+def handle_frame_dose_rate(data: dict[str, Any], run_data_map: dict, frame_dose_rate_mapping: dict[str, float]) -> str | float | None :
+    distinct_values = {} # Holds the mapping between distinct frame rate and the runs with those values
+    for entry in data:
+        run_name = entry["run_name"]
+        dose_rate = frame_dose_rate_mapping.get(run_name, 0.0)
+        if dose_rate in distinct_values:
+            distinct_values[dose_rate].append(run_name)
+        else :
+            distinct_values[dose_rate] = [run_name]
+
+    if len(distinct_values) == 0:
+        return None
+    if len(distinct_values) == 1:
+        return next(iter(distinct_values.keys()))
+    key = "float {frames_dose_rate}"
+    for dose_rate, runs in distinct_values.items():
+        for run_name in runs:
+            run_data_map[run_name][key] = dose_rate
+    return key
 
 
 @cli.command()
@@ -607,7 +642,10 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
     cross_reference_mapping = get_cross_reference_mapping(input_dir)
+    frame_dose_rate_mapping = get_frames_dose_rate_mapping(input_dir)
+
     deposition_mapping = get_deposition_map(input_dir)
+
     deposition_entity_by_id = create_deposition_entity_map(input_dir, cross_reference_mapping, deposition_mapping)
     file_paths = fs.glob(os.path.join(input_dir, "portal_[0-9]*.json"))
     file_paths.sort()
@@ -651,6 +689,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 run_tomo_map_path,
                 run_frames_map_path,
                 deposition_mapping.get(dataset_id),
+                handle_frame_dose_rate(val.get("runs"), run_data_map, frame_dose_rate_mapping),
             ),
         }
 

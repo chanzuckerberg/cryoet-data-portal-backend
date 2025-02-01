@@ -186,6 +186,7 @@ def upgrade(data: dict[str, Any]) -> dict[str, Any]:
         "run_data_map_file",
         "run_to_tomo_map_csv",
         "run_to_ts_map_csv",
+        "frame_dose_rate",
     ]
     data["standardization_config"] = {
         k: v for k, v in data["standardization_config"].items() if k in valid_standardization_keys
