@@ -45,7 +45,6 @@ annotations:
       binning: 4
       file_format: tomoman_relion_star
       glob_string: '{run_name}/metadata/particles/*.star'
-
       is_visualization_default: true
       order: xyz
 collection_metadata:
@@ -103,6 +102,12 @@ datasets:
   - literal:
       value:
       - '10007'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10007_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10007_thumbnail.png
 depositions:
 - metadata:
     authors: *id002
@@ -121,14 +126,11 @@ depositions:
   - literal:
       value:
       - 10007
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10007_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10007_thumbnail.png"
 frames:
-- sources:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: '{run_name}/frames/*.eer'
 gains:

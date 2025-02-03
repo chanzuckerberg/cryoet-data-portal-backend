@@ -1,8 +1,10 @@
 def add_frames_metadata(config: dict):
     standardization_config = config.get("standardization_config")
-    frame_dose_rate = standardization_config.get("frame_dose_rate")
-    if frame_dose_rate is None:
-        return config
+    frame_dose_rate = standardization_config.get("frame_dose_rate", 0)
+
+    if not frame_dose_rate and "frames" not in config:
+        return
+
     if "frames" not in config:
         config["frames"] = [
             {

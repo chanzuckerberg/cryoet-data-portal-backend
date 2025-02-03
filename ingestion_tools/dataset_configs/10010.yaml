@@ -25,7 +25,6 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
-
       is_visualization_default: true
       mask_label: 1
 - metadata:
@@ -45,7 +44,6 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
-
       is_visualization_default: true
       mask_label: 2
 - metadata:
@@ -65,7 +63,6 @@ annotations:
   - SemanticSegmentationMask:
       file_format: mrc
       glob_string: Voxel_Segmentations/{run_name}_labels.rec.mrc
-
       is_visualization_default: true
       mask_label: 3
 collection_metadata:
@@ -125,6 +122,12 @@ datasets:
   - literal:
       value:
       - '10010'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10010_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10010_thumbnail.png
 depositions:
 - metadata:
     authors: *id003
@@ -143,14 +146,11 @@ depositions:
   - literal:
       value:
       - 10010
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10010_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10010_thumbnail.png"
 frames:
-- sources:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: frames/{run_name}_*.tif
 runs:
