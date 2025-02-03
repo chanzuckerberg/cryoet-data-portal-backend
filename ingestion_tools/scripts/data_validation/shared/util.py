@@ -25,7 +25,7 @@ TIFF_EXTENSIONS = (".tif", ".tiff", ".eer", ".gain")
 def get_file_type(filename: str) -> str:
     if filename.endswith(".zarr"):
         return "zarr"
-    elif any(filename.endswith(extension) for extension in [".mrc", ".st"]):
+    if any(filename.endswith(extension) for extension in [".mrc", ".st"]):
         return "mrc"
     return "unknown"
 
@@ -76,14 +76,13 @@ def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi, fail_test: bool = Tru
 def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi, fail_test: bool = True):
     if file.endswith(MRC_EXTENSION):
         return file, get_mrc_header(file, filesystem, fail_test)
-    elif file.endswith(MRC_BZ2_EXTENSION):
+    if file.endswith(MRC_BZ2_EXTENSION):
         return file, get_mrc_bz2_header(file, filesystem, fail_test)
-    elif file.endswith(TIFF_EXTENSIONS):
+    if file.endswith(TIFF_EXTENSIONS):
         with filesystem.open(file, "rb", block_size=TIFF_HEADER_BLOCK_SIZE) as f, TiffFile(f) as tif:
             # The tif.pages must be converted to a list to actually read all the pages' data
             return file, list(tif.pages)
-    else:
-        return None, None
+    return None, None
 
 
 def get_tiff_mrc_headers(

@@ -254,6 +254,7 @@ def pytest_configure(config: pytest.Config) -> None:
     config.addinivalue_line("markers", "deposition: Tests concerning the deposition data.")
     config.addinivalue_line("markers", "frame: Tests concerning the frames.")
     config.addinivalue_line("markers", "gain: Tests concerning the gain files.")
+    config.addinivalue_line("markers", "mdoc: Tests concerning the .mdoc files.")
     config.addinivalue_line("markers", "run: Tests concerning the runs.")
     config.addinivalue_line("markers", "tiltseries: Tests concerning the tiltseries.")
     config.addinivalue_line(

@@ -1,13 +1,13 @@
 import allure
 import pandas as pd
 import pytest
+from data_validation.shared.helper.tiltseries_helper import TiltSeriesHelper
+from data_validation.shared.util import get_file_type, get_mrc_header, get_zarr_metadata
 from importers.base_importer import RunImporter
 from importers.tiltseries import TiltSeriesImporter
 
 from common.fs import FileSystemApi
 from common.image import get_volume_info
-from data_validation.shared.helper.tiltseries_helper import TiltSeriesHelper
-from data_validation.shared.util import get_file_type, get_mrc_header, get_zarr_metadata
 
 
 @pytest.mark.tiltseries
@@ -19,6 +19,8 @@ from data_validation.shared.util import get_file_type, get_mrc_header, get_zarr_
 )
 class TestTiltSeries(TiltSeriesHelper):
 
+    # This run fixture is required for generating some of the dependencies that are used in testing like raw_tilt_data,
+    # mdoc_data, etc.
     @pytest.fixture(scope="session")
     def run(self, tiltseries: TiltSeriesImporter) -> RunImporter:
         return tiltseries.get_run()
@@ -41,7 +43,7 @@ class TestTiltSeries(TiltSeriesHelper):
             if self.file_type == "mrc":
                 self.mrc_headers = {file_path: get_mrc_header(file_path, filesystem, fail_test=False)}
             elif self.file_type == "zarr":
-                self.zarr_headers = get_zarr_metadata(file_path, filesystem, fail_test=False)
+                self.zarr_headers = {file_path: get_zarr_metadata(file_path, filesystem, fail_test=False)}
         self.spacing = tiltseries_metadata.get("pixel_spacing")
         self.skip_z_axis_checks = True
 

@@ -2,9 +2,8 @@ import allure
 import pandas as pd
 import pytest
 import tifffile
-from mrcfile.mrcinterpreter import MrcInterpreter
-
 from data_validation.shared.helper.tilt_angles_helper import TiltAnglesHelper
+from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 @pytest.mark.tilt_angles
@@ -47,7 +46,7 @@ class TestTiltAngles(TiltAnglesHelper):
             if isinstance(frame_header, MrcInterpreter):
                 # only need to check the first frame, since we check that all frames have the same pixel spacing
                 assert tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["x"] == pytest.approx(
-                    round(tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["x"]),
+                    round(tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["y"]),
                     abs=0.001,
                 ), f"Pixel spacing does not match tiltseries metadata, {frame_file}"
                 return
