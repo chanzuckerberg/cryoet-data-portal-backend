@@ -1,5 +1,4 @@
 import pytest
-
 from data_validation.shared.helper.mdoc_helper import MdocTestHelper
 
 

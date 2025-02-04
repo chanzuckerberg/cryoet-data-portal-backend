@@ -4,7 +4,6 @@ import allure
 import numpy as np
 import pandas as pd
 import pytest
-
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
 
 

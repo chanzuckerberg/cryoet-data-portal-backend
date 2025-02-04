@@ -1,6 +1,5 @@
 import allure
 import pytest
-
 from data_validation.shared.helper.tilt_angles_helper import TiltAnglesHelper
 
 

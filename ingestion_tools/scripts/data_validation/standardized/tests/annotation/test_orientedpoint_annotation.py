@@ -3,7 +3,6 @@ from typing import Dict, List
 import allure
 import numpy as np
 import pytest
-
 from data_validation.standardized.tests.annotation.helper_point import contained_in_tomo, point_count_consistent
 
 

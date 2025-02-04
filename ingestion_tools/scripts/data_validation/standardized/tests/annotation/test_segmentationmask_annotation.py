@@ -3,9 +3,8 @@ from typing import Dict, List
 import allure
 import numpy as np
 import pytest
-from mrcfile.mrcinterpreter import MrcInterpreter
-
 from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
+from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination

@@ -1,6 +1,5 @@
 import allure
 import pandas as pd
-
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
 
 

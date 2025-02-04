@@ -6,12 +6,11 @@ import allure
 import numpy as np
 import pandas as pd
 import pytest
-from mrcfile.mrcinterpreter import MrcInterpreter
-
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
 from data_validation.shared.helper.tiltseries_helper import TiltSeriesHelper
 from data_validation.shared.util import BINNING_FACTORS
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
+from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination

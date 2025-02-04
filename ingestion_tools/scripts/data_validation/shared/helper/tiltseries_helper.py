@@ -3,7 +3,6 @@ import re
 import allure
 import pandas as pd
 import pytest
-
 from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
 
 TILT_AXIS_ANGLE_REGEX = re.compile(r".*tilt axis angle = (\d*\.\d*|\d*)")

@@ -4,13 +4,13 @@ from typing import Dict
 
 import allure
 import pytest
-from mrcfile.mrcinterpreter import MrcInterpreter
-
-from common.fs import FileSystemApi
 from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
 from data_validation.standardized.tests.helper_images import check_photo_valid
 from data_validation.standardized.tests.helper_metadata import basic_metadata_check
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
+from mrcfile.mrcinterpreter import MrcInterpreter
+
+from common.fs import FileSystemApi
 
 # values are based on ingestion_tools/scripts/importers/key_image.py
 # (100 pixels is the min width, if it's 4:3 then rotated by key_image.py)
