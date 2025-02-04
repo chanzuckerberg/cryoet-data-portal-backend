@@ -143,18 +143,18 @@ class PerSectionParameterGenerator:
 
     def get_data(self) -> list[dict[str, str]]:
         psp = []
-        rawtlt = self.get_raw_tlt()
-        mdoc_data = self.get_mdoc_data()
-        ctf_data = self.get_ctf_data()
+        rawtlt = self._get_raw_tlt()
+        mdoc_data = self._get_mdoc_data()
+        ctf_data = self._get_ctf_data()
         for index, raw_angle in rawtlt["raw_tlt_angle"].items():
-            mdoc_entry = self.get_mdoc_entry(round(raw_angle), mdoc_data)
-            ctf_entry = self.get_ctf_entry(mdoc_entry.ZValue, ctf_data)
+            mdoc_entry = self._get_mdoc_entry(round(raw_angle), mdoc_data)
+            ctf_entry = self._get_ctf_entry(mdoc_entry.ZValue, ctf_data)
             psp_section = PerSectionParameter(index, mdoc_entry, ctf_entry)
             psp.append(psp_section.to_json())
 
         return psp
 
-    def get_raw_tlt(self) -> pd.DataFrame:
+    def _get_raw_tlt(self) -> pd.DataFrame:
         for rawtlt in RawTiltImporter.finder(self.config, **self.parents):
             if not rawtlt.path or not rawtlt.path.endswith(".rawtlt"):
                 # Check to prevent any other files being included in the rawtlt section, incorrectly being pulled here.
@@ -162,27 +162,27 @@ class PerSectionParameterGenerator:
             path = rawtlt.get_destination_path()
             local_path = self.config.fs.localreadable(path)
             return pd.read_csv(local_path, names=["raw_tlt_angle"])
-        raise Exception(f"No .rawtlt found for run: {self.parents['run'].name}")
+        raise Exception(f"No rawtlt found for run: {self.parents['run'].name}")
 
-    def get_mdoc_data(self) -> list[MdocSectionData]:
+    def _get_mdoc_data(self) -> list[MdocSectionData]:
         collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
         return collection_md.get_output_data().section_data
 
-    def get_ctf_data(self) -> list[CTFInfo]:
+    def _get_ctf_data(self) -> list[CTFInfo]:
         for ctf in CtfImporter.finder(self.config, **self.parents):
             return ctf.get_output_data()
         return []
 
     @classmethod
-    def get_mdoc_entry(cls, tilt_angle: float, mdoc_data: list[MdocSectionData]) -> MdocSectionData:
+    def _get_mdoc_entry(cls, tilt_angle: float, mdoc_data: list[MdocSectionData]) -> MdocSectionData:
         for entry in mdoc_data:
             if round(entry.TiltAngle) == tilt_angle:
                 return entry
         raise Exception(f"No match for tiltangle {tilt_angle} in mdoc_data")
 
     @classmethod
-    def get_ctf_entry(cls, section_id: int, ctf_data: list[CTFInfo]) -> CTFInfo | None:
+    def _get_ctf_entry(cls, section_id: int, ctf_data: list[CTFInfo]) -> CTFInfo | None:
         for entry in ctf_data:
-            if section_id == entry.section - 1:
+            if section_id == (entry.section - 1):
                 return entry
         return None
