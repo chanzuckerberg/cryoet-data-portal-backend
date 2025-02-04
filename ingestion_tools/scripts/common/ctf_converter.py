@@ -12,13 +12,16 @@ class CTFInfo:
         cross_correlation (float): Cross correlation value.
         max_resolution (float): Maximum resolution (A).
     """
-    section: int = None
-    defocus_1: float = None
-    defocus_2: float = None
-    azimuth: float = None
-    phase_shift: float = None
-    cross_correlation: float = None
-    max_resolution: float = None
+    def __init__(
+            self, section: int, defocus_1: float, defocus_2: float, azimuth: float, phase_shift: float, cross_correlation: float, max_resolution: float,
+    ):
+        self.section = section
+        self.defocus_1 = defocus_1
+        self.defocus_2 = defocus_2
+        self.azimuth = azimuth
+        self.phase_shift = phase_shift
+        self.cross_correlation = cross_correlation
+        self.max_resolution = max_resolution
 
 
 class BaseCTFConverter:
@@ -32,10 +35,28 @@ class BaseCTFConverter:
 
 
 class AreTomo3CTF(BaseCTFConverter):
-    # TODO: Add parser
+    CtfValues: list[CTFInfo]
+
+    def get_ctf_info(self) -> list[CTFInfo]:
+        local_path = self.config.fs.localreadable(self.path)
+        with open(local_path, "r") as f:
+            text = f.read()
+        lines = text.strip().splitlines()
+        lines.pop(0)
+        return [self.from_str(line) for line in lines]
+
     @classmethod
-    def get_ctf_info(cls) -> list[CTFInfo]:
-        return []
+    def from_str(cls, line: str):
+        parts = line.split()
+        return CTFInfo(
+            section=int(parts[0]),
+            defocus_1=float(parts[1]),
+            defocus_2=float(parts[2]),
+            azimuth=float(parts[3]),
+            phase_shift=float(parts[4]),
+            cross_correlation=float(parts[5]),
+            max_resolution=float(parts[6]),
+        )
 
 def ctf_converter_factory(metadata: dict, config: DepositionImportConfig, path: str) -> BaseCTFConverter:
     ctf_format = metadata.get("format")
