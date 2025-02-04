@@ -65,7 +65,7 @@ build-ingestion-config: clean-core clean-ingestion-config
 	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) > $(METADATA_MODELS_PY)
 	linkml generate pydantic $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_MODELS_PY)
 	linkml generate json-schema $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_JSON_SCHEMA)
-	cd ingestion_config && ln -s $(INGESTION_CONFIG_VERSION) latest && cd ..
+	cd ingestion_config && ln -sf $(INGESTION_CONFIG_VERSION) latest && cd ..
 
 # To build-api for the non-default version, run `make build-api API_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
 .PHONY: build-api

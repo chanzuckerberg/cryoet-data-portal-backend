@@ -40,6 +40,7 @@ from codegen.ingestion_config_models import (
     DepositionKeyPhotoEntity,
     DepositionKeyPhotoSource,
     DepositionSource,
+    Frame,
     FrameEntity,
     FrameSource,
     GainEntity,
@@ -862,7 +863,18 @@ class ExtendedValidationDepositionEntity(DepositionEntity):
 # ==============================================================================
 # Frame Validation
 # ==============================================================================
+class ExtendedValidationFrames(Frame):
+
+    @field_validator("dose_rate")
+    @classmethod
+    def valid_dose_rate(cls, dose_rate: Union[float, str]) -> None:
+        if isinstance(dose_rate, float) and dose_rate <= 0:
+            raise ValueError(f"Dose Rate must be greater than zero, got {dose_rate}")
+
+
 class ExtendedValidationFrameEntity(FrameEntity):
+    metadata: Optional[ExtendedValidationFrames] = FrameEntity.model_fields["metadata"]
+
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[FrameSource]) -> List[FrameSource]:

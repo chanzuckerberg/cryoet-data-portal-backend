@@ -63,8 +63,8 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-ingestion-config/',
      'description': 'Schema for ingestion configs',
      'id': 'cdp-ingestion-config',
      'imports': ['linkml:types',
-                 '../../../core/v1.1.0/codegen/metadata_materialized',
-                 '../../../core/v1.1.0/common'],
+                 '../../../core/v2.0.0/codegen/metadata_materialized',
+                 '../../../core/v2.0.0/common'],
      'name': 'cdp-ingestion-config',
      'prefixes': {'linkml': {'prefix_prefix': 'linkml',
                              'prefix_reference': 'https://w3id.org/linkml/'}},
@@ -407,9 +407,9 @@ class AlignmentTypeEnum(str, Enum):
     """
     Type of alignment
     """
-    # Local alignment
+    # per-section non-rigid alignment available
     LOCAL = "LOCAL"
-    # Global alignment
+    # only per-section rigid alignment available
     GLOBAL = "GLOBAL"
 
 
@@ -417,9 +417,9 @@ class AlignmentFormatEnum(str, Enum):
     """
     Used to determine what alignment alogrithm to use.
     """
-    # IMOD was used for the alignment. Supported file formats are (xf, tlt, tilt.com, news.com, xtilt)
+    # formats (xf, tlt, com)
     IMOD = "IMOD"
-    # ARETOMO3 was used for the alignment. Supported file formats are (aln, txt, csv)
+    # formats (aln)
     ARETOMO3 = "ARETOMO3"
 
 
@@ -435,6 +435,18 @@ class AlignmentMethodTypeEnum(str, Enum):
     projection_matching = "projection_matching"
     # how alignment was done is unknown
     undefined = "undefined"
+
+
+class AnnotationFileSourceEnum(str, Enum):
+    """
+    How the annotation file was acquired
+    """
+    # Annotation submitted by dataset author
+    dataset_author = "dataset_author"
+    # Annotation submitted by community member
+    community = "community"
+    # Annotation submitted by portal standardization
+    portal_standard = "portal_standard"
 
 
 class AnnotationMethodTypeEnum(str, Enum):
@@ -463,10 +475,6 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     Point = "Point"
     # A volume with labels for multiple instances
     InstanceSegmentation = "InstanceSegmentation"
-    # A mesh of triangles
-    TriangularMesh = "TriangularMesh"
-    # A group of triangular meshes
-    TriangularMeshGroup = "TriangularMeshGroup"
 
 
 class AnnotationMethodLinkTypeEnum(str, Enum):
@@ -483,6 +491,14 @@ class AnnotationMethodLinkTypeEnum(str, Enum):
     source_code = "source_code"
     # Links to a website of the method or tool used to generate the annotation.
     website = "website"
+
+
+class CtfFormatEnum(str, Enum):
+    """
+    Used to determine what ctf parser to use.
+    """
+    # formats ctffind file formats
+    CTFFIND = "CTFFIND"
 
 
 class DepositionTypesEnum(str, Enum):
@@ -605,6 +621,8 @@ class TomogramTypeEnum(str, Enum):
     """
     # Canonical tomogram (basis geometry for all annotations)
     CANONICAL = "CANONICAL"
+    # Tomogram's was not submitted by the dataset author
+    UNKNOWN = "UNKNOWN"
 
 
 
@@ -842,7 +860,7 @@ class CellStrain(ConfiguredBaseModel):
                        'AuthorMixin',
                        'Author'],
          'exact_mappings': ['cdp-common:cell_strain_name']} })
-    id: Optional[str] = Field(None, description="""Link to more information about the cell strain.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+    id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
          'any_of': [{'range': 'WORMBASE_ID'}, {'range': 'ONTOLOGY_ID'}],
          'domain_of': ['TissueDetails',
                        'CellType',
@@ -1071,7 +1089,7 @@ class CameraDetails(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    acquire_mode: Optional[Union[TiltseriesCameraAcquireModeEnum, str]] = Field(None, description="""Camera acquisition mode""", json_schema_extra = { "linkml_meta": {'alias': 'acquire_mode',
+    acquire_mode: Optional[Union[TiltseriesCameraAcquireModeEnum, str]] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'acquire_mode',
          'any_of': [{'range': 'StringFormattedString'},
                     {'range': 'tiltseries_camera_acquire_mode_enum'}],
          'domain_of': ['CameraDetails'],
@@ -1117,7 +1135,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
     additional_info: Optional[str] = Field(None, description="""Other microscope optical setup information, in addition to energy filter, phase plate and image corrector""", json_schema_extra = { "linkml_meta": {'alias': 'additional_info',
          'domain_of': ['MicroscopeDetails'],
          'exact_mappings': ['cdp-common:tiltseries_microscope_additional_info']} })
-    manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(..., description="""Name of the microscope manufacturer""", json_schema_extra = { "linkml_meta": {'alias': 'manufacturer',
+    manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'manufacturer',
          'any_of': [{'description': 'Name of the microscope manufacturer',
                      'exact_mappings': ['cdp-common:tiltseries_microscope_manufacturer'],
                      'range': 'tiltseries_microscope_manufacturer_enum',
@@ -1164,7 +1182,7 @@ class TiltRange(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    min: Union[float, str] = Field(..., description="""Minimal tilt angle in degrees""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'min',
+    min: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'min',
          'any_of': [{'description': 'Minimal tilt angle in degrees',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_min'],
                      'maximum_value': 90,
@@ -1175,7 +1193,7 @@ class TiltRange(ConfiguredBaseModel):
                     {'range': 'FloatFormattedString'}],
          'domain_of': ['TiltRange'],
          'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
-    max: Union[float, str] = Field(..., description="""Maximal tilt angle in degrees""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'max',
+    max: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'max',
          'any_of': [{'description': 'Maximal tilt angle in degrees',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_max'],
                      'maximum_value': 90,
@@ -1222,7 +1240,7 @@ class TiltSeries(ConfiguredBaseModel):
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_acceleration_voltage'],
          'unit': {'descriptive_name': 'volts', 'symbol': 'V'}} })
-    aligned_tiltseries_binning: Optional[Union[float, str]] = Field(1.0, description="""Binning factor of the aligned tilt series""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'aligned_tiltseries_binning',
+    aligned_tiltseries_binning: Optional[Union[float, str]] = Field(1.0, description="""A placeholder for any type of data.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'aligned_tiltseries_binning',
          'any_of': [{'description': 'Binning factor of the aligned tilt series',
                      'exact_mappings': ['cdp-common:tiltseries_aligned_tiltseries_binning'],
                      'minimum_value': 0,
@@ -1230,7 +1248,7 @@ class TiltSeries(ConfiguredBaseModel):
                     {'range': 'FloatFormattedString'}],
          'domain_of': ['TiltSeries'],
          'ifabsent': 'float(1)'} })
-    binning_from_frames: Optional[Union[float, str]] = Field(1.0, description="""Describes the binning factor from frames to tilt series file""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'binning_from_frames',
+    binning_from_frames: Optional[Union[float, str]] = Field(1.0, description="""A placeholder for any type of data.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'binning_from_frames',
          'any_of': [{'description': 'Describes the binning factor from frames to tilt '
                                     'series file',
                      'exact_mappings': ['cdp-common:tiltseries_binning_from_frames'],
@@ -1254,7 +1272,7 @@ class TiltSeries(ConfiguredBaseModel):
     related_empiar_entry: Optional[str] = Field(None, description="""If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier""", json_schema_extra = { "linkml_meta": {'alias': 'related_empiar_entry',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_related_empiar_entry']} })
-    spherical_aberration_constant: Union[float, str] = Field(..., description="""Spherical Aberration Constant of the objective lens in millimeters""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'spherical_aberration_constant',
+    spherical_aberration_constant: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'spherical_aberration_constant',
          'any_of': [{'description': 'Spherical Aberration Constant of the objective '
                                     'lens in millimeters',
                      'exact_mappings': ['cdp-common:tiltseries_spherical_aberration_constant'],
@@ -1268,7 +1286,7 @@ class TiltSeries(ConfiguredBaseModel):
     tilt_alignment_software: Optional[str] = Field(None, description="""Software used for tilt alignment""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_alignment_software',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_tilt_alignment_software']} })
-    tilt_axis: Union[float, str] = Field(..., description="""Rotation angle in degrees""", ge=-360, le=360, json_schema_extra = { "linkml_meta": {'alias': 'tilt_axis',
+    tilt_axis: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=-360, le=360, json_schema_extra = { "linkml_meta": {'alias': 'tilt_axis',
          'any_of': [{'description': 'Rotation angle in degrees',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_axis'],
                      'maximum_value': 360,
@@ -1280,7 +1298,7 @@ class TiltSeries(ConfiguredBaseModel):
          'domain_of': ['TiltSeries'],
          'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
     tilt_range: TiltRange = Field(..., description="""The range of tilt angles in the tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_range', 'domain_of': ['TiltSeries']} })
-    tilt_series_quality: Union[int, str] = Field(..., description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""", ge=1, le=5, json_schema_extra = { "linkml_meta": {'alias': 'tilt_series_quality',
+    tilt_series_quality: Union[int, str] = Field(..., description="""A placeholder for any type of data.""", ge=1, le=5, json_schema_extra = { "linkml_meta": {'alias': 'tilt_series_quality',
          'any_of': [{'description': 'Author assessment of tilt series quality within '
                                     'the dataset (1-5, 5 is best)',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_series_quality'],
@@ -1290,7 +1308,7 @@ class TiltSeries(ConfiguredBaseModel):
                      'required': True},
                     {'range': 'IntegerFormattedString'}],
          'domain_of': ['TiltSeries']} })
-    tilt_step: Union[float, str] = Field(..., description="""Tilt step in degrees""", ge=0, le=90, json_schema_extra = { "linkml_meta": {'alias': 'tilt_step',
+    tilt_step: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0, le=90, json_schema_extra = { "linkml_meta": {'alias': 'tilt_step',
          'any_of': [{'description': 'Tilt step in degrees',
                      'exact_mappings': ['cdp-common:tiltseries_tilt_step'],
                      'maximum_value': 90,
@@ -1304,7 +1322,7 @@ class TiltSeries(ConfiguredBaseModel):
     tilting_scheme: str = Field(..., description="""The order of stage tilting during acquisition of the data""", json_schema_extra = { "linkml_meta": {'alias': 'tilting_scheme',
          'domain_of': ['TiltSeries'],
          'exact_mappings': ['cdp-common:tiltseries_tilting_scheme']} })
-    total_flux: Union[float, str] = Field(..., description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'total_flux',
+    total_flux: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'total_flux',
          'any_of': [{'description': 'Number of Electrons reaching the specimen in a '
                                     'square Angstrom area for the entire tilt series',
                      'exact_mappings': ['cdp-common:tiltseries_total_flux'],
@@ -1317,7 +1335,7 @@ class TiltSeries(ConfiguredBaseModel):
          'domain_of': ['TiltSeries'],
          'unit': {'descriptive_name': 'electrons per square Angstrom',
                   'symbol': 'e^-/Å^2'}} })
-    pixel_spacing: Union[float, str] = Field(..., description="""Pixel spacing for the tilt series""", ge=0.001, json_schema_extra = { "linkml_meta": {'alias': 'pixel_spacing',
+    pixel_spacing: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0.001, json_schema_extra = { "linkml_meta": {'alias': 'pixel_spacing',
          'any_of': [{'description': 'Pixel spacing for the tilt series',
                      'exact_mappings': ['cdp-common:tiltseries_pixel_spacing'],
                      'minimum_value': 0.001,
@@ -1470,63 +1488,24 @@ class TomogramOffset(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Union[int, str] = Field(..., description="""x offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    x: int = Field(..., description="""x offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    y: Union[int, str] = Field(..., description="""y offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    y: int = Field(..., description="""y offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    z: Union[int, str] = Field(..., description="""z offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    z: int = Field(..., description="""z offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-
-    @field_validator('x')
-    def pattern_x(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
-        if isinstance(v,list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid x format: {element}")
-        elif isinstance(v,str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid x format: {v}")
-        return v
-
-    @field_validator('y')
-    def pattern_y(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
-        if isinstance(v,list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid y format: {element}")
-        elif isinstance(v,str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid y format: {v}")
-        return v
-
-    @field_validator('z')
-    def pattern_z(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
-        if isinstance(v,list):
-            for element in v:
-                if not pattern.match(element):
-                    raise ValueError(f"Invalid z format: {element}")
-        elif isinstance(v,str):
-            if not pattern.match(v):
-                raise ValueError(f"Invalid z format: {v}")
-        return v
 
 
 class Tomogram(AuthoredEntity):
@@ -1535,7 +1514,7 @@ class Tomogram(AuthoredEntity):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixins': ['AuthoredEntity']})
 
-    voxel_spacing: Union[float, str] = Field(..., description="""Voxel spacing equal in all three axes in angstroms""", ge=0.001, json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacing',
+    voxel_spacing: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", ge=0.001, json_schema_extra = { "linkml_meta": {'alias': 'voxel_spacing',
          'any_of': [{'description': 'Voxel spacing equal in all three axes in '
                                     'angstroms',
                      'exact_mappings': ['cdp-common:tomogram_voxel_spacing'],
@@ -1550,7 +1529,7 @@ class Tomogram(AuthoredEntity):
                        'KeyImageParent',
                        'TomogramParent'],
          'unit': {'descriptive_name': 'Angstroms per voxel', 'symbol': 'Å/voxel'}} })
-    fiducial_alignment_status: Union[FiducialAlignmentStatusEnum, str] = Field(..., description="""Whether the tomographic alignment was computed based on fiducial markers.""", json_schema_extra = { "linkml_meta": {'alias': 'fiducial_alignment_status',
+    fiducial_alignment_status: Union[FiducialAlignmentStatusEnum, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'fiducial_alignment_status',
          'any_of': [{'description': 'Whether the tomographic alignment was computed '
                                     'based on fiducial markers.',
                      'exact_mappings': ['cdp-common:tomogram_fiducial_alignment_status'],
@@ -1565,7 +1544,7 @@ class Tomogram(AuthoredEntity):
     align_software: Optional[str] = Field(None, description="""Software used for alignment""", json_schema_extra = { "linkml_meta": {'alias': 'align_software',
          'domain_of': ['Tomogram'],
          'exact_mappings': ['cdp-common:tomogram_align_software']} })
-    reconstruction_method: Union[TomogramReconstructionMethodEnum, str] = Field(..., description="""Describe reconstruction method (WBP, SART, SIRT)""", json_schema_extra = { "linkml_meta": {'alias': 'reconstruction_method',
+    reconstruction_method: Union[TomogramReconstructionMethodEnum, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'reconstruction_method',
          'any_of': [{'description': 'Describe reconstruction method (WBP, SART, SIRT)',
                      'exact_mappings': ['cdp-common:tomogram_reconstruction_method'],
                      'range': 'tomogram_reconstruction_method_enum',
@@ -1692,7 +1671,7 @@ class AnnotationObject(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    id: str = Field(..., description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+    id: str = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
          'any_of': [{'range': 'GO_ID'}, {'range': 'UNIPROT_ID'}],
          'domain_of': ['TissueDetails',
                        'CellType',
@@ -2423,31 +2402,31 @@ class AlignmentSize(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Union[int, str] = Field(..., description="""Number of pixels in the 3D data fast axis""", json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    x: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    y: Union[int, str] = Field(..., description="""Number of pixels in the 3D data medium axis""", json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    y: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    z: Union[int, str] = Field(..., description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""", json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    z: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
 
     @field_validator('x')
     def pattern_x(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2459,7 +2438,7 @@ class AlignmentSize(ConfiguredBaseModel):
 
     @field_validator('y')
     def pattern_y(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2471,7 +2450,7 @@ class AlignmentSize(ConfiguredBaseModel):
 
     @field_validator('z')
     def pattern_z(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2488,34 +2467,34 @@ class AlignmentOffset(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    x: Union[int, str] = Field(0, description="""x offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+    x: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'ifabsent': 'int(0)',
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    y: Union[int, str] = Field(0, description="""y offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'ifabsent': 'float(0)',
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    y: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'ifabsent': 'int(0)',
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
-    z: Union[int, str] = Field(0, description="""z offset relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
+         'ifabsent': 'float(0)',
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    z: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
-         'ifabsent': 'int(0)',
-         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+         'ifabsent': 'float(0)',
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
 
     @field_validator('x')
     def pattern_x(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2527,7 +2506,7 @@ class AlignmentOffset(ConfiguredBaseModel):
 
     @field_validator('y')
     def pattern_y(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2539,7 +2518,7 @@ class AlignmentOffset(ConfiguredBaseModel):
 
     @field_validator('z')
     def pattern_z(cls, v):
-        pattern=re.compile(r"^int[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -2555,8 +2534,8 @@ class Alignment(ConfiguredBaseModel):
 
     alignment_type: Optional[AlignmentTypeEnum] = Field(None, description="""The type of alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'alignment_type', 'domain_of': ['Alignment']} })
     offset: Optional[AlignmentOffset] = Field(None, description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
-    volume_dimension: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimension', 'domain_of': ['Alignment']} })
-    x_rotation_offset: Optional[Union[int, str]] = Field(0, description="""The x rotation offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
+    volume_dimesion: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimesion', 'domain_of': ['Alignment']} })
+    x_rotation_offset: Optional[Union[int, str]] = Field(0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['Alignment'],
          'ifabsent': 'int(0)'} })
@@ -2576,7 +2555,7 @@ class Alignment(ConfiguredBaseModel):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
          'ifabsent': 'False'} })
-    format: AlignmentFormatEnum = Field(..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment']} })
+    format: AlignmentFormatEnum = Field(..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment', 'Ctf']} })
     method_type: Optional[AlignmentMethodTypeEnum] = Field(None, description="""The alignment method type.""", json_schema_extra = { "linkml_meta": {'alias': 'method_type', 'domain_of': ['Annotation', 'Alignment']} })
 
     @field_validator('alignment_type')
@@ -2634,10 +2613,43 @@ class Frame(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    dose: float = Field(..., description="""The dose.""", json_schema_extra = { "linkml_meta": {'alias': 'dose', 'domain_of': ['Frame']} })
-    defocus: float = Field(..., description="""The defocus.""", json_schema_extra = { "linkml_meta": {'alias': 'defocus', 'domain_of': ['Frame']} })
-    astigmatism: float = Field(..., description="""The astigmatism.""", json_schema_extra = { "linkml_meta": {'alias': 'astigmatism', 'domain_of': ['Frame']} })
-    astigmatic_angle: float = Field(..., description="""The astigmatic angle.""", json_schema_extra = { "linkml_meta": {'alias': 'astigmatic_angle', 'domain_of': ['Frame']} })
+    dose_rate: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'dose_rate',
+         'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
+         'domain_of': ['Frame']} })
+    is_gain_corrected: Optional[bool] = Field(None, description="""Is the frame gain corrected""", json_schema_extra = { "linkml_meta": {'alias': 'is_gain_corrected', 'domain_of': ['Frame']} })
+
+    @field_validator('dose_rate')
+    def pattern_dose_rate(cls, v):
+        pattern=re.compile(r"^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid dose_rate format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid dose_rate format: {v}")
+        return v
+
+
+class Ctf(ConfiguredBaseModel):
+    """
+    A ctf entity.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    format: CtfFormatEnum = Field(..., description="""The format of the ctf file.""", json_schema_extra = { "linkml_meta": {'alias': 'format', 'domain_of': ['Alignment', 'Ctf']} })
+
+    @field_validator('format')
+    def pattern_format(cls, v):
+        pattern=re.compile(r"^CTFFIND$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid format format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid format format: {v}")
+        return v
 
 
 class DateStampedEntityMixin(ConfiguredBaseModel):
@@ -2863,6 +2875,7 @@ class Container(ConfiguredBaseModel):
     alignments: Optional[List[AlignmentEntity]] = Field(None, description="""An alignment entity.""", json_schema_extra = { "linkml_meta": {'alias': 'alignments', 'domain_of': ['Container']} })
     annotations: Optional[List[AnnotationEntity]] = Field(None, description="""An annotation entity.""", json_schema_extra = { "linkml_meta": {'alias': 'annotations', 'domain_of': ['Container']} })
     collection_metadata: Optional[List[CollectionMetadataEntity]] = Field(None, description="""A collection_metadata entity.""", json_schema_extra = { "linkml_meta": {'alias': 'collection_metadata', 'domain_of': ['Container']} })
+    ctf: Optional[List[CtfEntity]] = Field(None, description="""A ctf entity.""", json_schema_extra = { "linkml_meta": {'alias': 'ctf', 'domain_of': ['Container']} })
     dataset_keyphotos: Optional[List[DatasetKeyPhotoEntity]] = Field(None, description="""A dataset key photo entity.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_keyphotos', 'domain_of': ['Container']} })
     datasets: List[DatasetEntity] = Field(..., description="""A dataset entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'datasets', 'domain_of': ['Container']} })
     deposition_keyphotos: Optional[List[DepositionKeyPhotoEntity]] = Field(None, description="""A deposition key photo entity.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition_keyphotos', 'domain_of': ['Container']} })
@@ -2965,6 +2978,7 @@ class DefaultSource(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -2981,6 +2995,7 @@ class DefaultSource(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3007,6 +3022,7 @@ class StandardSource(DefaultSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3024,6 +3040,7 @@ class StandardSource(DefaultSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3040,6 +3057,7 @@ class StandardSource(DefaultSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3059,6 +3077,7 @@ class StandardSource(DefaultSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -3073,6 +3092,7 @@ class StandardSource(DefaultSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3089,6 +3109,7 @@ class StandardSource(DefaultSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3109,7 +3130,7 @@ class StandardLiteral(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
-    value: List[Any] = Field(..., description="""The value for the literal.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'value',
+    value: List[Any] = Field(..., description="""A placeholder for any type of data.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'value',
          'domain_of': ['StandardLiteral',
                        'KeyPhotoLiteral',
                        'DestinationMetadataFilterKeyPair',
@@ -3136,7 +3157,7 @@ class DestinationMetadataFilterKeyPair(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
     key: List[str] = Field(..., description="""The path of the key for the filter in the metadata file.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'key', 'domain_of': ['DestinationMetadataFilterKeyPair']} })
-    value: Any = Field(..., description="""The value for the filter.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
+    value: Any = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'value',
          'domain_of': ['StandardLiteral',
                        'KeyPhotoLiteral',
                        'DestinationMetadataFilterKeyPair',
@@ -3166,6 +3187,7 @@ class ReferencedSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3183,6 +3205,7 @@ class ReferencedSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3199,6 +3222,7 @@ class ReferencedSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3218,6 +3242,7 @@ class ReferencedSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -3232,6 +3257,7 @@ class ReferencedSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3248,6 +3274,7 @@ class ReferencedSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3271,6 +3298,7 @@ class AlignmentEntity(ConfiguredBaseModel):
     metadata: Optional[Alignment] = Field(None, description="""The metadata for the alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
@@ -3280,6 +3308,7 @@ class AlignmentEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -3304,6 +3333,7 @@ class AlignmentSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -3321,6 +3351,7 @@ class AlignmentSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3338,6 +3369,7 @@ class AlignmentSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3354,6 +3386,7 @@ class AlignmentSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3373,6 +3406,7 @@ class AlignmentSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -3387,6 +3421,7 @@ class AlignmentSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3403,6 +3438,7 @@ class AlignmentSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3427,6 +3463,7 @@ class AlignmentParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3443,6 +3480,7 @@ class AlignmentParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3459,6 +3497,7 @@ class AlignmentParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3483,6 +3522,7 @@ class AlignmentParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -3495,6 +3535,7 @@ class AlignmentParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -3510,6 +3551,7 @@ class AlignmentParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -3528,6 +3570,7 @@ class AnnotationEntity(ConfiguredBaseModel):
     metadata: Annotation = Field(..., description="""Metadata describing an annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
@@ -3537,6 +3580,7 @@ class AnnotationEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -3568,6 +3612,7 @@ class AnnotationSource(DefaultSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -3584,6 +3629,7 @@ class AnnotationSource(DefaultSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3600,6 +3646,7 @@ class AnnotationSource(DefaultSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3624,6 +3671,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3640,6 +3688,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3656,6 +3705,7 @@ class AnnotationParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3680,6 +3730,7 @@ class AnnotationParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -3692,6 +3743,7 @@ class AnnotationParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -3707,6 +3759,7 @@ class AnnotationParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -3731,6 +3784,7 @@ class CollectionMetadataEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -3755,6 +3809,7 @@ class CollectionMetadataSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -3772,6 +3827,7 @@ class CollectionMetadataSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3789,6 +3845,7 @@ class CollectionMetadataSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3805,6 +3862,7 @@ class CollectionMetadataSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3824,6 +3882,7 @@ class CollectionMetadataSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -3838,6 +3897,7 @@ class CollectionMetadataSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3854,6 +3914,7 @@ class CollectionMetadataSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3878,6 +3939,7 @@ class CollectionMetadataParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3894,6 +3956,7 @@ class CollectionMetadataParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -3910,6 +3973,7 @@ class CollectionMetadataParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -3934,6 +3998,7 @@ class CollectionMetadataParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -3946,6 +4011,7 @@ class CollectionMetadataParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -3961,6 +4027,279 @@ class CollectionMetadataParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
+                       'FrameParent',
+                       'GainParent',
+                       'KeyImageParent',
+                       'RawTiltParent',
+                       'TiltSeriesParent',
+                       'TomogramParent',
+                       'VoxelSpacingParent']} })
+
+
+class CtfEntity(ConfiguredBaseModel):
+    """
+    A ctf entity.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    metadata: Optional[Ctf] = Field(None, description="""A ctf entity.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'CtfEntity',
+                       'DatasetEntity',
+                       'DepositionEntity',
+                       'FrameEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity']} })
+    sources: List[CtfSource] = Field(..., description="""A ctf source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'CollectionMetadataEntity',
+                       'CtfEntity',
+                       'DatasetEntity',
+                       'DatasetKeyPhotoEntity',
+                       'DepositionEntity',
+                       'DepositionKeyPhotoEntity',
+                       'FrameEntity',
+                       'GainEntity',
+                       'KeyImageEntity',
+                       'RawTiltEntity',
+                       'RunEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity',
+                       'VoxelSpacingEntity']} })
+
+
+class CtfSource(StandardSource):
+    """
+    A ctf source.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    parent_filters: Optional[CtfParentFilters] = Field(None, description="""Types of parent filters for a ctf source.""", json_schema_extra = { "linkml_meta": {'alias': 'parent_filters',
+         'domain_of': ['AlignmentSource',
+                       'AnnotationSource',
+                       'CollectionMetadataSource',
+                       'CtfSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource',
+                       'VoxelSpacingSource']} })
+    destination_glob: Optional[DestinationGlob] = Field(None, description="""A glob class for finding files in the output / destination directory.""", json_schema_extra = { "linkml_meta": {'alias': 'destination_glob',
+         'domain_of': ['StandardSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'CtfSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    source_glob: Optional[SourceGlob] = Field(None, description="""A glob class for finding files in the source directory.""", json_schema_extra = { "linkml_meta": {'alias': 'source_glob',
+         'domain_of': ['StandardSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'CtfSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    source_multi_glob: Optional[SourceMultiGlob] = Field(None, description="""A glob class for finding files in the source directory (with multiple globs).""", json_schema_extra = { "linkml_meta": {'alias': 'source_multi_glob',
+         'domain_of': ['StandardSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'CtfSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    literal: Optional[StandardLiteral] = Field(None, description="""A literal class with a value attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'literal',
+         'domain_of': ['StandardSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionKeyPhotoSource',
+                       'VoxelSpacingSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'CollectionMetadataSource',
+                       'CtfSource',
+                       'DatasetSource',
+                       'DepositionSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource']} })
+    exclude: Optional[List[str]] = Field(None, description="""Exclude files from the source that match (regexes).""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
+         'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
+                       'AnnotationParentFilters',
+                       'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
+                       'DatasetParentFilters',
+                       'DatasetKeyPhotoParentFilters',
+                       'DepositionKeyPhotoParentFilters',
+                       'FrameParentFilters',
+                       'GainParentFilters',
+                       'KeyImageParentFilters',
+                       'RawTiltParentFilters',
+                       'RunParentFilters',
+                       'TiltSeriesParentFilters',
+                       'TomogramParentFilters',
+                       'VoxelSpacingParentFilters',
+                       'StandardSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'AnnotationSource',
+                       'CollectionMetadataSource',
+                       'CtfSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource',
+                       'VoxelSpacingSource']} })
+
+
+class CtfParentFilters(ConfiguredBaseModel):
+    """
+    Types of parent filters for a ctf source.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    include: Optional[CtfParent] = Field(None, description="""A filter for a parent class of a ctf source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'include',
+         'domain_of': ['AlignmentParentFilters',
+                       'AnnotationParentFilters',
+                       'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
+                       'DatasetParentFilters',
+                       'DatasetKeyPhotoParentFilters',
+                       'DepositionKeyPhotoParentFilters',
+                       'FrameParentFilters',
+                       'GainParentFilters',
+                       'KeyImageParentFilters',
+                       'RawTiltParentFilters',
+                       'RunParentFilters',
+                       'TiltSeriesParentFilters',
+                       'TomogramParentFilters',
+                       'VoxelSpacingParentFilters']} })
+    exclude: Optional[CtfParent] = Field(None, description="""A filter for a parent class of a ctf source. For a given attribute, it can only be used if the current class is a subclass of the attribute.""", json_schema_extra = { "linkml_meta": {'alias': 'exclude',
+         'domain_of': ['DefaultSource',
+                       'AlignmentParentFilters',
+                       'AnnotationParentFilters',
+                       'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
+                       'DatasetParentFilters',
+                       'DatasetKeyPhotoParentFilters',
+                       'DepositionKeyPhotoParentFilters',
+                       'FrameParentFilters',
+                       'GainParentFilters',
+                       'KeyImageParentFilters',
+                       'RawTiltParentFilters',
+                       'RunParentFilters',
+                       'TiltSeriesParentFilters',
+                       'TomogramParentFilters',
+                       'VoxelSpacingParentFilters',
+                       'StandardSource',
+                       'ReferencedSource',
+                       'AlignmentSource',
+                       'AnnotationSource',
+                       'CollectionMetadataSource',
+                       'CtfSource',
+                       'DatasetSource',
+                       'DatasetKeyPhotoSource',
+                       'DepositionSource',
+                       'DepositionKeyPhotoSource',
+                       'FrameSource',
+                       'GainSource',
+                       'KeyImageSource',
+                       'RawTiltSource',
+                       'RunSource',
+                       'TiltSeriesSource',
+                       'TomogramSource',
+                       'VoxelSpacingSource']} })
+
+
+class CtfParent(ConfiguredBaseModel):
+    """
+    A filter for a parent class of a ctf source. For a given attribute, it can only be used if the current class is a subclass of the attribute.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    dataset: Optional[List[str]] = Field(None, description="""Include or exclude datasets for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
+                       'CollectionMetadataParent',
+                       'CtfParent',
+                       'FrameParent',
+                       'GainParent',
+                       'KeyImageParent',
+                       'RawTiltParent',
+                       'RunParent',
+                       'TiltSeriesParent',
+                       'TomogramParent',
+                       'VoxelSpacingParent']} })
+    deposition: Optional[List[str]] = Field(None, description="""Include or exclude depositions for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
+                       'CollectionMetadataParent',
+                       'CtfParent',
+                       'DatasetParent',
+                       'DatasetKeyPhotoParent',
+                       'DepositionKeyPhotoParent',
+                       'FrameParent',
+                       'GainParent',
+                       'KeyImageParent',
+                       'RawTiltParent',
+                       'RunParent',
+                       'TiltSeriesParent',
+                       'TomogramParent',
+                       'VoxelSpacingParent']} })
+    run: Optional[List[str]] = Field(None, description="""Include or exclude runs for a source.""", json_schema_extra = { "linkml_meta": {'alias': 'run',
+         'domain_of': ['AlignmentParent',
+                       'AnnotationParent',
+                       'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -3979,6 +4318,7 @@ class DatasetEntity(ConfiguredBaseModel):
     metadata: Optional[Dataset] = Field(None, description="""High-level description of a cryoET dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
@@ -3988,6 +4328,7 @@ class DatasetEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -4012,6 +4353,7 @@ class DatasetSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -4029,6 +4371,7 @@ class DatasetSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4046,6 +4389,7 @@ class DatasetSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4062,6 +4406,7 @@ class DatasetSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4081,6 +4426,7 @@ class DatasetSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -4095,6 +4441,7 @@ class DatasetSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4111,6 +4458,7 @@ class DatasetSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4135,6 +4483,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4151,6 +4500,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4167,6 +4517,7 @@ class DatasetParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4191,6 +4542,7 @@ class DatasetParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -4214,6 +4566,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -4242,6 +4595,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -4255,6 +4609,7 @@ class DatasetKeyPhotoSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -4272,6 +4627,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4289,6 +4645,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4305,6 +4662,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4321,6 +4679,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4337,6 +4696,7 @@ class DatasetKeyPhotoSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4361,6 +4721,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4377,6 +4738,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4393,6 +4755,7 @@ class DatasetKeyPhotoParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4417,6 +4780,7 @@ class DatasetKeyPhotoParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -4439,6 +4803,7 @@ class DepositionEntity(ConfiguredBaseModel):
     metadata: Optional[Deposition] = Field(None, description="""Metadata describing a deposition.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
@@ -4448,6 +4813,7 @@ class DepositionEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -4474,6 +4840,7 @@ class DepositionSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4491,6 +4858,7 @@ class DepositionSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4507,6 +4875,7 @@ class DepositionSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4526,6 +4895,7 @@ class DepositionSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -4540,6 +4910,7 @@ class DepositionSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4556,6 +4927,7 @@ class DepositionSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4580,6 +4952,7 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -4608,6 +4981,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -4621,6 +4995,7 @@ class DepositionKeyPhotoSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -4638,6 +5013,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4655,6 +5031,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4671,6 +5048,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4687,6 +5065,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4703,6 +5082,7 @@ class DepositionKeyPhotoSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4727,6 +5107,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4743,6 +5124,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4759,6 +5141,7 @@ class DepositionKeyPhotoParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4783,6 +5166,7 @@ class DepositionKeyPhotoParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -4802,10 +5186,11 @@ class FrameEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
 
-    sources: List[FrameSource] = Field(..., description="""A frame source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+    sources: Optional[List[FrameSource]] = Field(None, description="""A frame source.""", json_schema_extra = { "linkml_meta": {'alias': 'sources',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -4821,6 +5206,7 @@ class FrameEntity(ConfiguredBaseModel):
     metadata: Optional[Frame] = Field(None, description="""A frame entity.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
@@ -4838,6 +5224,7 @@ class FrameSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -4855,6 +5242,7 @@ class FrameSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4872,6 +5260,7 @@ class FrameSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4888,6 +5277,7 @@ class FrameSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4907,6 +5297,7 @@ class FrameSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -4921,6 +5312,7 @@ class FrameSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4937,6 +5329,7 @@ class FrameSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -4961,6 +5354,7 @@ class FrameParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4977,6 +5371,7 @@ class FrameParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -4993,6 +5388,7 @@ class FrameParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5017,6 +5413,7 @@ class FrameParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -5029,6 +5426,7 @@ class FrameParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -5044,6 +5442,7 @@ class FrameParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -5063,6 +5462,7 @@ class GainEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -5087,6 +5487,7 @@ class GainSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -5104,6 +5505,7 @@ class GainSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5121,6 +5523,7 @@ class GainSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5137,6 +5540,7 @@ class GainSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5156,6 +5560,7 @@ class GainSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -5170,6 +5575,7 @@ class GainSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5186,6 +5592,7 @@ class GainSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5210,6 +5617,7 @@ class GainParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5226,6 +5634,7 @@ class GainParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5242,6 +5651,7 @@ class GainParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5266,6 +5676,7 @@ class GainParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -5278,6 +5689,7 @@ class GainParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -5293,6 +5705,7 @@ class GainParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -5312,6 +5725,7 @@ class KeyImageEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -5336,6 +5750,7 @@ class KeyImageSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -5353,6 +5768,7 @@ class KeyImageSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5370,6 +5786,7 @@ class KeyImageSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5386,6 +5803,7 @@ class KeyImageSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5405,6 +5823,7 @@ class KeyImageSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -5419,6 +5838,7 @@ class KeyImageSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5435,6 +5855,7 @@ class KeyImageSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5459,6 +5880,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5475,6 +5897,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5491,6 +5914,7 @@ class KeyImageParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5515,6 +5939,7 @@ class KeyImageParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -5527,6 +5952,7 @@ class KeyImageParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -5542,6 +5968,7 @@ class KeyImageParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -5567,6 +5994,7 @@ class RawTiltEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -5591,6 +6019,7 @@ class RawTiltSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -5608,6 +6037,7 @@ class RawTiltSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5625,6 +6055,7 @@ class RawTiltSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5641,6 +6072,7 @@ class RawTiltSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5660,6 +6092,7 @@ class RawTiltSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -5674,6 +6107,7 @@ class RawTiltSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5690,6 +6124,7 @@ class RawTiltSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5714,6 +6149,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5730,6 +6166,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5746,6 +6183,7 @@ class RawTiltParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5770,6 +6208,7 @@ class RawTiltParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -5782,6 +6221,7 @@ class RawTiltParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -5797,6 +6237,7 @@ class RawTiltParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -5816,6 +6257,7 @@ class RunEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -5840,6 +6282,7 @@ class RunSource(StandardSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -5857,6 +6300,7 @@ class RunSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5874,6 +6318,7 @@ class RunSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5890,6 +6335,7 @@ class RunSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5909,6 +6355,7 @@ class RunSource(StandardSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -5923,6 +6370,7 @@ class RunSource(StandardSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5939,6 +6387,7 @@ class RunSource(StandardSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -5963,6 +6412,7 @@ class RunParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5979,6 +6429,7 @@ class RunParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -5995,6 +6446,7 @@ class RunParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6019,6 +6471,7 @@ class RunParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -6031,6 +6484,7 @@ class RunParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -6067,6 +6521,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
     metadata: Optional[TiltSeries] = Field(None, description="""Metadata describing a tilt series.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
@@ -6076,6 +6531,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -6100,6 +6556,7 @@ class TiltSeriesSource(ReferencedSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -6119,6 +6576,7 @@ class TiltSeriesSource(ReferencedSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6136,6 +6594,7 @@ class TiltSeriesSource(ReferencedSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6152,6 +6611,7 @@ class TiltSeriesSource(ReferencedSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6171,6 +6631,7 @@ class TiltSeriesSource(ReferencedSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -6185,6 +6646,7 @@ class TiltSeriesSource(ReferencedSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6201,6 +6663,7 @@ class TiltSeriesSource(ReferencedSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6225,6 +6688,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6241,6 +6705,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6257,6 +6722,7 @@ class TiltSeriesParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6281,6 +6747,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -6293,6 +6760,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -6308,6 +6776,7 @@ class TiltSeriesParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -6326,6 +6795,7 @@ class TomogramEntity(ConfiguredBaseModel):
     metadata: Optional[Tomogram] = Field(None, description="""Metadata describing a tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
@@ -6335,6 +6805,7 @@ class TomogramEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -6359,6 +6830,7 @@ class TomogramSource(ReferencedSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -6378,6 +6850,7 @@ class TomogramSource(ReferencedSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6395,6 +6868,7 @@ class TomogramSource(ReferencedSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6411,6 +6885,7 @@ class TomogramSource(ReferencedSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6430,6 +6905,7 @@ class TomogramSource(ReferencedSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -6444,6 +6920,7 @@ class TomogramSource(ReferencedSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6460,6 +6937,7 @@ class TomogramSource(ReferencedSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6484,6 +6962,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6500,6 +6979,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6516,6 +6996,7 @@ class TomogramParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6540,6 +7021,7 @@ class TomogramParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -6552,6 +7034,7 @@ class TomogramParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -6567,6 +7050,7 @@ class TomogramParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -6591,6 +7075,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
          'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
                        'CollectionMetadataEntity',
+                       'CtfEntity',
                        'DatasetEntity',
                        'DatasetKeyPhotoEntity',
                        'DepositionEntity',
@@ -6617,6 +7102,7 @@ class VoxelSpacingSource(DefaultSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6634,6 +7120,7 @@ class VoxelSpacingSource(DefaultSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6653,6 +7140,7 @@ class VoxelSpacingSource(DefaultSource):
                        'ReferencedSource',
                        'AlignmentSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DepositionSource',
                        'FrameSource',
@@ -6667,6 +7155,7 @@ class VoxelSpacingSource(DefaultSource):
          'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionKeyPhotoSource',
@@ -6683,6 +7172,7 @@ class VoxelSpacingSource(DefaultSource):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6699,6 +7189,7 @@ class VoxelSpacingSource(DefaultSource):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6723,6 +7214,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
          'domain_of': ['AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6739,6 +7231,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
                        'AlignmentParentFilters',
                        'AnnotationParentFilters',
                        'CollectionMetadataParentFilters',
+                       'CtfParentFilters',
                        'DatasetParentFilters',
                        'DatasetKeyPhotoParentFilters',
                        'DepositionKeyPhotoParentFilters',
@@ -6755,6 +7248,7 @@ class VoxelSpacingParentFilters(ConfiguredBaseModel):
                        'AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
+                       'CtfSource',
                        'DatasetSource',
                        'DatasetKeyPhotoSource',
                        'DepositionSource',
@@ -6779,6 +7273,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -6791,6 +7286,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'DatasetParent',
                        'DatasetKeyPhotoParent',
                        'DepositionKeyPhotoParent',
@@ -6806,6 +7302,7 @@ class VoxelSpacingParent(ConfiguredBaseModel):
          'domain_of': ['AlignmentParent',
                        'AnnotationParent',
                        'CollectionMetadataParent',
+                       'CtfParent',
                        'FrameParent',
                        'GainParent',
                        'KeyImageParent',
@@ -6891,6 +7388,7 @@ AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()
 Alignment.model_rebuild()
 Frame.model_rebuild()
+Ctf.model_rebuild()
 DateStampedEntityMixin.model_rebuild()
 DateStamp.model_rebuild()
 CrossReferencesMixin.model_rebuild()
@@ -6921,6 +7419,10 @@ CollectionMetadataEntity.model_rebuild()
 CollectionMetadataSource.model_rebuild()
 CollectionMetadataParentFilters.model_rebuild()
 CollectionMetadataParent.model_rebuild()
+CtfEntity.model_rebuild()
+CtfSource.model_rebuild()
+CtfParentFilters.model_rebuild()
+CtfParent.model_rebuild()
 DatasetEntity.model_rebuild()
 DatasetSource.model_rebuild()
 DatasetParentFilters.model_rebuild()
