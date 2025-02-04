@@ -43,8 +43,8 @@ IMPORTER_DEP_TREE = {
         DatasetImporter: {
             RunImporter: {
                 GainImporter: {},
-                FrameImporter: {},
                 CollectionMetadataImporter: {},
+                FrameImporter: {},
                 TiltSeriesImporter: {
                     RawTiltImporter: {},
                 },
