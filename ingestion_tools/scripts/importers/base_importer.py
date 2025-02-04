@@ -301,12 +301,14 @@ class BaseFileImporter(BaseImporter):
     This class extends the BaseImporter to handle the import of files. This is suited for case where no transformations
     are required, and source files can be copied to the destination.
     """
+    def get_destination_path(self) -> str:
+        return os.path.join(self.get_output_path(), os.path.basename(self.path))
+
     def import_item(self) -> None:
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-        dest_filename = os.path.join(self.get_output_path(), os.path.basename(self.path))
-        self.config.fs.copy(self.path, dest_filename)
+        self.config.fs.copy(self.path, self.get_destination_path())
 
 
 class BaseKeyPhotoImporter(BaseImporter):
