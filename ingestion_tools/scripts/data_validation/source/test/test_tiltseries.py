@@ -42,8 +42,10 @@ class TestTiltSeries(TiltSeriesHelper):
         if tiltseries.allow_imports:
             if self.file_type == "mrc":
                 self.mrc_headers = {file_path: get_mrc_header(file_path, filesystem, fail_test=False)}
+                self.error_on_no_zarr_header = False
             elif self.file_type == "zarr":
                 self.zarr_headers = {file_path: get_zarr_metadata(file_path, filesystem, fail_test=False)}
+                self.error_on_no_mrc_header = False
         self.spacing = tiltseries_metadata.get("pixel_spacing")
         self.skip_z_axis_checks = True
 

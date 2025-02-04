@@ -1,16 +1,16 @@
 import pytest
 import tifffile
-from importers.gain import GainImporter
-from importers.run import RunImporter
-from mrcfile.mrcinterpreter import MrcInterpreter
-
-from common.fs import S3Filesystem
 from data_validation.shared.helper.twodee_helper import GainTestHelper
 from data_validation.shared.util import (
     MRC_EXTENSION,
     PERMITTED_GAIN_EXTENSIONS,
     get_mrc_header,
 )
+from importers.gain import GainImporter
+from importers.run import RunImporter
+from mrcfile.mrcinterpreter import MrcInterpreter
+
+from common.fs import S3Filesystem
 
 PERMITTED_SOURCE_GAIN_EXTENSIONS = PERMITTED_GAIN_EXTENSIONS + [".dm4"]
 
@@ -32,9 +32,3 @@ class TestGain(GainTestHelper):
             file_path: get_mrc_header(file_path, filesystem, fail_test=False)
             for file_path in gain_files if file_path.endswith(MRC_EXTENSION)
         }
-
-    @pytest.fixture(autouse=True)
-    def set_helper_test_mrc_header_class_variables(
-            self, gain_headers: dict[str, list[tifffile.TiffPage]| MrcInterpreter],
-    ):
-        self.mrc_headers = gain_headers

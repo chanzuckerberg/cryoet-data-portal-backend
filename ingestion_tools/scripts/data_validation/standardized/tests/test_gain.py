@@ -3,21 +3,13 @@ from typing import Dict, List, Union
 import allure
 import pytest
 import tifffile
-from mrcfile.mrcinterpreter import MrcInterpreter
-
 from data_validation.shared.helper.twodee_helper import GainTestHelper
+from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 @pytest.mark.gain
 @pytest.mark.parametrize("dataset, run_name", pytest.cryoet.dataset_run_combinations, scope="session")
 class TestGain(GainTestHelper):
-
-    @pytest.fixture(autouse=True)
-    def set_helper_test_mrc_header_class_variables(
-        self,
-        gain_headers: Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]],
-    ):
-        self.mrc_headers = {k: v for k, v in gain_headers.items() if isinstance(v, MrcInterpreter)}
 
     ### BEGIN Frame-specific tests ###
     @allure.title("Gain: pixel spacing and dimensions match frames.")

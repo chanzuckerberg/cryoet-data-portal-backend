@@ -54,6 +54,7 @@ class HelperTestMRCHeader:
     spacing: float = None
     skip_z_axis_checks: bool = False
     permitted_mrc_datatypes: list = [np.int8, np.uint16, np.int16, np.float32, np.float64]
+    error_on_no_mrc_header: bool = True
 
     def mrc_header_helper(
         self,
@@ -62,7 +63,10 @@ class HelperTestMRCHeader:
     ):
         """Helper function to check the header of the mrc file. Used by all the test classes to stay DRY."""
         if not self.mrc_headers:
-            pytest.skip("No mrc headers to check")
+            if self.error_on_no_mrc_header:
+                pytest.fail("No mrc headers available")
+            else:
+                pytest.skip("No mrc headers to check")
 
         for mrc_filename, interpreter in self.mrc_headers.items():
             print(f"Checking {mrc_filename}")

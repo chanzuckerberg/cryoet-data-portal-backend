@@ -3,7 +3,6 @@ from typing import Dict
 import allure
 import numpy as np
 import pytest
-
 from data_validation.shared.util import BINNING_FACTORS
 
 ZATTRS_AXIS_ORDER = ["z", "y", "x"]
@@ -21,6 +20,7 @@ class HelperTestZarrHeader:
     skip_z_axis_checks: bool = False
     spacing: float = None
     permitted_zarr_datatypes: list = [np.int8, np.int16, np.float32, np.float64]
+    error_on_no_zarr_header: bool = True
 
     ### BEGIN ZARR Self-consistency tests ###
     def zarr_header_helper(
@@ -30,7 +30,10 @@ class HelperTestZarrHeader:
     ):
         """Helper function to check the header of the zarr file."""
         if not self.zarr_headers:
-            pytest.skip("No zarr headers to check")
+            if self.error_on_no_zarr_header:
+                pytest.fail("No zarr headers available")
+            else:
+                pytest.skip("No zarr headers to check")
 
         for zarr_filename, header_data in self.zarr_headers.items():
             print(f"Checking {zarr_filename}")

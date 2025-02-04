@@ -4,11 +4,10 @@ from typing import Dict, List, Union
 import allure
 import pytest
 import tifffile
-from mrcfile.mrcinterpreter import MrcInterpreter
-
 from data_validation.shared.helper.helper_mrc import HelperTestMRCHeader, mrc_allure_title
 from data_validation.shared.helper.helper_tiff_mrc import helper_tiff_mrc_consistent
 from data_validation.shared.util import PERMITTED_FRAME_EXTENSIONS, PERMITTED_GAIN_EXTENSIONS
+from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 class TwoDeeFileTestHelper(HelperTestMRCHeader):
@@ -49,9 +48,12 @@ class TwoDeeFileTestHelper(HelperTestMRCHeader):
 class FrameTestHelper(TwoDeeFileTestHelper):
 
     @pytest.fixture(autouse=True)
-    def set_entity_variables(self):
+    def set_entity_variables(self, frames_headers: dict[str, MrcInterpreter]):
         self.entity_type = "frame"
         self.permitted_extensions = PERMITTED_FRAME_EXTENSIONS
+        self.mrc_headers = {k: v for k, v in frames_headers.items() if isinstance(v, MrcInterpreter)}
+        if not self.mrc_headers:
+            self.error_on_no_mrc_header = False
 
     ### BEGIN Self-consistency tests ###
     @allure.title("Frames: valid extensions.")
@@ -67,10 +69,12 @@ class FrameTestHelper(TwoDeeFileTestHelper):
 class GainTestHelper(TwoDeeFileTestHelper):
 
     @pytest.fixture(autouse=True)
-    def set_entity_variables(self):
+    def set_entity_variables(self, gain_headers: dict[str, MrcInterpreter]):
         self.entity_type = "gain"
         self.permitted_extensions = PERMITTED_GAIN_EXTENSIONS
-
+        self.mrc_headers = gain_headers
+        if not self.mrc_headers:
+            self.error_on_no_mrc_header = False
 
     ### BEGIN Self-consistency tests ###
     @allure.title("Gain: valid extensions.")
