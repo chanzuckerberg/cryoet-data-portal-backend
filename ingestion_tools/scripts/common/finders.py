@@ -316,7 +316,7 @@ class DefaultImporterFactory(DepositionObjectImporterFactory):
 
 class MultiSourceFileFinder(DefaultImporterFactory):
     """
-    This is a special case of the DefaultImporterFactory which has a different behaviour than other ImporterFactories.
+    This is a special case of the DefaultImporterFactory which has a different behaviour from other ImporterFactories.
     It is used when we have multiple files that need to be fetched for a single entity, ie all the files retrieved in a
     single source entry are grouped together.
     This is used for the alignment importer, where we have multiple different files that need to be fetched for a single
