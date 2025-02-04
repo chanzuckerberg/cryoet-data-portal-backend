@@ -21,9 +21,6 @@ class CTFInfo:
     max_resolution: float = None
 
 
-DEFAULT_CTF_INFO = CTFInfo()
-
-
 class BaseCTFConverter:
     def __init__(self, config: DepositionImportConfig, path: str):
         self.path = path
@@ -35,6 +32,7 @@ class BaseCTFConverter:
 
 
 class AreTomo3CTF(BaseCTFConverter):
+    # TODO: Add parser
     @classmethod
     def get_ctf_info(cls) -> list[CTFInfo]:
         return []

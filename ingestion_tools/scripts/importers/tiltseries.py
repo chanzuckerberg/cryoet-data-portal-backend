@@ -5,7 +5,7 @@ import pandas as pd
 from mdocfile.data_models import MdocSectionData
 
 from common.config import DepositionImportConfig
-from common.ctf_converter import DEFAULT_CTF_INFO, CTFInfo
+from common.ctf_converter import CTFInfo
 from common.finders import DefaultImporterFactory
 from common.id_helper import IdentifierHelper
 from common.metadata import TiltSeriesMetadata
@@ -83,11 +83,9 @@ class TiltSeriesImporter(VolumeImporter):
         )
 
     def get_frames_count(self) -> int:
-        parent_args = dict(self.parents)
-        parent_args["tiltseries"] = self
         num_frames = 0
-        for _ in FrameImporter.finder(self.config, **parent_args):
-            num_frames += 1
+        for importer in FrameImporter.finder(self.config, **self.parents):
+            num_frames += importer.get_frame_count()
         return num_frames
 
     def import_metadata(self) -> None:
@@ -99,7 +97,8 @@ class TiltSeriesImporter(VolumeImporter):
         merge_data["frames_count"] = self.get_frames_count()
         base_metadata = self.get_base_metadata()
         merge_data["pixel_spacing"] = self.get_pixel_spacing()
-        merge_data["per_section_parameter"] = self.get_per_section_parameter()
+        psp_generator = PerSectionParameterGenerator(self.config, {**self.parents, "tiltseries": self})
+        merge_data["per_section_parameter"] = psp_generator.get_data()
         metadata = TiltSeriesMetadata(self.config.fs, self.get_deposition().name, base_metadata)
         metadata.write_metadata(dest_ts_metadata, merge_data)
 
@@ -120,7 +119,29 @@ class TiltSeriesImporter(VolumeImporter):
         complete_path = os.path.join(os.path.dirname(path), filename)
         return filename, complete_path, {filename: complete_path}
 
-    def get_per_section_parameter(self) -> list[dict[str, str]]:
+class PerSectionParameter:
+
+    def __init__(self, index: int, mdoc_entry: MdocSectionData, ctf_entry: CTFInfo):
+        self.z_index = index
+        self.frame_acquisition_order = mdoc_entry.ZValue
+        self.raw_angle = mdoc_entry.TiltAngle
+
+        self.astigmatic_angle = ctf_entry.azimuth if ctf_entry else None
+        self.cross_correlation = ctf_entry.cross_correlation if ctf_entry else None
+        self.major_defocus = ctf_entry.defocus_1 if ctf_entry else None
+        self.max_resolution = ctf_entry.max_resolution if ctf_entry else None
+        self.minor_defocus = ctf_entry.defocus_2 if ctf_entry else None
+        self.phase_shift = ctf_entry.phase_shift if ctf_entry else None
+
+    def to_json(self) -> dict[str, Any]:
+        return self.__dict__
+
+class PerSectionParameterGenerator:
+    def __init__(self, config: DepositionImportConfig, parents: dict[str, Any]):
+        self.config = config
+        self.parents = parents
+
+    def get_data(self) -> list[dict[str, str]]:
         psp = []
         rawtlt = self.get_raw_tlt()
         mdoc_data = self.get_mdoc_data()
@@ -128,35 +149,28 @@ class TiltSeriesImporter(VolumeImporter):
         for index, raw_angle in rawtlt["raw_tlt_angle"].items():
             mdoc_entry = self.get_mdoc_entry(round(raw_angle), mdoc_data)
             ctf_entry = self.get_ctf_entry(mdoc_entry.ZValue, ctf_data)
-            psp_section = {
-                "raw_angle": mdoc_entry.TiltAngle,
-                "z-index": index,
-                "frame_acquistion_order": mdoc_entry.ZValue,
-                "astigmatic_angle": ctf_entry.azimuth,
-                "cross_correlation": ctf_entry.cross_correlation,
-                "major_defocus": ctf_entry.defocus_1,
-                "minor_defocus": ctf_entry.defocus_2,
-                "phase_shift": ctf_entry.phase_shift,
-                "max_resolution": ctf_entry.max_resolution,
-            }
-            psp.append(psp_section)
+            psp_section = PerSectionParameter(index, mdoc_entry, ctf_entry)
+            psp.append(psp_section.to_json())
 
         return psp
 
     def get_raw_tlt(self) -> pd.DataFrame:
-        for rawtlt in RawTiltImporter.finder(self.config, **{**self.parents, "tiltseries": self}):
+        for rawtlt in RawTiltImporter.finder(self.config, **self.parents):
+            if not rawtlt.path or not rawtlt.path.endswith(".rawtlt"):
+                # Check to prevent any other files being included in the rawtlt section, incorrectly being pulled here.
+                continue
             path = rawtlt.get_destination_path()
             local_path = self.config.fs.localreadable(path)
             return pd.read_csv(local_path, names=["raw_tlt_angle"])
-        raise Exception(f"No rawtlt found for run: {self.get_run().name}")
+        raise Exception(f"No .rawtlt found for run: {self.parents['run'].name}")
 
     def get_mdoc_data(self) -> list[MdocSectionData]:
         collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
         return collection_md.get_output_data().section_data
 
     def get_ctf_data(self) -> list[CTFInfo]:
-        for ctf in CtfImporter.finder(self.config, **{**self.parents, "tiltseries": self}):
-            return ctf.get_data()
+        for ctf in CtfImporter.finder(self.config, **self.parents):
+            return ctf.get_output_data()
         return []
 
     @classmethod
@@ -167,8 +181,8 @@ class TiltSeriesImporter(VolumeImporter):
         raise Exception(f"No match for tiltangle {tilt_angle} in mdoc_data")
 
     @classmethod
-    def get_ctf_entry(cls, section_id: int, ctf_data: list[CTFInfo]) -> CTFInfo:
+    def get_ctf_entry(cls, section_id: int, ctf_data: list[CTFInfo]) -> CTFInfo | None:
         for entry in ctf_data:
             if section_id == entry.section - 1:
                 return entry
-        return DEFAULT_CTF_INFO
+        return None

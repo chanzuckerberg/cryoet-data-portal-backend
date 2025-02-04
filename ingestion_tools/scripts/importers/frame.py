@@ -19,6 +19,9 @@ class FrameImporter(BaseFileImporter):
         super().__init__(*args, **kwargs)
         self.file_paths = file_paths
 
+    def get_frame_count(self) -> int:
+        return len(self.file_paths)
+
     def get_dest_filename(self, path: str) -> str | None:
         if not path:
             return None
@@ -30,6 +33,7 @@ class FrameImporter(BaseFileImporter):
             return
 
         for path in self.file_paths.values():
+            print(f"Copying {path}")
             self.config.fs.copy(path, self.get_dest_filename(path))
 
     def import_metadata(self) -> None:

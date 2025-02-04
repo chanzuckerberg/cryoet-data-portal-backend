@@ -64,7 +64,6 @@ class TiltSeriesMetadata(MergedMetadata):
     pass
 
 
-
 class TomoMetadata(MergedMetadata):
     pass
 
