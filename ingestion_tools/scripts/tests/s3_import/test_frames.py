@@ -18,13 +18,14 @@ def test_frames_import(s3_fs: FileSystemApi, test_output_bucket: str, s3_client:
     run_name = parents["run"].name
     prefix = f"output/{parents['dataset'].name}/{run_name}/Frames"
     actual_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
-    source_filename = os.path.basename(frames[0].path)
-    assert source_filename in actual_files
+    for source_file_path in frames[0].file_paths:
+        source_filename = os.path.basename(source_file_path)
+        assert source_filename in actual_files
 
-    actual = get_data_from_s3(s3_client, test_output_bucket, os.path.join(prefix, source_filename)).readlines()
-    source_file_path = "/".join(frames[0].path.split("/")[1:])
-    expected = get_data_from_s3(s3_client, "test-public-bucket", source_file_path).readlines()
-    assert actual == expected
+        actual = get_data_from_s3(s3_client, test_output_bucket, os.path.join(prefix, source_filename)).readlines()
+        source_key = "/".join(source_file_path.split("/")[1:])
+        expected = get_data_from_s3(s3_client, "test-public-bucket", source_key).readlines()
+        assert actual == expected
 
 
 def test_frames_no_import(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:
