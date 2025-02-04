@@ -1,7 +1,9 @@
 import json
 import os.path
 from typing import Callable
+from unittest.mock import Mock
 
+import importers.tiltseries as tiltseries
 import pytest as pytest
 from importers.tiltseries import TiltSeriesImporter
 from mypy_boto3_s3 import S3Client
@@ -15,6 +17,7 @@ from tests.s3_import.util import (
     get_run_and_parents,
 )
 
+MOCK_PSP_DATA = ["this", "is", "a", "mock", "stub"]
 
 @pytest.fixture
 def validate_metadata(s3_client: S3Client, test_output_bucket: str) -> Callable[[dict, str, int], None]:
@@ -40,6 +43,15 @@ def add_tiltseries_metadata(s3_client: S3Client, test_output_bucket: str) -> Cal
     return _add_tiltseries_metadata
 
 
+@pytest.fixture
+def mock_per_section_parameter_generator(monkeypatch: pytest.MonkeyPatch) -> Mock:
+    mock_psp_generator_inst = Mock(spec=tiltseries.PerSectionParameterGenerator)
+    mock_psp_generator = Mock(return_value=mock_psp_generator_inst)
+    monkeypatch.setattr(tiltseries, "PerSectionParameterGenerator", mock_psp_generator)
+    mock_psp_generator_inst.get_data.return_value = MOCK_PSP_DATA
+    yield mock_psp_generator
+
+
 @pytest.mark.parametrize(
     "deposition_id, id_prefix",
     [
@@ -52,6 +64,7 @@ def test_tiltseries_import(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
+    mock_per_section_parameter_generator: Mock,
     add_tiltseries_metadata: Callable[[str, int], None],
     validate_metadata: Callable[[dict, str, int], None],
     deposition_id: int,
@@ -69,11 +82,13 @@ def test_tiltseries_import(
         item.import_item()
         item.import_metadata()
     output_prefix = os.path.join(prefix, str(id_prefix))
-    print(f"output_prefix: {output_prefix}")
     tilt_series_files = get_children(s3_client, test_output_bucket, output_prefix)
     assert f"{run_name}.mrc" in tilt_series_files
     assert f"{run_name}.zarr" in tilt_series_files
     assert "tiltseries_metadata.json" in tilt_series_files
+    psp_parents = {**parents, "tiltseries": tilt_series[0]}
+    mock_per_section_parameter_generator.assert_called_once_with(config, psp_parents)
+
 
 
 @pytest.mark.parametrize(
@@ -87,6 +102,7 @@ def test_tiltseries_import_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
+    mock_per_section_parameter_generator: Mock,
     validate_metadata: Callable[[dict, str], None],
     config_path: str,
     expected_pixel_spacing: float,
@@ -115,9 +131,11 @@ def test_tiltseries_import_metadata(
         "pixel_spacing": expected_pixel_spacing,
         "scales": [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 5, "x": 10}, {"z": 4, "y": 3, "x": 5}],
         "size": {"z": 4, "y": 10, "x": 20},
+        "per_section_parameter": MOCK_PSP_DATA,
     }
     validate_metadata(expected, prefix)
-
+    psp_parents = {**parents, "tiltseries": tilt_series[0]}
+    mock_per_section_parameter_generator.assert_called_once_with(config, psp_parents)
 
 def test_tiltseries_no_import(
     s3_fs: FileSystemApi,
