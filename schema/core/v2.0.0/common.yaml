@@ -1070,7 +1070,7 @@ enums:
     description: Used to determine what ctf parser to use.
     permissible_values:
       CTFFIND:
-        description: formats ctffind file formats
+        description: The file has ctffind schema
 
   deposition_types_enum:
     description: Types of data a deposition has
