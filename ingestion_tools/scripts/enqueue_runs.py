@@ -13,12 +13,15 @@ from boto3 import Session
 from botocore import UNSIGNED
 from botocore.config import Config
 from importers.dataset import DatasetImporter
-from importers.db.base_importer import DBImportConfig
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.utils import IMPORTERS
 from standardize_dirs import common_options as ingest_common_options
 
+from db_import.common.config import DBImportConfig
+from db_import.importer import db_import_options
+from db_import.importers.dataset import DatasetDBImporter
+from db_import.importers.deposition import DepositionDBImporter
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
@@ -169,8 +172,9 @@ def get_datasets(
     filter_datasets = [re.compile(pattern) for pattern in filter_datasets]
     exclude_datasets = [re.compile(pattern) for pattern in exclude_dataset]
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
-    s3_client = boto3.client("s3", config=s3_config)
-    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix)
+    session = Session()
+    s3_client = session.client("s3", config=s3_config)
+    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix, session)
 
     datasets_to_check = []
     if include_dataset:
@@ -239,6 +243,7 @@ def to_args(**kwargs) -> list[str]:
     default="db_import-v0.0.2.wdl",
     help="Specify wdl key for custom workload",
 )
+@db_import_options
 @enqueue_common_options
 @click.pass_context
 def db_import(
