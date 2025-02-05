@@ -35,7 +35,6 @@ class BaseCTFConverter:
 
 
 class AreTomo3CTF(BaseCTFConverter):
-    CtfValues: list[CTFInfo]
 
     def get_ctf_info(self) -> list[CTFInfo]:
         local_path = self.config.fs.localreadable(self.path)

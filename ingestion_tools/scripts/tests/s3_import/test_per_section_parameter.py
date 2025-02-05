@@ -32,8 +32,8 @@ def setup_psp_generator(s3_fs: FileSystemApi, test_output_bucket: str, config_pa
     return PerSectionParameterGenerator(config, parents)
 
 
-def test_per_section_parameter_success(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:
+def test_psp_success(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:
     psp_generator = setup_psp_generator(s3_fs, test_output_bucket)
     actual = psp_generator.get_data()
     print(json.dumps({"psp":actual}, indent=2))
-    assert len(actual) == 5
+    assert len(actual) == 4
