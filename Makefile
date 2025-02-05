@@ -1,7 +1,7 @@
 export docker_compose:=docker compose -f ./docker-compose.yml -f ./ingestion_tools/docker-compose.yml
 
 .PHONY: init
-init: ingestor-init api-init apiv2-init
+init: ingestor-init apiv2-init
 
 .PHONY: stop
 stop:
@@ -37,10 +37,6 @@ ingestor-test-db-init:
 	docker compose cp test_infra/sql db:/tmp/sql
 	docker compose exec db sh -c 'cat /tmp/sql/schema.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
 	docker compose exec db sh -c 'cat /tmp/sql/seed_db_enum.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
-
-.PHONY: ingestor-test-db
-ingestor-test-db:
-	docker compose exec ingestor pytest -vvv -s . -k db_import
 
 .PHONY: ingestor-test-s3
 ingestor-test-s3:

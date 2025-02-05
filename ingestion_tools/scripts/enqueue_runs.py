@@ -12,11 +12,8 @@ import click
 from boto3 import Session
 from botocore import UNSIGNED
 from botocore.config import Config
-from db_import import db_import_options
 from importers.dataset import DatasetImporter
 from importers.db.base_importer import DBImportConfig
-from importers.db.dataset import DatasetDBImporter
-from importers.db.deposition import DepositionDBImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.utils import IMPORTERS
@@ -242,7 +239,6 @@ def to_args(**kwargs) -> list[str]:
     default="db_import-v0.0.2.wdl",
     help="Specify wdl key for custom workload",
 )
-@db_import_options
 @enqueue_common_options
 @click.pass_context
 def db_import(
