@@ -38,9 +38,9 @@ ingestor-test-db-init:
 	docker compose exec db sh -c 'cat /tmp/sql/schema.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
 	docker compose exec db sh -c 'cat /tmp/sql/seed_db_enum.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
 
-# .PHONY: ingestor-test-db
-# ingestor-test-db:
-# 	docker compose exec ingestor pytest -vvv -s . -k db_import
+.PHONY: ingestor-test-db
+ingestor-test-db:
+	docker compose exec ingestor pytest -vvv -s . -k db_import
 
 .PHONY: ingestor-test-s3
 ingestor-test-s3:
