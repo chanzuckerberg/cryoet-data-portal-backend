@@ -1,0 +1,41 @@
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/mdocs_modified/foo-{run_name}.mdoc
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: metadata/{run_name}_ctffind4.txt
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10001'
+depositions:
+- sources:
+  - literal:
+      value:
+      - '10301'
+rawtilts:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/invalid_{run_name}.rawtlt
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/TS_*.rec
+      match_regex: .*
+      name_regex: (.*).rec
+standardization_config:
+  deposition_id: 10001
+  run_to_tomo_map_csv: null
+  source_prefix: input_bucket/10001_input
+tiltseries:
+- sources:
+  - source_glob:
+      list_glob: metadata/{run_name}.st
+      name_regex: (.*)\.st
