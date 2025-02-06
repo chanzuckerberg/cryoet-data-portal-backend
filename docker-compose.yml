@@ -20,7 +20,7 @@ services:
       test: ["CMD", "pg_isready", "-d", "cryoet", "-U", "postgres"]
     environment:
       POSTGRES_INITDB_ARGS: --data-checksums
-      POSTGRES_DB: cryoet
+      POSTGRES_DB: cryoetv2
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       # The postgres image declares a mounted volume at /var/lib/postgresql/data
@@ -33,56 +33,6 @@ services:
       - ./test_infra:/test_infra
     ports:
       - "5432:5432"
-  cryoet-api:
-    platform: linux/arm64
-    profiles: ["api", "apiv1"]
-    image: hasura-graphql
-    build:
-      context: ./api_server
-      dockerfile: Dockerfile
-    volumes:
-      - ./api_server/migrations:/hasura-migrations
-      - ./api_server/metadata:/hasura-metadata
-    healthcheck:
-      test: timeout 1s bash -c ':> /dev/tcp/127.0.0.1/8080' || exit 1
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
-      HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:postgres@db:5432/cryoet
-      HASURA_GRAPHQL_ADMIN_SECRET: secret
-      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
-    ports:
-      - "8080:8080"
-  hasura-console:
-    platform: linux/arm64
-    profiles: ["api", "apiv1"]
-    image: hasura-graphql
-    build:
-      context: ./api_server
-      dockerfile: Dockerfile
-    volumes:
-      - ./api_server:/app
-    healthcheck:
-      test: timeout 1s bash -c ':> /dev/tcp/127.0.0.1/9695' || exit 1
-    working_dir: /app
-    command: hasura-cli console
-      --no-browser
-      --endpoint http://cryoet-api:8080
-      --admin-secret secret
-      --address 0.0.0.0
-      --console-port 9695
-      --api-port 9693
-      --console-hge-endpoint http://localhost:8080
-    ports:
-      - "9695:9695"
-      - "9693:9693"
-    depends_on:
-      cryoet-api:
-        condition: service_healthy
-    environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/cryoet
   cerbos:
     image: ghcr.io/cerbos/cerbos:0.29.0
     profiles: ["api", "apiv2"]
