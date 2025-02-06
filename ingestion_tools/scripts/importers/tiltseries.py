@@ -162,7 +162,7 @@ class PerSectionParameterGenerator:
             path = rawtlt.get_destination_path()
             local_path = self.config.fs.localreadable(path)
             return pd.read_csv(local_path, names=["raw_tlt_angle"])
-        raise Exception(f"No rawtlt found for run: {self.parents['run'].name}")
+        raise FileNotFoundError(f"No rawtlt found for run: {self.parents['run'].name}")
 
     def _get_mdoc_data(self) -> list[MdocSectionData]:
         collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
@@ -178,7 +178,7 @@ class PerSectionParameterGenerator:
         for entry in mdoc_data:
             if round(entry.TiltAngle) == tilt_angle:
                 return entry
-        raise Exception(f"No match for tiltangle {tilt_angle} in mdoc_data")
+        raise KeyError(f"No match for tiltangle {tilt_angle} in mdoc_data")
 
     @classmethod
     def _get_ctf_entry(cls, section_id: int, ctf_data: list[CTFInfo]) -> CTFInfo | None:

@@ -20,4 +20,4 @@ class CollectionMetadataImporter(BaseFileImporter):
     def get_importer(cls, config: DepositionImportConfig, **parents) -> "CollectionMetadataImporter":
         for mdoc in cls.finder(config, **parents):
             return mdoc
-        raise Exception(f"No mdoc found for run: {parents['run'].name}")
+        raise FileNotFoundError(f"No mdoc found for run: {parents['run'].name}")
