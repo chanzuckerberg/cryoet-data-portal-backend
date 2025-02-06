@@ -3,11 +3,20 @@ import warnings
 
 import allure
 import pandas as pd
+import pytest
 import tifffile
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 class MdocTestHelper:
+
+    @pytest.fixture
+    def mdoc_sub_frame_path(self, mdoc_data: pd.DataFrame) -> list[str]:
+        return [
+            os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
+            for _, row in mdoc_data.iterrows()
+            if "SubFramePath" in row
+        ]
 
     ### BEGIN MDOC tests ###
     @allure.title("Mdoc: tilt angles are within the expected range [-90, 90].")
@@ -21,16 +30,23 @@ class MdocTestHelper:
         frames_len = len(frames_files)
         assert mdoc_len == frames_len, f"Number of mdoc sections {mdoc_len} mismatches number of frames: {frames_len}"
 
+    @allure.title("Mdoc: Every mdoc filename has an entry for SubFramePath.")
+    def test_mdoc_sub_frame_paths(self, mdoc_data: pd.DataFrame):
+        for _, row in mdoc_data.iterrows():
+            assert "SubFramePath" in row
 
     @allure.title("Mdoc: Every mdoc SubFramePath filename matches a frames file (one-to-one).")
     def test_mdoc_frame_paths(
             self, frames_files: list[str], mdoc_data: pd.DataFrame,
     ):
+        errors = []
         standardize_frames_files = [os.path.basename(f) for f in frames_files]
-        standardized_mdoc_entries = [
-            os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
-            for _, row in mdoc_data.iterrows()
-        ]
+        standardized_mdoc_entries = []
+        for _, row in mdoc_data.iterrows():
+            if not row.get("SubFramePath"):
+                continue
+            sub_frame_path = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
+            standardized_mdoc_entries.append(sub_frame_path)
 
         mdoc_with_missing_frames = [
             entry for entry in standardized_mdoc_entries if entry not in standardize_frames_files
@@ -39,7 +55,6 @@ class MdocTestHelper:
             entry for entry in standardize_frames_files if entry not in standardized_mdoc_entries
         ]
 
-        errors = []
         if len(standardize_frames_files) != len(standardized_mdoc_entries):
             errors.append(
                 f"# of mdoc entries ({len(standardized_mdoc_entries)}) != # of frames files ({len(standardize_frames_files)})",
@@ -59,13 +74,17 @@ class MdocTestHelper:
     ):
         errors = []
         for _, row in mdoc_data.iterrows():
+            if not row.get("SubFramePath"):
+                continue
             frame_file = os.path.basename(str(row["SubFramePath"]).replace("\\", "/"))
             if frame_file not in frames_headers:
-                # Frame file does not exist, this will get caught by a test_tilt_angles test
+                # Frame file does not exist, this will get caught by a test_mdoc_frame_paths test
                 continue
 
             header_entity = frames_headers[frame_file]
-            if isinstance(header_entity, list) and isinstance(header_entity[0], tifffile.TiffPage):
+            if "NumSubFrames" not in row:
+                errors.append("NumSubFrames not found in mdoc file")
+            elif isinstance(header_entity, list) and isinstance(header_entity[0], tifffile.TiffPage):
                 if len(header_entity) != row["NumSubFrames"]:
                     errors.append(
                         f"Number of subframes do not match: {len(header_entity)} != {row['NumSubFrames']}, {frame_file}",

@@ -51,7 +51,7 @@ def validate_config_path(path: str) -> str:
         new_path = os.path.join(expected_directory_path, os.path.basename(path))
         print(f"Updating the path from {path} to {new_path}")
         return new_path
-    raise RuntimeError(f"{os.path.basename(path)} does not exist in {os.path.abspath(path)}")
+    raise FileNotFoundError(f"{os.path.basename(path)} does not exist in {os.path.abspath(path)}")
 
 
 @click.command()

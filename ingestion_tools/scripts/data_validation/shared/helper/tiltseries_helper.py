@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
 
-TILT_AXIS_ANGLE_REGEX = re.compile(r".*tilt axis angle = (\d*\.\d*|\d*)")
+TILT_AXIS_ANGLE_REGEX = re.compile(r".*tilt\s*axis\s*angle\s*=\s*([-+]?(?:\d*\.*\d+))")
 
 
 class TiltSeriesHelper(HelperTestMRCZarrHeader):
@@ -36,4 +36,5 @@ class TiltSeriesHelper(HelperTestMRCZarrHeader):
 
     @allure.title("Tiltseries: tilt axis angle is consistent with mdoc file.")
     def test_tilt_axis_angle(self, mdoc_tilt_axis_angle: float, tiltseries_metadata: dict):
-        assert mdoc_tilt_axis_angle - 10 <= tiltseries_metadata.get("tilt_axis") <= mdoc_tilt_axis_angle + 10
+        metadata_tilt_axis = tiltseries_metadata.get("tilt_axis")
+        assert metadata_tilt_axis - 10 <= mdoc_tilt_axis_angle <= metadata_tilt_axis + 10
