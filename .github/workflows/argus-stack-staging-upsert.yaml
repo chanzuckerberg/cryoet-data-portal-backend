@@ -14,13 +14,13 @@ concurrency:
 jobs:
   run_if:
     if: github.head_ref == 'release-please--branches--main--components--apiv2'
-    runs-on: [ARM64, self-hosted, Linux]
+    runs-on: ARM64
     steps:
       - run: echo "The head branch of this PR is the release please branch"
 
   staging_stack_upsert:
     needs: run_if
-    runs-on: [ARM64, self-hosted, Linux]
+    runs-on: ARM64
     permissions:
       id-token: write
       issues: write
