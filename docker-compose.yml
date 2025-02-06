@@ -20,7 +20,7 @@ services:
       test: ["CMD", "pg_isready", "-d", "cryoet", "-U", "postgres"]
     environment:
       POSTGRES_INITDB_ARGS: --data-checksums
-      POSTGRES_DB: cryoet
+      POSTGRES_DB: cryoetv2
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       # The postgres image declares a mounted volume at /var/lib/postgresql/data

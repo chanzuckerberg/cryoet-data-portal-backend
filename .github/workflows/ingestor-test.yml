@@ -20,5 +20,4 @@ jobs:
       - name: Run tests
         run: |
           make ingestor-init
-          make ingestor-test-db-init
           make ingestor-test-s3
