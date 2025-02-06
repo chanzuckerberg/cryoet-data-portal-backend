@@ -16,13 +16,7 @@ class TestTiltAngles(TiltAnglesHelper):
     Ordering:
         - .tlt (<=) maps to .rawtlt (not necessarily 1:1)
         - .rawtlt (<=) maps to .mdoc (not necessarily 1:1)
-        - .mdoc (==) one-to-one with frames files & tiltseries_metadata size["z"]
-        - tiltseries metadata size["z"] == frames_count == # of frames files
-
-    Extra test redundancy is added for the cases where files sometimes do not exist.
-    Extra redundancy tests are done on the tiltseries metadata size["z"] since frames_count / # of frames files may be 0
-        when no frames are present and that is a valid case. To ensure consistency, we rely on the check
-        tiltseries metadata size["z"] == frames_count == # of frames files.
+        - tiltseries metadata size["z"] == number of rawtlt entries
     """
 
     ### BEGIN Raw Tilt .rawtlt tests ###

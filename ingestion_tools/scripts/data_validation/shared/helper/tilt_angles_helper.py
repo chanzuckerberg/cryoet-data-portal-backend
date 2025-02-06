@@ -12,7 +12,6 @@ class TiltAnglesHelper:
         Ordering:
             - .tlt (<=) maps to .rawtlt (not necessarily 1:1)
             - .rawtlt (<=) maps to .mdoc (not necessarily 1:1)
-            - .mdoc (==) one-to-one with frames files & tiltseries_metadata size["z"]
 
         Extra test redundancy is added for the cases where files sometimes do not exist.
     """

@@ -3,7 +3,6 @@ import os
 from typing import Dict
 
 import allure
-import numpy as np
 import pandas as pd
 import pytest
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
@@ -29,15 +28,6 @@ class TestTiltseries(TiltSeriesHelper):
         self.zarr_headers = tiltseries_zarr_metadata
         self.spacing = tiltseries_metadata["pixel_spacing"]
         self.skip_z_axis_checks = True
-
-    @pytest.fixture
-    def tiltseries_metadata_range(self, tiltseries_metadata: dict) -> list[float]:
-        # add tilt_step to max because arange is end value exclusive
-        return np.arange(
-            tiltseries_metadata["tilt_range"]["min"],
-            tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
-            tiltseries_metadata["tilt_step"],
-        ).tolist()
 
     ### BEGIN metadata self-consistency tests ###
     @allure.title("Tiltseries: sanity check tiltseries metadata.")
@@ -116,7 +106,7 @@ class TestTiltseries(TiltSeriesHelper):
     ### BEGIN metadata-mdoc consistency tests ###
     @allure.title("Mdoc: number of mdoc tilt angles equals tiltseries size['z'].")
     def test_mdoc_tiltseries_metadata(self, tiltseries_metadata: dict, mdoc_data: pd.DataFrame):
-        assert len(mdoc_data) <= tiltseries_metadata["size"]["z"]
+        assert len(mdoc_data) >= tiltseries_metadata["size"]["z"]
 
     @allure.title("Mdoc: every mdoc tilt angle corresponds to the tilt_range + tilt_step metadata field.")
     @allure.description("Not all angles in the tilt range must be present in the MDOC file.")

@@ -41,6 +41,19 @@ def generate_filters(kwargs) -> str:
     return " ".join(filters) if filters else ""
 
 
+def validate_config_path(path: str) -> str:
+    if os.path.exists(path):
+        return path
+
+    directory_path = os.path.dirname(os.path.abspath(path))
+    expected_directory_path = os.path.abspath(os.path.join(os.getcwd(), "..", "..", "..", "dataset_configs"))
+    if os.path.basename(directory_path) == "dataset_configs" and directory_path != expected_directory_path:
+        new_path = os.path.join(expected_directory_path, os.path.basename(path))
+        print(f"Updating the path from {path} to {new_path}")
+        return new_path
+    raise RuntimeError(f"{os.path.basename(path)} does not exist in {os.path.abspath(path)}")
+
+
 @click.command()
 @click.option(
     "--ingestion-config",
@@ -53,11 +66,12 @@ def main(
     ingestion_config: str,
     **kwargs,
 ):
-    config_name = os.path.basename(ingestion_config).split(".")[0]
+    config_path = validate_config_path(ingestion_config)
+    config_name = os.path.basename(config_path).split(".")[0]
     updated_kwargs = update_with_default(kwargs, DEFAULT_OVERRIDES)
     additional_parameters = [
         f"--input-bucket {updated_kwargs['input_bucket']}",
-        f"--ingestion-config {ingestion_config}",
+        f"--ingestion-config {config_path}",
         generate_filters(kwargs),
     ]
 

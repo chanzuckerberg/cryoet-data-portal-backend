@@ -6,7 +6,7 @@ import pytest
 import tifffile
 from data_validation.shared.helper.helper_mrc import HelperTestMRCHeader, mrc_allure_title
 from data_validation.shared.helper.helper_tiff_mrc import helper_tiff_mrc_consistent
-from data_validation.shared.util import PERMITTED_FRAME_EXTENSIONS, PERMITTED_GAIN_EXTENSIONS
+from data_validation.shared.util import PERMITTED_FRAME_EXTENSIONS
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 
@@ -71,7 +71,6 @@ class GainTestHelper(TwoDeeFileTestHelper):
     @pytest.fixture(autouse=True)
     def set_entity_variables(self, gain_headers: dict[str, MrcInterpreter]):
         self.entity_type = "gain"
-        self.permitted_extensions = PERMITTED_GAIN_EXTENSIONS
         self.mrc_headers = gain_headers
         if not self.mrc_headers:
             self.error_on_no_mrc_header = False

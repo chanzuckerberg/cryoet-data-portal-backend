@@ -4,12 +4,17 @@ import allure
 import pytest
 import tifffile
 from data_validation.shared.helper.twodee_helper import GainTestHelper
+from data_validation.shared.util import PERMITTED_GAIN_EXTENSIONS
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 @pytest.mark.gain
 @pytest.mark.parametrize("dataset, run_name", pytest.cryoet.dataset_run_combinations, scope="session")
 class TestGain(GainTestHelper):
+
+    @pytest.fixture(autouse=True)
+    def set_valid_extensions(self):
+        self.permitted_extensions = PERMITTED_GAIN_EXTENSIONS
 
     ### BEGIN Frame-specific tests ###
     @allure.title("Gain: pixel spacing and dimensions match frames.")

@@ -23,6 +23,10 @@ class TestGain(GainTestHelper):
     def gain_files(self, run: RunImporter) -> list[str]:
         return pytest.cryoet.get_importable_entities(GainImporter, [run], "path")
 
+    @pytest.fixture(autouse=True)
+    def set_valid_extensions(self):
+        self.permitted_extensions = PERMITTED_GAIN_EXTENSIONS + [".dm4"]
+
     @pytest.fixture(scope="class")
     def gain_headers(
             self, gain_files: list[str], filesystem: S3Filesystem,

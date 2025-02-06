@@ -1,6 +1,7 @@
 import re
 
 import allure
+import numpy as np
 import pandas as pd
 import pytest
 from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeader
@@ -13,6 +14,16 @@ class TiltSeriesHelper(HelperTestMRCZarrHeader):
     @pytest.fixture(autouse=True)
     def set_space_group(self):
         self.spacegroup = 0  # 2D image
+
+    @pytest.fixture
+    def tiltseries_metadata_range(self, tiltseries_metadata: dict) -> list[float]:
+        # add tilt_step to max because arange is end value exclusive
+        return np.arange(
+            tiltseries_metadata["tilt_range"]["min"],
+            tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
+            tiltseries_metadata["tilt_step"],
+        ).tolist()
+
 
     @pytest.fixture
     def mdoc_tilt_axis_angle(self, mdoc_data: pd.DataFrame) -> float:
