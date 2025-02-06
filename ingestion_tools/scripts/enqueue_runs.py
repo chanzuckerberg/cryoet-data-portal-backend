@@ -12,16 +12,16 @@ import click
 from boto3 import Session
 from botocore import UNSIGNED
 from botocore.config import Config
+from db_import.common.config import DBImportConfig
+from db_import.importer import db_import_options
+from db_import.importers.dataset import DatasetDBImporter
+from db_import.importers.deposition import DepositionDBImporter
 from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.utils import IMPORTERS
 from standardize_dirs import common_options as ingest_common_options
 
-from db_import.common.config import DBImportConfig
-from db_import.importer import db_import_options
-from db_import.importers.dataset import DatasetDBImporter
-from db_import.importers.deposition import DepositionDBImporter
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
