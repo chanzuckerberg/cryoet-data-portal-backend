@@ -48,6 +48,7 @@ TomogramAuthor {
     integer id
     integer author_list_order
     string orcid
+    string kaggle_id
     string name
     string email
     string affiliation_name
@@ -138,6 +139,7 @@ Frame {
 Deposition {
     string title
     string description
+    string tag
     string deposition_publications
     string related_database_entries
     date deposition_date
@@ -151,6 +153,7 @@ DepositionAuthor {
     integer id
     integer author_list_order
     string orcid
+    string kaggle_id
     string name
     string email
     string affiliation_name
@@ -197,6 +200,7 @@ DatasetAuthor {
     integer id
     integer author_list_order
     string orcid
+    string kaggle_id
     string name
     string email
     string affiliation_name
@@ -244,6 +248,7 @@ AnnotationAuthor {
     integer id
     integer author_list_order
     string orcid
+    string kaggle_id
     string name
     string email
     string affiliation_name

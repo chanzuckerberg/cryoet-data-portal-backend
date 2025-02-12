@@ -509,6 +509,13 @@ classes:
         range: string
         recommended: true
         pattern: "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"
+      kaggle_id:
+        name: kaggle_id
+        description: A unique, persistent identifier for kaggle users at kaggle.com.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - author_kaggle_id
+        range: string
       name:
         name: name
         description: Full name of an author (e.g. Jane Doe).
@@ -1544,6 +1551,13 @@ classes:
           - deposition_description
         range: string
         required: true
+      tag:
+        name: tag
+        description: Tag for the deposition - like ml competition
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - deposition_tag
+        range: string
       deposition_types:
         name: deposition_types
         from_schema: cdp-dataset-config

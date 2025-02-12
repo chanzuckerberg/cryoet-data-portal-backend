@@ -39,6 +39,7 @@ class DatasetAuthorFactory(CommonFactory):
     author_list_order = fuzzy.FuzzyInteger(1, 1000)
 
     orcid = fuzzy.FuzzyText()
+    kaggle_id = fuzzy.FuzzyText()
     name = fuzzy.FuzzyText()
     email = fuzzy.FuzzyText()
     affiliation_name = fuzzy.FuzzyText()

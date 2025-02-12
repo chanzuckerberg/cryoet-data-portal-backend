@@ -583,6 +583,9 @@ type AnnotationAuthor implements EntityInterface & Node {
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String
 
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String
+
   """Full name of an annotation author (e.g. Jane Doe)."""
   name: String!
 
@@ -650,6 +653,7 @@ enum AnnotationAuthorCountColumns {
   id
   authorListOrder
   orcid
+  kaggleId
   name
   email
   affiliationName
@@ -671,6 +675,9 @@ input AnnotationAuthorCreateInput {
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
+
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String = null
 
   """Full name of an annotation author (e.g. Jane Doe)."""
   name: String!
@@ -714,6 +721,7 @@ type AnnotationAuthorGroupByOptions {
   id: Int
   authorListOrder: Int
   orcid: String
+  kaggleId: String
   name: String
   email: String
   affiliationName: String
@@ -727,6 +735,7 @@ type AnnotationAuthorMinMaxColumns {
   id: Int
   authorListOrder: Int
   orcid: String
+  kaggleId: String
   name: String
   email: String
   affiliationName: String
@@ -744,6 +753,7 @@ input AnnotationAuthorOrderByClause {
   id: orderBy
   authorListOrder: orderBy
   orcid: orderBy
+  kaggleId: orderBy
   name: orderBy
   email: orderBy
   affiliationName: orderBy
@@ -765,6 +775,9 @@ input AnnotationAuthorUpdateInput {
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
+
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String = null
 
   """Full name of an annotation author (e.g. Jane Doe)."""
   name: String
@@ -800,6 +813,7 @@ input AnnotationAuthorWhereClause {
   id: IntComparators
   authorListOrder: IntComparators
   orcid: StrComparators
+  kaggleId: StrComparators
   name: StrComparators
   email: StrComparators
   affiliationName: StrComparators
@@ -1909,6 +1923,9 @@ type DatasetAuthor implements EntityInterface & Node {
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String
 
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String
+
   """Full name of an author (e.g. Jane Doe)."""
   name: String!
 
@@ -1974,6 +1991,7 @@ enum DatasetAuthorCountColumns {
   id
   authorListOrder
   orcid
+  kaggleId
   name
   email
   affiliationName
@@ -1995,6 +2013,9 @@ input DatasetAuthorCreateInput {
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
+
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String = null
 
   """Full name of an author (e.g. Jane Doe)."""
   name: String!
@@ -2036,6 +2057,7 @@ type DatasetAuthorGroupByOptions {
   id: Int
   authorListOrder: Int
   orcid: String
+  kaggleId: String
   name: String
   email: String
   affiliationName: String
@@ -2049,6 +2071,7 @@ type DatasetAuthorMinMaxColumns {
   id: Int
   authorListOrder: Int
   orcid: String
+  kaggleId: String
   name: String
   email: String
   affiliationName: String
@@ -2066,6 +2089,7 @@ input DatasetAuthorOrderByClause {
   id: orderBy
   authorListOrder: orderBy
   orcid: orderBy
+  kaggleId: orderBy
   name: orderBy
   email: orderBy
   affiliationName: orderBy
@@ -2087,6 +2111,9 @@ input DatasetAuthorUpdateInput {
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
+
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String = null
 
   """Full name of an author (e.g. Jane Doe)."""
   name: String
@@ -2120,6 +2147,7 @@ input DatasetAuthorWhereClause {
   id: IntComparators
   authorListOrder: IntComparators
   orcid: StrComparators
+  kaggleId: StrComparators
   name: StrComparators
   email: StrComparators
   affiliationName: StrComparators
@@ -2813,6 +2841,9 @@ type Deposition implements EntityInterface & Node {
 
   """Description for the deposition"""
   description: String!
+
+  """Tag for the deposition - like ml competition"""
+  tag: String
   depositionTypes(
     where: DepositionTypeWhereClause = null
     orderBy: [DepositionTypeOrderByClause!] = []
@@ -2884,6 +2915,9 @@ type DepositionAuthor implements EntityInterface & Node {
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String
 
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String
+
   """Full name of a deposition author (e.g. Jane Doe)."""
   name: String!
 
@@ -2947,6 +2981,7 @@ enum DepositionAuthorCountColumns {
   id
   authorListOrder
   orcid
+  kaggleId
   name
   email
   affiliationName
@@ -2967,6 +3002,9 @@ input DepositionAuthorCreateInput {
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
+
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String = null
 
   """Full name of a deposition author (e.g. Jane Doe)."""
   name: String!
@@ -3006,6 +3044,7 @@ type DepositionAuthorGroupByOptions {
   id: Int
   authorListOrder: Int
   orcid: String
+  kaggleId: String
   name: String
   email: String
   affiliationName: String
@@ -3019,6 +3058,7 @@ type DepositionAuthorMinMaxColumns {
   id: Int
   authorListOrder: Int
   orcid: String
+  kaggleId: String
   name: String
   email: String
   affiliationName: String
@@ -3036,6 +3076,7 @@ input DepositionAuthorOrderByClause {
   id: orderBy
   authorListOrder: orderBy
   orcid: orderBy
+  kaggleId: orderBy
   name: orderBy
   email: orderBy
   affiliationName: orderBy
@@ -3056,6 +3097,9 @@ input DepositionAuthorUpdateInput {
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
+
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String = null
 
   """Full name of a deposition author (e.g. Jane Doe)."""
   name: String
@@ -3087,6 +3131,7 @@ input DepositionAuthorWhereClause {
   id: IntComparators
   authorListOrder: IntComparators
   orcid: StrComparators
+  kaggleId: StrComparators
   name: StrComparators
   email: StrComparators
   affiliationName: StrComparators
@@ -3103,6 +3148,7 @@ input DepositionAuthorWhereClauseMutations {
 enum DepositionCountColumns {
   title
   description
+  tag
   depositionPublications
   relatedDatabaseEntries
   depositionDate
@@ -3119,6 +3165,9 @@ input DepositionCreateInput {
 
   """Description for the deposition"""
   description: String!
+
+  """Tag for the deposition - like ml competition"""
+  tag: String = null
 
   """The publications related to this deposition"""
   depositionPublications: String = null
@@ -3155,6 +3204,7 @@ type DepositionGroupByOptions {
   tomograms: TomogramGroupByOptions
   title: String
   description: String
+  tag: String
   depositionTypes: DepositionTypeGroupByOptions
   depositionPublications: String
   relatedDatabaseEntries: String
@@ -3169,6 +3219,7 @@ type DepositionGroupByOptions {
 type DepositionMinMaxColumns {
   title: String
   description: String
+  tag: String
   depositionPublications: String
   relatedDatabaseEntries: String
   depositionDate: DateTime
@@ -3186,6 +3237,7 @@ type DepositionNumericalColumns {
 input DepositionOrderByClause {
   title: orderBy
   description: orderBy
+  tag: orderBy
   depositionPublications: orderBy
   relatedDatabaseEntries: orderBy
   depositionDate: orderBy
@@ -3322,6 +3374,9 @@ input DepositionUpdateInput {
   """Description for the deposition"""
   description: String
 
+  """Tag for the deposition - like ml competition"""
+  tag: String = null
+
   """The publications related to this deposition"""
   depositionPublications: String = null
 
@@ -3364,6 +3419,7 @@ input DepositionWhereClause {
   tomogramsAggregate: TomogramAggregateWhereClause
   title: StrComparators
   description: StrComparators
+  tag: StrComparators
   depositionTypes: DepositionTypeWhereClause
   depositionTypesAggregate: DepositionTypeAggregateWhereClause
   depositionPublications: StrComparators
@@ -5432,6 +5488,9 @@ type TomogramAuthor implements EntityInterface & Node {
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String
 
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String
+
   """Full name of an author (e.g. Jane Doe)."""
   name: String!
 
@@ -5495,6 +5554,7 @@ enum TomogramAuthorCountColumns {
   id
   authorListOrder
   orcid
+  kaggleId
   name
   email
   affiliationName
@@ -5516,6 +5576,9 @@ input TomogramAuthorCreateInput {
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
+
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String = null
 
   """Full name of an author (e.g. Jane Doe)."""
   name: String!
@@ -5555,6 +5618,7 @@ type TomogramAuthorGroupByOptions {
   id: Int
   authorListOrder: Int
   orcid: String
+  kaggleId: String
   name: String
   email: String
   affiliationName: String
@@ -5568,6 +5632,7 @@ type TomogramAuthorMinMaxColumns {
   id: Int
   authorListOrder: Int
   orcid: String
+  kaggleId: String
   name: String
   email: String
   affiliationName: String
@@ -5585,6 +5650,7 @@ input TomogramAuthorOrderByClause {
   id: orderBy
   authorListOrder: orderBy
   orcid: orderBy
+  kaggleId: orderBy
   name: orderBy
   email: orderBy
   affiliationName: orderBy
@@ -5606,6 +5672,9 @@ input TomogramAuthorUpdateInput {
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
+
+  """A unique, persistent identifier for kaggle users at kaggle.com."""
+  kaggleId: String = null
 
   """Full name of an author (e.g. Jane Doe)."""
   name: String
@@ -5637,6 +5706,7 @@ input TomogramAuthorWhereClause {
   id: IntComparators
   authorListOrder: IntComparators
   orcid: StrComparators
+  kaggleId: StrComparators
   name: StrComparators
   email: StrComparators
   affiliationName: StrComparators

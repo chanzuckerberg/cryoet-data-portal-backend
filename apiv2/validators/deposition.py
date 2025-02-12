@@ -29,6 +29,12 @@ class DepositionCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    tag: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
     deposition_publications: Annotated[
         str | None,
         StringConstraints(
@@ -71,6 +77,12 @@ class DepositionUpdateInputValidator(BaseModel):
         ),
     ]
     description: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    tag: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
