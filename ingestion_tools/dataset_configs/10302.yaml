@@ -7,19 +7,18 @@ alignments:
       list_globs:
       - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.tlt
       - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf
-- metadata:
-    format: ARETOMO3
-    method_type: patch_tracking
-  sources:
-  - source_multi_glob:
-      list_globs:
-      - chlamy_visual_proteomics/{run_name}/ctffind4/ctfphaseflip_ctffind4.txt
 annotations: []
 collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
       - chlamy_visual_proteomics/{run_name}/{run_name}.mdoc
+ctf:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: 'chlamy_visual_proteomics/{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
 dataset_keyphotos:
 - sources:
   - literal:
