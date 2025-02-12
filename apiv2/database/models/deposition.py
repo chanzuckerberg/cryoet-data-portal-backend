@@ -95,6 +95,7 @@ class Deposition(Base):
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
+    tag: Mapped[str] = mapped_column(String, nullable=True)
     deposition_types: Mapped[list[DepositionType]] = relationship(
         "DepositionType",
         back_populates="deposition",

@@ -113,6 +113,7 @@ class AnnotationAuthorWhereClause(TypedDict):
     id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
     orcid: Optional[StrComparators] | None
+    kaggle_id: Optional[StrComparators] | None
     name: Optional[StrComparators] | None
     email: Optional[StrComparators] | None
     affiliation_name: Optional[StrComparators] | None
@@ -133,6 +134,7 @@ class AnnotationAuthorOrderByClause(TypedDict):
     id: Optional[orderBy] | None
     author_list_order: Optional[orderBy] | None
     orcid: Optional[orderBy] | None
+    kaggle_id: Optional[orderBy] | None
     name: Optional[orderBy] | None
     email: Optional[orderBy] | None
     affiliation_name: Optional[orderBy] | None
@@ -157,6 +159,9 @@ class AnnotationAuthor(EntityInterface):
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
         description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+    )
+    kaggle_id: Optional[str] = strawberry.field(
+        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
     )
     name: str = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
@@ -214,6 +219,7 @@ class AnnotationAuthorMinMaxColumns:
     id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None
+    kaggle_id: Optional[str] = None
     name: Optional[str] = None
     email: Optional[str] = None
     affiliation_name: Optional[str] = None
@@ -231,6 +237,7 @@ class AnnotationAuthorCountColumns(enum.Enum):
     id = "id"
     authorListOrder = "author_list_order"
     orcid = "orcid"
+    kaggleId = "kaggle_id"
     name = "name"
     email = "email"
     affiliationName = "affiliation_name"
@@ -309,6 +316,9 @@ class AnnotationAuthorCreateInput:
     orcid: Optional[str] = strawberry.field(
         description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
     )
+    kaggle_id: Optional[str] = strawberry.field(
+        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+    )
     name: str = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
@@ -342,6 +352,9 @@ class AnnotationAuthorUpdateInput:
     )
     orcid: Optional[str] = strawberry.field(
         description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+    )
+    kaggle_id: Optional[str] = strawberry.field(
+        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
     )
     name: Optional[str] = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
