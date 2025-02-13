@@ -1,0 +1,52 @@
+alignments:
+- sources:
+  - destination_glob:
+      list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+      match_regex: .*
+      name_regex: (.*)
+
+annotations: #TODO
+datasets:
+- sources:
+  - source_glob:
+      list_glob: 10???
+      match_regex: .*
+      name_regex: (.*)
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: #TODO
+    deposition_identifier: 10330
+    deposition_title: #TODO
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10330
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
+        thumbnail: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
+
+runs:
+- sources:
+  - source_glob:
+      list_glob: '{dataset_name}/*'
+      match_regex: .*
+      name_regex: (.*?)_.*?_T2SS.mod
+
+standardization_config:
+  deposition_id: 10330
+  source_prefix: #TODO
+
+version: 1.1.0
+voxel_spacings:
+- sources:
+  - destination_glob:
+      list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+      match_regex: .*
+      name_regex: VoxelSpacing(.*)
