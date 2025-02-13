@@ -645,7 +645,7 @@ def sync(
     "--swipe-wdl-key",
     type=str,
     required=True,
-    default="validate_dataset-v0.0.1.wdl",
+    default="validate_dataset-v0.0.2.wdl",
     help="Specify wdl key for custom workload",
 )
 @enqueue_common_options

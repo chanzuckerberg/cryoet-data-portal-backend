@@ -26,8 +26,6 @@ IMPORTERS = [
     DepositionImporter,
     DepositionKeyPhotoImporter,
     FrameImporter,
-    VisualizationConfigImporter,
-    TomogramImporter,
     GainImporter,
     KeyImageImporter,
     RawTiltImporter,
@@ -35,6 +33,7 @@ IMPORTERS = [
     TiltSeriesImporter,
     TomogramImporter,
     VoxelSpacingImporter,
+    VisualizationConfigImporter,
 ]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 
