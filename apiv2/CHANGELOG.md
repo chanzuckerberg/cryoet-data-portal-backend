@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.9.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.8.0...apiv2-v1.9.0) (2025-02-13)
+
+
+### Features
+
+* add kaggle id and deposition tag ([#433](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/433)) ([9a1fedb](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/9a1fedb80f074a2c22d9b6629acf42f9f5636a65))
+
+
+### Bug Fixes
+
+* update to trigger workflow ([#442](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/442)) ([1fdbf8b](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/1fdbf8b523de6198a6364ea24406d446a1b9eff6))
+* update to trigger workflow 2 ([#443](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/443)) ([dfecee5](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/dfecee5ead6d52d99e6ab0ef779abd7bfe84e1bd))
+
 ## [1.8.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.7.0...apiv2-v1.8.0) (2025-01-17)
 
 
