@@ -33,7 +33,6 @@ jobs:
       envs: ${{ inputs.envs }}
       images: |
         { "apiv2": {
-            "name": "apiv2",
             "context": "apiv2",
             "dockerfile": "apiv2/Dockerfile",
             "platform": "linux/arm64"
