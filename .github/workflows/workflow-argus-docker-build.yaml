@@ -37,8 +37,9 @@ jobs:
       path_filters: ${{ inputs.path_filters }}
       envs: ${{ inputs.envs }}
       images: |
-        { "apiv2": {
+        {
+          "apiv2": {
             "context": "apiv2",
-            "dockerfile": "apiv2/Dockerfile",
+            "dockerfile": "apiv2/Dockerfile"
           }
         }
