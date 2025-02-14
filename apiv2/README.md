@@ -46,6 +46,7 @@ $ FILE=tests/test_aggregates.py make test-file
 
 ```
 # First, make any necessary changes to `apiv2/schema/schema.yaml`, then run this to generate new code & migrations and apply them:
+
 cd apiv2
 make update-schema
 
