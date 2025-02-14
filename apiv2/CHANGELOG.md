@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.9.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.9.0...apiv2-v1.9.1) (2025-02-14)
+
+
+### Bug Fixes
+
+* path_filter formatting ([#447](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/447)) ([c545765](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/c54576577361eac52534be176a931f2d25a5f507))
+* update argus docker build ([#448](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/448)) ([6d8f116](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/6d8f116deae27ba680b38e9291e690be218869b4))
+* update docker build ([#446](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/446)) ([203a49e](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/203a49e1eb06901f8b16b0c0f6e64cfe1e3fe2cd))
+* update staging/prod builder ([#444](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/444)) ([a7fdf4f](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a7fdf4fd83082e88b88eb9c14c7558a42b23bb74))
+
 ## [1.9.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.8.0...apiv2-v1.9.0) (2025-02-13)
 
 
