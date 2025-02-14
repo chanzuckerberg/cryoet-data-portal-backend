@@ -34,6 +34,7 @@ jobs:
     with:
       branches_include: ${{ inputs.branches_include }}
       branches_ignore: ${{ inputs.branches_ignore }}
+      force_update_manifests: ${{ inputs.force_update_manifests }}
       path_filters: ${{ inputs.path_filters }}
       envs: ${{ inputs.envs }}
       images: |
