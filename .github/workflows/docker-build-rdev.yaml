@@ -3,8 +3,6 @@ name: Docker Build Rdev
 on:
   pull_request:
     types: [ labeled, synchronize ]
-    paths:
-      - 'apiv2/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,4 +15,4 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'stack') && github.event.sender.type != 'Bot'
     with:
       envs: rdev
-      path_filters: 'apiv2/**'
+      path_filters: apiv2/**
