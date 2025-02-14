@@ -21,6 +21,11 @@ on:
         required: false
         type: string
         default: ""
+      force_update_manifests:
+        description: "Whether to always update ArgoCD manifests after building the Docker images"
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   argus_builder:
@@ -35,6 +40,5 @@ jobs:
         { "apiv2": {
             "context": "apiv2",
             "dockerfile": "apiv2/Dockerfile",
-            "platform": "linux/arm64"
           }
         }
