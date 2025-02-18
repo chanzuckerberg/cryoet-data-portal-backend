@@ -1,5 +1,6 @@
 import contextlib
 import os
+from collections.abc import Iterator
 from typing import TYPE_CHECKING, Any, Optional
 
 from common.copy import copy_by_src
@@ -153,7 +154,7 @@ class BaseImporter:
         return self.allow_imports
 
     @classmethod
-    def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
+    def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> Iterator["BaseImporter"]:
         """
         Finds the importer entities based on the configuration source specified. If no items are found, but a default
         entry exists, then the default entry is returned.
