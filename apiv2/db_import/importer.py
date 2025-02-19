@@ -175,6 +175,7 @@ def load_func(
         import_runs = True
         import_alignments = True
         import_gains = True
+        import_frame_acquisition_files = True
         import_frames = True
         import_tiltseries = True
         import_tomograms = True
@@ -190,6 +191,7 @@ def load_func(
             import_alignments,
             import_gains,
             import_frames,
+            import_frame_acquisition_files,
             import_tiltseries,
             import_tomogram_voxel_spacing,
         )
@@ -238,8 +240,8 @@ def load_func(
 
             parents = {"run": run_obj, "dataset": dataset_obj}
             if import_frame_acquisition_files:
-              frame_acquisition_file_importer = FrameAcquisitionFileImporter(config, **parents)
-              frame_acquisition_file_importer.import_items()
+                frame_acquisition_file_importer = FrameAcquisitionFileImporter(config, **parents)
+                frame_acquisition_file_importer.import_items()
             if import_frames:
                 frame_importer = FrameImporter(config, **parents)
                 frame_importer.import_items()

@@ -28,16 +28,17 @@ def populate_existing_mdoc(session: sa.orm.Session) -> None:
     populate_run(session)
     stale_frame = models.FrameAcquisitionFile(
         run_id=RUN1_ID,
-        https_mdoc_path="STALE_S3_PATH",
-        s3_mdoc_path="STALE_HTTP_PATH",
+        s3_mdoc_path="STALE_S3_PATH",
+        https_mdoc_path="STALE_HTTP_PATH",
     )
     session.add(stale_frame)
-    models.FrameAcquisitionFile(
+    existing_mdoc = models.FrameAcquisitionFile(
         id=333,
         run_id=RUN1_ID,
-        s3_frame_path="s3://test-public-bucket/30001/RUN1/Frames/foo.mdoc",
-        https_frame_path="https://foo.com/",
+        s3_mdoc_path="s3://test-public-bucket/30001/RUN1/Frames/foo.mdoc",
+        https_mdoc_path="https://foo.com/",
     )
+    session.add(existing_mdoc)
 
 
 # Tests addition of new frames, and updating entries already existing in db

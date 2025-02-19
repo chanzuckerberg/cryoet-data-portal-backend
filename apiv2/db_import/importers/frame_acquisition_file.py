@@ -2,7 +2,7 @@ import os
 from typing import Any
 
 from database import models
-from db_import.common.finders import FileFinder
+from db_import.common.finders import MetadataFileFinder
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 
 # FrameAcquisitionFile Fields
@@ -17,13 +17,14 @@ class FrameAcquisitionFileItem(ItemDBImporter):
     model_class = models.FrameAcquisitionFile
 
     def load_computed_fields(self):
-        self.model_args["s3_mdoc_path"] = self.get_s3_url(self.input_data["file"])
-        self.model_args["https_mdoc_path"] = self.get_https_url(self.input_data["file"])
+        file = self.input_data["frames_acquisition_file"]
+        self.model_args["s3_mdoc_path"] = self.get_s3_url(file)
+        self.model_args["https_mdoc_path"] = self.get_https_url(file)
         self.model_args["run_id"] = self.input_data["run"].id
 
 
 class FrameAcquisitionFileImporter(IntegratedDBImporter):
-    finder = FileFinder
+    finder = MetadataFileFinder
     row_importer = FrameAcquisitionFileItem
     clean_up_siblings = True
 
@@ -37,7 +38,6 @@ class FrameAcquisitionFileImporter(IntegratedDBImporter):
 
     def get_finder_args(self) -> dict[str, Any]:
         return {
-            "path": os.path.join(self.run.s3_prefix, "Frames/"),
-            "glob": "*",
-            "match_regex": r"*.mdoc$",
+            "path": os.path.join(self.run.s3_prefix, "Frames"),
+            "file_glob": "frames_metadata.json",
         }
