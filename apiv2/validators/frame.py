@@ -19,24 +19,18 @@ class FrameCreateInputValidator(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     deposition_id: Annotated[uuid.UUID, Field()]
     run_id: Annotated[uuid.UUID, Field()]
-    raw_angle: Annotated[
-        float | None,
-        Field(
-            ge=-90,
-            le=90,
-        ),
-    ]
     acquisition_order: Annotated[int | None, Field()]
-    dose: Annotated[float | None, Field()]
+    accumulated_dose: Annotated[float | None, Field()]
+    exposure_dose: Annotated[float | None, Field()]
     is_gain_corrected: Annotated[bool | None, Field()]
     s3_frame_path: Annotated[
-        str,
+        str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
     ]
     https_frame_path: Annotated[
-        str,
+        str | None,
         StringConstraints(
             strip_whitespace=True,
         ),
@@ -50,15 +44,9 @@ class FrameUpdateInputValidator(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     deposition_id: Annotated[uuid.UUID | None, Field()]
     run_id: Annotated[uuid.UUID | None, Field()]
-    raw_angle: Annotated[
-        float | None,
-        Field(
-            ge=-90,
-            le=90,
-        ),
-    ]
     acquisition_order: Annotated[int | None, Field()]
-    dose: Annotated[float | None, Field()]
+    accumulated_dose: Annotated[float | None, Field()]
+    exposure_dose: Annotated[float | None, Field()]
     is_gain_corrected: Annotated[bool | None, Field()]
     s3_frame_path: Annotated[
         str | None,

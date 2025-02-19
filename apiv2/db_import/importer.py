@@ -186,11 +186,11 @@ def load_func(
         import_tomograms = max(import_tomograms, import_tomogram_authors)
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
         import_tiltseries = max(import_tiltseries, import_alignments)
+        import_frame_acquisition_files = max(import_frames, import_frame_acquisition_files)
         import_runs = max(
             import_runs,
             import_alignments,
             import_gains,
-            import_frames,
             import_frame_acquisition_files,
             import_tiltseries,
             import_tomogram_voxel_spacing,
@@ -241,10 +241,10 @@ def load_func(
             parents = {"run": run_obj, "dataset": dataset_obj}
             if import_frame_acquisition_files:
                 frame_acquisition_file_importer = FrameAcquisitionFileImporter(config, **parents)
-                frame_acquisition_file_importer.import_items()
-            if import_frames:
-                frame_importer = FrameImporter(config, **parents)
-                frame_importer.import_items()
+                for _ in frame_acquisition_file_importer.import_items():
+                    if import_frames:
+                        frame_importer = FrameImporter(config, **parents)
+                        frame_importer.import_items()
             if import_gains:
                 gain_importer = GainImporter(config, **parents)
                 gain_importer.import_items()

@@ -38,6 +38,6 @@ class FrameAcquisitionFileImporter(IntegratedDBImporter):
 
     def get_finder_args(self) -> dict[str, Any]:
         return {
-            "path": os.path.join(self.run.s3_prefix, "Frames"),
+            "path": os.path.join(self.run.s3_prefix, "Frames/"),
             "file_glob": "frames_metadata.json",
         }

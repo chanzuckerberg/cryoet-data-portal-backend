@@ -1,6 +1,26 @@
 {
-	"frames_acquisition_file": "30001/RUN1/Frames/foo.mdoc",
-	"frames": [
-
-	]
+    "frames_acquisition_file": "30001/RUN1/Frames/foo.mdoc",
+    "frames": [
+        {
+            "acquisition_order": 0,
+            "accumulated_dose": 0,
+            "exposure_dose": 1.92,
+            "is_gain_corrected": true,
+            "path": "30001/RUN1/Frames/frame1"
+        },
+        {
+            "acquisition_order": 1,
+            "accumulated_dose": 1.92,
+            "exposure_dose": 2.0,
+            "is_gain_corrected": true,
+            "path": "30001/RUN1/Frames/frame2"
+        },
+        {
+            "acquisition_order": 2,
+            "accumulated_dose": 3.92,
+            "exposure_dose": 1.5,
+            "is_gain_corrected": true,
+            "path": null
+        }
+    ]
 }
