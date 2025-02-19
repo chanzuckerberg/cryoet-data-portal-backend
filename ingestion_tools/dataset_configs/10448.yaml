@@ -17,27 +17,56 @@ depositions:
 
 datasets:
 - metadata:
-    authors: #TODO
+    authors:
+      - name: Mallak Ali
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0009-0007-8169-0996
+      - name: Julia Peukes
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0000-0001-8560-7407
+      - name: Yue Yu
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0000-0002-3248-9678
+      - name: Ariana Peck
+        primary_author_status: true
+        corresponding_author_status: false
+        ORCID: 0000-0002-5940-3897
+      - name: Elizabeth Montabana
+        primary_author_status: false
+        corresponding_author_status: false
+        ORCID: 0000-0002-6731-5854
+      - name: Shu-Hsien Sheu
+        primary_author_status: false
+        corresponding_author_status: true
+        ORCID: 0000-0003-0758-4654
+      - name: Mohammadreza Paraan
+        primary_author_status: false
+        corresponding_author_status: true
+        ORCID: 0000-0002-8402-0134
     dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synaptosomes purified
       by the homogenization of rat hippocampi. Samples were prepared by plunge-freezing via Leica GP2. Contained data
       were collected on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
-      using AreTomo3 v2.0.4.
+      using AreTomo3 v2.0.7.
     dataset_identifier: 10448
-    dataset_title: Synaptosomes from rat hippocampi (without centrifugation)
+    dataset_title: Synaptosomes from rat hippocampi (180 mg, 800 rpm, Au grid, high tilt range, 1:50)
     dates: &dataset_dates
-      deposition_date: '2024-11-26'
-      last_modified_date: '2024-11-26'
-      release_date: '2024-11-26'
+      deposition_date: '2025-02-13'
+      last_modified_date: '2025-02-13'
+      release_date: '2025-02-13'
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
       grant_id: 'CZII-2023–327779'
-    grid_preparation: Glow discharge Quantifoil Cu 200 mesh 1.2/1.3 + apply 4ul of diluted homogenate to grid + blot for
-      5 seconds + plunge-freeze
+    grid_preparation: Glow discharge Quantifoil Au R2/2 200 mesh grids + apply 4ul of diluted homogenate to grid +
+      blot for 4 seconds
     organism:
       name: Sprague Dawley Rat
       taxonomy_id: 10116
-    sample_preparation: 200 mg of hippocampus tissue placed into a glass pestle and mortar with 5mL of ice-cold
-      Hibernate-A buffer + grind for 40 seconds to homogenize tissue + dilute homogenate 1:100 with Hibernate A
+    sample_preparation: 180 mg Sprague Dawley rat hippocampus tissue placed into a glass pestle and mortar with 5mL of
+      ice-cold Artificial Cerebral Spinal Fluid (ACSF) + grind by stroking 4 times (1-2 seconds each) to homogenize
+      tissue + centrifuge for 10 minutes at 800 rpm + dilute supernatant 1:50 with ACSF
     sample_type: tissue
     tissue:
       name: hippocampus
@@ -210,7 +239,7 @@ tomograms:
     processing: denoised
     processing_software: DenoisET
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 v2.0.4
+    reconstruction_software: AreTomo3 v2.0.7
     tomogram_version: 1
     voxel_spacing: 4.990
   sources:
@@ -246,9 +275,9 @@ tomograms:
       y: 0
       z: 0
     processing: filtered
-    processing_software: AreTomo3 v2.0.4
+    processing_software: AreTomo3 v2.0.7
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 v2.0.4
+    reconstruction_software: AreTomo3 v2.0.7
     tomogram_version: 1
     voxel_spacing: 4.990
   sources:

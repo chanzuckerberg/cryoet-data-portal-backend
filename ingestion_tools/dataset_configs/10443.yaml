@@ -42,8 +42,8 @@ depositions:
         ORCID: 0000-0002-8402-0134
     dates: &deposition_dates
       deposition_date: '2024-11-26'
-      last_modified_date: '2024-11-26'
-      release_date: '2024-11-26'
+      last_modified_date: '2025-02-13'
+      release_date: '2025-02-13'
     deposition_description: CryoET tomograms of synaptosomes for the development of segmentation and subtomogram
       averaging pipelines for synaptic vesicle proteins, post-synaptic receptors, etc. Each dataset has a slightly
       different sample preparation conditions. The tomograms collectively have a combination of full synaptosomes,
@@ -73,7 +73,7 @@ datasets:
       were collected on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
       using AreTomo3 v2.0.4.
     dataset_identifier: 10443
-    dataset_title: Synaptosomes from rat hippocampi (without centrifugation)
+    dataset_title: Synaptosomes from rat hippocampi (200 mg, no centrifugation, Cu grid, low tilt range, 1:100)
     dates: &dataset_dates
       deposition_date: '2024-11-26'
       last_modified_date: '2024-11-26'
