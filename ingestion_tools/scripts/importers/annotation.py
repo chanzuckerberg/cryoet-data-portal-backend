@@ -512,6 +512,7 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     shape = "InstanceSegmentation"
     map_functions = {
         "tardis": pc.from_tardis,
+        "copick": pc.instance_from_copick,
     }
     valid_file_formats = list(map_functions.keys())
 
