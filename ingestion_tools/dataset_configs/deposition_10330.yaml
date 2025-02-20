@@ -35,17 +35,17 @@ annotations:
       method_type: automated
       version: 1.0
     sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{dataset_name}/{run_name}.zarr'
+          is_visualization_default: true
+          threshold: 0.5
       - InstanceSegmentation:
           binning: 1
           file_format: copick
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/cryoSAM2_1_vesicles.json'
           is_visualization_default: true
           order: xyz
-      - SemanticSegmentationMask:
-          file_format: zarr
-          glob_string: '{dataset_name}/{run_name}.zarr'
-          is_visualization_default: true
-          threshold: 0.5
 
 datasets:
 - sources:
