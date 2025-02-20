@@ -35,16 +35,17 @@ annotations:
       method_type: automated
       version: 1.0
     sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{dataset_name}/{run_name}.zarr'
+          is_visualization_default: true
+          threshold: 0.5
       - InstanceSegmentation:
           binning: 1
           file_format: copick
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/cryoSAM2_1_vesicles.json'
           is_visualization_default: true
           order: xyz
-      - SemanticSegmentationMask:
-          file_format: zarr
-          glob_string: '{dataset_name}/{run_name}_semantic.zarr'
-          is_visualization_default: true
 
 datasets:
 - sources:
@@ -88,8 +89,8 @@ deposition_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
-        thumbnail: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
+        snapshot: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
+        thumbnail: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
 
 runs:
 - sources:
