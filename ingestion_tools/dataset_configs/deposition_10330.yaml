@@ -45,6 +45,7 @@ annotations:
           file_format: zarr
           glob_string: '{dataset_name}/{run_name}_semantic.zarr'
           is_visualization_default: true
+          threshold: 0.5
 
 datasets:
 - sources:
