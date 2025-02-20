@@ -10,7 +10,7 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(CURRENT_DIR, "..", ".."))
 from common.fs import FileSystemApi  # noqa: E402
 
-DEFAULT_OUTPUT_BUCKET = "cryoetportal-output-test"
+DEFAULT_OUTPUT_BUCKET = "cryoet-data-portal-staging"
 
 
 def common_options(func):
