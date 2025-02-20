@@ -1,6 +1,6 @@
-depositions:
+datasets:
 - metadata:
-    authors: &deposition_authors
+    authors: &dataset_authors
       - name: Ariana Peck
         primary_author_status: true
         corresponding_author_status: false
@@ -73,33 +73,47 @@ depositions:
         primary_author_status: false
         corresponding_author_status: true
         ORCID: 0000-0002-8402-0134
-    cross_references: &cross_references
-      publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
+    cross_references:
+      publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608
       related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
-    dates: &dates
-      deposition_date: '2024-10-30'
-      last_modified_date: '2024-10-30'
-      release_date: '2024-10-30'
-    deposition_description: Experimental and simulated training data for the CryoET Object Identification Challenge.
-      Each dataset contains tilt series, alignments, tomograms and ground truth annotations for six protein complexes
-      (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP). Curation procedures
-      are described in detail in the accompanying paper. Details on how the dataset is used in the competition
-      are available on the competition page.
-    deposition_identifier: 10310
-    deposition_title: CZII - CryoET Object Identification Challenge
-    deposition_types:
-    - dataset
-    - annotation
+    dataset_description: This dataset is comprised of movie stacks, tiltseries, alignments, tomograms and hand-curated
+      ground truth annotations for the purpose of training object identification algorithms in the context of the CryoET
+      Object Identification Challenge. The data was acquired on a Krios G4 using a Falcon 4i detector and SelctrisX
+      energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23 and post-processed using different methods.
+      Each run provides raw, denoised, missing wedge corrected and ctf corrected tomograms. The labels were curated as
+      described in the accompanying paper and include point labels for Apo-ferritin, Beta-amylase, Beta-galactosidase,
+      cytosolic ribosomes, thyroglobulin and VLP. Public leaderboard scores on kaggle were computed based on this
+      dataset.
+    dataset_identifier: 10445
+    dataset_title: CZII - CryoET Object Identification Challenge - Public Leaderboard Dataset
+    dates: &dataset_dates
+      deposition_date: '2025-02-20'
+      last_modified_date: '2025-02-20'
+      release_date: '2025-02-20'
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: "CZII-2023\u2013327779"
+    grid_preparation: 'Set Leica GP2 chamber to 4°C and 95% humidity + Use Whitman #1 blotting paper + Attach GFP
+    nanobodies to grid surface using maleimide groups and kck linker + Apply 100 µL lysate in 10 rounds of 10 µL each +
+    Wash grid twice with PBS + Remove excess buffer + Add sequentially 1 µL each: THG (17.8 mg/mL), Apoferritin
+    (5 mg/mL), β-galactosidase (6 mg/mL), β-amylase (5 mg/mL), HSA (50 mg/mL), VLP (7.5 mg/mL) + Back-side blot for 6
+    seconds + Plunge-freeze in liquid ethane (-180°C)'
+    sample_preparation: 'Use HEK293T cells with LAMP1-GFP tag (from CZ BioHub) + Lyse cells using hypotonic buffer
+    (25mM Tris*HCl pH 7.5, 50mM sucrose, 0.2mM EGTA, 0.5mM MgCl2) with 23G syringe + Immediately add sucrose buffer
+    (2.5M sucrose, 0.2mM EGTA, 0.5mM MgCl2) + Remove nuclear fraction by centrifuging at 1000 x g for 10 min + Keep all
+    steps at 4°C and lysate on ice'
+    sample_type: in_vitro
   sources:
   - literal:
       value:
-      - 10310
-deposition_keyphotos:
+      - '10445'
+
+depositions:
 - sources:
   - literal:
       value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_thumbnail.png"
+      - 10310
+
 alignments:
 - metadata:
     format: ARETOMO3
@@ -109,7 +123,7 @@ alignments:
   sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/{run_name}.aln'
+      - '{run_name}.aln'
 
 annotations:
 - metadata:
@@ -122,8 +136,8 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41923
     annotation_software: &software CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 +
       slabpick 0.1.0 + deepfindET 0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *deposition_authors
-    dates: *dates
+    authors: *dataset_authors
+    dates: *dataset_dates
     ground_truth_status: true
     is_curator_recommended: true
     method_links: &method_links
@@ -173,8 +187,8 @@ annotations:
       name: Beta-amylase
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-30405
     annotation_software: *software
-    authors: *deposition_authors
-    dates: *dates
+    authors: *dataset_authors
+    dates: *dataset_dates
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *method_links
@@ -197,8 +211,8 @@ annotations:
       name: Beta-galactosidase
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-0153
     annotation_software: *software
-    authors: *deposition_authors
-    dates: *dates
+    authors: *dataset_authors
+    dates: *dataset_dates
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *method_links
@@ -220,8 +234,8 @@ annotations:
       name: cytosolic ribosome
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-3883
     annotation_software: *software
-    authors: *deposition_authors
-    dates: *dates
+    authors: *dataset_authors
+    dates: *dataset_dates
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *method_links
@@ -244,8 +258,8 @@ annotations:
       name: Thyroglobulin
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-24181
     annotation_software: *software
-    authors: *deposition_authors
-    dates: *dates
+    authors: *dataset_authors
+    dates: *dataset_dates
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *method_links
@@ -268,8 +282,8 @@ annotations:
       name: virus-like capsid
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41917
     annotation_software: *software
-    authors: *deposition_authors
-    dates: *dates
+    authors: *dataset_authors
+    dates: *dataset_dates
     ground_truth_status: true
     is_curator_recommended: true
     method_links: *method_links
@@ -288,42 +302,7 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-        - '{run_name}/{run_name}.mdoc'
-
-datasets:
-- metadata:
-    authors: *deposition_authors
-    cross_references:
-      publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608
-      related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
-    dataset_description: This dataset is comprised of movie stacks, tiltseries, alignments, tomograms and hand-curated
-      ground truth annotations for the purpose of training object identification algorithms in the context of the CryoET
-      Object Identification Challenge. The data was acquired on a Krios G4 using a Falcon 4i detector and SelctrisX
-      energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23 and post-processed using different methods.
-      Each run provides raw, denoised, missing wedge corrected and ctf corrected tomograms. The labels were curated as
-      described in the accompanying paper and include point labels for Apo-ferritin, Beta-amylase, Beta-galactosidase,
-      cytosolic ribosomes, thyroglobulin and VLP. Public leaderboard scores on kaggle were computed based on this
-      dataset.
-    dataset_identifier: 10445
-    dataset_title: CZII - CryoET Object Identification Challenge - Public Leaderboard Dataset
-    dates: *dates
-    funding:
-    - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: "CZII-2023\u2013327779"
-    grid_preparation: 'Set Leica GP2 chamber to 4°C and 95% humidity + Use Whitman #1 blotting paper + Attach GFP
-    nanobodies to grid surface using maleimide groups and kck linker + Apply 100 µL lysate in 10 rounds of 10 µL each +
-    Wash grid twice with PBS + Remove excess buffer + Add sequentially 1 µL each: THG (17.8 mg/mL), Apoferritin
-    (5 mg/mL), β-galactosidase (6 mg/mL), β-amylase (5 mg/mL), HSA (50 mg/mL), VLP (7.5 mg/mL) + Back-side blot for 6
-    seconds + Plunge-freeze in liquid ethane (-180°C)'
-    sample_preparation: 'Use HEK293T cells with LAMP1-GFP tag (from CZ BioHub) + Lyse cells using hypotonic buffer
-    (25mM Tris*HCl pH 7.5, 50mM sucrose, 0.2mM EGTA, 0.5mM MgCl2) with 23G syringe + Immediately add sucrose buffer
-    (2.5M sucrose, 0.2mM EGTA, 0.5mM MgCl2) + Remove nuclear fraction by centrifuging at 1000 x g for 10 min + Keep all
-    steps at 4°C and lysate on ice'
-    sample_type: in_vitro
-  sources:
-  - literal:
-      value:
-      - '10445'
+        - '{run_name}.mdoc'
 
 dataset_keyphotos:
 - sources:
@@ -335,29 +314,29 @@ dataset_keyphotos:
 frames:
 - sources:
   - source_glob:
-      list_glob: '{run_name}/Frames/*.eer'
+      list_glob: '{run_name}/*.eer'
 
 gains:
 - sources:
   - source_glob:
-      list_glob: '20240308_100035_EER_GainReference.gain'
+      list_glob: '{gain_file}'
 
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-        - '{run_name}/{run_name}.rawtlt'
+        - '{run_name}_st.rawtlt'
 
 runs:
 - sources:
   - source_glob:
-      list_glob: TS_*
-      match_regex: TS_\d{1,2}_\d$
-      name_regex: (TS_\d{1,2}_\d)$
+      list_glob: 24mar08a_*.mdoc
+      match_regex: 24mar08a.*\.mdoc$
+      name_regex: (24mar08a.*)\.mdoc$
 
 standardization_config:
   deposition_id: 10310
-  source_prefix: CZII/202410_competition
+  source_prefix: CZII/202502_competition_correct_hand/Public
 
 tiltseries:
 - metadata:
@@ -375,7 +354,7 @@ tiltseries:
       energy_filter: Selectris X
     pixel_spacing: 1.54
     spherical_aberration_constant: 2.7
-    tilt_axis: 80
+    tilt_axis: -96
     tilt_range:
       max: 45
       min: -45
@@ -385,7 +364,7 @@ tiltseries:
     total_flux: 120
   sources:
   - source_glob:
-      list_glob: '{run_name}/TiltSeries/{run_name}.mrc'
+      list_glob: '{run_name}_TS.mrc'
 
 tomograms:
 - metadata:
@@ -406,9 +385,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *deposition_authors
+    authors: *dataset_authors
     ctf_corrected: true
-    dates: *dates
+    dates: *dataset_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: true
     offset:
@@ -418,8 +397,8 @@ tomograms:
     processing: denoised
     reconstruction_method: WBP
     processing_software: DenoisET
-    align_software: AreTomo3 v1.0.23
-    reconstruction_software: AreTomo3 v1.0.23
+    align_software: AreTomo3 v1.0.20
+    reconstruction_software: AreTomo3 v2.0.10
     tomogram_version: 1
     voxel_spacing: 10.012
   sources:
@@ -444,9 +423,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *deposition_authors
+    authors: *dataset_authors
     ctf_corrected: true
-    dates: *dates
+    dates: *dataset_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
@@ -455,8 +434,8 @@ tomograms:
       z: 0
     processing: filtered
     reconstruction_method: WBP
-    align_software: AreTomo3 v1.0.23
-    reconstruction_software: AreTomo3 v1.0.23
+    align_software: AreTomo3 v1.0.20
+    reconstruction_software: AreTomo3 v2.0.10
     tomogram_version: 1
     voxel_spacing: 10.012
   sources:
@@ -481,9 +460,9 @@ tomograms:
         - 0
         - 0
         - 1
-    authors: *deposition_authors
+    authors: *dataset_authors
     ctf_corrected: false
-    dates: *dates
+    dates: *dataset_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
@@ -492,8 +471,8 @@ tomograms:
       z: 0
     processing: raw
     reconstruction_method: WBP
-    align_software: AreTomo3 v1.0.23
-    reconstruction_software: AreTomo3 v1.0.23
+    align_software: AreTomo3 v1.0.20
+    reconstruction_software: AreTomo3 v2.0.10
     tomogram_version: 1
     voxel_spacing: 10.012
   sources:
@@ -518,9 +497,9 @@ tomograms:
         - 0
         - 0
         - 1
-    authors: *deposition_authors
+    authors: *dataset_authors
     ctf_corrected: true
-    dates: *dates
+    dates: *dataset_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
@@ -529,8 +508,8 @@ tomograms:
       z: 0
     processing: denoised
     reconstruction_method: WBP
-    align_software: AreTomo3 v1.0.23
-    reconstruction_software: AreTomo3 v1.0.23
+    align_software: AreTomo3 v1.0.20
+    reconstruction_software: AreTomo3 v2.0.10
     processing_software: IsoNet
     tomogram_version: 1
     voxel_spacing: 10.012
