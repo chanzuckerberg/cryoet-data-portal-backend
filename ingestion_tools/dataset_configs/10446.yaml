@@ -84,7 +84,7 @@ datasets:
         corrected tomograms. The labels were curated as described in the accompanying paper and include point labels
         for Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP. Private
         leaderboard scores on kaggle were computed based on this dataset.
-      dataset_identifier: 10445
+      dataset_identifier: 10446
       dataset_title: CZII - CryoET Object Identification Challenge - Public Leaderboard Dataset
       dates: &dataset_dates
         deposition_date: '2025-02-20'
@@ -106,7 +106,7 @@ datasets:
     sources:
       - literal:
           value:
-            - '10445'
+            - '10446'
 
 depositions:
   - sources:
