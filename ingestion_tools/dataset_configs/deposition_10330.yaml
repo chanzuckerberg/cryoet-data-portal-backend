@@ -72,8 +72,8 @@ depositions:
     deposition_description: "This deposition contains segmentations of synaptic vesicles in cryo ET data of
       synaptosomes. The segmentations were produced with SynapseNet by re-training its vesicle segmentation network on
       ca. 50 synaptosome tomograms via unsupervised domain adaptation. The vesicles are segmented as instances:
-      each vesicle is assigned a unique id per tomogram and the pixels belonging to the vesicle are labeled with this
-      id. For more details on SynapseNet check out the software on github and the preprint linked below."
+      each vesicle is assigned a unique id per tomogram and a point with that ID is placed at its center. For more
+       details on SynapseNet check out the GitHub repository and the preprint linked below."
     deposition_identifier: 10330
     deposition_title: Automated Synaptic Vesicle Segmentation in Synaptosomes
     cross_references:
