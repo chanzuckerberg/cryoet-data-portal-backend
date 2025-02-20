@@ -77,9 +77,9 @@ datasets:
         publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608
         related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
       dataset_description: This dataset is comprised of movie stacks, tiltseries, alignments, tomograms and hand-curated
-        ground truth annotations for the purpose of training object identification algorithms in the context of the CryoET
-        Object Identification Challenge. The data was acquired on a Krios G4 using a Falcon 4i detector and SelctrisX
-        energy filter. Tomograms were aligned using AreTomo3 v1.0.20, reconstructed using AreTomo3 v2.0.10 and
+        ground truth annotations for the purpose of training object identification algorithms in the context of the
+        CryoET Object Identification Challenge. The data was acquired on a Krios G4 using a Falcon 4i detector and
+        SelctrisX energy filter. Tomograms were aligned using AreTomo3 v1.0.20, reconstructed using AreTomo3 v2.0.10 and
         post-processed using different methods. Each run provides raw, denoised, missing wedge corrected and ctf
         corrected tomograms. The labels were curated as described in the accompanying paper and include point labels
         for Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP. Public
@@ -155,177 +155,177 @@ annotations:
           is_visualization_default: true
           mask_label: 1
           rescale: true
-  - metadata:
-      annotation_method: &method hybrid curation using CellCanvas, copick, slabpick, deepfindET, topaz, minislab curation and
-        cryoSPARC
-      annotation_object:
-        state: apo
-        id: GO:0070288
-        name: ferritin complex
-      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41923
-      annotation_software: &software CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 +
-        slabpick 0.1.0 + deepfindET 0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-      authors: *dataset_authors
-      dates: *dataset_dates
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: &method_links
-        - custom_name: slabpick on GitHub
-          link: https://github.com/apeck12/slabpick
-          link_type: source_code
-        - custom_name: CellCanvas homepage
-          link: https://cellcanvas.org/
-          link_type: website
-        - custom_name: deepfindET on GitHub
-          link: https://github.com/copick/DeepFindET
-          link_type: source_code
-        - custom_name: copick on GitHub
-          link: https://github.com/copick/copick
-          link_type: source_code
-        - custom_name: copick-live on GitHub
-          link: https://github.com/copick/copick_live
-          link_type: source_code
-        - custom_name: chimerax-copick on GitHub
-          link: https://github.com/copick/chimerax-copick
-          link_type: source_code
-        - custom_name: pytom-match-pick on GitHub
-          link: https://github.com/SBC-Utrecht/pytom-match-pick
-          link_type: source_code
-        - custom_name: topaz on GitHub
-          link: https://github.com/tbepler/topaz
-          link_type: source_code
-        - custom_name: cryosparc homepage
-          link: https://cryosparc.com/
-          link_type: website
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - Point:
-          binning: 10.012
-          file_format: copick
-          glob_strings:
-            - '{run_name}/Picks/curation_0_apo-ferritin.json'
-          is_visualization_default: true
-          columns: xyz
-
-  - metadata:
-      annotation_method: *method
-      annotation_object:
-        state: tetrameric
-        id: UniProtKB:P10537
-        name: Beta-amylase
-      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-30405
-      annotation_software: *software
-      authors: *dataset_authors
-      dates: *dataset_dates
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *method_links
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - Point:
-          binning: 10.012
-          file_format: copick
-          glob_strings:
-            - '{run_name}/Picks/curation_0_beta-amylase.json'
-          is_visualization_default: true
-          columns: xyz
-
-  - metadata:
-      annotation_method: *method
-      annotation_object:
-        state: tetrameric
-        id: UniProtKB:P00722
-        name: Beta-galactosidase
-      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-0153
-      annotation_software: *software
-      authors: *dataset_authors
-      dates: *dataset_dates
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *method_links
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - Point:
-          binning: 10.012
-          file_format: copick
-          glob_strings:
-            - '{run_name}/Picks/curation_0_beta-galactosidase.json'
-          is_visualization_default: true
-          columns: xyz
-
-  - metadata:
-      annotation_method: *method
-      annotation_object:
-        id: GO:0022626
-        name: cytosolic ribosome
-      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-3883
-      annotation_software: *software
-      authors: *dataset_authors
-      dates: *dataset_dates
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *method_links
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - Point:
-          binning: 10.012
-          file_format: copick
-          glob_strings:
-            - '{run_name}/Picks/curation_0_ribosome.json'
-          is_visualization_default: true
-          columns: xyz
-
-  - metadata:
-      annotation_method: *method
-      annotation_object:
-        state: dimeric
-        id: UniProtKB:P01267
-        name: Thyroglobulin
-      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-24181
-      annotation_software: *software
-      authors: *dataset_authors
-      dates: *dataset_dates
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *method_links
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - Point:
-          binning: 10.012
-          file_format: copick
-          glob_strings:
-            - '{run_name}/Picks/curation_0_thyroglobulin.json'
-          is_visualization_default: true
-          columns: xyz
-
-  - metadata:
-      annotation_method: *method
-      annotation_object:
-        description: PP7 VLP
-        id: GO:0170047
-        name: virus-like capsid
-      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41917
-      annotation_software: *software
-      authors: *dataset_authors
-      dates: *dataset_dates
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *method_links
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - Point:
-          binning: 10.012
-          file_format: copick
-          glob_strings:
-            - '{run_name}/Picks/curation_0_virus-like-particle.json'
-          is_visualization_default: true
-          columns: xyz
+#  - metadata:
+#      annotation_method: &method hybrid curation using CellCanvas, copick, slabpick, deepfindET, topaz, minislab
+#        curation and cryoSPARC
+#      annotation_object:
+#        state: apo
+#        id: GO:0070288
+#        name: ferritin complex
+#      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41923
+#      annotation_software: &software CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 +
+#        slabpick 0.1.0 + deepfindET 0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
+#      authors: *dataset_authors
+#      dates: *dataset_dates
+#      ground_truth_status: true
+#      is_curator_recommended: true
+#      method_links: &method_links
+#        - custom_name: slabpick on GitHub
+#          link: https://github.com/apeck12/slabpick
+#          link_type: source_code
+#        - custom_name: CellCanvas homepage
+#          link: https://cellcanvas.org/
+#          link_type: website
+#        - custom_name: deepfindET on GitHub
+#          link: https://github.com/copick/DeepFindET
+#          link_type: source_code
+#        - custom_name: copick on GitHub
+#          link: https://github.com/copick/copick
+#          link_type: source_code
+#        - custom_name: copick-live on GitHub
+#          link: https://github.com/copick/copick_live
+#          link_type: source_code
+#        - custom_name: chimerax-copick on GitHub
+#          link: https://github.com/copick/chimerax-copick
+#          link_type: source_code
+#        - custom_name: pytom-match-pick on GitHub
+#          link: https://github.com/SBC-Utrecht/pytom-match-pick
+#          link_type: source_code
+#        - custom_name: topaz on GitHub
+#          link: https://github.com/tbepler/topaz
+#          link_type: source_code
+#        - custom_name: cryosparc homepage
+#          link: https://cryosparc.com/
+#          link_type: website
+#      method_type: hybrid
+#      version: 1.0
+#    sources:
+#      - Point:
+#          binning: 10.012
+#          file_format: copick
+#          glob_strings:
+#            - '{run_name}/Picks/curation_0_apo-ferritin.json'
+#          is_visualization_default: true
+#          columns: xyz
+#
+#  - metadata:
+#      annotation_method: *method
+#      annotation_object:
+#        state: tetrameric
+#        id: UniProtKB:P10537
+#        name: Beta-amylase
+#      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-30405
+#      annotation_software: *software
+#      authors: *dataset_authors
+#      dates: *dataset_dates
+#      ground_truth_status: true
+#      is_curator_recommended: true
+#      method_links: *method_links
+#      method_type: hybrid
+#      version: 1.0
+#    sources:
+#      - Point:
+#          binning: 10.012
+#          file_format: copick
+#          glob_strings:
+#            - '{run_name}/Picks/curation_0_beta-amylase.json'
+#          is_visualization_default: true
+#          columns: xyz
+#
+#  - metadata:
+#      annotation_method: *method
+#      annotation_object:
+#        state: tetrameric
+#        id: UniProtKB:P00722
+#        name: Beta-galactosidase
+#      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-0153
+#      annotation_software: *software
+#      authors: *dataset_authors
+#      dates: *dataset_dates
+#      ground_truth_status: true
+#      is_curator_recommended: true
+#      method_links: *method_links
+#      method_type: hybrid
+#      version: 1.0
+#    sources:
+#      - Point:
+#          binning: 10.012
+#          file_format: copick
+#          glob_strings:
+#            - '{run_name}/Picks/curation_0_beta-galactosidase.json'
+#          is_visualization_default: true
+#          columns: xyz
+#
+#  - metadata:
+#      annotation_method: *method
+#      annotation_object:
+#        id: GO:0022626
+#        name: cytosolic ribosome
+#      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-3883
+#      annotation_software: *software
+#      authors: *dataset_authors
+#      dates: *dataset_dates
+#      ground_truth_status: true
+#      is_curator_recommended: true
+#      method_links: *method_links
+#      method_type: hybrid
+#      version: 1.0
+#    sources:
+#      - Point:
+#          binning: 10.012
+#          file_format: copick
+#          glob_strings:
+#            - '{run_name}/Picks/curation_0_ribosome.json'
+#          is_visualization_default: true
+#          columns: xyz
+#
+#  - metadata:
+#      annotation_method: *method
+#      annotation_object:
+#        state: dimeric
+#        id: UniProtKB:P01267
+#        name: Thyroglobulin
+#      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-24181
+#      annotation_software: *software
+#      authors: *dataset_authors
+#      dates: *dataset_dates
+#      ground_truth_status: true
+#      is_curator_recommended: true
+#      method_links: *method_links
+#      method_type: hybrid
+#      version: 1.0
+#    sources:
+#      - Point:
+#          binning: 10.012
+#          file_format: copick
+#          glob_strings:
+#            - '{run_name}/Picks/curation_0_thyroglobulin.json'
+#          is_visualization_default: true
+#          columns: xyz
+#
+#  - metadata:
+#      annotation_method: *method
+#      annotation_object:
+#        description: PP7 VLP
+#        id: GO:0170047
+#        name: virus-like capsid
+#      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41917
+#      annotation_software: *software
+#      authors: *dataset_authors
+#      dates: *dataset_dates
+#      ground_truth_status: true
+#      is_curator_recommended: true
+#      method_links: *method_links
+#      method_type: hybrid
+#      version: 1.0
+#    sources:
+#      - Point:
+#          binning: 10.012
+#          file_format: copick
+#          glob_strings:
+#            - '{run_name}/Picks/curation_0_virus-like-particle.json'
+#          is_visualization_default: true
+#          columns: xyz
 
 collection_metadata:
   - sources:
