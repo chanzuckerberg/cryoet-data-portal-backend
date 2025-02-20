@@ -140,6 +140,8 @@ def execute_allure_tests(
         tar_report = f"{localdir_rep}.tar.gz"
         print(f"Compressing {localdir_rep} to {tar_report} and replacing {remote_tar_report}")
         os.system(f"tar -czf {tar_report} {localdir_rep}")
-        os.system(f"aws s3 sync {localdir_rep} s3://{output_bucket}/{output_dir}/{identifier_name}/")
         fs.s3fs.put(tar_report, remote_tar_report, recursive=True)
+        remote_report_dir = f"s3://{output_bucket}/{output_dir}/{identifier_name}/"
+        print(f"Syncing report from {localdir_rep} to {remote_report_dir}")
+        fs.s3fs.put(f"{localdir_rep}/*", remote_report_dir, recursive=True)
         os.remove(tar_report)
