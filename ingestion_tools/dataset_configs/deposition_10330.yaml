@@ -41,7 +41,7 @@ annotations:
           is_visualization_default: true
           threshold: 0.5
       - InstanceSegmentation:
-          binning: 1
+          binning: 4.99
           file_format: copick
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/cryoSAM2_1_vesicles.json'
           is_visualization_default: true
