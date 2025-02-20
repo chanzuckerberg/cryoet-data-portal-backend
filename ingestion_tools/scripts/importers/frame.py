@@ -37,14 +37,18 @@ class FrameImporter(BaseFileImporter):
             self.config.fs.copy(path, self.get_dest_filename(path))
 
     def import_metadata(self) -> None:
+        if not self.is_import_allowed():
+            print(f"Skipping import of {self.name}")
+            return
         base_metadata = self.get_base_metadata()
         dose_rate = base_metadata.get("dose_rate")
         if not dose_rate:
-            raise Exception(f"Invalid dose rate for Frames: {dose_rate}")
+            raise ValueError(f"Invalid dose rate for Frames: {dose_rate}")
 
         collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
+        is_gain_corrected = base_metadata.get("is_gain_corrected")
         extra_metadata = {
-            "frames": self.get_frame_metadata(float(dose_rate), collection_md),
+            "frames": self.get_frame_metadata(float(dose_rate), collection_md, is_gain_corrected),
             "frames_acquisition_file": self.config.to_formatted_path(collection_md.get_destination_path()),
         }
 
@@ -62,7 +66,9 @@ class FrameImporter(BaseFileImporter):
             for path in self.file_paths
         }
 
-    def get_frame_metadata(self, dose_rate: float, collection_md: CollectionMetadataImporter) -> list[dict[str, Any]]:
+    def get_frame_metadata(
+            self, dose_rate: float, collection_md: CollectionMetadataImporter, is_gain_corrected: bool | None,
+    ) -> list[dict[str, Any]]:
         frame_path_by_name = self.get_frame_output_path_by_name()
         mdoc = collection_md.get_output_data()
         frames = []
@@ -75,6 +81,8 @@ class FrameImporter(BaseFileImporter):
                 "acquisition_order": section.ZValue,
                 "accumulated_dose": accumulated_dose,
                 "exposure_dose": exposure_dose,
+                # Adding is_gain_corrected here redundantly to make it easier for the db import
+                "is_gain_corrected": is_gain_corrected,
                 "path": frame_path_by_name.get(frame_name),
             }
             frames.append(entry)

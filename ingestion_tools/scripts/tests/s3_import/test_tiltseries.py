@@ -94,7 +94,7 @@ def test_tiltseries_import(
 @pytest.mark.parametrize(
     "config_path, expected_pixel_spacing, expected_frames_count",
     [
-        ("dataset1.yaml", 3.3702, 2),  # pixel_spacing is present in metadata
+        ("dataset1.yaml", 3.3702, 5),  # pixel_spacing is present in metadata
         ("tiltseries/test1.yaml", 5.678, 0),  # pixel_spacing is fetched from the mrc file
     ],
 )

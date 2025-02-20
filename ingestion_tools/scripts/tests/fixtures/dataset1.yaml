@@ -130,7 +130,10 @@ deposition_keyphotos:
         snapshot: http://nginx:80/input_bucket/snapshot.gif
         thumbnail: http://nginx:80/input_bucket/thumbnail.gif
 frames:
-- sources:
+- metadata:
+    is_gain_corrected: true
+    dose_rate: 1.881
+  sources:
   - source_multi_glob:
       list_globs:
       - VPP/frames/{run_name}_*.tiff
