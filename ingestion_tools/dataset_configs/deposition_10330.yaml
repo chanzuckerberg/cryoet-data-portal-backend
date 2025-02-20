@@ -43,7 +43,7 @@ annotations:
           order: xyz
       - SemanticSegmentationMask:
           file_format: zarr
-          glob_string: '{dataset_name}/{run_name}_semantic.zarr'
+          glob_string: '{dataset_name}/{run_name}.zarr'
           is_visualization_default: true
           threshold: 0.5
 
