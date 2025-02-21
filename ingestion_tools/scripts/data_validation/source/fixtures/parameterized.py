@@ -79,7 +79,9 @@ class CryoetSourceEntities:
         input_bucket = self._pytest_config.getoption("--input-bucket")
         output_bucket = self._pytest_config.getoption("--output-bucket")
         print(f"Using input bucket {input_bucket}")
-        return DepositionImportConfig(self._fs, ingestion_config_path, output_bucket, input_bucket, IMPORTERS)
+        config = DepositionImportConfig(self._fs, ingestion_config_path, output_bucket, input_bucket, IMPORTERS)
+        config.load_map_files()
+        return config
 
     @classmethod
     def _get_all_ancestors(cls, parent: BaseImporter) -> dict[str, BaseImporter]:
