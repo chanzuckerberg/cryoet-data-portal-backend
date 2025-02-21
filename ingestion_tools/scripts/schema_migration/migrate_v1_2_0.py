@@ -2,7 +2,7 @@ def add_frames_metadata(config: dict):
     standardization_config = config.get("standardization_config")
     frame_dose_rate = standardization_config.get("frame_dose_rate", 0)
 
-    if not frame_dose_rate and "frames" not in config:
+    if not frame_dose_rate and "collection_metadata" not in config:
         return
 
     if "frames" not in config:
@@ -15,10 +15,11 @@ def add_frames_metadata(config: dict):
         ]
 
     for entry in config["frames"]:
-        entry["metadata"] = {
-            "dose_rate": frame_dose_rate,
-            "is_gain_corrected": "gain" in config,
-        }
+        if "metadata" not in entry:
+            entry["metadata"] = {
+                "dose_rate": frame_dose_rate,
+                "is_gain_corrected": "gain" in config,
+            }
 
 def clean_up_standard_config(config: dict):
     standardization_config = config.get("standardization_config")
