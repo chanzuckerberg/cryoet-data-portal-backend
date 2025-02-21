@@ -677,7 +677,7 @@ def validate(
             }
             future = execute_validate(
                 ctx=ctx,
-                identifier=f"-validate-{env}-{dataset_id}",
+                identifier=f"validate-{env}-{dataset_id}",
                 input_bucket=input_bucket,
                 output_dir=output_dir,
                 swipe_wdl_key=swipe_wdl_key,
