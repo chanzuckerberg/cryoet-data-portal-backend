@@ -13,9 +13,9 @@ collection_metadata:
   - source_multi_glob:
       list_globs:
       - chlamy_visual_proteomics/{run_name}/{run_name}.mdoc
-ctf:
+ctfs:
 - metadata:
-    format: CTFFIND
+    format: 'CTFFIND'
   sources:
   - source_glob:
       list_glob: chlamy_visual_proteomics/{run_name}/ctffind4/ctfphaseflip_ctffind4.txt
