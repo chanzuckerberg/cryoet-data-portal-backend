@@ -165,7 +165,6 @@ def to_standardization_config(
             run_has_multiple_tomos = True
         mapped_tomo_name[run["run_name"]] = get_canonical_tomogram_name(run) or "*"
 
-    tlt_tomo_path = "{mapped_frame_name}" if run_has_multiple_tomos else "3dimage_*"
     tomo_path = "{mapped_tomo_name}" if run_has_multiple_tomos else "3dimage_*/*"
 
     config = {
@@ -176,11 +175,11 @@ def to_standardization_config(
         "frame_dose_rate": frame_dose_rate,
         "gain_glob": None,
         "rawtlt_files": [
-            "{run_name}/*/*.mdoc", # The mdoc files can be in rawdata or file_* folders
+            # Only specifying the generated path to prevent multiple mdoc files or rawtlt files from being associated
+            # to a run. If the original file has correct data, it will be copied over to the generated folder inside
+            # the run. If a new file is to be added, it would be added to the generated folder.
             "{run_name}/generated/*.mdoc",
-            "{run_name}/file_*/*.rawtlt",
             "{run_name}/generated/*.rawtlt",
-            f"{{run_name}}/{tlt_tomo_path}/*.rawtlt",
         ],
         "tiltseries_glob": "{run_name}/rawdata/*",
         "ts_name_regex": r".*/rawdata/[^\._].*\.(mrc|st|ali)$",

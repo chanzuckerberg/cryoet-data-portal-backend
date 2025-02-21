@@ -3,7 +3,6 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/*/*.mdoc'
       - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
@@ -59,21 +58,11 @@ depositions:
   - literal:
       value:
       - 10021
-frames:
-- metadata:
-    dose_rate: 0.0
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
       - '{run_name}/generated/*.rawtlt'
-      - '{run_name}/3dimage_*/*.rawtlt'
 runs:
 - sources:
   - source_glob:

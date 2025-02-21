@@ -3,7 +3,6 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/*/*.mdoc'
       - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
@@ -68,9 +67,7 @@ rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
       - '{run_name}/generated/*.rawtlt'
-      - '{run_name}/3dimage_*/*.rawtlt'
 runs:
 - sources:
   - source_glob:
