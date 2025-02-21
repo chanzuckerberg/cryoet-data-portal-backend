@@ -53,9 +53,9 @@ datasets:
     dataset_identifier: 10450
     dataset_title: Synaptosomes from rat hippocampi (10 wk rat, 180 mg, 600 rpm, Au grid, low tilt range, 1:10)
     dates: &dataset_dates
-      deposition_date: '2025-02-13'
-      last_modified_date: '2025-02-13'
-      release_date: '2025-02-13'
+      deposition_date: '2025-02-20'
+      last_modified_date: '2025-02-20'
+      release_date: '2025-02-20'
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
       grant_id: 'CZII-2023–327779'
@@ -128,8 +128,18 @@ collection_metadata:
   - source_glob:
       list_glob: '{run_name}.mdoc'
 
+ctf:
+  - metadata:
+      format: CTFFIND
+    sources:
+      - source_glob:
+          list_glob: '{run_name}_CTFFIND_format_CTF.txt'
+
 frames:
-- sources:
+- metadata:
+    dose_rate: 5.319
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: '{run_name}/*.eer'
 
@@ -152,8 +162,8 @@ runs:
 
 standardization_config:
   deposition_id: 10313
-  source_prefix: #TODO
-  run_data_map_file: run_to_data_map.tsv
+  source_prefix: CZII/20250218_synaptosome/syn_24nov01d/
+  run_data_map_file: run_to_data_map_updated_quality_updated.tsv
 
 tiltseries:
 - metadata:
@@ -176,7 +186,7 @@ tiltseries:
       max: float {tilt_series_max_tilt}
       min: float {tilt_series_min_tilt}
     tilt_series_quality: int {tilt_series_quality}
-    tilt_step: 3.0
+    tilt_step: 2.0
     tilting_scheme: dose-symmetric
     total_flux: float {tilt_series_total_flux}
   sources:

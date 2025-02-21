@@ -42,8 +42,8 @@ depositions:
         ORCID: 0000-0002-8402-0134
     dates: &deposition_dates
       deposition_date: '2024-11-26'
-      last_modified_date: '2025-02-13'
-      release_date: '2025-02-13'
+      last_modified_date: '2025-02-20'
+      release_date: '2025-02-20'
     deposition_description: CryoET tomograms of synaptosomes for the development of segmentation and subtomogram
       averaging pipelines for synaptic vesicle proteins, post-synaptic receptors, etc. Each dataset has a slightly
       different sample preparation conditions. The tomograms collectively have a combination of full synaptosomes,
