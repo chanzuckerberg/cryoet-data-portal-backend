@@ -15,6 +15,7 @@ from common.fs import FileSystemApi
 # Pytest parametrized fixtures
 # ============================================================================
 
+
 class CryoetSourceEntities:
 
     def __init__(self, config: pytest.Config, ingestion_config_path: str):
@@ -52,7 +53,10 @@ class CryoetSourceEntities:
         return self._tiltseries
 
     def get_importable_entities(
-            self, importer_class: BaseImporter, parents: list[BaseImporter], attr: str = None,
+        self,
+        importer_class: BaseImporter,
+        parents: list[BaseImporter],
+        attr: str = None,
     ) -> list[str | BaseImporter]:
         return [
             getattr(item, attr) if attr else importer_class
@@ -75,11 +79,13 @@ class CryoetSourceEntities:
         print([item.name for item in items])
         return items
 
-    def _create_ingestion_config(self, ingestion_config_path: str)-> DepositionImportConfig:
+    def _create_ingestion_config(self, ingestion_config_path: str) -> DepositionImportConfig:
         input_bucket = self._pytest_config.getoption("--input-bucket")
         output_bucket = self._pytest_config.getoption("--output-bucket")
         print(f"Using input bucket {input_bucket}")
-        return DepositionImportConfig(self._fs, ingestion_config_path, output_bucket, input_bucket, IMPORTERS)
+        config = DepositionImportConfig(self._fs, ingestion_config_path, output_bucket, input_bucket, IMPORTERS)
+        config.load_map_files()
+        return config
 
     @classmethod
     def _get_all_ancestors(cls, parent: BaseImporter) -> dict[str, BaseImporter]:
