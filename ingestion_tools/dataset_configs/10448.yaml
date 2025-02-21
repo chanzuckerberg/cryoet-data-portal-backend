@@ -141,7 +141,7 @@ frames:
     is_gain_corrected: false
   sources:
   - source_glob:
-      list_glob: '{run_name}/*.eer'x
+      list_glob: '{run_name}/*.eer'
 
 gains:
 - sources:
@@ -181,7 +181,7 @@ tiltseries:
       energy_filter: Selectris X
     pixel_spacing: 1.540
     spherical_aberration_constant: 2.7
-    tilt_axis: 80
+    tilt_axis: -96
     tilt_range:
       max: float {tilt_series_max_tilt}
       min: float {tilt_series_min_tilt}
