@@ -155,7 +155,7 @@ python3 enqueue_runs.py sync --exclude '*' --include 'Annotations/*.json' --s3-p
 
 ## Source S3 File validation (`source-validate` subcommand)
 
-The `enqueue_runs.py source-validate` command queues up jobs to validate source data in s3 referenced by config files. It *requires* one or more configs to be specified. Once the jobs are complete, you can view test results for by updating the following URLs with the necessary config IDs:
+The `enqueue_runs.py source-validate` command queues up jobs to validate source data in s3 referenced by config files. It *requires* one or more configs to be specified. Once the jobs are complete, you can view test results for by updating the following URLs with the necessary config paths:
 
 https://files.cryoet.staging.si.czi.technology/source_validation/10000/index.html
 
@@ -173,7 +173,7 @@ EXPORT AWS_PROFILE=cryoet-dev
 python3 enqueue_runs.py source-validate --help
 
 # Example
-python3 enqueue_runs.py source-validate ../../dataset_configs/10000.yaml
+python3 enqueue_runs.py source-validate ../../../dataset_configs/10000.yaml
 
 ```
 
