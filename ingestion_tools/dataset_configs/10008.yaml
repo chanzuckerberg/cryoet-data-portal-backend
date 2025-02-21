@@ -149,6 +149,12 @@ datasets:
   - literal:
       value:
       - '10008'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10008_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10008_thumbnail.png
 depositions:
 - metadata:
     authors: *id003
@@ -167,23 +173,18 @@ depositions:
   - literal:
       value:
       - 10008
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10008_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10008_thumbnail.png"
 frames:
-- sources:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: tomo/raw_stacks/{mapped_ts_name}/frames/*{mapped_frame_name}_*.tif
-
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - 'tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.rawtlt'
-
+      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.rawtlt
 runs:
 - sources:
   - source_glob:

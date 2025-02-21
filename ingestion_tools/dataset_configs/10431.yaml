@@ -7,12 +7,11 @@ alignments:
       list_globs:
       - alignmentfiles/{run_name}_bin8_align_fid.tlt
       - alignmentfiles/{run_name}_bin8_align_fid.xf
-
+annotations: []
 collection_metadata:
 - sources:
   - source_glob:
-      list_glob: 'mdocs/{mdoc_name}'
-
+      list_glob: mdocs/{mdoc_name}
 datasets:
 - metadata:
     authors: &id001
@@ -32,6 +31,9 @@ datasets:
       corresponding_author_status: true
       name: Justin W. Taraska
       primary_author_status: false
+    cell_component:
+      id: GO:0005886
+      name: plasma membrane
     cell_strain:
       id: CLO:0001230
       name: HEK293
@@ -50,7 +52,7 @@ datasets:
       with 0.7 bar of paraformaldehyde prior to vitrification.
     dataset_identifier: 10431
     dataset_title: Plasma membranes isolated by unroofing - Grid 06
-    dates: &dates
+    dates: &id002
       deposition_date: '2024-07-01'
       last_modified_date: '2025-01-08'
       release_date: '2025-01-08'
@@ -71,78 +73,37 @@ datasets:
       with poly-lysine + remove the basal membrane and cytoplasm + paraformaldehyde
       + vitrification.
     sample_type: organelle
-    cell_component:
-      name: plasma membrane
-      id: GO:0005886
   sources:
   - literal:
       value:
       - '10431'
-
-annotations: []
-#TODO: Uncomment when RELION 5 support is added
-#  - metadata:
-#      annotation_method: Segmentation using EMAN2, refinement using Dynamo and RELION
-#      annotation_object:
-#        id: GO:0030118
-#        name: clathrin coat
-#      annotation_publications: 10.1101/2024.06.27.600657
-#      annotation_software: EMAN2, Dynamo, RELION 4, RELION 5
-#      method_links:
-#        - custom_name: EMAN2 website
-#          link: https://blake.bcm.edu/emanwiki/EMAN2
-#          link_type: website
-#        - custom_name: Dynamo website
-#          link: https://www.dynamo-em.org//w/index.php?title=Main_Page
-#          link_type: source_code
-#        - custom_name: RELION on GitHub
-#          link: https://github.com/3dem/relion
-#          link_type: source_code
-#      authors: *id001
-#      dates: *dataset_dates
-#      ground_truth_status: false
-#      is_curator_recommended: true
-#      method_type: hybrid
-#      version: 1.0
-#    sources:
-#      - OrientedPoint:
-#          binning: 10
-#          file_format: relion5_star
-#          glob_strings:
-#            - 'clathrin_aqb1_refined_particles.star'
-#          is_visualization_default: true
-#          order: xyz
-
 depositions:
 - sources:
   - literal:
       value:
       - 10306
-
 frames:
-- sources:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: frames/{frame_prefix}*.mrc
-
 gains: []
-
 rawtilts:
-  - sources:
-    - source_glob:
-        list_glob: 'rawtilts/{run_name}.rawtlt'
-
+- sources:
+  - source_glob:
+      list_glob: rawtilts/{run_name}.rawtlt
 runs:
 - sources:
   - source_glob:
       list_glob: tomograms_bin8/*
       match_regex: \.rec$
       name_regex: (.*)_bin8_align.rec
-
 standardization_config:
   deposition_id: 10306
   run_data_map_file: run_to_data_map.tsv
   source_prefix: kem_sochacki_06_2024/grid06/
-
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
@@ -169,9 +130,8 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: 'tilt_series/{run_name}_bin8_align.st'
+      list_glob: tilt_series/{run_name}_bin8_align.st
       match_regex: ^.*\.st$
-
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -193,7 +153,7 @@ tomograms:
       - 1
     authors: *id001
     ctf_corrected: false
-    dates: *dates
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
@@ -207,11 +167,9 @@ tomograms:
     voxel_spacing: 8.464
   sources:
   - source_glob:
-      list_glob: 'tomograms_bin8/{run_name}_bin8_align.rec'
+      list_glob: tomograms_bin8/{run_name}_bin8_align.rec
       match_regex: (.*)\.rec
-
 version: 1.1.0
-
 voxel_spacings:
 - sources:
   - literal:

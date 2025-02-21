@@ -56,7 +56,6 @@ annotations:
       file_format: relion4_star
       filter_value: '{run_name}'
       glob_string: motl_star/czii-remapped-points.star
-
       is_visualization_default: true
       order: xyz
 dataset_keyphotos:
@@ -135,6 +134,12 @@ datasets:
   - literal:
       value:
       - '10006'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10006_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10006_thumbnail.png
 depositions:
 - metadata:
     authors: *id002
@@ -152,14 +157,11 @@ depositions:
   - literal:
       value:
       - 10006
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10006_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10006_thumbnail.png"
 frames:
-- sources:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: Frames/{run_name}_acquisition-order_angle.tif
 gains:

@@ -523,7 +523,10 @@ depositions:
       value:
       - 10307
 frames:
-- sources:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: Data_Set_3/{run_name}/raw_frames/*.tif
 gains:
