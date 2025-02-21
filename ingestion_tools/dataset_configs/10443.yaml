@@ -150,7 +150,10 @@ collection_metadata:
       list_glob: '{run_name}.mdoc'
 
 frames:
-- sources:
+- metadata:
+    dose_rate: 5.302
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: '{run_name}/*.eer'
 

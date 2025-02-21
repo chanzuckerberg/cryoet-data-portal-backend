@@ -141,7 +141,7 @@ frames:
     is_gain_corrected: false
   sources:
   - source_glob:
-      list_glob: '{run_name}/*.eer'x
+      list_glob: '{run_name}/*.eer'
 
 gains:
 - sources:
