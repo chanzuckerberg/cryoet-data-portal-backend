@@ -99,6 +99,8 @@ class TiltSeriesImporter(VolumeImporter):
         merge_data["pixel_spacing"] = self.get_pixel_spacing()
         psp_generator = PerSectionParameterGenerator(self.config, {**self.parents, "tiltseries": self})
         merge_data["per_section_parameter"] = psp_generator.get_data()
+        merge_data["raw_tlt_path"] = psp_generator.get_raw_tlt_path()
+        merge_data["ctf_path"] = psp_generator.get_ctf_path()
         metadata = TiltSeriesMetadata(self.config.fs, self.get_deposition().name, base_metadata)
         metadata.write_metadata(dest_ts_metadata, merge_data)
 
@@ -140,6 +142,8 @@ class PerSectionParameterGenerator:
     def __init__(self, config: DepositionImportConfig, parents: dict[str, Any]):
         self.config = config
         self.parents = parents
+        self.raw_tlt_dest_file = self._get_raw_tlt_dest()
+        self.ctf_importer = self._get_ctf_importer()
 
     def get_data(self) -> list[dict[str, str]]:
         psp = []
@@ -154,23 +158,36 @@ class PerSectionParameterGenerator:
 
         return psp
 
-    def _get_raw_tlt(self) -> pd.DataFrame:
+    def get_raw_tlt_path(self) -> str:
+        return self.config.to_formatted_path(self.raw_tlt_dest_file)
+
+    def get_ctf_path(self) -> str | None:
+        return self.config.to_formatted_path(self.ctf_importer.get_destination_path()) if self.ctf_importer else None
+
+    def _get_raw_tlt_dest(self) -> str:
         for rawtlt in RawTiltImporter.finder(self.config, **self.parents):
             if not rawtlt.path or not rawtlt.path.endswith(".rawtlt"):
                 # Check to prevent any other files being included in the rawtlt section, incorrectly being pulled here.
                 continue
-            path = rawtlt.get_destination_path()
-            local_path = self.config.fs.localreadable(path)
-            return pd.read_csv(local_path, names=["raw_tlt_angle"])
+            return rawtlt.get_destination_path()
         raise FileNotFoundError(f"No rawtlt found for run: {self.parents['run'].name}")
+
+    def _get_ctf_importer(self) -> CtfImporter | None:
+        for ctf in CtfImporter.finder(self.config, **self.parents):
+            return ctf
+        return None
+
+    def _get_raw_tlt(self) -> pd.DataFrame:
+        local_path = self.config.fs.localreadable(self.raw_tlt_dest_file)
+        return pd.read_csv(local_path, names=["raw_tlt_angle"])
 
     def _get_mdoc_data(self) -> list[MdocSectionData]:
         collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
         return collection_md.get_output_data().section_data
 
     def _get_ctf_data(self) -> list[CTFInfo]:
-        for ctf in CtfImporter.finder(self.config, **self.parents):
-            return ctf.get_output_data()
+        if self.ctf_importer:
+            return self.ctf_importer.get_output_data()
         return []
 
     @classmethod
@@ -183,6 +200,8 @@ class PerSectionParameterGenerator:
     @classmethod
     def _get_ctf_entry(cls, section_id: int, ctf_data: list[CTFInfo]) -> CTFInfo | None:
         for entry in ctf_data:
-            if section_id == (entry.section - 1):
+            # To offset the ctf data's section index starts at 1.
+            section_index = entry.section - 1
+            if section_id == section_index:
                 return entry
         return None
