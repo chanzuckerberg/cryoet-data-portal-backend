@@ -214,6 +214,11 @@ class BaseImporter:
                 for item in source_finder_factory.find(config, metadata, **parents):
                     yield item
 
+    def __repr__(self) -> str:
+        if self.name:
+            return f"{self.type_key}: <{self.name}>"
+        return super().__repr__()
+
 
 class VolumeImporter(BaseImporter):
     """
