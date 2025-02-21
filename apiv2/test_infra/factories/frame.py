@@ -36,11 +36,11 @@ class FrameFactory(CommonFactory):
     run = factory.SubFactory(
         RunFactory,
     )
-    raw_angle = fuzzy.FuzzyFloat(1, 100)
 
     acquisition_order = fuzzy.FuzzyInteger(1, 1000)
 
-    dose = fuzzy.FuzzyFloat(1, 100)
+    accumulated_dose = fuzzy.FuzzyFloat(1, 100)
+    exposure_dose = fuzzy.FuzzyFloat(1, 100)
     is_gain_corrected = factory.Faker("boolean")
     s3_frame_path = fuzzy.FuzzyText()
     https_frame_path = fuzzy.FuzzyText()
