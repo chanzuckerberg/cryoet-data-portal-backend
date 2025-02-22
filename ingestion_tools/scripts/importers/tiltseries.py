@@ -172,30 +172,19 @@ class PerSectionParameterGenerator:
             return rawtlt.get_destination_path()
         raise FileNotFoundError(f"No rawtlt found for run: {self.parents['run'].name}")
 
+    def _get_raw_tlt(self) -> pd.DataFrame:
+        local_path = self.config.fs.localreadable(self.raw_tlt_dest_file)
+        return pd.read_csv(local_path, names=["raw_tlt_angle"])
+
     def _get_ctf_importer(self) -> CtfImporter | None:
         for ctf in CtfImporter.finder(self.config, **self.parents):
             return ctf
         return None
 
-    def _get_raw_tlt(self) -> pd.DataFrame:
-        local_path = self.config.fs.localreadable(self.raw_tlt_dest_file)
-        return pd.read_csv(local_path, names=["raw_tlt_angle"])
-
-    def _get_mdoc_data(self) -> list[MdocSectionData]:
-        collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
-        return collection_md.get_output_data().section_data
-
     def _get_ctf_data(self) -> list[CTFInfo]:
         if self.ctf_importer:
             return self.ctf_importer.get_output_data()
         return []
-
-    @classmethod
-    def _get_mdoc_entry(cls, tilt_angle: float, mdoc_data: list[MdocSectionData]) -> MdocSectionData:
-        for entry in mdoc_data:
-            if round(entry.TiltAngle) == tilt_angle:
-                return entry
-        raise KeyError(f"No match for tiltangle {tilt_angle} in mdoc_data")
 
     @classmethod
     def _get_ctf_entry(cls, section_id: int, ctf_data: list[CTFInfo]) -> CTFInfo | None:
@@ -205,3 +194,14 @@ class PerSectionParameterGenerator:
             if section_id == section_index:
                 return entry
         return None
+
+    def _get_mdoc_data(self) -> list[MdocSectionData]:
+        collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
+        return collection_md.get_output_data().section_data
+
+    @classmethod
+    def _get_mdoc_entry(cls, tilt_angle: float, mdoc_data: list[MdocSectionData]) -> MdocSectionData:
+        for entry in mdoc_data:
+            if round(entry.TiltAngle) == tilt_angle:
+                return entry
+        raise KeyError(f"No match for tiltangle {tilt_angle} in mdoc_data")
