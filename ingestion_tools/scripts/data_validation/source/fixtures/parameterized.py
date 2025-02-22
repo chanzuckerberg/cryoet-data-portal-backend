@@ -55,7 +55,7 @@ class CryoetSourceEntities:
             self, importer_class: BaseImporter, parents: list[BaseImporter], attr: str = None,
     ) -> list[str | BaseImporter]:
         return [
-            getattr(item, attr) if attr else importer_class
+            getattr(item, attr) if attr else item
             for item in self._get_entities(importer_class, parents)
             if item.allow_imports
         ]
