@@ -1,0 +1,30 @@
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/mdocs_modified/foo-{run_name}.mdoc
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10001'
+depositions:
+- sources:
+  - literal:
+      value:
+      - '10301'
+frames:
+- metadata:
+    dose_rate: 1.881
+  sources:
+  - literal:
+      value:
+      - 'default'
+runs:
+- sources:
+  - source_glob:
+      list_glob: tomograms/TS_*.rec
+      match_regex: .*
+      name_regex: (.*).rec
+standardization_config:
+  source_prefix: input_bucket/10001_input

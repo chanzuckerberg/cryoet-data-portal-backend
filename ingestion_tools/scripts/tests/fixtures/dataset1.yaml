@@ -23,11 +23,6 @@ annotations:
     file_format: csv
     glob_string: particle_lists/{run_name}_fas.csv
     shape: Point
-collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/mdocs_modified/foo-{run_name}.mdoc
 alignments:
 - metadata:
     affine_transformation_matrix:
@@ -62,6 +57,17 @@ alignments:
       - alignments/{run_name}.xf
       - alignments/{run_name}.tlt
       - alignments/{run_name}.xtilt
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/mdocs_modified/foo-{run_name}.mdoc
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: metadata/{run_name}_ctffind4.txt
 dataset_keyphotos:
 - sources:
   - literal:
@@ -124,7 +130,10 @@ deposition_keyphotos:
         snapshot: http://nginx:80/input_bucket/snapshot.gif
         thumbnail: http://nginx:80/input_bucket/thumbnail.gif
 frames:
-- sources:
+- metadata:
+    is_gain_corrected: true
+    dose_rate: 1.881
+  sources:
   - source_multi_glob:
       list_globs:
       - VPP/frames/{run_name}_*.tiff

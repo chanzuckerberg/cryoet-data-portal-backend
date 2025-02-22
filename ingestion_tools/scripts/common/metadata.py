@@ -39,11 +39,6 @@ class MergedMetadata(BaseMetadata):
         with self.fs.open(filename, "w", **kwargs) as fh:
             fh.write(tojson(metadata))
 
-
-class TiltSeriesMetadata(MergedMetadata):
-    pass
-
-
 class AlignmentMetadata(MergedMetadata):
     pass
 
@@ -56,7 +51,16 @@ class DepositionMetadata(MergedMetadata):
     pass
 
 
+
+class FrameMetadata(MergedMetadata):
+    pass
+
+
 class RunMetadata(MergedMetadata):
+    pass
+
+
+class TiltSeriesMetadata(MergedMetadata):
     pass
 
 
