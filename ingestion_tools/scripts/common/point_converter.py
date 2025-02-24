@@ -541,3 +541,14 @@ def point_from_copick(
     delimiter: str = None,
 ) -> List[Point]:
     return _from_copick(file_path, filter_value, binning, order, keep_orientation=False)
+
+def instance_from_copick(
+    file_path: Union[str, os.PathLike],
+    filter_value: str,
+    binning: float = 1.0,
+    order: str = "",
+    delimiter: str = None,
+) -> List[InstancePoint]:
+    """copick format conversion to instance point."""
+    points = _from_copick(file_path, filter_value, binning, order, keep_orientation=False)
+    return [InstancePoint(x_coord=p.x_coord, y_coord=p.y_coord, z_coord=p.z_coord, ID=i) for i, p in enumerate(points)]
