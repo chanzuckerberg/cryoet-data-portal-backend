@@ -35,13 +35,12 @@ annotations:
       file_format: relion3_star
       filter_value: '{mapped_tomo_name}.tomostar'
       glob_string: run_ct17_it034_data.star
-
       is_visualization_default: true
       order: xyz
 collection_metadata:
 - sources:
   - source_glob:
-      list_glob: 'frames/{run_name}.mrc.mdoc'
+      list_glob: frames/{run_name}.mrc.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -96,6 +95,12 @@ datasets:
   - literal:
       value:
       - '10003'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10003_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10003_thumbnail.png
 depositions:
 - metadata:
     authors: *id002
@@ -114,14 +119,11 @@ depositions:
   - literal:
       value:
       - 10003
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10003_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10003_thumbnail.png"
 frames:
-- sources:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: frames/{run_name}/*.tif
 gains:
@@ -129,9 +131,9 @@ gains:
   - source_glob:
       list_glob: frames/{run_name}/*.dm4
 rawtilts:
-  - sources:
-    - source_glob:
-        list_glob: '10499_TS_JJ/{mapped_tomo_name}/{mapped_tomo_name}.rawtlt'
+- sources:
+  - source_glob:
+      list_glob: 10499_TS_JJ/{mapped_tomo_name}/{mapped_tomo_name}.rawtlt
 runs:
 - sources:
   - source_glob:

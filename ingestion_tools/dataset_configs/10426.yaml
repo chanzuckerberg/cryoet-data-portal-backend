@@ -7,14 +7,11 @@ alignments:
       list_globs:
       - alignmentfiles/{run_name}_binalign8_fid.tlt
       - alignmentfiles/{run_name}_binalign8_fid.xf
-
 annotations: []
-
 collection_metadata:
 - sources:
   - source_glob:
-      list_glob: 'mdocs/{mdoc_name}'
-
+      list_glob: mdocs/{mdoc_name}
 datasets:
 - metadata:
     authors: &id001
@@ -34,6 +31,9 @@ datasets:
       corresponding_author_status: true
       name: Justin W. Taraska
       primary_author_status: false
+    cell_component:
+      id: GO:0005886
+      name: plasma membrane
     cell_strain:
       id: CLO:0051569
       name: RCB1975 cell
@@ -51,7 +51,7 @@ datasets:
       with 0.7 bar of paraformaldehyde prior to vitrification.
     dataset_identifier: 10426
     dataset_title: Plasma membranes isolated by unroofing - Grid 01
-    dates: &dates
+    dates: &id003
       deposition_date: '2024-07-01'
       last_modified_date: '2025-01-08'
       release_date: '2025-01-08'
@@ -70,19 +70,21 @@ datasets:
     sample_preparation: serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
       grids
     sample_type: organelle
-    cell_component:
-      name: plasma membrane
-      id: GO:0005886
   sources:
   - literal:
       value:
       - '10426'
-
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10306_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10306_thumbnail.png
 depositions:
 - metadata:
     authors: *id001
     cross_references: *id002
-    dates: *dates
+    dates: *id003
     deposition_description: Cryo-electron tomography datasets used in the development
       and evaluation of the unroofing method for preparation of plasma membranes and
       associated proteins.
@@ -94,38 +96,28 @@ depositions:
   - literal:
       value:
       - 10306
-
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10306_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10306_thumbnail.png"
-
 frames:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: frames/{frame_prefix}*.mrc
+gains: []
+rawtilts:
 - sources:
   - source_glob:
-      list_glob: 'frames/{frame_prefix}*.mrc'
-
-gains: []
-
-rawtilts:
-  - sources:
-    - source_glob:
-        list_glob: 'rawtilts/{run_name}.rawtlt'
-
+      list_glob: rawtilts/{run_name}.rawtlt
 runs:
 - sources:
   - source_glob:
       list_glob: tomograms_bin8/*
       match_regex: \.rec$
       name_regex: (.*)_binalign8.rec
-
 standardization_config:
   deposition_id: 10306
   run_data_map_file: run_to_data_map.tsv
   source_prefix: kem_sochacki_06_2024/grid01/
-
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
@@ -152,9 +144,8 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: 'tilt_series/{run_name}_binalign8.st'
+      list_glob: tilt_series/{run_name}_binalign8.st
       match_regex: ^.*\.st$
-
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -176,7 +167,7 @@ tomograms:
       - 1
     authors: *id001
     ctf_corrected: false
-    dates: *dates
+    dates: *id003
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
@@ -190,11 +181,9 @@ tomograms:
     voxel_spacing: 8.66
   sources:
   - source_glob:
-      list_glob: 'tomograms_bin8/{run_name}_binalign8.rec'
+      list_glob: tomograms_bin8/{run_name}_binalign8.rec
       match_regex: (.*)\.rec
-
 version: 1.1.0
-
 voxel_spacings:
 - sources:
   - literal:
