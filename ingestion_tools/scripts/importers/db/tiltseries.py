@@ -1,3 +1,4 @@
+import os
 from typing import Any
 
 import importers.db.deposition
@@ -55,8 +56,8 @@ class TiltSeriesDBImporter(BaseDBImporter):
             "frames_count": ["frames_count"],
         }
 
-    def get_first_match_file_name(self, file_extension_pattern: str):
-        for key in self.config.glob_s3(self.dir_prefix, file_extension_pattern):
+    def get_first_match_file_name(self, dir_path: str, file_extension_pattern: str):
+        for key in self.config.glob_s3(dir_path, file_extension_pattern):
             return key
 
     def get_computed_fields(self) -> dict[str, Any]:
@@ -77,17 +78,22 @@ class TiltSeriesDBImporter(BaseDBImporter):
             extra_data["s3_omezarr_dir"] = self.get_s3_url(omezarr_path)
             extra_data["https_omezarr_dir"] = self.get_https_url(omezarr_path)
 
-        if mdoc := self.get_first_match_file_name("*.mdoc"):
+        frames_dir = os.path.join(self.parent.dir_prefix, "Frames", "")
+        if mdoc := self.get_first_match_file_name(frames_dir, "*.mdoc"):
             extra_data["s3_collection_metadata"] = self.get_s3_url(mdoc)
             extra_data["https_collection_metadata"] = self.get_https_url(mdoc)
 
-        if angle_list := self.get_first_match_file_name("*.rawtlt") or self.get_first_match_file_name("*.tlt"):
+        if angle_list := (self.get_first_match_file_name(self.dir_prefix, "*.rawtlt") or
+                          self.get_first_match_file_name(self.dir_prefix, "*.tlt")):
             extra_data["s3_angle_list"] = self.get_s3_url(angle_list)
             extra_data["https_angle_list"] = self.get_https_url(angle_list)
 
-        if alignment_file_path := self.get_first_match_file_name("*.xf"):
-            extra_data["s3_alignment_file"] = self.get_s3_url(alignment_file_path)
-            extra_data["https_alignment_file"] = self.get_https_url(alignment_file_path)
+        aln_path = os.path.join(self.parent.dir_prefix, "Alignments", "")
+        for aln_dir in self.config.glob_s3(aln_path, "*", is_file=False):
+            if alignment_file_path := self.get_first_match_file_name(aln_dir, "*.xf"):
+                extra_data["s3_alignment_file"] = self.get_s3_url(alignment_file_path)
+                extra_data["https_alignment_file"] = self.get_https_url(alignment_file_path)
+                break
 
         deposition = importers.db.deposition.get_deposition(self.config, self.metadata.get("deposition_id"))
         extra_data["deposition_id"] = deposition.id

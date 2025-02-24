@@ -131,9 +131,9 @@ class FrameWhereClause(TypedDict):
     deposition_id: Optional[IntComparators] | None
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     run_id: Optional[IntComparators] | None
-    raw_angle: Optional[FloatComparators] | None
     acquisition_order: Optional[IntComparators] | None
-    dose: Optional[FloatComparators] | None
+    accumulated_dose: Optional[FloatComparators] | None
+    exposure_dose: Optional[FloatComparators] | None
     is_gain_corrected: Optional[BoolComparators] | None
     s3_frame_path: Optional[StrComparators] | None
     https_frame_path: Optional[StrComparators] | None
@@ -150,9 +150,9 @@ Supported ORDER BY clause attributes
 class FrameOrderByClause(TypedDict):
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
-    raw_angle: Optional[orderBy] | None
     acquisition_order: Optional[orderBy] | None
-    dose: Optional[orderBy] | None
+    accumulated_dose: Optional[orderBy] | None
+    exposure_dose: Optional[orderBy] | None
     is_gain_corrected: Optional[orderBy] | None
     s3_frame_path: Optional[orderBy] | None
     https_frame_path: Optional[orderBy] | None
@@ -173,16 +173,18 @@ class Frame(EntityInterface):
     deposition_id: int
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: int
-    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame", default=None)
     acquisition_order: Optional[int] = strawberry.field(
         description="Frame's acquistion order within a tilt experiment", default=None,
     )
-    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame", default=None)
+    accumulated_dose: Optional[float] = strawberry.field(
+        description="The total accumulated dose exposure frame", default=None,
+    )
+    exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_frame_path: str = strawberry.field(description="S3 path to the frame file")
-    https_frame_path: str = strawberry.field(description="HTTPS path to the frame file")
+    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
+    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
     file_size: Optional[float] = strawberry.field(description="Size of the frame file in bytes", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -207,9 +209,9 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class FrameNumericalColumns:
-    raw_angle: Optional[float] = None
     acquisition_order: Optional[int] = None
-    dose: Optional[float] = None
+    accumulated_dose: Optional[float] = None
+    exposure_dose: Optional[float] = None
     file_size: Optional[float] = None
     id: Optional[int] = None
 
@@ -221,9 +223,9 @@ Define columns that support min/max aggregations
 
 @strawberry.type
 class FrameMinMaxColumns:
-    raw_angle: Optional[float] = None
     acquisition_order: Optional[int] = None
-    dose: Optional[float] = None
+    accumulated_dose: Optional[float] = None
+    exposure_dose: Optional[float] = None
     s3_frame_path: Optional[str] = None
     https_frame_path: Optional[str] = None
     file_size: Optional[float] = None
@@ -237,9 +239,9 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class FrameCountColumns(enum.Enum):
-    rawAngle = "raw_angle"
     acquisitionOrder = "acquisition_order"
-    dose = "dose"
+    accumulatedDose = "accumulated_dose"
+    exposureDose = "exposure_dose"
     isGainCorrected = "is_gain_corrected"
     s3FramePath = "s3_frame_path"
     httpsFramePath = "https_frame_path"
@@ -308,16 +310,18 @@ Mutation types
 class FrameCreateInput:
     deposition_id: strawberry.ID = strawberry.field(description=None)
     run_id: strawberry.ID = strawberry.field(description=None)
-    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame", default=None)
     acquisition_order: Optional[int] = strawberry.field(
         description="Frame's acquistion order within a tilt experiment", default=None,
     )
-    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame", default=None)
+    accumulated_dose: Optional[float] = strawberry.field(
+        description="The total accumulated dose exposure frame", default=None,
+    )
+    exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_frame_path: str = strawberry.field(description="S3 path to the frame file")
-    https_frame_path: str = strawberry.field(description="HTTPS path to the frame file")
+    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
+    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
     file_size: Optional[float] = strawberry.field(description="Size of the frame file in bytes", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -326,16 +330,18 @@ class FrameCreateInput:
 class FrameUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None)
-    raw_angle: Optional[float] = strawberry.field(description="Camera angle for a frame", default=None)
     acquisition_order: Optional[int] = strawberry.field(
         description="Frame's acquistion order within a tilt experiment", default=None,
     )
-    dose: Optional[float] = strawberry.field(description="The raw camera angle for a frame", default=None)
+    accumulated_dose: Optional[float] = strawberry.field(
+        description="The total accumulated dose exposure frame", default=None,
+    )
+    exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
-    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file")
-    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file")
+    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
+    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
     file_size: Optional[float] = strawberry.field(description="Size of the frame file in bytes", default=None)
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
