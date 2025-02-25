@@ -82,9 +82,9 @@ depositions:
         release_date: '2024-10-30'
       deposition_description: Experimental and simulated training data for the CryoET Object Identification Challenge.
         Each dataset contains tilt series, alignments, tomograms and ground truth annotations for six protein complexes
-        (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP). Curation procedures
-        are described in detail in the accompanying paper. Details on how the dataset is used in the competition
-        are available on the competition page.
+        (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP). Curation
+        procedures are described in detail in the accompanying paper. Details on how the dataset is used in the 
+        competition are available on the competition page.
       deposition_identifier: 10310
       deposition_title: CZII - CryoET Object Identification Challenge
       deposition_types:
@@ -325,12 +325,12 @@ datasets:
         publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608
         related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
       dataset_description: This dataset is comprised of movie stacks, tiltseries, alignments, tomograms and hand-curated
-        ground truth annotations for the purpose of training object identification algorithms in the context of the CryoET
-        Object Identification Challenge. The data was acquired on a Krios G4 using a Falcon 4i detector and SelctrisX
-        energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23 and post-processed using different methods.
-        Each run provides raw, denoised, missing wedge corrected and ctf corrected tomograms. The labels were curated as
-        described in the accompanying paper and include point labels for Apo-ferritin, Beta-amylase, Beta-galactosidase,
-        cytosolic ribosomes, thyroglobulin and VLP.
+        ground truth annotations for the purpose of training object identification algorithms in the context of the
+        CryoET Object Identification Challenge. The data was acquired on a Krios G4 using a Falcon 4i detector and
+        SelctrisX energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23 and post-processed using different
+        methods. Each run provides raw, denoised, missing wedge corrected and ctf corrected tomograms. The labels were
+        curated as described in the accompanying paper and include point labels for Apo-ferritin, Beta-amylase,
+        Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP.
       dataset_identifier: 10440
       dataset_title: CZII - CryoET Object Identification Challenge - Experimental Training Data
       dates: *dates
@@ -405,7 +405,7 @@ tiltseries:
         energy_filter: Selectris X
       pixel_spacing: 1.54
       spherical_aberration_constant: 2.7
-      tilt_axis: 80
+      tilt_axis: -96
       tilt_range:
         max: float {tilt_series_max_tilt}
         min: float {tilt_series_min_tilt}
