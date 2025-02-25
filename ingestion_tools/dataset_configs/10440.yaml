@@ -83,7 +83,7 @@ depositions:
       deposition_description: Experimental and simulated training data for the CryoET Object Identification Challenge.
         Each dataset contains tilt series, alignments, tomograms and ground truth annotations for six protein complexes
         (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP). Curation
-        procedures are described in detail in the accompanying paper. Details on how the dataset is used in the 
+        procedures are described in detail in the accompanying paper. Details on how the dataset is used in the
         competition are available on the competition page.
       deposition_identifier: 10310
       deposition_title: CZII - CryoET Object Identification Challenge
