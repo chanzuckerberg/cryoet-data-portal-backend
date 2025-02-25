@@ -361,7 +361,7 @@ datasets:
         ground truth annotations for the purpose of training object identification algorithms in the context of the
         CryoET Object Identification Challenge. The data was acquired on a Krios G4 using a Falcon 4i detector and
         SelctrisX energy filter. Tomograms were aligned using AreTomo3 v1.0.20, reconstructed using AreTomo3 v2.0.10 and
-        post-processed using different methods. Each run provides raw, denoised, missing wedge corrected and ctf
+        post-processed using different methods. Each run provides denoised and ctf
         corrected tomograms. The labels were curated as described in the accompanying paper and include point labels for
         Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP.
       dataset_identifier: 10440
