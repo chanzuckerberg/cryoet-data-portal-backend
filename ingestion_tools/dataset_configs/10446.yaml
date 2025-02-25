@@ -121,9 +121,8 @@ alignments:
       alignment_type: LOCAL
       is_portal_standard: true
     sources:
-      - source_multi_glob:
-          list_globs:
-            - '{mapped_run_name}.aln'
+      - source_glob:
+          list_glob: '{mapped_run_name}.aln'
 
 annotations:
   - metadata:
