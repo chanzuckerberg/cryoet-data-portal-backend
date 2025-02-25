@@ -85,7 +85,7 @@ datasets:
         for Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP. Private
         leaderboard scores on Kaggle were computed based on this dataset.
       dataset_identifier: 10446
-      dataset_title: CZII - CryoET Object Identification Challenge - Private Leaderboard Dataset
+      dataset_title: CZII - CryoET Object Identification Challenge - Private Test Dataset
       dates: &dataset_dates
         deposition_date: '2025-02-25'
         last_modified_date: '2025-02-25'
