@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.9.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.9.0...apiv2-v1.9.1) (2025-02-14)
+
+
+### Bug Fixes
+
+* path_filter formatting ([#447](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/447)) ([c545765](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/c54576577361eac52534be176a931f2d25a5f507))
+* update argus docker build ([#448](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/448)) ([6d8f116](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/6d8f116deae27ba680b38e9291e690be218869b4))
+* update docker build ([#446](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/446)) ([203a49e](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/203a49e1eb06901f8b16b0c0f6e64cfe1e3fe2cd))
+* update staging/prod builder ([#444](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/444)) ([a7fdf4f](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a7fdf4fd83082e88b88eb9c14c7558a42b23bb74))
+
+## [1.9.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.8.0...apiv2-v1.9.0) (2025-02-13)
+
+
+### Features
+
+* add kaggle id and deposition tag ([#433](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/433)) ([9a1fedb](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/9a1fedb80f074a2c22d9b6629acf42f9f5636a65))
+
+
+### Bug Fixes
+
+* update to trigger workflow ([#442](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/442)) ([1fdbf8b](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/1fdbf8b523de6198a6364ea24406d446a1b9eff6))
+* update to trigger workflow 2 ([#443](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/443)) ([dfecee5](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/dfecee5ead6d52d99e6ab0ef779abd7bfe84e1bd))
+
 ## [1.8.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.7.0...apiv2-v1.8.0) (2025-01-17)
 
 
