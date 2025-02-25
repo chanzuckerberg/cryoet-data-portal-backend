@@ -1,5 +1,6 @@
 import contextlib
 import os
+from collections.abc import Iterator
 from typing import TYPE_CHECKING, Any, Optional
 
 from common.copy import copy_by_src
@@ -153,7 +154,7 @@ class BaseImporter:
         return self.allow_imports
 
     @classmethod
-    def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> list["BaseImporter"]:
+    def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> Iterator["BaseImporter"]:
         """
         Finds the importer entities based on the configuration source specified. If no items are found, but a default
         entry exists, then the default entry is returned.
@@ -301,12 +302,14 @@ class BaseFileImporter(BaseImporter):
     This class extends the BaseImporter to handle the import of files. This is suited for case where no transformations
     are required, and source files can be copied to the destination.
     """
+    def get_destination_path(self) -> str:
+        return os.path.join(self.get_output_path(), os.path.basename(self.path))
+
     def import_item(self) -> None:
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-        dest_filename = os.path.join(self.get_output_path(), os.path.basename(self.path))
-        self.config.fs.copy(self.path, dest_filename)
+        self.config.fs.copy(self.path, self.get_destination_path())
 
 
 class BaseKeyPhotoImporter(BaseImporter):

@@ -20,11 +20,17 @@ def filesystem() -> S3Filesystem:
 
 @pytest.fixture(scope="session")
 def frames_files(run: RunImporter) -> list[str]:
-    return pytest.cryoet.get_importable_entities(FrameImporter, [run], "path")
+    return [
+        file_path
+        for importer in pytest.cryoet.get_importable_entities(FrameImporter, [run])
+        for file_path in importer.file_paths.values()
+    ]
+
 
 @pytest.fixture(scope="session")
 def tiltseries_files(run: RunImporter) -> list[str]:
     return pytest.cryoet.get_importable_entities(TiltSeriesImporter, [run], "volume_filename")
+
 
 @pytest.fixture(scope="session")
 def frames_headers(frames_files, filesystem: FileSystemApi) -> dict[str, list[TiffPage] | MrcInterpreter]:
