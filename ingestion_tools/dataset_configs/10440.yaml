@@ -154,7 +154,7 @@ annotations:
           link: https://cryosparc.com/
           link_type: website
       method_type: hybrid
-      version: 1.0
+      version: 2.0
     sources:
       - Point:
           binning: 10.012
@@ -181,7 +181,7 @@ annotations:
       is_curator_recommended: true
       method_links: *method_links
       method_type: hybrid
-      version: 1.0
+      version: 2.0
     sources:
       - Point:
           binning: 10.012
@@ -209,7 +209,7 @@ annotations:
       is_curator_recommended: true
       method_links: *method_links
       method_type: hybrid
-      version: 1.0
+      version: 2.0
     sources:
       - Point:
           binning: 10.012
@@ -236,7 +236,7 @@ annotations:
       is_curator_recommended: true
       method_links: *method_links
       method_type: hybrid
-      version: 1.0
+      version: 2.0
     sources:
       - Point:
           binning: 10.012
@@ -264,7 +264,7 @@ annotations:
       is_curator_recommended: true
       method_links: *method_links
       method_type: hybrid
-      version: 1.0
+      version: 2.0
     sources:
       - Point:
           binning: 10.012
@@ -292,7 +292,7 @@ annotations:
       is_curator_recommended: true
       method_links: *method_links
       method_type: hybrid
-      version: 1.0
+      version: 2.0
     sources:
       - Point:
           binning: 10.012
@@ -301,6 +301,39 @@ annotations:
             - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_virus-like-particle.json'
           is_visualization_default: true
           columns: xyz
+        parent_filters:
+          include:
+            voxel_spacing:
+              - '10.012'
+  - metadata:
+      annotation_method: Prediction using membrain-seg without rescaling and weights
+        MemBrain_seg_v10_alpha.ckpt
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+      annotation_publications: 10.1101/2024.01.05.574336
+      annotation_software: membrain-seg 0.0.1
+      method_links:
+        - custom_name: membrain-seg on GitHub
+          link: https://github.com/teamtomo/membrain-seg
+          link_type: source_code
+        - custom_name: membrain-seg on PyPI
+          link: https://pypi.org/project/membrain-seg/
+          link_type: other
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings:
+            - '{mapped_run_name}_Vol_Segment_mask.mrc'
+          is_visualization_default: true
+          mask_label: 1
+          rescale: true
         parent_filters:
           include:
             voxel_spacing:
