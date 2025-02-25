@@ -207,7 +207,7 @@ class DepositionImportConfig:
     def get_expanded_metadata(self, obj: BaseImporter) -> dict[str, Any]:
         metadata_type = obj.type_key
         base_metadata = deepcopy(obj.metadata)
-        if metadata_type not in ["tomogram", "tiltseries"]:
+        if metadata_type not in ["tomogram", "tiltseries", "frame"]:
             return base_metadata
 
         run_name = self.get_run_name(obj)
