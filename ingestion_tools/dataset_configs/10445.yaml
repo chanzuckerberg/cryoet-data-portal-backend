@@ -208,7 +208,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'copick/ExperimentRuns/{run_name}/Picks/curation_0_apo-ferritin.json'
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_apo-ferritin.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
@@ -236,7 +236,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'copick/ExperimentRuns/{run_name}/Picks/curation_0_beta-amylase.json'
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-amylase.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
@@ -264,7 +264,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'copick/ExperimentRuns/{run_name}/Picks/curation_0_beta-galactosidase.json'
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-galactosidase.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
@@ -291,7 +291,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'copick/ExperimentRuns/{run_name}/Picks/curation_0_ribosome.json'
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_ribosome.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
@@ -319,7 +319,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'copick/ExperimentRuns/{run_name}/Picks/curation_0_thyroglobulin.json'
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_thyroglobulin.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
@@ -347,7 +347,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'copick/ExperimentRuns/{run_name}/Picks/curation_0_virus-like-particle.json'
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_virus-like-particle.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
