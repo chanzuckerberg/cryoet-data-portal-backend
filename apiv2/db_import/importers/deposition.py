@@ -131,7 +131,7 @@ class DepositionAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "affiliation_address": ["affiliation_address"],
             "affiliation_identifier": ["affiliation_identifier"],
             "author_list_order": ["author_list_order"],
-            "kaggle_id": ["kaggle_id"]
+            "kaggle_id": ["kaggle_id"],
         }
 
     @classmethod
