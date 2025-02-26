@@ -172,8 +172,7 @@ def get_datasets(
     filter_datasets = [re.compile(pattern) for pattern in filter_datasets]
     exclude_datasets = [re.compile(pattern) for pattern in exclude_dataset]
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
-    session = Session()
-    s3_client = session.client("s3", config=s3_config)
+    s3_client = boto3.client("s3", config=s3_config)
     config = DBImportConfig(s3_client, None, s3_bucket, https_prefix, None)
 
     datasets_to_check = []
