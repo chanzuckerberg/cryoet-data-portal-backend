@@ -80,7 +80,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_apo-ferritin.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_apo-ferritin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -91,7 +91,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_apo-ferritin.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_apo-ferritin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -118,7 +118,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-amylase.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_beta-amylase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -129,7 +129,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-amylase.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_beta-amylase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -156,7 +156,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-galactosidase.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_beta-galactosidase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -167,7 +167,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-galactosidase.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_beta-galactosidase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -193,7 +193,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_ribosome.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_ribosome.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -204,7 +204,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_ribosome.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_ribosome.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -231,7 +231,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_thyroglobulin.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_thyroglobulin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -242,7 +242,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_thyroglobulin.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_thyroglobulin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -269,7 +269,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_virus-like-particle.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_virus-like-particle.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -280,7 +280,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_virus-like-particle.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_virus-like-particle.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
