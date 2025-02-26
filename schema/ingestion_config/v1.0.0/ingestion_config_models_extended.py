@@ -544,6 +544,7 @@ class ExtendedValidationAlignmentEntity(AlignmentEntity):
     def valid_sources(cls: Self, source_list: List[AlignmentSource]) -> List[AlignmentSource]:
         return validate_sources(source_list)
 
+
 # ==============================================================================
 # Alignment Validation
 # ==============================================================================
@@ -647,21 +648,6 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
     def valid_sources(cls: Self, source_list: List[AnnotationSource]) -> List[AnnotationSource]:
         total_errors = []
 
-        # For verifying that all source entries don't have one shape used multiple times in different source entries
-        used_shapes = set()
-        shapes_used_multiple_times_errors = set()
-
-        for source_element in source_list:
-            for shape in source_element.model_fields:
-                if getattr(source_element, shape) is None:
-                    continue
-
-                # If the shape is already used in another source entry, add the shape to the error set
-                if shape in used_shapes:
-                    shapes_used_multiple_times_errors.add(shape)
-                else:
-                    used_shapes.add(shape)
-
         # For verifying that all source entries:
         # - each only have one shape entry
         # - that there is only one of glob_string and glob_strings
@@ -698,6 +684,29 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
                     total_errors.append(
                         ValueError(f"Source entry {i} cannot have a {source_child} entry without a shape"),
                     )
+
+        # For verifying that all source entries don't have one shape used multiple times in different source entries
+        used_shapes = set()
+        shapes_used_multiple_times_errors = set()
+
+        for source_element in source_list:
+            # If the source entry has parent filters, we need to relax the check for one shape used multiple times
+            has_parent_filters = source_element.parent_filters is not None
+
+            # Get the actual shapes in the source entry
+            shapes = source_element.model_fields.copy()
+            if has_parent_filters:
+                shapes.pop("parent_filters")
+
+            # Only one of these should be present (tested above)
+            shapes = [shape for shape in shapes if getattr(source_element, shape) is not None]
+            shape = shapes[0] if shapes else None
+
+            # If the shape is already used in another source entry, add the shape to the error set
+            if shape in used_shapes and not has_parent_filters:
+                shapes_used_multiple_times_errors.add(shape)
+            else:
+                used_shapes.add(shape)
 
         if shapes_used_multiple_times_errors:
             total_errors.append(
