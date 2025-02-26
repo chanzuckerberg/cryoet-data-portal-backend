@@ -5,10 +5,12 @@ depositions:
           ORCID: 0000-0002-2913-3662
           primary_author_status: true
           corresponding_author_status: true
+          kaggle_id: christofhenkel
         - name: Eugene Khvedchenya
           ORCID: 0000-0002-2363-3850
           primary_author_status: true
           corresponding_author_status: true
+          kaggle_id: bloodaxe
       dates: &dates
         deposition_date: '2024-02-25'
         last_modified_date: '2024-02-25'
@@ -25,6 +27,7 @@ depositions:
       deposition_title: CZII CryoET Object Identification Challenge - 1st place solution - Daddies
       deposition_types:
         - annotation
+      tag: competitionML2024Winners
     sources:
       - literal:
           value:

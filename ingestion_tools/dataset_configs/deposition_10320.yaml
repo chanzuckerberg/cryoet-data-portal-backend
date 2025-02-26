@@ -19,21 +19,21 @@ depositions:
         radii for each particle type, utilizing InstanceNorm3d and PReLU for enhanced training stability. After
         segmentation, particle centroids are computed using CC3D and filtered based on voxel count statistics, with an
         ensemble strategy involving averaging of 7 to 10 complementary models and test-time augmentation.
-      deposition_identifier: 10319
+      deposition_identifier: 10320
       deposition_title: CZII CryoET Object Identification Challenge - 2nd place solution - LuoZiqian&Lion
       deposition_types:
         - annotation
     sources:
       - literal:
           value:
-            - 10319
+            - 10320
 
 deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_snapshot.png"
-            thumbnail: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_thumbnail.png"
+            snapshot: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10320_snapshot.png"
+            thumbnail: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10320_thumbnail.png"
 
 alignments:
   - sources:
@@ -271,7 +271,7 @@ runs:
               - '10446'
 
 standardization_config:
-  deposition_id: 10319
+  deposition_id: 10320
   source_prefix: CZII/202502_competition_correct_hand
 
 version: 1.1.0

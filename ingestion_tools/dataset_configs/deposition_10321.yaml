@@ -1,29 +1,29 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-      cross_references: &cross_references
-        #TODO
-        publications: #TODO
+        - name: tangtang1999
+          corresponding_author_status: true
+          primary_author_status: true
       dates: &dates
         deposition_date: '2024-02-25'
         last_modified_date: '2024-02-25'
         release_date: '2024-02-25'
       deposition_description: #TODO
-      deposition_identifier: 10319
-      deposition_title: CZII CryoET Object Identification Challenge - 1st place solution - Placeholder
+      deposition_identifier: 10321
+      deposition_title: CZII CryoET Object Identification Challenge - 3rd place solution - ONCE UPON A MOON
       deposition_types:
         - annotation
     sources:
       - literal:
           value:
-            - 10319
+            - 10321
 
 deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_snapshot.png"
-            thumbnail: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_thumbnail.png"
+            snapshot: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10321_snapshot.png"
+            thumbnail: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10321_thumbnail.png"
 
 alignments:
   - sources:
@@ -54,7 +54,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_apo-ferritin.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_apo-ferritin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -65,46 +65,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_apo-ferritin.json'
-          is_visualization_default: false
-          columns: xyz
-        parent_filters:
-          include:
-            dataset:
-              - '10446'
-
-  - metadata:
-      annotation_method: *method
-      annotation_object:
-        state: tetrameric
-        id: UniProtKB:P10537
-        name: Beta-amylase
-      annotation_publications: EMD-30405
-      annotation_software: *software
-      authors: *deposition_authors
-      dates: *dates
-      ground_truth_status: false
-      is_curator_recommended: false
-      method_links: *method_links
-      method_type: automated
-      version: 1.0
-    sources:
-      - Point:
-          binning: 4.990
-          file_format: copick
-          glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-amylase.json'
-          is_visualization_default: false
-          columns: xyz
-        parent_filters:
-          include:
-            dataset:
-              - '10445'
-      - Point:
-          binning: 4.990
-          file_format: copick
-          glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-amylase.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_apo-ferritin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -132,7 +93,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-galactosidase.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_beta-galactosidase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -143,7 +104,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-galactosidase.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_beta-galactosidase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -170,7 +131,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_ribosome.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_ribosome.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -181,7 +142,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_ribosome.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_ribosome.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -209,7 +170,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_thyroglobulin.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_thyroglobulin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -220,7 +181,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_thyroglobulin.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_thyroglobulin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -248,7 +209,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_virus-like-particle.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_virus-like-particle.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -259,7 +220,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_virus-like-particle.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ONCEUPONAMOON_0_virus-like-particle.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -294,7 +255,7 @@ runs:
               - '10446'
 
 standardization_config:
-  deposition_id: 10319
+  deposition_id: 10321
   source_prefix: CZII/202502_competition_correct_hand
 
 version: 1.1.0

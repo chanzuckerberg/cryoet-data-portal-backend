@@ -1,29 +1,26 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-      cross_references: &cross_references
-        #TODO
-        publications: #TODO
       dates: &dates
         deposition_date: '2024-02-25'
         last_modified_date: '2024-02-25'
         release_date: '2024-02-25'
       deposition_description: #TODO
-      deposition_identifier: 10319
-      deposition_title: CZII CryoET Object Identification Challenge - 1st place solution - Placeholder
+      deposition_identifier: 10327
+      deposition_title: CZII CryoET Object Identification Challenge - 9th place solution - Avengers
       deposition_types:
         - annotation
     sources:
       - literal:
           value:
-            - 10319
+            - 10327
 
 deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_snapshot.png"
-            thumbnail: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_thumbnail.png"
+            snapshot: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10327_snapshot.png"
+            thumbnail: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10327_thumbnail.png"
 
 alignments:
   - sources:
@@ -294,7 +291,7 @@ runs:
               - '10446'
 
 standardization_config:
-  deposition_id: 10319
+  deposition_id: 10327
   source_prefix: CZII/202502_competition_correct_hand
 
 version: 1.1.0
