@@ -46,6 +46,7 @@ class DepositionDBImporter(BaseDBImporter):
             "last_modified_date": ["dates", "last_modified_date"],
             "related_database_entries": ["cross_references", "related_database_entries"],
             "deposition_publications": ["cross_references", "publications"],
+            "tag": ["tag"],
         }
 
     def get_computed_fields(self) -> dict[str, Any]:
@@ -130,6 +131,7 @@ class DepositionAuthorDBImporter(AuthorsStaleDeletionDBImporter):
             "affiliation_address": ["affiliation_address"],
             "affiliation_identifier": ["affiliation_identifier"],
             "author_list_order": ["author_list_order"],
+            "kaggle_id": ["kaggle_id"]
         }
 
     @classmethod
