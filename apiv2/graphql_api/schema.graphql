@@ -3488,23 +3488,23 @@ type Frame implements EntityInterface & Node {
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
   runId: Int!
 
-  """Camera angle for a frame"""
-  rawAngle: Float
-
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int
 
-  """The raw camera angle for a frame"""
-  dose: Float
+  """The total accumulated dose exposure frame"""
+  accumulatedDose: Float
+
+  """The dose exposure of this frame"""
+  exposureDose: Float
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean
 
   """S3 path to the frame file"""
-  s3FramePath: String!
+  s3FramePath: String
 
   """HTTPS path to the frame file"""
-  httpsFramePath: String!
+  httpsFramePath: String
 
   """Size of the frame file in bytes"""
   fileSize: Float
@@ -3677,9 +3677,9 @@ type FrameConnection {
 }
 
 enum FrameCountColumns {
-  rawAngle
   acquisitionOrder
-  dose
+  accumulatedDose
+  exposureDose
   isGainCorrected
   s3FramePath
   httpsFramePath
@@ -3691,23 +3691,23 @@ input FrameCreateInput {
   depositionId: ID!
   runId: ID!
 
-  """Camera angle for a frame"""
-  rawAngle: Float = null
-
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int = null
 
-  """The raw camera angle for a frame"""
-  dose: Float = null
+  """The total accumulated dose exposure frame"""
+  accumulatedDose: Float = null
+
+  """The dose exposure of this frame"""
+  exposureDose: Float = null
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean = null
 
   """S3 path to the frame file"""
-  s3FramePath: String!
+  s3FramePath: String = null
 
   """HTTPS path to the frame file"""
-  httpsFramePath: String!
+  httpsFramePath: String = null
 
   """Size of the frame file in bytes"""
   fileSize: Float = null
@@ -3728,9 +3728,9 @@ type FrameEdge {
 type FrameGroupByOptions {
   deposition: DepositionGroupByOptions
   run: RunGroupByOptions
-  rawAngle: Float
   acquisitionOrder: Int
-  dose: Float
+  accumulatedDose: Float
+  exposureDose: Float
   isGainCorrected: Boolean
   s3FramePath: String
   httpsFramePath: String
@@ -3739,9 +3739,9 @@ type FrameGroupByOptions {
 }
 
 type FrameMinMaxColumns {
-  rawAngle: Float
   acquisitionOrder: Int
-  dose: Float
+  accumulatedDose: Float
+  exposureDose: Float
   s3FramePath: String
   httpsFramePath: String
   fileSize: Float
@@ -3749,9 +3749,9 @@ type FrameMinMaxColumns {
 }
 
 type FrameNumericalColumns {
-  rawAngle: Float
   acquisitionOrder: Int
-  dose: Float
+  accumulatedDose: Float
+  exposureDose: Float
   fileSize: Float
   id: Int
 }
@@ -3759,9 +3759,9 @@ type FrameNumericalColumns {
 input FrameOrderByClause {
   deposition: DepositionOrderByClause
   run: RunOrderByClause
-  rawAngle: orderBy
   acquisitionOrder: orderBy
-  dose: orderBy
+  accumulatedDose: orderBy
+  exposureDose: orderBy
   isGainCorrected: orderBy
   s3FramePath: orderBy
   httpsFramePath: orderBy
@@ -3773,23 +3773,23 @@ input FrameUpdateInput {
   depositionId: ID
   runId: ID
 
-  """Camera angle for a frame"""
-  rawAngle: Float = null
-
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int = null
 
-  """The raw camera angle for a frame"""
-  dose: Float = null
+  """The total accumulated dose exposure frame"""
+  accumulatedDose: Float = null
+
+  """The dose exposure of this frame"""
+  exposureDose: Float = null
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean = null
 
   """S3 path to the frame file"""
-  s3FramePath: String
+  s3FramePath: String = null
 
   """HTTPS path to the frame file"""
-  httpsFramePath: String
+  httpsFramePath: String = null
 
   """Size of the frame file in bytes"""
   fileSize: Float = null
@@ -3803,9 +3803,9 @@ input FrameWhereClause {
   depositionId: IntComparators
   run: RunWhereClause
   runId: IntComparators
-  rawAngle: FloatComparators
   acquisitionOrder: IntComparators
-  dose: FloatComparators
+  accumulatedDose: FloatComparators
+  exposureDose: FloatComparators
   isGainCorrected: BoolComparators
   s3FramePath: StrComparators
   httpsFramePath: StrComparators

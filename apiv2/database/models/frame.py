@@ -43,11 +43,11 @@ class Frame(Base):
         foreign_keys=run_id,
         back_populates="frames",
     )
-    raw_angle: Mapped[float] = mapped_column(Float, nullable=True)
     acquisition_order: Mapped[int] = mapped_column(Integer, nullable=True)
-    dose: Mapped[float] = mapped_column(Float, nullable=True)
+    accumulated_dose: Mapped[float] = mapped_column(Float, nullable=True)
+    exposure_dose: Mapped[float] = mapped_column(Float, nullable=True)
     is_gain_corrected: Mapped[bool] = mapped_column(Boolean, nullable=True)
-    s3_frame_path: Mapped[str] = mapped_column(String, nullable=False)
-    https_frame_path: Mapped[str] = mapped_column(String, nullable=False)
+    s3_frame_path: Mapped[str] = mapped_column(String, nullable=True)
+    https_frame_path: Mapped[str] = mapped_column(String, nullable=True)
     file_size: Mapped[float] = mapped_column(Float, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

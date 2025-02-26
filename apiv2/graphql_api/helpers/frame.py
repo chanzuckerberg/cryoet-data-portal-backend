@@ -31,9 +31,9 @@ class FrameGroupByOptions:
         None
     )
     run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
-    raw_angle: Optional[float] = None
     acquisition_order: Optional[int] = None
-    dose: Optional[float] = None
+    accumulated_dose: Optional[float] = None
+    exposure_dose: Optional[float] = None
     is_gain_corrected: Optional[bool] = None
     s3_frame_path: Optional[str] = None
     https_frame_path: Optional[str] = None
