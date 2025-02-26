@@ -12,11 +12,11 @@ import click
 from boto3 import Session
 from botocore import UNSIGNED
 from botocore.config import Config
-from db_import import db_import_options
+from db_import.common.config import DBImportConfig
+from db_import.importer import db_import_options
+from db_import.importers.dataset import DatasetDBImporter
+from db_import.importers.deposition import DepositionDBImporter
 from importers.dataset import DatasetImporter
-from importers.db.base_importer import DBImportConfig
-from importers.db.dataset import DatasetDBImporter
-from importers.db.deposition import DepositionDBImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.utils import IMPORTERS
@@ -173,7 +173,7 @@ def get_datasets(
     exclude_datasets = [re.compile(pattern) for pattern in exclude_dataset]
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", config=s3_config)
-    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix)
+    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix, None)
 
     datasets_to_check = []
     if include_dataset:
@@ -239,7 +239,7 @@ def to_args(**kwargs) -> list[str]:
     "--swipe-wdl-key",
     type=str,
     required=True,
-    default="db_import-v0.0.2.wdl",
+    default="db_import-v0.0.3.wdl",
     help="Specify wdl key for custom workload",
 )
 @db_import_options
@@ -310,7 +310,6 @@ def db_import(
                 "s3_bucket": s3_bucket,
                 "https_prefix": https_prefix,
                 "flags": " ".join(new_args),
-                "scrape_flags": " ".join(scrape_args),
                 "environment": ctx.obj["environment"],
                 "v2_docker_image_id": f"908710317728.dkr.ecr.{aws_region}.amazonaws.com/apiv2-x86:{ecr_tag}",
             }
