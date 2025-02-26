@@ -3,8 +3,8 @@ import os
 from typing import Any, Callable
 
 import pytest as pytest
-from importers.db.base_importer import S3Client
 from importers.utils import IMPORTERS
+from mypy_boto3_s3 import S3Client
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi

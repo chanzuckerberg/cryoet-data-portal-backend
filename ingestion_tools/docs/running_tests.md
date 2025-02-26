@@ -25,8 +25,6 @@ To run the tests for db ingestion, use the following commands:
 ```bash
 # initializes the ingestion_tools image
 make ingestor-init
-# initializes the db, loads schema and seed data
-make ingestor-test-db-init
 # runs the tests for db ingestion
 make ingestor-test-s3
 ```

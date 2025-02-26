@@ -2,9 +2,9 @@ import pytest
 from importers.base_importer import BaseImporter
 from importers.collection_metadata import CollectionMetadataImporter
 from importers.ctf import CtfImporter
-from importers.db.base_importer import S3Client
 from importers.rawtilt import RawTiltImporter
 from importers.tiltseries import PerSectionParameterGenerator, TiltSeriesImporter
+from mypy_boto3_s3 import S3Client
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
