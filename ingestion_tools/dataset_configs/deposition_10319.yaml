@@ -46,7 +46,8 @@ alignments:
 
 annotations:
   - metadata:
-      annotation_method: &method Ensemble of segmentation and detection with feature distribution alignment scaling.
+      annotation_method: &method Ensemble of segmentation and detection networks with feature distribution alignment 
+        scaling.
       annotation_object:
         state: apo
         id: GO:0070288
