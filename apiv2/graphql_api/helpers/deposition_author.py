@@ -30,6 +30,7 @@ class DepositionAuthorGroupByOptions:
     id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None
+    kaggle_id: Optional[str] = None
     name: Optional[str] = None
     email: Optional[str] = None
     affiliation_name: Optional[str] = None

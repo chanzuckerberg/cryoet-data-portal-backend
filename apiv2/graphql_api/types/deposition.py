@@ -454,6 +454,7 @@ class DepositionWhereClause(TypedDict):
     )
     title: Optional[StrComparators] | None
     description: Optional[StrComparators] | None
+    tag: Optional[StrComparators] | None
     deposition_types: (
         Optional[Annotated["DepositionTypeWhereClause", strawberry.lazy("graphql_api.types.deposition_type")]] | None
     )
@@ -480,6 +481,7 @@ Supported ORDER BY clause attributes
 class DepositionOrderByClause(TypedDict):
     title: Optional[orderBy] | None
     description: Optional[orderBy] | None
+    tag: Optional[orderBy] | None
     deposition_publications: Optional[orderBy] | None
     related_database_entries: Optional[orderBy] | None
     deposition_date: Optional[orderBy] | None
@@ -539,6 +541,7 @@ class Deposition(EntityInterface):
     )  # type:ignore
     title: str = strawberry.field(description="Title for the deposition")
     description: str = strawberry.field(description="Description for the deposition")
+    tag: Optional[str] = strawberry.field(description="Tag for the deposition - like ml competition", default=None)
     deposition_types: Sequence[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]] = (
         load_deposition_type_rows
     )  # type:ignore
@@ -593,6 +596,7 @@ Define columns that support min/max aggregations
 class DepositionMinMaxColumns:
     title: Optional[str] = None
     description: Optional[str] = None
+    tag: Optional[str] = None
     deposition_publications: Optional[str] = None
     related_database_entries: Optional[str] = None
     deposition_date: Optional[datetime.datetime] = None
@@ -612,6 +616,7 @@ Define enum of all columns to support count and count(distinct) aggregations
 class DepositionCountColumns(enum.Enum):
     title = "title"
     description = "description"
+    tag = "tag"
     depositionPublications = "deposition_publications"
     relatedDatabaseEntries = "related_database_entries"
     depositionDate = "deposition_date"
@@ -685,6 +690,7 @@ Mutation types
 class DepositionCreateInput:
     title: str = strawberry.field(description="Title for the deposition")
     description: str = strawberry.field(description="Description for the deposition")
+    tag: Optional[str] = strawberry.field(description="Tag for the deposition - like ml competition", default=None)
     deposition_publications: Optional[str] = strawberry.field(
         description="The publications related to this deposition", default=None,
     )
@@ -705,6 +711,7 @@ class DepositionCreateInput:
 class DepositionUpdateInput:
     title: Optional[str] = strawberry.field(description="Title for the deposition")
     description: Optional[str] = strawberry.field(description="Description for the deposition")
+    tag: Optional[str] = strawberry.field(description="Tag for the deposition - like ml competition", default=None)
     deposition_publications: Optional[str] = strawberry.field(
         description="The publications related to this deposition", default=None,
     )

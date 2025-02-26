@@ -5937,6 +5937,15 @@
             },
             {
               "defaultValue": null,
+              "name": "tag",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "depositionTypes",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -6074,6 +6083,15 @@
             {
               "defaultValue": null,
               "name": "orcid",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "kaggleId",
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "StrComparators",
@@ -6478,6 +6496,9 @@
             },
             {
               "name": "orcid"
+            },
+            {
+              "name": "kaggleId"
             },
             {
               "name": "name"
@@ -8184,6 +8205,15 @@
             },
             {
               "defaultValue": null,
+              "name": "kaggleId",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "name",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -8330,6 +8360,9 @@
             },
             {
               "name": "orcid"
+            },
+            {
+              "name": "kaggleId"
             },
             {
               "name": "name"
@@ -9695,6 +9728,15 @@
             },
             {
               "defaultValue": null,
+              "name": "kaggleId",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "name",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -9841,6 +9883,9 @@
             },
             {
               "name": "orcid"
+            },
+            {
+              "name": "kaggleId"
             },
             {
               "name": "name"
@@ -10903,6 +10948,15 @@
             },
             {
               "defaultValue": null,
+              "name": "kaggleId",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "name",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -11049,6 +11103,9 @@
             },
             {
               "name": "orcid"
+            },
+            {
+              "name": "kaggleId"
             },
             {
               "name": "name"
@@ -12085,6 +12142,15 @@
             {
               "defaultValue": null,
               "name": "description",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "tag",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -15382,6 +15448,15 @@
             },
             {
               "args": [],
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "name",
               "type": {
                 "kind": "SCALAR",
@@ -15536,6 +15611,15 @@
             },
             {
               "args": [],
+              "name": "tag",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "depositionTypes",
               "type": {
                 "kind": "OBJECT",
@@ -15655,6 +15739,15 @@
             {
               "args": [],
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -16099,6 +16192,15 @@
             {
               "args": [],
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -16959,6 +17061,15 @@
             },
             {
               "args": [],
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "name",
               "type": {
                 "kind": "SCALAR",
@@ -17651,6 +17762,15 @@
             },
             {
               "args": [],
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "name",
               "type": {
                 "kind": "NON_NULL",
@@ -17768,6 +17888,15 @@
             {
               "defaultValue": null,
               "name": "orcid",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "kaggleId",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -18023,6 +18152,15 @@
             {
               "args": [],
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -18802,6 +18940,15 @@
               }
             },
             {
+              "args": [],
+              "name": "tag",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "args": [
                 {
                   "defaultValue": "null",
@@ -19171,6 +19318,15 @@
             },
             {
               "args": [],
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "name",
               "type": {
                 "kind": "NON_NULL",
@@ -19288,6 +19444,15 @@
             {
               "defaultValue": null,
               "name": "orcid",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "kaggleId",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -19543,6 +19708,15 @@
             {
               "args": [],
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -21676,6 +21850,15 @@
             },
             {
               "args": [],
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "name",
               "type": {
                 "kind": "NON_NULL",
@@ -21793,6 +21976,15 @@
             {
               "defaultValue": null,
               "name": "orcid",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "kaggleId",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -22048,6 +22240,15 @@
             {
               "args": [],
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -25702,6 +25903,15 @@
             },
             {
               "args": [],
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "name",
               "type": {
                 "kind": "NON_NULL",
@@ -26252,6 +26462,15 @@
             },
             {
               "defaultValue": null,
+              "name": "kaggleId",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "name",
               "type": {
                 "kind": "ENUM",
@@ -26499,6 +26718,15 @@
             {
               "args": [],
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -29891,6 +30119,15 @@
             },
             {
               "args": [],
+              "name": "tag",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "depositionPublications",
               "type": {
                 "kind": "SCALAR",
@@ -29975,6 +30212,9 @@
             },
             {
               "name": "description"
+            },
+            {
+              "name": "tag"
             },
             {
               "name": "depositionPublications"
@@ -33003,6 +33243,15 @@
               }
             },
             {
+              "defaultValue": "null",
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "defaultValue": null,
               "name": "name",
               "type": {
@@ -33109,6 +33358,15 @@
             {
               "defaultValue": "null",
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -34059,6 +34317,15 @@
               }
             },
             {
+              "defaultValue": "null",
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "defaultValue": null,
               "name": "name",
               "type": {
@@ -34165,6 +34432,15 @@
             {
               "defaultValue": "null",
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -35006,6 +35282,15 @@
               }
             },
             {
+              "defaultValue": "null",
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "defaultValue": null,
               "name": "name",
               "type": {
@@ -35112,6 +35397,15 @@
             {
               "defaultValue": "null",
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -35238,6 +35532,15 @@
             },
             {
               "defaultValue": "null",
+              "name": "tag",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
               "name": "depositionPublications",
               "type": {
                 "kind": "SCALAR",
@@ -35346,6 +35649,15 @@
             {
               "defaultValue": null,
               "name": "description",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "tag",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -37017,6 +37329,15 @@
               }
             },
             {
+              "defaultValue": "null",
+              "name": "kaggleId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
               "defaultValue": null,
               "name": "name",
               "type": {
@@ -37123,6 +37444,15 @@
             {
               "defaultValue": "null",
               "name": "orcid",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "kaggleId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",

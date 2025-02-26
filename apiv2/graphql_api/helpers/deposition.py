@@ -61,6 +61,7 @@ class DepositionGroupByOptions:
     tomograms: Optional[Annotated["TomogramGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram")]] = None
     title: Optional[str] = None
     description: Optional[str] = None
+    tag: Optional[str] = None
     deposition_types: Optional[
         Annotated["DepositionTypeGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition_type")]
     ] = None

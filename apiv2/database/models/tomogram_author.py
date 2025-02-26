@@ -38,6 +38,7 @@ class TomogramAuthor(Base):
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
     author_list_order: Mapped[int] = mapped_column(Integer, nullable=False)
     orcid: Mapped[str] = mapped_column(String, nullable=True)
+    kaggle_id: Mapped[str] = mapped_column(String, nullable=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
     email: Mapped[str] = mapped_column(String, nullable=True)
     affiliation_name: Mapped[str] = mapped_column(String, nullable=True)
