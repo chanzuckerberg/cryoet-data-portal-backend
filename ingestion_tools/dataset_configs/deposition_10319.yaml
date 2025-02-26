@@ -1,14 +1,26 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-      cross_references: &cross_references
-        #TODO
-        publications: #TODO
+        - name: Christof Henkel
+          ORCID: 0000-0002-2913-3662
+          primary_author_status: true
+          corresponding_author_status: true
+        - name: Eugene Khvedchenya
+          ORCID: 0000-0002-2363-3850
+          primary_author_status: true
+          corresponding_author_status: true
       dates: &dates
         deposition_date: '2024-02-25'
         last_modified_date: '2024-02-25'
         release_date: '2024-02-25'
-      deposition_description: #TODO
+      deposition_description:
+        The 1st place solution employs an ensemble approach combining segmentation models (3D UNets with ResNet & B3
+        encoders) and object detection models (SegResNet and DynUnet backbones) from MONAI. Segmentation uses weighted
+        CrossEntropy loss (256:1 positive:negative weighting), while detection implements a modified PP-Yolo loss with
+        IoU-based point-point similarity metrics. Models are trained on 96×96×96 patches with inference on larger
+        volumes, and both approaches are merged through a novel scaling technique that aligns feature map distributions
+        before object detection post-processing. Performance is optimized by converting models to TensorRT, achieving a
+        200% speedup and enabling parallel inference on two T4 GPUs.
       deposition_identifier: 10319
       deposition_title: CZII CryoET Object Identification Challenge - 1st place solution - Daddies
       deposition_types:
@@ -22,8 +34,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_snapshot.png"
-            thumbnail: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_thumbnail.png"
+            snapshot: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_snapshot.png"
+            thumbnail: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_thumbnail.png"
 
 alignments:
   - sources:
@@ -34,19 +46,33 @@ alignments:
 
 annotations:
   - metadata:
-      annotation_method: &method #TODO
+      annotation_method: &method Ensemble of segmentation and detection with feature distribution alignment scaling.
       annotation_object:
         state: apo
         id: GO:0070288
         name: ferritin complex
       annotation_publications: EMD-41923
-      annotation_software: &software #TODO
+      annotation_software: null
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
       is_curator_recommended: false
       method_links: &method_links
-      #TODO
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561510
+          link_type: documentation
+        - custom_name: Segmentation training code on GitHub
+          link: https://github.com/ChristofHenkel/kaggle-cryoet-1st-place-segmentation
+          link_type: source_code
+        - custom_name: Object Detection training code on GitHub
+          link: https://github.com/BloodAxe/Kaggle-2024-CryoET
+          link_type: source_code
+        - custom_name: Inference kernel on Kaggle
+          link: https://www.kaggle.com/code/christofhenkel/cryo-et-1st-place-solution?scriptVersionId=223259615
+          link_type: source_code
+        - custom_name: Model weights on Kaggle
+          link: https://www.kaggle.com/datasets/bloodaxe/cryoet-detection-models
+          link_type: models_weights
       method_type: automated
       version: 1.0
     sources:
@@ -80,7 +106,6 @@ annotations:
         id: UniProtKB:P10537
         name: Beta-amylase
       annotation_publications: EMD-30405
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -119,7 +144,6 @@ annotations:
         id: UniProtKB:P00722
         name: Beta-galactosidase
       annotation_publications: EMD-0153
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -157,7 +181,6 @@ annotations:
         id: GO:0022626
         name: cytosolic ribosome
       annotation_publications: EMD-3883
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -196,7 +219,6 @@ annotations:
         id: UniProtKB:P01267
         name: Thyroglobulin
       annotation_publications: EMD-24181
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -235,7 +257,6 @@ annotations:
         id: GO:0170047
         name: virus-like capsid
       annotation_publications: EMD-41917
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -269,17 +290,29 @@ annotations:
 
 datasets:
   - sources:
-      - source_glob:
-          list_glob: 104??
+      - destination_glob:
+          list_glob: 1044?
           match_regex: (10445|10446)
           name_regex: (.*)
 
 runs:
   - sources:
       - source_glob:
-          list_glob: "P*/copick/ExperimentRuns/*"
+          list_glob: "Public/copick/ExperimentRuns/*"
           match_regex: '.*'
           name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - source_glob:
+          list_glob: "Private/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
 
 standardization_config:
   deposition_id: 10319
@@ -291,4 +324,4 @@ voxel_spacings:
   - sources:
       - literal:
           value:
-            - 10.012
+            - 4.990
