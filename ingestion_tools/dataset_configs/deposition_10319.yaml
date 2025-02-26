@@ -290,10 +290,10 @@ annotations:
 
 datasets:
   - sources:
-      - destination_glob:
-          list_glob: 1044?
-          match_regex: (10445|10446)
-          name_regex: (.*)
+      - literal:
+          value:
+            - '10445'
+            - '10446'
 
 runs:
   - sources:
