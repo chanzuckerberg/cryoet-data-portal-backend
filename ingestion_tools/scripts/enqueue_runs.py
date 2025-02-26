@@ -174,7 +174,7 @@ def get_datasets(
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     session = Session()
     s3_client = session.client("s3", config=s3_config)
-    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix, session)
+    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix)
 
     datasets_to_check = []
     if include_dataset:

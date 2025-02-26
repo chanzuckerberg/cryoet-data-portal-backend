@@ -30,13 +30,6 @@ apiv2-init:
 clean:
 	$(docker_compose) --profile '*' down
 
-.PHONY: ingestor-test-db-init
-ingestor-test-db-init:
-	docker compose up db -d
-	docker compose cp test_infra/sql db:/tmp/sql
-	docker compose exec db sh -c 'cat /tmp/sql/schema.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
-	docker compose exec db sh -c 'cat /tmp/sql/seed_db_enum.sql | psql postgres://postgres:postgres@127.0.0.1:5432/cryoet'
-
 .PHONY: ingestor-test-s3
 ingestor-test-s3:
 	docker compose exec ingestor pytest -vvv -s . -k s3_import
