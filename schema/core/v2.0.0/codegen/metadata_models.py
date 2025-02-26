@@ -589,7 +589,7 @@ class CtfFormatEnum(str, Enum):
     Used to determine what ctf parser to use.
     """
 
-    # formats ctffind file formats
+    # The file has ctffind schema
     CTFFIND = "CTFFIND"
 
 
@@ -1500,6 +1500,13 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_types"],
             }
+        },
+    )
+    tag: Optional[str] = Field(
+        None,
+        description="""A string to categorize this deposition (i.e \"competitionML2024Winners\")""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "tag", "domain_of": ["Deposition"], "exact_mappings": ["cdp-common:tag"]}
         },
     )
     dates: DateStamp = Field(
@@ -4729,6 +4736,17 @@ class AuthorMixin(ConfiguredBaseModel):
             }
         },
     )
+    kaggle_id: Optional[str] = Field(
+        None,
+        description="""Identifying string for the author's kaggle profile (found after 'kaggle.com/').""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "kaggle_id",
+                "domain_of": ["AuthorMixin", "Author"],
+                "exact_mappings": ["cdp-common:kaggle_id"],
+            }
+        },
+    )
 
 
 class Author(AuthorMixin):
@@ -4747,6 +4765,17 @@ class Author(AuthorMixin):
                 "domain_of": ["Author"],
                 "exact_mappings": ["cdp-common:author_orcid"],
                 "recommended": True,
+            }
+        },
+    )
+    kaggle_id: Optional[str] = Field(
+        None,
+        description="""Identifying string for the author's kaggle profile (found after 'kaggle.com/').""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "kaggle_id",
+                "domain_of": ["Author", "AuthorMixin"],
+                "exact_mappings": ["cdp-common:kaggle_id"],
             }
         },
     )

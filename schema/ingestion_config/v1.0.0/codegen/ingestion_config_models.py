@@ -497,7 +497,7 @@ class CtfFormatEnum(str, Enum):
     """
     Used to determine what ctf parser to use.
     """
-    # formats ctffind file formats
+    # The file has ctffind schema
     CTFFIND = "CTFFIND"
 
 
@@ -1054,6 +1054,9 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
     deposition_types: List[DepositionTypesEnum] = Field(..., description="""Type of data in the deposition (e.g. dataset, annotation, tomogram)""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'deposition_types',
          'domain_of': ['Deposition'],
          'exact_mappings': ['cdp-common:deposition_types']} })
+    tag: Optional[str] = Field(None, description="""A string to categorize this deposition (i.e \"competitionML2024Winners\")""", json_schema_extra = { "linkml_meta": {'alias': 'tag',
+         'domain_of': ['Deposition'],
+         'exact_mappings': ['cdp-common:tag']} })
     dates: DateStamp = Field(..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'alias': 'dates',
          'domain_of': ['DateStampedEntity',
                        'Tomogram',
@@ -2808,6 +2811,9 @@ class AuthorMixin(ConfiguredBaseModel):
          'domain_of': ['AuthorMixin', 'Author'],
          'exact_mappings': ['cdp-common:author_primary_author_status'],
          'ifabsent': 'False'} })
+    kaggle_id: Optional[str] = Field(None, description="""Identifying string for the author's kaggle profile (found after 'kaggle.com/').""", json_schema_extra = { "linkml_meta": {'alias': 'kaggle_id',
+         'domain_of': ['AuthorMixin', 'Author'],
+         'exact_mappings': ['cdp-common:kaggle_id']} })
 
 
 class Author(AuthorMixin):
@@ -2820,6 +2826,9 @@ class Author(AuthorMixin):
          'domain_of': ['Author'],
          'exact_mappings': ['cdp-common:author_orcid'],
          'recommended': True} })
+    kaggle_id: Optional[str] = Field(None, description="""Identifying string for the author's kaggle profile (found after 'kaggle.com/').""", json_schema_extra = { "linkml_meta": {'alias': 'kaggle_id',
+         'domain_of': ['Author', 'AuthorMixin'],
+         'exact_mappings': ['cdp-common:kaggle_id']} })
     name: str = Field(..., description="""The full name of the author.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
          'domain_of': ['AuthorMixin',
                        'OrganismDetails',

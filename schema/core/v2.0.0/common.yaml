@@ -112,6 +112,11 @@ slots:
     required: true
     description: >-
       The position of the author in the author list.
+
+  kaggle_id:
+    range: string
+    description: >-
+      Identifying string for the author's kaggle profile (found after 'kaggle.com/').
   # ============================================================================
 
 
@@ -141,6 +146,10 @@ slots:
     multivalued: true
     description: >-
       Type of data in the deposition (e.g. dataset, annotation, tomogram)
+  tag:
+      range: string
+      description: >-
+        A string to categorize this deposition (i.e "competitionML2024Winners")
   # ============================================================================
 
   # ============================================================================
@@ -1344,3 +1353,6 @@ classes:
       primary_author_status:
         exact_mappings:
           - cdp-common:author_primary_author_status
+      kaggle_id:
+        exact_mappings:
+          - cdp-common:kaggle_id

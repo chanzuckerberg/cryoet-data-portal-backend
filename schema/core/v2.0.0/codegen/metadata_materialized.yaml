@@ -491,7 +491,7 @@ enums:
     permissible_values:
       CTFFIND:
         text: CTFFIND
-        description: formats ctffind file formats
+        description: The file has ctffind schema
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has
@@ -703,6 +703,21 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'
+      kaggle_id:
+        name: kaggle_id
+        description: Identifying string for the author's kaggle profile (found after
+          'kaggle.com/').
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:kaggle_id
+        alias: kaggle_id
+        owner: Author
+        domain_of:
+        - Author
+        - AuthorMixin
+        range: string
+        inlined: true
+        inlined_as_list: true
       name:
         name: name
         description: The full name of the author.
@@ -1681,6 +1696,19 @@ classes:
         inlined_as_list: true
         pattern: (^annotation$)|(^dataset$)|(^tomogram$)
         minimum_cardinality: 1
+      tag:
+        name: tag
+        description: A string to categorize this deposition (i.e "competitionML2024Winners")
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:tag
+        alias: tag
+        owner: Deposition
+        domain_of:
+        - Deposition
+        range: string
+        inlined: true
+        inlined_as_list: true
       dates:
         name: dates
         description: A set of dates at which a data item was deposited, published
@@ -4542,6 +4570,21 @@ classes:
         domain_of:
         - AuthorMixin
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      kaggle_id:
+        name: kaggle_id
+        description: Identifying string for the author's kaggle profile (found after
+          'kaggle.com/').
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:kaggle_id
+        alias: kaggle_id
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - Author
+        range: string
         inlined: true
         inlined_as_list: true
 source_file: core/v2.0.0/metadata.yaml
