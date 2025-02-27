@@ -25,11 +25,11 @@ depositions:
         The 8th place solution employs an ensemble of four 3D U-Net model soups trained with different model sizes,
         parameters, and training data types, featuring patch sizes of (128,128,128) for training and (160,384,384) for
         inference with 25% overlap using Gaussian reconstruction to handle border artifacts. The models are pretrained
-        on six synthetic tomograms with Gaussian denoising and fine-tuned using DiceCELoss with AdamW optimization,
-        incorporating geometric data augmentations including flipping and transposition during both training and
-        test-time. The key innovation lies in their model soup approach, which averages weights from multiple models
-        trained from the same pretrained weights, combined with their inference strategy using maximally large patch
-        sizes and watershed segmentation for post-processing.
+        on six synthetic tomograms with Gaussian denoising and fine-tuned using Dice cross entropy loss with AdamW
+        optimization, incorporating geometric data augmentations including flipping and transposition during both
+        training and test-time. The key innovation lies in the model soup approach, which averages weights from multiple
+        models trained from the same pretrained weights, combined with their inference strategy using maximally large
+        patchsizes and watershed segmentation for post-processing.
       deposition_identifier: 10326
       deposition_title: CZII CryoET Object Identification Challenge - 8th place solution - I Cryo Everyteim
       deposition_types:
@@ -44,8 +44,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10326_snapshot.png"
-            thumbnail: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10326_thumbnail.png"
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10326_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10326_thumbnail.png"
 
 alignments:
   - sources:
