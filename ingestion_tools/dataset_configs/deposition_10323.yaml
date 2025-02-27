@@ -1,0 +1,272 @@
+depositions:
+  - metadata:
+      authors: &deposition_authors
+        - name: Youssef Ouertani
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: youssefouertani
+      dates: &dates
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      deposition_description:
+        The 5th place solution employs a compact DeepFinder-like 3D neural network with a 3D batch normalization layer
+        at the input and reduced channel counts for particle detection in cryoET data. The model is trained using label
+        smoothingcross-entropy loss with smoothing factor of 0.01, with binary masks created using customized particle
+        radius factors of 0.5 or less. The inference pipeline splits volumes into patches with minimal overlap, applies
+        6-way test-time augmentation (3 flips and 3 rotations), and uses connected components analysis with area-based
+        filtering for post-processing.
+      deposition_identifier: 10323
+      deposition_title: CZII CryoET Object Identification Challenge - 5th place solution - Youssef Ouertani
+      deposition_types:
+        - annotation
+      tag: competitionML2024Winners
+    sources:
+      - literal:
+          value:
+            - 10323
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10323_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10323_thumbnail.png"
+
+alignments:
+  - sources:
+      - destination_glob:
+          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          match_regex: .*
+          name_regex: (.*)
+
+annotations:
+  - metadata:
+      annotation_method: &method Compact DeepFinder-inspired 3D-CNN with optimized cross-entropy and TTA.
+      annotation_object:
+        state: apo
+        id: GO:0070288
+        name: ferritin complex
+      annotation_publications: EMD-41923
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: &method_links
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561580
+          link_type: documentation
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: tetrameric
+        id: UniProtKB:P00722
+        name: Beta-galactosidase
+      annotation_publications: EMD-0153
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: EMD-3883
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: dimeric
+        id: UniProtKB:P01267
+        name: Thyroglobulin
+      annotation_publications: EMD-24181
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        description: PP7 VLP
+        id: GO:0170047
+        name: virus-like capsid
+      annotation_publications: EMD-41917
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/YoussefOuertani_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+datasets:
+  - sources:
+      - literal:
+          value:
+            - '10445'
+            - '10446'
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: "Public/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - source_glob:
+          list_glob: "Private/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+standardization_config:
+  deposition_id: 10323
+  source_prefix: CZII/202502_competition_correct_hand
+
+version: 1.1.0
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 4.990
