@@ -4,14 +4,16 @@ depositions:
         - name: LuoZiqian
           corresponding_author_status: true
           primary_author_status: true
+          kaggle_id: luoziqian
         - name: Shuo Wang
           ORCID: 0000-0003-2854-9460
           corresponding_author_status: true
           primary_author_status: true
+          kaggle_id: sjtuwangshuo
       dates: &dates
-        deposition_date: '2024-02-25'
-        last_modified_date: '2024-02-25'
-        release_date: '2024-02-25'
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
       deposition_description:
         The 2nd place solution employs an ensemble of multiple lightweight segmentation models with parameter sizes
         ranging from 873K to 14.2M, including architectures such as UNet3D, VoxResNet, VoxHRNet, SegResNet, DenseVNet,
@@ -23,6 +25,7 @@ depositions:
       deposition_title: CZII CryoET Object Identification Challenge - 2nd place solution - LuoZiqian&Lion
       deposition_types:
         - annotation
+      tag: competitionML2024Winners
     sources:
       - literal:
           value:
@@ -64,7 +67,7 @@ annotations:
         - custom_name: Luoziqian's Training Code on GitHub
           link: https://github.com/luoziqianX/CZII-CryoET-Object-Identification-2nd-luoziqian
           link_type: source_code
-        - custom_name: Inference Notebook
+        - custom_name: Inference Notebook on Kaggle
           link: https://www.kaggle.com/code/luoziqian/7-model-6tta-t4x2-patch-norm-v2?scriptVersionId=220452693
           link_type: source_code
       method_type: automated

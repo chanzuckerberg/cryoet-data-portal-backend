@@ -1,18 +1,28 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-      cross_references: &cross_references
-        #TODO
-        publications: #TODO
+        - name: Josef Slavicek
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: josefslavicek
       dates: &dates
-        deposition_date: '2024-02-25'
-        last_modified_date: '2024-02-25'
-        release_date: '2024-02-25'
-      deposition_description: #TODO
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      deposition_description:
+        The 10th place solution employs an ensemble of nine 3D UNets, pretrained on simulated data and finetuned on
+        competition data, using a combination of Tversky loss and multiclass cross-entropy as the training objective.
+        Predictions are merged by averaging logits equally across models, followed by thresholding to obtain detection
+        regions and a custom KL-divergence based postprocessing approach to separate multiple particles detected within
+        a single region. The solution achieves distinction through its postprocessing method that identifies
+        particle centers by optimally placing theoretical particle probability density functions to minimize KL
+        divergence with predicted density functions, further refined by using circumcenters of randomly selected
+        boundary points to improve centroid predictions.
       deposition_identifier: 10328
-      deposition_title: CZII CryoET Object Identification Challenge - 1st place solution - Placeholder
+      deposition_title: CZII CryoET Object Identification Challenge - 10th place solution - Josef Slavicek
       deposition_types:
         - annotation
+      tag: competitionML2024Winners
     sources:
       - literal:
           value:
@@ -22,8 +32,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10328_snapshot.png"
-            thumbnail: #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10328_thumbnail.png"
+            snapshot: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10328_snapshot.png"
+            thumbnail: null #TODO #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10328_thumbnail.png"
 
 alignments:
   - sources:
@@ -34,19 +44,20 @@ alignments:
 
 annotations:
   - metadata:
-      annotation_method: &method #TODO
+      annotation_method: &method Ensembled 3D UNets with KL-divergence based particle separation postprocessing.
       annotation_object:
         state: apo
         id: GO:0070288
         name: ferritin complex
       annotation_publications: EMD-41923
-      annotation_software: &software #TODO
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
       is_curator_recommended: false
       method_links: &method_links
-      #TODO
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561844
+          link_type: documentation
       method_type: automated
       version: 1.0
     sources:
@@ -54,7 +65,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_apo-ferritin.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_apo-ferritin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -65,7 +76,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_apo-ferritin.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_apo-ferritin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -80,7 +91,6 @@ annotations:
         id: UniProtKB:P10537
         name: Beta-amylase
       annotation_publications: EMD-30405
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -93,7 +103,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-amylase.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_beta-amylase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -104,7 +114,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-amylase.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_beta-amylase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -119,7 +129,6 @@ annotations:
         id: UniProtKB:P00722
         name: Beta-galactosidase
       annotation_publications: EMD-0153
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -132,7 +141,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-galactosidase.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_beta-galactosidase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -143,7 +152,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_beta-galactosidase.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_beta-galactosidase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -157,7 +166,6 @@ annotations:
         id: GO:0022626
         name: cytosolic ribosome
       annotation_publications: EMD-3883
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -170,7 +178,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_ribosome.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_ribosome.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -181,7 +189,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_ribosome.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_ribosome.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -196,7 +204,6 @@ annotations:
         id: UniProtKB:P01267
         name: Thyroglobulin
       annotation_publications: EMD-24181
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -209,7 +216,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_thyroglobulin.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_thyroglobulin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -220,7 +227,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_thyroglobulin.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_thyroglobulin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -235,7 +242,6 @@ annotations:
         id: GO:0170047
         name: virus-like capsid
       annotation_publications: EMD-41917
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -248,7 +254,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_virus-like-particle.json'
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_virus-like-particle.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -259,7 +265,7 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/teamplaceholder_0_virus-like-particle.json'
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/JosefSlavicek_0_virus-like-particle.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
@@ -269,10 +275,10 @@ annotations:
 
 datasets:
   - sources:
-      - destination_glob:
-          list_glob: 1044?
-          match_regex: (10445|10446)
-          name_regex: (.*)
+      - literal:
+          value:
+            - '10445'
+            - '10446'
 
 runs:
   - sources:

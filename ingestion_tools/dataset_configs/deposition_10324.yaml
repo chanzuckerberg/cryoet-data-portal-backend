@@ -1,18 +1,27 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-      cross_references: &cross_references
-        #TODO
-        publications: #TODO
+        - name: Tomoki Uchiyama
+          ORCID: 0009-0001-6354-4692
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: tomoon33
       dates: &dates
-        deposition_date: '2024-02-25'
-        last_modified_date: '2024-02-25'
-        release_date: '2024-02-25'
-      deposition_description: #TODO
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      deposition_description:
+        The 6th place solution employs a combination of 2.5D UNet and 3D UNet architectures with various backbones
+        (including SegResNet and DynUnet) to predict segmentation maps for particle detection in cryoET data.
+        FocalTversky++ loss is utilized during training on 64×128×128 patches, with models being pretrained on
+        custom-simulated data generated using Polnet and accelerated during inference via TensorRT conversion. A key
+        innovation involves designing prediction maps that reflect model confidence rather than binary outputs, enabling
+        effective ensemble averaging across 10 models.
       deposition_identifier: 10324
       deposition_title: CZII CryoET Object Identification Challenge - 6th place solution - tomoon33
       deposition_types:
         - annotation
+      tag: competitionML2024Winners
     sources:
       - literal:
           value:
@@ -34,19 +43,26 @@ alignments:
 
 annotations:
   - metadata:
-      annotation_method: &method #TODO
+      annotation_method: &method Custom-simulated pretraining with FocalTversky++ loss.
       annotation_object:
         state: apo
         id: GO:0070288
         name: ferritin complex
       annotation_publications: EMD-41923
-      annotation_software: &software #TODO
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
       is_curator_recommended: false
       method_links: &method_links
-      #TODO
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561518
+          link_type: documentation
+        - custom_name: Source code on GitHub
+          link: https://github.com/uchiyama33/czii-6th-place
+          link_type: source_code
+        - custom_name: Inference notebook on Kaggle
+          link: https://www.kaggle.com/code/tomoon33/czii-submission-6th-place
+          link_type: source_code
       method_type: automated
       version: 1.0
     sources:
@@ -77,49 +93,9 @@ annotations:
       annotation_method: *method
       annotation_object:
         state: tetrameric
-        id: UniProtKB:P10537
-        name: Beta-amylase
-      annotation_publications: EMD-30405
-      annotation_software: *software
-      authors: *deposition_authors
-      dates: *dates
-      ground_truth_status: false
-      is_curator_recommended: false
-      method_links: *method_links
-      method_type: automated
-      version: 1.0
-    sources:
-      - Point:
-          binning: 4.990
-          file_format: copick
-          glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/tomoon33_0_beta-amylase.json'
-          is_visualization_default: false
-          columns: xyz
-        parent_filters:
-          include:
-            dataset:
-              - '10445'
-      - Point:
-          binning: 4.990
-          file_format: copick
-          glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/tomoon33_0_beta-amylase.json'
-          is_visualization_default: false
-          columns: xyz
-        parent_filters:
-          include:
-            dataset:
-              - '10446'
-
-  - metadata:
-      annotation_method: *method
-      annotation_object:
-        state: tetrameric
         id: UniProtKB:P00722
         name: Beta-galactosidase
       annotation_publications: EMD-0153
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -157,7 +133,6 @@ annotations:
         id: GO:0022626
         name: cytosolic ribosome
       annotation_publications: EMD-3883
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -196,7 +171,6 @@ annotations:
         id: UniProtKB:P01267
         name: Thyroglobulin
       annotation_publications: EMD-24181
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -235,7 +209,6 @@ annotations:
         id: GO:0170047
         name: virus-like capsid
       annotation_publications: EMD-41917
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -269,10 +242,10 @@ annotations:
 
 datasets:
   - sources:
-      - destination_glob:
-          list_glob: 1044?
-          match_regex: (10445|10446)
-          name_regex: (.*)
+      - literal:
+          value:
+            - '10445'
+            - '10446'
 
 runs:
   - sources:

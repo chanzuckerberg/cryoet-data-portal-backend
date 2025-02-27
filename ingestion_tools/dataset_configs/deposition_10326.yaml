@@ -1,18 +1,40 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-      cross_references: &cross_references
-        #TODO
-        publications: #TODO
+        - name: Sergio Alvarez
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: sersasj
+        - name: ITK8191
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: itsuki9180
+        - name: IAmParadox
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: iamparadox
+        - name: Sumo
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: sirapoabchaikunsaeng
       dates: &dates
-        deposition_date: '2024-02-25'
-        last_modified_date: '2024-02-25'
-        release_date: '2024-02-25'
-      deposition_description: #TODO
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      deposition_description:
+        The 8th place solution employs an ensemble of four 3D U-Net model soups trained with different model sizes,
+        parameters, and training data types, featuring patch sizes of (128,128,128) for training and (160,384,384) for
+        inference with 25% overlap using Gaussian reconstruction to handle border artifacts. The models are pretrained
+        on six synthetic tomograms with Gaussian denoising and fine-tuned using DiceCELoss with AdamW optimization,
+        incorporating geometric data augmentations including flipping and transposition during both training and
+        test-time. The key innovation lies in their model soup approach, which averages weights from multiple models
+        trained from the same pretrained weights, combined with their inference strategy using maximally large patch
+        sizes and watershed segmentation for post-processing.
       deposition_identifier: 10326
       deposition_title: CZII CryoET Object Identification Challenge - 8th place solution - I Cryo Everyteim
       deposition_types:
         - annotation
+      tag: competitionML2024Winners
     sources:
       - literal:
           value:
@@ -34,19 +56,26 @@ alignments:
 
 annotations:
   - metadata:
-      annotation_method: &method #TODO
+      annotation_method: &method Ensembled U-Net model soups with large inference patches and watershed segmentation.
       annotation_object:
         state: apo
         id: GO:0070288
         name: ferritin complex
       annotation_publications: EMD-41923
-      annotation_software: &software #TODO
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
       is_curator_recommended: false
       method_links: &method_links
-      #TODO
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561515
+          link_type: documentation
+        - custom_name: Solution code on GitHub
+          link: https://github.com/IAmPara0x/czii-8th-solution
+          link_type: source_code
+        - custom_name: Submission Notebook on Kaggle
+          link: https://www.kaggle.com/code/sirapoabchaikunsaeng/czii-final-sub-reproduce
+          link_type: source_code
       method_type: automated
       version: 1.0
     sources:
@@ -77,49 +106,9 @@ annotations:
       annotation_method: *method
       annotation_object:
         state: tetrameric
-        id: UniProtKB:P10537
-        name: Beta-amylase
-      annotation_publications: EMD-30405
-      annotation_software: *software
-      authors: *deposition_authors
-      dates: *dates
-      ground_truth_status: false
-      is_curator_recommended: false
-      method_links: *method_links
-      method_type: automated
-      version: 1.0
-    sources:
-      - Point:
-          binning: 4.990
-          file_format: copick
-          glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_beta-amylase.json'
-          is_visualization_default: false
-          columns: xyz
-        parent_filters:
-          include:
-            dataset:
-              - '10445'
-      - Point:
-          binning: 4.990
-          file_format: copick
-          glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_beta-amylase.json'
-          is_visualization_default: false
-          columns: xyz
-        parent_filters:
-          include:
-            dataset:
-              - '10446'
-
-  - metadata:
-      annotation_method: *method
-      annotation_object:
-        state: tetrameric
         id: UniProtKB:P00722
         name: Beta-galactosidase
       annotation_publications: EMD-0153
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -157,7 +146,6 @@ annotations:
         id: GO:0022626
         name: cytosolic ribosome
       annotation_publications: EMD-3883
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -196,7 +184,6 @@ annotations:
         id: UniProtKB:P01267
         name: Thyroglobulin
       annotation_publications: EMD-24181
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -235,7 +222,6 @@ annotations:
         id: GO:0170047
         name: virus-like capsid
       annotation_publications: EMD-41917
-      annotation_software: *software
       authors: *deposition_authors
       dates: *dates
       ground_truth_status: false
@@ -269,10 +255,10 @@ annotations:
 
 datasets:
   - sources:
-      - destination_glob:
-          list_glob: 1044?
-          match_regex: (10445|10446)
-          name_regex: (.*)
+      - literal:
+          value:
+            - '10445'
+            - '10446'
 
 runs:
   - sources:

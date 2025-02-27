@@ -12,9 +12,9 @@ depositions:
           corresponding_author_status: true
           kaggle_id: bloodaxe
       dates: &dates
-        deposition_date: '2024-02-25'
-        last_modified_date: '2024-02-25'
-        release_date: '2024-02-25'
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
       deposition_description:
         The 1st place solution employs an ensemble approach combining segmentation models (3D UNets with ResNet & B3
         encoders) and object detection models (SegResNet and DynUnet backbones) from MONAI. Segmentation uses weighted
@@ -49,7 +49,7 @@ alignments:
 
 annotations:
   - metadata:
-      annotation_method: &method Ensemble of segmentation and detection networks with feature distribution alignment 
+      annotation_method: &method Ensemble of segmentation and detection networks with feature distribution alignment
         scaling.
       annotation_object:
         state: apo
