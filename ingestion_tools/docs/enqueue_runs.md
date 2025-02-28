@@ -153,7 +153,36 @@ python3 enqueue_runs.py sync --exclude '*' --include 'Annotations/*.json' --s3-p
 | --include-deposition | null    | Look for deposition metadata  with the deposition ids passed here. This helps sync the deposition data.                                                                                            |
 | --no-sync-dataset | False   | Skip syncing datasets. This is useful when we want to only update deposition data                                                                                                                  |
 
-## S3 File validation (`validate` subcommand)
+## Source S3 File validation (`source-validate` subcommand)
+
+The `enqueue_runs.py source-validate` command queues up jobs to validate source data in s3 referenced by config files. It *requires* one or more configs to be specified. Once the jobs are complete, you can view test results for by updating the following URLs with the necessary config paths:
+
+https://files.cryoet.staging.si.czi.technology/source_validation/10000/index.html
+
+### tl;dr:
+```bash
+cd ingestion_tools/scripts
+
+# Activate a python virtualenv
+source ../.venv/bin/activate
+
+# Set up any required AWS env vars
+EXPORT AWS_PROFILE=cryoet-dev
+
+# Get information on what types of stuff we can import
+python3 enqueue_runs.py source-validate --help
+
+# Example
+python3 enqueue_runs.py source-validate ../../../dataset_configs/10000.yaml
+
+```
+
+### Commonly used options
+| Option          | Default | Explanation             |
+|-----------------| --- |-------------------------|
+| \[config_file\] | | Config file to validate |
+
+## Standardized S3 File validation (`validate` subcommand)
 
 The `enqueue_runs.py validate` command queues up jobs to validate dataset data in s3. It *requires* one or more dataset ID's to be specified. Once the jobs are complete, you can view test results for staging or prod by updating the following URLs with the necessary dataset ID's:
 

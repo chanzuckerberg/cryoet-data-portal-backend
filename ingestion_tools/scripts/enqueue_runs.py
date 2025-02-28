@@ -12,11 +12,11 @@ import click
 from boto3 import Session
 from botocore import UNSIGNED
 from botocore.config import Config
-from db_import import db_import_options
+from db_import.common.config import DBImportConfig
+from db_import.importer import db_import_options
+from db_import.importers.dataset import DatasetDBImporter
+from db_import.importers.deposition import DepositionDBImporter
 from importers.dataset import DatasetImporter
-from importers.db.base_importer import DBImportConfig
-from importers.db.dataset import DatasetDBImporter
-from importers.db.deposition import DepositionDBImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.utils import IMPORTERS
@@ -173,7 +173,7 @@ def get_datasets(
     exclude_datasets = [re.compile(pattern) for pattern in exclude_dataset]
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", config=s3_config)
-    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix)
+    config = DBImportConfig(s3_client, None, s3_bucket, https_prefix, None)
 
     datasets_to_check = []
     if include_dataset:
@@ -239,7 +239,7 @@ def to_args(**kwargs) -> list[str]:
     "--swipe-wdl-key",
     type=str,
     required=True,
-    default="db_import-v0.0.2.wdl",
+    default="db_import-v0.0.3.wdl",
     help="Specify wdl key for custom workload",
 )
 @db_import_options
@@ -310,7 +310,6 @@ def db_import(
                 "s3_bucket": s3_bucket,
                 "https_prefix": https_prefix,
                 "flags": " ".join(new_args),
-                "scrape_flags": " ".join(scrape_args),
                 "environment": ctx.obj["environment"],
                 "v2_docker_image_id": f"908710317728.dkr.ecr.{aws_region}.amazonaws.com/apiv2-x86:{ecr_tag}",
             }
@@ -520,47 +519,6 @@ def execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl
         wait(futures)
 
 
-def execute_validate(
-    ctx,
-    env: str,
-    dataset_ids: list[str],
-    input_bucket: str,
-    output_bucket: str,
-    output_dir: str,
-    swipe_wdl_key: str,
-):
-    futures = []
-    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
-        for dataset_id in dataset_ids:
-            print(f"Processing {dataset_id}...")
-
-            execution_name = f"{int(time.time())}-validate-{env}-{dataset_id}"
-
-            # execution name greater than 80 chars causes boto ValidationException
-            if len(execution_name) > 80:
-                execution_name = execution_name[-80:]
-
-            wdl_args = {
-                "dataset": dataset_id,
-                "input_bucket": input_bucket,
-                "output_bucket": output_bucket,
-                "output_dir": output_dir,
-                "extra_args": "",
-            }
-            futures.append(
-                workerpool.submit(
-                    partial(
-                        run_job,
-                        execution_name,
-                        wdl_args,
-                        swipe_wdl_key=swipe_wdl_key,
-                        **ctx.obj,
-                    ),
-                ),
-            )
-        wait(futures)
-
-
 @cli.command(name="sync", cls=OrderedSyncFilters)
 @click.option("--input-bucket", required=True, type=str, default="cryoet-data-portal-staging")
 @click.option("--output-bucket", required=True, type=str, default="cryoet-data-portal-public")
@@ -639,20 +597,60 @@ def sync(
         )
 
 
+def execute_validate(
+    ctx,
+    workerpool: ProcessPoolExecutor,
+    identifier: str,
+    input_bucket: str,
+    output_dir: str,
+    swipe_wdl_key: str,
+    test_entity: str,
+    additional_params: dict[str, str],
+):
+    execution_name = f"{int(time.time())}-{identifier}"
+    # execution name greater than 80 chars causes boto ValidationException
+    if len(execution_name) > 80:
+        execution_name = execution_name[-80:]
+
+    # Default to using a lot less memory than the ingestion job.
+    if not ctx.obj.get("memory"):
+        ctx.obj["memory"] = 4000
+
+    wdl_args = {
+        "dataset": additional_params.get("dataset_id", ""),
+        "input_bucket": input_bucket,
+        "output_bucket": "cryoet-data-portal-staging",
+        "output_dir": output_dir,
+        "extra_args": additional_params.get("extra_args", ""),
+        "config_file": additional_params.get("config_file", ""),
+        "flags": additional_params.get("flags", ""),
+        "test_entity": test_entity,
+    }
+    return workerpool.submit(
+        partial(
+            run_job,
+            execution_name,
+            wdl_args,
+            swipe_wdl_key=swipe_wdl_key,
+            **ctx.obj,
+        ),
+    )
+
+
 @cli.command(name="validate")
-@click.argument("dataset_id", nargs=-1, required=True, type=str)
+@click.argument("dataset_ids", nargs=-1, required=True, type=str)
 @click.option(
     "--swipe-wdl-key",
     type=str,
     required=True,
-    default="validate_dataset-v0.0.1.wdl",
+    default="validate_dataset-v0.0.2.wdl",
     help="Specify wdl key for custom workload",
 )
 @enqueue_common_options
 @click.pass_context
 def validate(
     ctx,
-    dataset_id: list[str],
+    dataset_ids: list[str],
     swipe_wdl_key: str,
     **kwargs,
 ):
@@ -669,19 +667,71 @@ def validate(
     kwargs["environment"] = "staging"
     handle_common_options(ctx, kwargs)
 
-    # Default to using a lot less memory than the ingestion job.
-    if not ctx.obj.get("memory"):
-        ctx.obj["memory"] = 4000
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for dataset_id in dataset_ids:
+            print(f"Processing {dataset_id}...")
+            validation_params = {
+                "dataset_id": dataset_id,
+            }
+            future = execute_validate(
+                ctx=ctx,
+                identifier=f"validate-{env}-{dataset_id}",
+                input_bucket=input_bucket,
+                output_dir=output_dir,
+                swipe_wdl_key=swipe_wdl_key,
+                test_entity="standardized",
+                additional_params=validation_params,
+                workerpool=workerpool,
+            )
+            futures.append(future)
+        wait(futures)
 
-    execute_validate(
-        ctx=ctx,
-        env=env,
-        dataset_ids=dataset_id,
-        input_bucket=input_bucket,
-        output_bucket="cryoet-data-portal-staging",
-        output_dir=output_dir,
-        swipe_wdl_key=swipe_wdl_key,
-    )
+
+@cli.command(name="source-validate")
+@click.argument("ingestion-config", required=True, type=str)
+@click.argument("input-bucket", required=False, type=str, default="cryoetportal-rawdatasets-dev")
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="validate_dataset-v0.0.2.wdl",
+    help="Specify wdl key for custom workload",
+)
+@enqueue_common_options
+@click.pass_context
+def source_validate(
+    ctx,
+    ingestion_config: str,
+    input_bucket: str,
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    output_dir = "source_validation"
+
+    # We always run validation in the staging env.
+    kwargs["environment"] = "staging"
+    handle_common_options(ctx, kwargs)
+
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        print(f"Processing {ingestion_config}...")
+        validation_params = {
+            "config_file": ingestion_config,
+        }
+        future = execute_validate(
+            ctx=ctx,
+            identifier=f"validate-src-{os.path.basename(ingestion_config)}",
+            input_bucket=input_bucket,
+            output_dir=output_dir,
+            swipe_wdl_key=swipe_wdl_key,
+            test_entity="source",
+            additional_params=validation_params,
+            workerpool=workerpool,
+        )
+        futures.append(future)
+        wait(futures)
+
 
 
 if __name__ == "__main__":

@@ -44,6 +44,9 @@ classes:
       ORCID:
         exact_mappings:
           - cdp-common:author_orcid
+      kaggle_id:
+        exact_mappings:
+          - cdp-common:kaggle_id
   # ============================================================================
 
   # ============================================================================
@@ -257,6 +260,9 @@ classes:
       deposition_types:
         exact_mappings:
           - cdp-common:deposition_types
+      tag:
+        exact_mappings:
+          - cdp-common:tag
 
   # ============================================================================
   # TiltSeries metadata

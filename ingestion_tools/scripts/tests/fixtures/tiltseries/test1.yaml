@@ -1,3 +1,8 @@
+collection_metadata:
+- sources:
+  - source_multi_glob:
+      list_globs:
+      - metadata/mdocs_modified/foo-{run_name}.mdoc
 datasets:
 - sources:
   - literal:
