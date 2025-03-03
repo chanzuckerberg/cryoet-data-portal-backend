@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.9.1...apiv2-v1.10.0) (2025-02-26)
+
+
+### Features
+
+* add tag and kaggle id to importers ([#453](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/453)) ([2969bcc](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/2969bcc9e902824b236eb2def6c470d5b00ef11b))
+
 ## [1.9.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.9.0...apiv2-v1.9.1) (2025-02-14)
 
 

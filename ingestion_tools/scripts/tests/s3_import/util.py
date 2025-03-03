@@ -62,3 +62,21 @@ def get_children(s3_client: S3Client, bucket: str, prefix: str, recurse: bool = 
         return path
 
     return {get_root_folder(item) if "/" in item else item for item in all_descendants}
+
+
+def validate_output_data_is_same_as_source(
+        s3_client: S3Client,
+        output_bucket: str,
+        prefix: str,
+        importer: BaseImporter,
+):
+    source_filepaths = [importer.path] if importer.path else importer.file_paths
+    actual_files = [os.path.basename(item) for item in list_dir(s3_client, output_bucket, prefix)]
+    for source_filepath in source_filepaths:
+        source_filename = os.path.basename(source_filepath)
+        assert source_filename in actual_files
+
+        actual = get_data_from_s3(s3_client, output_bucket, os.path.join(prefix, source_filename)).readlines()
+        source_bucket_key = "/".join(source_filepath.split("/")[1:])
+        expected = get_data_from_s3(s3_client, "test-public-bucket", source_bucket_key).readlines()
+        assert actual == expected

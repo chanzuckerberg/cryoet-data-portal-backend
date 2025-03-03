@@ -1,0 +1,610 @@
+datasets:
+  - metadata:
+      authors: &dataset_authors
+        - name: Ariana Peck
+          primary_author_status: true
+          corresponding_author_status: false
+          ORCID: 0000-0002-5940-3897
+        - name: Yue Yu
+          primary_author_status: true
+          corresponding_author_status: false
+          ORCID: 0000-0002-3248-9678
+        - name: Jonathan Schwartz
+          primary_author_status: true
+          corresponding_author_status: false
+          ORCID: 0000-0002-8063-6951
+        - name: Anchi Cheng
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0003-0466-4376
+        - name: Utz Heinrich Ermel
+          ORCID: 0000-0003-4685-037X
+          corresponding_author_status: false
+          primary_author_status: false
+        - name: Saugat Kandel
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-7324-2559
+        - name: Dari Kimanius
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-2662-6373
+        - name: Elizabeth Montabana
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-6731-5854
+        - name: Daniel Serwas
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0001-9010-7298
+        - name: Hannah Siems
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0009-0002-6674-7601
+        - name: Zhuowen Zhao
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-2355-2284
+        - name: Shawn Zheng
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0001-9517-3075
+        - name: Matthias Haury
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-1796-1479
+        - name: David Agard
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0003-3512-695X
+        - name: Clinton Potter
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-3287-121X
+        - name: Bridget Carragher
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-0624-5020
+        - name: Kyle I. S. Harrington
+          primary_author_status: false
+          corresponding_author_status: true
+          ORCID: 0000-0002-7237-1973
+        - name: Mohammadreza Paraan
+          primary_author_status: false
+          corresponding_author_status: true
+          ORCID: 0000-0002-8402-0134
+      cross_references:
+        publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608
+        related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
+      dataset_description: This dataset is comprised of movie stacks, tiltseries, alignments, tomograms and hand-curated
+        ground truth annotations for the purpose of training object identification algorithms in the context of the
+        CryoET Object Identification Challenge. The data was acquired on a Krios G4 using a Falcon 4i detector and
+        SelctrisX energy filter. Tomograms were aligned using AreTomo3 v1.0.20, reconstructed using AreTomo3 v2.0.10 and
+        post-processed using different methods. Each run provides denoised and ctf
+        corrected tomograms. The labels were curated as described in the accompanying paper and include point labels
+        for Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP. Public
+        leaderboard scores on Kaggle were computed based on this dataset.
+      dataset_identifier: 10445
+      dataset_title: CZII - CryoET Object Identification Challenge - Public Test Dataset
+      dates: &dataset_dates
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      funding:
+        - funding_agency_name: Chan Zuckerberg Initiative
+          grant_id: "CZII-2023\u2013327779"
+      grid_preparation: 'Set Leica GP2 chamber to 4°C and 95% humidity + Use Whitman #1 blotting paper + Attach GFP
+    nanobodies to grid surface using maleimide groups and kck linker + Apply 100 µL lysate in 10 rounds of 10 µL each +
+    Wash grid twice with PBS + Remove excess buffer + Add sequentially 1 µL each: THG (17.8 mg/mL), Apoferritin
+    (5 mg/mL), β-galactosidase (6 mg/mL), β-amylase (5 mg/mL), HSA (50 mg/mL), VLP (7.5 mg/mL) + Back-side blot for 6
+    seconds + Plunge-freeze in liquid ethane (-180°C)'
+      sample_preparation: 'Use HEK293T cells with LAMP1-GFP tag (from CZ BioHub) + Lyse cells using hypotonic buffer
+    (25mM Tris*HCl pH 7.5, 50mM sucrose, 0.2mM EGTA, 0.5mM MgCl2) with 23G syringe + Immediately add sucrose buffer
+    (2.5M sucrose, 0.2mM EGTA, 0.5mM MgCl2) + Remove nuclear fraction by centrifuging at 1000 x g for 10 min + Keep all
+    steps at 4°C and lysate on ice'
+      sample_type: in_vitro
+    sources:
+      - literal:
+          value:
+            - '10445'
+
+depositions:
+  - sources:
+      - literal:
+          value:
+            - 10310
+
+alignments:
+  - metadata:
+      format: ARETOMO3
+      method_type: projection_matching
+      alignment_type: LOCAL
+      is_portal_standard: true
+    sources:
+      - source_glob:
+          list_glob: '{mapped_run_name}.aln'
+
+annotations:
+  - metadata:
+      annotation_method: Prediction using membrain-seg without rescaling and weights
+        MemBrain_seg_v10_alpha.ckpt
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+      annotation_publications: 10.1101/2024.01.05.574336
+      annotation_software: membrain-seg 0.0.1
+      method_links:
+        - custom_name: membrain-seg on GitHub
+          link: https://github.com/teamtomo/membrain-seg
+          link_type: source_code
+        - custom_name: membrain-seg on PyPI
+          link: https://pypi.org/project/membrain-seg/
+          link_type: other
+      authors: *dataset_authors
+      dates: *dataset_dates
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings:
+            - '{mapped_run_name}_Vol_Segment_mask.mrc'
+          is_visualization_default: true
+          mask_label: 1
+          rescale: true
+        parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+  - metadata:
+      annotation_method: &method hybrid curation using CellCanvas, copick, slabpick, deepfindET, topaz, minislab
+        curation and cryoSPARC
+      annotation_object:
+        state: apo
+        id: GO:0070288
+        name: ferritin complex
+      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41923
+      annotation_software: &software CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 +
+        slabpick 0.1.0 + deepfindET 0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
+      authors: *dataset_authors
+      dates: *dataset_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: &method_links
+        - custom_name: slabpick on GitHub
+          link: https://github.com/apeck12/slabpick
+          link_type: source_code
+        - custom_name: CellCanvas homepage
+          link: https://cellcanvas.org/
+          link_type: website
+        - custom_name: deepfindET on GitHub
+          link: https://github.com/copick/DeepFindET
+          link_type: source_code
+        - custom_name: copick on GitHub
+          link: https://github.com/copick/copick
+          link_type: source_code
+        - custom_name: copick-live on GitHub
+          link: https://github.com/copick/copick_live
+          link_type: source_code
+        - custom_name: chimerax-copick on GitHub
+          link: https://github.com/copick/chimerax-copick
+          link_type: source_code
+        - custom_name: pytom-match-pick on GitHub
+          link: https://github.com/SBC-Utrecht/pytom-match-pick
+          link_type: source_code
+        - custom_name: topaz on GitHub
+          link: https://github.com/tbepler/topaz
+          link_type: source_code
+        - custom_name: cryosparc homepage
+          link: https://cryosparc.com/
+          link_type: website
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_apo-ferritin.json'
+          is_visualization_default: true
+          columns: xyz
+        parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: tetrameric
+        id: UniProtKB:P10537
+        name: Beta-amylase
+      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-30405
+      annotation_software: *software
+      authors: *dataset_authors
+      dates: *dataset_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-amylase.json'
+          is_visualization_default: true
+          columns: xyz
+        parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: tetrameric
+        id: UniProtKB:P00722
+        name: Beta-galactosidase
+      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-0153
+      annotation_software: *software
+      authors: *dataset_authors
+      dates: *dataset_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-galactosidase.json'
+          is_visualization_default: true
+          columns: xyz
+        parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-3883
+      annotation_software: *software
+      authors: *dataset_authors
+      dates: *dataset_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_ribosome.json'
+          is_visualization_default: true
+          columns: xyz
+        parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: dimeric
+        id: UniProtKB:P01267
+        name: Thyroglobulin
+      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-24181
+      annotation_software: *software
+      authors: *dataset_authors
+      dates: *dataset_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_thyroglobulin.json'
+          is_visualization_default: true
+          columns: xyz
+        parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        description: PP7 VLP
+        id: GO:0170047
+        name: virus-like capsid
+      annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41917
+      annotation_software: *software
+      authors: *dataset_authors
+      dates: *dataset_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_virus-like-particle.json'
+          is_visualization_default: true
+          columns: xyz
+        parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+
+collection_metadata:
+  - sources:
+      - source_glob:
+          list_glob: '{mapped_run_name}.mdoc'
+
+ctf:
+  - metadata:
+      format: CTFFIND
+    sources:
+      - source_glob:
+          list_glob: '{mapped_run_name}_CTFFIND_format_CTF.txt'
+
+dataset_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
+
+frames:
+  - metadata:
+      dose_rate: 5.955
+      is_gain_corrected: false
+    sources:
+      - source_glob:
+          list_glob: '{mapped_run_name}/*.eer'
+
+gains:
+  - sources:
+      - source_glob:
+          list_glob: '{gain_file}'
+
+rawtilts:
+  - sources:
+      - source_glob:
+          list_glob: '{mapped_run_name}_st.rawtlt'
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: 'copick/ExperimentRuns/*'
+          match_regex: '.*'
+          name_regex: '(.*)'
+
+standardization_config:
+  deposition_id: 10310
+  source_prefix: CZII/202502_competition_correct_hand/Public
+  run_data_map_file: run_to_data_map_updated_quality_updated.tsv
+
+tiltseries:
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: TFS
+        model: FALCON 4i
+      data_acquisition_software: Tomo5
+      is_aligned: false
+      microscope:
+        manufacturer: TFS
+        model: TITAN KRIOS G4
+      microscope_optical_setup:
+        energy_filter: Selectris X
+      pixel_spacing: 1.54
+      spherical_aberration_constant: 2.7
+      tilt_axis: -96
+      tilt_range:
+        max: float {tilt_series_max_tilt}
+        min: float {tilt_series_min_tilt}
+      tilt_series_quality: int {tilt_series_quality}
+      tilt_step: 3.0
+      tilting_scheme: dose-symmetric
+      total_flux: 120
+    sources:
+      - source_glob:
+          list_glob: '{mapped_run_name}_TS.mrc'
+
+tomograms:
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *dataset_authors
+      ctf_corrected: true
+      dates: *dataset_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: denoised
+      reconstruction_method: WBP
+      processing_software: DenoisET
+      align_software: AreTomo3 v1.0.20
+      reconstruction_software: AreTomo3 v2.0.10
+      tomogram_version: 1
+      voxel_spacing: 4.990
+    sources:
+      - parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+        source_glob:
+          list_glob: '{mapped_run_name}_Vol.mrc'
+          match_regex: (.*)\.mrc
+
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *dataset_authors
+      ctf_corrected: true
+      dates: *dataset_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: filtered
+      reconstruction_method: WBP
+      align_software: AreTomo3 v1.0.20
+      reconstruction_software: AreTomo3 v2.0.10
+      tomogram_version: 1
+      voxel_spacing: 4.990
+    sources:
+      - parent_filters:
+          include:
+            voxel_spacing:
+              - '4.990'
+        source_glob:
+          list_glob: '{mapped_run_name}_dctf_Vol.mrc'
+          match_regex: (.*)\.mrc
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *dataset_authors
+      ctf_corrected: true
+      dates: *dataset_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: denoised
+      reconstruction_method: WBP
+      processing_software: DenoisET
+      align_software: AreTomo3 v1.0.20
+      reconstruction_software: AreTomo3 v2.0.10
+      tomogram_version: 1
+      voxel_spacing: 10.012
+    sources:
+      - parent_filters:
+          include:
+            voxel_spacing:
+              - '10.012'
+        source_glob:
+          list_glob: '{mapped_run_name}_Vol_10A.mrc'
+          match_regex: (.*)\.mrc
+
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *dataset_authors
+      ctf_corrected: true
+      dates: *dataset_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: filtered
+      reconstruction_method: WBP
+      align_software: AreTomo3 v1.0.20
+      reconstruction_software: AreTomo3 v2.0.10
+      tomogram_version: 1
+      voxel_spacing: 10.012
+    sources:
+      - parent_filters:
+          include:
+            voxel_spacing:
+              - '10.012'
+        source_glob:
+          list_glob: '{mapped_run_name}_dctf_Vol_10A.mrc'
+          match_regex: (.*)\.mrc
+
+version: 1.1.0
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 4.990
+            - 10.012
