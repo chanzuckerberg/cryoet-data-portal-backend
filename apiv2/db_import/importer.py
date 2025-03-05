@@ -17,6 +17,7 @@ from db_import.importers.annotation import (
 from db_import.importers.dataset import DatasetAuthorDBImporter, DatasetDBImporter, DatasetFundingDBImporter
 from db_import.importers.deposition import DepositionAuthorDBImporter, DepositionDBImporter, DepositionTypeDBImporter
 from db_import.importers.frame import FrameImporter
+from db_import.importers.frame_acquisition_file import FrameAcquisitionFileImporter
 from db_import.importers.gain import GainImporter
 from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
 from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
@@ -47,6 +48,7 @@ def db_import_options(func):
     options.append(click.option("--import-alignments", is_flag=True, default=False))
     options.append(click.option("--import-gains", is_flag=True, default=False))
     options.append(click.option("--import-frames", is_flag=True, default=False))
+    options.append(click.option("--import-frame-acquisition-files", is_flag=True, default=False))
     options.append(click.option("--import-tiltseries", is_flag=True, default=False))
     options.append(click.option("--import-tomograms", is_flag=True, default=False))
     options.append(click.option("--import-tomogram-authors", is_flag=True, default=False))
@@ -94,6 +96,7 @@ def load(
     import_alignments: bool,
     import_gains: bool,
     import_frames: bool,
+    import_frame_acquisition_files: bool,
     import_tiltseries: bool,
     import_tomograms: bool,
     import_tomogram_authors: bool,
@@ -120,6 +123,7 @@ def load(
         import_alignments,
         import_gains,
         import_frames,
+        import_frame_acquisition_files,
         import_tiltseries,
         import_tomograms,
         import_tomogram_authors,
@@ -147,6 +151,7 @@ def load_func(
     import_alignments: bool = False,
     import_gains: bool = False,
     import_frames: bool = False,
+    import_frame_acquisition_files: bool = False,
     import_tiltseries: bool = False,
     import_tomograms: bool = False,
     import_tomogram_authors: bool = False,
@@ -170,6 +175,7 @@ def load_func(
         import_runs = True
         import_alignments = True
         import_gains = True
+        import_frame_acquisition_files = True
         import_frames = True
         import_tiltseries = True
         import_tomograms = True
@@ -180,11 +186,12 @@ def load_func(
         import_tomograms = max(import_tomograms, import_tomogram_authors)
         import_tomogram_voxel_spacing = max(import_annotations, import_tomograms, import_tomogram_voxel_spacing)
         import_tiltseries = max(import_tiltseries, import_alignments)
+        import_frame_acquisition_files = max(import_frames, import_frame_acquisition_files)
         import_runs = max(
             import_runs,
             import_alignments,
             import_gains,
-            import_frames,
+            import_frame_acquisition_files,
             import_tiltseries,
             import_tomogram_voxel_spacing,
         )
@@ -232,9 +239,12 @@ def load_func(
             run_cleaner.mark_as_active(run_obj)
 
             parents = {"run": run_obj, "dataset": dataset_obj}
-            if import_frames:
-                frame_importer = FrameImporter(config, **parents)
-                frame_importer.import_items()
+            if import_frame_acquisition_files:
+                frame_acquisition_file_importer = FrameAcquisitionFileImporter(config, **parents)
+                for _ in frame_acquisition_file_importer.import_items():
+                    if import_frames:
+                        frame_importer = FrameImporter(config, **parents)
+                        frame_importer.import_items()
             if import_gains:
                 gain_importer = GainImporter(config, **parents)
                 gain_importer.import_items()
