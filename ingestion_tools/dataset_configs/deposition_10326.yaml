@@ -1,19 +1,23 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-        - name: Sergio Alvarez
+        - name: Sergio Alvarez da Silva Junior
+          ORCID: 0000-0001-5270-370X
           primary_author_status: true
           corresponding_author_status: true
           kaggle_id: sersasj
-        - name: ITK8191
+        - name: Naoki Hashimoto
+          ORCID: 0009-0002-9673-2902
           primary_author_status: true
           corresponding_author_status: true
           kaggle_id: itsuki9180
-        - name: IAmParadox
+        - name: Sirapoab Chaikunsaeng
+          ORCID: 0009-0001-2316-8039
           primary_author_status: true
           corresponding_author_status: true
           kaggle_id: iamparadox
-        - name: Sumo
+        - name: Sahil Barnwal
+          ORCID: 0009-0009-7467-0860
           primary_author_status: true
           corresponding_author_status: true
           kaggle_id: sirapoabchaikunsaeng

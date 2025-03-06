@@ -1,7 +1,8 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-        - name: LuoZiqian
+        - name: Ziqian Luo
+          ORCID: 0009-0005-4277-4455
           corresponding_author_status: true
           primary_author_status: true
           kaggle_id: luoziqian

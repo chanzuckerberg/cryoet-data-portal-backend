@@ -1,7 +1,7 @@
 depositions:
   - metadata:
       authors: &deposition_authors
-        - name: NANACHI
+        - name: Koki Wada
           primary_author_status: true
           corresponding_author_status: true
           kaggle_id: wadakoki
