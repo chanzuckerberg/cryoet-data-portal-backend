@@ -1,0 +1,286 @@
+depositions:
+  - metadata:
+      authors: &deposition_authors
+        - name: Yusuke Uchida
+          ORCID: '0000-0002-6932-1465'
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: yu4u
+        - name: Takaaki Fukui
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: tattaka
+      dates: &dates
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      deposition_description:
+        The 4th place solution employs heatmap-based particle detection using both 2.5D UNet-like models with 2D
+        image-based backbones and 3D outputs. The solution utilizes weighted mean squared error loss with a balance
+        between positive and negative samples, operates on 32×128×128 voxel patches during training, and converts models
+        to TensorRT format for faster inference. Ensembling combines seven models (four from one contributor and three
+        from another) with test-time augmentation, while post-processing uses non-maximum suppression with a kernel size
+        of 7 and particle-specific thresholds.
+      deposition_identifier: 10322
+      deposition_title: CZII CryoET Object Identification Challenge - 4th place solution - yu4u & tattaka
+      deposition_types:
+        - annotation
+      tag: competitionML2024Winners
+    sources:
+      - literal:
+          value:
+            - 10322
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10322_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10322_thumbnail.png"
+
+alignments:
+  - sources:
+      - destination_glob:
+          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          match_regex: .*
+          name_regex: (.*)
+
+annotations:
+  - metadata:
+      annotation_method: &method Heatmap-based 2.5D UNets with weighted MSE and TensorRT acceleration.
+      annotation_object:
+        state: apo
+        id: GO:0070288
+        name: ferritin complex
+      annotation_publications: EMD-41923
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: &method_links
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561401
+          link_type: documentation
+        - custom_name: Final submission notebook on Kaggle
+          link: https://www.kaggle.com/code/ren4yu/czii-ensemble-tensorrt-xy-stride-th/notebook?scriptVersionId=220758003
+          link_type: source_code
+        - custom_name: Training code for tattaka's model on GitHub
+          link: https://github.com/tattaka/czii-cryo-et-object-identification-public
+          link_type: source_code
+        - custom_name: Training code for yu4u's model on GitHub
+          link: https://github.com/yu4u/kaggle-czii-4th
+          link_type: source_code
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: tetrameric
+        id: UniProtKB:P00722
+        name: Beta-galactosidase
+      annotation_publications: EMD-0153
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: EMD-3883
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: dimeric
+        id: UniProtKB:P01267
+        name: Thyroglobulin
+      annotation_publications: EMD-24181
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        description: PP7 VLP
+        id: GO:0170047
+        name: virus-like capsid
+      annotation_publications: EMD-41917
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+datasets:
+  - sources:
+      - literal:
+          value:
+            - '10445'
+            - '10446'
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: "Public/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - source_glob:
+          list_glob: "Private/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+standardization_config:
+  deposition_id: 10322
+  source_prefix: CZII/202502_competition_correct_hand
+
+version: 1.1.0
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 4.990

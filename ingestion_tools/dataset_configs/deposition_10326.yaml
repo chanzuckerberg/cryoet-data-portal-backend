@@ -1,0 +1,296 @@
+depositions:
+  - metadata:
+      authors: &deposition_authors
+        - name: Sergio Alvarez da Silva Junior
+          ORCID: 0000-0001-5270-370X
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: sersasj
+        - name: Naoki Hashimoto
+          ORCID: 0009-0002-9673-2902
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: itsuki9180
+        - name: Sirapoab Chaikunsaeng
+          ORCID: 0009-0001-2316-8039
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: iamparadox
+        - name: Sahil Barnwal
+          ORCID: 0009-0009-7467-0860
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: sirapoabchaikunsaeng
+      dates: &dates
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      deposition_description:
+        The 8th place solution employs an ensemble of four 3D U-Net model soups trained with different model sizes,
+        parameters, and training data types, featuring patch sizes of (128,128,128) for training and (160,384,384) for
+        inference with 25% overlap using Gaussian reconstruction to handle border artifacts. The models are pretrained
+        on six synthetic tomograms with Gaussian denoising and fine-tuned using Dice cross entropy loss with AdamW
+        optimization, incorporating geometric data augmentations including flipping and transposition during both
+        training and test-time. The key innovation lies in the model soup approach, which averages weights from multiple
+        models trained from the same pretrained weights, combined with their inference strategy using maximally large
+        patchsizes and watershed segmentation for post-processing.
+      deposition_identifier: 10326
+      deposition_title: CZII CryoET Object Identification Challenge - 8th place solution - I Cryo Everyteim
+      deposition_types:
+        - annotation
+      tag: competitionML2024Winners
+    sources:
+      - literal:
+          value:
+            - 10326
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10326_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10326_thumbnail.png"
+
+alignments:
+  - sources:
+      - destination_glob:
+          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          match_regex: .*
+          name_regex: (.*)
+
+annotations:
+  - metadata:
+      annotation_method: &method Ensembled U-Net model soups with large inference patches and watershed segmentation.
+      annotation_object:
+        state: apo
+        id: GO:0070288
+        name: ferritin complex
+      annotation_publications: EMD-41923
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: &method_links
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561515
+          link_type: documentation
+        - custom_name: Solution code on GitHub
+          link: https://github.com/IAmPara0x/czii-8th-solution
+          link_type: source_code
+        - custom_name: Submission Notebook on Kaggle
+          link: https://www.kaggle.com/code/sirapoabchaikunsaeng/czii-final-sub-reproduce
+          link_type: source_code
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: tetrameric
+        id: UniProtKB:P00722
+        name: Beta-galactosidase
+      annotation_publications: EMD-0153
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: EMD-3883
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: dimeric
+        id: UniProtKB:P01267
+        name: Thyroglobulin
+      annotation_publications: EMD-24181
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        description: PP7 VLP
+        id: GO:0170047
+        name: virus-like capsid
+      annotation_publications: EMD-41917
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/ICryoEveryteim_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+datasets:
+  - sources:
+      - literal:
+          value:
+            - '10445'
+            - '10446'
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: "Public/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - source_glob:
+          list_glob: "Private/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+standardization_config:
+  deposition_id: 10326
+  source_prefix: CZII/202502_competition_correct_hand
+
+version: 1.1.0
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 4.990
