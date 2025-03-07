@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.10.0...apiv2-v1.11.0) (2025-03-07)
+
+
+### Features
+
+* Update DB ingestion for FramesAcquisitionFile, and Frames ([#451](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/451)) ([c8c40dd](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/c8c40dd56b1ac0bc60dd98a2026c2f5a75ba5ab7))
+
 ## [1.10.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.9.1...apiv2-v1.10.0) (2025-02-26)
 
 
