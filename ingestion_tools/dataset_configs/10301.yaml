@@ -188,9 +188,8 @@ annotations:
       order: xyz
 collection_metadata:
 - sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/{run_name}.mdoc'
+  - source_glob:
+      list_glob: '{run_name}/{run_name}_vali.mdoc'
 ctfs:
 - metadata:
     format: 'CTFFIND'
@@ -301,7 +300,7 @@ depositions:
       - 10300
 frames:
 - metadata:
-    dose_rate: 0
+    dose_rate: float {dose_rate}
     is_gain_corrected: false
   sources:
   - source_glob:
@@ -312,9 +311,8 @@ gains:
       list_glob: '{run_name}/*.gain'
 rawtilts:
 - sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/{run_name}.rawtlt'
+  - source_glob:
+      list_glob: '{run_name}/{run_name}.rawtlt'
 runs:
 - sources:
   - source_glob:

@@ -1,560 +1,560 @@
 alignments:
-- metadata:
-    format: IMOD
-    method_type: patch_tracking
-  sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/{run_name}.xf
-      - metadata/{run_name}.tlt
+  - metadata:
+      format: IMOD
+      method_type: patch_tracking
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - metadata/{run_name}.xf
+            - metadata/{run_name}.tlt
 annotations:
-- metadata:
-    annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
-      filtering + distance constraints + manual addition
-    annotation_object:
-      id: GO:0005835
-      name: fatty acid synthase complex
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: pyTOM + Keras
-    authors: &id001
-    - ORCID: 0000-0002-9903-3667
-      name: Sara Goetz
-      primary_author_status: true
-    - ORCID: 0000-0002-4691-9501
-      name: Irene de Teresa Trueba
-    - ORCID: 0000-0003-0901-8701
-      name: Alexander Mattausch
-    - ORCID: 0000-0002-4327-1068
-      name: Frosina Stojanovska
-    - ORCID: 0000-0003-4388-1349
-      name: Christian Eugen Zimmerli
-    - ORCID: 0000-0001-5333-3640
-      name: Mauricio Toro-Nahuelpan
-    - name: Dorothy W. C. Cheng
-    - name: Fergus Tollervey
-    - ORCID: 0000-0001-6562-7187
-      name: Constantin Pape
-    - ORCID: 0000-0002-7397-1321
-      name: Martin Beck
-    - ORCID: 0000-0001-6864-8901
-      name: Alba Diz-Munoz
-    - ORCID: 0000-0003-1334-6388
-      name: Anna Kreshuk
-    - ORCID: 0000-0001-6968-041X
-      corresponding_author_status: true
-      name: Julia Mahamid
-    - ORCID: 0000-0001-8324-4040
-      corresponding_author_status: true
-      name: Judith B. Zaugg
-    dates: &id002
-      deposition_date: '2023-04-01'
-      last_modified_date: '2023-06-01'
-      release_date: '2023-06-01'
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: &id003
-    - custom_name: DeePiCt on GitHub
-      link: https://github.com/ZauggGroup/DeePiCt
-      link_type: source_code
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - Point:
-      columns: xyz
-      file_format: csv
-      glob_string: particle_lists/{run_name}_fas.csv
-      is_visualization_default: false
-- metadata:
-    annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
-      filtering + distance constraints + manual addition
-    annotation_object:
-      id: GO:0022626
-      name: cytosolic ribosome
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: pyTOM + Keras
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - Point:
-      columns: xyz
-      file_format: csv
-      glob_string: particle_lists/{run_name}_cyto_ribosomes.csv
-      is_visualization_default: true
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005737
-      name: cytoplasm
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: false
-      mask_label: 1
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005739
-      name: mitochondrion
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: true
-      mask_label: 2
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0031982
-      name: vesicle
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: false
-      mask_label: 3
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005874
-      name: microtubule
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: true
-      mask_label: 4
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005783
-      name: endoplasmic reticulum
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: true
-      mask_label: 5
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005635
-      name: nuclear envelope
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: true
-      mask_label: 6
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005634
-      name: nucleus
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: false
-      mask_label: 7
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005773
-      name: vacuole
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: false
-      mask_label: 8
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005811
-      name: lipid droplet
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: false
-      mask_label: 9
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005794
-      name: Golgi apparatus
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: true
-      mask_label: 10
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0005771
-      name: multivesicular body
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: false
-      mask_label: 11
-- metadata:
-    annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0031974
-      name: membrane-enclosed lumen
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: false
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
-      is_visualization_default: false
-      mask_label: 13
-- metadata:
-    annotation_method: 3D CNN prediction + manual correction
-    annotation_object:
-      id: GO:0016020
-      name: membrane
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
-    annotation_software: Keras + AMIRA
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: hybrid
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_string: labels/{run_name}_membranes.mrc
-      is_visualization_default: false
-      mask_label: 1
+  - metadata:
+      annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
+        filtering + distance constraints + manual addition
+      annotation_object:
+        id: GO:0005835
+        name: fatty acid synthase complex
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: pyTOM + Keras
+      authors: &id001
+        - ORCID: 0000-0002-9903-3667
+          name: Sara Goetz
+          primary_author_status: true
+        - ORCID: 0000-0002-4691-9501
+          name: Irene de Teresa Trueba
+        - ORCID: 0000-0003-0901-8701
+          name: Alexander Mattausch
+        - ORCID: 0000-0002-4327-1068
+          name: Frosina Stojanovska
+        - ORCID: 0000-0003-4388-1349
+          name: Christian Eugen Zimmerli
+        - ORCID: 0000-0001-5333-3640
+          name: Mauricio Toro-Nahuelpan
+        - name: Dorothy W. C. Cheng
+        - name: Fergus Tollervey
+        - ORCID: 0000-0001-6562-7187
+          name: Constantin Pape
+        - ORCID: 0000-0002-7397-1321
+          name: Martin Beck
+        - ORCID: 0000-0001-6864-8901
+          name: Alba Diz-Munoz
+        - ORCID: 0000-0003-1334-6388
+          name: Anna Kreshuk
+        - ORCID: 0000-0001-6968-041X
+          corresponding_author_status: true
+          name: Julia Mahamid
+        - ORCID: 0000-0001-8324-4040
+          corresponding_author_status: true
+          name: Judith B. Zaugg
+      dates: &id002
+        deposition_date: '2023-04-01'
+        last_modified_date: '2023-06-01'
+        release_date: '2023-06-01'
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: &id003
+        - custom_name: DeePiCt on GitHub
+          link: https://github.com/ZauggGroup/DeePiCt
+          link_type: source_code
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          columns: xyz
+          file_format: csv
+          glob_string: particle_lists/{run_name}_fas.csv
+          is_visualization_default: false
+  - metadata:
+      annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
+        filtering + distance constraints + manual addition
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: pyTOM + Keras
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          columns: xyz
+          file_format: csv
+          glob_string: particle_lists/{run_name}_cyto_ribosomes.csv
+          is_visualization_default: true
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005737
+        name: cytoplasm
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: false
+          mask_label: 1
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005739
+        name: mitochondrion
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: true
+          mask_label: 2
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0031982
+        name: vesicle
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: false
+          mask_label: 3
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005874
+        name: microtubule
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: true
+          mask_label: 4
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005783
+        name: endoplasmic reticulum
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: true
+          mask_label: 5
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005635
+        name: nuclear envelope
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: true
+          mask_label: 6
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005634
+        name: nucleus
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: false
+          mask_label: 7
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005773
+        name: vacuole
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: false
+          mask_label: 8
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005811
+        name: lipid droplet
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: false
+          mask_label: 9
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005794
+        name: Golgi apparatus
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: true
+          mask_label: 10
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0005771
+        name: multivesicular body
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: false
+          mask_label: 11
+  - metadata:
+      annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0031974
+        name: membrane-enclosed lumen
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: false
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/180426_{mapped_segmask_name}.labels.mrc
+          is_visualization_default: false
+          mask_label: 13
+  - metadata:
+      annotation_method: 3D CNN prediction + manual correction
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+      annotation_software: Keras + AMIRA
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/{run_name}_membranes.mrc
+          is_visualization_default: false
+          mask_label: 1
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/mdocs_modified/{run_name}.mdoc
+  - sources:
+      - source_glob:
+          list_glob: metadata/mdocs_vali/{run_name}.mdoc
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10988-l.gif
-        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10988.gif
+  - sources:
+      - literal:
+          value:
+            snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10988-l.gif
+            thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10988.gif
 datasets:
-- metadata:
-    authors: &id004
-    - ORCID: 0000-0002-4691-9501
-      name: Irene de Teresa Trueba
-      primary_author_status: true
-    - ORCID: 0000-0002-9903-3667
-      name: Sara Goetz
-    - ORCID: 0000-0003-0901-8701
-      name: Alexander Mattausch
-    - ORCID: 0000-0002-4327-1068
-      name: Frosina Stojanovska
-    - ORCID: 0000-0003-4388-1349
-      name: Christian Eugen Zimmerli
-    - ORCID: 0000-0001-5333-3640
-      name: Mauricio Toro-Nahuelpan
-    - name: Dorothy W. C. Cheng
-    - name: Fergus Tollervey
-    - ORCID: 0000-0001-6562-7187
-      name: Constantin Pape
-    - ORCID: 0000-0002-7397-1321
-      name: Martin Beck
-    - ORCID: 0000-0001-6864-8901
-      name: Alba Diz-Munoz
-    - ORCID: 0000-0003-1334-6388
-      name: Anna Kreshuk
-    - ORCID: 0000-0001-6968-041X
-      corresponding_author_status: true
-      name: Julia Mahamid
-    - ORCID: 0000-0001-8324-4040
-      corresponding_author_status: true
-      name: Judith B. Zaugg
-    cell_strain:
-      id: NCBITaxon:284812
-      name: Schizosaccharomyces pombe 972h-
-    cross_references: &id005
-      publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
-      related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
-        EMD-14418, EMD-14419, EMD-14420
-    dataset_description: Defocus cryo-electron tomography of S. pombe cryo-FIB lamellae
-      with comprehensive annotations of structures and macromolecules
-    dataset_identifier: 10000
-    dataset_title: S. pombe cells with defocus
-    dates: *id002
-    funding:
-    - funding_agency_name: European Research Council (ERC)
-      grant_id: '760067'
-    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, mesh: 200, support_film_film_type_id:
+  - metadata:
+      authors: &id004
+        - ORCID: 0000-0002-4691-9501
+          name: Irene de Teresa Trueba
+          primary_author_status: true
+        - ORCID: 0000-0002-9903-3667
+          name: Sara Goetz
+        - ORCID: 0000-0003-0901-8701
+          name: Alexander Mattausch
+        - ORCID: 0000-0002-4327-1068
+          name: Frosina Stojanovska
+        - ORCID: 0000-0003-4388-1349
+          name: Christian Eugen Zimmerli
+        - ORCID: 0000-0001-5333-3640
+          name: Mauricio Toro-Nahuelpan
+        - name: Dorothy W. C. Cheng
+        - name: Fergus Tollervey
+        - ORCID: 0000-0001-6562-7187
+          name: Constantin Pape
+        - ORCID: 0000-0002-7397-1321
+          name: Martin Beck
+        - ORCID: 0000-0001-6864-8901
+          name: Alba Diz-Munoz
+        - ORCID: 0000-0003-1334-6388
+          name: Anna Kreshuk
+        - ORCID: 0000-0001-6968-041X
+          corresponding_author_status: true
+          name: Julia Mahamid
+        - ORCID: 0000-0001-8324-4040
+          corresponding_author_status: true
+          name: Judith B. Zaugg
+      cell_strain:
+        id: NCBITaxon:284812
+        name: Schizosaccharomyces pombe 972h-
+      cross_references: &id005
+        publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
+        related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+          EMD-14418, EMD-14419, EMD-14420
+      dataset_description: Defocus cryo-electron tomography of S. pombe cryo-FIB lamellae
+        with comprehensive annotations of structures and macromolecules
+      dataset_identifier: 10000
+      dataset_title: S. pombe cells with defocus
+      dates: *id002
+      funding:
+        - funding_agency_name: European Research Council (ERC)
+          grant_id: '760067'
+      grid_preparation: 'model: Quantifoil R2/1, material: COPPER, mesh: 200, support_film_film_type_id:
       1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
       support_film, pretreatment_type_: GLOW DISCHARGE'
-    organism:
-      name: Schizosaccharomyces pombe
-      taxonomy_id: 4896
-    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
+      organism:
+        name: Schizosaccharomyces pombe
+        taxonomy_id: 4896
+      sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
       subtomogram_averaging_preparation'
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10000'
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10000'
 deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10000_snapshot.png
-        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10000_thumbnail.png
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10000_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10000_thumbnail.png
 depositions:
-- metadata:
-    authors: *id004
-    cross_references: *id005
-    dates: *id002
-    deposition_description: Datasets comprising 20 annotated Schizosaccharomyces pombe
-      cryo-electron tomograms, with 10 tomograms acquired using a Volta phase plate
-      (VPP) for enhanced contrast and 10 using conventional defocus. The dataset includes
-      comprehensive annotations of ribosomes, fatty acid synthases, membranes, organelles,
-      and cytosol. Additionally, 3 tomograms of RPE-1 cells used to train networks
-      for actin segmentation are included. These datasets enabled the development
-      and validation of DeePiCt, a deep learning framework combining 2D and 3D convolutional
-      neural networks for cellular structure segmentation and macromolecular complex
-      localization across different species and acquisition conditions.
-    deposition_identifier: 10000
-    deposition_title: DeePiCt Training and Evaluation Datasets
-    deposition_types:
-    - dataset
-    - annotation
-  sources:
-  - literal:
-      value:
-      - 10000
+  - metadata:
+      authors: *id004
+      cross_references: *id005
+      dates: *id002
+      deposition_description: Datasets comprising 20 annotated Schizosaccharomyces pombe
+        cryo-electron tomograms, with 10 tomograms acquired using a Volta phase plate
+        (VPP) for enhanced contrast and 10 using conventional defocus. The dataset includes
+        comprehensive annotations of ribosomes, fatty acid synthases, membranes, organelles,
+        and cytosol. Additionally, 3 tomograms of RPE-1 cells used to train networks
+        for actin segmentation are included. These datasets enabled the development
+        and validation of DeePiCt, a deep learning framework combining 2D and 3D convolutional
+        neural networks for cellular structure segmentation and macromolecular complex
+        localization across different species and acquisition conditions.
+      deposition_identifier: 10000
+      deposition_title: DeePiCt Training and Evaluation Datasets
+      deposition_types:
+        - dataset
+        - annotation
+    sources:
+      - literal:
+          value:
+            - 10000
 frames:
-- metadata:
-    dose_rate: 0
-    is_gain_corrected: false
-  sources:
-  - source_glob:
-      list_glob: frames/{run_name}_*.tif
+  - metadata:
+      dose_rate: 2.392
+      is_gain_corrected: false
+    sources:
+      - source_glob:
+          list_glob: frames/{run_name}_*.tif
+
 gains:
-- sources:
-  - source_glob:
-      list_glob: frames/CountRef.dm4
+  - sources:
+      - source_glob:
+          list_glob: frames/CountRef.dm4
+
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/{run_name}.rawtlt
+  - sources:
+      - source_glob:
+          list_glob: metadata/{run_name}_vali.rawtlt
 runs:
-- sources:
-  - source_glob:
-      list_glob: tomograms/TS_*.rec
-      match_regex: .*
-      name_regex: (.*).rec
+  - sources:
+      - source_glob:
+          list_glob: tomograms/TS_*.rec
+          match_regex: .*
+          name_regex: (.*).rec
 standardization_config:
   deposition_id: 10000
-  run_data_map_file: run_data_map.tsv
+  run_data_map_file: run_data_map_vali.tsv
   source_prefix: julia/DEF
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: 1
-    camera:
-      manufacturer: Gatan
-      model: K2 SUMMIT
-    data_acquisition_software: SerialEM
-    is_aligned: false
-    microscope:
-      manufacturer: TFS
-      model: Krios
-    microscope_optical_setup:
-      energy_filter: GIF Quantum LS
-    pixel_spacing: 3.3702
-    related_empiar_entry: EMPIAR-10988
-    spherical_aberration_constant: 2.7
-    tilt_axis: 84.7
-    tilt_range:
-      max: 58
-      min: -40
-    tilt_series_quality: 5
-    tilt_step: 2
-    tilting_scheme: Dose symmetric from 0.0 degrees
-    total_flux: 122
-  sources:
-  - source_glob:
-      list_glob: metadata/{run_name}.st
-      match_regex: (.*)\.st
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: Gatan
+        model: K2 SUMMIT
+      data_acquisition_software: SerialEM
+      is_aligned: false
+      microscope:
+        manufacturer: TFS
+        model: Krios
+      microscope_optical_setup:
+        energy_filter: GIF Quantum LS
+      pixel_spacing: 3.3702
+      related_empiar_entry: EMPIAR-10988
+      spherical_aberration_constant: 2.7
+      tilt_axis: -84.7
+      tilt_range:
+        max: float {tilt_series_max_tilt}
+        min: float {tilt_series_min_tilt}
+      tilt_series_quality: 5
+      tilt_step: 2
+      tilting_scheme: Dose symmetric from 0.0 degrees
+      total_flux: 122
+    sources:
+      - source_glob:
+          list_glob: metadata/{run_name}.st
+          match_regex: (.*)\.st
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    authors: *id004
-    ctf_corrected: false
-    dates: *id002
-    fiducial_alignment_status: NON_FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 13.48
-  sources:
-  - source_glob:
-      list_glob: tomograms/{run_name}.rec
-      match_regex: .*\.rec
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *id004
+      ctf_corrected: false
+      dates: *id002
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 13.48
+    sources:
+      - source_glob:
+          list_glob: tomograms/{run_name}.rec
+          match_regex: .*\.rec
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 13.48
+  - sources:
+      - literal:
+          value:
+            - 13.48

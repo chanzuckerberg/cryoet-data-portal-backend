@@ -1,6 +1,7 @@
 alignments:
 - metadata:
     format: IMOD
+    method_type: patch_tracking
   sources:
   - source_multi_glob:
       list_globs:
@@ -49,9 +50,14 @@ annotations:
       order: xyz
 collection_metadata:
 - sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/*.mdoc'
+  - source_glob:
+      list_glob: '{run_name}/{run_name}_vali.mdoc'
+ctf:
+  - metadata:
+      format: CTFFIND
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -128,7 +134,7 @@ depositions:
       - 10007
 frames:
 - metadata:
-    dose_rate: 0
+    dose_rate: float {dose_rate}
     is_gain_corrected: false
   sources:
   - source_glob:
@@ -139,9 +145,8 @@ gains:
       list_glob: '{run_name}/*.gain'
 rawtilts:
 - sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/*_dose-filt.rawtlt'
+  - source_glob:
+      list_glob: '{run_name}/*_dose-filt.rawtlt'
 runs:
 - sources:
   - source_glob:
@@ -150,8 +155,7 @@ runs:
       name_regex: (.*)
 standardization_config:
   deposition_id: 10007
-  run_data_map_file: run_data_map.csv
-  run_to_tomo_map_csv: run_to_tomo_map.csv
+  run_data_map_file: run_data_map_vali.tsv
   source_prefix: Abhay_yeast
 tiltseries:
 - metadata:
@@ -170,14 +174,14 @@ tiltseries:
     pixel_spacing: 1.96
     related_empiar_entry: EMPIAR-11658
     spherical_aberration_constant: 2.7
-    tilt_axis: -87
-    tilt_range: &id007
-      max: 60
-      min: -60
+    tilt_axis: -84
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
     tilt_series_quality: int {ts_quality_score}
     tilt_step: 3
     tilting_scheme: Dose symmetric from lamella pre-tilt
-    total_flux: 143.5
+    total_flux: float {total_flux}
   sources:
   - parent_filters:
       exclude:
@@ -203,12 +207,14 @@ tiltseries:
     pixel_spacing: 3.4
     related_empiar_entry: EMPIAR-11658
     spherical_aberration_constant: 2.7
-    tilt_axis: -87
-    tilt_range: *id007
-    tilt_series_quality: 5
+    tilt_axis: -84
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {ts_quality_score}
     tilt_step: 3
     tilting_scheme: Dose symmetric from lamella pre-tilt
-    total_flux: 143.5
+    total_flux: float {total_flux}
   sources:
   - parent_filters:
       include:
@@ -256,7 +262,7 @@ tomograms:
     voxel_spacing: 7.84
   sources:
   - source_glob:
-      list_glob: bin4_cryocare/{mapped_tomo_name}.rec
+      list_glob: bin4_cryocare/{tomogram_name}.rec
       match_regex: .*
 version: 1.1.0
 voxel_spacings:

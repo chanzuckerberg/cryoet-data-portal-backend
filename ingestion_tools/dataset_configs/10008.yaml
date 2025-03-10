@@ -5,8 +5,8 @@ alignments:
   sources:
   - source_multi_glob:
       list_globs:
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-*.tlt
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-*.xf
+      - tomo/raw_stacks/{session_name}/imod/{processing_prefix}_vali.tlt
+      - tomo/raw_stacks/{session_name}/imod/{processing_prefix}_vali.xf
 annotations:
 - metadata:
     annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -80,9 +80,8 @@ annotations:
       order: xyz
 collection_metadata:
 - sources:
-  - source_multi_glob:
-      list_globs:
-      - tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st.mdoc
+  - source_glob:
+      list_glob: tomo/raw_stacks/{session_name}/SerialEM/{processing_prefix}_vali.st.mdoc
 dataset_keyphotos:
 - sources:
   - literal:
@@ -179,12 +178,11 @@ frames:
     is_gain_corrected: false
   sources:
   - source_glob:
-      list_glob: tomo/raw_stacks/{mapped_ts_name}/frames/*{mapped_frame_name}_*.tif
+      list_glob: tomo/raw_stacks/{session_name}/frames/*{processing_prefix}_*.tif
 rawtilts:
 - sources:
-  - source_multi_glob:
-      list_globs:
-      - tomo/raw_stacks/{mapped_ts_name}/imod/{mapped_frame_name}-.*.rawtlt
+  - source_glob:
+      list_glob: tomo/raw_stacks/{session_name}/imod/{processing_prefix}_vali.rawtlt
 runs:
 - sources:
   - source_glob:
@@ -193,8 +191,7 @@ runs:
       name_regex: (.*).rec
 standardization_config:
   deposition_id: 10008
-  run_to_frame_map_csv: tomo_frame_map.csv
-  run_to_ts_map_csv: tomo_ts_map.csv
+  run_data_map_file: run_data_map_vali.tsv
   source_prefix: Ben_T_kivui
 tiltseries:
 - metadata:
@@ -213,7 +210,7 @@ tiltseries:
     pixel_spacing: 3.52
     related_empiar_entry: EMPIAR-11058
     spherical_aberration_constant: 2.7
-    tilt_axis: 1.36
+    tilt_axis: 175
     tilt_range:
       max: 70
       min: -50
@@ -223,7 +220,7 @@ tiltseries:
     total_flux: 120
   sources:
   - source_glob:
-      list_glob: tomo/raw_stacks/{mapped_ts_name}/SerialEM/{mapped_frame_name}.st
+      list_glob: tomo/raw_stacks/{session_name}/SerialEM/{processing_prefix}.st
       match_regex: .*
 tomograms:
 - metadata:
