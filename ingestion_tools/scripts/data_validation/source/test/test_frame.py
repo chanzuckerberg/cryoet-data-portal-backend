@@ -11,4 +11,4 @@ class TestFrame(FrameTestHelper):
     def test_frames_have_mdoc(self, frames_files: list[str], mdoc_file: str):
         if len(frames_files) == 0:
             pytest.skip("No frame files")
-        assert mdoc_file is not None
+        assert mdoc_file is not None, "Frame files are present, but MDOC file not found"

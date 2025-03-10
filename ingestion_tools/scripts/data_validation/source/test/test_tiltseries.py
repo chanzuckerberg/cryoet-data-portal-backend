@@ -31,10 +31,10 @@ class TestTiltSeries(TiltSeriesHelper):
 
     @pytest.fixture(autouse=True)
     def set_helper_test_mrc_zarr_header_class_variables(
-            self,
-            tiltseries: TiltSeriesImporter,
-            tiltseries_metadata: dict,
-            filesystem: FileSystemApi,
+        self,
+        tiltseries: TiltSeriesImporter,
+        tiltseries_metadata: dict,
+        filesystem: FileSystemApi,
     ):
         self.file_type = get_file_type(tiltseries.name)
         file_path = tiltseries.volume_filename
@@ -51,7 +51,7 @@ class TestTiltSeries(TiltSeriesHelper):
 
     @allure.title("Tiltseries: sanity check filetype.")
     def test_file_type(self):
-        assert self.file_type != "unknown"
+        assert self.file_type != "unknown", "Tiltseries filetype is unknown"
 
     @allure.title("Zarr and MRC: files exist for each entity.")
     def test_zarr_mrc_both_exist(self):
@@ -62,6 +62,11 @@ class TestTiltSeries(TiltSeriesHelper):
         pytest.skip("Both formats won't exist for source data")
 
     @allure.title("Tiltseries: the number of rawtlt entries should match the number of z-sections")
-    def test_z_index_consistency(self, tiltseries: TiltSeriesImporter, filesystem: FileSystemApi, raw_tilt_data: pd.DataFrame):
+    def test_z_index_consistency(
+        self, tiltseries: TiltSeriesImporter, filesystem: FileSystemApi, raw_tilt_data: pd.DataFrame
+    ):
         volume_info = get_volume_info(filesystem, tiltseries.volume_filename)
-        assert len(raw_tilt_data) == volume_info.zend - volume_info.zstart
+        assert len(raw_tilt_data) == volume_info.zend - volume_info.zstart, (
+            f"Number of rawtlt entries: {len(raw_tilt_data)} != Number of z-sections: "
+            f"{volume_info.zend - volume_info.zstart}"
+        )

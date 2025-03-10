@@ -46,7 +46,7 @@ class HelperTestZarrHeader:
             for binning_factor in BINNING_FACTORS:  # 1x, 2x, 4x
                 assert header_data["zattrs"]["multiscales"][0]["datasets"][binning_factor]["path"] == str(
                     binning_factor,
-                )
+                ), f"Path metadata is incorrect for binning factor {binning_factor}"
 
         self.zarr_header_helper(check_zattrs_path)
 
@@ -54,13 +54,13 @@ class HelperTestZarrHeader:
     def test_zattrs_axes(self):
         def check_zattrs_axes(header_data, _zaar_filename):
             del _zaar_filename
-            assert len(header_data["zattrs"]["multiscales"][0]["axes"]) == 3
+            assert len(header_data["zattrs"]["multiscales"][0]["axes"]) == 3, "Incorrect number of axes"
             for i, axis in enumerate(ZATTRS_AXIS_ORDER):
                 assert header_data["zattrs"]["multiscales"][0]["axes"][i] == {
                     "name": axis,
                     "type": "space",
                     "unit": "angstrom",
-                }
+                }, f"Axis {axis} is incorrect"
 
         self.zarr_header_helper(check_zattrs_axes)
 
@@ -69,9 +69,11 @@ class HelperTestZarrHeader:
         def check_zarray(header_data, _zarr_filename):
             del _zarr_filename
             zarrays = header_data["zarrays"]
-            assert len(zarrays) == 3
+            assert len(zarrays) == 3, "Incorrect number of zarrays"
             for zarray in zarrays.values():
-                assert np.dtype(zarray["dtype"]) in self.permitted_zarr_datatypes
+                assert (
+                    np.dtype(zarray["dtype"]) in self.permitted_zarr_datatypes
+                ), f"Data type is {zarray['dtype']} is not permitted"
 
         self.zarr_header_helper(check_zarray)
 
@@ -89,7 +91,7 @@ class HelperTestZarrHeader:
                     assert datasets_entry["coordinateTransformations"][0]["scale"][axis] == pytest.approx(
                         self.spacing * 2**binning_factor,
                         abs=SPACING_TOLERANCE * 2**binning_factor,
-                    )
+                    ), f"Voxel spacing is incorrect for axis {axis} and binning factor {binning_factor}"
 
         self.zarr_header_helper(check_zattrs_voxel_spacings)
 

@@ -76,7 +76,7 @@ class HelperTestMRCHeader:
     def test_is_volume(self):
         def check_is_volume(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert header.ispg == self.spacegroup
+            assert header.ispg == self.spacegroup, f"Spacegroup is {header.ispg}, expected {self.spacegroup}"
 
         self.mrc_header_helper(check_is_volume)
 
@@ -84,7 +84,7 @@ class HelperTestMRCHeader:
     def test_map_id_string(self):
         def check_map_id(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert header.map == self.map_id
+            assert header.map == self.map_id, f"MAP ID is {header.map}, expected {self.map_id}"
 
         self.mrc_header_helper(check_map_id)
 
@@ -103,7 +103,7 @@ class HelperTestMRCHeader:
     def test_datatype(self):
         def check_datatype(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert utils.dtype_from_mode(header.mode) in self.permitted_mrc_datatypes
+            assert utils.dtype_from_mode(header.mode) in self.permitted_mrc_datatypes, "Invalid datatype {header.mode}"
 
         self.mrc_header_helper(check_datatype)
 
@@ -112,7 +112,7 @@ class HelperTestMRCHeader:
         def check_map_dimension_fields(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             for field in ["nx", "ny", "nz", "mx", "my", "mz", "ispg", "nlabl"]:
-                assert header[field] >= 0
+                assert header[field] >= 0, f"Dimension field is negative"
 
         self.mrc_header_helper(check_map_dimension_fields)
 
@@ -122,13 +122,13 @@ class HelperTestMRCHeader:
             del _mrc_filename
             assert header.cella.x >= 0 and header.cella.x == pytest.approx(
                 header.mx * interpreter.voxel_size["x"].astype(float),
-            )
+            ), f"Cella.x is {header.cella.x}, expected {header.mx * interpreter.voxel_size['x']}"
             assert header.cella.y >= 0 and header.cella.y == pytest.approx(
                 header.my * interpreter.voxel_size["y"].astype(float),
-            )
+            ), f"Cella.y is {header.cella.y}, expected {header.my * interpreter.voxel_size['y']}"
             assert header.cella.z >= 0 and header.cella.z == pytest.approx(
                 header.mz * interpreter.voxel_size["z"].astype(float),
-            )
+            ), f"Cella.z is {header.cella.z}, expected {header.mz * interpreter.voxel_size['z']}"
 
         self.mrc_header_helper(check_cell_dimensions)
 
@@ -139,8 +139,8 @@ class HelperTestMRCHeader:
             count = sum(1 for label in header.label if label.strip())
             empty_label = any(len(label) != 0 and not label.strip() for label in header.label)
 
-            assert count == header.nlabl
-            assert not empty_label
+            assert count == header.nlabl, f"Number of non-empty labels is {count}, expected {header.nlabl}"
+            assert not empty_label, "Empty label found"
 
         self.mrc_header_helper(check_nlabel)
 
@@ -148,7 +148,7 @@ class HelperTestMRCHeader:
     def test_nversion(self):
         def check_nversion(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert header.nversion in [20140, 20141]
+            assert header.nversion in [20140, 20141], f"nversion is {header.nversion}, expected 20140 or 20141"
 
         self.mrc_header_helper(check_nversion)
 
@@ -157,12 +157,14 @@ class HelperTestMRCHeader:
         def check_exttyp(header, interpreter, _mrc_filename):
             del _mrc_filename
             if header.nsymbt > 0:
-                assert header.exttyp in [b"CCP4", b"MRCO", b"SERI", b"AGAR", b"FEI1", b"FEI2", b"HDF5"]
+                assert header.exttyp in [b"CCP4", b"MRCO", b"SERI", b"AGAR", b"FEI1", b"FEI2", b"HDF5"], (
+                    "Invalid " "exttyp"
+                )
             assert (
                 header.nsymbt == 0
                 and interpreter.extended_header is None
                 or header.nsymbt == interpreter.extended_header.nbytes
-            )
+            ), "nsymbt does not match the size of the extended header"
 
         self.mrc_header_helper(check_exttyp)
 
@@ -171,9 +173,9 @@ class HelperTestMRCHeader:
         def check_axis_mapping(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Standard axis mapping
-            assert header.mapc == 1
-            assert header.mapr == 2
-            assert header.maps == 3
+            assert header.mapc == 1, "mapc is not 1"
+            assert header.mapr == 2, "mapr is not 2"
+            assert header.maps == 3, "maps is not 3"
 
         self.mrc_header_helper(check_axis_mapping)
 
@@ -182,17 +184,17 @@ class HelperTestMRCHeader:
         def check_unit_cell(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Unit cell z-size is 1
-            assert header.mx == header.nx
-            assert header.my == header.ny
+            assert header.mx == header.nx, f"Unit cell dim mx {header.mx} does not match nx {header.nx}"
+            assert header.my == header.ny, f"Unit cell dim my {header.my} does not match ny {header.ny}"
             if self.skip_z_axis_checks:
-                assert header.mz == 1
+                assert header.mz == 1, f"Unit cell dim mz {header.mz} does not match 1"
             else:
-                assert header.mz == header.nz
+                assert header.mz == header.nz, f"Unit cell dim mz {header.mz} does not match nz {header.nz}"
 
             # Check that the unit cell angles specify cartesian system
-            assert header.cellb.alpha == 90
-            assert header.cellb.beta == 90
-            assert header.cellb.gamma == 90
+            assert header.cellb.alpha == 90, f"Unit cell angle alpha {header.cellb.alpha} is not 90"
+            assert header.cellb.beta == 90, f"Unit cell angle beta {header.cellb.beta} is not 90"
+            assert header.cellb.gamma == 90, f"Unit cell angle gamma {header.cellb.gamma} is not 90"
 
         self.mrc_header_helper(check_unit_cell)
 
@@ -201,9 +203,9 @@ class HelperTestMRCHeader:
         def check_origin(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Origin is zero
-            assert header.origin.x == 0
-            assert header.origin.y == 0
-            assert header.origin.z == 0
+            assert header.origin.x == 0, f"Origin x {header.origin.x} is not 0"
+            assert header.origin.y == 0, f"Origin y {header.origin.y} is not 0"
+            assert header.origin.z == 0, f"Origin z {header.origin.z} is not 0"
 
         self.mrc_header_helper(check_origin)
 
@@ -212,9 +214,9 @@ class HelperTestMRCHeader:
         def check_subimage_start(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Subimage start is zero
-            assert header.nxstart == 0
-            assert header.nystart == 0
-            assert header.nzstart == 0
+            assert header.nxstart == 0, f"nxstart is not 0"
+            assert header.nystart == 0, f"nystart is not 0"
+            assert header.nzstart == 0, f"nzstart is not 0"
 
         self.mrc_header_helper(check_subimage_start)
 
@@ -234,7 +236,9 @@ class HelperTestMRCHeader:
             actual_bytes = filesystem.s3fs.size(mrc_filename)
             if actual_bytes != expected_bytes:
                 warnings.warn(f"Expected {expected_bytes} bytes, got {actual_bytes} bytes", stacklevel=2)
-            assert abs(expected_bytes - filesystem.s3fs.size(mrc_filename)) < DISK_STORAGE_TOLERANCE
+            assert (
+                abs(expected_bytes - filesystem.s3fs.size(mrc_filename)) < DISK_STORAGE_TOLERANCE
+            ), f"Expected {expected_bytes} bytes, got {filesystem.s3fs.size(mrc_filename)} bytes"
 
         self.mrc_header_helper(check_disk_storage, filesystem=filesystem)
 
@@ -243,9 +247,15 @@ class HelperTestMRCHeader:
     def test_mrc_spacing(self):
         def check_spacing(_header, interpreter, _mrc_filename):
             del _header, _mrc_filename
-            assert interpreter.voxel_size["x"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
-            assert interpreter.voxel_size["y"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
-            assert interpreter.voxel_size["z"] == pytest.approx(self.spacing, abs=SPACING_TOLERANCE)
+            assert interpreter.voxel_size["x"] == pytest.approx(
+                self.spacing, abs=SPACING_TOLERANCE
+            ), f"Voxel size x is {interpreter.voxel_size['x']}, expected {self.spacing}"
+            assert interpreter.voxel_size["y"] == pytest.approx(
+                self.spacing, abs=SPACING_TOLERANCE
+            ), f"Voxel size y is {interpreter.voxel_size['y']}, expected {self.spacing}"
+            assert interpreter.voxel_size["z"] == pytest.approx(
+                self.spacing, abs=SPACING_TOLERANCE
+            ), f"Voxel size z is {interpreter.voxel_size['z']}, expected {self.spacing}"
 
         self.mrc_header_helper(check_spacing)
 
