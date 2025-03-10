@@ -21,8 +21,8 @@ class MdocTestHelper:
     ### BEGIN MDOC tests ###
     @allure.title("Mdoc: tilt angles are within the expected range [-90, 90].")
     def test_frames_mdoc_range(self, mdoc_data: pd.DataFrame):
-        assert mdoc_data["TiltAngle"].min() >= -90
-        assert mdoc_data["TiltAngle"].max() <= 90
+        assert mdoc_data["TiltAngle"].min() >= -90, "Minimum tilt angle is less than -90"
+        assert mdoc_data["TiltAngle"].max() <= 90, "Maximum tilt angle is greater than 90"
 
     @allure.title("Mdoc: number of mdoc sections equal number of frames files.")
     def test_mdoc_frames(self, mdoc_data: pd.DataFrame, frames_files: list[str]):
@@ -33,11 +33,13 @@ class MdocTestHelper:
     @allure.title("Mdoc: Every mdoc filename has an entry for SubFramePath.")
     def test_mdoc_sub_frame_paths(self, mdoc_data: pd.DataFrame):
         for _, row in mdoc_data.iterrows():
-            assert "SubFramePath" in row
+            assert "SubFramePath" in row, "SubFramePath not found in mdoc entry"
 
     @allure.title("Mdoc: Every mdoc SubFramePath filename matches a frames file (one-to-one).")
     def test_mdoc_frame_paths(
-            self, frames_files: list[str], mdoc_data: pd.DataFrame,
+        self,
+        frames_files: list[str],
+        mdoc_data: pd.DataFrame,
     ):
         errors = []
         standardize_frames_files = [os.path.basename(f) for f in frames_files]
@@ -68,9 +70,9 @@ class MdocTestHelper:
 
     @allure.title("Mdoc: number of subframes in mdoc matches the number of subframes in the frame file.")
     def test_mdoc_numsubframes(
-            self,
-            frames_headers: dict[str, list[tifffile.TiffPage | MrcInterpreter]],
-            mdoc_data: pd.DataFrame,
+        self,
+        frames_headers: dict[str, list[tifffile.TiffPage | MrcInterpreter]],
+        mdoc_data: pd.DataFrame,
     ):
         errors = []
         for _, row in mdoc_data.iterrows():
