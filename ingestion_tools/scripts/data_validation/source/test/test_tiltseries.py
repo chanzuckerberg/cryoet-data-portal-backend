@@ -63,7 +63,10 @@ class TestTiltSeries(TiltSeriesHelper):
 
     @allure.title("Tiltseries: the number of rawtlt entries should match the number of z-sections")
     def test_z_index_consistency(
-        self, tiltseries: TiltSeriesImporter, filesystem: FileSystemApi, raw_tilt_data: pd.DataFrame
+        self,
+        tiltseries: TiltSeriesImporter,
+        filesystem: FileSystemApi,
+        raw_tilt_data: pd.DataFrame,
     ):
         volume_info = get_volume_info(filesystem, tiltseries.volume_filename)
         assert len(raw_tilt_data) == volume_info.zend - volume_info.zstart, (

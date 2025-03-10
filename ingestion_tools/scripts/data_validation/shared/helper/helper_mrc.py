@@ -112,7 +112,7 @@ class HelperTestMRCHeader:
         def check_map_dimension_fields(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             for field in ["nx", "ny", "nz", "mx", "my", "mz", "ispg", "nlabl"]:
-                assert header[field] >= 0, f"Dimension field is negative"
+                assert header[field] >= 0, "Dimension field is negative"
 
         self.mrc_header_helper(check_map_dimension_fields)
 
@@ -157,9 +157,15 @@ class HelperTestMRCHeader:
         def check_exttyp(header, interpreter, _mrc_filename):
             del _mrc_filename
             if header.nsymbt > 0:
-                assert header.exttyp in [b"CCP4", b"MRCO", b"SERI", b"AGAR", b"FEI1", b"FEI2", b"HDF5"], (
-                    "Invalid " "exttyp"
-                )
+                assert header.exttyp in [
+                    b"CCP4",
+                    b"MRCO",
+                    b"SERI",
+                    b"AGAR",
+                    b"FEI1",
+                    b"FEI2",
+                    b"HDF5",
+                ], "Invalid exttyp"
             assert (
                 header.nsymbt == 0
                 and interpreter.extended_header is None
@@ -214,9 +220,9 @@ class HelperTestMRCHeader:
         def check_subimage_start(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
             # Subimage start is zero
-            assert header.nxstart == 0, f"nxstart is not 0"
-            assert header.nystart == 0, f"nystart is not 0"
-            assert header.nzstart == 0, f"nzstart is not 0"
+            assert header.nxstart == 0, "nxstart is not 0"
+            assert header.nystart == 0, "nystart is not 0"
+            assert header.nzstart == 0, "nzstart is not 0"
 
         self.mrc_header_helper(check_subimage_start)
 
@@ -248,13 +254,16 @@ class HelperTestMRCHeader:
         def check_spacing(_header, interpreter, _mrc_filename):
             del _header, _mrc_filename
             assert interpreter.voxel_size["x"] == pytest.approx(
-                self.spacing, abs=SPACING_TOLERANCE
+                self.spacing,
+                abs=SPACING_TOLERANCE,
             ), f"Voxel size x is {interpreter.voxel_size['x']}, expected {self.spacing}"
             assert interpreter.voxel_size["y"] == pytest.approx(
-                self.spacing, abs=SPACING_TOLERANCE
+                self.spacing,
+                abs=SPACING_TOLERANCE,
             ), f"Voxel size y is {interpreter.voxel_size['y']}, expected {self.spacing}"
             assert interpreter.voxel_size["z"] == pytest.approx(
-                self.spacing, abs=SPACING_TOLERANCE
+                self.spacing,
+                abs=SPACING_TOLERANCE,
             ), f"Voxel size z is {interpreter.voxel_size['z']}, expected {self.spacing}"
 
         self.mrc_header_helper(check_spacing)
