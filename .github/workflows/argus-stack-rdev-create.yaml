@@ -2,7 +2,7 @@ name: Create an RDev Stack
 
 on:
   pull_request:
-    types: [ labeled, synchronize ]
+    types: [labeled, synchronize]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   create-stack:
-    runs-on: [ARM64, self-hosted, Linux]
+    runs-on: ARM64
     if: contains(github.event.pull_request.labels.*.name, 'stack')
     permissions:
       id-token: write
@@ -20,8 +20,8 @@ jobs:
     steps:
       - name: Create Stack
         id: upsert
-        uses: chanzuckerberg/argus-artifacts/ci/packages/create-stack@v0.27.0
+        uses: chanzuckerberg/argus-artifacts/ci/packages/create-stack@v0.49.1
         with:
           appName: cryoet-apiv2
           envName: rdev
-          waitForDeploymentSeconds: 300
+          waitForDeploymentSeconds: 600

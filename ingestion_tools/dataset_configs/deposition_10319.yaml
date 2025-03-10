@@ -1,0 +1,331 @@
+depositions:
+  - metadata:
+      authors: &deposition_authors
+        - name: Christof Henkel
+          ORCID: 0000-0002-2913-3662
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: christofhenkel
+        - name: Eugene Khvedchenya
+          ORCID: 0000-0002-2363-3850
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: bloodaxe
+      dates: &dates
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      deposition_description:
+        The 1st place solution employs an ensemble approach combining segmentation models (3D UNets with ResNet & B3
+        encoders) and object detection models (SegResNet and DynUnet backbones) from MONAI. Segmentation uses weighted
+        CrossEntropy loss (256:1 positive:negative weighting), while detection implements a modified PP-Yolo loss with
+        IoU-based point-point similarity metrics. Models are trained on 96×96×96 patches with inference on larger
+        volumes, and both approaches are merged through a novel scaling technique that aligns feature map distributions
+        before object detection post-processing. Performance is optimized by converting models to TensorRT, achieving a
+        200% speedup and enabling parallel inference on two T4 GPUs.
+      deposition_identifier: 10319
+      deposition_title: CZII CryoET Object Identification Challenge - 1st place solution - Daddies
+      deposition_types:
+        - annotation
+      tag: competitionML2024Winners
+    sources:
+      - literal:
+          value:
+            - 10319
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_thumbnail.png"
+
+alignments:
+  - sources:
+      - destination_glob:
+          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          match_regex: .*
+          name_regex: (.*)
+
+annotations:
+  - metadata:
+      annotation_method: &method Ensemble of segmentation and detection networks with feature distribution alignment
+        scaling.
+      annotation_object:
+        state: apo
+        id: GO:0070288
+        name: ferritin complex
+      annotation_publications: EMD-41923
+      annotation_software: null
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: &method_links
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561510
+          link_type: documentation
+        - custom_name: Segmentation training code on GitHub
+          link: https://github.com/ChristofHenkel/kaggle-cryoet-1st-place-segmentation
+          link_type: source_code
+        - custom_name: Object Detection training code on GitHub
+          link: https://github.com/BloodAxe/Kaggle-2024-CryoET
+          link_type: source_code
+        - custom_name: Inference kernel on Kaggle
+          link: https://www.kaggle.com/code/christofhenkel/cryo-et-1st-place-solution?scriptVersionId=223259615
+          link_type: source_code
+        - custom_name: Model weights on Kaggle
+          link: https://www.kaggle.com/datasets/bloodaxe/cryoet-detection-models
+          link_type: models_weights
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: tetrameric
+        id: UniProtKB:P10537
+        name: Beta-amylase
+      annotation_publications: EMD-30405
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_beta-amylase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_beta-amylase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: tetrameric
+        id: UniProtKB:P00722
+        name: Beta-galactosidase
+      annotation_publications: EMD-0153
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: EMD-3883
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: dimeric
+        id: UniProtKB:P01267
+        name: Thyroglobulin
+      annotation_publications: EMD-24181
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        description: PP7 VLP
+        id: GO:0170047
+        name: virus-like capsid
+      annotation_publications: EMD-41917
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Daddies_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+datasets:
+  - sources:
+      - literal:
+          value:
+            - '10445'
+            - '10446'
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: "Public/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - source_glob:
+          list_glob: "Private/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+standardization_config:
+  deposition_id: 10319
+  source_prefix: CZII/202502_competition_correct_hand
+
+version: 1.1.0
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 4.990

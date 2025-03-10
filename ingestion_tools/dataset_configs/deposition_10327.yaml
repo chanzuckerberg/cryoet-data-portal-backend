@@ -1,0 +1,284 @@
+depositions:
+  - metadata:
+      authors: &deposition_authors
+        - name: Koki Wada
+          primary_author_status: true
+          corresponding_author_status: true
+          kaggle_id: wadakoki
+      dates: &dates
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
+      deposition_description:
+        For the 9th place solution, a 3D ConvNeXt-like segmentation model is employed with modifications to the encoder
+        including smaller 2x2 stem and 3x3 kernel size in convolution blocks to better detect small particles. Binary
+        cross-entropy loss is used for training with basic rot90 augmentations, and the final submission ensembles
+        multiple models with DBSCAN clustering applied to refine particle centroids. A key distinction of this approach
+        is the custom adjustment of ground truth mask sizes for different particle types with factors of 0.5 for smaller
+        particles and 0.33 for larger ones, which significantly improved performance from 0.62 to 0.70-0.77 on the
+        public leaderboard.
+      deposition_identifier: 10327
+      deposition_title: CZII CryoET Object Identification Challenge - 9th place solution - Avengers
+      deposition_types:
+        - annotation
+      tag: competitionML2024Winners
+    sources:
+      - literal:
+          value:
+            - 10327
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10327_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10327_thumbnail.png"
+
+alignments:
+  - sources:
+      - destination_glob:
+          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          match_regex: .*
+          name_regex: (.*)
+
+annotations:
+  - metadata:
+      annotation_method: &method 3D ConvNeXt segmentation with reduced kernel sizes and adjusted masks.
+      annotation_object:
+        state: apo
+        id: GO:0070288
+        name: ferritin complex
+      annotation_publications: EMD-41923
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: &method_links
+        - custom_name: Solution overview on Kaggle
+          link: https://www.kaggle.com/competitions/czii-cryo-et-object-identification/discussion/561431
+          link_type: documentation
+        - custom_name: Inference code on GitHub
+          link: https://www.kaggle.com/code/wadakoki/czii-9th-inference
+          link_type: source_code
+        - custom_name: Training code on Colab
+          link: https://colab.research.google.com/drive/1OG5Rap9zUkKG6fnGZ8kP0JwwFZfSTgCc
+          link_type: source_code
+        - custom_name: Model checkpoints on Kaggle
+          link: https://www.kaggle.com/datasets/wadakoki/czii-9th-final-models/data
+          link_type: models_weights
+        - custom_name: Mask generation code on GitHub
+          link: https://www.kaggle.com/code/wadakoki/czii-gen-small-masks
+          link_type: source_code
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_apo-ferritin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: tetrameric
+        id: UniProtKB:P00722
+        name: Beta-galactosidase
+      annotation_publications: EMD-0153
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_beta-galactosidase.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: EMD-3883
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_ribosome.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        state: dimeric
+        id: UniProtKB:P01267
+        name: Thyroglobulin
+      annotation_publications: EMD-24181
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_thyroglobulin.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+  - metadata:
+      annotation_method: *method
+      annotation_object:
+        description: PP7 VLP
+        id: GO:0170047
+        name: virus-like capsid
+      annotation_publications: EMD-41917
+      authors: *deposition_authors
+      dates: *dates
+      ground_truth_status: false
+      is_curator_recommended: false
+      method_links: *method_links
+      method_type: automated
+      version: 1.0
+    sources:
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - Point:
+          binning: 4.990
+          file_format: copick
+          glob_strings:
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/Avengers_0_virus-like-particle.json'
+          is_visualization_default: false
+          columns: xyz
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+datasets:
+  - sources:
+      - literal:
+          value:
+            - '10445'
+            - '10446'
+runs:
+  - sources:
+      - source_glob:
+          list_glob: "Public/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10445'
+      - source_glob:
+          list_glob: "Private/copick/ExperimentRuns/*"
+          match_regex: '.*'
+          name_regex: '(.*)'
+        parent_filters:
+          include:
+            dataset:
+              - '10446'
+
+standardization_config:
+  deposition_id: 10327
+  source_prefix: CZII/202502_competition_correct_hand
+
+version: 1.1.0
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 4.990

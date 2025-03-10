@@ -475,7 +475,7 @@ enums:
     permissible_values:
       CTFFIND:
         text: CTFFIND
-        description: formats ctffind file formats
+        description: The file has ctffind schema
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has
@@ -6220,6 +6220,21 @@ classes:
         - AuthorMixin
         - Author
         range: boolean
+        inlined: true
+        inlined_as_list: true
+      kaggle_id:
+        name: kaggle_id
+        description: Identifying string for the author's kaggle profile (found after
+          'kaggle.com/').
+        from_schema: cdp-ingestion-config
+        exact_mappings:
+        - cdp-common:kaggle_id
+        alias: kaggle_id
+        owner: AuthorMixin
+        domain_of:
+        - AuthorMixin
+        - Author
+        range: string
         inlined: true
         inlined_as_list: true
 source_file: ingestion_config/v1.0.0/ingestion_config_models.yaml

@@ -45,6 +45,9 @@ classes:
       orcid:
         exact_mappings:
           - cdp-common:author_orcid
+      kaggle_id:
+        exact_mappings:
+          - cdp-common:kaggle_id
   APIDateStampedEntityMixin:
     description: A set of dates at which a data item was deposited, published and last modified.
     mixin: true
@@ -429,6 +432,9 @@ classes:
       deposition_description:
         exact_mappings:
           - cdp-common:deposition_description
+      tag:
+        exact_mappings:
+          - cdp-common:tag
       deposition_types:
         range: DepositionType
         inverse: DepositionType.deposition

@@ -117,6 +117,7 @@ Deposition {
     TomogramsList tomograms
     string deposition_title
     string deposition_description
+    string tag
     integer id
     DOI_LIST publications
     EMPIAR_EMDB_PDB_LIST related_database_entries
@@ -213,6 +214,7 @@ DepositionAuthor {
     integer id
     integer author_list_order
     ORCID orcid
+    string kaggle_id
     string name
     string email
     string affiliation_name
@@ -225,6 +227,7 @@ AnnotationAuthor {
     integer id
     integer author_list_order
     ORCID orcid
+    string kaggle_id
     string name
     string email
     string affiliation_name
@@ -237,6 +240,7 @@ TomogramAuthor {
     integer id
     integer author_list_order
     ORCID orcid
+    string kaggle_id
     string name
     string email
     string affiliation_name
@@ -249,6 +253,7 @@ DatasetAuthor {
     integer id
     integer author_list_order
     ORCID orcid
+    string kaggle_id
     string name
     string email
     string affiliation_name

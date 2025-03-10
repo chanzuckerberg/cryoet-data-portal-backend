@@ -191,6 +191,7 @@ class AnnotationAuthorItem(ItemDBImporter):
         "affiliation_address": ["affiliation_address"],
         "affiliation_identifier": ["affiliation_identifier"],
         "author_list_order": ["index"],
+        "kaggle_id": ["kaggle_id"],
     }
 
     def load_computed_fields(self):

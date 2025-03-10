@@ -27,6 +27,12 @@ class TomogramAuthorCreateInputValidator(BaseModel):
             pattern=r"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
         ),
     ]
+    kaggle_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
     name: Annotated[
         str,
         StringConstraints(
@@ -72,6 +78,12 @@ class TomogramAuthorUpdateInputValidator(BaseModel):
         StringConstraints(
             strip_whitespace=True,
             pattern=r"[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
+        ),
+    ]
+    kaggle_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
         ),
     ]
     name: Annotated[

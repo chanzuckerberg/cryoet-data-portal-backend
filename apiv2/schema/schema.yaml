@@ -509,6 +509,13 @@ classes:
         range: string
         recommended: true
         pattern: "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"
+      kaggle_id:
+        name: kaggle_id
+        description: A unique, persistent identifier for kaggle users at kaggle.com.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - author_kaggle_id
+        range: string
       name:
         name: name
         description: Full name of an author (e.g. Jane Doe).
@@ -1544,6 +1551,13 @@ classes:
           - deposition_description
         range: string
         required: true
+      tag:
+        name: tag
+        description: Tag for the deposition - like ml competition
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - deposition_tag
+        range: string
       deposition_types:
         name: deposition_types
         from_schema: cdp-dataset-config
@@ -1642,30 +1656,25 @@ classes:
         inverse: Run.frames
         range: Run
         required: true
-      raw_angle:
-        name: raw_angle
-        description: Camera angle for a frame
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - api_frame_raw_angle
-        range: float
-        required: false
-        minimum_value: -90
-        maximum_value: 90
       acquisition_order:
         name: acquisition_order
         description: Frame's acquistion order within a tilt experiment
-        from_schema: cdp-dataset-config
-        exact_mappings:
-          - api_frame_acquisition_order
         range: integer
         required: false
-      dose:
-        name: dose
-        description: The raw camera angle for a frame
+      accumulated_dose:
+        name: accumulated_dose
+        description: The total accumulated dose exposure frame
+        range: float
+        required: false
+        unit:
+          symbol: e-/Å2
+          descriptive_name: electrons per square angstrom
+      exposure_dose:
+        name: exposure_dose
+        description: The dose exposure of this frame
         from_schema: cdp-dataset-config
         exact_mappings:
-          - api_frame_dose
+          - api_frame_exposure_dose
         range: float
         required: false
         unit:
@@ -1681,11 +1690,11 @@ classes:
       s3_frame_path:
         description: S3 path to the frame file
         range: string
-        required: true
+        required: false
       https_frame_path:
         description: HTTPS path to the frame file
         range: string
-        required: true
+        required: false
       file_size:
         name: file_size
         description: Size of the frame file in bytes

@@ -1421,6 +1421,13 @@
                         "null"
                     ]
                 },
+                "kaggle_id": {
+                    "description": "Identifying string for the author's kaggle profile (found after 'kaggle.com/').",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "name": {
                     "description": "The full name of the author.",
                     "type": "string"
@@ -2683,6 +2690,13 @@
                     },
                     "minItems": 1,
                     "type": "array"
+                },
+                "tag": {
+                    "description": "A string to categorize this deposition (i.e \"competitionML2024Winners\")",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 }
             },
             "required": [

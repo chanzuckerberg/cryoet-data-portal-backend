@@ -1,6 +1,7 @@
 from importers.alignment import AlignmentImporter
 from importers.annotation import AnnotationImporter
 from importers.collection_metadata import CollectionMetadataImporter
+from importers.ctf import CtfImporter
 from importers.dataset import DatasetImporter
 from importers.dataset_key_photo import DatasetKeyPhotoImporter
 from importers.deposition import DepositionImporter
@@ -21,13 +22,12 @@ IMPORTERS = [
     AnnotationImporter,
     AnnotationVisualizationImporter,
     CollectionMetadataImporter,
+    CtfImporter,
     DatasetKeyPhotoImporter,
     DatasetImporter,
     DepositionImporter,
     DepositionKeyPhotoImporter,
     FrameImporter,
-    VisualizationConfigImporter,
-    TomogramImporter,
     GainImporter,
     KeyImageImporter,
     RawTiltImporter,
@@ -35,6 +35,7 @@ IMPORTERS = [
     TiltSeriesImporter,
     TomogramImporter,
     VoxelSpacingImporter,
+    VisualizationConfigImporter,
 ]
 IMPORTER_DICT = {cls.type_key: cls for cls in IMPORTERS}
 
@@ -44,9 +45,10 @@ IMPORTER_DEP_TREE = {
         DatasetImporter: {
             RunImporter: {
                 GainImporter: {},
-                FrameImporter: {},
                 CollectionMetadataImporter: {},
+                FrameImporter: {},
                 TiltSeriesImporter: {
+                    CtfImporter: {},
                     RawTiltImporter: {},
                 },
                 AlignmentImporter: {},

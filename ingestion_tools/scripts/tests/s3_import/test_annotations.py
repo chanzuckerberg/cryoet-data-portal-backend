@@ -1180,6 +1180,52 @@ ingest_instance_points_test_cases = [
             },
         ],
     },
+    # copick
+    {
+        "case": "copick, binning 2",
+        "source_cfg": {
+            "InstanceSegmentation": {
+                "order": "xyz",
+                "file_format": "copick",
+                "glob_string": "annotations/copick_instance.json",
+                "is_visualization_default": False,
+                "binning": 5,
+            },
+        },
+        "count": 6,
+        "out_data": [
+            {
+                "type": "instancePoint",
+                "location": {"x": 2, "y": 4, "z": 6},
+                "instance_id": 0,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 2, "y": 2, "z": 2},
+                "instance_id": 1,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 3, "y": 2, "z": 1},
+                "instance_id": 2,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 0, "y": 3, "z": 0},
+                "instance_id": 3,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 4, "y": 2, "z": 1},
+                "instance_id": 4,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 1.5, "y": 1, "z": 0.5},
+                "instance_id": 5,
+            },
+        ],
+    },
 ]
 
 

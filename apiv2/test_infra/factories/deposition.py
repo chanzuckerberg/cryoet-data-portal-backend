@@ -30,6 +30,7 @@ class DepositionFactory(CommonFactory):
 
     title = fuzzy.FuzzyText()
     description = fuzzy.FuzzyText()
+    tag = fuzzy.FuzzyText()
     deposition_publications = fuzzy.FuzzyText()
     related_database_entries = fuzzy.FuzzyText()
     deposition_date = factory.Faker("date")
