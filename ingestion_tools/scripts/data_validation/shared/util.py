@@ -22,12 +22,14 @@ MRC_EXTENSION = ".mrc"
 MRC_BZ2_EXTENSION = ".mrc.bz2"
 TIFF_EXTENSIONS = (".tif", ".tiff", ".eer", ".gain")
 
+
 def get_file_type(filename: str) -> str:
     if filename.endswith(".zarr"):
         return "zarr"
-    if any(filename.endswith(extension) for extension in [".mrc", ".st"]):
+    if any(filename.endswith(extension) for extension in [".mrc", ".st", ".ali"]):
         return "mrc"
     return "unknown"
+
 
 def get_mrc_header(mrc_file_path: str, fs: FileSystemApi, fail_test: bool = True) -> MrcInterpreter | None:
     try:
@@ -72,7 +74,6 @@ def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi, fail_test: bool = Tru
             return None
 
 
-
 def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi, fail_test: bool = True):
     if file.endswith(MRC_EXTENSION):
         return file, get_mrc_header(file, filesystem, fail_test)
@@ -86,15 +87,20 @@ def _get_tiff_mrc_header(file: str, filesystem: FileSystemApi, fail_test: bool =
 
 
 def get_tiff_mrc_headers(
-    files: list[str], filesystem: FileSystemApi, fail_test: bool = True,
-) -> dict[str, list[TiffPage]| MrcInterpreter]:
+    files: list[str],
+    filesystem: FileSystemApi,
+    fail_test: bool = True,
+) -> dict[str, list[TiffPage] | MrcInterpreter]:
 
     # Open the images in parallel
     with ThreadPoolExecutor() as executor:
         headers = {}
 
         for header_filename, header_data in executor.map(
-                _get_tiff_mrc_header, files, [filesystem] * len(files), [fail_test] * len(files),
+            _get_tiff_mrc_header,
+            files,
+            [filesystem] * len(files),
+            [fail_test] * len(files),
         ):
             if header_filename is None:
                 continue

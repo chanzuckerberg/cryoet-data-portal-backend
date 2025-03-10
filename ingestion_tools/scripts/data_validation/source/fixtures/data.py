@@ -37,7 +37,7 @@ def frames_headers(frames_files, filesystem: FileSystemApi) -> dict[str, list[Ti
     return get_tiff_mrc_headers(frames_files, filesystem)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()  # scope="session")
 def mdoc_file(run: RunImporter) -> str | None:
     mdoc_files = pytest.cryoet.get_importable_entities(CollectionMetadataImporter, [run], "path")
     if len(mdoc_files) == 1:
@@ -47,7 +47,7 @@ def mdoc_file(run: RunImporter) -> str | None:
     return None
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()  # scope="session")
 def mdoc_data(filesystem: S3Filesystem, mdoc_file: str) -> pd.DataFrame:
     if not mdoc_file:
         pytest.skip("No mdoc files found")
@@ -55,7 +55,7 @@ def mdoc_data(filesystem: S3Filesystem, mdoc_file: str) -> pd.DataFrame:
     return mdocfile.read(local_filepath)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()  # scope="session")
 def raw_tlt_file(run: RunImporter) -> str | None:
     raw_tilt_files = pytest.cryoet.get_importable_entities(RawTiltImporter, [run], "path")
     if len(raw_tilt_files) == 1:
@@ -64,7 +64,8 @@ def raw_tlt_file(run: RunImporter) -> str | None:
         pytest.fail(f"Multiple raw tlt files found: {raw_tilt_files}")
     return None
 
-@pytest.fixture(scope="session")
+
+@pytest.fixture()  # scope="session")
 def raw_tilt_data(filesystem: S3Filesystem, raw_tlt_file: str) -> pd.DataFrame:
     if not raw_tlt_file:
         pytest.skip("No raw_tilt files found")
