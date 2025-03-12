@@ -9,7 +9,6 @@ stack:
       failureThreshold: 3
       httpGet:
         path: /graphql
-        port: "9009"
         scheme: HTTP
       periodSeconds: 10
       successThreshold: 1
@@ -19,7 +18,6 @@ stack:
       failureThreshold: 3
       httpGet:
         path: /graphql
-        port: "9009"
         scheme: HTTP
       periodSeconds: 10
       successThreshold: 1
