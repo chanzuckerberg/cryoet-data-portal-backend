@@ -1687,6 +1687,15 @@ classes:
         exact_mappings:
           - api_frame_is_gain_corrected
         range: boolean
+      per_section_parameters:
+        name: per_section_parameters
+        description: Per section parameters for this frame
+        from_schema: cdp-dataset-config
+        multivalued: true
+        inverse: PerSectionParameters.frame
+        range: PerSectionParameters
+        annotations:
+          cascade_delete: true
       s3_frame_path:
         description: S3 path to the frame file
         range: string
@@ -1771,6 +1780,111 @@ classes:
         unit:
           symbol: °
           descriptive_name: degrees
+  PerSectionParameters:
+    name: PerSectionParameters
+    annotations:
+      plural:
+        tag: plural
+        value: PerSectionParameters
+    description: Map individual Frames to a Tiltseries
+    from_schema: cdp-dataset-config
+    mixins:
+      - IDMixin
+    attributes:
+      astigmatic_angle:
+        name: astigmatic_angle
+        description: Angle (in degrees) from reciprocal space X axis to the major axis of defocus.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - per_section_astigmatic_angle
+        range: float
+        required: false
+      frame:
+        name: frame
+        description: Frame that this section is a part of
+        from_schema: cdp-dataset-config
+        inverse: Frame.per_section_parameters
+        range: Frame
+        required: true
+      major_defocus:
+        name: major_defocus
+        description: Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - per_section_major_defocus
+        range: float
+        required: false
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      max_resolution:
+        name: max_resolution
+        description: Maximum resolution of the frame
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - per_section_max_resolution
+        range: float
+        required: false
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      minor_defocus:
+        name: minor_defocus
+        description: Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - per_section_minor_defocus
+        range: float
+        required: false
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      phase_shift:
+        name: phase_shift
+        description: Phase shift estimated for this tilt image in degrees.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - per_section_phase_shift
+        range: float
+        required: false
+        ifabsent: 0
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      raw_angle:
+        name: raw_angle
+        description: Nominal tilt angle for this tilt image reported by the microscope.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - per_section_raw_angle
+        range: float
+        required: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      run:
+        name: run
+        description: Run that this section is a part of
+        from_schema: cdp-dataset-config
+        range: Run
+        required: true
+        inverse: Run.per_section_parameters
+      tiltseries:
+        name: tiltseries
+        description: Tiltseries that this section is a part of
+        from_schema: cdp-dataset-config
+        range: Tiltseries
+        required: true
+        inverse: Tiltseries.per_section_parameters
+      z_index:
+        name: z_index
+        description: Index (0-based) of this tilt image in the tilt series stack.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - per_section_z_index
+        range: integer
+        required: true
+        minimum_value: 0
   Run:
     name: Run
     annotations:
@@ -1825,6 +1939,15 @@ classes:
         multivalued: true
         inverse: FrameAcquisitionFile.run
         range: FrameAcquisitionFile
+        annotations:
+          cascade_delete: true
+      per_section_parameters:
+        name: per_section_parameters
+        description: Per section parameters for this run
+        from_schema: cdp-dataset-config
+        multivalued: true
+        inverse: PerSectionParameters.run
+        range: PerSectionParameters
         annotations:
           cascade_delete: true
       tiltseries:
@@ -2038,6 +2161,15 @@ classes:
         exact_mappings:
           - tiltseries_microscope_additional_info
         range: string
+      per_section_parameters:
+        name: per_section_parameters
+        description: Per section parameters for this tiltseries
+        from_schema: cdp-dataset-config
+        multivalued: true
+        inverse: PerSectionParameters.tiltseries
+        range: PerSectionParameters
+        annotations:
+          cascade_delete: true
       camera_manufacturer:
         name: camera_manufacturer
         description: Name of the camera manufacturer

@@ -25,6 +25,10 @@ from graphql_api.types.frame_acquisition_file import (
     format_frame_acquisition_file_aggregate_output,
 )
 from graphql_api.types.gain_file import GainFileAggregate, format_gain_file_aggregate_output
+from graphql_api.types.per_section_parameters import (
+    PerSectionParametersAggregate,
+    format_per_section_parameters_aggregate_output,
+)
 from graphql_api.types.tiltseries import TiltseriesAggregate, format_tiltseries_aggregate_output
 from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
 from graphql_api.types.tomogram_voxel_spacing import (
@@ -84,6 +88,12 @@ if TYPE_CHECKING:
         GainFileOrderByClause,
         GainFileWhereClause,
     )
+    from graphql_api.types.per_section_parameters import (
+        PerSectionParameters,
+        PerSectionParametersAggregateWhereClause,
+        PerSectionParametersOrderByClause,
+        PerSectionParametersWhereClause,
+    )
     from graphql_api.types.tiltseries import (
         Tiltseries,
         TiltseriesAggregateWhereClause,
@@ -129,6 +139,10 @@ else:
     FrameAcquisitionFileAggregateWhereClause = "FrameAcquisitionFileAggregateWhereClause"
     FrameAcquisitionFile = "FrameAcquisitionFile"
     FrameAcquisitionFileOrderByClause = "FrameAcquisitionFileOrderByClause"
+    PerSectionParametersWhereClause = "PerSectionParametersWhereClause"
+    PerSectionParametersAggregateWhereClause = "PerSectionParametersAggregateWhereClause"
+    PerSectionParameters = "PerSectionParameters"
+    PerSectionParametersOrderByClause = "PerSectionParametersOrderByClause"
     TiltseriesWhereClause = "TiltseriesWhereClause"
     TiltseriesAggregateWhereClause = "TiltseriesAggregateWhereClause"
     Tiltseries = "Tiltseries"
@@ -328,6 +342,46 @@ async def load_frame_acquisition_file_aggregate_rows(
 
 
 @relay.connection(
+    relay.ListConnection[
+        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ],  # type:ignore
+)
+async def load_per_section_parameters_rows(
+    root: "Run",
+    info: Info,
+    where: (
+        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
+    ) = None,
+    order_by: Optional[
+        list[
+            Annotated["PerSectionParametersOrderByClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
+        ]
+    ] = [],
+) -> Sequence[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Run)
+    relationship = mapper.relationships["per_section_parameters"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+
+
+@strawberry.field
+async def load_per_section_parameters_aggregate_rows(
+    root: "Run",
+    info: Info,
+    where: (
+        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
+    ) = None,
+) -> Optional[Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
+    selections = get_nested_selected_fields(info.selected_fields)
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Run)
+    relationship = mapper.relationships["per_section_parameters"]
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    aggregate_output = format_per_section_parameters_aggregate_output(rows)
+    return aggregate_output
+
+
+@relay.connection(
     relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]],  # type:ignore
 )
 async def load_tiltseries_rows(
@@ -486,6 +540,20 @@ class RunWhereClause(TypedDict):
         ]
         | None
     )
+    per_section_parameters: (
+        Optional[
+            Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
+        ]
+        | None
+    )
+    per_section_parameters_aggregate: (
+        Optional[
+            Annotated[
+                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters"),
+            ]
+        ]
+        | None
+    )
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     tiltseries_aggregate: (
         Optional[Annotated["TiltseriesAggregateWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
@@ -567,6 +635,12 @@ class Run(EntityInterface):
     frame_acquisition_files_aggregate: Optional[
         Annotated["FrameAcquisitionFileAggregate", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
     ] = load_frame_acquisition_file_aggregate_rows  # type:ignore
+    per_section_parameters: Sequence[
+        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ] = load_per_section_parameters_rows  # type:ignore
+    per_section_parameters_aggregate: Optional[
+        Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ] = load_per_section_parameters_aggregate_rows  # type:ignore
     tiltseries: Sequence[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
         load_tiltseries_rows
     )  # type:ignore

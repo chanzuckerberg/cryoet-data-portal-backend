@@ -1,6 +1,7 @@
 from datetime import date, datetime
 
 import sqlalchemy as sa
+from database import models
 from database.models import (
     Alignment,
     Annotation,
@@ -13,7 +14,9 @@ from database.models import (
     DatasetFunding,
     Deposition,
     DepositionAuthor,
+    Frame,
     PerSectionAlignmentParameters,
+    PerSectionParameters,
     Run,
     Tiltseries,
     Tomogram,
@@ -21,6 +24,7 @@ from database.models import (
     TomogramVoxelSpacing,
 )
 
+FRAME_ID = 333
 DATASET_ID = 30001
 DATASET_AUTHOR_ID = 301
 DATASET_FUNDING_ID = 302
@@ -695,4 +699,51 @@ def populate_stale_per_section_alignment_parameters(session: sa.orm.Session) -> 
             alignment_id=STALE_ALIGNMENT_ID,
             **default_kwargs,
         ),
+    )
+
+@write_data
+def populate_per_section_parameters(session: sa.orm.Session) -> models.PerSectionParameters:
+    populate_tiltseries(session)
+    frame = Frame(
+        run_id=RUN1_ID,
+        id=FRAME_ID,
+        acquisition_order=0,
+        deposition_id=DEPOSITION_ID1,
+        s3_frame_path="s3://test-public-bucket/30001/RUN1/Frames/frame1",
+        https_frame_path="https://foo.com/30001/RUN1/Frames/frame1",
+    )
+    session.add(frame)
+    per_section_parameters = PerSectionParameters(
+        astigmatic_angle=0.5,
+        frame_id=FRAME_ID,
+        major_defocus=0.5,
+        minor_defocus=0.5,
+        phase_shift=0.5,
+        max_resolution=0.5,
+        raw_angle=0.5,
+        run_id=RUN1_ID,
+        tiltseries_id=TILTSERIES_ID,
+        z_index=0)
+    session.add(per_section_parameters)
+    return per_section_parameters
+
+
+
+@write_data
+def populate_existing_frames(session: sa.orm.Session) -> Frame:
+    populate_run(session)
+    stale_frame = Frame(
+        run_id=RUN1_ID,
+        deposition_id=DEPOSITION_ID1,
+        https_frame_path="STALE_FRAME",
+        s3_frame_path="STALE_FRAME",
+    )
+    session.add(stale_frame)
+    return Frame(
+        id=FRAME_ID,
+        run_id=RUN1_ID,
+        acquisition_order=0,
+        deposition_id=DEPOSITION_ID1,
+        s3_frame_path="s3://test-public-bucket/30001/RUN1/Frames/frame1",
+        https_frame_path="https://foo.com/30001/RUN1/Frames/frame1",
     )

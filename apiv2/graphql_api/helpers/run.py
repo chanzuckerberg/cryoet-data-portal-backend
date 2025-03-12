@@ -13,6 +13,7 @@ import graphql_api.helpers.dataset as dataset_helper
 import graphql_api.helpers.frame as frame_helper
 import graphql_api.helpers.frame_acquisition_file as frame_acquisition_file_helper
 import graphql_api.helpers.gain_file as gain_file_helper
+import graphql_api.helpers.per_section_parameters as per_section_parameters_helper
 import graphql_api.helpers.tiltseries as tiltseries_helper
 import graphql_api.helpers.tomogram as tomogram_helper
 import graphql_api.helpers.tomogram_voxel_spacing as tomogram_voxel_spacing_helper
@@ -25,6 +26,7 @@ if TYPE_CHECKING:
     from graphql_api.helpers.frame import FrameGroupByOptions
     from graphql_api.helpers.frame_acquisition_file import FrameAcquisitionFileGroupByOptions
     from graphql_api.helpers.gain_file import GainFileGroupByOptions
+    from graphql_api.helpers.per_section_parameters import PerSectionParametersGroupByOptions
     from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions
     from graphql_api.helpers.tomogram import TomogramGroupByOptions
     from graphql_api.helpers.tomogram_voxel_spacing import TomogramVoxelSpacingGroupByOptions
@@ -35,6 +37,7 @@ else:
     FrameGroupByOptions = "FrameGroupByOptions"
     GainFileGroupByOptions = "GainFileGroupByOptions"
     FrameAcquisitionFileGroupByOptions = "FrameAcquisitionFileGroupByOptions"
+    PerSectionParametersGroupByOptions = "PerSectionParametersGroupByOptions"
     TiltseriesGroupByOptions = "TiltseriesGroupByOptions"
     TomogramVoxelSpacingGroupByOptions = "TomogramVoxelSpacingGroupByOptions"
     TomogramGroupByOptions = "TomogramGroupByOptions"
@@ -57,6 +60,9 @@ class RunGroupByOptions:
     gain_files: Optional[Annotated["GainFileGroupByOptions", strawberry.lazy("graphql_api.helpers.gain_file")]] = None
     frame_acquisition_files: Optional[
         Annotated["FrameAcquisitionFileGroupByOptions", strawberry.lazy("graphql_api.helpers.frame_acquisition_file")]
+    ] = None
+    per_section_parameters: Optional[
+        Annotated["PerSectionParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_parameters")]
     ] = None
     tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = (
         None
@@ -159,6 +165,19 @@ def build_run_groupby_output(
                 )
             else:
                 value = frame_acquisition_file_helper.build_frame_acquisition_file_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "per_section_parameters":
+            if getattr(group_object, key):
+                value = per_section_parameters_helper.build_per_section_parameters_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = per_section_parameters_helper.build_per_section_parameters_groupby_output(
                     None,
                     keys,
                     value,

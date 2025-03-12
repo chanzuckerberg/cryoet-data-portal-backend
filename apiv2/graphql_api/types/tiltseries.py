@@ -18,6 +18,10 @@ import strawberry
 from fastapi import Depends
 from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions, build_tiltseries_groupby_output
 from graphql_api.types.alignment import AlignmentAggregate, format_alignment_aggregate_output
+from graphql_api.types.per_section_parameters import (
+    PerSectionParametersAggregate,
+    format_per_section_parameters_aggregate_output,
+)
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -61,6 +65,12 @@ if TYPE_CHECKING:
         DepositionOrderByClause,
         DepositionWhereClause,
     )
+    from graphql_api.types.per_section_parameters import (
+        PerSectionParameters,
+        PerSectionParametersAggregateWhereClause,
+        PerSectionParametersOrderByClause,
+        PerSectionParametersWhereClause,
+    )
     from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
 
     pass
@@ -77,6 +87,10 @@ else:
     DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
+    PerSectionParametersWhereClause = "PerSectionParametersWhereClause"
+    PerSectionParametersAggregateWhereClause = "PerSectionParametersAggregateWhereClause"
+    PerSectionParameters = "PerSectionParameters"
+    PerSectionParametersOrderByClause = "PerSectionParametersOrderByClause"
     pass
 
 
@@ -146,6 +160,46 @@ async def load_deposition_rows(
     return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
 
 
+@relay.connection(
+    relay.ListConnection[
+        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ],  # type:ignore
+)
+async def load_per_section_parameters_rows(
+    root: "Tiltseries",
+    info: Info,
+    where: (
+        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
+    ) = None,
+    order_by: Optional[
+        list[
+            Annotated["PerSectionParametersOrderByClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
+        ]
+    ] = [],
+) -> Sequence[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Tiltseries)
+    relationship = mapper.relationships["per_section_parameters"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+
+
+@strawberry.field
+async def load_per_section_parameters_aggregate_rows(
+    root: "Tiltseries",
+    info: Info,
+    where: (
+        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
+    ) = None,
+) -> Optional[Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
+    selections = get_nested_selected_fields(info.selected_fields)
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Tiltseries)
+    relationship = mapper.relationships["per_section_parameters"]
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    aggregate_output = format_per_section_parameters_aggregate_output(rows)
+    return aggregate_output
+
+
 """
 ------------------------------------------------------------------------------
 Define Strawberry GQL types
@@ -195,6 +249,20 @@ class TiltseriesWhereClause(TypedDict):
     microscope_phase_plate: Optional[StrComparators] | None
     microscope_image_corrector: Optional[StrComparators] | None
     microscope_additional_info: Optional[StrComparators] | None
+    per_section_parameters: (
+        Optional[
+            Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
+        ]
+        | None
+    )
+    per_section_parameters_aggregate: (
+        Optional[
+            Annotated[
+                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters"),
+            ]
+        ]
+        | None
+    )
     camera_manufacturer: Optional[StrComparators] | None
     camera_model: Optional[StrComparators] | None
     tilt_min: Optional[FloatComparators] | None
@@ -322,6 +390,12 @@ class Tiltseries(EntityInterface):
         description="Other microscope optical setup information, in addition to energy filter, phase plate and image corrector",
         default=None,
     )
+    per_section_parameters: Sequence[
+        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ] = load_per_section_parameters_rows  # type:ignore
+    per_section_parameters_aggregate: Optional[
+        Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ] = load_per_section_parameters_aggregate_rows  # type:ignore
     camera_manufacturer: str = strawberry.field(description="Name of the camera manufacturer")
     camera_model: str = strawberry.field(description="Camera model name")
     tilt_min: float = strawberry.field(description="Minimal tilt angle in degrees")

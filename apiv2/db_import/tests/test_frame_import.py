@@ -1,14 +1,8 @@
 from typing import Any, Callable
 
 import pytest as pytest
-import sqlalchemy as sa
 from database import models
-from db_import.tests.populate_db import (
-    DEPOSITION_ID1,
-    RUN1_ID,
-    populate_run,
-    write_data,
-)
+from db_import.tests.populate_db import populate_existing_frames
 from sqlalchemy.orm import Session
 
 from platformics.database.models import Base
@@ -45,26 +39,6 @@ def expected_frames(http_prefix: str) -> list[dict[str, Any]]:
             "file_size": 0,
         },
     ]
-
-
-@write_data
-def populate_existing_frames(session: sa.orm.Session) -> models.Frame:
-    populate_run(session)
-    stale_frame = models.Frame(
-        run_id=RUN1_ID,
-        deposition_id=DEPOSITION_ID1,
-        https_frame_path="STALE_FRAME",
-        s3_frame_path="STALE_FRAME",
-    )
-    session.add(stale_frame)
-    return models.Frame(
-        id=333,
-        run_id=RUN1_ID,
-        acquisition_order=0,
-        deposition_id=DEPOSITION_ID1,
-        s3_frame_path="s3://test-public-bucket/30001/RUN1/Frames/frame1",
-        https_frame_path="https://foo.com/30001/RUN1/Frames/frame1",
-    )
 
 
 # Tests addition of new frames, and updating entries already existing in db

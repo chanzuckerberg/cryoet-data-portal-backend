@@ -6,6 +6,7 @@ from db_import.tests.populate_db import (
     DATASET_ID,
     RUN1_ID,
     TILTSERIES_ID,
+    populate_per_section_parameters,
     populate_stale_run,
     populate_stale_tiltseries,
     populate_tiltseries,
@@ -128,3 +129,54 @@ def test_import_tiltseries_stale_deletion(
             if "run_id" not in expected:
                 expected["run_id"] = run.id
             verify_model(tiltseries, expected)
+
+@pytest.fixture
+def expected_per_section_parameters() -> list[dict[str, Any]]:
+    return {
+    "per_section_parameter": [
+        {
+            "z_index": 0,
+            "frame_acquisition_order": 27,
+            "raw_angle": -52.01,
+            "astigmatic_angle": 37.98,
+            "cross_correlation": 2551.0,
+            "major_defocus": 28.0,
+            "max_resolution": 88.0,
+            "minor_defocus": 37.98,
+            "phase_shift": 2699.0,
+        },
+        {
+            "z_index": 1,
+            "frame_acquisition_order": 26,
+            "raw_angle": -49.01,
+            "astigmatic_angle": 34.98,
+            "cross_correlation": 2674.0,
+            "major_defocus": 27.0,
+            "max_resolution": 72.0,
+            "minor_defocus": 34.98,
+            "phase_shift": 2823.0,
+        },
+        {
+            "z_index": 2,
+            "frame_acquisition_order": 23,
+            "raw_angle": -46.01,
+            "astigmatic_angle": 25.98,
+            "cross_correlation": 3507.0,
+            "major_defocus": 24.0,
+            "max_resolution": -20.0,
+            "minor_defocus": 25.98,
+            "phase_shift": 3553.0,
+        },
+    ],
+
+}
+
+def test_import_per_section_parameters(
+    sync_db_session: Session,
+    verify_dataset_import: Callable[[list[str]], models.Dataset],
+    verify_model: Callable[[Base, dict[str, Any]], None],
+    expected_per_section_parameters: list[dict[str, Any]] ) -> None:
+    populate_per_section_parameters(sync_db_session)
+    sync_db_session.commit()
+    # actual = verify_dataset_import(import_tiltseries=True)
+    # expected_iter = iter(expected_per_section_parameters)

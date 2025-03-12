@@ -5,6 +5,8 @@ import boto3
 import click
 from botocore import UNSIGNED
 from botocore.config import Config
+from s3fs import S3FileSystem
+
 from db_import.common.config import DBImportConfig
 from db_import.importers.alignment import AlignmentImporter, PerSectionAlignmentParametersImporter
 from db_import.importers.annotation import (
@@ -20,11 +22,13 @@ from db_import.importers.frame import FrameImporter
 from db_import.importers.frame_acquisition_file import FrameAcquisitionFileImporter
 from db_import.importers.gain import GainImporter
 from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
-from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
+from db_import.importers.tiltseries import (
+    PerSectionParametersImporter,
+    StaleTiltSeriesDeletionDBImporter,
+    TiltSeriesDBImporter,
+)
 from db_import.importers.tomogram import TomogramAuthorImporter, TomogramImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
-from s3fs import S3FileSystem
-
 from platformics.database.connect import init_sync_db
 
 logger = logging.getLogger("db_import")
@@ -254,6 +258,14 @@ def load_func(
                 if tiltseries:
                     tiltseries_obj = tiltseries.import_to_db()
                     tiltseries_cleaner.mark_as_active(tiltseries_obj)
+                    parents = {"run": run, "tiltseries": tiltseries}
+                    per_section_parameters_importer = PerSectionParametersImporter(
+                        config,
+                        tiltseries=tiltseries_obj,
+                        run=run_obj,
+                        parents=parents,
+                    )
+                    per_section_parameters_importer.import_items()
                 tiltseries_cleaner.remove_stale_objects()
             if import_alignments:
                 alignment_importer = AlignmentImporter(config, **parents)
