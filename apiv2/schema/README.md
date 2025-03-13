@@ -57,6 +57,16 @@ TomogramAuthor {
     boolean corresponding_author_status
     boolean primary_author_status
 }
+PerSectionParameters {
+    float astigmatic_angle
+    float major_defocus
+    float max_resolution
+    float minor_defocus
+    float phase_shift
+    float raw_angle
+    integer z_index
+    integer id
+}
 Tiltseries {
     string s3_omezarr_dir
     float file_size_omezarr
@@ -284,6 +294,9 @@ TomogramVoxelSpacing ||--}o AnnotationFile : "annotation_files"
 TomogramVoxelSpacing ||--|o Run : "run"
 TomogramVoxelSpacing ||--}o Tomogram : "tomograms"
 TomogramAuthor ||--|o Tomogram : "tomogram"
+PerSectionParameters ||--|| Frame : "frame"
+PerSectionParameters ||--|| Run : "run"
+PerSectionParameters ||--|| Tiltseries : "tiltseries"
 Tiltseries ||--}o Alignment : "alignments"
 Tiltseries ||--|| Run : "run"
 Tiltseries ||--|o Deposition : "deposition"
