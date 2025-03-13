@@ -76,3 +76,6 @@ services:
     volumes:
       - ./apiv2:/app
     command: ["/usr/local/bin/supervisord", "-c", "/app/etc/supervisord.conf"]
+    depends_on:
+      db:
+        condition: service_healthy
