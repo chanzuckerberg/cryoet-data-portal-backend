@@ -373,7 +373,7 @@ def populate_stale_tomogram_authors(session: sa.orm.Session) -> None:
 @write_data
 def populate_tiltseries(session: sa.orm.Session) -> Tiltseries:
     populate_run(session)
-    tiltseries=Tiltseries(
+    tiltseries = Tiltseries(
         id=TILTSERIES_ID,
         run_id=RUN1_ID,
         s3_mrc_file="ts_foo.mrc",
@@ -418,7 +418,8 @@ def populate_tiltseries(session: sa.orm.Session) -> Tiltseries:
         raw_angle=0.5,
         run_id=RUN1_ID,
         tiltseries_id=TILTSERIES_ID,
-        z_index=0)
+        z_index=0,
+    )
     session.add(per_section_parameters)
     return tiltseries
 

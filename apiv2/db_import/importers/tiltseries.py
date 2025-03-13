@@ -13,10 +13,7 @@ from platformics.database.models.base import Base
 
 
 class PerSectionParametersItem(ItemDBImporter):
-    id_fields = [
-        "frame_id",
-        "run_id",
-        "tiltseries_id"]
+    id_fields = ["frame_id", "run_id", "tiltseries_id"]
     model_class = models.PerSectionParameters
     direct_mapped_fields = {
         "astigmatic_angle": ["astigmatic_angle"],
@@ -32,7 +29,13 @@ class PerSectionParametersItem(ItemDBImporter):
         self.model_args["run_id"] = self.input_data["run"].id
         self.model_args["tiltseries_id"] = self.input_data["tiltseries"].id
         # query the database for the frame_id using run_id and acquisition_order
-        self.model_args["frame_id"] = self.config.get_db_session().query(models.Frame).filter_by(run_id=self.input_data["run"].id, acquisition_order=self.input_data["frame_acquisition_order"]).one().id
+        self.model_args["frame_id"] = (
+            self.config.get_db_session()
+            .query(models.Frame)
+            .filter_by(run_id=self.input_data["run"].id, acquisition_order=self.input_data["frame_acquisition_order"])
+            .one()
+            .id
+        )
 
 
 class PerSectionParametersImporter(IntegratedDBImporter):

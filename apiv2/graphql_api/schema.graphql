@@ -1926,7 +1926,7 @@ type DatasetAuthor implements EntityInterface & Node {
   """A unique, persistent identifier for kaggle users at kaggle.com."""
   kaggleId: String
 
-  """Full name of an author (e.g. Jane Doe)."""
+  """Full name of a dataset author (e.g. Jane Doe)."""
   name: String!
 
   """Email address for this author"""
@@ -2017,7 +2017,7 @@ input DatasetAuthorCreateInput {
   """A unique, persistent identifier for kaggle users at kaggle.com."""
   kaggleId: String = null
 
-  """Full name of an author (e.g. Jane Doe)."""
+  """Full name of a dataset author (e.g. Jane Doe)."""
   name: String!
 
   """Email address for this author"""
@@ -2115,7 +2115,7 @@ input DatasetAuthorUpdateInput {
   """A unique, persistent identifier for kaggle users at kaggle.com."""
   kaggleId: String = null
 
-  """Full name of an author (e.g. Jane Doe)."""
+  """Full name of a dataset author (e.g. Jane Doe)."""
   name: String
 
   """Email address for this author"""
