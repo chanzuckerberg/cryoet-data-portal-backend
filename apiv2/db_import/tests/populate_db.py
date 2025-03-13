@@ -1,7 +1,6 @@
 from datetime import date, datetime
 
 import sqlalchemy as sa
-from database import models
 from database.models import (
     Alignment,
     Annotation,
@@ -374,7 +373,7 @@ def populate_stale_tomogram_authors(session: sa.orm.Session) -> None:
 @write_data
 def populate_tiltseries(session: sa.orm.Session) -> Tiltseries:
     populate_run(session)
-    return Tiltseries(
+    tiltseries=Tiltseries(
         id=TILTSERIES_ID,
         run_id=RUN1_ID,
         s3_mrc_file="ts_foo.mrc",
@@ -400,6 +399,28 @@ def populate_tiltseries(session: sa.orm.Session) -> Tiltseries:
         tilting_scheme="unknown",
         data_acquisition_software="unknown",
     )
+    frame = Frame(
+        run_id=RUN1_ID,
+        id=FRAME_ID,
+        acquisition_order=0,
+        deposition_id=DEPOSITION_ID1,
+        s3_frame_path="s3://test-public-bucket/30001/RUN1/Frames/frame1",
+        https_frame_path="https://foo.com/30001/RUN1/Frames/frame1",
+    )
+    session.add(frame)
+    per_section_parameters = PerSectionParameters(
+        astigmatic_angle=0.5,
+        frame_id=FRAME_ID,
+        major_defocus=0.5,
+        minor_defocus=0.5,
+        phase_shift=0.5,
+        max_resolution=0.5,
+        raw_angle=0.5,
+        run_id=RUN1_ID,
+        tiltseries_id=TILTSERIES_ID,
+        z_index=0)
+    session.add(per_section_parameters)
+    return tiltseries
 
 
 @write_data
@@ -700,33 +721,6 @@ def populate_stale_per_section_alignment_parameters(session: sa.orm.Session) -> 
             **default_kwargs,
         ),
     )
-
-@write_data
-def populate_per_section_parameters(session: sa.orm.Session) -> models.PerSectionParameters:
-    populate_tiltseries(session)
-    frame = Frame(
-        run_id=RUN1_ID,
-        id=FRAME_ID,
-        acquisition_order=0,
-        deposition_id=DEPOSITION_ID1,
-        s3_frame_path="s3://test-public-bucket/30001/RUN1/Frames/frame1",
-        https_frame_path="https://foo.com/30001/RUN1/Frames/frame1",
-    )
-    session.add(frame)
-    per_section_parameters = PerSectionParameters(
-        astigmatic_angle=0.5,
-        frame_id=FRAME_ID,
-        major_defocus=0.5,
-        minor_defocus=0.5,
-        phase_shift=0.5,
-        max_resolution=0.5,
-        raw_angle=0.5,
-        run_id=RUN1_ID,
-        tiltseries_id=TILTSERIES_ID,
-        z_index=0)
-    session.add(per_section_parameters)
-    return per_section_parameters
-
 
 
 @write_data
