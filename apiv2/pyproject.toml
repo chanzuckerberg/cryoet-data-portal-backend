@@ -43,7 +43,7 @@ uuid6 = "^2023.5.2"
 types-requests = "^2.31.0.2"
 boto3 = "^1.28.43"
 boto3-stubs = {extras = ["s3", "sts"], version = "^1.28.61"}
-jinja2 = "^3.1.3"
+jinja2 = "^3.1.6"
 linkml = "^1.5.7"
 strcase = "^1.0.0"
 linkml-runtime = "^1.6.0"
