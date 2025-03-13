@@ -57,5 +57,40 @@
   "run_name": "RUN1",
   "frames_count": 60,
   "deposition_id": 300,
-  "last_updated_at": 1728675676
+  "last_updated_at": 1728675676,
+  "per_section_parameter": [
+    {
+      "z_index": 0,
+      "frame_acquisition_order": 27,
+      "raw_angle": -52.01,
+      "astigmatic_angle": 37.98,
+      "cross_correlation": 2551.0,
+      "major_defocus": 28.0,
+      "max_resolution": 88.0,
+      "minor_defocus": 37.98,
+      "phase_shift": 2699.0
+    },
+    {
+      "z_index": 1,
+      "frame_acquisition_order": 26,
+      "raw_angle": -49.01,
+      "astigmatic_angle": 34.98,
+      "cross_correlation": 2674.0,
+      "major_defocus": 27.0,
+      "max_resolution": 72.0,
+      "minor_defocus": 34.98,
+      "phase_shift": 2823.0
+    },
+    {
+      "z_index": 2,
+      "frame_acquisition_order": 23,
+      "raw_angle": -46.01,
+      "astigmatic_angle": 25.98,
+      "cross_correlation": 3507.0,
+      "major_defocus": 24.0,
+      "max_resolution": -20.0,
+      "minor_defocus": 25.98,
+      "phase_shift": 3553.0
+    }
+  ]
 }
