@@ -258,11 +258,10 @@ def load_func(
                 if tiltseries:
                     tiltseries_obj = tiltseries.import_to_db()
                     tiltseries_cleaner.mark_as_active(tiltseries_obj)
-                    parents = {"run": run, "tiltseries": tiltseries}
+                    parents = {"run": run_obj, "tiltseries": tiltseries_obj}
                     per_section_parameters_importer = PerSectionParametersImporter(
                         config,
-                        tiltseries=tiltseries_obj,
-                        run=run_obj,
+                        tiltseries,
                         parents=parents,
                     )
                     per_section_parameters_importer.import_items()
