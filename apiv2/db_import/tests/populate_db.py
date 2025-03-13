@@ -722,23 +722,3 @@ def populate_stale_per_section_alignment_parameters(session: sa.orm.Session) -> 
             **default_kwargs,
         ),
     )
-
-
-@write_data
-def populate_existing_frames(session: sa.orm.Session) -> Frame:
-    populate_run(session)
-    stale_frame = Frame(
-        run_id=RUN1_ID,
-        deposition_id=DEPOSITION_ID1,
-        https_frame_path="STALE_FRAME",
-        s3_frame_path="STALE_FRAME",
-    )
-    session.add(stale_frame)
-    return Frame(
-        id=FRAME_ID,
-        run_id=RUN1_ID,
-        acquisition_order=0,
-        deposition_id=DEPOSITION_ID1,
-        s3_frame_path="s3://test-public-bucket/30001/RUN1/Frames/frame1",
-        https_frame_path="https://foo.com/30001/RUN1/Frames/frame1",
-    )
