@@ -258,13 +258,16 @@ def load_func(
                 if tiltseries:
                     tiltseries_obj = tiltseries.import_to_db()
                     tiltseries_cleaner.mark_as_active(tiltseries_obj)
-                    parents = {"run": run_obj, "tiltseries": tiltseries_obj}
+                    # import per section parameters
+                    metadata_file_path = tiltseries.get_metadata_file_path()
+                    parents["tiltseries"] = tiltseries_obj
                     per_section_parameters_importer = PerSectionParametersImporter(
                         config,
-                        tiltseries,
-                        parents=parents,
+                        metadata_file_path,
+                        **parents,
                     )
                     per_section_parameters_importer.import_items()
+                    parents.pop("tiltseries")
                 tiltseries_cleaner.remove_stale_objects()
             if import_alignments:
                 alignment_importer = AlignmentImporter(config, **parents)

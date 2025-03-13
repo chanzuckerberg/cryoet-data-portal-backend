@@ -26,13 +26,14 @@ class PerSectionParametersItem(ItemDBImporter):
     }
 
     def load_computed_fields(self):
-        self.model_args["run_id"] = self.input_data["run"].id
         self.model_args["tiltseries_id"] = self.input_data["tiltseries"].id
+        run_id = self.input_data["tiltseries"].run_id
+        self.model_args["run_id"] = run_id
         # query the database for the frame_id using run_id and acquisition_order
         self.model_args["frame_id"] = (
             self.config.get_db_session()
             .query(models.Frame)
-            .filter_by(run_id=self.input_data["run"].id, acquisition_order=self.input_data["frame_acquisition_order"])
+            .filter_by(run_id=run_id, acquisition_order=self.input_data["frame_acquisition_order"])
             .one()
             .id
         )
@@ -43,16 +44,16 @@ class PerSectionParametersImporter(IntegratedDBImporter):
     row_importer = PerSectionParametersItem
     clean_up_siblings = True
 
-    def __init__(self, config, tiltseries: "TiltSeriesDBImporter", parents: dict[str, Any]):
+    def __init__(self, config, metadata_file_path: str, tiltseries: models.Tiltseries, **unused_parents):
         self.config = config
-        self.parents = parents
-        self.tiltseries = tiltseries
+        self.parents = {"tiltseries": tiltseries}
+        self.metadata_file_path = metadata_file_path
 
     def get_filters(self) -> dict[str, Any]:
         return {"tiltseries_id": self.parents["tiltseries"].id}
 
     def get_finder_args(self) -> dict[str, Any]:
-        metadata_path = os.path.join(self.config.s3_prefix, self.tiltseries.get_metadata_file_path())
+        metadata_path = os.path.join(self.config.s3_prefix, self.metadata_file_path)
         return {
             "path": self.convert_to_finder_path(metadata_path),
             "list_key": ["per_section_parameter"],
