@@ -1845,8 +1845,8 @@ classes:
         required: false
         ifabsent: 0
         unit:
-          symbol: °
-          descriptive_name: degrees
+          symbol: rad
+          descriptive_name: radians
       raw_angle:
         name: raw_angle
         description: Nominal tilt angle for this tilt image reported by the microscope.

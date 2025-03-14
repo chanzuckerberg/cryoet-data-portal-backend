@@ -114,7 +114,8 @@ def expected_per_section_parameters() -> list[dict[str, Any]]:
             raw_angle=0.5,
             run_id=RUN1_ID,
             tiltseries_id=TILTSERIES_ID,
-            z_index=0),
+            z_index=0,
+        ),
     ]
 
 

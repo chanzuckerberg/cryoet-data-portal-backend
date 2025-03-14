@@ -478,7 +478,9 @@ def populate_stale_per_section_parameters(session: sa.orm.Session) -> PerSection
             raw_angle=0.5,
             tiltseries_id=TILTSERIES_ID,
             z_index=0,
-        ))
+        ),
+    )
+
 
 @write_data
 def populate_annotations(session: sa.orm.Session) -> Annotation:
