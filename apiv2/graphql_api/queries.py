@@ -84,6 +84,12 @@ from graphql_api.types.per_section_alignment_parameters import (
     resolve_per_section_alignment_parameters,
     resolve_per_section_alignment_parameters_aggregate,
 )
+from graphql_api.types.per_section_parameters import (
+    PerSectionParameters,
+    PerSectionParametersAggregate,
+    resolve_per_section_parameters,
+    resolve_per_section_parameters_aggregate,
+)
 from graphql_api.types.run import Run, RunAggregate, resolve_runs, resolve_runs_aggregate
 from graphql_api.types.tiltseries import (
     Tiltseries,
@@ -130,6 +136,7 @@ class Query:
     deposition_types: Sequence[DepositionType] = resolve_deposition_types
     frames: Sequence[Frame] = resolve_frames
     per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = resolve_per_section_alignment_parameters
+    per_section_parameters: Sequence[PerSectionParameters] = resolve_per_section_parameters
     runs: Sequence[Run] = resolve_runs
     tiltseries: Sequence[Tiltseries] = resolve_tiltseries
     tomogram_authors: Sequence[TomogramAuthor] = resolve_tomogram_authors
@@ -155,6 +162,7 @@ class Query:
     per_section_alignment_parameters_aggregate: PerSectionAlignmentParametersAggregate = (
         resolve_per_section_alignment_parameters_aggregate
     )
+    per_section_parameters_aggregate: PerSectionParametersAggregate = resolve_per_section_parameters_aggregate
     runs_aggregate: RunAggregate = resolve_runs_aggregate
     tiltseries_aggregate: TiltseriesAggregate = resolve_tiltseries_aggregate
     tomogram_authors_aggregate: TomogramAuthorAggregate = resolve_tomogram_authors_aggregate

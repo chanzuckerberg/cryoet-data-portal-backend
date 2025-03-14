@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.alignment as alignment_helper
 import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.per_section_parameters as per_section_parameters_helper
 import graphql_api.helpers.run as run_helper
 import strawberry
 from support.enums import tiltseries_microscope_manufacturer_enum
@@ -16,11 +17,13 @@ from support.enums import tiltseries_microscope_manufacturer_enum
 if TYPE_CHECKING:
     from graphql_api.helpers.alignment import AlignmentGroupByOptions
     from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.per_section_parameters import PerSectionParametersGroupByOptions
     from graphql_api.helpers.run import RunGroupByOptions
 else:
     AlignmentGroupByOptions = "AlignmentGroupByOptions"
     RunGroupByOptions = "RunGroupByOptions"
     DepositionGroupByOptions = "DepositionGroupByOptions"
+    PerSectionParametersGroupByOptions = "PerSectionParametersGroupByOptions"
 
 
 """
@@ -52,6 +55,9 @@ class TiltseriesGroupByOptions:
     microscope_phase_plate: Optional[str] = None
     microscope_image_corrector: Optional[str] = None
     microscope_additional_info: Optional[str] = None
+    per_section_parameters: Optional[
+        Annotated["PerSectionParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_parameters")]
+    ] = None
     camera_manufacturer: Optional[str] = None
     camera_model: Optional[str] = None
     tilt_min: Optional[float] = None
@@ -123,6 +129,19 @@ def build_tiltseries_groupby_output(
                 )
             else:
                 value = deposition_helper.build_deposition_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "per_section_parameters":
+            if getattr(group_object, key):
+                value = per_section_parameters_helper.build_per_section_parameters_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = per_section_parameters_helper.build_per_section_parameters_groupby_output(
                     None,
                     keys,
                     value,

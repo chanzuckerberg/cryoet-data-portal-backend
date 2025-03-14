@@ -25,6 +25,7 @@ from database.models.deposition import Deposition  # noqa: F401
 from database.models.deposition_type import DepositionType  # noqa: F401
 from database.models.frame import Frame  # noqa: F401
 from database.models.per_section_alignment_parameters import PerSectionAlignmentParameters  # noqa: F401
+from database.models.per_section_parameters import PerSectionParameters  # noqa: F401
 from database.models.run import Run  # noqa: F401
 from database.models.tiltseries import Tiltseries  # noqa: F401
 from database.models.tomogram_author import TomogramAuthor  # noqa: F401

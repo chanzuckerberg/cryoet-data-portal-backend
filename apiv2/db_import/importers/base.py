@@ -4,9 +4,9 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Type
 
 import sqlalchemy as sa
-from db_import.common.config import DBImportConfig, map_to_value
 from sqlalchemy.exc import NoResultFound
 
+from db_import.common.config import DBImportConfig, map_to_value
 from platformics.database.models.base import Base
 
 if TYPE_CHECKING:

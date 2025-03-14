@@ -74,6 +74,12 @@ from graphql_api.types.per_section_alignment_parameters import (
     delete_per_section_alignment_parameters,
     update_per_section_alignment_parameters,
 )
+from graphql_api.types.per_section_parameters import (
+    PerSectionParameters,
+    create_per_section_parameters,
+    delete_per_section_parameters,
+    update_per_section_parameters,
+)
 from graphql_api.types.run import Run, create_run, delete_run, update_run
 from graphql_api.types.tiltseries import Tiltseries, create_tiltseries, delete_tiltseries, update_tiltseries
 from graphql_api.types.tomogram import Tomogram, create_tomogram, delete_tomogram, update_tomogram
@@ -172,6 +178,11 @@ class Mutation:
     delete_per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = (
         delete_per_section_alignment_parameters
     )
+
+    # PerSectionParameters mutations
+    create_per_section_parameters: PerSectionParameters = create_per_section_parameters
+    update_per_section_parameters: Sequence[PerSectionParameters] = update_per_section_parameters
+    delete_per_section_parameters: Sequence[PerSectionParameters] = delete_per_section_parameters
 
     # Run mutations
     create_run: Run = create_run

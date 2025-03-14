@@ -20,6 +20,7 @@ if TYPE_CHECKING:
     from database.models.frame import Frame
     from database.models.frame_acquisition_file import FrameAcquisitionFile
     from database.models.gain_file import GainFile
+    from database.models.per_section_parameters import PerSectionParameters
     from database.models.tiltseries import Tiltseries
     from database.models.tomogram import Tomogram
     from database.models.tomogram_voxel_spacing import TomogramVoxelSpacing
@@ -35,6 +36,7 @@ else:
     Frame = "Frame"
     GainFile = "GainFile"
     FrameAcquisitionFile = "FrameAcquisitionFile"
+    PerSectionParameters = "PerSectionParameters"
     Tiltseries = "Tiltseries"
     TomogramVoxelSpacing = "TomogramVoxelSpacing"
     Tomogram = "Tomogram"
@@ -68,6 +70,13 @@ class Run(Base):
         back_populates="run",
         uselist=True,
         foreign_keys="FrameAcquisitionFile.run_id",
+        cascade="all, delete-orphan",
+    )
+    per_section_parameters: Mapped[list[PerSectionParameters]] = relationship(
+        "PerSectionParameters",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="PerSectionParameters.run_id",
         cascade="all, delete-orphan",
     )
     tiltseries: Mapped[list[Tiltseries]] = relationship(

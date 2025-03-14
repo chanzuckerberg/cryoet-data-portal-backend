@@ -3,12 +3,7 @@ from typing import Any, Callable
 import pytest as pytest
 import sqlalchemy as sa
 from database import models
-from db_import.tests.populate_db import (
-    DEPOSITION_ID1,
-    RUN1_ID,
-    populate_run,
-    write_data,
-)
+from db_import.tests.populate_db import DEPOSITION_ID1, FRAME_ID, RUN1_ID, populate_run, write_data
 from sqlalchemy.orm import Session
 
 from platformics.database.models import Base
@@ -58,7 +53,7 @@ def populate_existing_frames(session: sa.orm.Session) -> models.Frame:
     )
     session.add(stale_frame)
     return models.Frame(
-        id=333,
+        id=FRAME_ID,
         run_id=RUN1_ID,
         acquisition_order=0,
         deposition_id=DEPOSITION_ID1,

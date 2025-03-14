@@ -16,6 +16,7 @@ from faker_enum import EnumProvider
 
 from platformics.test_infra.factories.base import CommonFactory
 from test_infra.factories.frame import FrameFactory
+from test_infra.factories.run import RunFactory
 from test_infra.factories.tiltseries import TiltseriesFactory
 
 Faker.add_provider(Bioseq)
@@ -30,14 +31,23 @@ class PerSectionParametersFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+    astigmatic_angle = fuzzy.FuzzyFloat(1, 100)
     frame = factory.SubFactory(
         FrameFactory,
+    )
+    major_defocus = fuzzy.FuzzyFloat(1, 100)
+    max_resolution = fuzzy.FuzzyFloat(1, 100)
+    minor_defocus = fuzzy.FuzzyFloat(1, 100)
+    phase_shift = fuzzy.FuzzyFloat(1, 100)
+    raw_angle = fuzzy.FuzzyFloat(1, 100)
+    run = factory.SubFactory(
+        RunFactory,
     )
     tiltseries = factory.SubFactory(
         TiltseriesFactory,
     )
+
     z_index = fuzzy.FuzzyInteger(1, 1000)
-    defocus = fuzzy.FuzzyFloat(1, 100)
-    astigmatism = fuzzy.FuzzyFloat(1, 100)
-    astigmatic_angle = fuzzy.FuzzyFloat(1, 100)
-    id = fuzzy.FuzzyInteger(1, 1000)
+
+    # Auto increment integer identifiers starting with 1
+    id = factory.Sequence(lambda n: n + 1)

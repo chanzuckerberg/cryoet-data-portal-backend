@@ -42,21 +42,34 @@ from platformics.graphql_api.core.query_input_types import (
 )
 from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
-    from graphql_api.types.frame import Frame, FrameOrderByClause, FrameWhereClause
-    from graphql_api.types.tiltseries import Tiltseries, TiltseriesOrderByClause, TiltseriesWhereClause
+    from graphql_api.types.frame import Frame, FrameAggregateWhereClause, FrameOrderByClause, FrameWhereClause
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
+    from graphql_api.types.tiltseries import (
+        Tiltseries,
+        TiltseriesAggregateWhereClause,
+        TiltseriesOrderByClause,
+        TiltseriesWhereClause,
+    )
 
     pass
 else:
     FrameWhereClause = "FrameWhereClause"
+    FrameAggregateWhereClause = "FrameAggregateWhereClause"
     Frame = "Frame"
     FrameOrderByClause = "FrameOrderByClause"
+    RunWhereClause = "RunWhereClause"
+    RunAggregateWhereClause = "RunAggregateWhereClause"
+    Run = "Run"
+    RunOrderByClause = "RunOrderByClause"
     TiltseriesWhereClause = "TiltseriesWhereClause"
+    TiltseriesAggregateWhereClause = "TiltseriesAggregateWhereClause"
     Tiltseries = "Tiltseries"
     TiltseriesOrderByClause = "TiltseriesOrderByClause"
     pass
@@ -81,6 +94,19 @@ async def load_frame_rows(
     mapper = inspect(db.PerSectionParameters)
     relationship = mapper.relationships["frame"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.frame_id)  # type:ignore
+
+
+@strawberry.field
+async def load_run_rows(
+    root: "PerSectionParameters",
+    info: Info,
+    where: Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")] | None = None,
+    order_by: Optional[list[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]]] = [],
+) -> Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.PerSectionParameters)
+    relationship = mapper.relationships["run"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
 
 
 @strawberry.field
@@ -123,14 +149,19 @@ Supported WHERE clause attributes
 
 @strawberry.input
 class PerSectionParametersWhereClause(TypedDict):
+    astigmatic_angle: Optional[FloatComparators] | None
     frame: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
     frame_id: Optional[IntComparators] | None
+    major_defocus: Optional[FloatComparators] | None
+    max_resolution: Optional[FloatComparators] | None
+    minor_defocus: Optional[FloatComparators] | None
+    phase_shift: Optional[FloatComparators] | None
+    raw_angle: Optional[FloatComparators] | None
+    run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    run_id: Optional[IntComparators] | None
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     tiltseries_id: Optional[IntComparators] | None
     z_index: Optional[IntComparators] | None
-    defocus: Optional[FloatComparators] | None
-    astigmatism: Optional[FloatComparators] | None
-    astigmatic_angle: Optional[FloatComparators] | None
     id: Optional[IntComparators] | None
 
 
@@ -141,12 +172,16 @@ Supported ORDER BY clause attributes
 
 @strawberry.input
 class PerSectionParametersOrderByClause(TypedDict):
+    astigmatic_angle: Optional[orderBy] | None
     frame: Optional[Annotated["FrameOrderByClause", strawberry.lazy("graphql_api.types.frame")]] | None
+    major_defocus: Optional[orderBy] | None
+    max_resolution: Optional[orderBy] | None
+    minor_defocus: Optional[orderBy] | None
+    phase_shift: Optional[orderBy] | None
+    raw_angle: Optional[orderBy] | None
+    run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
     tiltseries: Optional[Annotated["TiltseriesOrderByClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
     z_index: Optional[orderBy] | None
-    defocus: Optional[orderBy] | None
-    astigmatism: Optional[orderBy] | None
-    astigmatic_angle: Optional[orderBy] | None
     id: Optional[orderBy] | None
 
 
@@ -155,18 +190,35 @@ Define PerSectionParameters type
 """
 
 
-@strawberry.type(description="Record how frames get mapped to Tiltseries")
+@strawberry.type(description="Map individual Frames to a Tiltseries")
 class PerSectionParameters(EntityInterface):
+    astigmatic_angle: Optional[float] = strawberry.field(
+        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
+    )
     frame: Optional[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
     frame_id: int
+    major_defocus: Optional[float] = strawberry.field(
+        description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
+        default=None,
+    )
+    max_resolution: Optional[float] = strawberry.field(description="Maximum resolution of the frame", default=None)
+    minor_defocus: Optional[float] = strawberry.field(
+        description="Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
+        default=None,
+    )
+    phase_shift: Optional[float] = strawberry.field(
+        description="Phase shift estimated for this tilt image in degrees.", default=None,
+    )
+    raw_angle: float = strawberry.field(
+        description="Nominal tilt angle for this tilt image reported by the microscope.",
+    )
+    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run_id: int
     tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
         load_tiltseries_rows
     )  # type:ignore
     tiltseries_id: int
-    z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
-    defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
-    astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
-    astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
+    z_index: int = strawberry.field(description="Index (0-based) of this tilt image in the tilt series stack.")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -190,10 +242,13 @@ Define columns that support numerical aggregations
 
 @strawberry.type
 class PerSectionParametersNumericalColumns:
-    z_index: Optional[int] = None
-    defocus: Optional[float] = None
-    astigmatism: Optional[float] = None
     astigmatic_angle: Optional[float] = None
+    major_defocus: Optional[float] = None
+    max_resolution: Optional[float] = None
+    minor_defocus: Optional[float] = None
+    phase_shift: Optional[float] = None
+    raw_angle: Optional[float] = None
+    z_index: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -204,10 +259,13 @@ Define columns that support min/max aggregations
 
 @strawberry.type
 class PerSectionParametersMinMaxColumns:
-    z_index: Optional[int] = None
-    defocus: Optional[float] = None
-    astigmatism: Optional[float] = None
     astigmatic_angle: Optional[float] = None
+    major_defocus: Optional[float] = None
+    max_resolution: Optional[float] = None
+    minor_defocus: Optional[float] = None
+    phase_shift: Optional[float] = None
+    raw_angle: Optional[float] = None
+    z_index: Optional[int] = None
     id: Optional[int] = None
 
 
@@ -218,13 +276,32 @@ Define enum of all columns to support count and count(distinct) aggregations
 
 @strawberry.enum
 class PerSectionParametersCountColumns(enum.Enum):
-    frame = "frame"
-    tiltseries = "tiltseries"
-    zIndex = "z_index"
-    defocus = "defocus"
-    astigmatism = "astigmatism"
     astigmaticAngle = "astigmatic_angle"
+    majorDefocus = "major_defocus"
+    maxResolution = "max_resolution"
+    minorDefocus = "minor_defocus"
+    phaseShift = "phase_shift"
+    rawAngle = "raw_angle"
+    zIndex = "z_index"
     id = "id"
+
+
+"""
+Support *filtering* on aggregates and related aggregates
+"""
+
+
+@strawberry.input
+class PerSectionParametersAggregateWhereClauseCount(TypedDict):
+    arguments: Optional["PerSectionParametersCountColumns"] | None
+    distinct: Optional[bool] | None
+    filter: Optional[PerSectionParametersWhereClause] | None
+    predicate: Optional[IntComparators] | None
+
+
+@strawberry.input
+class PerSectionParametersAggregateWhereClause(TypedDict):
+    count: PerSectionParametersAggregateWhereClauseCount
 
 
 """
@@ -237,9 +314,7 @@ class PerSectionParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self,
-        distinct: Optional[bool] = False,
-        columns: Optional[PerSectionParametersCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[PerSectionParametersCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -272,23 +347,57 @@ Mutation types
 
 @strawberry.input()
 class PerSectionParametersCreateInput:
-    frame_id: strawberry.ID = strawberry.field(description=None)
-    tiltseries_id: strawberry.ID = strawberry.field(description=None)
-    z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
-    defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
-    astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
-    astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
+    astigmatic_angle: Optional[float] = strawberry.field(
+        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
+    )
+    frame_id: strawberry.ID = strawberry.field(description="Frame that this section is a part of")
+    major_defocus: Optional[float] = strawberry.field(
+        description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
+        default=None,
+    )
+    max_resolution: Optional[float] = strawberry.field(description="Maximum resolution of the frame", default=None)
+    minor_defocus: Optional[float] = strawberry.field(
+        description="Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
+        default=None,
+    )
+    phase_shift: Optional[float] = strawberry.field(
+        description="Phase shift estimated for this tilt image in degrees.", default=None,
+    )
+    raw_angle: float = strawberry.field(
+        description="Nominal tilt angle for this tilt image reported by the microscope.",
+    )
+    run_id: strawberry.ID = strawberry.field(description="Run that this section is a part of")
+    tiltseries_id: strawberry.ID = strawberry.field(description="Tiltseries that this section is a part of")
+    z_index: int = strawberry.field(description="Index (0-based) of this tilt image in the tilt series stack.")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
 
 @strawberry.input()
 class PerSectionParametersUpdateInput:
-    frame_id: Optional[strawberry.ID] = strawberry.field(description=None)
-    tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None)
-    z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
-    defocus: Optional[float] = strawberry.field(description="defocus amount", default=None)
-    astigmatism: Optional[float] = strawberry.field(description="Astigmatism amount for this frame", default=None)
-    astigmatic_angle: Optional[float] = strawberry.field(description="Angle of ast", default=None)
+    astigmatic_angle: Optional[float] = strawberry.field(
+        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
+    )
+    frame_id: Optional[strawberry.ID] = strawberry.field(description="Frame that this section is a part of")
+    major_defocus: Optional[float] = strawberry.field(
+        description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
+        default=None,
+    )
+    max_resolution: Optional[float] = strawberry.field(description="Maximum resolution of the frame", default=None)
+    minor_defocus: Optional[float] = strawberry.field(
+        description="Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
+        default=None,
+    )
+    phase_shift: Optional[float] = strawberry.field(
+        description="Phase shift estimated for this tilt image in degrees.", default=None,
+    )
+    raw_angle: Optional[float] = strawberry.field(
+        description="Nominal tilt angle for this tilt image reported by the microscope.",
+    )
+    run_id: Optional[strawberry.ID] = strawberry.field(description="Run that this section is a part of")
+    tiltseries_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries that this section is a part of")
+    z_index: Optional[int] = strawberry.field(
+        description="Index (0-based) of this tilt image in the tilt series stack.",
+    )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
 
@@ -378,10 +487,7 @@ async def resolve_per_section_parameters_aggregate(
     """
     # Get the selected aggregate functions and columns to operate on, and groupby options if any were provided.
     # TODO: not sure why selected_fields is a list
-    selections = info.selected_fields[0].selections[0].selections
-    aggregate_selections = [selection for selection in selections if selection.name != "groupBy"]
-    groupby_selections = [selection for selection in selections if selection.name == "groupBy"]
-    groupby_selections = groupby_selections[0].selections if groupby_selections else []
+    aggregate_selections, groupby_selections = get_aggregate_selections(info.selected_fields)
 
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
@@ -411,16 +517,17 @@ async def create_per_section_parameters(
     # Check that frame relationship is accessible.
     if validated.frame_id:
         frame = await get_db_rows(
-            db.Frame,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.frame_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW,
         )
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
+    # Check that run relationship is accessible.
+    if validated.run_id:
+        run = await get_db_rows(
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+        )
+        if not run:
+            raise PlatformicsError("Unauthorized: run does not exist")
     # Check that tiltseries relationship is accessible.
     if validated.tiltseries_id:
         tiltseries = await get_db_rows(
@@ -472,18 +579,21 @@ async def update_per_section_parameters(
     # Check that frame relationship is accessible.
     if validated.frame_id:
         frame = await get_db_rows(
-            db.Frame,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.frame_id}},
-            [],
-            AuthzAction.VIEW,
+            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW,
         )
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
         params["frame"] = frame[0]
         del params["frame_id"]
+    # Check that run relationship is accessible.
+    if validated.run_id:
+        run = await get_db_rows(
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+        )
+        if not run:
+            raise PlatformicsError("Unauthorized: run does not exist")
+        params["run"] = run[0]
+        del params["run_id"]
     # Check that tiltseries relationship is accessible.
     if validated.tiltseries_id:
         tiltseries = await get_db_rows(
@@ -502,13 +612,7 @@ async def update_per_section_parameters(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionParameters,
-        session,
-        authz_client,
-        principal,
-        where,
-        [],
-        AuthzAction.UPDATE,
+        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -540,13 +644,7 @@ async def delete_per_section_parameters(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionParameters,
-        session,
-        authz_client,
-        principal,
-        where,
-        [],
-        AuthzAction.DELETE,
+        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

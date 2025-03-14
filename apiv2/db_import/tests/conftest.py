@@ -127,5 +127,5 @@ def expected_dataset(http_prefix: str) -> dict[str, Any]:
         "key_photo_url": f"{http_prefix}/{DATASET_ID}/KeyPhoto/snapshot.png",
         "key_photo_thumbnail_url": f"{http_prefix}/{DATASET_ID}/KeyPhoto/thumbnail.png",
         "deposition_id": 300,
-        "file_size": 1373792.0,
+        "file_size": 1374106.0,
     }
