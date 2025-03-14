@@ -1797,6 +1797,9 @@ classes:
           - per_section_astigmatic_angle
         range: float
         required: false
+        unit:
+          symbol: °
+          descriptive_name: degrees
       frame:
         name: frame
         description: Frame that this section is a part of

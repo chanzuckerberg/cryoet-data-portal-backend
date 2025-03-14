@@ -465,6 +465,22 @@ def populate_stale_tiltseries(session: sa.orm.Session) -> None:
 
 
 @write_data
+def populate_stale_per_section_parameters(session: sa.orm.Session) -> PerSectionParameters:
+    session.add(
+        PerSectionParameters(
+            run_id=STALE_RUN_ID,
+            astigmatic_angle=0.1,
+            frame_id=FRAME_ID,
+            major_defocus=0.5,
+            minor_defocus=0.5,
+            phase_shift=0.5,
+            max_resolution=0.5,
+            raw_angle=0.5,
+            tiltseries_id=TILTSERIES_ID,
+            z_index=0,
+        ))
+
+@write_data
 def populate_annotations(session: sa.orm.Session) -> Annotation:
     populate_deposition2(session)
     populate_tomogram_voxel_spacing(session)

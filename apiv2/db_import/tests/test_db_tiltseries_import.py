@@ -4,8 +4,10 @@ import pytest as pytest
 from database import models
 from db_import.tests.populate_db import (
     DATASET_ID,
+    FRAME_ID,
     RUN1_ID,
     TILTSERIES_ID,
+    populate_stale_per_section_parameters,
     populate_stale_run,
     populate_stale_tiltseries,
     populate_tiltseries,
@@ -90,23 +92,57 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
     ]
 
 
+@pytest.fixture
+def expected_per_section_parameters() -> list[dict[str, Any]]:
+    return [
+        {
+            "z_index": 0,
+            "raw_angle": -52.01,
+            "astigmatic_angle": 37.98,
+            "major_defocus": 28.0,
+            "max_resolution": 88.0,
+            "minor_defocus": 37.98,
+            "phase_shift": 2699.0,
+        },
+        dict(
+            astigmatic_angle=0.5,
+            frame_id=FRAME_ID,
+            major_defocus=0.5,
+            minor_defocus=0.5,
+            phase_shift=0.5,
+            max_resolution=0.5,
+            raw_angle=0.5,
+            run_id=RUN1_ID,
+            tiltseries_id=TILTSERIES_ID,
+            z_index=0),
+    ]
+
+
 # Tests addition of new tiltseries, and updating entries already existing in db
 def test_import_tiltseries(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_tiltseries: list[dict[str, Any]],
+    expected_per_section_parameters: list[dict[str, Any]],
 ) -> None:
     populate_tiltseries(sync_db_session)
     sync_db_session.commit()
     actual = verify_dataset_import(import_tiltseries=True)
-    expected_iter = iter(expected_tiltseries)
+    expected_ts_iter = iter(expected_tiltseries)
+    expected_psp_iter = iter(expected_per_section_parameters)
     for run in sorted(actual.runs, key=lambda x: x.name):
         for tiltseries in run.tiltseries:
-            expected = next(expected_iter)
+            expected = next(expected_ts_iter)
             if "run_id" not in expected:
                 expected["run_id"] = run.id
             verify_model(tiltseries, expected)
+        for per_section_parameters in run.per_section_parameters:
+            expected = next(expected_psp_iter)
+            if "run_id" not in expected:
+                expected["run_id"] = run.id
+            if per_section_parameters:
+                verify_model(per_section_parameters, expected)
 
 
 # Tests addition of new tiltseries, and updating entries already existing in db
@@ -115,16 +151,25 @@ def test_import_tiltseries_stale_deletion(
     verify_dataset_import: Callable[[list[str]], models.Dataset],
     verify_model: Callable[[Base, dict[str, Any]], None],
     expected_tiltseries: list[dict[str, Any]],
+    expected_per_section_parameters: list[dict[str, Any]],
 ) -> None:
     populate_tiltseries(sync_db_session)
     populate_stale_run(sync_db_session)
     populate_stale_tiltseries(sync_db_session)
+    populate_stale_per_section_parameters(sync_db_session)
     sync_db_session.commit()
     actual = verify_dataset_import(import_tiltseries=True)
-    expected_iter = iter(expected_tiltseries)
+    expected_ts_iter = iter(expected_tiltseries)
+    expected_psp_iter = iter(expected_per_section_parameters)
     for run in sorted(actual.runs, key=lambda x: x.name):
         for tiltseries in run.tiltseries:
-            expected = next(expected_iter)
+            expected = next(expected_ts_iter)
             if "run_id" not in expected:
                 expected["run_id"] = run.id
             verify_model(tiltseries, expected)
+        for per_section_parameters in run.per_section_parameters:
+            expected = next(expected_psp_iter)
+            if "run_id" not in expected:
+                expected["run_id"] = run.id
+            if per_section_parameters:
+                verify_model(per_section_parameters, expected)
