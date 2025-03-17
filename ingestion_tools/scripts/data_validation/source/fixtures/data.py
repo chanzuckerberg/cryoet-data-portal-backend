@@ -23,7 +23,7 @@ def frames_files(run: RunImporter) -> list[str]:
     return [
         file_path
         for importer in pytest.cryoet.get_importable_entities(FrameImporter, [run])
-        for file_path in importer.file_paths.values()
+        for name, file_path in importer.file_paths.items() if name != "default"
     ]
 
 
