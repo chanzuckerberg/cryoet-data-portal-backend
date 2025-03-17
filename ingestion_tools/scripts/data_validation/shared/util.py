@@ -26,7 +26,7 @@ TIFF_EXTENSIONS = (".tif", ".tiff", ".eer", ".gain")
 def get_file_type(filename: str) -> str:
     if filename.endswith(".zarr"):
         return "zarr"
-    if any(filename.endswith(extension) for extension in [".mrc", ".st", ".ali"]):
+    if any(filename.endswith(extension) for extension in [".mrc", ".st", ".ali", ".mrcs"]):
         return "mrc"
     return "unknown"
 
