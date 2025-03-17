@@ -718,6 +718,7 @@ def source_validate(
         print(f"Processing {ingestion_config}...")
         validation_params = {
             "config_file": ingestion_config,
+            "flags": "--no-multiprocessing",
         }
         future = execute_validate(
             ctx=ctx,
@@ -731,7 +732,6 @@ def source_validate(
         )
         futures.append(future)
         wait(futures)
-
 
 
 if __name__ == "__main__":

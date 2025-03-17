@@ -60,7 +60,7 @@ pytest --ingestion-config "../../../dataset_configs/10000.yaml" --input-bucket c
 Run frames and mdoc validation for run "TS_026" in ingestion config 10000.yaml
 
 ```
-pytest --ingestion-config "../../../dataset_configs/10000.yaml" --input-bucket cryoetportal-rawdatasets-dev   --filter-run-name TS_026 -s -v -m "mdoc or frame"
+pytest --ingestion-config "../../../dataset_configs/10000.yaml" --input-bucket cryoetportal-rawdatasets-dev --filter-run-name TS_026 -s -v -m "mdoc or frame"
 ```
 
 ### Allure + Pytest

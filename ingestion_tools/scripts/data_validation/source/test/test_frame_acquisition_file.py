@@ -10,6 +10,6 @@ class TestFrameAcquisitionFile(MdocTestHelper):
     @allure.title("Mdoc file exists when frames or tiltseries are present")
     def test_mdoc_file_count(self, mdoc_file: str, frames_files: list[str], tiltseries_files: list[str]):
         if frames_files or tiltseries_files:
-            assert mdoc_file is not None
+            assert mdoc_file is not None, "Frame or tiltseries files are present, but MDOC file not found"
         else:
             pytest.skip("No tiltseries or frame files")
