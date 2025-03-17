@@ -1,332 +1,332 @@
 alignments:
-- metadata:
-    format: IMOD
-    method_type: fiducial_based
-  sources:
-  - source_multi_glob:
-      list_globs:
-      - alignmentfiles/{run_name}_binalign8_fid.tlt
-      - alignmentfiles/{run_name}_binalign8_fid.xf
-annotations: []
+  - metadata:
+      format: IMOD
+      method_type: fiducial_based
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - alignmentfiles/{run_name}_binalign8_fid.tlt
+            - alignmentfiles/{run_name}_binalign8_fid.xf
+annotations: [ ]
 collection_metadata:
-- sources:
-  - source_glob:
-      list_glob: mdocs/{mdoc_name}
+  - sources:
+      - source_glob:
+          list_glob: mdocs/{mdoc_name}
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/kem_sochacki_06_2024/grid02/dataset_keyphotos/key-photo-snapshot.png
-        thumbnail: cryoetportal-rawdatasets-dev/kem_sochacki_06_2024/grid02/dataset_keyphotos/key-photo-thumbnail.png
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/kem_sochacki_06_2024/grid02/dataset_keyphotos/key-photo-snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/kem_sochacki_06_2024/grid02/dataset_keyphotos/key-photo-thumbnail.png
 datasets:
-- metadata:
-    authors: &id001
-    - name: Willy W. Sun
-      primary_author_status: true
-    - name: Dennis J Michalak
-      primary_author_status: true
-    - ORCID: 0000-0003-1160-4558
-      corresponding_author_status: true
-      name: Kem A. Sochacki
-      primary_author_status: true
-    - ORCID: 0000-0002-5130-5061
-      corresponding_author_status: true
-      name: Jenny E. Hinshaw
-      primary_author_status: false
-    - ORCID: 0000-0001-5355-9535
-      corresponding_author_status: true
-      name: Justin W. Taraska
-      primary_author_status: false
-    cell_component:
-      id: GO:0005886
-      name: plasma membrane
-    cell_strain:
-      id: CLO:0051569
-      name: RCB1975 cell
-    cell_type:
-      id: CL:0000010
-      name: cultured cell
-    cross_references:
-      publications: 10.1038/s41467-025-56045-z, 10.1101/2024.06.27.600657
-      related_database_entries: EMD-44921, EMD-44909, EMD-44922, EMD-46973
-    dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
-      contains 10 grids. This is grid 2 of 10 and contains basal membranes of HSC3
-      cells.  The cell line expresses EGFR-GFP as described in Panilla-Macua et al.
-      Elife 2017 and has been serum starved.  The cells were grown on Quantifoil Au
-      300 R2/2, 2 nm carbon grids prior to removing the apical membrane and cytoplasm
-      with 0.7 bar of paraformaldehyde prior to vitrification.
-    dataset_identifier: 10427
-    dataset_title: Plasma membranes isolated by unroofing - Grid 02
-    dates: &id002
-      deposition_date: '2024-07-01'
-      last_modified_date: '2025-01-08'
-      release_date: '2025-01-08'
-    funding:
-    - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: 2021-234544
-    - funding_agency_name: NIH
-      grant_id: 1ZIAHL006098
-    - funding_agency_name: NIH
-      grant_id: 1ZIADK060100
-    grid_preparation: plasma discharge 30 sec + UV treatment 20 min + 125 ng/ul fibronectin,
-      20 minutes + water rinse + seeded with 15000 cells
-    organism:
-      name: Homo sapiens
-      taxonomy_id: 9606
-    sample_preparation: serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
-      grids
-    sample_type: organelle
-  sources:
-  - literal:
-      value:
-      - '10427'
+  - metadata:
+      authors: &id001
+        - name: Willy W. Sun
+          primary_author_status: true
+        - name: Dennis J Michalak
+          primary_author_status: true
+        - ORCID: 0000-0003-1160-4558
+          corresponding_author_status: true
+          name: Kem A. Sochacki
+          primary_author_status: true
+        - ORCID: 0000-0002-5130-5061
+          corresponding_author_status: true
+          name: Jenny E. Hinshaw
+          primary_author_status: false
+        - ORCID: 0000-0001-5355-9535
+          corresponding_author_status: true
+          name: Justin W. Taraska
+          primary_author_status: false
+      cell_component:
+        id: GO:0005886
+        name: plasma membrane
+      cell_strain:
+        id: CLO:0051569
+        name: RCB1975 cell
+      cell_type:
+        id: CL:0000010
+        name: cultured cell
+      cross_references:
+        publications: 10.1038/s41467-025-56045-z, 10.1101/2024.06.27.600657
+        related_database_entries: EMD-44921, EMD-44909, EMD-44922, EMD-46973
+      dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
+        contains 10 grids. This is grid 2 of 10 and contains basal membranes of HSC3
+        cells.  The cell line expresses EGFR-GFP as described in Panilla-Macua et al.
+        Elife 2017 and has been serum starved.  The cells were grown on Quantifoil Au
+        300 R2/2, 2 nm carbon grids prior to removing the apical membrane and cytoplasm
+        with 0.7 bar of paraformaldehyde prior to vitrification.
+      dataset_identifier: 10427
+      dataset_title: Plasma membranes isolated by unroofing - Grid 02
+      dates: &id002
+        deposition_date: '2024-07-01'
+        last_modified_date: '2025-01-08'
+        release_date: '2025-01-08'
+      funding:
+        - funding_agency_name: Chan Zuckerberg Initiative
+          grant_id: 2021-234544
+        - funding_agency_name: NIH
+          grant_id: 1ZIAHL006098
+        - funding_agency_name: NIH
+          grant_id: 1ZIADK060100
+      grid_preparation: plasma discharge 30 sec + UV treatment 20 min + 125 ng/ul fibronectin,
+        20 minutes + water rinse + seeded with 15000 cells
+      organism:
+        name: Homo sapiens
+        taxonomy_id: 9606
+      sample_preparation: serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
+        grids
+      sample_type: organelle
+    sources:
+      - literal:
+          value:
+            - '10427'
 depositions:
-- sources:
-  - literal:
-      value:
-      - 10306
+  - sources:
+      - literal:
+          value:
+            - 10306
 frames:
-- metadata:
-    dose_rate: 0
-    is_gain_corrected: false
-  sources:
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_11$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_01794_\-50\.0\.tif|tomo_unroof_control_c2d1_01793_\-48\.0\.tif|tomo_unroof_control_c2d1_01792_\-46\.0\.tif|tomo_unroof_control_c2d1_01791_\-44\.0\.tif|tomo_unroof_control_c2d1_01790_\-42\.0\.tif|tomo_unroof_control_c2d1_01789_\-40\.0\.tif|tomo_unroof_control_c2d1_01788_\-38\.0\.tif|tomo_unroof_control_c2d1_01780_\-36\.0\.tif|tomo_unroof_control_c2d1_01779_\-34\.0\.tif|tomo_unroof_control_c2d1_01778_\-32\.0\.tif|tomo_unroof_control_c2d1_01774_\-30\.0\.tif|tomo_unroof_control_c2d1_01773_\-28\.0\.tif|tomo_unroof_control_c2d1_01772_\-26\.0\.tif|tomo_unroof_control_c2d1_01768_\-24\.0\.tif|tomo_unroof_control_c2d1_01767_\-22\.0\.tif|tomo_unroof_control_c2d1_01766_\-20\.0\.tif|tomo_unroof_control_c2d1_01762_\-18\.0\.tif|tomo_unroof_control_c2d1_01761_\-16\.0\.tif|tomo_unroof_control_c2d1_01760_\-14\.0\.tif|tomo_unroof_control_c2d1_01756_\-12\.0\.tif|tomo_unroof_control_c2d1_01755_\-10\.0\.tif|tomo_unroof_control_c2d1_01754_\-8\.0\.tif|tomo_unroof_control_c2d1_01750_\-6\.0\.tif|tomo_unroof_control_c2d1_01749_\-4\.0\.tif|tomo_unroof_control_c2d1_01748_\-2\.0\.tif|tomo_unroof_control_c2d1_01744_\-0\.0\.tif|tomo_unroof_control_c2d1_01745_2\.0\.tif|tomo_unroof_control_c2d1_01746_4\.0\.tif|tomo_unroof_control_c2d1_01747_6\.0\.tif|tomo_unroof_control_c2d1_01751_8\.0\.tif|tomo_unroof_control_c2d1_01752_10\.0\.tif|tomo_unroof_control_c2d1_01753_12\.0\.tif|tomo_unroof_control_c2d1_01757_14\.0\.tif|tomo_unroof_control_c2d1_01758_16\.0\.tif|tomo_unroof_control_c2d1_01759_18\.0\.tif|tomo_unroof_control_c2d1_01763_20\.0\.tif|tomo_unroof_control_c2d1_01764_22\.0\.tif|tomo_unroof_control_c2d1_01765_24\.0\.tif|tomo_unroof_control_c2d1_01769_26\.0\.tif|tomo_unroof_control_c2d1_01770_28\.0\.tif|tomo_unroof_control_c2d1_01771_30\.0\.tif|tomo_unroof_control_c2d1_01775_32\.0\.tif|tomo_unroof_control_c2d1_01776_34\.0\.tif|tomo_unroof_control_c2d1_01777_36\.0\.tif|tomo_unroof_control_c2d1_01781_38\.0\.tif|tomo_unroof_control_c2d1_01782_40\.0\.tif|tomo_unroof_control_c2d1_01783_42\.0\.tif|tomo_unroof_control_c2d1_01784_44\.0\.tif|tomo_unroof_control_c2d1_01785_46\.0\.tif|tomo_unroof_control_c2d1_01786_48\.0\.tif|tomo_unroof_control_c2d1_01787_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_19$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02100_\-50\.0\.tif|tomo_unroof_control_c2d1_02099_\-48\.0\.tif|tomo_unroof_control_c2d1_02098_\-46\.0\.tif|tomo_unroof_control_c2d1_02097_\-44\.0\.tif|tomo_unroof_control_c2d1_02096_\-42\.0\.tif|tomo_unroof_control_c2d1_02095_\-40\.0\.tif|tomo_unroof_control_c2d1_02094_\-38\.0\.tif|tomo_unroof_control_c2d1_02086_\-36\.0\.tif|tomo_unroof_control_c2d1_02085_\-34\.0\.tif|tomo_unroof_control_c2d1_02084_\-32\.0\.tif|tomo_unroof_control_c2d1_02080_\-30\.0\.tif|tomo_unroof_control_c2d1_02079_\-28\.0\.tif|tomo_unroof_control_c2d1_02078_\-26\.0\.tif|tomo_unroof_control_c2d1_02074_\-24\.0\.tif|tomo_unroof_control_c2d1_02073_\-22\.0\.tif|tomo_unroof_control_c2d1_02072_\-20\.0\.tif|tomo_unroof_control_c2d1_02068_\-18\.0\.tif|tomo_unroof_control_c2d1_02067_\-16\.0\.tif|tomo_unroof_control_c2d1_02066_\-14\.0\.tif|tomo_unroof_control_c2d1_02062_\-12\.0\.tif|tomo_unroof_control_c2d1_02061_\-10\.0\.tif|tomo_unroof_control_c2d1_02060_\-8\.0\.tif|tomo_unroof_control_c2d1_02056_\-6\.0\.tif|tomo_unroof_control_c2d1_02055_\-4\.0\.tif|tomo_unroof_control_c2d1_02054_\-2\.0\.tif|tomo_unroof_control_c2d1_02050_\-0\.0\.tif|tomo_unroof_control_c2d1_02051_2\.0\.tif|tomo_unroof_control_c2d1_02052_4\.0\.tif|tomo_unroof_control_c2d1_02053_6\.0\.tif|tomo_unroof_control_c2d1_02057_8\.0\.tif|tomo_unroof_control_c2d1_02058_10\.0\.tif|tomo_unroof_control_c2d1_02059_12\.0\.tif|tomo_unroof_control_c2d1_02063_14\.0\.tif|tomo_unroof_control_c2d1_02064_16\.0\.tif|tomo_unroof_control_c2d1_02065_18\.0\.tif|tomo_unroof_control_c2d1_02069_20\.0\.tif|tomo_unroof_control_c2d1_02070_22\.0\.tif|tomo_unroof_control_c2d1_02071_24\.0\.tif|tomo_unroof_control_c2d1_02075_26\.0\.tif|tomo_unroof_control_c2d1_02076_28\.0\.tif|tomo_unroof_control_c2d1_02077_30\.0\.tif|tomo_unroof_control_c2d1_02081_32\.0\.tif|tomo_unroof_control_c2d1_02082_34\.0\.tif|tomo_unroof_control_c2d1_02083_36\.0\.tif|tomo_unroof_control_c2d1_02087_38\.0\.tif|tomo_unroof_control_c2d1_02088_40\.0\.tif|tomo_unroof_control_c2d1_02089_42\.0\.tif|tomo_unroof_control_c2d1_02090_44\.0\.tif|tomo_unroof_control_c2d1_02091_46\.0\.tif|tomo_unroof_control_c2d1_02092_48\.0\.tif|tomo_unroof_control_c2d1_02093_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_21$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02202_\-50\.0\.tif|tomo_unroof_control_c2d1_02201_\-48\.0\.tif|tomo_unroof_control_c2d1_02200_\-46\.0\.tif|tomo_unroof_control_c2d1_02199_\-44\.0\.tif|tomo_unroof_control_c2d1_02198_\-42\.0\.tif|tomo_unroof_control_c2d1_02197_\-40\.0\.tif|tomo_unroof_control_c2d1_02196_\-38\.0\.tif|tomo_unroof_control_c2d1_02188_\-36\.0\.tif|tomo_unroof_control_c2d1_02187_\-34\.0\.tif|tomo_unroof_control_c2d1_02186_\-32\.0\.tif|tomo_unroof_control_c2d1_02182_\-30\.0\.tif|tomo_unroof_control_c2d1_02181_\-28\.0\.tif|tomo_unroof_control_c2d1_02180_\-26\.0\.tif|tomo_unroof_control_c2d1_02176_\-24\.0\.tif|tomo_unroof_control_c2d1_02175_\-22\.0\.tif|tomo_unroof_control_c2d1_02174_\-20\.0\.tif|tomo_unroof_control_c2d1_02170_\-18\.0\.tif|tomo_unroof_control_c2d1_02169_\-16\.0\.tif|tomo_unroof_control_c2d1_02168_\-14\.0\.tif|tomo_unroof_control_c2d1_02164_\-12\.0\.tif|tomo_unroof_control_c2d1_02163_\-10\.0\.tif|tomo_unroof_control_c2d1_02162_\-8\.0\.tif|tomo_unroof_control_c2d1_02158_\-6\.0\.tif|tomo_unroof_control_c2d1_02157_\-4\.0\.tif|tomo_unroof_control_c2d1_02156_\-2\.0\.tif|tomo_unroof_control_c2d1_02152_\-0\.0\.tif|tomo_unroof_control_c2d1_02153_2\.0\.tif|tomo_unroof_control_c2d1_02154_4\.0\.tif|tomo_unroof_control_c2d1_02155_6\.0\.tif|tomo_unroof_control_c2d1_02159_8\.0\.tif|tomo_unroof_control_c2d1_02160_10\.0\.tif|tomo_unroof_control_c2d1_02161_12\.0\.tif|tomo_unroof_control_c2d1_02165_14\.0\.tif|tomo_unroof_control_c2d1_02166_16\.0\.tif|tomo_unroof_control_c2d1_02167_18\.0\.tif|tomo_unroof_control_c2d1_02171_20\.0\.tif|tomo_unroof_control_c2d1_02172_22\.0\.tif|tomo_unroof_control_c2d1_02173_24\.0\.tif|tomo_unroof_control_c2d1_02177_26\.0\.tif|tomo_unroof_control_c2d1_02178_28\.0\.tif|tomo_unroof_control_c2d1_02179_30\.0\.tif|tomo_unroof_control_c2d1_02183_32\.0\.tif|tomo_unroof_control_c2d1_02184_34\.0\.tif|tomo_unroof_control_c2d1_02185_36\.0\.tif|tomo_unroof_control_c2d1_02189_38\.0\.tif|tomo_unroof_control_c2d1_02190_40\.0\.tif|tomo_unroof_control_c2d1_02191_42\.0\.tif|tomo_unroof_control_c2d1_02192_44\.0\.tif|tomo_unroof_control_c2d1_02193_46\.0\.tif|tomo_unroof_control_c2d1_02194_48\.0\.tif|tomo_unroof_control_c2d1_02195_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_22$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02253_\-50\.0\.tif|tomo_unroof_control_c2d1_02252_\-48\.0\.tif|tomo_unroof_control_c2d1_02251_\-46\.0\.tif|tomo_unroof_control_c2d1_02250_\-44\.0\.tif|tomo_unroof_control_c2d1_02249_\-42\.0\.tif|tomo_unroof_control_c2d1_02248_\-40\.0\.tif|tomo_unroof_control_c2d1_02247_\-38\.0\.tif|tomo_unroof_control_c2d1_02239_\-36\.0\.tif|tomo_unroof_control_c2d1_02238_\-34\.0\.tif|tomo_unroof_control_c2d1_02237_\-32\.0\.tif|tomo_unroof_control_c2d1_02233_\-30\.0\.tif|tomo_unroof_control_c2d1_02232_\-28\.0\.tif|tomo_unroof_control_c2d1_02231_\-26\.0\.tif|tomo_unroof_control_c2d1_02227_\-24\.0\.tif|tomo_unroof_control_c2d1_02226_\-22\.0\.tif|tomo_unroof_control_c2d1_02225_\-20\.0\.tif|tomo_unroof_control_c2d1_02221_\-18\.0\.tif|tomo_unroof_control_c2d1_02220_\-16\.0\.tif|tomo_unroof_control_c2d1_02219_\-14\.0\.tif|tomo_unroof_control_c2d1_02215_\-12\.0\.tif|tomo_unroof_control_c2d1_02214_\-10\.0\.tif|tomo_unroof_control_c2d1_02213_\-8\.0\.tif|tomo_unroof_control_c2d1_02209_\-6\.0\.tif|tomo_unroof_control_c2d1_02208_\-4\.0\.tif|tomo_unroof_control_c2d1_02207_\-2\.0\.tif|tomo_unroof_control_c2d1_02203_\-0\.0\.tif|tomo_unroof_control_c2d1_02204_2\.0\.tif|tomo_unroof_control_c2d1_02205_4\.0\.tif|tomo_unroof_control_c2d1_02206_6\.0\.tif|tomo_unroof_control_c2d1_02210_8\.0\.tif|tomo_unroof_control_c2d1_02211_10\.0\.tif|tomo_unroof_control_c2d1_02212_12\.0\.tif|tomo_unroof_control_c2d1_02216_14\.0\.tif|tomo_unroof_control_c2d1_02217_16\.0\.tif|tomo_unroof_control_c2d1_02218_18\.0\.tif|tomo_unroof_control_c2d1_02222_20\.0\.tif|tomo_unroof_control_c2d1_02223_22\.0\.tif|tomo_unroof_control_c2d1_02224_24\.0\.tif|tomo_unroof_control_c2d1_02228_26\.0\.tif|tomo_unroof_control_c2d1_02229_28\.0\.tif|tomo_unroof_control_c2d1_02230_30\.0\.tif|tomo_unroof_control_c2d1_02234_32\.0\.tif|tomo_unroof_control_c2d1_02235_34\.0\.tif|tomo_unroof_control_c2d1_02236_36\.0\.tif|tomo_unroof_control_c2d1_02240_38\.0\.tif|tomo_unroof_control_c2d1_02241_40\.0\.tif|tomo_unroof_control_c2d1_02242_42\.0\.tif|tomo_unroof_control_c2d1_02243_44\.0\.tif|tomo_unroof_control_c2d1_02244_46\.0\.tif|tomo_unroof_control_c2d1_02245_48\.0\.tif|tomo_unroof_control_c2d1_02246_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_23$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02304_\-50\.0\.tif|tomo_unroof_control_c2d1_02303_\-48\.0\.tif|tomo_unroof_control_c2d1_02302_\-46\.0\.tif|tomo_unroof_control_c2d1_02301_\-44\.0\.tif|tomo_unroof_control_c2d1_02300_\-42\.0\.tif|tomo_unroof_control_c2d1_02299_\-40\.0\.tif|tomo_unroof_control_c2d1_02298_\-38\.0\.tif|tomo_unroof_control_c2d1_02290_\-36\.0\.tif|tomo_unroof_control_c2d1_02289_\-34\.0\.tif|tomo_unroof_control_c2d1_02288_\-32\.0\.tif|tomo_unroof_control_c2d1_02284_\-30\.0\.tif|tomo_unroof_control_c2d1_02283_\-28\.0\.tif|tomo_unroof_control_c2d1_02282_\-26\.0\.tif|tomo_unroof_control_c2d1_02278_\-24\.0\.tif|tomo_unroof_control_c2d1_02277_\-22\.0\.tif|tomo_unroof_control_c2d1_02276_\-20\.0\.tif|tomo_unroof_control_c2d1_02272_\-18\.0\.tif|tomo_unroof_control_c2d1_02271_\-16\.0\.tif|tomo_unroof_control_c2d1_02270_\-14\.0\.tif|tomo_unroof_control_c2d1_02266_\-12\.0\.tif|tomo_unroof_control_c2d1_02265_\-10\.0\.tif|tomo_unroof_control_c2d1_02264_\-8\.0\.tif|tomo_unroof_control_c2d1_02260_\-6\.0\.tif|tomo_unroof_control_c2d1_02259_\-4\.0\.tif|tomo_unroof_control_c2d1_02258_\-2\.0\.tif|tomo_unroof_control_c2d1_02254_\-0\.0\.tif|tomo_unroof_control_c2d1_02255_2\.0\.tif|tomo_unroof_control_c2d1_02256_4\.0\.tif|tomo_unroof_control_c2d1_02257_6\.0\.tif|tomo_unroof_control_c2d1_02261_8\.0\.tif|tomo_unroof_control_c2d1_02262_10\.0\.tif|tomo_unroof_control_c2d1_02263_12\.0\.tif|tomo_unroof_control_c2d1_02267_14\.0\.tif|tomo_unroof_control_c2d1_02268_16\.0\.tif|tomo_unroof_control_c2d1_02269_18\.0\.tif|tomo_unroof_control_c2d1_02273_20\.0\.tif|tomo_unroof_control_c2d1_02274_22\.0\.tif|tomo_unroof_control_c2d1_02275_24\.0\.tif|tomo_unroof_control_c2d1_02279_26\.0\.tif|tomo_unroof_control_c2d1_02280_28\.0\.tif|tomo_unroof_control_c2d1_02281_30\.0\.tif|tomo_unroof_control_c2d1_02285_32\.0\.tif|tomo_unroof_control_c2d1_02286_34\.0\.tif|tomo_unroof_control_c2d1_02287_36\.0\.tif|tomo_unroof_control_c2d1_02291_38\.0\.tif|tomo_unroof_control_c2d1_02292_40\.0\.tif|tomo_unroof_control_c2d1_02293_42\.0\.tif|tomo_unroof_control_c2d1_02294_44\.0\.tif|tomo_unroof_control_c2d1_02295_46\.0\.tif|tomo_unroof_control_c2d1_02296_48\.0\.tif|tomo_unroof_control_c2d1_02297_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_25$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02355_\-50\.0\.tif|tomo_unroof_control_c2d1_02354_\-48\.0\.tif|tomo_unroof_control_c2d1_02353_\-46\.0\.tif|tomo_unroof_control_c2d1_02352_\-44\.0\.tif|tomo_unroof_control_c2d1_02351_\-42\.0\.tif|tomo_unroof_control_c2d1_02350_\-40\.0\.tif|tomo_unroof_control_c2d1_02349_\-38\.0\.tif|tomo_unroof_control_c2d1_02341_\-36\.0\.tif|tomo_unroof_control_c2d1_02340_\-34\.0\.tif|tomo_unroof_control_c2d1_02339_\-32\.0\.tif|tomo_unroof_control_c2d1_02335_\-30\.0\.tif|tomo_unroof_control_c2d1_02334_\-28\.0\.tif|tomo_unroof_control_c2d1_02333_\-26\.0\.tif|tomo_unroof_control_c2d1_02329_\-24\.0\.tif|tomo_unroof_control_c2d1_02328_\-22\.0\.tif|tomo_unroof_control_c2d1_02327_\-20\.0\.tif|tomo_unroof_control_c2d1_02323_\-18\.0\.tif|tomo_unroof_control_c2d1_02322_\-16\.0\.tif|tomo_unroof_control_c2d1_02321_\-14\.0\.tif|tomo_unroof_control_c2d1_02317_\-12\.0\.tif|tomo_unroof_control_c2d1_02316_\-10\.0\.tif|tomo_unroof_control_c2d1_02315_\-8\.0\.tif|tomo_unroof_control_c2d1_02311_\-6\.0\.tif|tomo_unroof_control_c2d1_02310_\-4\.0\.tif|tomo_unroof_control_c2d1_02309_\-2\.0\.tif|tomo_unroof_control_c2d1_02305_\-0\.0\.tif|tomo_unroof_control_c2d1_02306_2\.0\.tif|tomo_unroof_control_c2d1_02307_4\.0\.tif|tomo_unroof_control_c2d1_02308_6\.0\.tif|tomo_unroof_control_c2d1_02312_8\.0\.tif|tomo_unroof_control_c2d1_02313_10\.0\.tif|tomo_unroof_control_c2d1_02314_12\.0\.tif|tomo_unroof_control_c2d1_02318_14\.0\.tif|tomo_unroof_control_c2d1_02319_16\.0\.tif|tomo_unroof_control_c2d1_02320_18\.0\.tif|tomo_unroof_control_c2d1_02324_20\.0\.tif|tomo_unroof_control_c2d1_02325_22\.0\.tif|tomo_unroof_control_c2d1_02326_24\.0\.tif|tomo_unroof_control_c2d1_02330_26\.0\.tif|tomo_unroof_control_c2d1_02331_28\.0\.tif|tomo_unroof_control_c2d1_02332_30\.0\.tif|tomo_unroof_control_c2d1_02336_32\.0\.tif|tomo_unroof_control_c2d1_02337_34\.0\.tif|tomo_unroof_control_c2d1_02338_36\.0\.tif|tomo_unroof_control_c2d1_02342_38\.0\.tif|tomo_unroof_control_c2d1_02343_40\.0\.tif|tomo_unroof_control_c2d1_02344_42\.0\.tif|tomo_unroof_control_c2d1_02345_44\.0\.tif|tomo_unroof_control_c2d1_02346_46\.0\.tif|tomo_unroof_control_c2d1_02347_48\.0\.tif|tomo_unroof_control_c2d1_02348_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_26$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02406_\-50\.0\.tif|tomo_unroof_control_c2d1_02405_\-48\.0\.tif|tomo_unroof_control_c2d1_02404_\-46\.0\.tif|tomo_unroof_control_c2d1_02403_\-44\.0\.tif|tomo_unroof_control_c2d1_02402_\-42\.0\.tif|tomo_unroof_control_c2d1_02401_\-40\.0\.tif|tomo_unroof_control_c2d1_02400_\-38\.0\.tif|tomo_unroof_control_c2d1_02392_\-36\.0\.tif|tomo_unroof_control_c2d1_02391_\-34\.0\.tif|tomo_unroof_control_c2d1_02390_\-32\.0\.tif|tomo_unroof_control_c2d1_02386_\-30\.0\.tif|tomo_unroof_control_c2d1_02385_\-28\.0\.tif|tomo_unroof_control_c2d1_02384_\-26\.0\.tif|tomo_unroof_control_c2d1_02380_\-24\.0\.tif|tomo_unroof_control_c2d1_02379_\-22\.0\.tif|tomo_unroof_control_c2d1_02378_\-20\.0\.tif|tomo_unroof_control_c2d1_02374_\-18\.0\.tif|tomo_unroof_control_c2d1_02373_\-16\.0\.tif|tomo_unroof_control_c2d1_02372_\-14\.0\.tif|tomo_unroof_control_c2d1_02368_\-12\.0\.tif|tomo_unroof_control_c2d1_02367_\-10\.0\.tif|tomo_unroof_control_c2d1_02366_\-8\.0\.tif|tomo_unroof_control_c2d1_02362_\-6\.0\.tif|tomo_unroof_control_c2d1_02361_\-4\.0\.tif|tomo_unroof_control_c2d1_02360_\-2\.0\.tif|tomo_unroof_control_c2d1_02356_\-0\.0\.tif|tomo_unroof_control_c2d1_02357_2\.0\.tif|tomo_unroof_control_c2d1_02358_4\.0\.tif|tomo_unroof_control_c2d1_02359_6\.0\.tif|tomo_unroof_control_c2d1_02363_8\.0\.tif|tomo_unroof_control_c2d1_02364_10\.0\.tif|tomo_unroof_control_c2d1_02365_12\.0\.tif|tomo_unroof_control_c2d1_02369_14\.0\.tif|tomo_unroof_control_c2d1_02370_16\.0\.tif|tomo_unroof_control_c2d1_02371_18\.0\.tif|tomo_unroof_control_c2d1_02375_20\.0\.tif|tomo_unroof_control_c2d1_02376_22\.0\.tif|tomo_unroof_control_c2d1_02377_24\.0\.tif|tomo_unroof_control_c2d1_02381_26\.0\.tif|tomo_unroof_control_c2d1_02382_28\.0\.tif|tomo_unroof_control_c2d1_02383_30\.0\.tif|tomo_unroof_control_c2d1_02387_32\.0\.tif|tomo_unroof_control_c2d1_02388_34\.0\.tif|tomo_unroof_control_c2d1_02389_36\.0\.tif|tomo_unroof_control_c2d1_02393_38\.0\.tif|tomo_unroof_control_c2d1_02394_40\.0\.tif|tomo_unroof_control_c2d1_02395_42\.0\.tif|tomo_unroof_control_c2d1_02396_44\.0\.tif|tomo_unroof_control_c2d1_02397_46\.0\.tif|tomo_unroof_control_c2d1_02398_48\.0\.tif|tomo_unroof_control_c2d1_02399_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_27$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02457_\-50\.0\.tif|tomo_unroof_control_c2d1_02456_\-48\.0\.tif|tomo_unroof_control_c2d1_02455_\-46\.0\.tif|tomo_unroof_control_c2d1_02454_\-44\.0\.tif|tomo_unroof_control_c2d1_02453_\-42\.0\.tif|tomo_unroof_control_c2d1_02452_\-40\.0\.tif|tomo_unroof_control_c2d1_02451_\-38\.0\.tif|tomo_unroof_control_c2d1_02443_\-36\.0\.tif|tomo_unroof_control_c2d1_02442_\-34\.0\.tif|tomo_unroof_control_c2d1_02441_\-32\.0\.tif|tomo_unroof_control_c2d1_02437_\-30\.0\.tif|tomo_unroof_control_c2d1_02436_\-28\.0\.tif|tomo_unroof_control_c2d1_02435_\-26\.0\.tif|tomo_unroof_control_c2d1_02431_\-24\.0\.tif|tomo_unroof_control_c2d1_02430_\-22\.0\.tif|tomo_unroof_control_c2d1_02429_\-20\.0\.tif|tomo_unroof_control_c2d1_02425_\-18\.0\.tif|tomo_unroof_control_c2d1_02424_\-16\.0\.tif|tomo_unroof_control_c2d1_02423_\-14\.0\.tif|tomo_unroof_control_c2d1_02419_\-12\.0\.tif|tomo_unroof_control_c2d1_02418_\-10\.0\.tif|tomo_unroof_control_c2d1_02417_\-8\.0\.tif|tomo_unroof_control_c2d1_02413_\-6\.0\.tif|tomo_unroof_control_c2d1_02412_\-4\.0\.tif|tomo_unroof_control_c2d1_02411_\-2\.0\.tif|tomo_unroof_control_c2d1_02407_\-0\.0\.tif|tomo_unroof_control_c2d1_02408_2\.0\.tif|tomo_unroof_control_c2d1_02409_4\.0\.tif|tomo_unroof_control_c2d1_02410_6\.0\.tif|tomo_unroof_control_c2d1_02414_8\.0\.tif|tomo_unroof_control_c2d1_02415_10\.0\.tif|tomo_unroof_control_c2d1_02416_12\.0\.tif|tomo_unroof_control_c2d1_02420_14\.0\.tif|tomo_unroof_control_c2d1_02421_16\.0\.tif|tomo_unroof_control_c2d1_02422_18\.0\.tif|tomo_unroof_control_c2d1_02426_20\.0\.tif|tomo_unroof_control_c2d1_02427_22\.0\.tif|tomo_unroof_control_c2d1_02428_24\.0\.tif|tomo_unroof_control_c2d1_02432_26\.0\.tif|tomo_unroof_control_c2d1_02433_28\.0\.tif|tomo_unroof_control_c2d1_02434_30\.0\.tif|tomo_unroof_control_c2d1_02438_32\.0\.tif|tomo_unroof_control_c2d1_02439_34\.0\.tif|tomo_unroof_control_c2d1_02440_36\.0\.tif|tomo_unroof_control_c2d1_02444_38\.0\.tif|tomo_unroof_control_c2d1_02445_40\.0\.tif|tomo_unroof_control_c2d1_02446_42\.0\.tif|tomo_unroof_control_c2d1_02447_44\.0\.tif|tomo_unroof_control_c2d1_02448_46\.0\.tif|tomo_unroof_control_c2d1_02449_48\.0\.tif|tomo_unroof_control_c2d1_02450_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_28$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02505_\-44\.0\.tif|tomo_unroof_control_c2d1_02504_\-42\.0\.tif|tomo_unroof_control_c2d1_02503_\-40\.0\.tif|tomo_unroof_control_c2d1_02502_\-38\.0\.tif|tomo_unroof_control_c2d1_02494_\-36\.0\.tif|tomo_unroof_control_c2d1_02493_\-34\.0\.tif|tomo_unroof_control_c2d1_02492_\-32\.0\.tif|tomo_unroof_control_c2d1_02488_\-30\.0\.tif|tomo_unroof_control_c2d1_02487_\-28\.0\.tif|tomo_unroof_control_c2d1_02486_\-26\.0\.tif|tomo_unroof_control_c2d1_02482_\-24\.0\.tif|tomo_unroof_control_c2d1_02481_\-22\.0\.tif|tomo_unroof_control_c2d1_02480_\-20\.0\.tif|tomo_unroof_control_c2d1_02476_\-18\.0\.tif|tomo_unroof_control_c2d1_02475_\-16\.0\.tif|tomo_unroof_control_c2d1_02474_\-14\.0\.tif|tomo_unroof_control_c2d1_02470_\-12\.0\.tif|tomo_unroof_control_c2d1_02469_\-10\.0\.tif|tomo_unroof_control_c2d1_02468_\-8\.0\.tif|tomo_unroof_control_c2d1_02464_\-6\.0\.tif|tomo_unroof_control_c2d1_02463_\-4\.0\.tif|tomo_unroof_control_c2d1_02462_\-2\.0\.tif|tomo_unroof_control_c2d1_02458_\-0\.0\.tif|tomo_unroof_control_c2d1_02459_2\.0\.tif|tomo_unroof_control_c2d1_02460_4\.0\.tif|tomo_unroof_control_c2d1_02461_6\.0\.tif|tomo_unroof_control_c2d1_02465_8\.0\.tif|tomo_unroof_control_c2d1_02466_10\.0\.tif|tomo_unroof_control_c2d1_02467_12\.0\.tif|tomo_unroof_control_c2d1_02471_14\.0\.tif|tomo_unroof_control_c2d1_02472_16\.0\.tif|tomo_unroof_control_c2d1_02473_18\.0\.tif|tomo_unroof_control_c2d1_02477_20\.0\.tif|tomo_unroof_control_c2d1_02478_22\.0\.tif|tomo_unroof_control_c2d1_02479_24\.0\.tif|tomo_unroof_control_c2d1_02483_26\.0\.tif|tomo_unroof_control_c2d1_02484_28\.0\.tif|tomo_unroof_control_c2d1_02485_30\.0\.tif|tomo_unroof_control_c2d1_02489_32\.0\.tif|tomo_unroof_control_c2d1_02490_34\.0\.tif|tomo_unroof_control_c2d1_02491_36\.0\.tif|tomo_unroof_control_c2d1_02495_38\.0\.tif|tomo_unroof_control_c2d1_02496_40\.0\.tif|tomo_unroof_control_c2d1_02497_42\.0\.tif|tomo_unroof_control_c2d1_02498_44\.0\.tif|tomo_unroof_control_c2d1_02499_46\.0\.tif|tomo_unroof_control_c2d1_02500_48\.0\.tif|tomo_unroof_control_c2d1_02501_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_29$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02556_\-50\.0\.tif|tomo_unroof_control_c2d1_02555_\-48\.0\.tif|tomo_unroof_control_c2d1_02554_\-46\.0\.tif|tomo_unroof_control_c2d1_02553_\-44\.0\.tif|tomo_unroof_control_c2d1_02552_\-42\.0\.tif|tomo_unroof_control_c2d1_02551_\-40\.0\.tif|tomo_unroof_control_c2d1_02550_\-38\.0\.tif|tomo_unroof_control_c2d1_02542_\-36\.0\.tif|tomo_unroof_control_c2d1_02541_\-34\.0\.tif|tomo_unroof_control_c2d1_02540_\-32\.0\.tif|tomo_unroof_control_c2d1_02536_\-30\.0\.tif|tomo_unroof_control_c2d1_02535_\-28\.0\.tif|tomo_unroof_control_c2d1_02534_\-26\.0\.tif|tomo_unroof_control_c2d1_02530_\-24\.0\.tif|tomo_unroof_control_c2d1_02529_\-22\.0\.tif|tomo_unroof_control_c2d1_02528_\-20\.0\.tif|tomo_unroof_control_c2d1_02524_\-18\.0\.tif|tomo_unroof_control_c2d1_02523_\-16\.0\.tif|tomo_unroof_control_c2d1_02522_\-14\.0\.tif|tomo_unroof_control_c2d1_02518_\-12\.0\.tif|tomo_unroof_control_c2d1_02517_\-10\.0\.tif|tomo_unroof_control_c2d1_02516_\-8\.0\.tif|tomo_unroof_control_c2d1_02512_\-6\.0\.tif|tomo_unroof_control_c2d1_02511_\-4\.0\.tif|tomo_unroof_control_c2d1_02510_\-2\.0\.tif|tomo_unroof_control_c2d1_02506_\-0\.0\.tif|tomo_unroof_control_c2d1_02507_2\.0\.tif|tomo_unroof_control_c2d1_02508_4\.0\.tif|tomo_unroof_control_c2d1_02509_6\.0\.tif|tomo_unroof_control_c2d1_02513_8\.0\.tif|tomo_unroof_control_c2d1_02514_10\.0\.tif|tomo_unroof_control_c2d1_02515_12\.0\.tif|tomo_unroof_control_c2d1_02519_14\.0\.tif|tomo_unroof_control_c2d1_02520_16\.0\.tif|tomo_unroof_control_c2d1_02521_18\.0\.tif|tomo_unroof_control_c2d1_02525_20\.0\.tif|tomo_unroof_control_c2d1_02526_22\.0\.tif|tomo_unroof_control_c2d1_02527_24\.0\.tif|tomo_unroof_control_c2d1_02531_26\.0\.tif|tomo_unroof_control_c2d1_02532_28\.0\.tif|tomo_unroof_control_c2d1_02533_30\.0\.tif|tomo_unroof_control_c2d1_02537_32\.0\.tif|tomo_unroof_control_c2d1_02538_34\.0\.tif|tomo_unroof_control_c2d1_02539_36\.0\.tif|tomo_unroof_control_c2d1_02543_38\.0\.tif|tomo_unroof_control_c2d1_02544_40\.0\.tif|tomo_unroof_control_c2d1_02545_42\.0\.tif|tomo_unroof_control_c2d1_02546_44\.0\.tif|tomo_unroof_control_c2d1_02547_46\.0\.tif|tomo_unroof_control_c2d1_02548_48\.0\.tif|tomo_unroof_control_c2d1_02549_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_3$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02806_\-50\.0\.tif|tomo_unroof_control_c2d1_02805_\-48\.0\.tif|tomo_unroof_control_c2d1_02804_\-46\.0\.tif|tomo_unroof_control_c2d1_02803_\-44\.0\.tif|tomo_unroof_control_c2d1_02802_\-42\.0\.tif|tomo_unroof_control_c2d1_02801_\-40\.0\.tif|tomo_unroof_control_c2d1_02800_\-38\.0\.tif|tomo_unroof_control_c2d1_02792_\-36\.0\.tif|tomo_unroof_control_c2d1_02791_\-34\.0\.tif|tomo_unroof_control_c2d1_02790_\-32\.0\.tif|tomo_unroof_control_c2d1_02786_\-30\.0\.tif|tomo_unroof_control_c2d1_02785_\-28\.0\.tif|tomo_unroof_control_c2d1_02784_\-26\.0\.tif|tomo_unroof_control_c2d1_02780_\-24\.0\.tif|tomo_unroof_control_c2d1_02779_\-22\.0\.tif|tomo_unroof_control_c2d1_02778_\-20\.0\.tif|tomo_unroof_control_c2d1_02774_\-18\.0\.tif|tomo_unroof_control_c2d1_02773_\-16\.0\.tif|tomo_unroof_control_c2d1_02772_\-14\.0\.tif|tomo_unroof_control_c2d1_02768_\-12\.0\.tif|tomo_unroof_control_c2d1_02767_\-10\.0\.tif|tomo_unroof_control_c2d1_02766_\-8\.0\.tif|tomo_unroof_control_c2d1_02762_\-6\.0\.tif|tomo_unroof_control_c2d1_02761_\-4\.0\.tif|tomo_unroof_control_c2d1_02760_\-2\.0\.tif|tomo_unroof_control_c2d1_02756_\-0\.0\.tif|tomo_unroof_control_c2d1_02757_2\.0\.tif|tomo_unroof_control_c2d1_02758_4\.0\.tif|tomo_unroof_control_c2d1_02759_6\.0\.tif|tomo_unroof_control_c2d1_02763_8\.0\.tif|tomo_unroof_control_c2d1_02764_10\.0\.tif|tomo_unroof_control_c2d1_02765_12\.0\.tif|tomo_unroof_control_c2d1_02769_14\.0\.tif|tomo_unroof_control_c2d1_02770_16\.0\.tif|tomo_unroof_control_c2d1_02771_18\.0\.tif|tomo_unroof_control_c2d1_02775_20\.0\.tif|tomo_unroof_control_c2d1_02776_22\.0\.tif|tomo_unroof_control_c2d1_02777_24\.0\.tif|tomo_unroof_control_c2d1_02781_26\.0\.tif|tomo_unroof_control_c2d1_02782_28\.0\.tif|tomo_unroof_control_c2d1_02783_30\.0\.tif|tomo_unroof_control_c2d1_02787_32\.0\.tif|tomo_unroof_control_c2d1_02788_34\.0\.tif|tomo_unroof_control_c2d1_02789_36\.0\.tif|tomo_unroof_control_c2d1_02793_38\.0\.tif|tomo_unroof_control_c2d1_02794_40\.0\.tif|tomo_unroof_control_c2d1_02795_42\.0\.tif|tomo_unroof_control_c2d1_02796_44\.0\.tif|tomo_unroof_control_c2d1_02797_46\.0\.tif|tomo_unroof_control_c2d1_02798_48\.0\.tif|tomo_unroof_control_c2d1_02799_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_33$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_02969_\-50\.0\.tif|tomo_unroof_control_c2d1_02968_\-48\.0\.tif|tomo_unroof_control_c2d1_02967_\-46\.0\.tif|tomo_unroof_control_c2d1_02966_\-44\.0\.tif|tomo_unroof_control_c2d1_02965_\-42\.0\.tif|tomo_unroof_control_c2d1_02964_\-40\.0\.tif|tomo_unroof_control_c2d1_02963_\-38\.0\.tif|tomo_unroof_control_c2d1_02955_\-36\.0\.tif|tomo_unroof_control_c2d1_02954_\-34\.0\.tif|tomo_unroof_control_c2d1_02953_\-32\.0\.tif|tomo_unroof_control_c2d1_02949_\-30\.0\.tif|tomo_unroof_control_c2d1_02948_\-28\.0\.tif|tomo_unroof_control_c2d1_02947_\-26\.0\.tif|tomo_unroof_control_c2d1_02943_\-24\.0\.tif|tomo_unroof_control_c2d1_02942_\-22\.0\.tif|tomo_unroof_control_c2d1_02941_\-20\.0\.tif|tomo_unroof_control_c2d1_02937_\-18\.0\.tif|tomo_unroof_control_c2d1_02936_\-16\.0\.tif|tomo_unroof_control_c2d1_02935_\-14\.0\.tif|tomo_unroof_control_c2d1_02931_\-12\.0\.tif|tomo_unroof_control_c2d1_02930_\-10\.0\.tif|tomo_unroof_control_c2d1_02929_\-8\.0\.tif|tomo_unroof_control_c2d1_02925_\-6\.0\.tif|tomo_unroof_control_c2d1_02924_\-4\.0\.tif|tomo_unroof_control_c2d1_02923_\-2\.0\.tif|tomo_unroof_control_c2d1_02919_\-0\.0\.tif|tomo_unroof_control_c2d1_02920_2\.0\.tif|tomo_unroof_control_c2d1_02921_4\.0\.tif|tomo_unroof_control_c2d1_02922_6\.0\.tif|tomo_unroof_control_c2d1_02926_8\.0\.tif|tomo_unroof_control_c2d1_02927_10\.0\.tif|tomo_unroof_control_c2d1_02928_12\.0\.tif|tomo_unroof_control_c2d1_02932_14\.0\.tif|tomo_unroof_control_c2d1_02933_16\.0\.tif|tomo_unroof_control_c2d1_02934_18\.0\.tif|tomo_unroof_control_c2d1_02938_20\.0\.tif|tomo_unroof_control_c2d1_02939_22\.0\.tif|tomo_unroof_control_c2d1_02940_24\.0\.tif|tomo_unroof_control_c2d1_02944_26\.0\.tif|tomo_unroof_control_c2d1_02945_28\.0\.tif|tomo_unroof_control_c2d1_02946_30\.0\.tif|tomo_unroof_control_c2d1_02950_32\.0\.tif|tomo_unroof_control_c2d1_02951_34\.0\.tif|tomo_unroof_control_c2d1_02952_36\.0\.tif|tomo_unroof_control_c2d1_02956_38\.0\.tif|tomo_unroof_control_c2d1_02957_40\.0\.tif|tomo_unroof_control_c2d1_02958_42\.0\.tif|tomo_unroof_control_c2d1_02959_44\.0\.tif|tomo_unroof_control_c2d1_02960_46\.0\.tif|tomo_unroof_control_c2d1_02961_48\.0\.tif|tomo_unroof_control_c2d1_02962_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_34$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_03020_\-50\.0\.tif|tomo_unroof_control_c2d1_03019_\-48\.0\.tif|tomo_unroof_control_c2d1_03018_\-46\.0\.tif|tomo_unroof_control_c2d1_03017_\-44\.0\.tif|tomo_unroof_control_c2d1_03016_\-42\.0\.tif|tomo_unroof_control_c2d1_03015_\-40\.0\.tif|tomo_unroof_control_c2d1_03014_\-38\.0\.tif|tomo_unroof_control_c2d1_03006_\-36\.0\.tif|tomo_unroof_control_c2d1_03005_\-34\.0\.tif|tomo_unroof_control_c2d1_03004_\-32\.0\.tif|tomo_unroof_control_c2d1_03000_\-30\.0\.tif|tomo_unroof_control_c2d1_02999_\-28\.0\.tif|tomo_unroof_control_c2d1_02998_\-26\.0\.tif|tomo_unroof_control_c2d1_02994_\-24\.0\.tif|tomo_unroof_control_c2d1_02993_\-22\.0\.tif|tomo_unroof_control_c2d1_02992_\-20\.0\.tif|tomo_unroof_control_c2d1_02988_\-18\.0\.tif|tomo_unroof_control_c2d1_02987_\-16\.0\.tif|tomo_unroof_control_c2d1_02986_\-14\.0\.tif|tomo_unroof_control_c2d1_02982_\-12\.0\.tif|tomo_unroof_control_c2d1_02981_\-10\.0\.tif|tomo_unroof_control_c2d1_02980_\-8\.0\.tif|tomo_unroof_control_c2d1_02976_\-6\.0\.tif|tomo_unroof_control_c2d1_02975_\-4\.0\.tif|tomo_unroof_control_c2d1_02974_\-2\.0\.tif|tomo_unroof_control_c2d1_02970_\-0\.0\.tif|tomo_unroof_control_c2d1_02971_2\.0\.tif|tomo_unroof_control_c2d1_02972_4\.0\.tif|tomo_unroof_control_c2d1_02973_6\.0\.tif|tomo_unroof_control_c2d1_02977_8\.0\.tif|tomo_unroof_control_c2d1_02978_10\.0\.tif|tomo_unroof_control_c2d1_02979_12\.0\.tif|tomo_unroof_control_c2d1_02983_14\.0\.tif|tomo_unroof_control_c2d1_02984_16\.0\.tif|tomo_unroof_control_c2d1_02985_18\.0\.tif|tomo_unroof_control_c2d1_02989_20\.0\.tif|tomo_unroof_control_c2d1_02990_22\.0\.tif|tomo_unroof_control_c2d1_02991_24\.0\.tif|tomo_unroof_control_c2d1_02995_26\.0\.tif|tomo_unroof_control_c2d1_02996_28\.0\.tif|tomo_unroof_control_c2d1_02997_30\.0\.tif|tomo_unroof_control_c2d1_03001_32\.0\.tif|tomo_unroof_control_c2d1_03002_34\.0\.tif|tomo_unroof_control_c2d1_03003_36\.0\.tif|tomo_unroof_control_c2d1_03007_38\.0\.tif|tomo_unroof_control_c2d1_03008_40\.0\.tif|tomo_unroof_control_c2d1_03009_42\.0\.tif|tomo_unroof_control_c2d1_03010_44\.0\.tif|tomo_unroof_control_c2d1_03011_46\.0\.tif|tomo_unroof_control_c2d1_03012_48\.0\.tif|tomo_unroof_control_c2d1_03013_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_53$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_00417_\-50\.0\.tif|tomo_unroof_control_c2d1_00416_\-48\.0\.tif|tomo_unroof_control_c2d1_00415_\-46\.0\.tif|tomo_unroof_control_c2d1_00414_\-44\.0\.tif|tomo_unroof_control_c2d1_00413_\-42\.0\.tif|tomo_unroof_control_c2d1_00412_\-40\.0\.tif|tomo_unroof_control_c2d1_00411_\-38\.0\.tif|tomo_unroof_control_c2d1_00403_\-36\.0\.tif|tomo_unroof_control_c2d1_00402_\-34\.0\.tif|tomo_unroof_control_c2d1_00401_\-32\.0\.tif|tomo_unroof_control_c2d1_00397_\-30\.0\.tif|tomo_unroof_control_c2d1_00396_\-28\.0\.tif|tomo_unroof_control_c2d1_00395_\-26\.0\.tif|tomo_unroof_control_c2d1_00391_\-24\.0\.tif|tomo_unroof_control_c2d1_00390_\-22\.0\.tif|tomo_unroof_control_c2d1_00389_\-20\.0\.tif|tomo_unroof_control_c2d1_00385_\-18\.0\.tif|tomo_unroof_control_c2d1_00384_\-16\.0\.tif|tomo_unroof_control_c2d1_00383_\-14\.0\.tif|tomo_unroof_control_c2d1_00379_\-12\.0\.tif|tomo_unroof_control_c2d1_00378_\-10\.0\.tif|tomo_unroof_control_c2d1_00377_\-8\.0\.tif|tomo_unroof_control_c2d1_00373_\-6\.0\.tif|tomo_unroof_control_c2d1_00372_\-4\.0\.tif|tomo_unroof_control_c2d1_00371_\-2\.0\.tif|tomo_unroof_control_c2d1_00367_\-0\.0\.tif|tomo_unroof_control_c2d1_00368_2\.0\.tif|tomo_unroof_control_c2d1_00369_4\.0\.tif|tomo_unroof_control_c2d1_00370_6\.0\.tif|tomo_unroof_control_c2d1_00374_8\.0\.tif|tomo_unroof_control_c2d1_00375_10\.0\.tif|tomo_unroof_control_c2d1_00376_12\.0\.tif|tomo_unroof_control_c2d1_00380_14\.0\.tif|tomo_unroof_control_c2d1_00381_16\.0\.tif|tomo_unroof_control_c2d1_00382_18\.0\.tif|tomo_unroof_control_c2d1_00386_20\.0\.tif|tomo_unroof_control_c2d1_00387_22\.0\.tif|tomo_unroof_control_c2d1_00388_24\.0\.tif|tomo_unroof_control_c2d1_00392_26\.0\.tif|tomo_unroof_control_c2d1_00393_28\.0\.tif|tomo_unroof_control_c2d1_00394_30\.0\.tif|tomo_unroof_control_c2d1_00398_32\.0\.tif|tomo_unroof_control_c2d1_00399_34\.0\.tif|tomo_unroof_control_c2d1_00400_36\.0\.tif|tomo_unroof_control_c2d1_00404_38\.0\.tif|tomo_unroof_control_c2d1_00405_40\.0\.tif|tomo_unroof_control_c2d1_00406_42\.0\.tif|tomo_unroof_control_c2d1_00407_44\.0\.tif|tomo_unroof_control_c2d1_00408_46\.0\.tif|tomo_unroof_control_c2d1_00409_48\.0\.tif|tomo_unroof_control_c2d1_00410_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_54$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_00468_\-50\.0\.tif|tomo_unroof_control_c2d1_00467_\-48\.0\.tif|tomo_unroof_control_c2d1_00466_\-46\.0\.tif|tomo_unroof_control_c2d1_00465_\-44\.0\.tif|tomo_unroof_control_c2d1_00464_\-42\.0\.tif|tomo_unroof_control_c2d1_00463_\-40\.0\.tif|tomo_unroof_control_c2d1_00462_\-38\.0\.tif|tomo_unroof_control_c2d1_00454_\-36\.0\.tif|tomo_unroof_control_c2d1_00453_\-34\.0\.tif|tomo_unroof_control_c2d1_00452_\-32\.0\.tif|tomo_unroof_control_c2d1_00448_\-30\.0\.tif|tomo_unroof_control_c2d1_00447_\-28\.0\.tif|tomo_unroof_control_c2d1_00446_\-26\.0\.tif|tomo_unroof_control_c2d1_00442_\-24\.0\.tif|tomo_unroof_control_c2d1_00441_\-22\.0\.tif|tomo_unroof_control_c2d1_00440_\-20\.0\.tif|tomo_unroof_control_c2d1_00436_\-18\.0\.tif|tomo_unroof_control_c2d1_00435_\-16\.0\.tif|tomo_unroof_control_c2d1_00434_\-14\.0\.tif|tomo_unroof_control_c2d1_00430_\-12\.0\.tif|tomo_unroof_control_c2d1_00429_\-10\.0\.tif|tomo_unroof_control_c2d1_00428_\-8\.0\.tif|tomo_unroof_control_c2d1_00424_\-6\.0\.tif|tomo_unroof_control_c2d1_00423_\-4\.0\.tif|tomo_unroof_control_c2d1_00422_\-2\.0\.tif|tomo_unroof_control_c2d1_00418_\-0\.0\.tif|tomo_unroof_control_c2d1_00419_2\.0\.tif|tomo_unroof_control_c2d1_00420_4\.0\.tif|tomo_unroof_control_c2d1_00421_6\.0\.tif|tomo_unroof_control_c2d1_00425_8\.0\.tif|tomo_unroof_control_c2d1_00426_10\.0\.tif|tomo_unroof_control_c2d1_00427_12\.0\.tif|tomo_unroof_control_c2d1_00431_14\.0\.tif|tomo_unroof_control_c2d1_00432_16\.0\.tif|tomo_unroof_control_c2d1_00433_18\.0\.tif|tomo_unroof_control_c2d1_00437_20\.0\.tif|tomo_unroof_control_c2d1_00438_22\.0\.tif|tomo_unroof_control_c2d1_00439_24\.0\.tif|tomo_unroof_control_c2d1_00443_26\.0\.tif|tomo_unroof_control_c2d1_00444_28\.0\.tif|tomo_unroof_control_c2d1_00445_30\.0\.tif|tomo_unroof_control_c2d1_00449_32\.0\.tif|tomo_unroof_control_c2d1_00450_34\.0\.tif|tomo_unroof_control_c2d1_00451_36\.0\.tif|tomo_unroof_control_c2d1_00455_38\.0\.tif|tomo_unroof_control_c2d1_00456_40\.0\.tif|tomo_unroof_control_c2d1_00457_42\.0\.tif|tomo_unroof_control_c2d1_00458_44\.0\.tif|tomo_unroof_control_c2d1_00459_46\.0\.tif|tomo_unroof_control_c2d1_00460_48\.0\.tif|tomo_unroof_control_c2d1_00461_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_58$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_00672_\-50\.0\.tif|tomo_unroof_control_c2d1_00671_\-48\.0\.tif|tomo_unroof_control_c2d1_00670_\-46\.0\.tif|tomo_unroof_control_c2d1_00669_\-44\.0\.tif|tomo_unroof_control_c2d1_00668_\-42\.0\.tif|tomo_unroof_control_c2d1_00667_\-40\.0\.tif|tomo_unroof_control_c2d1_00666_\-38\.0\.tif|tomo_unroof_control_c2d1_00658_\-36\.0\.tif|tomo_unroof_control_c2d1_00657_\-34\.0\.tif|tomo_unroof_control_c2d1_00656_\-32\.0\.tif|tomo_unroof_control_c2d1_00652_\-30\.0\.tif|tomo_unroof_control_c2d1_00651_\-28\.0\.tif|tomo_unroof_control_c2d1_00650_\-26\.0\.tif|tomo_unroof_control_c2d1_00646_\-24\.0\.tif|tomo_unroof_control_c2d1_00645_\-22\.0\.tif|tomo_unroof_control_c2d1_00644_\-20\.0\.tif|tomo_unroof_control_c2d1_00640_\-18\.0\.tif|tomo_unroof_control_c2d1_00639_\-16\.0\.tif|tomo_unroof_control_c2d1_00638_\-14\.0\.tif|tomo_unroof_control_c2d1_00634_\-12\.0\.tif|tomo_unroof_control_c2d1_00633_\-10\.0\.tif|tomo_unroof_control_c2d1_00632_\-8\.0\.tif|tomo_unroof_control_c2d1_00628_\-6\.0\.tif|tomo_unroof_control_c2d1_00627_\-4\.0\.tif|tomo_unroof_control_c2d1_00626_\-2\.0\.tif|tomo_unroof_control_c2d1_00622_\-0\.0\.tif|tomo_unroof_control_c2d1_00623_2\.0\.tif|tomo_unroof_control_c2d1_00624_4\.0\.tif|tomo_unroof_control_c2d1_00625_6\.0\.tif|tomo_unroof_control_c2d1_00629_8\.0\.tif|tomo_unroof_control_c2d1_00630_10\.0\.tif|tomo_unroof_control_c2d1_00631_12\.0\.tif|tomo_unroof_control_c2d1_00635_14\.0\.tif|tomo_unroof_control_c2d1_00636_16\.0\.tif|tomo_unroof_control_c2d1_00637_18\.0\.tif|tomo_unroof_control_c2d1_00641_20\.0\.tif|tomo_unroof_control_c2d1_00642_22\.0\.tif|tomo_unroof_control_c2d1_00643_24\.0\.tif|tomo_unroof_control_c2d1_00647_26\.0\.tif|tomo_unroof_control_c2d1_00648_28\.0\.tif|tomo_unroof_control_c2d1_00649_30\.0\.tif|tomo_unroof_control_c2d1_00653_32\.0\.tif|tomo_unroof_control_c2d1_00654_34\.0\.tif|tomo_unroof_control_c2d1_00655_36\.0\.tif|tomo_unroof_control_c2d1_00659_38\.0\.tif|tomo_unroof_control_c2d1_00660_40\.0\.tif|tomo_unroof_control_c2d1_00661_42\.0\.tif|tomo_unroof_control_c2d1_00662_44\.0\.tif|tomo_unroof_control_c2d1_00663_46\.0\.tif|tomo_unroof_control_c2d1_00664_48\.0\.tif|tomo_unroof_control_c2d1_00665_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_59$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_00723_\-50\.0\.tif|tomo_unroof_control_c2d1_00722_\-48\.0\.tif|tomo_unroof_control_c2d1_00721_\-46\.0\.tif|tomo_unroof_control_c2d1_00720_\-44\.0\.tif|tomo_unroof_control_c2d1_00719_\-42\.0\.tif|tomo_unroof_control_c2d1_00718_\-40\.0\.tif|tomo_unroof_control_c2d1_00717_\-38\.0\.tif|tomo_unroof_control_c2d1_00709_\-36\.0\.tif|tomo_unroof_control_c2d1_00708_\-34\.0\.tif|tomo_unroof_control_c2d1_00707_\-32\.0\.tif|tomo_unroof_control_c2d1_00703_\-30\.0\.tif|tomo_unroof_control_c2d1_00702_\-28\.0\.tif|tomo_unroof_control_c2d1_00701_\-26\.0\.tif|tomo_unroof_control_c2d1_00697_\-24\.0\.tif|tomo_unroof_control_c2d1_00696_\-22\.0\.tif|tomo_unroof_control_c2d1_00695_\-20\.0\.tif|tomo_unroof_control_c2d1_00691_\-18\.0\.tif|tomo_unroof_control_c2d1_00690_\-16\.0\.tif|tomo_unroof_control_c2d1_00689_\-14\.0\.tif|tomo_unroof_control_c2d1_00685_\-12\.0\.tif|tomo_unroof_control_c2d1_00684_\-10\.0\.tif|tomo_unroof_control_c2d1_00683_\-8\.0\.tif|tomo_unroof_control_c2d1_00679_\-6\.0\.tif|tomo_unroof_control_c2d1_00678_\-4\.0\.tif|tomo_unroof_control_c2d1_00677_\-2\.0\.tif|tomo_unroof_control_c2d1_00673_\-0\.0\.tif|tomo_unroof_control_c2d1_00674_2\.0\.tif|tomo_unroof_control_c2d1_00675_4\.0\.tif|tomo_unroof_control_c2d1_00676_6\.0\.tif|tomo_unroof_control_c2d1_00680_8\.0\.tif|tomo_unroof_control_c2d1_00681_10\.0\.tif|tomo_unroof_control_c2d1_00682_12\.0\.tif|tomo_unroof_control_c2d1_00686_14\.0\.tif|tomo_unroof_control_c2d1_00687_16\.0\.tif|tomo_unroof_control_c2d1_00688_18\.0\.tif|tomo_unroof_control_c2d1_00692_20\.0\.tif|tomo_unroof_control_c2d1_00693_22\.0\.tif|tomo_unroof_control_c2d1_00694_24\.0\.tif|tomo_unroof_control_c2d1_00698_26\.0\.tif|tomo_unroof_control_c2d1_00699_28\.0\.tif|tomo_unroof_control_c2d1_00700_30\.0\.tif|tomo_unroof_control_c2d1_00704_32\.0\.tif|tomo_unroof_control_c2d1_00705_34\.0\.tif|tomo_unroof_control_c2d1_00706_36\.0\.tif|tomo_unroof_control_c2d1_00710_38\.0\.tif|tomo_unroof_control_c2d1_00711_40\.0\.tif|tomo_unroof_control_c2d1_00712_42\.0\.tif|tomo_unroof_control_c2d1_00713_44\.0\.tif|tomo_unroof_control_c2d1_00714_46\.0\.tif|tomo_unroof_control_c2d1_00715_48\.0\.tif|tomo_unroof_control_c2d1_00716_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_65$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_00978_\-50\.0\.tif|tomo_unroof_control_c2d1_00977_\-48\.0\.tif|tomo_unroof_control_c2d1_00976_\-46\.0\.tif|tomo_unroof_control_c2d1_00975_\-44\.0\.tif|tomo_unroof_control_c2d1_00974_\-42\.0\.tif|tomo_unroof_control_c2d1_00973_\-40\.0\.tif|tomo_unroof_control_c2d1_00972_\-38\.0\.tif|tomo_unroof_control_c2d1_00964_\-36\.0\.tif|tomo_unroof_control_c2d1_00963_\-34\.0\.tif|tomo_unroof_control_c2d1_00962_\-32\.0\.tif|tomo_unroof_control_c2d1_00958_\-30\.0\.tif|tomo_unroof_control_c2d1_00957_\-28\.0\.tif|tomo_unroof_control_c2d1_00956_\-26\.0\.tif|tomo_unroof_control_c2d1_00952_\-24\.0\.tif|tomo_unroof_control_c2d1_00951_\-22\.0\.tif|tomo_unroof_control_c2d1_00950_\-20\.0\.tif|tomo_unroof_control_c2d1_00946_\-18\.0\.tif|tomo_unroof_control_c2d1_00945_\-16\.0\.tif|tomo_unroof_control_c2d1_00944_\-14\.0\.tif|tomo_unroof_control_c2d1_00940_\-12\.0\.tif|tomo_unroof_control_c2d1_00939_\-10\.0\.tif|tomo_unroof_control_c2d1_00938_\-8\.0\.tif|tomo_unroof_control_c2d1_00934_\-6\.0\.tif|tomo_unroof_control_c2d1_00933_\-4\.0\.tif|tomo_unroof_control_c2d1_00932_\-2\.0\.tif|tomo_unroof_control_c2d1_00928_\-0\.0\.tif|tomo_unroof_control_c2d1_00929_2\.0\.tif|tomo_unroof_control_c2d1_00930_4\.0\.tif|tomo_unroof_control_c2d1_00931_6\.0\.tif|tomo_unroof_control_c2d1_00935_8\.0\.tif|tomo_unroof_control_c2d1_00936_10\.0\.tif|tomo_unroof_control_c2d1_00937_12\.0\.tif|tomo_unroof_control_c2d1_00941_14\.0\.tif|tomo_unroof_control_c2d1_00942_16\.0\.tif|tomo_unroof_control_c2d1_00943_18\.0\.tif|tomo_unroof_control_c2d1_00947_20\.0\.tif|tomo_unroof_control_c2d1_00948_22\.0\.tif|tomo_unroof_control_c2d1_00949_24\.0\.tif|tomo_unroof_control_c2d1_00953_26\.0\.tif|tomo_unroof_control_c2d1_00954_28\.0\.tif|tomo_unroof_control_c2d1_00955_30\.0\.tif|tomo_unroof_control_c2d1_00959_32\.0\.tif|tomo_unroof_control_c2d1_00960_34\.0\.tif|tomo_unroof_control_c2d1_00961_36\.0\.tif|tomo_unroof_control_c2d1_00965_38\.0\.tif|tomo_unroof_control_c2d1_00966_40\.0\.tif|tomo_unroof_control_c2d1_00967_42\.0\.tif|tomo_unroof_control_c2d1_00968_44\.0\.tif|tomo_unroof_control_c2d1_00969_46\.0\.tif|tomo_unroof_control_c2d1_00970_48\.0\.tif|tomo_unroof_control_c2d1_00971_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_7$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_01590_\-50\.0\.tif|tomo_unroof_control_c2d1_01589_\-48\.0\.tif|tomo_unroof_control_c2d1_01588_\-46\.0\.tif|tomo_unroof_control_c2d1_01587_\-44\.0\.tif|tomo_unroof_control_c2d1_01586_\-42\.0\.tif|tomo_unroof_control_c2d1_01585_\-40\.0\.tif|tomo_unroof_control_c2d1_01584_\-38\.0\.tif|tomo_unroof_control_c2d1_01576_\-36\.0\.tif|tomo_unroof_control_c2d1_01575_\-34\.0\.tif|tomo_unroof_control_c2d1_01574_\-32\.0\.tif|tomo_unroof_control_c2d1_01570_\-30\.0\.tif|tomo_unroof_control_c2d1_01569_\-28\.0\.tif|tomo_unroof_control_c2d1_01568_\-26\.0\.tif|tomo_unroof_control_c2d1_01564_\-24\.0\.tif|tomo_unroof_control_c2d1_01563_\-22\.0\.tif|tomo_unroof_control_c2d1_01562_\-20\.0\.tif|tomo_unroof_control_c2d1_01558_\-18\.0\.tif|tomo_unroof_control_c2d1_01557_\-16\.0\.tif|tomo_unroof_control_c2d1_01556_\-14\.0\.tif|tomo_unroof_control_c2d1_01552_\-12\.0\.tif|tomo_unroof_control_c2d1_01551_\-10\.0\.tif|tomo_unroof_control_c2d1_01550_\-8\.0\.tif|tomo_unroof_control_c2d1_01546_\-6\.0\.tif|tomo_unroof_control_c2d1_01545_\-4\.0\.tif|tomo_unroof_control_c2d1_01544_\-2\.0\.tif|tomo_unroof_control_c2d1_01540_\-0\.0\.tif|tomo_unroof_control_c2d1_01541_2\.0\.tif|tomo_unroof_control_c2d1_01542_4\.0\.tif|tomo_unroof_control_c2d1_01543_6\.0\.tif|tomo_unroof_control_c2d1_01547_8\.0\.tif|tomo_unroof_control_c2d1_01548_10\.0\.tif|tomo_unroof_control_c2d1_01549_12\.0\.tif|tomo_unroof_control_c2d1_01553_14\.0\.tif|tomo_unroof_control_c2d1_01554_16\.0\.tif|tomo_unroof_control_c2d1_01555_18\.0\.tif|tomo_unroof_control_c2d1_01559_20\.0\.tif|tomo_unroof_control_c2d1_01560_22\.0\.tif|tomo_unroof_control_c2d1_01561_24\.0\.tif|tomo_unroof_control_c2d1_01565_26\.0\.tif|tomo_unroof_control_c2d1_01566_28\.0\.tif|tomo_unroof_control_c2d1_01567_30\.0\.tif|tomo_unroof_control_c2d1_01571_32\.0\.tif|tomo_unroof_control_c2d1_01572_34\.0\.tif|tomo_unroof_control_c2d1_01573_36\.0\.tif|tomo_unroof_control_c2d1_01577_38\.0\.tif|tomo_unroof_control_c2d1_01578_40\.0\.tif|tomo_unroof_control_c2d1_01579_42\.0\.tif|tomo_unroof_control_c2d1_01580_44\.0\.tif|tomo_unroof_control_c2d1_01581_46\.0\.tif|tomo_unroof_control_c2d1_01582_48\.0\.tif|tomo_unroof_control_c2d1_01583_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_73$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_01386_\-50\.0\.tif|tomo_unroof_control_c2d1_01385_\-48\.0\.tif|tomo_unroof_control_c2d1_01384_\-46\.0\.tif|tomo_unroof_control_c2d1_01383_\-44\.0\.tif|tomo_unroof_control_c2d1_01382_\-42\.0\.tif|tomo_unroof_control_c2d1_01381_\-40\.0\.tif|tomo_unroof_control_c2d1_01380_\-38\.0\.tif|tomo_unroof_control_c2d1_01372_\-36\.0\.tif|tomo_unroof_control_c2d1_01371_\-34\.0\.tif|tomo_unroof_control_c2d1_01370_\-32\.0\.tif|tomo_unroof_control_c2d1_01366_\-30\.0\.tif|tomo_unroof_control_c2d1_01365_\-28\.0\.tif|tomo_unroof_control_c2d1_01364_\-26\.0\.tif|tomo_unroof_control_c2d1_01360_\-24\.0\.tif|tomo_unroof_control_c2d1_01359_\-22\.0\.tif|tomo_unroof_control_c2d1_01358_\-20\.0\.tif|tomo_unroof_control_c2d1_01354_\-18\.0\.tif|tomo_unroof_control_c2d1_01353_\-16\.0\.tif|tomo_unroof_control_c2d1_01352_\-14\.0\.tif|tomo_unroof_control_c2d1_01348_\-12\.0\.tif|tomo_unroof_control_c2d1_01347_\-10\.0\.tif|tomo_unroof_control_c2d1_01346_\-8\.0\.tif|tomo_unroof_control_c2d1_01342_\-6\.0\.tif|tomo_unroof_control_c2d1_01341_\-4\.0\.tif|tomo_unroof_control_c2d1_01340_\-2\.0\.tif|tomo_unroof_control_c2d1_01336_\-0\.0\.tif|tomo_unroof_control_c2d1_01337_2\.0\.tif|tomo_unroof_control_c2d1_01338_4\.0\.tif|tomo_unroof_control_c2d1_01339_6\.0\.tif|tomo_unroof_control_c2d1_01343_8\.0\.tif|tomo_unroof_control_c2d1_01344_10\.0\.tif|tomo_unroof_control_c2d1_01345_12\.0\.tif|tomo_unroof_control_c2d1_01349_14\.0\.tif|tomo_unroof_control_c2d1_01350_16\.0\.tif|tomo_unroof_control_c2d1_01351_18\.0\.tif|tomo_unroof_control_c2d1_01355_20\.0\.tif|tomo_unroof_control_c2d1_01356_22\.0\.tif|tomo_unroof_control_c2d1_01357_24\.0\.tif|tomo_unroof_control_c2d1_01361_26\.0\.tif|tomo_unroof_control_c2d1_01362_28\.0\.tif|tomo_unroof_control_c2d1_01363_30\.0\.tif|tomo_unroof_control_c2d1_01367_32\.0\.tif|tomo_unroof_control_c2d1_01368_34\.0\.tif|tomo_unroof_control_c2d1_01369_36\.0\.tif|tomo_unroof_control_c2d1_01373_38\.0\.tif|tomo_unroof_control_c2d1_01374_40\.0\.tif|tomo_unroof_control_c2d1_01375_42\.0\.tif|tomo_unroof_control_c2d1_01376_44\.0\.tif|tomo_unroof_control_c2d1_01377_46\.0\.tif|tomo_unroof_control_c2d1_01378_48\.0\.tif|tomo_unroof_control_c2d1_01379_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_79$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_00213_\-50\.0\.tif|tomo_unroof_control_c2d1_00212_\-48\.0\.tif|tomo_unroof_control_c2d1_00211_\-46\.0\.tif|tomo_unroof_control_c2d1_00210_\-44\.0\.tif|tomo_unroof_control_c2d1_00209_\-42\.0\.tif|tomo_unroof_control_c2d1_00208_\-40\.0\.tif|tomo_unroof_control_c2d1_00207_\-38\.0\.tif|tomo_unroof_control_c2d1_00199_\-36\.0\.tif|tomo_unroof_control_c2d1_00198_\-34\.0\.tif|tomo_unroof_control_c2d1_00197_\-32\.0\.tif|tomo_unroof_control_c2d1_00193_\-30\.0\.tif|tomo_unroof_control_c2d1_00192_\-28\.0\.tif|tomo_unroof_control_c2d1_00191_\-26\.0\.tif|tomo_unroof_control_c2d1_00187_\-24\.0\.tif|tomo_unroof_control_c2d1_00186_\-22\.0\.tif|tomo_unroof_control_c2d1_00185_\-20\.0\.tif|tomo_unroof_control_c2d1_00181_\-18\.0\.tif|tomo_unroof_control_c2d1_00180_\-16\.0\.tif|tomo_unroof_control_c2d1_00179_\-14\.0\.tif|tomo_unroof_control_c2d1_00175_\-12\.0\.tif|tomo_unroof_control_c2d1_00174_\-10\.0\.tif|tomo_unroof_control_c2d1_00173_\-8\.0\.tif|tomo_unroof_control_c2d1_00169_\-6\.0\.tif|tomo_unroof_control_c2d1_00168_\-4\.0\.tif|tomo_unroof_control_c2d1_00167_\-2\.0\.tif|tomo_unroof_control_c2d1_00163_\-0\.0\.tif|tomo_unroof_control_c2d1_00164_2\.0\.tif|tomo_unroof_control_c2d1_00165_4\.0\.tif|tomo_unroof_control_c2d1_00166_6\.0\.tif|tomo_unroof_control_c2d1_00170_8\.0\.tif|tomo_unroof_control_c2d1_00171_10\.0\.tif|tomo_unroof_control_c2d1_00172_12\.0\.tif|tomo_unroof_control_c2d1_00176_14\.0\.tif|tomo_unroof_control_c2d1_00177_16\.0\.tif|tomo_unroof_control_c2d1_00178_18\.0\.tif|tomo_unroof_control_c2d1_00182_20\.0\.tif|tomo_unroof_control_c2d1_00183_22\.0\.tif|tomo_unroof_control_c2d1_00184_24\.0\.tif|tomo_unroof_control_c2d1_00188_26\.0\.tif|tomo_unroof_control_c2d1_00189_28\.0\.tif|tomo_unroof_control_c2d1_00190_30\.0\.tif|tomo_unroof_control_c2d1_00194_32\.0\.tif|tomo_unroof_control_c2d1_00195_34\.0\.tif|tomo_unroof_control_c2d1_00196_36\.0\.tif|tomo_unroof_control_c2d1_00200_38\.0\.tif|tomo_unroof_control_c2d1_00201_40\.0\.tif|tomo_unroof_control_c2d1_00202_42\.0\.tif|tomo_unroof_control_c2d1_00203_44\.0\.tif|tomo_unroof_control_c2d1_00204_46\.0\.tif|tomo_unroof_control_c2d1_00205_48\.0\.tif|tomo_unroof_control_c2d1_00206_50\.0\.tif)
-  - parent_filters:
-      include:
-        run:
-        - ^tomo_c2c1_9$
-    source_glob:
-      list_glob: frames/*.tif
-      match_regex: (tomo_unroof_control_c2d1_01692_\-50\.0\.tif|tomo_unroof_control_c2d1_01691_\-48\.0\.tif|tomo_unroof_control_c2d1_01690_\-46\.0\.tif|tomo_unroof_control_c2d1_01689_\-44\.0\.tif|tomo_unroof_control_c2d1_01688_\-42\.0\.tif|tomo_unroof_control_c2d1_01687_\-40\.0\.tif|tomo_unroof_control_c2d1_01686_\-38\.0\.tif|tomo_unroof_control_c2d1_01678_\-36\.0\.tif|tomo_unroof_control_c2d1_01677_\-34\.0\.tif|tomo_unroof_control_c2d1_01676_\-32\.0\.tif|tomo_unroof_control_c2d1_01672_\-30\.0\.tif|tomo_unroof_control_c2d1_01671_\-28\.0\.tif|tomo_unroof_control_c2d1_01670_\-26\.0\.tif|tomo_unroof_control_c2d1_01666_\-24\.0\.tif|tomo_unroof_control_c2d1_01665_\-22\.0\.tif|tomo_unroof_control_c2d1_01664_\-20\.0\.tif|tomo_unroof_control_c2d1_01660_\-18\.0\.tif|tomo_unroof_control_c2d1_01659_\-16\.0\.tif|tomo_unroof_control_c2d1_01658_\-14\.0\.tif|tomo_unroof_control_c2d1_01654_\-12\.0\.tif|tomo_unroof_control_c2d1_01653_\-10\.0\.tif|tomo_unroof_control_c2d1_01652_\-8\.0\.tif|tomo_unroof_control_c2d1_01648_\-6\.0\.tif|tomo_unroof_control_c2d1_01647_\-4\.0\.tif|tomo_unroof_control_c2d1_01646_\-2\.0\.tif|tomo_unroof_control_c2d1_01642_\-0\.0\.tif|tomo_unroof_control_c2d1_01643_2\.0\.tif|tomo_unroof_control_c2d1_01644_4\.0\.tif|tomo_unroof_control_c2d1_01645_6\.0\.tif|tomo_unroof_control_c2d1_01649_8\.0\.tif|tomo_unroof_control_c2d1_01650_10\.0\.tif|tomo_unroof_control_c2d1_01651_12\.0\.tif|tomo_unroof_control_c2d1_01655_14\.0\.tif|tomo_unroof_control_c2d1_01656_16\.0\.tif|tomo_unroof_control_c2d1_01657_18\.0\.tif|tomo_unroof_control_c2d1_01661_20\.0\.tif|tomo_unroof_control_c2d1_01662_22\.0\.tif|tomo_unroof_control_c2d1_01663_24\.0\.tif|tomo_unroof_control_c2d1_01667_26\.0\.tif|tomo_unroof_control_c2d1_01668_28\.0\.tif|tomo_unroof_control_c2d1_01669_30\.0\.tif|tomo_unroof_control_c2d1_01673_32\.0\.tif|tomo_unroof_control_c2d1_01674_34\.0\.tif|tomo_unroof_control_c2d1_01675_36\.0\.tif|tomo_unroof_control_c2d1_01679_38\.0\.tif|tomo_unroof_control_c2d1_01680_40\.0\.tif|tomo_unroof_control_c2d1_01681_42\.0\.tif|tomo_unroof_control_c2d1_01682_44\.0\.tif|tomo_unroof_control_c2d1_01683_46\.0\.tif|tomo_unroof_control_c2d1_01684_48\.0\.tif|tomo_unroof_control_c2d1_01685_50\.0\.tif)
-gains: []
+  - metadata:
+      dose_rate: float {dose_rate}
+      is_gain_corrected: true
+    sources:
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_11$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_01794_\-50\.0\.tif|tomo_unroof_control_c2d1_01793_\-48\.0\.tif|tomo_unroof_control_c2d1_01792_\-46\.0\.tif|tomo_unroof_control_c2d1_01791_\-44\.0\.tif|tomo_unroof_control_c2d1_01790_\-42\.0\.tif|tomo_unroof_control_c2d1_01789_\-40\.0\.tif|tomo_unroof_control_c2d1_01788_\-38\.0\.tif|tomo_unroof_control_c2d1_01780_\-36\.0\.tif|tomo_unroof_control_c2d1_01779_\-34\.0\.tif|tomo_unroof_control_c2d1_01778_\-32\.0\.tif|tomo_unroof_control_c2d1_01774_\-30\.0\.tif|tomo_unroof_control_c2d1_01773_\-28\.0\.tif|tomo_unroof_control_c2d1_01772_\-26\.0\.tif|tomo_unroof_control_c2d1_01768_\-24\.0\.tif|tomo_unroof_control_c2d1_01767_\-22\.0\.tif|tomo_unroof_control_c2d1_01766_\-20\.0\.tif|tomo_unroof_control_c2d1_01762_\-18\.0\.tif|tomo_unroof_control_c2d1_01761_\-16\.0\.tif|tomo_unroof_control_c2d1_01760_\-14\.0\.tif|tomo_unroof_control_c2d1_01756_\-12\.0\.tif|tomo_unroof_control_c2d1_01755_\-10\.0\.tif|tomo_unroof_control_c2d1_01754_\-8\.0\.tif|tomo_unroof_control_c2d1_01750_\-6\.0\.tif|tomo_unroof_control_c2d1_01749_\-4\.0\.tif|tomo_unroof_control_c2d1_01748_\-2\.0\.tif|tomo_unroof_control_c2d1_01744_\-0\.0\.tif|tomo_unroof_control_c2d1_01745_2\.0\.tif|tomo_unroof_control_c2d1_01746_4\.0\.tif|tomo_unroof_control_c2d1_01747_6\.0\.tif|tomo_unroof_control_c2d1_01751_8\.0\.tif|tomo_unroof_control_c2d1_01752_10\.0\.tif|tomo_unroof_control_c2d1_01753_12\.0\.tif|tomo_unroof_control_c2d1_01757_14\.0\.tif|tomo_unroof_control_c2d1_01758_16\.0\.tif|tomo_unroof_control_c2d1_01759_18\.0\.tif|tomo_unroof_control_c2d1_01763_20\.0\.tif|tomo_unroof_control_c2d1_01764_22\.0\.tif|tomo_unroof_control_c2d1_01765_24\.0\.tif|tomo_unroof_control_c2d1_01769_26\.0\.tif|tomo_unroof_control_c2d1_01770_28\.0\.tif|tomo_unroof_control_c2d1_01771_30\.0\.tif|tomo_unroof_control_c2d1_01775_32\.0\.tif|tomo_unroof_control_c2d1_01776_34\.0\.tif|tomo_unroof_control_c2d1_01777_36\.0\.tif|tomo_unroof_control_c2d1_01781_38\.0\.tif|tomo_unroof_control_c2d1_01782_40\.0\.tif|tomo_unroof_control_c2d1_01783_42\.0\.tif|tomo_unroof_control_c2d1_01784_44\.0\.tif|tomo_unroof_control_c2d1_01785_46\.0\.tif|tomo_unroof_control_c2d1_01786_48\.0\.tif|tomo_unroof_control_c2d1_01787_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_19$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02100_\-50\.0\.tif|tomo_unroof_control_c2d1_02099_\-48\.0\.tif|tomo_unroof_control_c2d1_02098_\-46\.0\.tif|tomo_unroof_control_c2d1_02097_\-44\.0\.tif|tomo_unroof_control_c2d1_02096_\-42\.0\.tif|tomo_unroof_control_c2d1_02095_\-40\.0\.tif|tomo_unroof_control_c2d1_02094_\-38\.0\.tif|tomo_unroof_control_c2d1_02086_\-36\.0\.tif|tomo_unroof_control_c2d1_02085_\-34\.0\.tif|tomo_unroof_control_c2d1_02084_\-32\.0\.tif|tomo_unroof_control_c2d1_02080_\-30\.0\.tif|tomo_unroof_control_c2d1_02079_\-28\.0\.tif|tomo_unroof_control_c2d1_02078_\-26\.0\.tif|tomo_unroof_control_c2d1_02074_\-24\.0\.tif|tomo_unroof_control_c2d1_02073_\-22\.0\.tif|tomo_unroof_control_c2d1_02072_\-20\.0\.tif|tomo_unroof_control_c2d1_02068_\-18\.0\.tif|tomo_unroof_control_c2d1_02067_\-16\.0\.tif|tomo_unroof_control_c2d1_02066_\-14\.0\.tif|tomo_unroof_control_c2d1_02062_\-12\.0\.tif|tomo_unroof_control_c2d1_02061_\-10\.0\.tif|tomo_unroof_control_c2d1_02060_\-8\.0\.tif|tomo_unroof_control_c2d1_02056_\-6\.0\.tif|tomo_unroof_control_c2d1_02055_\-4\.0\.tif|tomo_unroof_control_c2d1_02054_\-2\.0\.tif|tomo_unroof_control_c2d1_02050_\-0\.0\.tif|tomo_unroof_control_c2d1_02051_2\.0\.tif|tomo_unroof_control_c2d1_02052_4\.0\.tif|tomo_unroof_control_c2d1_02053_6\.0\.tif|tomo_unroof_control_c2d1_02057_8\.0\.tif|tomo_unroof_control_c2d1_02058_10\.0\.tif|tomo_unroof_control_c2d1_02059_12\.0\.tif|tomo_unroof_control_c2d1_02063_14\.0\.tif|tomo_unroof_control_c2d1_02064_16\.0\.tif|tomo_unroof_control_c2d1_02065_18\.0\.tif|tomo_unroof_control_c2d1_02069_20\.0\.tif|tomo_unroof_control_c2d1_02070_22\.0\.tif|tomo_unroof_control_c2d1_02071_24\.0\.tif|tomo_unroof_control_c2d1_02075_26\.0\.tif|tomo_unroof_control_c2d1_02076_28\.0\.tif|tomo_unroof_control_c2d1_02077_30\.0\.tif|tomo_unroof_control_c2d1_02081_32\.0\.tif|tomo_unroof_control_c2d1_02082_34\.0\.tif|tomo_unroof_control_c2d1_02083_36\.0\.tif|tomo_unroof_control_c2d1_02087_38\.0\.tif|tomo_unroof_control_c2d1_02088_40\.0\.tif|tomo_unroof_control_c2d1_02089_42\.0\.tif|tomo_unroof_control_c2d1_02090_44\.0\.tif|tomo_unroof_control_c2d1_02091_46\.0\.tif|tomo_unroof_control_c2d1_02092_48\.0\.tif|tomo_unroof_control_c2d1_02093_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_21$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02202_\-50\.0\.tif|tomo_unroof_control_c2d1_02201_\-48\.0\.tif|tomo_unroof_control_c2d1_02200_\-46\.0\.tif|tomo_unroof_control_c2d1_02199_\-44\.0\.tif|tomo_unroof_control_c2d1_02198_\-42\.0\.tif|tomo_unroof_control_c2d1_02197_\-40\.0\.tif|tomo_unroof_control_c2d1_02196_\-38\.0\.tif|tomo_unroof_control_c2d1_02188_\-36\.0\.tif|tomo_unroof_control_c2d1_02187_\-34\.0\.tif|tomo_unroof_control_c2d1_02186_\-32\.0\.tif|tomo_unroof_control_c2d1_02182_\-30\.0\.tif|tomo_unroof_control_c2d1_02181_\-28\.0\.tif|tomo_unroof_control_c2d1_02180_\-26\.0\.tif|tomo_unroof_control_c2d1_02176_\-24\.0\.tif|tomo_unroof_control_c2d1_02175_\-22\.0\.tif|tomo_unroof_control_c2d1_02174_\-20\.0\.tif|tomo_unroof_control_c2d1_02170_\-18\.0\.tif|tomo_unroof_control_c2d1_02169_\-16\.0\.tif|tomo_unroof_control_c2d1_02168_\-14\.0\.tif|tomo_unroof_control_c2d1_02164_\-12\.0\.tif|tomo_unroof_control_c2d1_02163_\-10\.0\.tif|tomo_unroof_control_c2d1_02162_\-8\.0\.tif|tomo_unroof_control_c2d1_02158_\-6\.0\.tif|tomo_unroof_control_c2d1_02157_\-4\.0\.tif|tomo_unroof_control_c2d1_02156_\-2\.0\.tif|tomo_unroof_control_c2d1_02152_\-0\.0\.tif|tomo_unroof_control_c2d1_02153_2\.0\.tif|tomo_unroof_control_c2d1_02154_4\.0\.tif|tomo_unroof_control_c2d1_02155_6\.0\.tif|tomo_unroof_control_c2d1_02159_8\.0\.tif|tomo_unroof_control_c2d1_02160_10\.0\.tif|tomo_unroof_control_c2d1_02161_12\.0\.tif|tomo_unroof_control_c2d1_02165_14\.0\.tif|tomo_unroof_control_c2d1_02166_16\.0\.tif|tomo_unroof_control_c2d1_02167_18\.0\.tif|tomo_unroof_control_c2d1_02171_20\.0\.tif|tomo_unroof_control_c2d1_02172_22\.0\.tif|tomo_unroof_control_c2d1_02173_24\.0\.tif|tomo_unroof_control_c2d1_02177_26\.0\.tif|tomo_unroof_control_c2d1_02178_28\.0\.tif|tomo_unroof_control_c2d1_02179_30\.0\.tif|tomo_unroof_control_c2d1_02183_32\.0\.tif|tomo_unroof_control_c2d1_02184_34\.0\.tif|tomo_unroof_control_c2d1_02185_36\.0\.tif|tomo_unroof_control_c2d1_02189_38\.0\.tif|tomo_unroof_control_c2d1_02190_40\.0\.tif|tomo_unroof_control_c2d1_02191_42\.0\.tif|tomo_unroof_control_c2d1_02192_44\.0\.tif|tomo_unroof_control_c2d1_02193_46\.0\.tif|tomo_unroof_control_c2d1_02194_48\.0\.tif|tomo_unroof_control_c2d1_02195_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_22$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02253_\-50\.0\.tif|tomo_unroof_control_c2d1_02252_\-48\.0\.tif|tomo_unroof_control_c2d1_02251_\-46\.0\.tif|tomo_unroof_control_c2d1_02250_\-44\.0\.tif|tomo_unroof_control_c2d1_02249_\-42\.0\.tif|tomo_unroof_control_c2d1_02248_\-40\.0\.tif|tomo_unroof_control_c2d1_02247_\-38\.0\.tif|tomo_unroof_control_c2d1_02239_\-36\.0\.tif|tomo_unroof_control_c2d1_02238_\-34\.0\.tif|tomo_unroof_control_c2d1_02237_\-32\.0\.tif|tomo_unroof_control_c2d1_02233_\-30\.0\.tif|tomo_unroof_control_c2d1_02232_\-28\.0\.tif|tomo_unroof_control_c2d1_02231_\-26\.0\.tif|tomo_unroof_control_c2d1_02227_\-24\.0\.tif|tomo_unroof_control_c2d1_02226_\-22\.0\.tif|tomo_unroof_control_c2d1_02225_\-20\.0\.tif|tomo_unroof_control_c2d1_02221_\-18\.0\.tif|tomo_unroof_control_c2d1_02220_\-16\.0\.tif|tomo_unroof_control_c2d1_02219_\-14\.0\.tif|tomo_unroof_control_c2d1_02215_\-12\.0\.tif|tomo_unroof_control_c2d1_02214_\-10\.0\.tif|tomo_unroof_control_c2d1_02213_\-8\.0\.tif|tomo_unroof_control_c2d1_02209_\-6\.0\.tif|tomo_unroof_control_c2d1_02208_\-4\.0\.tif|tomo_unroof_control_c2d1_02207_\-2\.0\.tif|tomo_unroof_control_c2d1_02203_\-0\.0\.tif|tomo_unroof_control_c2d1_02204_2\.0\.tif|tomo_unroof_control_c2d1_02205_4\.0\.tif|tomo_unroof_control_c2d1_02206_6\.0\.tif|tomo_unroof_control_c2d1_02210_8\.0\.tif|tomo_unroof_control_c2d1_02211_10\.0\.tif|tomo_unroof_control_c2d1_02212_12\.0\.tif|tomo_unroof_control_c2d1_02216_14\.0\.tif|tomo_unroof_control_c2d1_02217_16\.0\.tif|tomo_unroof_control_c2d1_02218_18\.0\.tif|tomo_unroof_control_c2d1_02222_20\.0\.tif|tomo_unroof_control_c2d1_02223_22\.0\.tif|tomo_unroof_control_c2d1_02224_24\.0\.tif|tomo_unroof_control_c2d1_02228_26\.0\.tif|tomo_unroof_control_c2d1_02229_28\.0\.tif|tomo_unroof_control_c2d1_02230_30\.0\.tif|tomo_unroof_control_c2d1_02234_32\.0\.tif|tomo_unroof_control_c2d1_02235_34\.0\.tif|tomo_unroof_control_c2d1_02236_36\.0\.tif|tomo_unroof_control_c2d1_02240_38\.0\.tif|tomo_unroof_control_c2d1_02241_40\.0\.tif|tomo_unroof_control_c2d1_02242_42\.0\.tif|tomo_unroof_control_c2d1_02243_44\.0\.tif|tomo_unroof_control_c2d1_02244_46\.0\.tif|tomo_unroof_control_c2d1_02245_48\.0\.tif|tomo_unroof_control_c2d1_02246_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_23$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02304_\-50\.0\.tif|tomo_unroof_control_c2d1_02303_\-48\.0\.tif|tomo_unroof_control_c2d1_02302_\-46\.0\.tif|tomo_unroof_control_c2d1_02301_\-44\.0\.tif|tomo_unroof_control_c2d1_02300_\-42\.0\.tif|tomo_unroof_control_c2d1_02299_\-40\.0\.tif|tomo_unroof_control_c2d1_02298_\-38\.0\.tif|tomo_unroof_control_c2d1_02290_\-36\.0\.tif|tomo_unroof_control_c2d1_02289_\-34\.0\.tif|tomo_unroof_control_c2d1_02288_\-32\.0\.tif|tomo_unroof_control_c2d1_02284_\-30\.0\.tif|tomo_unroof_control_c2d1_02283_\-28\.0\.tif|tomo_unroof_control_c2d1_02282_\-26\.0\.tif|tomo_unroof_control_c2d1_02278_\-24\.0\.tif|tomo_unroof_control_c2d1_02277_\-22\.0\.tif|tomo_unroof_control_c2d1_02276_\-20\.0\.tif|tomo_unroof_control_c2d1_02272_\-18\.0\.tif|tomo_unroof_control_c2d1_02271_\-16\.0\.tif|tomo_unroof_control_c2d1_02270_\-14\.0\.tif|tomo_unroof_control_c2d1_02266_\-12\.0\.tif|tomo_unroof_control_c2d1_02265_\-10\.0\.tif|tomo_unroof_control_c2d1_02264_\-8\.0\.tif|tomo_unroof_control_c2d1_02260_\-6\.0\.tif|tomo_unroof_control_c2d1_02259_\-4\.0\.tif|tomo_unroof_control_c2d1_02258_\-2\.0\.tif|tomo_unroof_control_c2d1_02254_\-0\.0\.tif|tomo_unroof_control_c2d1_02255_2\.0\.tif|tomo_unroof_control_c2d1_02256_4\.0\.tif|tomo_unroof_control_c2d1_02257_6\.0\.tif|tomo_unroof_control_c2d1_02261_8\.0\.tif|tomo_unroof_control_c2d1_02262_10\.0\.tif|tomo_unroof_control_c2d1_02263_12\.0\.tif|tomo_unroof_control_c2d1_02267_14\.0\.tif|tomo_unroof_control_c2d1_02268_16\.0\.tif|tomo_unroof_control_c2d1_02269_18\.0\.tif|tomo_unroof_control_c2d1_02273_20\.0\.tif|tomo_unroof_control_c2d1_02274_22\.0\.tif|tomo_unroof_control_c2d1_02275_24\.0\.tif|tomo_unroof_control_c2d1_02279_26\.0\.tif|tomo_unroof_control_c2d1_02280_28\.0\.tif|tomo_unroof_control_c2d1_02281_30\.0\.tif|tomo_unroof_control_c2d1_02285_32\.0\.tif|tomo_unroof_control_c2d1_02286_34\.0\.tif|tomo_unroof_control_c2d1_02287_36\.0\.tif|tomo_unroof_control_c2d1_02291_38\.0\.tif|tomo_unroof_control_c2d1_02292_40\.0\.tif|tomo_unroof_control_c2d1_02293_42\.0\.tif|tomo_unroof_control_c2d1_02294_44\.0\.tif|tomo_unroof_control_c2d1_02295_46\.0\.tif|tomo_unroof_control_c2d1_02296_48\.0\.tif|tomo_unroof_control_c2d1_02297_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_25$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02355_\-50\.0\.tif|tomo_unroof_control_c2d1_02354_\-48\.0\.tif|tomo_unroof_control_c2d1_02353_\-46\.0\.tif|tomo_unroof_control_c2d1_02352_\-44\.0\.tif|tomo_unroof_control_c2d1_02351_\-42\.0\.tif|tomo_unroof_control_c2d1_02350_\-40\.0\.tif|tomo_unroof_control_c2d1_02349_\-38\.0\.tif|tomo_unroof_control_c2d1_02341_\-36\.0\.tif|tomo_unroof_control_c2d1_02340_\-34\.0\.tif|tomo_unroof_control_c2d1_02339_\-32\.0\.tif|tomo_unroof_control_c2d1_02335_\-30\.0\.tif|tomo_unroof_control_c2d1_02334_\-28\.0\.tif|tomo_unroof_control_c2d1_02333_\-26\.0\.tif|tomo_unroof_control_c2d1_02329_\-24\.0\.tif|tomo_unroof_control_c2d1_02328_\-22\.0\.tif|tomo_unroof_control_c2d1_02327_\-20\.0\.tif|tomo_unroof_control_c2d1_02323_\-18\.0\.tif|tomo_unroof_control_c2d1_02322_\-16\.0\.tif|tomo_unroof_control_c2d1_02321_\-14\.0\.tif|tomo_unroof_control_c2d1_02317_\-12\.0\.tif|tomo_unroof_control_c2d1_02316_\-10\.0\.tif|tomo_unroof_control_c2d1_02315_\-8\.0\.tif|tomo_unroof_control_c2d1_02311_\-6\.0\.tif|tomo_unroof_control_c2d1_02310_\-4\.0\.tif|tomo_unroof_control_c2d1_02309_\-2\.0\.tif|tomo_unroof_control_c2d1_02305_\-0\.0\.tif|tomo_unroof_control_c2d1_02306_2\.0\.tif|tomo_unroof_control_c2d1_02307_4\.0\.tif|tomo_unroof_control_c2d1_02308_6\.0\.tif|tomo_unroof_control_c2d1_02312_8\.0\.tif|tomo_unroof_control_c2d1_02313_10\.0\.tif|tomo_unroof_control_c2d1_02314_12\.0\.tif|tomo_unroof_control_c2d1_02318_14\.0\.tif|tomo_unroof_control_c2d1_02319_16\.0\.tif|tomo_unroof_control_c2d1_02320_18\.0\.tif|tomo_unroof_control_c2d1_02324_20\.0\.tif|tomo_unroof_control_c2d1_02325_22\.0\.tif|tomo_unroof_control_c2d1_02326_24\.0\.tif|tomo_unroof_control_c2d1_02330_26\.0\.tif|tomo_unroof_control_c2d1_02331_28\.0\.tif|tomo_unroof_control_c2d1_02332_30\.0\.tif|tomo_unroof_control_c2d1_02336_32\.0\.tif|tomo_unroof_control_c2d1_02337_34\.0\.tif|tomo_unroof_control_c2d1_02338_36\.0\.tif|tomo_unroof_control_c2d1_02342_38\.0\.tif|tomo_unroof_control_c2d1_02343_40\.0\.tif|tomo_unroof_control_c2d1_02344_42\.0\.tif|tomo_unroof_control_c2d1_02345_44\.0\.tif|tomo_unroof_control_c2d1_02346_46\.0\.tif|tomo_unroof_control_c2d1_02347_48\.0\.tif|tomo_unroof_control_c2d1_02348_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_26$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02406_\-50\.0\.tif|tomo_unroof_control_c2d1_02405_\-48\.0\.tif|tomo_unroof_control_c2d1_02404_\-46\.0\.tif|tomo_unroof_control_c2d1_02403_\-44\.0\.tif|tomo_unroof_control_c2d1_02402_\-42\.0\.tif|tomo_unroof_control_c2d1_02401_\-40\.0\.tif|tomo_unroof_control_c2d1_02400_\-38\.0\.tif|tomo_unroof_control_c2d1_02392_\-36\.0\.tif|tomo_unroof_control_c2d1_02391_\-34\.0\.tif|tomo_unroof_control_c2d1_02390_\-32\.0\.tif|tomo_unroof_control_c2d1_02386_\-30\.0\.tif|tomo_unroof_control_c2d1_02385_\-28\.0\.tif|tomo_unroof_control_c2d1_02384_\-26\.0\.tif|tomo_unroof_control_c2d1_02380_\-24\.0\.tif|tomo_unroof_control_c2d1_02379_\-22\.0\.tif|tomo_unroof_control_c2d1_02378_\-20\.0\.tif|tomo_unroof_control_c2d1_02374_\-18\.0\.tif|tomo_unroof_control_c2d1_02373_\-16\.0\.tif|tomo_unroof_control_c2d1_02372_\-14\.0\.tif|tomo_unroof_control_c2d1_02368_\-12\.0\.tif|tomo_unroof_control_c2d1_02367_\-10\.0\.tif|tomo_unroof_control_c2d1_02366_\-8\.0\.tif|tomo_unroof_control_c2d1_02362_\-6\.0\.tif|tomo_unroof_control_c2d1_02361_\-4\.0\.tif|tomo_unroof_control_c2d1_02360_\-2\.0\.tif|tomo_unroof_control_c2d1_02356_\-0\.0\.tif|tomo_unroof_control_c2d1_02357_2\.0\.tif|tomo_unroof_control_c2d1_02358_4\.0\.tif|tomo_unroof_control_c2d1_02359_6\.0\.tif|tomo_unroof_control_c2d1_02363_8\.0\.tif|tomo_unroof_control_c2d1_02364_10\.0\.tif|tomo_unroof_control_c2d1_02365_12\.0\.tif|tomo_unroof_control_c2d1_02369_14\.0\.tif|tomo_unroof_control_c2d1_02370_16\.0\.tif|tomo_unroof_control_c2d1_02371_18\.0\.tif|tomo_unroof_control_c2d1_02375_20\.0\.tif|tomo_unroof_control_c2d1_02376_22\.0\.tif|tomo_unroof_control_c2d1_02377_24\.0\.tif|tomo_unroof_control_c2d1_02381_26\.0\.tif|tomo_unroof_control_c2d1_02382_28\.0\.tif|tomo_unroof_control_c2d1_02383_30\.0\.tif|tomo_unroof_control_c2d1_02387_32\.0\.tif|tomo_unroof_control_c2d1_02388_34\.0\.tif|tomo_unroof_control_c2d1_02389_36\.0\.tif|tomo_unroof_control_c2d1_02393_38\.0\.tif|tomo_unroof_control_c2d1_02394_40\.0\.tif|tomo_unroof_control_c2d1_02395_42\.0\.tif|tomo_unroof_control_c2d1_02396_44\.0\.tif|tomo_unroof_control_c2d1_02397_46\.0\.tif|tomo_unroof_control_c2d1_02398_48\.0\.tif|tomo_unroof_control_c2d1_02399_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_27$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02457_\-50\.0\.tif|tomo_unroof_control_c2d1_02456_\-48\.0\.tif|tomo_unroof_control_c2d1_02455_\-46\.0\.tif|tomo_unroof_control_c2d1_02454_\-44\.0\.tif|tomo_unroof_control_c2d1_02453_\-42\.0\.tif|tomo_unroof_control_c2d1_02452_\-40\.0\.tif|tomo_unroof_control_c2d1_02451_\-38\.0\.tif|tomo_unroof_control_c2d1_02443_\-36\.0\.tif|tomo_unroof_control_c2d1_02442_\-34\.0\.tif|tomo_unroof_control_c2d1_02441_\-32\.0\.tif|tomo_unroof_control_c2d1_02437_\-30\.0\.tif|tomo_unroof_control_c2d1_02436_\-28\.0\.tif|tomo_unroof_control_c2d1_02435_\-26\.0\.tif|tomo_unroof_control_c2d1_02431_\-24\.0\.tif|tomo_unroof_control_c2d1_02430_\-22\.0\.tif|tomo_unroof_control_c2d1_02429_\-20\.0\.tif|tomo_unroof_control_c2d1_02425_\-18\.0\.tif|tomo_unroof_control_c2d1_02424_\-16\.0\.tif|tomo_unroof_control_c2d1_02423_\-14\.0\.tif|tomo_unroof_control_c2d1_02419_\-12\.0\.tif|tomo_unroof_control_c2d1_02418_\-10\.0\.tif|tomo_unroof_control_c2d1_02417_\-8\.0\.tif|tomo_unroof_control_c2d1_02413_\-6\.0\.tif|tomo_unroof_control_c2d1_02412_\-4\.0\.tif|tomo_unroof_control_c2d1_02411_\-2\.0\.tif|tomo_unroof_control_c2d1_02407_\-0\.0\.tif|tomo_unroof_control_c2d1_02408_2\.0\.tif|tomo_unroof_control_c2d1_02409_4\.0\.tif|tomo_unroof_control_c2d1_02410_6\.0\.tif|tomo_unroof_control_c2d1_02414_8\.0\.tif|tomo_unroof_control_c2d1_02415_10\.0\.tif|tomo_unroof_control_c2d1_02416_12\.0\.tif|tomo_unroof_control_c2d1_02420_14\.0\.tif|tomo_unroof_control_c2d1_02421_16\.0\.tif|tomo_unroof_control_c2d1_02422_18\.0\.tif|tomo_unroof_control_c2d1_02426_20\.0\.tif|tomo_unroof_control_c2d1_02427_22\.0\.tif|tomo_unroof_control_c2d1_02428_24\.0\.tif|tomo_unroof_control_c2d1_02432_26\.0\.tif|tomo_unroof_control_c2d1_02433_28\.0\.tif|tomo_unroof_control_c2d1_02434_30\.0\.tif|tomo_unroof_control_c2d1_02438_32\.0\.tif|tomo_unroof_control_c2d1_02439_34\.0\.tif|tomo_unroof_control_c2d1_02440_36\.0\.tif|tomo_unroof_control_c2d1_02444_38\.0\.tif|tomo_unroof_control_c2d1_02445_40\.0\.tif|tomo_unroof_control_c2d1_02446_42\.0\.tif|tomo_unroof_control_c2d1_02447_44\.0\.tif|tomo_unroof_control_c2d1_02448_46\.0\.tif|tomo_unroof_control_c2d1_02449_48\.0\.tif|tomo_unroof_control_c2d1_02450_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_28$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02505_\-44\.0\.tif|tomo_unroof_control_c2d1_02504_\-42\.0\.tif|tomo_unroof_control_c2d1_02503_\-40\.0\.tif|tomo_unroof_control_c2d1_02502_\-38\.0\.tif|tomo_unroof_control_c2d1_02494_\-36\.0\.tif|tomo_unroof_control_c2d1_02493_\-34\.0\.tif|tomo_unroof_control_c2d1_02492_\-32\.0\.tif|tomo_unroof_control_c2d1_02488_\-30\.0\.tif|tomo_unroof_control_c2d1_02487_\-28\.0\.tif|tomo_unroof_control_c2d1_02486_\-26\.0\.tif|tomo_unroof_control_c2d1_02482_\-24\.0\.tif|tomo_unroof_control_c2d1_02481_\-22\.0\.tif|tomo_unroof_control_c2d1_02480_\-20\.0\.tif|tomo_unroof_control_c2d1_02476_\-18\.0\.tif|tomo_unroof_control_c2d1_02475_\-16\.0\.tif|tomo_unroof_control_c2d1_02474_\-14\.0\.tif|tomo_unroof_control_c2d1_02470_\-12\.0\.tif|tomo_unroof_control_c2d1_02469_\-10\.0\.tif|tomo_unroof_control_c2d1_02468_\-8\.0\.tif|tomo_unroof_control_c2d1_02464_\-6\.0\.tif|tomo_unroof_control_c2d1_02463_\-4\.0\.tif|tomo_unroof_control_c2d1_02462_\-2\.0\.tif|tomo_unroof_control_c2d1_02458_\-0\.0\.tif|tomo_unroof_control_c2d1_02459_2\.0\.tif|tomo_unroof_control_c2d1_02460_4\.0\.tif|tomo_unroof_control_c2d1_02461_6\.0\.tif|tomo_unroof_control_c2d1_02465_8\.0\.tif|tomo_unroof_control_c2d1_02466_10\.0\.tif|tomo_unroof_control_c2d1_02467_12\.0\.tif|tomo_unroof_control_c2d1_02471_14\.0\.tif|tomo_unroof_control_c2d1_02472_16\.0\.tif|tomo_unroof_control_c2d1_02473_18\.0\.tif|tomo_unroof_control_c2d1_02477_20\.0\.tif|tomo_unroof_control_c2d1_02478_22\.0\.tif|tomo_unroof_control_c2d1_02479_24\.0\.tif|tomo_unroof_control_c2d1_02483_26\.0\.tif|tomo_unroof_control_c2d1_02484_28\.0\.tif|tomo_unroof_control_c2d1_02485_30\.0\.tif|tomo_unroof_control_c2d1_02489_32\.0\.tif|tomo_unroof_control_c2d1_02490_34\.0\.tif|tomo_unroof_control_c2d1_02491_36\.0\.tif|tomo_unroof_control_c2d1_02495_38\.0\.tif|tomo_unroof_control_c2d1_02496_40\.0\.tif|tomo_unroof_control_c2d1_02497_42\.0\.tif|tomo_unroof_control_c2d1_02498_44\.0\.tif|tomo_unroof_control_c2d1_02499_46\.0\.tif|tomo_unroof_control_c2d1_02500_48\.0\.tif|tomo_unroof_control_c2d1_02501_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_29$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02556_\-50\.0\.tif|tomo_unroof_control_c2d1_02555_\-48\.0\.tif|tomo_unroof_control_c2d1_02554_\-46\.0\.tif|tomo_unroof_control_c2d1_02553_\-44\.0\.tif|tomo_unroof_control_c2d1_02552_\-42\.0\.tif|tomo_unroof_control_c2d1_02551_\-40\.0\.tif|tomo_unroof_control_c2d1_02550_\-38\.0\.tif|tomo_unroof_control_c2d1_02542_\-36\.0\.tif|tomo_unroof_control_c2d1_02541_\-34\.0\.tif|tomo_unroof_control_c2d1_02540_\-32\.0\.tif|tomo_unroof_control_c2d1_02536_\-30\.0\.tif|tomo_unroof_control_c2d1_02535_\-28\.0\.tif|tomo_unroof_control_c2d1_02534_\-26\.0\.tif|tomo_unroof_control_c2d1_02530_\-24\.0\.tif|tomo_unroof_control_c2d1_02529_\-22\.0\.tif|tomo_unroof_control_c2d1_02528_\-20\.0\.tif|tomo_unroof_control_c2d1_02524_\-18\.0\.tif|tomo_unroof_control_c2d1_02523_\-16\.0\.tif|tomo_unroof_control_c2d1_02522_\-14\.0\.tif|tomo_unroof_control_c2d1_02518_\-12\.0\.tif|tomo_unroof_control_c2d1_02517_\-10\.0\.tif|tomo_unroof_control_c2d1_02516_\-8\.0\.tif|tomo_unroof_control_c2d1_02512_\-6\.0\.tif|tomo_unroof_control_c2d1_02511_\-4\.0\.tif|tomo_unroof_control_c2d1_02510_\-2\.0\.tif|tomo_unroof_control_c2d1_02506_\-0\.0\.tif|tomo_unroof_control_c2d1_02507_2\.0\.tif|tomo_unroof_control_c2d1_02508_4\.0\.tif|tomo_unroof_control_c2d1_02509_6\.0\.tif|tomo_unroof_control_c2d1_02513_8\.0\.tif|tomo_unroof_control_c2d1_02514_10\.0\.tif|tomo_unroof_control_c2d1_02515_12\.0\.tif|tomo_unroof_control_c2d1_02519_14\.0\.tif|tomo_unroof_control_c2d1_02520_16\.0\.tif|tomo_unroof_control_c2d1_02521_18\.0\.tif|tomo_unroof_control_c2d1_02525_20\.0\.tif|tomo_unroof_control_c2d1_02526_22\.0\.tif|tomo_unroof_control_c2d1_02527_24\.0\.tif|tomo_unroof_control_c2d1_02531_26\.0\.tif|tomo_unroof_control_c2d1_02532_28\.0\.tif|tomo_unroof_control_c2d1_02533_30\.0\.tif|tomo_unroof_control_c2d1_02537_32\.0\.tif|tomo_unroof_control_c2d1_02538_34\.0\.tif|tomo_unroof_control_c2d1_02539_36\.0\.tif|tomo_unroof_control_c2d1_02543_38\.0\.tif|tomo_unroof_control_c2d1_02544_40\.0\.tif|tomo_unroof_control_c2d1_02545_42\.0\.tif|tomo_unroof_control_c2d1_02546_44\.0\.tif|tomo_unroof_control_c2d1_02547_46\.0\.tif|tomo_unroof_control_c2d1_02548_48\.0\.tif|tomo_unroof_control_c2d1_02549_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_3$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02806_\-50\.0\.tif|tomo_unroof_control_c2d1_02805_\-48\.0\.tif|tomo_unroof_control_c2d1_02804_\-46\.0\.tif|tomo_unroof_control_c2d1_02803_\-44\.0\.tif|tomo_unroof_control_c2d1_02802_\-42\.0\.tif|tomo_unroof_control_c2d1_02801_\-40\.0\.tif|tomo_unroof_control_c2d1_02800_\-38\.0\.tif|tomo_unroof_control_c2d1_02792_\-36\.0\.tif|tomo_unroof_control_c2d1_02791_\-34\.0\.tif|tomo_unroof_control_c2d1_02790_\-32\.0\.tif|tomo_unroof_control_c2d1_02786_\-30\.0\.tif|tomo_unroof_control_c2d1_02785_\-28\.0\.tif|tomo_unroof_control_c2d1_02784_\-26\.0\.tif|tomo_unroof_control_c2d1_02780_\-24\.0\.tif|tomo_unroof_control_c2d1_02779_\-22\.0\.tif|tomo_unroof_control_c2d1_02778_\-20\.0\.tif|tomo_unroof_control_c2d1_02774_\-18\.0\.tif|tomo_unroof_control_c2d1_02773_\-16\.0\.tif|tomo_unroof_control_c2d1_02772_\-14\.0\.tif|tomo_unroof_control_c2d1_02768_\-12\.0\.tif|tomo_unroof_control_c2d1_02767_\-10\.0\.tif|tomo_unroof_control_c2d1_02766_\-8\.0\.tif|tomo_unroof_control_c2d1_02762_\-6\.0\.tif|tomo_unroof_control_c2d1_02761_\-4\.0\.tif|tomo_unroof_control_c2d1_02760_\-2\.0\.tif|tomo_unroof_control_c2d1_02756_\-0\.0\.tif|tomo_unroof_control_c2d1_02757_2\.0\.tif|tomo_unroof_control_c2d1_02758_4\.0\.tif|tomo_unroof_control_c2d1_02759_6\.0\.tif|tomo_unroof_control_c2d1_02763_8\.0\.tif|tomo_unroof_control_c2d1_02764_10\.0\.tif|tomo_unroof_control_c2d1_02765_12\.0\.tif|tomo_unroof_control_c2d1_02769_14\.0\.tif|tomo_unroof_control_c2d1_02770_16\.0\.tif|tomo_unroof_control_c2d1_02771_18\.0\.tif|tomo_unroof_control_c2d1_02775_20\.0\.tif|tomo_unroof_control_c2d1_02776_22\.0\.tif|tomo_unroof_control_c2d1_02777_24\.0\.tif|tomo_unroof_control_c2d1_02781_26\.0\.tif|tomo_unroof_control_c2d1_02782_28\.0\.tif|tomo_unroof_control_c2d1_02783_30\.0\.tif|tomo_unroof_control_c2d1_02787_32\.0\.tif|tomo_unroof_control_c2d1_02788_34\.0\.tif|tomo_unroof_control_c2d1_02789_36\.0\.tif|tomo_unroof_control_c2d1_02793_38\.0\.tif|tomo_unroof_control_c2d1_02794_40\.0\.tif|tomo_unroof_control_c2d1_02795_42\.0\.tif|tomo_unroof_control_c2d1_02796_44\.0\.tif|tomo_unroof_control_c2d1_02797_46\.0\.tif|tomo_unroof_control_c2d1_02798_48\.0\.tif|tomo_unroof_control_c2d1_02799_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_33$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_02969_\-50\.0\.tif|tomo_unroof_control_c2d1_02968_\-48\.0\.tif|tomo_unroof_control_c2d1_02967_\-46\.0\.tif|tomo_unroof_control_c2d1_02966_\-44\.0\.tif|tomo_unroof_control_c2d1_02965_\-42\.0\.tif|tomo_unroof_control_c2d1_02964_\-40\.0\.tif|tomo_unroof_control_c2d1_02963_\-38\.0\.tif|tomo_unroof_control_c2d1_02955_\-36\.0\.tif|tomo_unroof_control_c2d1_02954_\-34\.0\.tif|tomo_unroof_control_c2d1_02953_\-32\.0\.tif|tomo_unroof_control_c2d1_02949_\-30\.0\.tif|tomo_unroof_control_c2d1_02948_\-28\.0\.tif|tomo_unroof_control_c2d1_02947_\-26\.0\.tif|tomo_unroof_control_c2d1_02943_\-24\.0\.tif|tomo_unroof_control_c2d1_02942_\-22\.0\.tif|tomo_unroof_control_c2d1_02941_\-20\.0\.tif|tomo_unroof_control_c2d1_02937_\-18\.0\.tif|tomo_unroof_control_c2d1_02936_\-16\.0\.tif|tomo_unroof_control_c2d1_02935_\-14\.0\.tif|tomo_unroof_control_c2d1_02931_\-12\.0\.tif|tomo_unroof_control_c2d1_02930_\-10\.0\.tif|tomo_unroof_control_c2d1_02929_\-8\.0\.tif|tomo_unroof_control_c2d1_02925_\-6\.0\.tif|tomo_unroof_control_c2d1_02924_\-4\.0\.tif|tomo_unroof_control_c2d1_02923_\-2\.0\.tif|tomo_unroof_control_c2d1_02919_\-0\.0\.tif|tomo_unroof_control_c2d1_02920_2\.0\.tif|tomo_unroof_control_c2d1_02921_4\.0\.tif|tomo_unroof_control_c2d1_02922_6\.0\.tif|tomo_unroof_control_c2d1_02926_8\.0\.tif|tomo_unroof_control_c2d1_02927_10\.0\.tif|tomo_unroof_control_c2d1_02928_12\.0\.tif|tomo_unroof_control_c2d1_02932_14\.0\.tif|tomo_unroof_control_c2d1_02933_16\.0\.tif|tomo_unroof_control_c2d1_02934_18\.0\.tif|tomo_unroof_control_c2d1_02938_20\.0\.tif|tomo_unroof_control_c2d1_02939_22\.0\.tif|tomo_unroof_control_c2d1_02940_24\.0\.tif|tomo_unroof_control_c2d1_02944_26\.0\.tif|tomo_unroof_control_c2d1_02945_28\.0\.tif|tomo_unroof_control_c2d1_02946_30\.0\.tif|tomo_unroof_control_c2d1_02950_32\.0\.tif|tomo_unroof_control_c2d1_02951_34\.0\.tif|tomo_unroof_control_c2d1_02952_36\.0\.tif|tomo_unroof_control_c2d1_02956_38\.0\.tif|tomo_unroof_control_c2d1_02957_40\.0\.tif|tomo_unroof_control_c2d1_02958_42\.0\.tif|tomo_unroof_control_c2d1_02959_44\.0\.tif|tomo_unroof_control_c2d1_02960_46\.0\.tif|tomo_unroof_control_c2d1_02961_48\.0\.tif|tomo_unroof_control_c2d1_02962_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_34$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_03020_\-50\.0\.tif|tomo_unroof_control_c2d1_03019_\-48\.0\.tif|tomo_unroof_control_c2d1_03018_\-46\.0\.tif|tomo_unroof_control_c2d1_03017_\-44\.0\.tif|tomo_unroof_control_c2d1_03016_\-42\.0\.tif|tomo_unroof_control_c2d1_03015_\-40\.0\.tif|tomo_unroof_control_c2d1_03014_\-38\.0\.tif|tomo_unroof_control_c2d1_03006_\-36\.0\.tif|tomo_unroof_control_c2d1_03005_\-34\.0\.tif|tomo_unroof_control_c2d1_03004_\-32\.0\.tif|tomo_unroof_control_c2d1_03000_\-30\.0\.tif|tomo_unroof_control_c2d1_02999_\-28\.0\.tif|tomo_unroof_control_c2d1_02998_\-26\.0\.tif|tomo_unroof_control_c2d1_02994_\-24\.0\.tif|tomo_unroof_control_c2d1_02993_\-22\.0\.tif|tomo_unroof_control_c2d1_02992_\-20\.0\.tif|tomo_unroof_control_c2d1_02988_\-18\.0\.tif|tomo_unroof_control_c2d1_02987_\-16\.0\.tif|tomo_unroof_control_c2d1_02986_\-14\.0\.tif|tomo_unroof_control_c2d1_02982_\-12\.0\.tif|tomo_unroof_control_c2d1_02981_\-10\.0\.tif|tomo_unroof_control_c2d1_02980_\-8\.0\.tif|tomo_unroof_control_c2d1_02976_\-6\.0\.tif|tomo_unroof_control_c2d1_02975_\-4\.0\.tif|tomo_unroof_control_c2d1_02974_\-2\.0\.tif|tomo_unroof_control_c2d1_02970_\-0\.0\.tif|tomo_unroof_control_c2d1_02971_2\.0\.tif|tomo_unroof_control_c2d1_02972_4\.0\.tif|tomo_unroof_control_c2d1_02973_6\.0\.tif|tomo_unroof_control_c2d1_02977_8\.0\.tif|tomo_unroof_control_c2d1_02978_10\.0\.tif|tomo_unroof_control_c2d1_02979_12\.0\.tif|tomo_unroof_control_c2d1_02983_14\.0\.tif|tomo_unroof_control_c2d1_02984_16\.0\.tif|tomo_unroof_control_c2d1_02985_18\.0\.tif|tomo_unroof_control_c2d1_02989_20\.0\.tif|tomo_unroof_control_c2d1_02990_22\.0\.tif|tomo_unroof_control_c2d1_02991_24\.0\.tif|tomo_unroof_control_c2d1_02995_26\.0\.tif|tomo_unroof_control_c2d1_02996_28\.0\.tif|tomo_unroof_control_c2d1_02997_30\.0\.tif|tomo_unroof_control_c2d1_03001_32\.0\.tif|tomo_unroof_control_c2d1_03002_34\.0\.tif|tomo_unroof_control_c2d1_03003_36\.0\.tif|tomo_unroof_control_c2d1_03007_38\.0\.tif|tomo_unroof_control_c2d1_03008_40\.0\.tif|tomo_unroof_control_c2d1_03009_42\.0\.tif|tomo_unroof_control_c2d1_03010_44\.0\.tif|tomo_unroof_control_c2d1_03011_46\.0\.tif|tomo_unroof_control_c2d1_03012_48\.0\.tif|tomo_unroof_control_c2d1_03013_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_53$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_00417_\-50\.0\.tif|tomo_unroof_control_c2d1_00416_\-48\.0\.tif|tomo_unroof_control_c2d1_00415_\-46\.0\.tif|tomo_unroof_control_c2d1_00414_\-44\.0\.tif|tomo_unroof_control_c2d1_00413_\-42\.0\.tif|tomo_unroof_control_c2d1_00412_\-40\.0\.tif|tomo_unroof_control_c2d1_00411_\-38\.0\.tif|tomo_unroof_control_c2d1_00403_\-36\.0\.tif|tomo_unroof_control_c2d1_00402_\-34\.0\.tif|tomo_unroof_control_c2d1_00401_\-32\.0\.tif|tomo_unroof_control_c2d1_00397_\-30\.0\.tif|tomo_unroof_control_c2d1_00396_\-28\.0\.tif|tomo_unroof_control_c2d1_00395_\-26\.0\.tif|tomo_unroof_control_c2d1_00391_\-24\.0\.tif|tomo_unroof_control_c2d1_00390_\-22\.0\.tif|tomo_unroof_control_c2d1_00389_\-20\.0\.tif|tomo_unroof_control_c2d1_00385_\-18\.0\.tif|tomo_unroof_control_c2d1_00384_\-16\.0\.tif|tomo_unroof_control_c2d1_00383_\-14\.0\.tif|tomo_unroof_control_c2d1_00379_\-12\.0\.tif|tomo_unroof_control_c2d1_00378_\-10\.0\.tif|tomo_unroof_control_c2d1_00377_\-8\.0\.tif|tomo_unroof_control_c2d1_00373_\-6\.0\.tif|tomo_unroof_control_c2d1_00372_\-4\.0\.tif|tomo_unroof_control_c2d1_00371_\-2\.0\.tif|tomo_unroof_control_c2d1_00367_\-0\.0\.tif|tomo_unroof_control_c2d1_00368_2\.0\.tif|tomo_unroof_control_c2d1_00369_4\.0\.tif|tomo_unroof_control_c2d1_00370_6\.0\.tif|tomo_unroof_control_c2d1_00374_8\.0\.tif|tomo_unroof_control_c2d1_00375_10\.0\.tif|tomo_unroof_control_c2d1_00376_12\.0\.tif|tomo_unroof_control_c2d1_00380_14\.0\.tif|tomo_unroof_control_c2d1_00381_16\.0\.tif|tomo_unroof_control_c2d1_00382_18\.0\.tif|tomo_unroof_control_c2d1_00386_20\.0\.tif|tomo_unroof_control_c2d1_00387_22\.0\.tif|tomo_unroof_control_c2d1_00388_24\.0\.tif|tomo_unroof_control_c2d1_00392_26\.0\.tif|tomo_unroof_control_c2d1_00393_28\.0\.tif|tomo_unroof_control_c2d1_00394_30\.0\.tif|tomo_unroof_control_c2d1_00398_32\.0\.tif|tomo_unroof_control_c2d1_00399_34\.0\.tif|tomo_unroof_control_c2d1_00400_36\.0\.tif|tomo_unroof_control_c2d1_00404_38\.0\.tif|tomo_unroof_control_c2d1_00405_40\.0\.tif|tomo_unroof_control_c2d1_00406_42\.0\.tif|tomo_unroof_control_c2d1_00407_44\.0\.tif|tomo_unroof_control_c2d1_00408_46\.0\.tif|tomo_unroof_control_c2d1_00409_48\.0\.tif|tomo_unroof_control_c2d1_00410_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_54$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_00468_\-50\.0\.tif|tomo_unroof_control_c2d1_00467_\-48\.0\.tif|tomo_unroof_control_c2d1_00466_\-46\.0\.tif|tomo_unroof_control_c2d1_00465_\-44\.0\.tif|tomo_unroof_control_c2d1_00464_\-42\.0\.tif|tomo_unroof_control_c2d1_00463_\-40\.0\.tif|tomo_unroof_control_c2d1_00462_\-38\.0\.tif|tomo_unroof_control_c2d1_00454_\-36\.0\.tif|tomo_unroof_control_c2d1_00453_\-34\.0\.tif|tomo_unroof_control_c2d1_00452_\-32\.0\.tif|tomo_unroof_control_c2d1_00448_\-30\.0\.tif|tomo_unroof_control_c2d1_00447_\-28\.0\.tif|tomo_unroof_control_c2d1_00446_\-26\.0\.tif|tomo_unroof_control_c2d1_00442_\-24\.0\.tif|tomo_unroof_control_c2d1_00441_\-22\.0\.tif|tomo_unroof_control_c2d1_00440_\-20\.0\.tif|tomo_unroof_control_c2d1_00436_\-18\.0\.tif|tomo_unroof_control_c2d1_00435_\-16\.0\.tif|tomo_unroof_control_c2d1_00434_\-14\.0\.tif|tomo_unroof_control_c2d1_00430_\-12\.0\.tif|tomo_unroof_control_c2d1_00429_\-10\.0\.tif|tomo_unroof_control_c2d1_00428_\-8\.0\.tif|tomo_unroof_control_c2d1_00424_\-6\.0\.tif|tomo_unroof_control_c2d1_00423_\-4\.0\.tif|tomo_unroof_control_c2d1_00422_\-2\.0\.tif|tomo_unroof_control_c2d1_00418_\-0\.0\.tif|tomo_unroof_control_c2d1_00419_2\.0\.tif|tomo_unroof_control_c2d1_00420_4\.0\.tif|tomo_unroof_control_c2d1_00421_6\.0\.tif|tomo_unroof_control_c2d1_00425_8\.0\.tif|tomo_unroof_control_c2d1_00426_10\.0\.tif|tomo_unroof_control_c2d1_00427_12\.0\.tif|tomo_unroof_control_c2d1_00431_14\.0\.tif|tomo_unroof_control_c2d1_00432_16\.0\.tif|tomo_unroof_control_c2d1_00433_18\.0\.tif|tomo_unroof_control_c2d1_00437_20\.0\.tif|tomo_unroof_control_c2d1_00438_22\.0\.tif|tomo_unroof_control_c2d1_00439_24\.0\.tif|tomo_unroof_control_c2d1_00443_26\.0\.tif|tomo_unroof_control_c2d1_00444_28\.0\.tif|tomo_unroof_control_c2d1_00445_30\.0\.tif|tomo_unroof_control_c2d1_00449_32\.0\.tif|tomo_unroof_control_c2d1_00450_34\.0\.tif|tomo_unroof_control_c2d1_00451_36\.0\.tif|tomo_unroof_control_c2d1_00455_38\.0\.tif|tomo_unroof_control_c2d1_00456_40\.0\.tif|tomo_unroof_control_c2d1_00457_42\.0\.tif|tomo_unroof_control_c2d1_00458_44\.0\.tif|tomo_unroof_control_c2d1_00459_46\.0\.tif|tomo_unroof_control_c2d1_00460_48\.0\.tif|tomo_unroof_control_c2d1_00461_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_58$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_00672_\-50\.0\.tif|tomo_unroof_control_c2d1_00671_\-48\.0\.tif|tomo_unroof_control_c2d1_00670_\-46\.0\.tif|tomo_unroof_control_c2d1_00669_\-44\.0\.tif|tomo_unroof_control_c2d1_00668_\-42\.0\.tif|tomo_unroof_control_c2d1_00667_\-40\.0\.tif|tomo_unroof_control_c2d1_00666_\-38\.0\.tif|tomo_unroof_control_c2d1_00658_\-36\.0\.tif|tomo_unroof_control_c2d1_00657_\-34\.0\.tif|tomo_unroof_control_c2d1_00656_\-32\.0\.tif|tomo_unroof_control_c2d1_00652_\-30\.0\.tif|tomo_unroof_control_c2d1_00651_\-28\.0\.tif|tomo_unroof_control_c2d1_00650_\-26\.0\.tif|tomo_unroof_control_c2d1_00646_\-24\.0\.tif|tomo_unroof_control_c2d1_00645_\-22\.0\.tif|tomo_unroof_control_c2d1_00644_\-20\.0\.tif|tomo_unroof_control_c2d1_00640_\-18\.0\.tif|tomo_unroof_control_c2d1_00639_\-16\.0\.tif|tomo_unroof_control_c2d1_00638_\-14\.0\.tif|tomo_unroof_control_c2d1_00634_\-12\.0\.tif|tomo_unroof_control_c2d1_00633_\-10\.0\.tif|tomo_unroof_control_c2d1_00632_\-8\.0\.tif|tomo_unroof_control_c2d1_00628_\-6\.0\.tif|tomo_unroof_control_c2d1_00627_\-4\.0\.tif|tomo_unroof_control_c2d1_00626_\-2\.0\.tif|tomo_unroof_control_c2d1_00622_\-0\.0\.tif|tomo_unroof_control_c2d1_00623_2\.0\.tif|tomo_unroof_control_c2d1_00624_4\.0\.tif|tomo_unroof_control_c2d1_00625_6\.0\.tif|tomo_unroof_control_c2d1_00629_8\.0\.tif|tomo_unroof_control_c2d1_00630_10\.0\.tif|tomo_unroof_control_c2d1_00631_12\.0\.tif|tomo_unroof_control_c2d1_00635_14\.0\.tif|tomo_unroof_control_c2d1_00636_16\.0\.tif|tomo_unroof_control_c2d1_00637_18\.0\.tif|tomo_unroof_control_c2d1_00641_20\.0\.tif|tomo_unroof_control_c2d1_00642_22\.0\.tif|tomo_unroof_control_c2d1_00643_24\.0\.tif|tomo_unroof_control_c2d1_00647_26\.0\.tif|tomo_unroof_control_c2d1_00648_28\.0\.tif|tomo_unroof_control_c2d1_00649_30\.0\.tif|tomo_unroof_control_c2d1_00653_32\.0\.tif|tomo_unroof_control_c2d1_00654_34\.0\.tif|tomo_unroof_control_c2d1_00655_36\.0\.tif|tomo_unroof_control_c2d1_00659_38\.0\.tif|tomo_unroof_control_c2d1_00660_40\.0\.tif|tomo_unroof_control_c2d1_00661_42\.0\.tif|tomo_unroof_control_c2d1_00662_44\.0\.tif|tomo_unroof_control_c2d1_00663_46\.0\.tif|tomo_unroof_control_c2d1_00664_48\.0\.tif|tomo_unroof_control_c2d1_00665_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_59$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_00723_\-50\.0\.tif|tomo_unroof_control_c2d1_00722_\-48\.0\.tif|tomo_unroof_control_c2d1_00721_\-46\.0\.tif|tomo_unroof_control_c2d1_00720_\-44\.0\.tif|tomo_unroof_control_c2d1_00719_\-42\.0\.tif|tomo_unroof_control_c2d1_00718_\-40\.0\.tif|tomo_unroof_control_c2d1_00717_\-38\.0\.tif|tomo_unroof_control_c2d1_00709_\-36\.0\.tif|tomo_unroof_control_c2d1_00708_\-34\.0\.tif|tomo_unroof_control_c2d1_00707_\-32\.0\.tif|tomo_unroof_control_c2d1_00703_\-30\.0\.tif|tomo_unroof_control_c2d1_00702_\-28\.0\.tif|tomo_unroof_control_c2d1_00701_\-26\.0\.tif|tomo_unroof_control_c2d1_00697_\-24\.0\.tif|tomo_unroof_control_c2d1_00696_\-22\.0\.tif|tomo_unroof_control_c2d1_00695_\-20\.0\.tif|tomo_unroof_control_c2d1_00691_\-18\.0\.tif|tomo_unroof_control_c2d1_00690_\-16\.0\.tif|tomo_unroof_control_c2d1_00689_\-14\.0\.tif|tomo_unroof_control_c2d1_00685_\-12\.0\.tif|tomo_unroof_control_c2d1_00684_\-10\.0\.tif|tomo_unroof_control_c2d1_00683_\-8\.0\.tif|tomo_unroof_control_c2d1_00679_\-6\.0\.tif|tomo_unroof_control_c2d1_00678_\-4\.0\.tif|tomo_unroof_control_c2d1_00677_\-2\.0\.tif|tomo_unroof_control_c2d1_00673_\-0\.0\.tif|tomo_unroof_control_c2d1_00674_2\.0\.tif|tomo_unroof_control_c2d1_00675_4\.0\.tif|tomo_unroof_control_c2d1_00676_6\.0\.tif|tomo_unroof_control_c2d1_00680_8\.0\.tif|tomo_unroof_control_c2d1_00681_10\.0\.tif|tomo_unroof_control_c2d1_00682_12\.0\.tif|tomo_unroof_control_c2d1_00686_14\.0\.tif|tomo_unroof_control_c2d1_00687_16\.0\.tif|tomo_unroof_control_c2d1_00688_18\.0\.tif|tomo_unroof_control_c2d1_00692_20\.0\.tif|tomo_unroof_control_c2d1_00693_22\.0\.tif|tomo_unroof_control_c2d1_00694_24\.0\.tif|tomo_unroof_control_c2d1_00698_26\.0\.tif|tomo_unroof_control_c2d1_00699_28\.0\.tif|tomo_unroof_control_c2d1_00700_30\.0\.tif|tomo_unroof_control_c2d1_00704_32\.0\.tif|tomo_unroof_control_c2d1_00705_34\.0\.tif|tomo_unroof_control_c2d1_00706_36\.0\.tif|tomo_unroof_control_c2d1_00710_38\.0\.tif|tomo_unroof_control_c2d1_00711_40\.0\.tif|tomo_unroof_control_c2d1_00712_42\.0\.tif|tomo_unroof_control_c2d1_00713_44\.0\.tif|tomo_unroof_control_c2d1_00714_46\.0\.tif|tomo_unroof_control_c2d1_00715_48\.0\.tif|tomo_unroof_control_c2d1_00716_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_65$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_00978_\-50\.0\.tif|tomo_unroof_control_c2d1_00977_\-48\.0\.tif|tomo_unroof_control_c2d1_00976_\-46\.0\.tif|tomo_unroof_control_c2d1_00975_\-44\.0\.tif|tomo_unroof_control_c2d1_00974_\-42\.0\.tif|tomo_unroof_control_c2d1_00973_\-40\.0\.tif|tomo_unroof_control_c2d1_00972_\-38\.0\.tif|tomo_unroof_control_c2d1_00964_\-36\.0\.tif|tomo_unroof_control_c2d1_00963_\-34\.0\.tif|tomo_unroof_control_c2d1_00962_\-32\.0\.tif|tomo_unroof_control_c2d1_00958_\-30\.0\.tif|tomo_unroof_control_c2d1_00957_\-28\.0\.tif|tomo_unroof_control_c2d1_00956_\-26\.0\.tif|tomo_unroof_control_c2d1_00952_\-24\.0\.tif|tomo_unroof_control_c2d1_00951_\-22\.0\.tif|tomo_unroof_control_c2d1_00950_\-20\.0\.tif|tomo_unroof_control_c2d1_00946_\-18\.0\.tif|tomo_unroof_control_c2d1_00945_\-16\.0\.tif|tomo_unroof_control_c2d1_00944_\-14\.0\.tif|tomo_unroof_control_c2d1_00940_\-12\.0\.tif|tomo_unroof_control_c2d1_00939_\-10\.0\.tif|tomo_unroof_control_c2d1_00938_\-8\.0\.tif|tomo_unroof_control_c2d1_00934_\-6\.0\.tif|tomo_unroof_control_c2d1_00933_\-4\.0\.tif|tomo_unroof_control_c2d1_00932_\-2\.0\.tif|tomo_unroof_control_c2d1_00928_\-0\.0\.tif|tomo_unroof_control_c2d1_00929_2\.0\.tif|tomo_unroof_control_c2d1_00930_4\.0\.tif|tomo_unroof_control_c2d1_00931_6\.0\.tif|tomo_unroof_control_c2d1_00935_8\.0\.tif|tomo_unroof_control_c2d1_00936_10\.0\.tif|tomo_unroof_control_c2d1_00937_12\.0\.tif|tomo_unroof_control_c2d1_00941_14\.0\.tif|tomo_unroof_control_c2d1_00942_16\.0\.tif|tomo_unroof_control_c2d1_00943_18\.0\.tif|tomo_unroof_control_c2d1_00947_20\.0\.tif|tomo_unroof_control_c2d1_00948_22\.0\.tif|tomo_unroof_control_c2d1_00949_24\.0\.tif|tomo_unroof_control_c2d1_00953_26\.0\.tif|tomo_unroof_control_c2d1_00954_28\.0\.tif|tomo_unroof_control_c2d1_00955_30\.0\.tif|tomo_unroof_control_c2d1_00959_32\.0\.tif|tomo_unroof_control_c2d1_00960_34\.0\.tif|tomo_unroof_control_c2d1_00961_36\.0\.tif|tomo_unroof_control_c2d1_00965_38\.0\.tif|tomo_unroof_control_c2d1_00966_40\.0\.tif|tomo_unroof_control_c2d1_00967_42\.0\.tif|tomo_unroof_control_c2d1_00968_44\.0\.tif|tomo_unroof_control_c2d1_00969_46\.0\.tif|tomo_unroof_control_c2d1_00970_48\.0\.tif|tomo_unroof_control_c2d1_00971_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_7$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_01590_\-50\.0\.tif|tomo_unroof_control_c2d1_01589_\-48\.0\.tif|tomo_unroof_control_c2d1_01588_\-46\.0\.tif|tomo_unroof_control_c2d1_01587_\-44\.0\.tif|tomo_unroof_control_c2d1_01586_\-42\.0\.tif|tomo_unroof_control_c2d1_01585_\-40\.0\.tif|tomo_unroof_control_c2d1_01584_\-38\.0\.tif|tomo_unroof_control_c2d1_01576_\-36\.0\.tif|tomo_unroof_control_c2d1_01575_\-34\.0\.tif|tomo_unroof_control_c2d1_01574_\-32\.0\.tif|tomo_unroof_control_c2d1_01570_\-30\.0\.tif|tomo_unroof_control_c2d1_01569_\-28\.0\.tif|tomo_unroof_control_c2d1_01568_\-26\.0\.tif|tomo_unroof_control_c2d1_01564_\-24\.0\.tif|tomo_unroof_control_c2d1_01563_\-22\.0\.tif|tomo_unroof_control_c2d1_01562_\-20\.0\.tif|tomo_unroof_control_c2d1_01558_\-18\.0\.tif|tomo_unroof_control_c2d1_01557_\-16\.0\.tif|tomo_unroof_control_c2d1_01556_\-14\.0\.tif|tomo_unroof_control_c2d1_01552_\-12\.0\.tif|tomo_unroof_control_c2d1_01551_\-10\.0\.tif|tomo_unroof_control_c2d1_01550_\-8\.0\.tif|tomo_unroof_control_c2d1_01546_\-6\.0\.tif|tomo_unroof_control_c2d1_01545_\-4\.0\.tif|tomo_unroof_control_c2d1_01544_\-2\.0\.tif|tomo_unroof_control_c2d1_01540_\-0\.0\.tif|tomo_unroof_control_c2d1_01541_2\.0\.tif|tomo_unroof_control_c2d1_01542_4\.0\.tif|tomo_unroof_control_c2d1_01543_6\.0\.tif|tomo_unroof_control_c2d1_01547_8\.0\.tif|tomo_unroof_control_c2d1_01548_10\.0\.tif|tomo_unroof_control_c2d1_01549_12\.0\.tif|tomo_unroof_control_c2d1_01553_14\.0\.tif|tomo_unroof_control_c2d1_01554_16\.0\.tif|tomo_unroof_control_c2d1_01555_18\.0\.tif|tomo_unroof_control_c2d1_01559_20\.0\.tif|tomo_unroof_control_c2d1_01560_22\.0\.tif|tomo_unroof_control_c2d1_01561_24\.0\.tif|tomo_unroof_control_c2d1_01565_26\.0\.tif|tomo_unroof_control_c2d1_01566_28\.0\.tif|tomo_unroof_control_c2d1_01567_30\.0\.tif|tomo_unroof_control_c2d1_01571_32\.0\.tif|tomo_unroof_control_c2d1_01572_34\.0\.tif|tomo_unroof_control_c2d1_01573_36\.0\.tif|tomo_unroof_control_c2d1_01577_38\.0\.tif|tomo_unroof_control_c2d1_01578_40\.0\.tif|tomo_unroof_control_c2d1_01579_42\.0\.tif|tomo_unroof_control_c2d1_01580_44\.0\.tif|tomo_unroof_control_c2d1_01581_46\.0\.tif|tomo_unroof_control_c2d1_01582_48\.0\.tif|tomo_unroof_control_c2d1_01583_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_73$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_01386_\-50\.0\.tif|tomo_unroof_control_c2d1_01385_\-48\.0\.tif|tomo_unroof_control_c2d1_01384_\-46\.0\.tif|tomo_unroof_control_c2d1_01383_\-44\.0\.tif|tomo_unroof_control_c2d1_01382_\-42\.0\.tif|tomo_unroof_control_c2d1_01381_\-40\.0\.tif|tomo_unroof_control_c2d1_01380_\-38\.0\.tif|tomo_unroof_control_c2d1_01372_\-36\.0\.tif|tomo_unroof_control_c2d1_01371_\-34\.0\.tif|tomo_unroof_control_c2d1_01370_\-32\.0\.tif|tomo_unroof_control_c2d1_01366_\-30\.0\.tif|tomo_unroof_control_c2d1_01365_\-28\.0\.tif|tomo_unroof_control_c2d1_01364_\-26\.0\.tif|tomo_unroof_control_c2d1_01360_\-24\.0\.tif|tomo_unroof_control_c2d1_01359_\-22\.0\.tif|tomo_unroof_control_c2d1_01358_\-20\.0\.tif|tomo_unroof_control_c2d1_01354_\-18\.0\.tif|tomo_unroof_control_c2d1_01353_\-16\.0\.tif|tomo_unroof_control_c2d1_01352_\-14\.0\.tif|tomo_unroof_control_c2d1_01348_\-12\.0\.tif|tomo_unroof_control_c2d1_01347_\-10\.0\.tif|tomo_unroof_control_c2d1_01346_\-8\.0\.tif|tomo_unroof_control_c2d1_01342_\-6\.0\.tif|tomo_unroof_control_c2d1_01341_\-4\.0\.tif|tomo_unroof_control_c2d1_01340_\-2\.0\.tif|tomo_unroof_control_c2d1_01336_\-0\.0\.tif|tomo_unroof_control_c2d1_01337_2\.0\.tif|tomo_unroof_control_c2d1_01338_4\.0\.tif|tomo_unroof_control_c2d1_01339_6\.0\.tif|tomo_unroof_control_c2d1_01343_8\.0\.tif|tomo_unroof_control_c2d1_01344_10\.0\.tif|tomo_unroof_control_c2d1_01345_12\.0\.tif|tomo_unroof_control_c2d1_01349_14\.0\.tif|tomo_unroof_control_c2d1_01350_16\.0\.tif|tomo_unroof_control_c2d1_01351_18\.0\.tif|tomo_unroof_control_c2d1_01355_20\.0\.tif|tomo_unroof_control_c2d1_01356_22\.0\.tif|tomo_unroof_control_c2d1_01357_24\.0\.tif|tomo_unroof_control_c2d1_01361_26\.0\.tif|tomo_unroof_control_c2d1_01362_28\.0\.tif|tomo_unroof_control_c2d1_01363_30\.0\.tif|tomo_unroof_control_c2d1_01367_32\.0\.tif|tomo_unroof_control_c2d1_01368_34\.0\.tif|tomo_unroof_control_c2d1_01369_36\.0\.tif|tomo_unroof_control_c2d1_01373_38\.0\.tif|tomo_unroof_control_c2d1_01374_40\.0\.tif|tomo_unroof_control_c2d1_01375_42\.0\.tif|tomo_unroof_control_c2d1_01376_44\.0\.tif|tomo_unroof_control_c2d1_01377_46\.0\.tif|tomo_unroof_control_c2d1_01378_48\.0\.tif|tomo_unroof_control_c2d1_01379_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_79$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_00213_\-50\.0\.tif|tomo_unroof_control_c2d1_00212_\-48\.0\.tif|tomo_unroof_control_c2d1_00211_\-46\.0\.tif|tomo_unroof_control_c2d1_00210_\-44\.0\.tif|tomo_unroof_control_c2d1_00209_\-42\.0\.tif|tomo_unroof_control_c2d1_00208_\-40\.0\.tif|tomo_unroof_control_c2d1_00207_\-38\.0\.tif|tomo_unroof_control_c2d1_00199_\-36\.0\.tif|tomo_unroof_control_c2d1_00198_\-34\.0\.tif|tomo_unroof_control_c2d1_00197_\-32\.0\.tif|tomo_unroof_control_c2d1_00193_\-30\.0\.tif|tomo_unroof_control_c2d1_00192_\-28\.0\.tif|tomo_unroof_control_c2d1_00191_\-26\.0\.tif|tomo_unroof_control_c2d1_00187_\-24\.0\.tif|tomo_unroof_control_c2d1_00186_\-22\.0\.tif|tomo_unroof_control_c2d1_00185_\-20\.0\.tif|tomo_unroof_control_c2d1_00181_\-18\.0\.tif|tomo_unroof_control_c2d1_00180_\-16\.0\.tif|tomo_unroof_control_c2d1_00179_\-14\.0\.tif|tomo_unroof_control_c2d1_00175_\-12\.0\.tif|tomo_unroof_control_c2d1_00174_\-10\.0\.tif|tomo_unroof_control_c2d1_00173_\-8\.0\.tif|tomo_unroof_control_c2d1_00169_\-6\.0\.tif|tomo_unroof_control_c2d1_00168_\-4\.0\.tif|tomo_unroof_control_c2d1_00167_\-2\.0\.tif|tomo_unroof_control_c2d1_00163_\-0\.0\.tif|tomo_unroof_control_c2d1_00164_2\.0\.tif|tomo_unroof_control_c2d1_00165_4\.0\.tif|tomo_unroof_control_c2d1_00166_6\.0\.tif|tomo_unroof_control_c2d1_00170_8\.0\.tif|tomo_unroof_control_c2d1_00171_10\.0\.tif|tomo_unroof_control_c2d1_00172_12\.0\.tif|tomo_unroof_control_c2d1_00176_14\.0\.tif|tomo_unroof_control_c2d1_00177_16\.0\.tif|tomo_unroof_control_c2d1_00178_18\.0\.tif|tomo_unroof_control_c2d1_00182_20\.0\.tif|tomo_unroof_control_c2d1_00183_22\.0\.tif|tomo_unroof_control_c2d1_00184_24\.0\.tif|tomo_unroof_control_c2d1_00188_26\.0\.tif|tomo_unroof_control_c2d1_00189_28\.0\.tif|tomo_unroof_control_c2d1_00190_30\.0\.tif|tomo_unroof_control_c2d1_00194_32\.0\.tif|tomo_unroof_control_c2d1_00195_34\.0\.tif|tomo_unroof_control_c2d1_00196_36\.0\.tif|tomo_unroof_control_c2d1_00200_38\.0\.tif|tomo_unroof_control_c2d1_00201_40\.0\.tif|tomo_unroof_control_c2d1_00202_42\.0\.tif|tomo_unroof_control_c2d1_00203_44\.0\.tif|tomo_unroof_control_c2d1_00204_46\.0\.tif|tomo_unroof_control_c2d1_00205_48\.0\.tif|tomo_unroof_control_c2d1_00206_50\.0\.tif)
+      - parent_filters:
+          include:
+            run:
+              - ^tomo_c2c1_9$
+        source_glob:
+          list_glob: frames/*.tif
+          match_regex: (tomo_unroof_control_c2d1_01692_\-50\.0\.tif|tomo_unroof_control_c2d1_01691_\-48\.0\.tif|tomo_unroof_control_c2d1_01690_\-46\.0\.tif|tomo_unroof_control_c2d1_01689_\-44\.0\.tif|tomo_unroof_control_c2d1_01688_\-42\.0\.tif|tomo_unroof_control_c2d1_01687_\-40\.0\.tif|tomo_unroof_control_c2d1_01686_\-38\.0\.tif|tomo_unroof_control_c2d1_01678_\-36\.0\.tif|tomo_unroof_control_c2d1_01677_\-34\.0\.tif|tomo_unroof_control_c2d1_01676_\-32\.0\.tif|tomo_unroof_control_c2d1_01672_\-30\.0\.tif|tomo_unroof_control_c2d1_01671_\-28\.0\.tif|tomo_unroof_control_c2d1_01670_\-26\.0\.tif|tomo_unroof_control_c2d1_01666_\-24\.0\.tif|tomo_unroof_control_c2d1_01665_\-22\.0\.tif|tomo_unroof_control_c2d1_01664_\-20\.0\.tif|tomo_unroof_control_c2d1_01660_\-18\.0\.tif|tomo_unroof_control_c2d1_01659_\-16\.0\.tif|tomo_unroof_control_c2d1_01658_\-14\.0\.tif|tomo_unroof_control_c2d1_01654_\-12\.0\.tif|tomo_unroof_control_c2d1_01653_\-10\.0\.tif|tomo_unroof_control_c2d1_01652_\-8\.0\.tif|tomo_unroof_control_c2d1_01648_\-6\.0\.tif|tomo_unroof_control_c2d1_01647_\-4\.0\.tif|tomo_unroof_control_c2d1_01646_\-2\.0\.tif|tomo_unroof_control_c2d1_01642_\-0\.0\.tif|tomo_unroof_control_c2d1_01643_2\.0\.tif|tomo_unroof_control_c2d1_01644_4\.0\.tif|tomo_unroof_control_c2d1_01645_6\.0\.tif|tomo_unroof_control_c2d1_01649_8\.0\.tif|tomo_unroof_control_c2d1_01650_10\.0\.tif|tomo_unroof_control_c2d1_01651_12\.0\.tif|tomo_unroof_control_c2d1_01655_14\.0\.tif|tomo_unroof_control_c2d1_01656_16\.0\.tif|tomo_unroof_control_c2d1_01657_18\.0\.tif|tomo_unroof_control_c2d1_01661_20\.0\.tif|tomo_unroof_control_c2d1_01662_22\.0\.tif|tomo_unroof_control_c2d1_01663_24\.0\.tif|tomo_unroof_control_c2d1_01667_26\.0\.tif|tomo_unroof_control_c2d1_01668_28\.0\.tif|tomo_unroof_control_c2d1_01669_30\.0\.tif|tomo_unroof_control_c2d1_01673_32\.0\.tif|tomo_unroof_control_c2d1_01674_34\.0\.tif|tomo_unroof_control_c2d1_01675_36\.0\.tif|tomo_unroof_control_c2d1_01679_38\.0\.tif|tomo_unroof_control_c2d1_01680_40\.0\.tif|tomo_unroof_control_c2d1_01681_42\.0\.tif|tomo_unroof_control_c2d1_01682_44\.0\.tif|tomo_unroof_control_c2d1_01683_46\.0\.tif|tomo_unroof_control_c2d1_01684_48\.0\.tif|tomo_unroof_control_c2d1_01685_50\.0\.tif)
+gains: [ ]
 rawtilts:
-- sources:
-  - source_glob:
-      list_glob: rawtilts/{run_name}.rawtlt
+  - sources:
+      - source_glob:
+          list_glob: rawtilts/{run_name}.rawtlt
 runs:
-- sources:
-  - source_glob:
-      list_glob: tomograms_bin8/*
-      match_regex: \.rec$
-      name_regex: (.*)_binalign8.rec
+  - sources:
+      - source_glob:
+          list_glob: tomograms_bin8/*
+          match_regex: \.rec$
+          name_regex: (.*)_binalign8.rec
 standardization_config:
   deposition_id: 10306
-  run_data_map_file: run_to_data_map.tsv
+  run_data_map_file: run_to_data_map_vali.tsv
   source_prefix: kem_sochacki_06_2024/grid02/
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: 1
-    camera:
-      manufacturer: Gatan
-      model: K3
-    data_acquisition_software: SerialEM
-    is_aligned: false
-    microscope:
-      manufacturer: FEI
-      model: TITAN KRIOS
-    microscope_optical_setup:
-      energy_filter: Gatan Quantum LS
-    pixel_spacing: 2.15681
-    spherical_aberration_constant: 2.7
-    tilt_axis: 0.0
-    tilt_range:
-      max: float {tilt_series_max_tilt}
-      min: float {tilt_series_min_tilt}
-    tilt_series_quality: 5
-    tilt_step: 2.0
-    tilting_scheme: dose-symmetric
-    total_flux: float {tilt_series_total_flux}
-  sources:
-  - source_glob:
-      list_glob: tilt_series/{run_name}_binalign8.st
-      match_regex: ^.*\.st$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 4
+      camera:
+        manufacturer: Gatan
+        model: K3
+      data_acquisition_software: SerialEM
+      is_aligned: false
+      microscope:
+        manufacturer: FEI
+        model: TITAN KRIOS
+      microscope_optical_setup:
+        energy_filter: Gatan Quantum LS
+      pixel_spacing: 8.627
+      spherical_aberration_constant: 2.7
+      tilt_axis: 96.0
+      tilt_range:
+        max: float {tilt_series_max_tilt}
+        min: float {tilt_series_min_tilt}
+      tilt_series_quality: 5
+      tilt_step: 2.0
+      tilting_scheme: dose-symmetric
+      total_flux: float {tilt_series_total_flux}
+    sources:
+      - source_glob:
+          list_glob: tilt_series/{run_name}_binalign8.st
+          match_regex: ^.*\.st$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    authors: *id001
-    ctf_corrected: false
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    reconstruction_method: SIRT
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 8.627
-  sources:
-  - source_glob:
-      list_glob: tomograms_bin8/{run_name}_binalign8.rec
-      match_regex: (.*)\.rec
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *id001
+      ctf_corrected: false
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      reconstruction_method: SIRT
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 8.627
+    sources:
+      - source_glob:
+          list_glob: tomograms_bin8/{run_name}_binalign8.rec
+          match_regex: (.*)\.rec
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 8.627
+  - sources:
+      - literal:
+          value:
+            - 8.627

@@ -1,220 +1,219 @@
 alignments:
-- metadata:
-    format: IMOD
-    method_type: patch_tracking
-  sources:
-  - source_multi_glob:
-      list_globs:
-      - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.tlt
-      - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf
-annotations: []
+  - metadata:
+      format: IMOD
+      method_type: patch_tracking
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.tlt
+            - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf
+annotations: [ ]
 collection_metadata:
-- sources:
-  - source_glob:
-      list_glob: chlamy_visual_proteomics/{run_name}/{run_name}.mdoc
+  - sources:
+      - source_glob:
+          list_glob: chlamy_visual_proteomics/{run_name}/{run_name}_vali.mdoc
 ctfs:
-- metadata:
-    format: 'CTFFIND'
-  sources:
-  - source_glob:
-      list_glob: chlamy_visual_proteomics/{run_name}/ctffind4/ctfphaseflip_ctffind4.txt
+  - metadata:
+      format: 'CTFFIND'
+    sources:
+      - source_glob:
+          list_glob: chlamy_visual_proteomics/{run_name}/ctffind4/ctfphaseflip_ctffind4.txt
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11830-l.gif
-        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11830.gif
+  - sources:
+      - literal:
+          value:
+            snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11830-l.gif
+            thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11830.gif
 datasets:
-- metadata:
-    authors: &id001
-    - name: Ron Kelley
-      primary_author_status: true
-    - ORCID: 0000-0003-2020-3561
-      corresponding_author_status: true
-      name: Sagar Khavnekar
-      primary_author_status: true
-    - ORCID: 0000-0003-3554-780X
-      name: Xianjun Zhang
-    - ORCID: 0000-0003-1756-6564
-      name: Martin Obr
-    - ORCID: 0000-0002-6307-8441
-      name: Saikat Chakraborty
-    - ORCID: 0000-0001-6682-4449
-      name: Adrian Fujiet Koh
-    - ORCID: 0000-0002-7025-7608
-      name: Jessica Heebner
-    - ORCID: 0000-0003-4247-4303
-      name: Ricardo D. Righetto
-    - ORCID: 0000-0002-2251-3363
-      name: Florent Waltz
-    - name: C McCafferty
-    - name: Hugo van den Hoek
-    - ORCID: 0000-0001-8898-2392
-      name: Wojciech Wietrzynski
-    - name: P Van Der Stappen
-    - ORCID: 0000-0002-6080-839X
-      name: Alicia K Michael
-    - name: S van Dorst
-    - ORCID: 0000-0002-9312-2108
-      name: Grigory Tagiltsev
-    - name: Florian Beck
-    - ORCID: 0000-0001-6345-1907
-      name: Ellen Zhong
-    - ORCID: 0000-0003-2497-3010
-      name: William Wan
-    - ORCID: 0000-0003-3990-6910
-      name: John Briggs
-    - corresponding_author_status: false
-      name: "M. J\xFCrgen Plitzko"
-      primary_author_status: false
-    - ORCID: 0000-0002-0941-4387
-      name: Benjamin D. Engel
-    - ORCID: 0000-0002-4480-5439
-      corresponding_author_status: true
-      name: Abhay Kotecha
-      primary_author_status: false
-    cell_type:
-      name: Chlamydomonas reinhardtii
-    cross_references:
-      publications: 10.1093/micmic/ozad067.480
-      related_database_entries: EMPIAR-11830
-    dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
-      lamella.
-    dataset_identifier: 10302
-    dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
-      cryo-plasmaFIB milling - Full Dataset
-    dates:
-      deposition_date: '2024-04-10'
-      last_modified_date: '2024-04-10'
-      release_date: '2024-04-10'
-    grid_preparation: null
-    organism:
-      name: Chlamydomonas reinhardtii
-      taxonomy_id: 3055
-    sample_preparation: null
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10302'
+  - metadata:
+      authors: &id001
+        - name: Ron Kelley
+          primary_author_status: true
+        - ORCID: 0000-0003-2020-3561
+          corresponding_author_status: true
+          name: Sagar Khavnekar
+          primary_author_status: true
+        - ORCID: 0000-0003-3554-780X
+          name: Xianjun Zhang
+        - ORCID: 0000-0003-1756-6564
+          name: Martin Obr
+        - ORCID: 0000-0002-6307-8441
+          name: Saikat Chakraborty
+        - ORCID: 0000-0001-6682-4449
+          name: Adrian Fujiet Koh
+        - ORCID: 0000-0002-7025-7608
+          name: Jessica Heebner
+        - ORCID: 0000-0003-4247-4303
+          name: Ricardo D. Righetto
+        - ORCID: 0000-0002-2251-3363
+          name: Florent Waltz
+        - name: C McCafferty
+        - name: Hugo van den Hoek
+        - ORCID: 0000-0001-8898-2392
+          name: Wojciech Wietrzynski
+        - name: P Van Der Stappen
+        - ORCID: 0000-0002-6080-839X
+          name: Alicia K Michael
+        - name: S van Dorst
+        - ORCID: 0000-0002-9312-2108
+          name: Grigory Tagiltsev
+        - name: Florian Beck
+        - ORCID: 0000-0001-6345-1907
+          name: Ellen Zhong
+        - ORCID: 0000-0003-2497-3010
+          name: William Wan
+        - ORCID: 0000-0003-3990-6910
+          name: John Briggs
+        - corresponding_author_status: false
+          name: "M. J\xFCrgen Plitzko"
+          primary_author_status: false
+        - ORCID: 0000-0002-0941-4387
+          name: Benjamin D. Engel
+        - ORCID: 0000-0002-4480-5439
+          corresponding_author_status: true
+          name: Abhay Kotecha
+          primary_author_status: false
+      cell_type:
+        name: Chlamydomonas reinhardtii
+      cross_references:
+        publications: 10.1093/micmic/ozad067.480
+        related_database_entries: EMPIAR-11830
+      dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
+        lamella.
+      dataset_identifier: 10302
+      dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
+        cryo-plasmaFIB milling - Full Dataset
+      dates:
+        deposition_date: '2024-04-10'
+        last_modified_date: '2024-04-10'
+        release_date: '2024-04-10'
+      grid_preparation: null
+      organism:
+        name: Chlamydomonas reinhardtii
+        taxonomy_id: 3055
+      sample_preparation: null
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10302'
 depositions:
-- sources:
-  - literal:
-      value:
-      - 10300
+  - sources:
+      - literal:
+          value:
+            - 10300
 frames:
-- metadata:
-    dose_rate: 0
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: float {dose_rate}
+      is_gain_corrected: false
+    sources:
+      - source_glob:
+          list_glob: chlamy_visual_proteomics/{run_name}/frames/*.eer
 rawtilts:
-- sources:
-  - source_glob:
-      list_glob: chlamy_visual_proteomics/{run_name}/{run_name}.rawtlt
+  - sources:
+      - source_glob:
+          list_glob: chlamy_visual_proteomics/{run_name}/{run_name}.rawtlt
 runs:
-- sources:
-  - exclude:
-    - ^01122021_BrnoKrios_arctis_lam1_pos4$
-    - ^01122021_BrnoKrios_arctis_lam1_pos5$
-    - ^01122021_BrnoKrios_arctis_lam2_pos13$
-    - ^01122021_BrnoKrios_arctis_lam3_pos27$
-    - ^06042022_BrnoKrios_Arctis_grid7_Position_29$
-    - ^08042022_BrnoKrios_Arctis_grid5_gistest_Position_4$
-    - ^12052022_BrnoKrios_Arctis_grid_newGISc_Position_38$
-    - ^14042022_BrnoKrios_Arctis_grid5_Position_1$
-    - ^15042022_BrnoKrios_Arctis_grid9_Position_32$
-    - ^15042022_BrnoKrios_Arctis_grid9_Position_65$
-    - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_101$
-    - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_35$
-    - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_68$
-    - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_76$
-    - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_13$
-    - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_33$
-    - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_44$
-    - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_7$
-    source_glob:
-      list_glob: chlamy_visual_proteomics/*
-      match_regex: /(\d{8}_.*)$
-      name_regex: (.*)
+  - sources:
+      - exclude:
+          - ^01122021_BrnoKrios_arctis_lam1_pos4$
+          - ^01122021_BrnoKrios_arctis_lam1_pos5$
+          - ^01122021_BrnoKrios_arctis_lam2_pos13$
+          - ^01122021_BrnoKrios_arctis_lam3_pos27$
+          - ^06042022_BrnoKrios_Arctis_grid7_Position_29$
+          - ^08042022_BrnoKrios_Arctis_grid5_gistest_Position_4$
+          - ^12052022_BrnoKrios_Arctis_grid_newGISc_Position_38$
+          - ^14042022_BrnoKrios_Arctis_grid5_Position_1$
+          - ^15042022_BrnoKrios_Arctis_grid9_Position_32$
+          - ^15042022_BrnoKrios_Arctis_grid9_Position_65$
+          - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_101$
+          - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_35$
+          - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_68$
+          - ^17072022_BrnoKrios_Arctis_p3ar_grid_Position_76$
+          - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_13$
+          - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_33$
+          - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_44$
+          - ^27042022_BrnoKrios_Arctis_grid9_hGIS_Position_7$
+        source_glob:
+          list_glob: chlamy_visual_proteomics/*
+          match_regex: /(\d{8}_.*)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10300
   run_data_map_file: chlamy_visual_proteomics/run_to_data_map.tsv
   source_prefix: chlamy2/data/
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: 1
-    camera:
-      manufacturer: FEI
-      model: FALCON IV
-    data_acquisition_software: TEM Tomography 5
-    is_aligned: false
-    microscope:
-      manufacturer: FEI
-      model: TITAN KRIOS
-    microscope_optical_setup:
-      energy_filter: Selectris X
-    pixel_spacing: 1.96
-    related_empiar_entry: EMPIAR-11830
-    spherical_aberration_constant: 2.7
-    tilt_axis: float {tilt_series_tilt_axis_angle}
-    tilt_range:
-      max: float {tilt_series_max_tilt}
-      min: float {tilt_series_min_tilt}
-    tilt_series_quality: 5
-    tilt_step: 3.0
-    tilting_scheme: dose-symmetric
-    total_flux: float {tilt_series_total_flux}
-  sources:
-  - source_glob:
-      list_glob: chlamy_visual_proteomics/{run_name}/{run_name}.st
-      match_regex: (.*)
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: FEI
+        model: FALCON IV
+      data_acquisition_software: TEM Tomography 5
+      is_aligned: false
+      microscope:
+        manufacturer: FEI
+        model: TITAN KRIOS
+      microscope_optical_setup:
+        energy_filter: Selectris X
+      pixel_spacing: 1.96
+      related_empiar_entry: EMPIAR-11830
+      spherical_aberration_constant: 2.7
+      tilt_axis: float {tilt_series_tilt_axis_angle}
+      tilt_range:
+        max: float {tilt_series_max_tilt}
+        min: float {tilt_series_min_tilt}
+      tilt_series_quality: 5
+      tilt_step: 3.0
+      tilting_scheme: dose-symmetric
+      total_flux: float {tilt_series_total_flux}
+    sources:
+      - source_glob:
+          list_glob: chlamy_visual_proteomics/{run_name}/{run_name}.st
+          match_regex: (.*)
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    authors: *id001
-    ctf_corrected: true
-    dates:
-      deposition_date: '2024-04-09'
-      last_modified_date: '2024-04-09'
-      release_date: '2024-04-09'
-    fiducial_alignment_status: NON_FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: denoised
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 7.84
-  sources:
-  - source_glob:
-      list_glob: cryocare_bin4/{annotation_micrograph_name}.mrc
-      match_regex: (.*)\.mrc
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *id001
+      ctf_corrected: true
+      dates:
+        deposition_date: '2024-04-09'
+        last_modified_date: '2024-04-09'
+        release_date: '2024-04-09'
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: denoised
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 7.84
+    sources:
+      - source_glob:
+          list_glob: cryocare_bin4/{annotation_micrograph_name}.mrc
+          match_regex: (.*)\.mrc
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 7.84
+  - sources:
+      - literal:
+          value:
+            - 7.84
