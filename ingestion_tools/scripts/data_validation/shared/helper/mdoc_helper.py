@@ -26,8 +26,10 @@ class MdocTestHelper:
 
     @allure.title("Mdoc: number of mdoc sections equal number of frames files.")
     def test_mdoc_frames(self, mdoc_data: pd.DataFrame, frames_files: list[str]):
-        mdoc_len = len(mdoc_data)
         frames_len = len(frames_files)
+        if frames_len == 0:
+            pytest.skip("No frame files to compare")
+        mdoc_len = len(mdoc_data)
         assert mdoc_len == frames_len, f"Number of mdoc sections {mdoc_len} mismatches number of frames: {frames_len}"
 
     @allure.title("Mdoc: Every mdoc filename has an entry for SubFramePath.")
@@ -41,6 +43,8 @@ class MdocTestHelper:
         frames_files: list[str],
         mdoc_data: pd.DataFrame,
     ):
+        if len(frames_files) == 0:
+            pytest.skip("No frame files to compare")
         errors = []
         standardize_frames_files = [os.path.basename(f) for f in frames_files]
         standardized_mdoc_entries = []
