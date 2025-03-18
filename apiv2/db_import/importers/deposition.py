@@ -2,7 +2,6 @@ from datetime import datetime, timezone
 from typing import Any, Iterable
 
 from database import models
-
 from db_import.common.config import DBImportConfig
 from db_import.importers.base_importer import (
     AuthorsStaleDeletionDBImporter,

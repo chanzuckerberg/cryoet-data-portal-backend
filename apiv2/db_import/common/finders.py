@@ -7,6 +7,7 @@ from functools import lru_cache
 from typing import TYPE_CHECKING, Any
 
 from db_import.common.config import DBImportConfig
+
 from platformics.database.models.base import Base
 
 logger = logging.getLogger("finders")

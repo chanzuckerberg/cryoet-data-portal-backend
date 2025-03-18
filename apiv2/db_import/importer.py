@@ -5,8 +5,6 @@ import boto3
 import click
 from botocore import UNSIGNED
 from botocore.config import Config
-from s3fs import S3FileSystem
-
 from db_import.common.config import DBImportConfig
 from db_import.importers.alignment import AlignmentImporter, PerSectionAlignmentParametersImporter
 from db_import.importers.annotation import (
@@ -29,6 +27,8 @@ from db_import.importers.tiltseries import (
 )
 from db_import.importers.tomogram import TomogramAuthorImporter, TomogramImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
+from s3fs import S3FileSystem
+
 from platformics.database.connect import init_sync_db
 
 logger = logging.getLogger("db_import")

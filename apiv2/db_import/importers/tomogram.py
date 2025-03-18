@@ -3,7 +3,6 @@ import os
 from typing import Any
 
 from database import models
-
 from db_import.common.finders import MetadataFileFinder
 from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
