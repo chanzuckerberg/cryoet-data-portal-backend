@@ -260,7 +260,7 @@ depositions:
 frames:
   - metadata:
       is_gain_corrected: true
-      dose_rate: 0
+      dose_rate: 3.226
     sources:
       - literal:
           value:
