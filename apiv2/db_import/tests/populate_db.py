@@ -478,7 +478,19 @@ def populate_stale_per_section_parameters(session: sa.orm.Session) -> PerSection
             raw_angle=0.5,
             tiltseries_id=TILTSERIES_ID,
             z_index=0,
-        ),
+      ),
+      PerSectionParameters(
+        run_id=RUN1_ID,
+        astigmatic_angle=0.1,
+        frame_id=1234,
+        major_defocus=0.5,
+        minor_defocus=0.5,
+        phase_shift=0.5,
+        max_resolution=0.5,
+        raw_angle=0.5,
+        tiltseries_id=TILTSERIES_ID,
+        z_index=10,
+      ),
     )
 
 
