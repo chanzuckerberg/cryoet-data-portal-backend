@@ -1,12 +1,63 @@
+import os
 from typing import Any
 
 from database import models
 from db_import.common.config import DBImportConfig
+from db_import.common.finders import JsonDataFinder
+from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 from db_import.importers.base_importer import BaseDBImporter, StaleParentDeletionDBImporter
 from db_import.importers.deposition import get_deposition
 from db_import.importers.run import RunDBImporter
 
 from platformics.database.models.base import Base
+
+
+class PerSectionParametersItem(ItemDBImporter):
+    id_fields = ["frame_id", "run_id", "tiltseries_id"]
+    model_class = models.PerSectionParameters
+    direct_mapped_fields = {
+        "astigmatic_angle": ["astigmatic_angle"],
+        "z_index": ["z_index"],
+        "major_defocus": ["major_defocus"],
+        "minor_defocus": ["minor_defocus"],
+        "max_resolution": ["max_resolution"],
+        "phase_shift": ["phase_shift"],
+        "raw_angle": ["raw_angle"],
+    }
+
+    def load_computed_fields(self):
+        self.model_args["tiltseries_id"] = self.input_data["tiltseries"].id
+        run_id = self.input_data["tiltseries"].run_id
+        self.model_args["run_id"] = run_id
+        # query the database for the frame_id using run_id and acquisition_order
+        self.model_args["frame_id"] = (
+            self.config.get_db_session()
+            .query(models.Frame)
+            .filter_by(run_id=run_id, acquisition_order=self.input_data["frame_acquisition_order"])
+            .one()
+            .id
+        )
+
+
+class PerSectionParametersImporter(IntegratedDBImporter):
+    finder = JsonDataFinder
+    row_importer = PerSectionParametersItem
+    clean_up_siblings = True
+
+    def __init__(self, config, metadata_file_path: str, tiltseries: models.Tiltseries, **unused_parents):
+        self.config = config
+        self.parents = {"tiltseries": tiltseries}
+        self.metadata_file_path = metadata_file_path
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"tiltseries_id": self.parents["tiltseries"].id}
+
+    def get_finder_args(self) -> dict[str, Any]:
+        metadata_path = os.path.join(self.config.s3_prefix, self.metadata_file_path)
+        return {
+            "path": self.convert_to_finder_path(metadata_path),
+            "list_key": ["per_section_parameter"],
+        }
 
 
 class TiltSeriesDBImporter(BaseDBImporter):
