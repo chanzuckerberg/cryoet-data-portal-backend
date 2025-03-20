@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -151,8 +152,8 @@ Define AnnotationAuthor type
 @strawberry.type(description="Metadata for an annotation's authors")
 class AnnotationAuthor(EntityInterface):
     annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows  # type:ignore
-    )
+        load_annotation_rows
+    )  # type:ignore
     annotation_id: Optional[int]
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
@@ -400,9 +401,7 @@ async def resolve_annotation_authors(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.AnnotationAuthor, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.AnnotationAuthor, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_annotation_author_aggregate_output(
@@ -470,9 +469,7 @@ async def resolve_annotation_authors_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.AnnotationAuthor, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.AnnotationAuthor, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_author_aggregate_output(rows)
     return aggregate_output
 

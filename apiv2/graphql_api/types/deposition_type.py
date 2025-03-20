@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -133,8 +134,8 @@ Define DepositionType type
 @strawberry.type(description=None)
 class DepositionType(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows  # type:ignore
-    )
+        load_deposition_rows
+    )  # type:ignore
     deposition_id: int
     type: Optional[deposition_types_enum] = strawberry.field(
         description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
@@ -289,9 +290,7 @@ async def resolve_deposition_types(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.DepositionType, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.DepositionType, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_deposition_type_aggregate_output(
@@ -359,9 +358,7 @@ async def resolve_deposition_types_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.DepositionType, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.DepositionType, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_deposition_type_aggregate_output(rows)
     return aggregate_output
 

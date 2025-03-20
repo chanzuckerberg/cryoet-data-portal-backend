@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -144,7 +145,9 @@ Define PerSectionAlignmentParameters type
 
 @strawberry.type(description="Map alignment parameters to tilt series frames")
 class PerSectionAlignmentParameters(EntityInterface):
-    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
+    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
+        load_alignment_rows
+    )  # type:ignore
     alignment_id: int
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
@@ -338,17 +341,7 @@ async def resolve_per_section_alignment_parameters(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.PerSectionAlignmentParameters,
-        session,
-        authz_client,
-        principal,
-        where,
-        order_by,
-        AuthzAction.VIEW,
-        limit,
-        offset,
-    )  # type: ignore
+    return await get_db_rows(db.PerSectionAlignmentParameters, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_per_section_alignment_parameters_aggregate_output(
@@ -418,16 +411,7 @@ async def resolve_per_section_alignment_parameters_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.PerSectionAlignmentParameters,
-        session,
-        authz_client,
-        principal,
-        where,
-        aggregate_selections,
-        [],
-        groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.PerSectionAlignmentParameters, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_per_section_alignment_parameters_aggregate_output(rows)
     return aggregate_output
 

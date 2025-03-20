@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -214,8 +215,8 @@ class PerSectionParameters(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: int
     tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows  # type:ignore
-    )
+        load_tiltseries_rows
+    )  # type:ignore
     tiltseries_id: int
     z_index: int = strawberry.field(description="Index (0-based) of this tilt image in the tilt series stack.")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -423,9 +424,7 @@ async def resolve_per_section_parameters(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.PerSectionParameters, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_per_section_parameters_aggregate_output(
@@ -493,9 +492,7 @@ async def resolve_per_section_parameters_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.PerSectionParameters, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_per_section_parameters_aggregate_output(rows)
     return aggregate_output
 

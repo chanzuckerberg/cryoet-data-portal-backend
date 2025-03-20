@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -115,7 +116,9 @@ async def load_deposition_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]
+    ],  # type:ignore
 )
 async def load_dataset_funding_rows(
     root: "Dataset",
@@ -323,25 +326,25 @@ Define Dataset type
 @strawberry.type(description="A collection of imaging experiments on the same organism")
 class Dataset(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows  # type:ignore
-    )
+        load_deposition_rows
+    )  # type:ignore
     deposition_id: int
     funding_sources: Sequence[Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]] = (
-        load_dataset_funding_rows  # type:ignore
-    )
+        load_dataset_funding_rows
+    )  # type:ignore
     funding_sources_aggregate: Optional[
         Annotated["DatasetFundingAggregate", strawberry.lazy("graphql_api.types.dataset_funding")]
     ] = load_dataset_funding_aggregate_rows  # type:ignore
     authors: Sequence[Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]] = (
-        load_dataset_author_rows  # type:ignore
-    )
+        load_dataset_author_rows
+    )  # type:ignore
     authors_aggregate: Optional[
         Annotated["DatasetAuthorAggregate", strawberry.lazy("graphql_api.types.dataset_author")]
     ] = load_dataset_author_aggregate_rows  # type:ignore
     runs: Sequence[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     runs_aggregate: Optional[Annotated["RunAggregate", strawberry.lazy("graphql_api.types.run")]] = (
-        load_run_aggregate_rows  # type:ignore
-    )
+        load_run_aggregate_rows
+    )  # type:ignore
     title: str = strawberry.field(description="Title of a CryoET dataset")
     description: str = strawberry.field(
         description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
@@ -743,9 +746,7 @@ async def resolve_datasets(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.Dataset, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.Dataset, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_dataset_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> DatasetAggregate:
@@ -811,9 +812,7 @@ async def resolve_datasets_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.Dataset, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.Dataset, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_dataset_aggregate_output(rows)
     return aggregate_output
 

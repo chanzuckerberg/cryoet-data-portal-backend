@@ -99,6 +99,7 @@ from graphql_api.types.tomogram_voxel_spacing import (
 
 @strawberry.type
 class Mutation:
+
     # GainFile mutations
     create_gain_file: GainFile = create_gain_file
     update_gain_file: Sequence[GainFile] = update_gain_file

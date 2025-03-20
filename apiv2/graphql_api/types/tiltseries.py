@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -160,7 +161,9 @@ async def load_deposition_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ],  # type:ignore
 )
 async def load_per_section_parameters_rows(
     root: "Tiltseries",
@@ -336,15 +339,17 @@ Define Tiltseries type
 
 @strawberry.type(description=None)
 class Tiltseries(EntityInterface):
-    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
+    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
+        load_alignment_rows
+    )  # type:ignore
     alignments_aggregate: Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_aggregate_rows  # type:ignore
-    )
+        load_alignment_aggregate_rows
+    )  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: int
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows  # type:ignore
-    )
+        load_deposition_rows
+    )  # type:ignore
     deposition_id: Optional[int]
     s3_omezarr_dir: Optional[str] = strawberry.field(
         description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None,
@@ -787,9 +792,7 @@ async def resolve_tiltseries(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.Tiltseries, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.Tiltseries, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_tiltseries_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> TiltseriesAggregate:
@@ -855,9 +858,7 @@ async def resolve_tiltseries_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.Tiltseries, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.Tiltseries, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_tiltseries_aggregate_output(rows)
     return aggregate_output
 

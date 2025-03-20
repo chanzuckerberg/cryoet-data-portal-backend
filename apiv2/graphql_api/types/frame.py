@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -117,7 +118,9 @@ async def load_run_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ],  # type:ignore
 )
 async def load_per_section_parameters_rows(
     root: "Frame",
@@ -234,8 +237,8 @@ Define Frame type
 @strawberry.type(description=None)
 class Frame(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows  # type:ignore
-    )
+        load_deposition_rows
+    )  # type:ignore
     deposition_id: int
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: int
@@ -441,9 +444,7 @@ async def resolve_frames(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.Frame, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.Frame, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_frame_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> FrameAggregate:
@@ -509,9 +510,7 @@ async def resolve_frames_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.Frame, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.Frame, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_frame_aggregate_output(rows)
     return aggregate_output
 

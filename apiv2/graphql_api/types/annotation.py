@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -127,7 +128,9 @@ async def load_run_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]
+    ],  # type:ignore
 )
 async def load_annotation_shape_rows(
     root: "Annotation",
@@ -159,7 +162,9 @@ async def load_annotation_shape_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]
+    ],  # type:ignore
 )
 async def load_annotation_method_link_rows(
     root: "Annotation",
@@ -197,7 +202,9 @@ async def load_annotation_method_link_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]
+    ],  # type:ignore
 )
 async def load_annotation_author_rows(
     root: "Annotation",
@@ -372,8 +379,8 @@ class Annotation(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: Optional[int]
     annotation_shapes: Sequence[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = (
-        load_annotation_shape_rows  # type:ignore
-    )
+        load_annotation_shape_rows
+    )  # type:ignore
     annotation_shapes_aggregate: Optional[
         Annotated["AnnotationShapeAggregate", strawberry.lazy("graphql_api.types.annotation_shape")]
     ] = load_annotation_shape_aggregate_rows  # type:ignore
@@ -384,14 +391,14 @@ class Annotation(EntityInterface):
         Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]
     ] = load_annotation_method_link_aggregate_rows  # type:ignore
     authors: Sequence[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]] = (
-        load_annotation_author_rows  # type:ignore
-    )
+        load_annotation_author_rows
+    )  # type:ignore
     authors_aggregate: Optional[
         Annotated["AnnotationAuthorAggregate", strawberry.lazy("graphql_api.types.annotation_author")]
     ] = load_annotation_author_aggregate_rows  # type:ignore
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows  # type:ignore
-    )
+        load_deposition_rows
+    )  # type:ignore
     deposition_id: Optional[int]
     s3_metadata_path: str = strawberry.field(description="S3 path for the metadata json file for this annotation")
     https_metadata_path: str = strawberry.field(description="HTTPS path for the metadata json file for this annotation")
@@ -745,9 +752,7 @@ async def resolve_annotations(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.Annotation, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.Annotation, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_annotation_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> AnnotationAggregate:
@@ -813,9 +818,7 @@ async def resolve_annotations_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.Annotation, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.Annotation, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_aggregate_output(rows)
     return aggregate_output
 

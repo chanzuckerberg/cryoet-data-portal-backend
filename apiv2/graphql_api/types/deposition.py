@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -137,7 +138,9 @@ These are batching functions for loading related objects to avoid N+1 queries.
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]
+    ],  # type:ignore
 )
 async def load_deposition_author_rows(
     root: "Deposition",
@@ -357,7 +360,9 @@ async def load_tomogram_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]
+    ],  # type:ignore
 )
 async def load_deposition_type_rows(
     root: "Deposition",
@@ -495,45 +500,51 @@ Define Deposition type
 @strawberry.type(description="Deposition metadata")
 class Deposition(EntityInterface):
     authors: Sequence[Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]] = (
-        load_deposition_author_rows  # type:ignore
-    )
+        load_deposition_author_rows
+    )  # type:ignore
     authors_aggregate: Optional[
         Annotated["DepositionAuthorAggregate", strawberry.lazy("graphql_api.types.deposition_author")]
     ] = load_deposition_author_aggregate_rows  # type:ignore
-    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
+    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
+        load_alignment_rows
+    )  # type:ignore
     alignments_aggregate: Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_aggregate_rows  # type:ignore
-    )
+        load_alignment_aggregate_rows
+    )  # type:ignore
     annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows  # type:ignore
-    )
+        load_annotation_rows
+    )  # type:ignore
     annotations_aggregate: Optional[
         Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]
     ] = load_annotation_aggregate_rows  # type:ignore
-    datasets: Sequence[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type:ignore
+    datasets: Sequence[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
+        load_dataset_rows
+    )  # type:ignore
     datasets_aggregate: Optional[Annotated["DatasetAggregate", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_aggregate_rows  # type:ignore
-    )
+        load_dataset_aggregate_rows
+    )  # type:ignore
     frames: Sequence[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
     frames_aggregate: Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]] = (
-        load_frame_aggregate_rows  # type:ignore
-    )
+        load_frame_aggregate_rows
+    )  # type:ignore
     tiltseries: Sequence[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows  # type:ignore
-    )
+        load_tiltseries_rows
+    )  # type:ignore
     tiltseries_aggregate: Optional[
         Annotated["TiltseriesAggregate", strawberry.lazy("graphql_api.types.tiltseries")]
     ] = load_tiltseries_aggregate_rows  # type:ignore
-    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type:ignore
+    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
+        load_tomogram_rows
+    )  # type:ignore
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_aggregate_rows  # type:ignore
-    )
+        load_tomogram_aggregate_rows
+    )  # type:ignore
     title: str = strawberry.field(description="Title for the deposition")
     description: str = strawberry.field(description="Description for the deposition")
     tag: Optional[str] = strawberry.field(description="Tag for the deposition - like ml competition", default=None)
     deposition_types: Sequence[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]] = (
-        load_deposition_type_rows  # type:ignore
-    )
+        load_deposition_type_rows
+    )  # type:ignore
     deposition_types_aggregate: Optional[
         Annotated["DepositionTypeAggregate", strawberry.lazy("graphql_api.types.deposition_type")]
     ] = load_deposition_type_aggregate_rows  # type:ignore
@@ -742,9 +753,7 @@ async def resolve_depositions(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.Deposition, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.Deposition, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_deposition_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> DepositionAggregate:
@@ -810,9 +819,7 @@ async def resolve_depositions_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.Deposition, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.Deposition, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_deposition_aggregate_output(rows)
     return aggregate_output
 

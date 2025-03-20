@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -134,7 +135,9 @@ async def load_tomogram_voxel_spacing_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationFile)
     relationship = mapper.relationships["tomogram_voxel_spacing"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.tomogram_voxel_spacing_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(
+        root.tomogram_voxel_spacing_id,
+    )  # type:ignore
 
 
 """
@@ -218,11 +221,13 @@ Define AnnotationFile type
 
 @strawberry.type(description="Metadata for files associated with an annotation")
 class AnnotationFile(EntityInterface):
-    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
+    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
+        load_alignment_rows
+    )  # type:ignore
     alignment_id: Optional[int]
     annotation_shape: Optional[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = (
-        load_annotation_shape_rows  # type:ignore
-    )
+        load_annotation_shape_rows
+    )  # type:ignore
     annotation_shape_id: Optional[int]
     tomogram_voxel_spacing: Optional[
         Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
@@ -427,9 +432,7 @@ async def resolve_annotation_files(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.AnnotationFile, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.AnnotationFile, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_annotation_file_aggregate_output(
@@ -497,9 +500,7 @@ async def resolve_annotation_files_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.AnnotationFile, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.AnnotationFile, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_file_aggregate_output(rows)
     return aggregate_output
 

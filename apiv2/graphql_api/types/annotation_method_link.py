@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -146,8 +147,8 @@ Define AnnotationMethodLink type
 )
 class AnnotationMethodLink(EntityInterface):
     annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows  # type:ignore
-    )
+        load_annotation_rows
+    )  # type:ignore
     annotation_id: Optional[int]
     link_type: annotation_method_link_type_enum = strawberry.field(
         description="Type of link (e.g. model, source code, documentation)",
@@ -313,9 +314,7 @@ async def resolve_annotation_method_links(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.AnnotationMethodLink, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.AnnotationMethodLink, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_annotation_method_link_aggregate_output(
@@ -383,9 +382,7 @@ async def resolve_annotation_method_links_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.AnnotationMethodLink, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.AnnotationMethodLink, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_method_link_aggregate_output(rows)
     return aggregate_output
 

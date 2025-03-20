@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -95,7 +96,9 @@ async def load_annotation_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]
+    ],  # type:ignore
 )
 async def load_annotation_file_rows(
     root: "AnnotationShape",
@@ -184,12 +187,12 @@ Define AnnotationShape type
 @strawberry.type(description="Shapes associated with an annotation")
 class AnnotationShape(EntityInterface):
     annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows  # type:ignore
-    )
+        load_annotation_rows
+    )  # type:ignore
     annotation_id: Optional[int]
     annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
-        load_annotation_file_rows  # type:ignore
-    )
+        load_annotation_file_rows
+    )  # type:ignore
     annotation_files_aggregate: Optional[
         Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
     ] = load_annotation_file_aggregate_rows  # type:ignore
@@ -350,9 +353,7 @@ async def resolve_annotation_shapes(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.AnnotationShape, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.AnnotationShape, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_annotation_shape_aggregate_output(
@@ -420,9 +421,7 @@ async def resolve_annotation_shapes_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.AnnotationShape, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.AnnotationShape, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_shape_aggregate_output(rows)
     return aggregate_output
 

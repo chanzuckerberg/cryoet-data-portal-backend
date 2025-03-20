@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -126,7 +127,9 @@ Define DatasetFunding type
 
 @strawberry.type(description="Metadata for a dataset's funding sources")
 class DatasetFunding(EntityInterface):
-    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type:ignore
+    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
+        load_dataset_rows
+    )  # type:ignore
     dataset_id: Optional[int]
     funding_agency_name: Optional[str] = strawberry.field(description="Name of the funding agency.", default=None)
     grant_id: Optional[str] = strawberry.field(
@@ -288,9 +291,7 @@ async def resolve_dataset_funding(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.DatasetFunding, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.DatasetFunding, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_dataset_funding_aggregate_output(
@@ -358,9 +359,7 @@ async def resolve_dataset_funding_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.DatasetFunding, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.DatasetFunding, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_dataset_funding_aggregate_output(rows)
     return aggregate_output
 

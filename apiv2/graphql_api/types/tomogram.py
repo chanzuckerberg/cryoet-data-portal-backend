@@ -7,6 +7,7 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+
 import datetime
 import enum
 import typing
@@ -122,7 +123,9 @@ async def load_alignment_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["TomogramAuthor", strawberry.lazy("graphql_api.types.tomogram_author")]],  # type:ignore
+    relay.ListConnection[
+        Annotated["TomogramAuthor", strawberry.lazy("graphql_api.types.tomogram_author")]
+    ],  # type:ignore
 )
 async def load_tomogram_author_rows(
     root: "Tomogram",
@@ -197,7 +200,9 @@ async def load_tomogram_voxel_spacing_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Tomogram)
     relationship = mapper.relationships["tomogram_voxel_spacing"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.tomogram_voxel_spacing_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(
+        root.tomogram_voxel_spacing_id,
+    )  # type:ignore
 
 
 """
@@ -344,17 +349,19 @@ Define Tomogram type
 
 @strawberry.type(description="Metadata describing a tomogram.")
 class Tomogram(EntityInterface):
-    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
+    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
+        load_alignment_rows
+    )  # type:ignore
     alignment_id: Optional[int]
     authors: Sequence[Annotated["TomogramAuthor", strawberry.lazy("graphql_api.types.tomogram_author")]] = (
-        load_tomogram_author_rows  # type:ignore
-    )
+        load_tomogram_author_rows
+    )  # type:ignore
     authors_aggregate: Optional[
         Annotated["TomogramAuthorAggregate", strawberry.lazy("graphql_api.types.tomogram_author")]
     ] = load_tomogram_author_aggregate_rows  # type:ignore
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows  # type:ignore
-    )
+        load_deposition_rows
+    )  # type:ignore
     deposition_id: int
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: Optional[int]
@@ -842,9 +849,7 @@ async def resolve_tomograms(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(
-        db.Tomogram, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
-    )  # type: ignore
+    return await get_db_rows(db.Tomogram, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
 def format_tomogram_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> TomogramAggregate:
@@ -910,9 +915,7 @@ async def resolve_tomograms_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(
-        db.Tomogram, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
-    )  # type: ignore
+    rows = await get_aggregate_db_rows(db.Tomogram, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_tomogram_aggregate_output(rows)
     return aggregate_output
 
