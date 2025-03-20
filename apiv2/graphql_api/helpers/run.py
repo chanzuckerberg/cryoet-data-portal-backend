@@ -5,32 +5,31 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import Any, Optional, TYPE_CHECKING, Annotated
-import strawberry
-import datetime
-import uuid
+from typing import TYPE_CHECKING, Annotated, Any, Optional
+
 import graphql_api.helpers.alignment as alignment_helper
 import graphql_api.helpers.annotation as annotation_helper
 import graphql_api.helpers.dataset as dataset_helper
 import graphql_api.helpers.frame as frame_helper
-import graphql_api.helpers.gain_file as gain_file_helper
 import graphql_api.helpers.frame_acquisition_file as frame_acquisition_file_helper
+import graphql_api.helpers.gain_file as gain_file_helper
 import graphql_api.helpers.per_section_parameters as per_section_parameters_helper
 import graphql_api.helpers.tiltseries as tiltseries_helper
-import graphql_api.helpers.tomogram_voxel_spacing as tomogram_voxel_spacing_helper
 import graphql_api.helpers.tomogram as tomogram_helper
+import graphql_api.helpers.tomogram_voxel_spacing as tomogram_voxel_spacing_helper
+import strawberry
 
 if TYPE_CHECKING:
     from graphql_api.helpers.alignment import AlignmentGroupByOptions
     from graphql_api.helpers.annotation import AnnotationGroupByOptions
     from graphql_api.helpers.dataset import DatasetGroupByOptions
     from graphql_api.helpers.frame import FrameGroupByOptions
-    from graphql_api.helpers.gain_file import GainFileGroupByOptions
     from graphql_api.helpers.frame_acquisition_file import FrameAcquisitionFileGroupByOptions
+    from graphql_api.helpers.gain_file import GainFileGroupByOptions
     from graphql_api.helpers.per_section_parameters import PerSectionParametersGroupByOptions
     from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions
-    from graphql_api.helpers.tomogram_voxel_spacing import TomogramVoxelSpacingGroupByOptions
     from graphql_api.helpers.tomogram import TomogramGroupByOptions
+    from graphql_api.helpers.tomogram_voxel_spacing import TomogramVoxelSpacingGroupByOptions
 else:
     AlignmentGroupByOptions = "AlignmentGroupByOptions"
     AnnotationGroupByOptions = "AnnotationGroupByOptions"

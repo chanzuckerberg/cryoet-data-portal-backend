@@ -7,40 +7,20 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+import datetime
+import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
+from typing import TYPE_CHECKING, Annotated, Optional, Sequence
 
-import platformics.database.models as base_db
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-import datetime
-from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
-from validators.tomogram_voxel_spacing import TomogramVoxelSpacingCreateInputValidator
-from validators.tomogram_voxel_spacing import TomogramVoxelSpacingUpdateInputValidator
+from fastapi import Depends
 from graphql_api.helpers.tomogram_voxel_spacing import (
     TomogramVoxelSpacingGroupByOptions,
     build_tomogram_voxel_spacing_groupby_output,
 )
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from graphql_api.types.annotation_file import AnnotationFileAggregate, format_annotation_file_aggregate_output
 from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
-from fastapi import Depends
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
-from platformics.graphql_api.core.query_input_types import (
-    aggregator_map,
-    orderBy,
-    EnumComparators,
-    DatetimeComparators,
-    IntComparators,
-    FloatComparators,
-    StrComparators,
-    UUIDComparators,
-    BoolComparators,
-)
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -48,24 +28,42 @@ from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-import enum
+from validators.tomogram_voxel_spacing import (
+    TomogramVoxelSpacingCreateInputValidator,
+    TomogramVoxelSpacingUpdateInputValidator,
+)
+
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
+from platformics.graphql_api.core.query_input_types import (
+    FloatComparators,
+    IntComparators,
+    StrComparators,
+    aggregator_map,
+    orderBy,
+)
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.annotation_file import (
-        AnnotationFileOrderByClause,
-        AnnotationFileAggregateWhereClause,
-        AnnotationFileWhereClause,
         AnnotationFile,
+        AnnotationFileAggregateWhereClause,
+        AnnotationFileOrderByClause,
+        AnnotationFileWhereClause,
     )
-    from graphql_api.types.run import RunOrderByClause, RunAggregateWhereClause, RunWhereClause, Run
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
     from graphql_api.types.tomogram import (
-        TomogramOrderByClause,
-        TomogramAggregateWhereClause,
-        TomogramWhereClause,
         Tomogram,
+        TomogramAggregateWhereClause,
+        TomogramOrderByClause,
+        TomogramWhereClause,
     )
 
     pass
@@ -94,7 +92,7 @@ These are batching functions for loading related objects to avoid N+1 queries.
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]]  # type:ignore
+    relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]],  # type:ignore
 )
 async def load_annotation_file_rows(
     root: "TomogramVoxelSpacing",
@@ -139,7 +137,7 @@ async def load_run_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]]  # type:ignore
+    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
 )
 async def load_tomogram_rows(
     root: "TomogramVoxelSpacing",
@@ -247,10 +245,10 @@ class TomogramVoxelSpacing(EntityInterface):
     )
     voxel_spacing: float = strawberry.field(description="The voxel spacing for the tomograms in this set in angstroms")
     s3_prefix: str = strawberry.field(
-        description="The S3 public bucket path where this tomogram voxel spacing is contained"
+        description="The S3 public bucket path where this tomogram voxel spacing is contained",
     )
     https_prefix: str = strawberry.field(
-        description="The HTTPS directory path where this tomogram voxel spacing is contained"
+        description="The HTTPS directory path where this tomogram voxel spacing is contained",
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -333,7 +331,7 @@ class TomogramVoxelSpacingAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[TomogramVoxelSpacingCountColumns] = None
+        self, distinct: Optional[bool] = False, columns: Optional[TomogramVoxelSpacingCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -367,14 +365,14 @@ Mutation types
 @strawberry.input()
 class TomogramVoxelSpacingCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(
-        description="The the run this tomogram voxel spacing is a part of", default=None
+        description="The the run this tomogram voxel spacing is a part of", default=None,
     )
     voxel_spacing: float = strawberry.field(description="The voxel spacing for the tomograms in this set in angstroms")
     s3_prefix: str = strawberry.field(
-        description="The S3 public bucket path where this tomogram voxel spacing is contained"
+        description="The S3 public bucket path where this tomogram voxel spacing is contained",
     )
     https_prefix: str = strawberry.field(
-        description="The HTTPS directory path where this tomogram voxel spacing is contained"
+        description="The HTTPS directory path where this tomogram voxel spacing is contained",
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -382,16 +380,16 @@ class TomogramVoxelSpacingCreateInput:
 @strawberry.input()
 class TomogramVoxelSpacingUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(
-        description="The the run this tomogram voxel spacing is a part of", default=None
+        description="The the run this tomogram voxel spacing is a part of", default=None,
     )
     voxel_spacing: Optional[float] = strawberry.field(
-        description="The voxel spacing for the tomograms in this set in angstroms"
+        description="The voxel spacing for the tomograms in this set in angstroms",
     )
     s3_prefix: Optional[str] = strawberry.field(
-        description="The S3 public bucket path where this tomogram voxel spacing is contained"
+        description="The S3 public bucket path where this tomogram voxel spacing is contained",
     )
     https_prefix: Optional[str] = strawberry.field(
-        description="The HTTPS directory path where this tomogram voxel spacing is contained"
+        description="The HTTPS directory path where this tomogram voxel spacing is contained",
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -420,7 +418,7 @@ async def resolve_tomogram_voxel_spacings(
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
     return await get_db_rows(
-        db.TomogramVoxelSpacing, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset
+        db.TomogramVoxelSpacing, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
     )  # type: ignore
 
 
@@ -432,7 +430,7 @@ def format_tomogram_voxel_spacing_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if not type(query_results) is list:
+    if type(query_results) is not list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_tomogram_voxel_spacing_aggregate_row(row))
@@ -451,10 +449,10 @@ def format_tomogram_voxel_spacing_aggregate_row(row: RowMapping) -> TomogramVoxe
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not getattr(output, "groupBy"):
-                setattr(output, "groupBy", TomogramVoxelSpacingGroupByOptions())
-            group = build_tomogram_voxel_spacing_groupby_output(getattr(output, "groupBy"), group_keys, value)
-            setattr(output, "groupBy", group)
+            if not output.groupBy:
+                output.groupBy = TomogramVoxelSpacingGroupByOptions()
+            group = build_tomogram_voxel_spacing_groupby_output(output.groupBy, group_keys, value)
+            output.groupBy = group
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -490,7 +488,7 @@ async def resolve_tomogram_voxel_spacings_aggregate(
         raise PlatformicsError("No aggregate functions selected")
 
     rows = await get_aggregate_db_rows(
-        db.TomogramVoxelSpacing, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+        db.TomogramVoxelSpacing, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
     )  # type: ignore
     aggregate_output = format_tomogram_voxel_spacing_aggregate_output(rows)
     return aggregate_output
@@ -516,7 +514,7 @@ async def create_tomogram_voxel_spacing(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -558,7 +556,7 @@ async def update_tomogram_voxel_spacing(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -567,7 +565,7 @@ async def update_tomogram_voxel_spacing(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.UPDATE
+        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -599,7 +597,7 @@ async def delete_tomogram_voxel_spacing(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.DELETE
+        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

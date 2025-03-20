@@ -5,21 +5,20 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import Any, Optional, TYPE_CHECKING, Annotated
-import strawberry
-import datetime
-import uuid
-from support.enums import tiltseries_microscope_manufacturer_enum
+from typing import TYPE_CHECKING, Annotated, Any, Optional
+
 import graphql_api.helpers.alignment as alignment_helper
-import graphql_api.helpers.run as run_helper
 import graphql_api.helpers.deposition as deposition_helper
 import graphql_api.helpers.per_section_parameters as per_section_parameters_helper
+import graphql_api.helpers.run as run_helper
+import strawberry
+from support.enums import tiltseries_microscope_manufacturer_enum
 
 if TYPE_CHECKING:
     from graphql_api.helpers.alignment import AlignmentGroupByOptions
-    from graphql_api.helpers.run import RunGroupByOptions
     from graphql_api.helpers.deposition import DepositionGroupByOptions
     from graphql_api.helpers.per_section_parameters import PerSectionParametersGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
 else:
     AlignmentGroupByOptions = "AlignmentGroupByOptions"
     RunGroupByOptions = "RunGroupByOptions"

@@ -7,13 +7,10 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 
 # ruff: noqa: E501 Line too long
 
-from support.enums import deposition_types_enum
-
-import typing
-import datetime
 import uuid
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints
+from pydantic import BaseModel, ConfigDict, Field
+from support.enums import deposition_types_enum
 from typing_extensions import Annotated
 
 

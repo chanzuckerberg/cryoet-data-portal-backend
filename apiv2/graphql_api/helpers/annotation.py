@@ -5,23 +5,23 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import Any, Optional, TYPE_CHECKING, Annotated
-import strawberry
 import datetime
-import uuid
-from support.enums import annotation_method_type_enum
-import graphql_api.helpers.run as run_helper
-import graphql_api.helpers.annotation_shape as annotation_shape_helper
-import graphql_api.helpers.annotation_method_link as annotation_method_link_helper
+from typing import TYPE_CHECKING, Annotated, Any, Optional
+
 import graphql_api.helpers.annotation_author as annotation_author_helper
+import graphql_api.helpers.annotation_method_link as annotation_method_link_helper
+import graphql_api.helpers.annotation_shape as annotation_shape_helper
 import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.run as run_helper
+import strawberry
+from support.enums import annotation_method_type_enum
 
 if TYPE_CHECKING:
-    from graphql_api.helpers.run import RunGroupByOptions
-    from graphql_api.helpers.annotation_shape import AnnotationShapeGroupByOptions
-    from graphql_api.helpers.annotation_method_link import AnnotationMethodLinkGroupByOptions
     from graphql_api.helpers.annotation_author import AnnotationAuthorGroupByOptions
+    from graphql_api.helpers.annotation_method_link import AnnotationMethodLinkGroupByOptions
+    from graphql_api.helpers.annotation_shape import AnnotationShapeGroupByOptions
     from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
 else:
     RunGroupByOptions = "RunGroupByOptions"
     AnnotationShapeGroupByOptions = "AnnotationShapeGroupByOptions"

@@ -5,22 +5,22 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import Any, Optional, TYPE_CHECKING, Annotated
-import strawberry
 import datetime
-import uuid
-from support.enums import fiducial_alignment_status_enum, tomogram_reconstruction_method_enum, tomogram_processing_enum
+from typing import TYPE_CHECKING, Annotated, Any, Optional
+
 import graphql_api.helpers.alignment as alignment_helper
-import graphql_api.helpers.tomogram_author as tomogram_author_helper
 import graphql_api.helpers.deposition as deposition_helper
 import graphql_api.helpers.run as run_helper
+import graphql_api.helpers.tomogram_author as tomogram_author_helper
 import graphql_api.helpers.tomogram_voxel_spacing as tomogram_voxel_spacing_helper
+import strawberry
+from support.enums import fiducial_alignment_status_enum, tomogram_processing_enum, tomogram_reconstruction_method_enum
 
 if TYPE_CHECKING:
     from graphql_api.helpers.alignment import AlignmentGroupByOptions
-    from graphql_api.helpers.tomogram_author import TomogramAuthorGroupByOptions
     from graphql_api.helpers.deposition import DepositionGroupByOptions
     from graphql_api.helpers.run import RunGroupByOptions
+    from graphql_api.helpers.tomogram_author import TomogramAuthorGroupByOptions
     from graphql_api.helpers.tomogram_voxel_spacing import TomogramVoxelSpacingGroupByOptions
 else:
     AlignmentGroupByOptions = "AlignmentGroupByOptions"

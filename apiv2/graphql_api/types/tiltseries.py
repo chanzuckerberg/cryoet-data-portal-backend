@@ -7,73 +7,70 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+import datetime
+import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
+from typing import TYPE_CHECKING, Annotated, Optional, Sequence
 
-import platformics.database.models as base_db
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-import datetime
-from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
-from validators.tiltseries import TiltseriesCreateInputValidator
-from validators.tiltseries import TiltseriesUpdateInputValidator
+from fastapi import Depends
 from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions, build_tiltseries_groupby_output
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from graphql_api.types.alignment import AlignmentAggregate, format_alignment_aggregate_output
 from graphql_api.types.per_section_parameters import (
     PerSectionParametersAggregate,
     format_per_section_parameters_aggregate_output,
 )
-from fastapi import Depends
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
-from platformics.graphql_api.core.query_input_types import (
-    aggregator_map,
-    orderBy,
-    EnumComparators,
-    DatetimeComparators,
-    IntComparators,
-    FloatComparators,
-    StrComparators,
-    UUIDComparators,
-    BoolComparators,
-)
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
 from strawberry import relay
 from strawberry.types import Info
+from support.enums import tiltseries_microscope_manufacturer_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-import enum
-from support.enums import tiltseries_microscope_manufacturer_enum
+from validators.tiltseries import TiltseriesCreateInputValidator, TiltseriesUpdateInputValidator
+
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
+from platformics.graphql_api.core.query_input_types import (
+    BoolComparators,
+    EnumComparators,
+    FloatComparators,
+    IntComparators,
+    StrComparators,
+    aggregator_map,
+    orderBy,
+)
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.alignment import (
-        AlignmentOrderByClause,
-        AlignmentAggregateWhereClause,
-        AlignmentWhereClause,
         Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
     )
-    from graphql_api.types.run import RunOrderByClause, RunAggregateWhereClause, RunWhereClause, Run
     from graphql_api.types.deposition import (
-        DepositionOrderByClause,
-        DepositionAggregateWhereClause,
-        DepositionWhereClause,
         Deposition,
+        DepositionAggregateWhereClause,
+        DepositionOrderByClause,
+        DepositionWhereClause,
     )
     from graphql_api.types.per_section_parameters import (
-        PerSectionParametersOrderByClause,
-        PerSectionParametersAggregateWhereClause,
-        PerSectionParametersWhereClause,
         PerSectionParameters,
+        PerSectionParametersAggregateWhereClause,
+        PerSectionParametersOrderByClause,
+        PerSectionParametersWhereClause,
     )
+    from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
 
     pass
 else:
@@ -105,7 +102,7 @@ These are batching functions for loading related objects to avoid N+1 queries.
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]]  # type:ignore
+    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]],  # type:ignore
 )
 async def load_alignment_rows(
     root: "Tiltseries",
@@ -163,7 +160,7 @@ async def load_deposition_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]]  # type:ignore
+    relay.ListConnection[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]],  # type:ignore
 )
 async def load_per_section_parameters_rows(
     root: "Tiltseries",
@@ -258,7 +255,7 @@ class TiltseriesWhereClause(TypedDict):
     per_section_parameters_aggregate: (
         Optional[
             Annotated[
-                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")
+                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters"),
             ]
         ]
         | None
@@ -350,35 +347,35 @@ class Tiltseries(EntityInterface):
     )
     deposition_id: Optional[int]
     s3_omezarr_dir: Optional[str] = strawberry.field(
-        description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None
+        description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
     file_size_omezarr: Optional[float] = strawberry.field(
-        description="Size of the tiltseries in OME-Zarr format in bytes", default=None
+        description="Size of the tiltseries in OME-Zarr format in bytes", default=None,
     )
     s3_mrc_file: Optional[str] = strawberry.field(
-        description="S3 path to this tiltseries in MRC format (no scaling)", default=None
+        description="S3 path to this tiltseries in MRC format (no scaling)", default=None,
     )
     file_size_mrc: Optional[float] = strawberry.field(
-        description="Size of the tiltseries in MRC format in bytes", default=None
+        description="Size of the tiltseries in MRC format in bytes", default=None,
     )
     https_omezarr_dir: Optional[str] = strawberry.field(
-        description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None
+        description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
     https_mrc_file: Optional[str] = strawberry.field(
-        description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None
+        description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None,
     )
     s3_angle_list: Optional[str] = strawberry.field(
-        description="S3 path to the angle list file for this tiltseries", default=None
+        description="S3 path to the angle list file for this tiltseries", default=None,
     )
     https_angle_list: Optional[str] = strawberry.field(
-        description="HTTPS path to the angle list file for this tiltseries", default=None
+        description="HTTPS path to the angle list file for this tiltseries", default=None,
     )
     acceleration_voltage: int = strawberry.field(description="Electron Microscope Accelerator voltage in volts")
     spherical_aberration_constant: float = strawberry.field(
-        description="Spherical Aberration Constant of the objective lens in millimeters"
+        description="Spherical Aberration Constant of the objective lens in millimeters",
     )
     microscope_manufacturer: tiltseries_microscope_manufacturer_enum = strawberry.field(
-        description="Name of the microscope manufacturer (FEI, TFS, JEOL)"
+        description="Name of the microscope manufacturer (FEI, TFS, JEOL)",
     )
     microscope_model: str = strawberry.field(description="Microscope model name")
     microscope_energy_filter: str = strawberry.field(description="Energy filter setup used")
@@ -403,22 +400,22 @@ class Tiltseries(EntityInterface):
     tilting_scheme: str = strawberry.field(description="The order of stage tilting during acquisition of the data")
     tilt_axis: float = strawberry.field(description="Rotation angle in degrees")
     total_flux: float = strawberry.field(
-        description="Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series"
+        description="Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
     )
     data_acquisition_software: str = strawberry.field(description="Software used to collect data")
     related_empiar_entry: Optional[str] = strawberry.field(
-        description="If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier", default=None
+        description="If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier", default=None,
     )
     binning_from_frames: Optional[float] = strawberry.field(
-        description="Describes the binning factor from frames to tilt series file", default=None
+        description="Describes the binning factor from frames to tilt series file", default=None,
     )
     tilt_series_quality: int = strawberry.field(
-        description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)"
+        description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
     )
     is_aligned: bool = strawberry.field(description="Whether this tilt series is aligned")
     pixel_spacing: float = strawberry.field(description="Pixel spacing equal in both axes in angstroms")
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
-        description="Binning factor of the aligned tilt series", default=None
+        description="Binning factor of the aligned tilt series", default=None,
     )
     size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
     size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
@@ -582,7 +579,7 @@ class TiltseriesAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[TiltseriesCountColumns] = None
+        self, distinct: Optional[bool] = False, columns: Optional[TiltseriesCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -618,35 +615,35 @@ class TiltseriesCreateInput:
     run_id: strawberry.ID = strawberry.field(description=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     s3_omezarr_dir: Optional[str] = strawberry.field(
-        description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None
+        description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
     file_size_omezarr: Optional[float] = strawberry.field(
-        description="Size of the tiltseries in OME-Zarr format in bytes", default=None
+        description="Size of the tiltseries in OME-Zarr format in bytes", default=None,
     )
     s3_mrc_file: Optional[str] = strawberry.field(
-        description="S3 path to this tiltseries in MRC format (no scaling)", default=None
+        description="S3 path to this tiltseries in MRC format (no scaling)", default=None,
     )
     file_size_mrc: Optional[float] = strawberry.field(
-        description="Size of the tiltseries in MRC format in bytes", default=None
+        description="Size of the tiltseries in MRC format in bytes", default=None,
     )
     https_omezarr_dir: Optional[str] = strawberry.field(
-        description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None
+        description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
     https_mrc_file: Optional[str] = strawberry.field(
-        description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None
+        description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None,
     )
     s3_angle_list: Optional[str] = strawberry.field(
-        description="S3 path to the angle list file for this tiltseries", default=None
+        description="S3 path to the angle list file for this tiltseries", default=None,
     )
     https_angle_list: Optional[str] = strawberry.field(
-        description="HTTPS path to the angle list file for this tiltseries", default=None
+        description="HTTPS path to the angle list file for this tiltseries", default=None,
     )
     acceleration_voltage: int = strawberry.field(description="Electron Microscope Accelerator voltage in volts")
     spherical_aberration_constant: float = strawberry.field(
-        description="Spherical Aberration Constant of the objective lens in millimeters"
+        description="Spherical Aberration Constant of the objective lens in millimeters",
     )
     microscope_manufacturer: tiltseries_microscope_manufacturer_enum = strawberry.field(
-        description="Name of the microscope manufacturer (FEI, TFS, JEOL)"
+        description="Name of the microscope manufacturer (FEI, TFS, JEOL)",
     )
     microscope_model: str = strawberry.field(description="Microscope model name")
     microscope_energy_filter: str = strawberry.field(description="Energy filter setup used")
@@ -665,22 +662,22 @@ class TiltseriesCreateInput:
     tilting_scheme: str = strawberry.field(description="The order of stage tilting during acquisition of the data")
     tilt_axis: float = strawberry.field(description="Rotation angle in degrees")
     total_flux: float = strawberry.field(
-        description="Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series"
+        description="Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
     )
     data_acquisition_software: str = strawberry.field(description="Software used to collect data")
     related_empiar_entry: Optional[str] = strawberry.field(
-        description="If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier", default=None
+        description="If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier", default=None,
     )
     binning_from_frames: Optional[float] = strawberry.field(
-        description="Describes the binning factor from frames to tilt series file", default=None
+        description="Describes the binning factor from frames to tilt series file", default=None,
     )
     tilt_series_quality: int = strawberry.field(
-        description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)"
+        description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
     )
     is_aligned: bool = strawberry.field(description="Whether this tilt series is aligned")
     pixel_spacing: float = strawberry.field(description="Pixel spacing equal in both axes in angstroms")
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
-        description="Binning factor of the aligned tilt series", default=None
+        description="Binning factor of the aligned tilt series", default=None,
     )
     size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
     size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
@@ -693,37 +690,37 @@ class TiltseriesUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     s3_omezarr_dir: Optional[str] = strawberry.field(
-        description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None
+        description="S3 path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
     file_size_omezarr: Optional[float] = strawberry.field(
-        description="Size of the tiltseries in OME-Zarr format in bytes", default=None
+        description="Size of the tiltseries in OME-Zarr format in bytes", default=None,
     )
     s3_mrc_file: Optional[str] = strawberry.field(
-        description="S3 path to this tiltseries in MRC format (no scaling)", default=None
+        description="S3 path to this tiltseries in MRC format (no scaling)", default=None,
     )
     file_size_mrc: Optional[float] = strawberry.field(
-        description="Size of the tiltseries in MRC format in bytes", default=None
+        description="Size of the tiltseries in MRC format in bytes", default=None,
     )
     https_omezarr_dir: Optional[str] = strawberry.field(
-        description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None
+        description="HTTPS path to this tiltseries in multiscale OME-Zarr format", default=None,
     )
     https_mrc_file: Optional[str] = strawberry.field(
-        description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None
+        description="HTTPS path to this tiltseries in MRC format (no scaling)", default=None,
     )
     s3_angle_list: Optional[str] = strawberry.field(
-        description="S3 path to the angle list file for this tiltseries", default=None
+        description="S3 path to the angle list file for this tiltseries", default=None,
     )
     https_angle_list: Optional[str] = strawberry.field(
-        description="HTTPS path to the angle list file for this tiltseries", default=None
+        description="HTTPS path to the angle list file for this tiltseries", default=None,
     )
     acceleration_voltage: Optional[int] = strawberry.field(
-        description="Electron Microscope Accelerator voltage in volts"
+        description="Electron Microscope Accelerator voltage in volts",
     )
     spherical_aberration_constant: Optional[float] = strawberry.field(
-        description="Spherical Aberration Constant of the objective lens in millimeters"
+        description="Spherical Aberration Constant of the objective lens in millimeters",
     )
     microscope_manufacturer: Optional[tiltseries_microscope_manufacturer_enum] = strawberry.field(
-        description="Name of the microscope manufacturer (FEI, TFS, JEOL)"
+        description="Name of the microscope manufacturer (FEI, TFS, JEOL)",
     )
     microscope_model: Optional[str] = strawberry.field(description="Microscope model name")
     microscope_energy_filter: Optional[str] = strawberry.field(description="Energy filter setup used")
@@ -740,26 +737,26 @@ class TiltseriesUpdateInput:
     tilt_range: Optional[float] = strawberry.field(description="Total tilt range in degrees")
     tilt_step: Optional[float] = strawberry.field(description="Tilt step in degrees")
     tilting_scheme: Optional[str] = strawberry.field(
-        description="The order of stage tilting during acquisition of the data"
+        description="The order of stage tilting during acquisition of the data",
     )
     tilt_axis: Optional[float] = strawberry.field(description="Rotation angle in degrees")
     total_flux: Optional[float] = strawberry.field(
-        description="Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series"
+        description="Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
     )
     data_acquisition_software: Optional[str] = strawberry.field(description="Software used to collect data")
     related_empiar_entry: Optional[str] = strawberry.field(
-        description="If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier", default=None
+        description="If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier", default=None,
     )
     binning_from_frames: Optional[float] = strawberry.field(
-        description="Describes the binning factor from frames to tilt series file", default=None
+        description="Describes the binning factor from frames to tilt series file", default=None,
     )
     tilt_series_quality: Optional[int] = strawberry.field(
-        description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)"
+        description="Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
     )
     is_aligned: Optional[bool] = strawberry.field(description="Whether this tilt series is aligned")
     pixel_spacing: Optional[float] = strawberry.field(description="Pixel spacing equal in both axes in angstroms")
     aligned_tiltseries_binning: Optional[int] = strawberry.field(
-        description="Binning factor of the aligned tilt series", default=None
+        description="Binning factor of the aligned tilt series", default=None,
     )
     size_x: Optional[int] = strawberry.field(description="Number of pixels in the 3D data fast axis", default=None)
     size_y: Optional[int] = strawberry.field(description="Number of pixels in the 3D data medium axis", default=None)
@@ -791,7 +788,7 @@ async def resolve_tiltseries(
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
     return await get_db_rows(
-        db.Tiltseries, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset
+        db.Tiltseries, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
     )  # type: ignore
 
 
@@ -801,7 +798,7 @@ def format_tiltseries_aggregate_output(query_results: Sequence[RowMapping] | Row
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if not type(query_results) is list:
+    if type(query_results) is not list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_tiltseries_aggregate_row(row))
@@ -820,10 +817,10 @@ def format_tiltseries_aggregate_row(row: RowMapping) -> TiltseriesAggregateFunct
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not getattr(output, "groupBy"):
-                setattr(output, "groupBy", TiltseriesGroupByOptions())
-            group = build_tiltseries_groupby_output(getattr(output, "groupBy"), group_keys, value)
-            setattr(output, "groupBy", group)
+            if not output.groupBy:
+                output.groupBy = TiltseriesGroupByOptions()
+            group = build_tiltseries_groupby_output(output.groupBy, group_keys, value)
+            output.groupBy = group
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -859,7 +856,7 @@ async def resolve_tiltseries_aggregate(
         raise PlatformicsError("No aggregate functions selected")
 
     rows = await get_aggregate_db_rows(
-        db.Tiltseries, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+        db.Tiltseries, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
     )  # type: ignore
     aggregate_output = format_tiltseries_aggregate_output(rows)
     return aggregate_output
@@ -885,7 +882,7 @@ async def create_tiltseries(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -940,7 +937,7 @@ async def update_tiltseries(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW
+            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

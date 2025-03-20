@@ -7,66 +7,62 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
+import datetime
+import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
+from typing import TYPE_CHECKING, Annotated, Optional, Sequence
 
-import platformics.database.models as base_db
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-import datetime
-from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
-from validators.annotation_file import AnnotationFileCreateInputValidator
-from validators.annotation_file import AnnotationFileUpdateInputValidator
-from graphql_api.helpers.annotation_file import AnnotationFileGroupByOptions, build_annotation_file_groupby_output
-from platformics.graphql_api.core.relay_interface import EntityInterface
 from fastapi import Depends
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
-from platformics.graphql_api.core.query_input_types import (
-    aggregator_map,
-    orderBy,
-    EnumComparators,
-    DatetimeComparators,
-    IntComparators,
-    FloatComparators,
-    StrComparators,
-    UUIDComparators,
-    BoolComparators,
-)
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+from graphql_api.helpers.annotation_file import AnnotationFileGroupByOptions, build_annotation_file_groupby_output
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
-from strawberry import relay
 from strawberry.types import Info
+from support.enums import annotation_file_source_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-import enum
-from support.enums import annotation_file_source_enum
+from validators.annotation_file import AnnotationFileCreateInputValidator, AnnotationFileUpdateInputValidator
+
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
+from platformics.graphql_api.core.query_input_types import (
+    BoolComparators,
+    EnumComparators,
+    FloatComparators,
+    IntComparators,
+    StrComparators,
+    aggregator_map,
+    orderBy,
+)
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.alignment import (
-        AlignmentOrderByClause,
-        AlignmentAggregateWhereClause,
-        AlignmentWhereClause,
         Alignment,
+        AlignmentAggregateWhereClause,
+        AlignmentOrderByClause,
+        AlignmentWhereClause,
     )
     from graphql_api.types.annotation_shape import (
-        AnnotationShapeOrderByClause,
-        AnnotationShapeAggregateWhereClause,
-        AnnotationShapeWhereClause,
         AnnotationShape,
+        AnnotationShapeAggregateWhereClause,
+        AnnotationShapeOrderByClause,
+        AnnotationShapeWhereClause,
     )
     from graphql_api.types.tomogram_voxel_spacing import (
-        TomogramVoxelSpacingOrderByClause,
-        TomogramVoxelSpacingAggregateWhereClause,
-        TomogramVoxelSpacingWhereClause,
         TomogramVoxelSpacing,
+        TomogramVoxelSpacingAggregateWhereClause,
+        TomogramVoxelSpacingOrderByClause,
+        TomogramVoxelSpacingWhereClause,
     )
 
     pass
@@ -329,7 +325,7 @@ class AnnotationFileAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationFileCountColumns] = None
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationFileCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -364,10 +360,10 @@ Mutation types
 class AnnotationFileCreateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation", default=None
+        description="Shapes associated with an annotation", default=None,
     )
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacing that this annotation file is associated with", default=None
+        description="Voxel spacing that this annotation file is associated with", default=None,
     )
     format: str = strawberry.field(description="File format for this file")
     s3_path: str = strawberry.field(description="s3 path of the annotation file")
@@ -388,10 +384,10 @@ class AnnotationFileCreateInput:
 class AnnotationFileUpdateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation", default=None
+        description="Shapes associated with an annotation", default=None,
     )
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacing that this annotation file is associated with", default=None
+        description="Voxel spacing that this annotation file is associated with", default=None,
     )
     format: Optional[str] = strawberry.field(description="File format for this file")
     s3_path: Optional[str] = strawberry.field(description="s3 path of the annotation file")
@@ -432,7 +428,7 @@ async def resolve_annotation_files(
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
     return await get_db_rows(
-        db.AnnotationFile, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset
+        db.AnnotationFile, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset,
     )  # type: ignore
 
 
@@ -444,7 +440,7 @@ def format_annotation_file_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if not type(query_results) is list:
+    if type(query_results) is not list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_file_aggregate_row(row))
@@ -463,10 +459,10 @@ def format_annotation_file_aggregate_row(row: RowMapping) -> AnnotationFileAggre
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not getattr(output, "groupBy"):
-                setattr(output, "groupBy", AnnotationFileGroupByOptions())
-            group = build_annotation_file_groupby_output(getattr(output, "groupBy"), group_keys, value)
-            setattr(output, "groupBy", group)
+            if not output.groupBy:
+                output.groupBy = AnnotationFileGroupByOptions()
+            group = build_annotation_file_groupby_output(output.groupBy, group_keys, value)
+            output.groupBy = group
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -502,7 +498,7 @@ async def resolve_annotation_files_aggregate(
         raise PlatformicsError("No aggregate functions selected")
 
     rows = await get_aggregate_db_rows(
-        db.AnnotationFile, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+        db.AnnotationFile, session, authz_client, principal, where, aggregate_selections, [], groupby_selections,
     )  # type: ignore
     aggregate_output = format_annotation_file_aggregate_output(rows)
     return aggregate_output
