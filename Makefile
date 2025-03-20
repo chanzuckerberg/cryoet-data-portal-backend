@@ -58,6 +58,6 @@ push-ingestor-build-apiv2:
 	aws ecr get-login-password --region $(aws_region) | docker login --username AWS --password-stdin $(ecr_repo); \
 	docker push $(ecr_repo):$(tag);
 
-.PHONY: import-dataset
-import-dataset:
+.PHONY: db-import-dataset
+db-import-dataset:
 	AWS_PROFILE=cryoet-dev aws-oidc exec -- docker run --rm=true -v $$PWD/apiv2:/app -e AWS_REGION -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN -e AWS_DEFAULT_OUTPUT --network cryoback_default -ti graphql-api python3 -m db_import.importer load --s3-prefix 10001 --import-everything --postgres_url postgresql+psycopg://postgres:postgres@db:5432/cryoetv2 cryoet-data-portal-public http://localhost:8000  --import-depositions --deposition-id 10301 --deposition-id 10303
