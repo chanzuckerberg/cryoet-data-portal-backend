@@ -96,6 +96,8 @@ class tomogram_processing_enum(enum.StrEnum):
     denoised = "denoised"
     filtered = "filtered"
     raw = "raw"
+    filtered_even = "filtered_even"
+    filtered_odd = "filtered_odd"
 
 
 @strawberry.enum
