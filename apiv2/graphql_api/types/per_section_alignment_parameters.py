@@ -7,53 +7,56 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
-
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, List, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.per_section_alignment_parameters import PerSectionAlignmentParametersCreateInputValidator
+from validators.per_section_alignment_parameters import PerSectionAlignmentParametersUpdateInputValidator
 from graphql_api.helpers.per_section_alignment_parameters import (
     PerSectionAlignmentParametersGroupByOptions,
     build_per_section_alignment_parameters_groupby_output,
 )
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from fastapi import Depends
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_input_types import (
+    aggregator_map,
+    orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
+)
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
+from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.per_section_alignment_parameters import (
-    PerSectionAlignmentParametersCreateInputValidator,
-    PerSectionAlignmentParametersUpdateInputValidator,
-)
-
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
-from platformics.graphql_api.core.query_input_types import (
-    FloatComparators,
-    IntComparators,
-    aggregator_map,
-    orderBy,
-)
-from platformics.graphql_api.core.relay_interface import EntityInterface
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+import enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.alignment import (
-        Alignment,
-        AlignmentAggregateWhereClause,
         AlignmentOrderByClause,
+        AlignmentAggregateWhereClause,
         AlignmentWhereClause,
+        Alignment,
     )
 
     pass
@@ -145,20 +148,18 @@ Define PerSectionAlignmentParameters type
 
 @strawberry.type(description="Map alignment parameters to tilt series frames")
 class PerSectionAlignmentParameters(EntityInterface):
-    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_rows
-    )  # type:ignore
+    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
     alignment_id: int
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
+        description="In-plane X-shift of the projection in angstrom", default=None
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
+        description="In-plane Y-shift of the projection in angstrom", default=None
     )
     volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
     in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
+        description="In-plane rotation of the projection in degrees", default=None
     )
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -251,7 +252,7 @@ class PerSectionAlignmentParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[PerSectionAlignmentParametersCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[PerSectionAlignmentParametersCountColumns] = None
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -287,14 +288,14 @@ class PerSectionAlignmentParametersCreateInput:
     alignment_id: strawberry.ID = strawberry.field(description="Tiltseries Alignment")
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
+        description="In-plane X-shift of the projection in angstrom", default=None
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
+        description="In-plane Y-shift of the projection in angstrom", default=None
     )
     volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
     in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
+        description="In-plane rotation of the projection in degrees", default=None
     )
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -305,14 +306,14 @@ class PerSectionAlignmentParametersUpdateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment")
     z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
+        description="In-plane X-shift of the projection in angstrom", default=None
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
+        description="In-plane Y-shift of the projection in angstrom", default=None
     )
     volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
     in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
+        description="In-plane rotation of the projection in degrees", default=None
     )
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
@@ -341,7 +342,17 @@ async def resolve_per_section_alignment_parameters(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(db.PerSectionAlignmentParameters, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
+    return await get_db_rows(
+        db.PerSectionAlignmentParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        order_by,
+        AuthzAction.VIEW,
+        limit,
+        offset,
+    )  # type: ignore
 
 
 def format_per_section_alignment_parameters_aggregate_output(
@@ -352,7 +363,7 @@ def format_per_section_alignment_parameters_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_per_section_alignment_parameters_aggregate_row(row))
@@ -373,10 +384,10 @@ def format_per_section_alignment_parameters_aggregate_row(
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = PerSectionAlignmentParametersGroupByOptions()
-            group = build_per_section_alignment_parameters_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", PerSectionAlignmentParametersGroupByOptions())
+            group = build_per_section_alignment_parameters_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -411,7 +422,16 @@ async def resolve_per_section_alignment_parameters_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(db.PerSectionAlignmentParameters, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
+    rows = await get_aggregate_db_rows(
+        db.PerSectionAlignmentParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        aggregate_selections,
+        [],
+        groupby_selections,
+    )  # type: ignore
     aggregate_output = format_per_section_alignment_parameters_aggregate_output(rows)
     return aggregate_output
 
@@ -499,7 +519,7 @@ async def update_per_section_alignment_parameters(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE,
+        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -531,7 +551,7 @@ async def delete_per_section_alignment_parameters(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.DELETE,
+        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.DELETE
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

@@ -5,20 +5,20 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-import datetime
-from typing import TYPE_CHECKING, Annotated, Any, Optional
-
-import graphql_api.helpers.dataset_author as dataset_author_helper
-import graphql_api.helpers.dataset_funding as dataset_funding_helper
-import graphql_api.helpers.deposition as deposition_helper
-import graphql_api.helpers.run as run_helper
+from typing import Any, Optional, TYPE_CHECKING, Annotated
 import strawberry
+import datetime
+import uuid
 from support.enums import sample_type_enum
+import graphql_api.helpers.deposition as deposition_helper
+import graphql_api.helpers.dataset_funding as dataset_funding_helper
+import graphql_api.helpers.dataset_author as dataset_author_helper
+import graphql_api.helpers.run as run_helper
 
 if TYPE_CHECKING:
-    from graphql_api.helpers.dataset_author import DatasetAuthorGroupByOptions
-    from graphql_api.helpers.dataset_funding import DatasetFundingGroupByOptions
     from graphql_api.helpers.deposition import DepositionGroupByOptions
+    from graphql_api.helpers.dataset_funding import DatasetFundingGroupByOptions
+    from graphql_api.helpers.dataset_author import DatasetAuthorGroupByOptions
     from graphql_api.helpers.run import RunGroupByOptions
 else:
     DepositionGroupByOptions = "DepositionGroupByOptions"

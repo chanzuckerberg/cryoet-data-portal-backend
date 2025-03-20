@@ -7,12 +7,13 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 
 # ruff: noqa: E501 Line too long
 
+from support.enums import fiducial_alignment_status_enum, tomogram_reconstruction_method_enum, tomogram_processing_enum
 
+import typing
 import datetime
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
-from support.enums import fiducial_alignment_status_enum, tomogram_processing_enum, tomogram_reconstruction_method_enum
 from typing_extensions import Annotated
 
 

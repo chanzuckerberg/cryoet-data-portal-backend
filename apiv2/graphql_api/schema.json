@@ -9630,6 +9630,12 @@
             },
             {
               "name": "raw"
+            },
+            {
+              "name": "filtered_even"
+            },
+            {
+              "name": "filtered_odd"
             }
           ],
           "fields": null,

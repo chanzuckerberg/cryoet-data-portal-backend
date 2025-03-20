@@ -7,55 +7,57 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
-
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.annotation_method_link import AnnotationMethodLinkCreateInputValidator
+from validators.annotation_method_link import AnnotationMethodLinkUpdateInputValidator
 from graphql_api.helpers.annotation_method_link import (
     AnnotationMethodLinkGroupByOptions,
     build_annotation_method_link_groupby_output,
 )
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from fastapi import Depends
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_input_types import (
+    aggregator_map,
+    orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
+)
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
+from strawberry import relay
 from strawberry.types import Info
-from support.enums import annotation_method_link_type_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.annotation_method_link import (
-    AnnotationMethodLinkCreateInputValidator,
-    AnnotationMethodLinkUpdateInputValidator,
-)
-
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
-from platformics.graphql_api.core.query_input_types import (
-    EnumComparators,
-    IntComparators,
-    StrComparators,
-    aggregator_map,
-    orderBy,
-)
-from platformics.graphql_api.core.relay_interface import EntityInterface
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+import enum
+from support.enums import annotation_method_link_type_enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.annotation import (
-        Annotation,
-        AnnotationAggregateWhereClause,
         AnnotationOrderByClause,
+        AnnotationAggregateWhereClause,
         AnnotationWhereClause,
+        Annotation,
     )
 
     pass
@@ -143,15 +145,15 @@ Define AnnotationMethodLink type
 
 
 @strawberry.type(
-    description="A set of links to models, source code, documentation, etc referenced by annotation method",
+    description="A set of links to models, source code, documentation, etc referenced by annotation method"
 )
 class AnnotationMethodLink(EntityInterface):
     annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
+        load_annotation_rows  # type:ignore
+    )
     annotation_id: Optional[int]
     link_type: annotation_method_link_type_enum = strawberry.field(
-        description="Type of link (e.g. model, source code, documentation)",
+        description="Type of link (e.g. model, source code, documentation)"
     )
     name: Optional[str] = strawberry.field(description="user readable name of the resource", default=None)
     link: str = strawberry.field(description="URL to the resource")
@@ -234,7 +236,7 @@ class AnnotationMethodLinkAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationMethodLinkCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationMethodLinkCountColumns] = None
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -268,10 +270,10 @@ Mutation types
 @strawberry.input()
 class AnnotationMethodLinkCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to annotation this link applies to", default=None,
+        description="Reference to annotation this link applies to", default=None
     )
     link_type: annotation_method_link_type_enum = strawberry.field(
-        description="Type of link (e.g. model, source code, documentation)",
+        description="Type of link (e.g. model, source code, documentation)"
     )
     name: Optional[str] = strawberry.field(description="user readable name of the resource", default=None)
     link: str = strawberry.field(description="URL to the resource")
@@ -281,10 +283,10 @@ class AnnotationMethodLinkCreateInput:
 @strawberry.input()
 class AnnotationMethodLinkUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to annotation this link applies to", default=None,
+        description="Reference to annotation this link applies to", default=None
     )
     link_type: Optional[annotation_method_link_type_enum] = strawberry.field(
-        description="Type of link (e.g. model, source code, documentation)",
+        description="Type of link (e.g. model, source code, documentation)"
     )
     name: Optional[str] = strawberry.field(description="user readable name of the resource", default=None)
     link: Optional[str] = strawberry.field(description="URL to the resource")
@@ -314,7 +316,9 @@ async def resolve_annotation_method_links(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(db.AnnotationMethodLink, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
+    return await get_db_rows(
+        db.AnnotationMethodLink, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset
+    )  # type: ignore
 
 
 def format_annotation_method_link_aggregate_output(
@@ -325,7 +329,7 @@ def format_annotation_method_link_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_method_link_aggregate_row(row))
@@ -344,10 +348,10 @@ def format_annotation_method_link_aggregate_row(row: RowMapping) -> AnnotationMe
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = AnnotationMethodLinkGroupByOptions()
-            group = build_annotation_method_link_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", AnnotationMethodLinkGroupByOptions())
+            group = build_annotation_method_link_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -382,7 +386,9 @@ async def resolve_annotation_method_links_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(db.AnnotationMethodLink, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
+    rows = await get_aggregate_db_rows(
+        db.AnnotationMethodLink, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+    )  # type: ignore
     aggregate_output = format_annotation_method_link_aggregate_output(rows)
     return aggregate_output
 
@@ -470,7 +476,7 @@ async def update_annotation_method_link(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.AnnotationMethodLink, session, authz_client, principal, where, [], AuthzAction.UPDATE,
+        db.AnnotationMethodLink, session, authz_client, principal, where, [], AuthzAction.UPDATE
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -502,7 +508,7 @@ async def delete_annotation_method_link(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.AnnotationMethodLink, session, authz_client, principal, where, [], AuthzAction.DELETE,
+        db.AnnotationMethodLink, session, authz_client, principal, where, [], AuthzAction.DELETE
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

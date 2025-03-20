@@ -7,56 +7,61 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
-
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.annotation_shape import AnnotationShapeCreateInputValidator
+from validators.annotation_shape import AnnotationShapeUpdateInputValidator
 from graphql_api.helpers.annotation_shape import AnnotationShapeGroupByOptions, build_annotation_shape_groupby_output
+from platformics.graphql_api.core.relay_interface import EntityInterface
 from graphql_api.types.annotation_file import AnnotationFileAggregate, format_annotation_file_aggregate_output
+from fastapi import Depends
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_input_types import (
+    aggregator_map,
+    orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
+)
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
 from strawberry import relay
 from strawberry.types import Info
-from support.enums import annotation_file_shape_type_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.annotation_shape import AnnotationShapeCreateInputValidator, AnnotationShapeUpdateInputValidator
-
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
-from platformics.graphql_api.core.query_input_types import (
-    EnumComparators,
-    IntComparators,
-    aggregator_map,
-    orderBy,
-)
-from platformics.graphql_api.core.relay_interface import EntityInterface
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+import enum
+from support.enums import annotation_file_shape_type_enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.annotation import (
-        Annotation,
-        AnnotationAggregateWhereClause,
         AnnotationOrderByClause,
+        AnnotationAggregateWhereClause,
         AnnotationWhereClause,
+        Annotation,
     )
     from graphql_api.types.annotation_file import (
-        AnnotationFile,
-        AnnotationFileAggregateWhereClause,
         AnnotationFileOrderByClause,
+        AnnotationFileAggregateWhereClause,
         AnnotationFileWhereClause,
+        AnnotationFile,
     )
 
     pass
@@ -96,9 +101,7 @@ async def load_annotation_rows(
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]]  # type:ignore
 )
 async def load_annotation_file_rows(
     root: "AnnotationShape",
@@ -187,12 +190,12 @@ Define AnnotationShape type
 @strawberry.type(description="Shapes associated with an annotation")
 class AnnotationShape(EntityInterface):
     annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
+        load_annotation_rows  # type:ignore
+    )
     annotation_id: Optional[int]
     annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
-        load_annotation_file_rows
-    )  # type:ignore
+        load_annotation_file_rows  # type:ignore
+    )
     annotation_files_aggregate: Optional[
         Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
     ] = load_annotation_file_aggregate_rows  # type:ignore
@@ -275,7 +278,7 @@ class AnnotationShapeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationShapeCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[AnnotationShapeCountColumns] = None
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -309,7 +312,7 @@ Mutation types
 @strawberry.input()
 class AnnotationShapeCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an shapes for an annotation", default=None,
+        description="Metadata about an shapes for an annotation", default=None
     )
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
         description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
@@ -321,7 +324,7 @@ class AnnotationShapeCreateInput:
 @strawberry.input()
 class AnnotationShapeUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an shapes for an annotation", default=None,
+        description="Metadata about an shapes for an annotation", default=None
     )
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
         description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
@@ -353,7 +356,9 @@ async def resolve_annotation_shapes(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(db.AnnotationShape, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
+    return await get_db_rows(
+        db.AnnotationShape, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset
+    )  # type: ignore
 
 
 def format_annotation_shape_aggregate_output(
@@ -364,7 +369,7 @@ def format_annotation_shape_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_shape_aggregate_row(row))
@@ -383,10 +388,10 @@ def format_annotation_shape_aggregate_row(row: RowMapping) -> AnnotationShapeAgg
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = AnnotationShapeGroupByOptions()
-            group = build_annotation_shape_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", AnnotationShapeGroupByOptions())
+            group = build_annotation_shape_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -421,7 +426,9 @@ async def resolve_annotation_shapes_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(db.AnnotationShape, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
+    rows = await get_aggregate_db_rows(
+        db.AnnotationShape, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+    )  # type: ignore
     aggregate_output = format_annotation_shape_aggregate_output(rows)
     return aggregate_output
 

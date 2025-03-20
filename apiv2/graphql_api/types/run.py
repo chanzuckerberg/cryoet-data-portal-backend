@@ -7,34 +7,53 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
-
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.run import RunCreateInputValidator
+from validators.run import RunUpdateInputValidator
 from graphql_api.helpers.run import RunGroupByOptions, build_run_groupby_output
+from platformics.graphql_api.core.relay_interface import EntityInterface
 from graphql_api.types.alignment import AlignmentAggregate, format_alignment_aggregate_output
 from graphql_api.types.annotation import AnnotationAggregate, format_annotation_aggregate_output
 from graphql_api.types.frame import FrameAggregate, format_frame_aggregate_output
+from graphql_api.types.gain_file import GainFileAggregate, format_gain_file_aggregate_output
 from graphql_api.types.frame_acquisition_file import (
     FrameAcquisitionFileAggregate,
     format_frame_acquisition_file_aggregate_output,
 )
-from graphql_api.types.gain_file import GainFileAggregate, format_gain_file_aggregate_output
 from graphql_api.types.per_section_parameters import (
     PerSectionParametersAggregate,
     format_per_section_parameters_aggregate_output,
 )
 from graphql_api.types.tiltseries import TiltseriesAggregate, format_tiltseries_aggregate_output
-from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
 from graphql_api.types.tomogram_voxel_spacing import (
     TomogramVoxelSpacingAggregate,
     format_tomogram_voxel_spacing_aggregate_output,
 )
+from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
+from fastapi import Depends
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_input_types import (
+    aggregator_map,
+    orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
+)
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -42,75 +61,61 @@ from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.run import RunCreateInputValidator, RunUpdateInputValidator
-
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
-from platformics.graphql_api.core.query_input_types import (
-    IntComparators,
-    StrComparators,
-    aggregator_map,
-    orderBy,
-)
-from platformics.graphql_api.core.relay_interface import EntityInterface
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+import enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.alignment import (
-        Alignment,
-        AlignmentAggregateWhereClause,
         AlignmentOrderByClause,
+        AlignmentAggregateWhereClause,
         AlignmentWhereClause,
+        Alignment,
     )
     from graphql_api.types.annotation import (
-        Annotation,
-        AnnotationAggregateWhereClause,
         AnnotationOrderByClause,
+        AnnotationAggregateWhereClause,
         AnnotationWhereClause,
+        Annotation,
     )
-    from graphql_api.types.dataset import Dataset, DatasetAggregateWhereClause, DatasetOrderByClause, DatasetWhereClause
-    from graphql_api.types.frame import Frame, FrameAggregateWhereClause, FrameOrderByClause, FrameWhereClause
-    from graphql_api.types.frame_acquisition_file import (
-        FrameAcquisitionFile,
-        FrameAcquisitionFileAggregateWhereClause,
-        FrameAcquisitionFileOrderByClause,
-        FrameAcquisitionFileWhereClause,
-    )
+    from graphql_api.types.dataset import DatasetOrderByClause, DatasetAggregateWhereClause, DatasetWhereClause, Dataset
+    from graphql_api.types.frame import FrameOrderByClause, FrameAggregateWhereClause, FrameWhereClause, Frame
     from graphql_api.types.gain_file import (
-        GainFile,
-        GainFileAggregateWhereClause,
         GainFileOrderByClause,
+        GainFileAggregateWhereClause,
         GainFileWhereClause,
+        GainFile,
+    )
+    from graphql_api.types.frame_acquisition_file import (
+        FrameAcquisitionFileOrderByClause,
+        FrameAcquisitionFileAggregateWhereClause,
+        FrameAcquisitionFileWhereClause,
+        FrameAcquisitionFile,
     )
     from graphql_api.types.per_section_parameters import (
-        PerSectionParameters,
-        PerSectionParametersAggregateWhereClause,
         PerSectionParametersOrderByClause,
+        PerSectionParametersAggregateWhereClause,
         PerSectionParametersWhereClause,
+        PerSectionParameters,
     )
     from graphql_api.types.tiltseries import (
-        Tiltseries,
-        TiltseriesAggregateWhereClause,
         TiltseriesOrderByClause,
+        TiltseriesAggregateWhereClause,
         TiltseriesWhereClause,
-    )
-    from graphql_api.types.tomogram import (
-        Tomogram,
-        TomogramAggregateWhereClause,
-        TomogramOrderByClause,
-        TomogramWhereClause,
+        Tiltseries,
     )
     from graphql_api.types.tomogram_voxel_spacing import (
-        TomogramVoxelSpacing,
-        TomogramVoxelSpacingAggregateWhereClause,
         TomogramVoxelSpacingOrderByClause,
+        TomogramVoxelSpacingAggregateWhereClause,
         TomogramVoxelSpacingWhereClause,
+        TomogramVoxelSpacing,
+    )
+    from graphql_api.types.tomogram import (
+        TomogramOrderByClause,
+        TomogramAggregateWhereClause,
+        TomogramWhereClause,
+        Tomogram,
     )
 
     pass
@@ -167,7 +172,7 @@ These are batching functions for loading related objects to avoid N+1 queries.
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]],  # type:ignore
+    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]]  # type:ignore
 )
 async def load_alignment_rows(
     root: "Run",
@@ -197,7 +202,7 @@ async def load_alignment_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]],  # type:ignore
+    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]]  # type:ignore
 )
 async def load_annotation_rows(
     root: "Run",
@@ -242,7 +247,7 @@ async def load_dataset_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]],  # type:ignore
+    relay.ListConnection[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]]  # type:ignore
 )
 async def load_frame_rows(
     root: "Run",
@@ -272,7 +277,7 @@ async def load_frame_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]],  # type:ignore
+    relay.ListConnection[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]]  # type:ignore
 )
 async def load_gain_file_rows(
     root: "Run",
@@ -302,9 +307,7 @@ async def load_gain_file_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]]  # type:ignore
 )
 async def load_frame_acquisition_file_rows(
     root: "Run",
@@ -342,9 +345,7 @@ async def load_frame_acquisition_file_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]]  # type:ignore
 )
 async def load_per_section_parameters_rows(
     root: "Run",
@@ -382,7 +383,7 @@ async def load_per_section_parameters_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]],  # type:ignore
+    relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]]  # type:ignore
 )
 async def load_tiltseries_rows(
     root: "Run",
@@ -414,9 +415,7 @@ async def load_tiltseries_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]]  # type:ignore
 )
 async def load_tomogram_voxel_spacing_rows(
     root: "Run",
@@ -454,7 +453,7 @@ async def load_tomogram_voxel_spacing_aggregate_rows(
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
+    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]]  # type:ignore
 )
 async def load_tomogram_rows(
     root: "Run",
@@ -535,7 +534,7 @@ class RunWhereClause(TypedDict):
     frame_acquisition_files_aggregate: (
         Optional[
             Annotated[
-                "FrameAcquisitionFileAggregateWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file"),
+                "FrameAcquisitionFileAggregateWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file")
             ]
         ]
         | None
@@ -549,7 +548,7 @@ class RunWhereClause(TypedDict):
     per_section_parameters_aggregate: (
         Optional[
             Annotated[
-                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters"),
+                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")
             ]
         ]
         | None
@@ -567,7 +566,7 @@ class RunWhereClause(TypedDict):
     tomogram_voxel_spacings_aggregate: (
         Optional[
             Annotated[
-                "TomogramVoxelSpacingAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing"),
+                "TomogramVoxelSpacingAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")
             ]
         ]
         | None
@@ -603,32 +602,26 @@ Define Run type
 
 @strawberry.type(description=None)
 class Run(EntityInterface):
-    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_rows
-    )  # type:ignore
+    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
     alignments_aggregate: Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_aggregate_rows
-    )  # type:ignore
+        load_alignment_aggregate_rows  # type:ignore
+    )
     annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
+        load_annotation_rows  # type:ignore
+    )
     annotations_aggregate: Optional[
         Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]
     ] = load_annotation_aggregate_rows  # type:ignore
-    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_rows
-    )  # type:ignore
+    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type:ignore
     dataset_id: int
     frames: Sequence[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
     frames_aggregate: Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]] = (
-        load_frame_aggregate_rows
-    )  # type:ignore
-    gain_files: Sequence[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]] = (
-        load_gain_file_rows
-    )  # type:ignore
+        load_frame_aggregate_rows  # type:ignore
+    )
+    gain_files: Sequence[Annotated["GainFile", strawberry.lazy("graphql_api.types.gain_file")]] = load_gain_file_rows  # type:ignore
     gain_files_aggregate: Optional[Annotated["GainFileAggregate", strawberry.lazy("graphql_api.types.gain_file")]] = (
-        load_gain_file_aggregate_rows
-    )  # type:ignore
+        load_gain_file_aggregate_rows  # type:ignore
+    )
     frame_acquisition_files: Sequence[
         Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
     ] = load_frame_acquisition_file_rows  # type:ignore
@@ -642,8 +635,8 @@ class Run(EntityInterface):
         Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
     ] = load_per_section_parameters_aggregate_rows  # type:ignore
     tiltseries: Sequence[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows
-    )  # type:ignore
+        load_tiltseries_rows  # type:ignore
+    )
     tiltseries_aggregate: Optional[
         Annotated["TiltseriesAggregate", strawberry.lazy("graphql_api.types.tiltseries")]
     ] = load_tiltseries_aggregate_rows  # type:ignore
@@ -653,12 +646,10 @@ class Run(EntityInterface):
     tomogram_voxel_spacings_aggregate: Optional[
         Annotated["TomogramVoxelSpacingAggregate", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
     ] = load_tomogram_voxel_spacing_aggregate_rows  # type:ignore
-    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_rows
-    )  # type:ignore
+    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type:ignore
     tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_aggregate_rows
-    )  # type:ignore
+        load_tomogram_aggregate_rows  # type:ignore
+    )
     name: str = strawberry.field(description="Short name for this experiment run")
     s3_prefix: str = strawberry.field(description="The S3 public bucket path where this run is contained")
     https_prefix: str = strawberry.field(description="The HTTPS directory path where this run is contained url")
@@ -784,7 +775,7 @@ class RunUpdateInput:
     name: Optional[str] = strawberry.field(description="Short name for this experiment run")
     s3_prefix: Optional[str] = strawberry.field(description="The S3 public bucket path where this run is contained")
     https_prefix: Optional[str] = strawberry.field(
-        description="The HTTPS directory path where this run is contained url",
+        description="The HTTPS directory path where this run is contained url"
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -821,7 +812,7 @@ def format_run_aggregate_output(query_results: Sequence[RowMapping] | RowMapping
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_run_aggregate_row(row))
@@ -840,10 +831,10 @@ def format_run_aggregate_row(row: RowMapping) -> RunAggregateFunctions:
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = RunGroupByOptions()
-            group = build_run_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", RunGroupByOptions())
+            group = build_run_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -878,7 +869,9 @@ async def resolve_runs_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(db.Run, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
+    rows = await get_aggregate_db_rows(
+        db.Run, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+    )  # type: ignore
     aggregate_output = format_run_aggregate_output(rows)
     return aggregate_output
 
@@ -903,7 +896,7 @@ async def create_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
@@ -945,7 +938,7 @@ async def update_run(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
+            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")

@@ -487,7 +487,8 @@ def populate_stale_per_section_parameters(session: sa.orm.Session) -> PerSection
             id=STALE_FRAME_ID,
             acquisition_order=1,
             deposition_id=DEPOSITION_ID1,
-        ))
+        )
+    )
     session.add(
         PerSectionParameters(
             run_id=RUN1_ID,

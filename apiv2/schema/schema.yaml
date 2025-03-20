@@ -410,6 +410,12 @@ enums:
       raw:
         text: raw
         description: Tomogram was not processed
+      filtered_even:
+        text: filtered_even
+        description: Tomogram was filtered, created from even frames
+      filtered_odd:
+        text: filtered_odd
+        description: Tomogram was filtered, created from odd frames
   tomogram_reconstruction_method_enum:
     name: tomogram_reconstruction_method_enum
     description: Tomogram reconstruction method
@@ -2577,7 +2583,7 @@ classes:
           - tomogram_processing
         range: tomogram_processing_enum
         required: true
-        pattern: (^denoised$)|(^filtered$)|(^raw$)
+        pattern: (^denoised$)|(^filtered$)|(^raw$)|(^filtered_even$)|(^filtered_odd$)
       tomogram_version:
         range: float
         description: Version of tomogram

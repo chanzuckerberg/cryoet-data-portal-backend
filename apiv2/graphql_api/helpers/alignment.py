@@ -5,24 +5,25 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
-from typing import TYPE_CHECKING, Annotated, Any, Optional
-
+from typing import Any, Optional, TYPE_CHECKING, Annotated
+import strawberry
+import datetime
+import uuid
+from support.enums import alignment_type_enum, alignment_method_type_enum
 import graphql_api.helpers.annotation_file as annotation_file_helper
-import graphql_api.helpers.deposition as deposition_helper
 import graphql_api.helpers.per_section_alignment_parameters as per_section_alignment_parameters_helper
-import graphql_api.helpers.run as run_helper
+import graphql_api.helpers.deposition as deposition_helper
 import graphql_api.helpers.tiltseries as tiltseries_helper
 import graphql_api.helpers.tomogram as tomogram_helper
-import strawberry
-from support.enums import alignment_method_type_enum, alignment_type_enum
+import graphql_api.helpers.run as run_helper
 
 if TYPE_CHECKING:
     from graphql_api.helpers.annotation_file import AnnotationFileGroupByOptions
-    from graphql_api.helpers.deposition import DepositionGroupByOptions
     from graphql_api.helpers.per_section_alignment_parameters import PerSectionAlignmentParametersGroupByOptions
-    from graphql_api.helpers.run import RunGroupByOptions
+    from graphql_api.helpers.deposition import DepositionGroupByOptions
     from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions
     from graphql_api.helpers.tomogram import TomogramGroupByOptions
+    from graphql_api.helpers.run import RunGroupByOptions
 else:
     AnnotationFileGroupByOptions = "AnnotationFileGroupByOptions"
     PerSectionAlignmentParametersGroupByOptions = "PerSectionAlignmentParametersGroupByOptions"

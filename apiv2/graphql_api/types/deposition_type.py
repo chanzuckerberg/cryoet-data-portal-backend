@@ -7,48 +7,54 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
-
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.deposition_type import DepositionTypeCreateInputValidator
+from validators.deposition_type import DepositionTypeUpdateInputValidator
 from graphql_api.helpers.deposition_type import DepositionTypeGroupByOptions, build_deposition_type_groupby_output
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from fastapi import Depends
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_input_types import (
+    aggregator_map,
+    orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
+)
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
+from strawberry import relay
 from strawberry.types import Info
-from support.enums import deposition_types_enum
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.deposition_type import DepositionTypeCreateInputValidator, DepositionTypeUpdateInputValidator
-
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
-from platformics.graphql_api.core.query_input_types import (
-    EnumComparators,
-    IntComparators,
-    aggregator_map,
-    orderBy,
-)
-from platformics.graphql_api.core.relay_interface import EntityInterface
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+import enum
+from support.enums import deposition_types_enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.deposition import (
-        Deposition,
-        DepositionAggregateWhereClause,
         DepositionOrderByClause,
+        DepositionAggregateWhereClause,
         DepositionWhereClause,
+        Deposition,
     )
 
     pass
@@ -134,8 +140,8 @@ Define DepositionType type
 @strawberry.type(description=None)
 class DepositionType(EntityInterface):
     deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
+        load_deposition_rows  # type:ignore
+    )
     deposition_id: int
     type: Optional[deposition_types_enum] = strawberry.field(
         description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
@@ -216,7 +222,7 @@ class DepositionTypeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DepositionTypeCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[DepositionTypeCountColumns] = None
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -290,7 +296,9 @@ async def resolve_deposition_types(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(db.DepositionType, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
+    return await get_db_rows(
+        db.DepositionType, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset
+    )  # type: ignore
 
 
 def format_deposition_type_aggregate_output(
@@ -301,7 +309,7 @@ def format_deposition_type_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_deposition_type_aggregate_row(row))
@@ -320,10 +328,10 @@ def format_deposition_type_aggregate_row(row: RowMapping) -> DepositionTypeAggre
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = DepositionTypeGroupByOptions()
-            group = build_deposition_type_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", DepositionTypeGroupByOptions())
+            group = build_deposition_type_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -358,7 +366,9 @@ async def resolve_deposition_types_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(db.DepositionType, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
+    rows = await get_aggregate_db_rows(
+        db.DepositionType, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+    )  # type: ignore
     aggregate_output = format_deposition_type_aggregate_output(rows)
     return aggregate_output
 

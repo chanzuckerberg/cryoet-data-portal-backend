@@ -7,48 +7,53 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 
 # ruff: noqa: E501 Line too long
 
-
-import datetime
-import enum
 import typing
-from typing import TYPE_CHECKING, Annotated, Optional, Sequence
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Sequence, Callable, List
 
+import platformics.database.models as base_db
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 import database.models as db
 import strawberry
-from fastapi import Depends
+import datetime
+from platformics.graphql_api.core.query_builder import get_db_rows, get_aggregate_db_rows
+from validators.tomogram_author import TomogramAuthorCreateInputValidator
+from validators.tomogram_author import TomogramAuthorUpdateInputValidator
 from graphql_api.helpers.tomogram_author import TomogramAuthorGroupByOptions, build_tomogram_author_groupby_output
+from platformics.graphql_api.core.relay_interface import EntityInterface
+from fastapi import Depends
+from platformics.graphql_api.core.errors import PlatformicsError
+from platformics.graphql_api.core.deps import get_authz_client, get_db_session, require_auth_principal, is_system_user
+from platformics.graphql_api.core.query_input_types import (
+    aggregator_map,
+    orderBy,
+    EnumComparators,
+    DatetimeComparators,
+    IntComparators,
+    FloatComparators,
+    StrComparators,
+    UUIDComparators,
+    BoolComparators,
+)
+from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
+from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
+from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
-from validators.tomogram_author import TomogramAuthorCreateInputValidator, TomogramAuthorUpdateInputValidator
-
-from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
-from platformics.graphql_api.core.errors import PlatformicsError
-from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
-from platformics.graphql_api.core.query_input_types import (
-    BoolComparators,
-    IntComparators,
-    StrComparators,
-    aggregator_map,
-    orderBy,
-)
-from platformics.graphql_api.core.relay_interface import EntityInterface
-from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
-from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+import enum
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.tomogram import (
-        Tomogram,
-        TomogramAggregateWhereClause,
         TomogramOrderByClause,
+        TomogramAggregateWhereClause,
         TomogramWhereClause,
+        Tomogram,
     )
 
     pass
@@ -149,35 +154,33 @@ Define TomogramAuthor type
 
 @strawberry.type(description="Author of a tomogram")
 class TomogramAuthor(EntityInterface):
-    tomogram: Optional[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_rows
-    )  # type:ignore
+    tomogram: Optional[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type:ignore
     tomogram_id: Optional[int]
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None
     )
     name: str = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated", default=None
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.", default=None
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author", default=None
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the tomogram", default=None,
+        description="Indicates whether an author is the main person creating the tomogram", default=None
     )
 
 
@@ -271,7 +274,7 @@ class TomogramAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[TomogramAuthorCountColumns] = None,
+        self, distinct: Optional[bool] = False, columns: Optional[TomogramAuthorCountColumns] = None
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -305,68 +308,68 @@ Mutation types
 @strawberry.input()
 class TomogramAuthorCreateInput:
     tomogram_id: Optional[strawberry.ID] = strawberry.field(
-        description="The tomogram this tomogram author is a part of", default=None,
+        description="The tomogram this tomogram author is a part of", default=None
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None
     )
     name: str = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated", default=None
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.", default=None
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author", default=None
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the tomogram", default=None,
+        description="Indicates whether an author is the main person creating the tomogram", default=None
     )
 
 
 @strawberry.input()
 class TomogramAuthorUpdateInput:
     tomogram_id: Optional[strawberry.ID] = strawberry.field(
-        description="The tomogram this tomogram author is a part of", default=None,
+        description="The tomogram this tomogram author is a part of", default=None
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: Optional[int] = strawberry.field(
-        description="The order in which the author appears in the publication",
+        description="The order in which the author appears in the publication"
     )
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None
     )
     name: Optional[str] = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated", default=None
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.", default=None
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author", default=None
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the tomogram", default=None,
+        description="Indicates whether an author is the main person creating the tomogram", default=None
     )
 
 
@@ -393,7 +396,9 @@ async def resolve_tomogram_authors(
     offset = limit_offset["offset"] if limit_offset and "offset" in limit_offset else None
     if offset and not limit:
         raise PlatformicsError("Cannot use offset without limit")
-    return await get_db_rows(db.TomogramAuthor, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
+    return await get_db_rows(
+        db.TomogramAuthor, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset
+    )  # type: ignore
 
 
 def format_tomogram_author_aggregate_output(
@@ -404,7 +409,7 @@ def format_tomogram_author_aggregate_output(
     format the results using the proper GraphQL types.
     """
     aggregate = []
-    if type(query_results) is not list:
+    if not type(query_results) is list:
         query_results = [query_results]  # type: ignore
     for row in query_results:
         aggregate.append(format_tomogram_author_aggregate_row(row))
@@ -423,10 +428,10 @@ def format_tomogram_author_aggregate_row(row: RowMapping) -> TomogramAuthorAggre
         aggregate = key.split("_", 1)
         if aggregate[0] not in aggregator_map.keys():
             # Turn list of groupby keys into nested objects
-            if not output.groupBy:
-                output.groupBy = TomogramAuthorGroupByOptions()
-            group = build_tomogram_author_groupby_output(output.groupBy, group_keys, value)
-            output.groupBy = group
+            if not getattr(output, "groupBy"):
+                setattr(output, "groupBy", TomogramAuthorGroupByOptions())
+            group = build_tomogram_author_groupby_output(getattr(output, "groupBy"), group_keys, value)
+            setattr(output, "groupBy", group)
         else:
             aggregate_name = aggregate[0]
             if aggregate_name == "count":
@@ -461,7 +466,9 @@ async def resolve_tomogram_authors_aggregate(
     if not aggregate_selections:
         raise PlatformicsError("No aggregate functions selected")
 
-    rows = await get_aggregate_db_rows(db.TomogramAuthor, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
+    rows = await get_aggregate_db_rows(
+        db.TomogramAuthor, session, authz_client, principal, where, aggregate_selections, [], groupby_selections
+    )  # type: ignore
     aggregate_output = format_tomogram_author_aggregate_output(rows)
     return aggregate_output
 
@@ -486,7 +493,7 @@ async def create_tomogram_author(
     # Check that tomogram relationship is accessible.
     if validated.tomogram_id:
         tomogram = await get_db_rows(
-            db.Tomogram, session, authz_client, principal, {"id": {"_eq": validated.tomogram_id}}, [], AuthzAction.VIEW,
+            db.Tomogram, session, authz_client, principal, {"id": {"_eq": validated.tomogram_id}}, [], AuthzAction.VIEW
         )
         if not tomogram:
             raise PlatformicsError("Unauthorized: tomogram does not exist")
@@ -528,7 +535,7 @@ async def update_tomogram_author(
     # Check that tomogram relationship is accessible.
     if validated.tomogram_id:
         tomogram = await get_db_rows(
-            db.Tomogram, session, authz_client, principal, {"id": {"_eq": validated.tomogram_id}}, [], AuthzAction.VIEW,
+            db.Tomogram, session, authz_client, principal, {"id": {"_eq": validated.tomogram_id}}, [], AuthzAction.VIEW
         )
         if not tomogram:
             raise PlatformicsError("Unauthorized: tomogram does not exist")
