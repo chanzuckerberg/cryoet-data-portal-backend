@@ -49,12 +49,8 @@ $ FILE=tests/test_aggregates.py make test-file
 ```
 # First, make any necessary changes to `apiv2/schema/schema.yaml`, then run this to generate new code & migrations and apply them:
 
-cd apiv2
-make update-schema
-
-# Then, from the root of the repo, run:
-cd ..
-pre-commit run --all-files
+# from the root of the repo
+make update-api-schema
 
 # Then commit all changed files, *including* any new migrations!
 git commit -am "chore: Updating schema to add X feature"
