@@ -44,7 +44,6 @@ def run_migrations_offline() -> None:
     )
 
     with context.begin_transaction():
-        context.get_context()._ensure_version_table()  # pylint: disable=protected-access
         context.run_migrations()
 
 
