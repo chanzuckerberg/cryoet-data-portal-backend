@@ -61,8 +61,3 @@ push-ingestor-build-apiv2:
 .PHONY: db-import-dataset
 db-import-dataset:
 	AWS_PROFILE=cryoet-dev aws-oidc exec -- docker run --rm=true -v $$PWD/apiv2:/app -e AWS_REGION -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN -e AWS_DEFAULT_OUTPUT --network cryoback_default -ti graphql-api python3 -m db_import.importer load --s3-prefix 10001 --import-everything --postgres_url postgresql+psycopg://postgres:postgres@db:5432/cryoetv2 cryoet-data-portal-public http://localhost:8000  --import-depositions --deposition-id 10301 --deposition-id 10303
-
-.PHONY: update-api-schema
-update-api-schema:
-	$(MAKE) -C apiv2 update-schema
-	pre-commit run --all-files
