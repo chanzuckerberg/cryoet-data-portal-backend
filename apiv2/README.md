@@ -7,7 +7,7 @@ make init # from the root of the repo
 After the above steps, browse the api at [http://localhost:9009/graphql](http://localhost:9009/graphql)
 
 If you'd like to load some data from the production portal into the db, run this from the root of the repo:
-```make db-import
+```
 ```
 make db-import-dataset
 ```
