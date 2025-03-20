@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.annotation as annotation_helper
@@ -22,12 +24,9 @@ Define groupby options for AnnotationMethodLink type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class AnnotationMethodLinkGroupByOptions:
-    annotation: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = (
-        None
-    )
+    annotation: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = None
     link_type: Optional[annotation_method_link_type_enum] = None
     name: Optional[str] = None
     link: Optional[str] = None

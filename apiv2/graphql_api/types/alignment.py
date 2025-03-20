@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -85,7 +98,6 @@ if TYPE_CHECKING:
         TomogramOrderByClause,
         TomogramWhereClause,
     )
-
     pass
 else:
     AnnotationFileWhereClause = "AnnotationFileWhereClause"
@@ -121,27 +133,19 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]],  # type:ignore
 )
 async def load_annotation_file_rows(
     root: "Alignment",
     info: Info,
     where: Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")] | None = None,
-    order_by: Optional[
-        list[Annotated["AnnotationFileOrderByClause", strawberry.lazy("graphql_api.types.annotation_file")]]
-    ] = [],
+    order_by: Optional[list[Annotated["AnnotationFileOrderByClause", strawberry.lazy("graphql_api.types.annotation_file")]]] = [],
 ) -> Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Alignment)
     relationship = mapper.relationships["annotation_files"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_annotation_file_aggregate_rows(
     root: "Alignment",
@@ -155,58 +159,25 @@ async def load_annotation_file_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_annotation_file_aggregate_output(rows)
     return aggregate_output
-
-
 @relay.connection(
-    relay.ListConnection[
-        Annotated[
-            "PerSectionAlignmentParameters", strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-        ]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["PerSectionAlignmentParameters", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]],  # type:ignore
 )
 async def load_per_section_alignment_parameters_rows(
     root: "Alignment",
     info: Info,
-    where: (
-        Annotated[
-            "PerSectionAlignmentParametersWhereClause",
-            strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-        ]
-        | None
-    ) = None,
-    order_by: Optional[
-        list[
-            Annotated[
-                "PerSectionAlignmentParametersOrderByClause",
-                strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-            ]
-        ]
-    ] = [],
-) -> Sequence[
-    Annotated["PerSectionAlignmentParameters", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]
-]:
+    where: Annotated["PerSectionAlignmentParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")] | None = None,
+    order_by: Optional[list[Annotated["PerSectionAlignmentParametersOrderByClause", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]]] = [],
+) -> Sequence[Annotated["PerSectionAlignmentParameters", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Alignment)
     relationship = mapper.relationships["per_section_alignments"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_per_section_alignment_parameters_aggregate_rows(
     root: "Alignment",
     info: Info,
-    where: (
-        Annotated[
-            "PerSectionAlignmentParametersWhereClause",
-            strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-        ]
-        | None
-    ) = None,
-) -> Optional[
-    Annotated[
-        "PerSectionAlignmentParametersAggregate", strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-    ]
-]:
+    where: Annotated["PerSectionAlignmentParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")] | None = None,
+) -> Optional[Annotated["PerSectionAlignmentParametersAggregate", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]]:
     selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Alignment)
@@ -214,40 +185,30 @@ async def load_per_section_alignment_parameters_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_per_section_alignment_parameters_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.field
 async def load_deposition_rows(
     root: "Alignment",
     info: Info,
     where: Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")] | None = None,
-    order_by: Optional[
-        list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]
-    ] = [],
+    order_by: Optional[list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]] = [],
 ) -> Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Alignment)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id) # type:ignore
 @strawberry.field
 async def load_tiltseries_rows(
     root: "Alignment",
     info: Info,
     where: Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")] | None = None,
-    order_by: Optional[
-        list[Annotated["TiltseriesOrderByClause", strawberry.lazy("graphql_api.types.tiltseries")]]
-    ] = [],
+    order_by: Optional[list[Annotated["TiltseriesOrderByClause", strawberry.lazy("graphql_api.types.tiltseries")]]] = [],
 ) -> Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Alignment)
     relationship = mapper.relationships["tiltseries"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.tiltseries_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.tiltseries_id) # type:ignore
 @relay.connection(
-    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
+        relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
 )
 async def load_tomogram_rows(
     root: "Alignment",
@@ -259,8 +220,6 @@ async def load_tomogram_rows(
     mapper = inspect(db.Alignment)
     relationship = mapper.relationships["tomograms"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_tomogram_aggregate_rows(
     root: "Alignment",
@@ -274,8 +233,6 @@ async def load_tomogram_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_tomogram_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.field
 async def load_run_rows(
     root: "Alignment",
@@ -286,8 +243,7 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Alignment)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -300,8 +256,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class AlignmentWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -310,45 +264,20 @@ class AlignmentWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class AlignmentWhereClause(TypedDict):
-    annotation_files: (
-        Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
-    )
-    annotation_files_aggregate: (
-        Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]]
-        | None
-    )
-    per_section_alignments: (
-        Optional[
-            Annotated[
-                "PerSectionAlignmentParametersWhereClause",
-                strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-            ]
-        ]
-        | None
-    )
-    per_section_alignments_aggregate: (
-        Optional[
-            Annotated[
-                "PerSectionAlignmentParametersAggregateWhereClause",
-                strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-            ]
-        ]
-        | None
-    )
+    annotation_files: Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
+    annotation_files_aggregate : Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
+    per_section_alignments: Optional[Annotated["PerSectionAlignmentParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]] | None
+    per_section_alignments_aggregate : Optional[Annotated["PerSectionAlignmentParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]] | None
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
-    deposition_id: Optional[IntComparators] | None
+    deposition_id : Optional[IntComparators] | None
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
-    tiltseries_id: Optional[IntComparators] | None
+    tiltseries_id : Optional[IntComparators] | None
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
-    tomograms_aggregate: (
-        Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
-    )
+    tomograms_aggregate : Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    run_id: Optional[IntComparators] | None
+    run_id : Optional[IntComparators] | None
     alignment_type: Optional[EnumComparators[alignment_type_enum]] | None
     alignment_method: Optional[EnumComparators[alignment_method_type_enum]] | None
     volume_x_dimension: Optional[FloatComparators] | None
@@ -365,12 +294,9 @@ class AlignmentWhereClause(TypedDict):
     is_portal_standard: Optional[BoolComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class AlignmentOrderByClause(TypedDict):
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
@@ -396,85 +322,35 @@ class AlignmentOrderByClause(TypedDict):
 """
 Define Alignment type
 """
-
-
-@strawberry.type(description="Tiltseries Alignment")
+@strawberry.type(description='Tiltseries Alignment')
 class Alignment(EntityInterface):
-    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
-        load_annotation_file_rows
-    )  # type:ignore
-    annotation_files_aggregate: Optional[
-        Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
-    ] = load_annotation_file_aggregate_rows  # type:ignore
-    per_section_alignments: Sequence[
-        Annotated[
-            "PerSectionAlignmentParameters", strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-        ]
-    ] = load_per_section_alignment_parameters_rows  # type:ignore
-    per_section_alignments_aggregate: Optional[
-        Annotated[
-            "PerSectionAlignmentParametersAggregate",
-            strawberry.lazy("graphql_api.types.per_section_alignment_parameters"),
-        ]
-    ] = load_per_section_alignment_parameters_aggregate_rows  # type:ignore
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
-    deposition_id: Optional[int]
-    tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows
-    )  # type:ignore
-    tiltseries_id: Optional[int]
-    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_rows
-    )  # type:ignore
-    tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_aggregate_rows
-    )  # type:ignore
+    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_rows  # type:ignore
+    annotation_files_aggregate : Optional[Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_aggregate_rows  # type:ignore
+    per_section_alignments: Sequence[Annotated["PerSectionAlignmentParameters", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]] = load_per_section_alignment_parameters_rows  # type:ignore
+    per_section_alignments_aggregate : Optional[Annotated["PerSectionAlignmentParametersAggregate", strawberry.lazy("graphql_api.types.per_section_alignment_parameters")]] = load_per_section_alignment_parameters_aggregate_rows  # type:ignore
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type:ignore
+    deposition_id :  Optional[int]
+    tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = load_tiltseries_rows  # type:ignore
+    tiltseries_id :  Optional[int]
+    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type:ignore
+    tomograms_aggregate : Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: Optional[int]
-    alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Whether this a LOCAL or GLOBAL alignment", default=None,
-    )
-    alignment_method: Optional[alignment_method_type_enum] = strawberry.field(
-        description="The method used to create this alignment", default=None,
-    )
-    volume_x_dimension: Optional[float] = strawberry.field(
-        description="X dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_y_dimension: Optional[float] = strawberry.field(
-        description="Y dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_z_dimension: Optional[float] = strawberry.field(
-        description="Z dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_x_offset: Optional[float] = strawberry.field(
-        description="X shift of the reconstruction volume in angstrom", default=None,
-    )
-    volume_y_offset: Optional[float] = strawberry.field(
-        description="Y shift of the reconstruction volume in angstrom", default=None,
-    )
-    volume_z_offset: Optional[float] = strawberry.field(
-        description="Z shift of the reconstruction volume in angstrom", default=None,
-    )
-    x_rotation_offset: Optional[float] = strawberry.field(
-        description="Additional X rotation of the reconstruction volume in degrees", default=None,
-    )
-    tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
-    affine_transformation_matrix: Optional[str] = strawberry.field(
-        description="A placeholder for the affine transformation matrix.", default=None,
-    )
-    s3_alignment_metadata: Optional[str] = strawberry.field(
-        description="S3 path to the metadata file for this alignment", default=None,
-    )
-    https_alignment_metadata: Optional[str] = strawberry.field(
-        description="HTTPS url to the metadata file for this alignment", default=None,
-    )
-    is_portal_standard: Optional[bool] = strawberry.field(
-        description="Whether this is the portal standard alignment", default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    run_id :  Optional[int]
+    alignment_type:  Optional[alignment_type_enum] = strawberry.field(description='Whether this a LOCAL or GLOBAL alignment', default=None)
+    alignment_method:  Optional[alignment_method_type_enum] = strawberry.field(description='The method used to create this alignment', default=None)
+    volume_x_dimension: Optional[float] = strawberry.field(description='X dimension of the reconstruction volume in angstrom', default=None)
+    volume_y_dimension: Optional[float] = strawberry.field(description='Y dimension of the reconstruction volume in angstrom', default=None)
+    volume_z_dimension: Optional[float] = strawberry.field(description='Z dimension of the reconstruction volume in angstrom', default=None)
+    volume_x_offset: Optional[float] = strawberry.field(description='X shift of the reconstruction volume in angstrom', default=None)
+    volume_y_offset: Optional[float] = strawberry.field(description='Y shift of the reconstruction volume in angstrom', default=None)
+    volume_z_offset: Optional[float] = strawberry.field(description='Z shift of the reconstruction volume in angstrom', default=None)
+    x_rotation_offset: Optional[float] = strawberry.field(description='Additional X rotation of the reconstruction volume in degrees', default=None)
+    tilt_offset: Optional[float] = strawberry.field(description='Additional tilt offset in degrees', default=None)
+    affine_transformation_matrix: Optional[str] = strawberry.field(description='A placeholder for the affine transformation matrix.', default=None)
+    s3_alignment_metadata: Optional[str] = strawberry.field(description='S3 path to the metadata file for this alignment', default=None)
+    https_alignment_metadata: Optional[str] = strawberry.field(description='HTTPS url to the metadata file for this alignment', default=None)
+    is_portal_standard: Optional[bool] = strawberry.field(description='Whether this is the portal standard alignment', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -492,47 +368,39 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class AlignmentNumericalColumns:
-    volume_x_dimension: Optional[float] = None
-    volume_y_dimension: Optional[float] = None
-    volume_z_dimension: Optional[float] = None
-    volume_x_offset: Optional[float] = None
-    volume_y_offset: Optional[float] = None
-    volume_z_offset: Optional[float] = None
-    x_rotation_offset: Optional[float] = None
-    tilt_offset: Optional[float] = None
-    id: Optional[int] = None
-
+    volume_x_dimension:  Optional[float] = None
+    volume_y_dimension:  Optional[float] = None
+    volume_z_dimension:  Optional[float] = None
+    volume_x_offset:  Optional[float] = None
+    volume_y_offset:  Optional[float] = None
+    volume_z_offset:  Optional[float] = None
+    x_rotation_offset:  Optional[float] = None
+    tilt_offset:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class AlignmentMinMaxColumns:
-    volume_x_dimension: Optional[float] = None
-    volume_y_dimension: Optional[float] = None
-    volume_z_dimension: Optional[float] = None
-    volume_x_offset: Optional[float] = None
-    volume_y_offset: Optional[float] = None
-    volume_z_offset: Optional[float] = None
-    x_rotation_offset: Optional[float] = None
-    tilt_offset: Optional[float] = None
-    affine_transformation_matrix: Optional[str] = None
-    s3_alignment_metadata: Optional[str] = None
-    https_alignment_metadata: Optional[str] = None
-    id: Optional[int] = None
-
+    volume_x_dimension:  Optional[float] = None
+    volume_y_dimension:  Optional[float] = None
+    volume_z_dimension:  Optional[float] = None
+    volume_x_offset:  Optional[float] = None
+    volume_y_offset:  Optional[float] = None
+    volume_z_offset:  Optional[float] = None
+    x_rotation_offset:  Optional[float] = None
+    tilt_offset:  Optional[float] = None
+    affine_transformation_matrix:  Optional[str] = None
+    s3_alignment_metadata:  Optional[str] = None
+    https_alignment_metadata:  Optional[str] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class AlignmentCountColumns(enum.Enum):
     alignmentType = "alignment_type"
@@ -551,12 +419,9 @@ class AlignmentCountColumns(enum.Enum):
     isPortalStandard = "is_portal_standard"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class AlignmentAggregateWhereClauseCount(TypedDict):
     arguments: Optional["AlignmentCountColumns"] | None
@@ -569,20 +434,16 @@ class AlignmentAggregateWhereClauseCount(TypedDict):
 class AlignmentAggregateWhereClause(TypedDict):
     count: AlignmentAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class AlignmentAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(self, distinct: Optional[bool] = False, columns: Optional[AlignmentCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[AlignmentNumericalColumns] = None
     avg: Optional[AlignmentNumericalColumns] = None
     stddev: Optional[AlignmentNumericalColumns] = None
@@ -591,16 +452,12 @@ class AlignmentAggregateFunctions:
     max: Optional[AlignmentMinMaxColumns] = None
     groupBy: Optional[AlignmentGroupByOptions] = None
 
-
 """
 Wrapper around AlignmentAggregateFunctions
 """
-
-
 @strawberry.type
 class AlignmentAggregate:
     aggregate: Optional[list[AlignmentAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -614,103 +471,47 @@ class AlignmentCreateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Whether this a LOCAL or GLOBAL alignment", default=None,
-    )
-    alignment_method: Optional[alignment_method_type_enum] = strawberry.field(
-        description="The method used to create this alignment", default=None,
-    )
-    volume_x_dimension: Optional[float] = strawberry.field(
-        description="X dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_y_dimension: Optional[float] = strawberry.field(
-        description="Y dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_z_dimension: Optional[float] = strawberry.field(
-        description="Z dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_x_offset: Optional[float] = strawberry.field(
-        description="X shift of the reconstruction volume in angstrom", default=None,
-    )
-    volume_y_offset: Optional[float] = strawberry.field(
-        description="Y shift of the reconstruction volume in angstrom", default=None,
-    )
-    volume_z_offset: Optional[float] = strawberry.field(
-        description="Z shift of the reconstruction volume in angstrom", default=None,
-    )
-    x_rotation_offset: Optional[float] = strawberry.field(
-        description="Additional X rotation of the reconstruction volume in degrees", default=None,
-    )
-    tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
-    affine_transformation_matrix: Optional[str] = strawberry.field(
-        description="A placeholder for the affine transformation matrix.", default=None,
-    )
-    s3_alignment_metadata: Optional[str] = strawberry.field(
-        description="S3 path to the metadata file for this alignment", default=None,
-    )
-    https_alignment_metadata: Optional[str] = strawberry.field(
-        description="HTTPS url to the metadata file for this alignment", default=None,
-    )
-    is_portal_standard: Optional[bool] = strawberry.field(
-        description="Whether this is the portal standard alignment", default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    alignment_type: Optional[alignment_type_enum] = strawberry.field(description='Whether this a LOCAL or GLOBAL alignment', default=None)
+    alignment_method: Optional[alignment_method_type_enum] = strawberry.field(description='The method used to create this alignment', default=None)
+    volume_x_dimension: Optional[float] = strawberry.field(description='X dimension of the reconstruction volume in angstrom', default=None)
+    volume_y_dimension: Optional[float] = strawberry.field(description='Y dimension of the reconstruction volume in angstrom', default=None)
+    volume_z_dimension: Optional[float] = strawberry.field(description='Z dimension of the reconstruction volume in angstrom', default=None)
+    volume_x_offset: Optional[float] = strawberry.field(description='X shift of the reconstruction volume in angstrom', default=None)
+    volume_y_offset: Optional[float] = strawberry.field(description='Y shift of the reconstruction volume in angstrom', default=None)
+    volume_z_offset: Optional[float] = strawberry.field(description='Z shift of the reconstruction volume in angstrom', default=None)
+    x_rotation_offset: Optional[float] = strawberry.field(description='Additional X rotation of the reconstruction volume in degrees', default=None)
+    tilt_offset: Optional[float] = strawberry.field(description='Additional tilt offset in degrees', default=None)
+    affine_transformation_matrix: Optional[str] = strawberry.field(description='A placeholder for the affine transformation matrix.', default=None)
+    s3_alignment_metadata: Optional[str] = strawberry.field(description='S3 path to the metadata file for this alignment', default=None)
+    https_alignment_metadata: Optional[str] = strawberry.field(description='HTTPS url to the metadata file for this alignment', default=None)
+    is_portal_standard: Optional[bool] = strawberry.field(description='Whether this is the portal standard alignment', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class AlignmentUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tiltseries_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    alignment_type: Optional[alignment_type_enum] = strawberry.field(
-        description="Whether this a LOCAL or GLOBAL alignment", default=None,
-    )
-    alignment_method: Optional[alignment_method_type_enum] = strawberry.field(
-        description="The method used to create this alignment", default=None,
-    )
-    volume_x_dimension: Optional[float] = strawberry.field(
-        description="X dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_y_dimension: Optional[float] = strawberry.field(
-        description="Y dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_z_dimension: Optional[float] = strawberry.field(
-        description="Z dimension of the reconstruction volume in angstrom", default=None,
-    )
-    volume_x_offset: Optional[float] = strawberry.field(
-        description="X shift of the reconstruction volume in angstrom", default=None,
-    )
-    volume_y_offset: Optional[float] = strawberry.field(
-        description="Y shift of the reconstruction volume in angstrom", default=None,
-    )
-    volume_z_offset: Optional[float] = strawberry.field(
-        description="Z shift of the reconstruction volume in angstrom", default=None,
-    )
-    x_rotation_offset: Optional[float] = strawberry.field(
-        description="Additional X rotation of the reconstruction volume in degrees", default=None,
-    )
-    tilt_offset: Optional[float] = strawberry.field(description="Additional tilt offset in degrees", default=None)
-    affine_transformation_matrix: Optional[str] = strawberry.field(
-        description="A placeholder for the affine transformation matrix.", default=None,
-    )
-    s3_alignment_metadata: Optional[str] = strawberry.field(
-        description="S3 path to the metadata file for this alignment", default=None,
-    )
-    https_alignment_metadata: Optional[str] = strawberry.field(
-        description="HTTPS url to the metadata file for this alignment", default=None,
-    )
-    is_portal_standard: Optional[bool] = strawberry.field(
-        description="Whether this is the portal standard alignment", default=None,
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    alignment_type: Optional[alignment_type_enum] = strawberry.field(description='Whether this a LOCAL or GLOBAL alignment', default=None)
+    alignment_method: Optional[alignment_method_type_enum] = strawberry.field(description='The method used to create this alignment', default=None)
+    volume_x_dimension: Optional[float] = strawberry.field(description='X dimension of the reconstruction volume in angstrom', default=None)
+    volume_y_dimension: Optional[float] = strawberry.field(description='Y dimension of the reconstruction volume in angstrom', default=None)
+    volume_z_dimension: Optional[float] = strawberry.field(description='Z dimension of the reconstruction volume in angstrom', default=None)
+    volume_x_offset: Optional[float] = strawberry.field(description='X shift of the reconstruction volume in angstrom', default=None)
+    volume_y_offset: Optional[float] = strawberry.field(description='Y shift of the reconstruction volume in angstrom', default=None)
+    volume_z_offset: Optional[float] = strawberry.field(description='Z shift of the reconstruction volume in angstrom', default=None)
+    x_rotation_offset: Optional[float] = strawberry.field(description='Additional X rotation of the reconstruction volume in degrees', default=None)
+    tilt_offset: Optional[float] = strawberry.field(description='Additional tilt offset in degrees', default=None)
+    affine_transformation_matrix: Optional[str] = strawberry.field(description='A placeholder for the affine transformation matrix.', default=None)
+    s3_alignment_metadata: Optional[str] = strawberry.field(description='S3 path to the metadata file for this alignment', default=None)
+    https_alignment_metadata: Optional[str] = strawberry.field(description='HTTPS url to the metadata file for this alignment', default=None)
+    is_portal_standard: Optional[bool] = strawberry.field(description='Whether this is the portal standard alignment', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_alignments(
@@ -738,11 +539,10 @@ def format_alignment_aggregate_output(query_results: Sequence[RowMapping] | RowM
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_alignment_aggregate_row(row))
     return AlignmentAggregate(aggregate=aggregate)
-
 
 def format_alignment_aggregate_row(row: RowMapping) -> AlignmentAggregateFunctions:
     """
@@ -774,7 +574,6 @@ def format_alignment_aggregate_row(row: RowMapping) -> AlignmentAggregateFunctio
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_alignments_aggregate(
     info: Info,
@@ -797,8 +596,6 @@ async def resolve_alignments_aggregate(
     rows = await get_aggregate_db_rows(db.Alignment, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_alignment_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_alignment(
     input: AlignmentCreateInput,
@@ -818,35 +615,17 @@ async def create_alignment(
     # Validate that the user can read all of the entities they're linking to.
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
     # Check that tiltseries relationship is accessible.
     if validated.tiltseries_id:
-        tiltseries = await get_db_rows(
-            db.Tiltseries,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.tiltseries_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        tiltseries = await get_db_rows(db.Tiltseries, session, authz_client, principal, {"id": {"_eq": validated.tiltseries_id } }, [], AuthzAction.VIEW)
         if not tiltseries:
             raise PlatformicsError("Unauthorized: tiltseries does not exist")
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
 
@@ -861,8 +640,6 @@ async def create_alignment(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_alignment(
     input: AlignmentUpdateInput,
@@ -886,39 +663,21 @@ async def update_alignment(
     # Validate that the user can read all of the entities they're linking to.
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
         params["deposition"] = deposition[0]
         del params["deposition_id"]
     # Check that tiltseries relationship is accessible.
     if validated.tiltseries_id:
-        tiltseries = await get_db_rows(
-            db.Tiltseries,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.tiltseries_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        tiltseries = await get_db_rows(db.Tiltseries, session, authz_client, principal, {"id": {"_eq": validated.tiltseries_id } }, [], AuthzAction.VIEW)
         if not tiltseries:
             raise PlatformicsError("Unauthorized: tiltseries does not exist")
         params["tiltseries"] = tiltseries[0]
         del params["tiltseries_id"]
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
         params["run"] = run[0]

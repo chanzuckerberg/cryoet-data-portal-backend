@@ -31,6 +31,7 @@ class PerSectionParametersFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     astigmatic_angle = fuzzy.FuzzyFloat(1, 100)
     frame = factory.SubFactory(
         FrameFactory,
@@ -48,6 +49,7 @@ class PerSectionParametersFactory(CommonFactory):
     )
 
     z_index = fuzzy.FuzzyInteger(1, 1000)
+
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)

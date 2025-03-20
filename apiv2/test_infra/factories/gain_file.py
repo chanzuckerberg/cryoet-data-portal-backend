@@ -29,6 +29,7 @@ class GainFileFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     run = factory.SubFactory(
         RunFactory,
     )

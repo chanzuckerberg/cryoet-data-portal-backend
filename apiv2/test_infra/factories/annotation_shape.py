@@ -29,10 +29,17 @@ class AnnotationShapeFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     annotation = factory.SubFactory(
         AnnotationFactory,
     )
-    shape_type = fuzzy.FuzzyChoice(["SegmentationMask", "OrientedPoint", "Point", "InstanceSegmentation", "Mesh"])
+    shape_type = fuzzy.FuzzyChoice([
+        "SegmentationMask",
+        "OrientedPoint",
+        "Point",
+        "InstanceSegmentation",
+        "Mesh",
+    ])
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)

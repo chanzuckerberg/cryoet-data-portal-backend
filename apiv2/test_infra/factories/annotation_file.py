@@ -31,6 +31,7 @@ class AnnotationFileFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     alignment = factory.SubFactory(
         AlignmentFactory,
     )
@@ -45,7 +46,11 @@ class AnnotationFileFactory(CommonFactory):
     file_size = fuzzy.FuzzyFloat(1, 100)
     https_path = fuzzy.FuzzyText()
     is_visualization_default = factory.Faker("boolean")
-    source = fuzzy.FuzzyChoice(["dataset_author", "community", "portal_standard"])
+    source = fuzzy.FuzzyChoice([
+        "dataset_author",
+        "community",
+        "portal_standard",
+    ])
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)

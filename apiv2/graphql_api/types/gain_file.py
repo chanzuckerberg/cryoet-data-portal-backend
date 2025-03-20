@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -44,7 +57,6 @@ T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
-
     pass
 else:
     RunWhereClause = "RunWhereClause"
@@ -60,8 +72,6 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_run_rows(
     root: "GainFile",
@@ -72,8 +82,7 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.GainFile)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -86,8 +95,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class GainFileWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -96,22 +103,17 @@ class GainFileWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class GainFileWhereClause(TypedDict):
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    run_id: Optional[IntComparators] | None
+    run_id : Optional[IntComparators] | None
     s3_file_path: Optional[StrComparators] | None
     https_file_path: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class GainFileOrderByClause(TypedDict):
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
@@ -123,16 +125,13 @@ class GainFileOrderByClause(TypedDict):
 """
 Define GainFile type
 """
-
-
-@strawberry.type(description="Gain values for frames in this run")
+@strawberry.type(description='Gain values for frames in this run')
 class GainFile(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: int
-    s3_file_path: str = strawberry.field(description="Path to the file in s3")
-    https_file_path: str = strawberry.field(description="Path to the file as an https url")
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    run_id :  int
+    s3_file_path: str = strawberry.field(description='Path to the file in s3')
+    https_file_path: str = strawberry.field(description='Path to the file as an https url')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -150,42 +149,31 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class GainFileNumericalColumns:
-    id: Optional[int] = None
-
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class GainFileMinMaxColumns:
-    s3_file_path: Optional[str] = None
-    https_file_path: Optional[str] = None
-    id: Optional[int] = None
-
+    s3_file_path:  Optional[str] = None
+    https_file_path:  Optional[str] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class GainFileCountColumns(enum.Enum):
     s3FilePath = "s3_file_path"
     httpsFilePath = "https_file_path"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class GainFileAggregateWhereClauseCount(TypedDict):
     arguments: Optional["GainFileCountColumns"] | None
@@ -198,20 +186,16 @@ class GainFileAggregateWhereClauseCount(TypedDict):
 class GainFileAggregateWhereClause(TypedDict):
     count: GainFileAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class GainFileAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(self, distinct: Optional[bool] = False, columns: Optional[GainFileCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[GainFileNumericalColumns] = None
     avg: Optional[GainFileNumericalColumns] = None
     stddev: Optional[GainFileNumericalColumns] = None
@@ -220,16 +204,12 @@ class GainFileAggregateFunctions:
     max: Optional[GainFileMinMaxColumns] = None
     groupBy: Optional[GainFileGroupByOptions] = None
 
-
 """
 Wrapper around GainFileAggregateFunctions
 """
-
-
 @strawberry.type
 class GainFileAggregate:
     aggregate: Optional[list[GainFileAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -241,25 +221,21 @@ Mutation types
 @strawberry.input()
 class GainFileCreateInput:
     run_id: strawberry.ID = strawberry.field(description=None)
-    s3_file_path: str = strawberry.field(description="Path to the file in s3")
-    https_file_path: str = strawberry.field(description="Path to the file as an https url")
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    s3_file_path: str = strawberry.field(description='Path to the file in s3')
+    https_file_path: str = strawberry.field(description='Path to the file as an https url')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class GainFileUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None)
-    s3_file_path: Optional[str] = strawberry.field(description="Path to the file in s3")
-    https_file_path: Optional[str] = strawberry.field(description="Path to the file as an https url")
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    s3_file_path: Optional[str] = strawberry.field(description='Path to the file in s3')
+    https_file_path: Optional[str] = strawberry.field(description='Path to the file as an https url')
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_gain_files(
@@ -287,11 +263,10 @@ def format_gain_file_aggregate_output(query_results: Sequence[RowMapping] | RowM
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_gain_file_aggregate_row(row))
     return GainFileAggregate(aggregate=aggregate)
-
 
 def format_gain_file_aggregate_row(row: RowMapping) -> GainFileAggregateFunctions:
     """
@@ -323,7 +298,6 @@ def format_gain_file_aggregate_row(row: RowMapping) -> GainFileAggregateFunction
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_gain_files_aggregate(
     info: Info,
@@ -346,8 +320,6 @@ async def resolve_gain_files_aggregate(
     rows = await get_aggregate_db_rows(db.GainFile, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_gain_file_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_gain_file(
     input: GainFileCreateInput,
@@ -367,9 +339,7 @@ async def create_gain_file(
     # Validate that the user can read all of the entities they're linking to.
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
 
@@ -384,8 +354,6 @@ async def create_gain_file(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_gain_file(
     input: GainFileUpdateInput,
@@ -409,9 +377,7 @@ async def update_gain_file(
     # Validate that the user can read all of the entities they're linking to.
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
         params["run"] = run[0]

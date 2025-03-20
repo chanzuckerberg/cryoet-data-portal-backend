@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -66,7 +79,6 @@ if TYPE_CHECKING:
         TomogramOrderByClause,
         TomogramWhereClause,
     )
-
     pass
 else:
     AnnotationFileWhereClause = "AnnotationFileWhereClause"
@@ -90,27 +102,19 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]],  # type:ignore
 )
 async def load_annotation_file_rows(
     root: "TomogramVoxelSpacing",
     info: Info,
     where: Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")] | None = None,
-    order_by: Optional[
-        list[Annotated["AnnotationFileOrderByClause", strawberry.lazy("graphql_api.types.annotation_file")]]
-    ] = [],
+    order_by: Optional[list[Annotated["AnnotationFileOrderByClause", strawberry.lazy("graphql_api.types.annotation_file")]]] = [],
 ) -> Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["annotation_files"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_annotation_file_aggregate_rows(
     root: "TomogramVoxelSpacing",
@@ -124,8 +128,6 @@ async def load_annotation_file_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_annotation_file_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.field
 async def load_run_rows(
     root: "TomogramVoxelSpacing",
@@ -136,11 +138,9 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id) # type:ignore
 @relay.connection(
-    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
+        relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
 )
 async def load_tomogram_rows(
     root: "TomogramVoxelSpacing",
@@ -152,8 +152,6 @@ async def load_tomogram_rows(
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["tomograms"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_tomogram_aggregate_rows(
     root: "TomogramVoxelSpacing",
@@ -168,7 +166,6 @@ async def load_tomogram_aggregate_rows(
     aggregate_output = format_tomogram_aggregate_output(rows)
     return aggregate_output
 
-
 """
 ------------------------------------------------------------------------------
 Define Strawberry GQL types
@@ -180,8 +177,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class TomogramVoxelSpacingWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -190,34 +185,22 @@ class TomogramVoxelSpacingWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class TomogramVoxelSpacingWhereClause(TypedDict):
-    annotation_files: (
-        Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
-    )
-    annotation_files_aggregate: (
-        Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]]
-        | None
-    )
+    annotation_files: Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
+    annotation_files_aggregate : Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    run_id: Optional[IntComparators] | None
+    run_id : Optional[IntComparators] | None
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
-    tomograms_aggregate: (
-        Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
-    )
+    tomograms_aggregate : Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
     voxel_spacing: Optional[FloatComparators] | None
     s3_prefix: Optional[StrComparators] | None
     https_prefix: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class TomogramVoxelSpacingOrderByClause(TypedDict):
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
@@ -230,33 +213,18 @@ class TomogramVoxelSpacingOrderByClause(TypedDict):
 """
 Define TomogramVoxelSpacing type
 """
-
-
-@strawberry.type(description="Voxel spacings for a run")
+@strawberry.type(description='Voxel spacings for a run')
 class TomogramVoxelSpacing(EntityInterface):
-    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
-        load_annotation_file_rows
-    )  # type:ignore
-    annotation_files_aggregate: Optional[
-        Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
-    ] = load_annotation_file_aggregate_rows  # type:ignore
+    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_rows  # type:ignore
+    annotation_files_aggregate : Optional[Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: Optional[int]
-    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_rows
-    )  # type:ignore
-    tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_aggregate_rows
-    )  # type:ignore
-    voxel_spacing: float = strawberry.field(description="The voxel spacing for the tomograms in this set in angstroms")
-    s3_prefix: str = strawberry.field(
-        description="The S3 public bucket path where this tomogram voxel spacing is contained",
-    )
-    https_prefix: str = strawberry.field(
-        description="The HTTPS directory path where this tomogram voxel spacing is contained",
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    run_id :  Optional[int]
+    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type:ignore
+    tomograms_aggregate : Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_aggregate_rows  # type:ignore
+    voxel_spacing: float = strawberry.field(description='The voxel spacing for the tomograms in this set in angstroms')
+    s3_prefix: str = strawberry.field(description='The S3 public bucket path where this tomogram voxel spacing is contained')
+    https_prefix: str = strawberry.field(description='The HTTPS directory path where this tomogram voxel spacing is contained')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -274,32 +242,24 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class TomogramVoxelSpacingNumericalColumns:
-    voxel_spacing: Optional[float] = None
-    id: Optional[int] = None
-
+    voxel_spacing:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class TomogramVoxelSpacingMinMaxColumns:
-    voxel_spacing: Optional[float] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
-    id: Optional[int] = None
-
+    voxel_spacing:  Optional[float] = None
+    s3_prefix:  Optional[str] = None
+    https_prefix:  Optional[str] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class TomogramVoxelSpacingCountColumns(enum.Enum):
     voxelSpacing = "voxel_spacing"
@@ -307,12 +267,9 @@ class TomogramVoxelSpacingCountColumns(enum.Enum):
     httpsPrefix = "https_prefix"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class TomogramVoxelSpacingAggregateWhereClauseCount(TypedDict):
     arguments: Optional["TomogramVoxelSpacingCountColumns"] | None
@@ -325,22 +282,16 @@ class TomogramVoxelSpacingAggregateWhereClauseCount(TypedDict):
 class TomogramVoxelSpacingAggregateWhereClause(TypedDict):
     count: TomogramVoxelSpacingAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class TomogramVoxelSpacingAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[TomogramVoxelSpacingCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[TomogramVoxelSpacingCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[TomogramVoxelSpacingNumericalColumns] = None
     avg: Optional[TomogramVoxelSpacingNumericalColumns] = None
     stddev: Optional[TomogramVoxelSpacingNumericalColumns] = None
@@ -349,16 +300,12 @@ class TomogramVoxelSpacingAggregateFunctions:
     max: Optional[TomogramVoxelSpacingMinMaxColumns] = None
     groupBy: Optional[TomogramVoxelSpacingGroupByOptions] = None
 
-
 """
 Wrapper around TomogramVoxelSpacingAggregateFunctions
 """
-
-
 @strawberry.type
 class TomogramVoxelSpacingAggregate:
     aggregate: Optional[list[TomogramVoxelSpacingAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -369,42 +316,24 @@ Mutation types
 
 @strawberry.input()
 class TomogramVoxelSpacingCreateInput:
-    run_id: Optional[strawberry.ID] = strawberry.field(
-        description="The the run this tomogram voxel spacing is a part of", default=None,
-    )
-    voxel_spacing: float = strawberry.field(description="The voxel spacing for the tomograms in this set in angstroms")
-    s3_prefix: str = strawberry.field(
-        description="The S3 public bucket path where this tomogram voxel spacing is contained",
-    )
-    https_prefix: str = strawberry.field(
-        description="The HTTPS directory path where this tomogram voxel spacing is contained",
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    run_id: Optional[strawberry.ID] = strawberry.field(description='The the run this tomogram voxel spacing is a part of', default=None)
+    voxel_spacing: float = strawberry.field(description='The voxel spacing for the tomograms in this set in angstroms')
+    s3_prefix: str = strawberry.field(description='The S3 public bucket path where this tomogram voxel spacing is contained')
+    https_prefix: str = strawberry.field(description='The HTTPS directory path where this tomogram voxel spacing is contained')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class TomogramVoxelSpacingUpdateInput:
-    run_id: Optional[strawberry.ID] = strawberry.field(
-        description="The the run this tomogram voxel spacing is a part of", default=None,
-    )
-    voxel_spacing: Optional[float] = strawberry.field(
-        description="The voxel spacing for the tomograms in this set in angstroms",
-    )
-    s3_prefix: Optional[str] = strawberry.field(
-        description="The S3 public bucket path where this tomogram voxel spacing is contained",
-    )
-    https_prefix: Optional[str] = strawberry.field(
-        description="The HTTPS directory path where this tomogram voxel spacing is contained",
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    run_id: Optional[strawberry.ID] = strawberry.field(description='The the run this tomogram voxel spacing is a part of', default=None)
+    voxel_spacing: Optional[float] = strawberry.field(description='The voxel spacing for the tomograms in this set in angstroms')
+    s3_prefix: Optional[str] = strawberry.field(description='The S3 public bucket path where this tomogram voxel spacing is contained')
+    https_prefix: Optional[str] = strawberry.field(description='The HTTPS directory path where this tomogram voxel spacing is contained')
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_tomogram_voxel_spacings(
@@ -425,20 +354,17 @@ async def resolve_tomogram_voxel_spacings(
     return await get_db_rows(db.TomogramVoxelSpacing, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_tomogram_voxel_spacing_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> TomogramVoxelSpacingAggregate:
+def format_tomogram_voxel_spacing_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> TomogramVoxelSpacingAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_tomogram_voxel_spacing_aggregate_row(row))
     return TomogramVoxelSpacingAggregate(aggregate=aggregate)
-
 
 def format_tomogram_voxel_spacing_aggregate_row(row: RowMapping) -> TomogramVoxelSpacingAggregateFunctions:
     """
@@ -470,7 +396,6 @@ def format_tomogram_voxel_spacing_aggregate_row(row: RowMapping) -> TomogramVoxe
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_tomogram_voxel_spacings_aggregate(
     info: Info,
@@ -493,8 +418,6 @@ async def resolve_tomogram_voxel_spacings_aggregate(
     rows = await get_aggregate_db_rows(db.TomogramVoxelSpacing, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_tomogram_voxel_spacing_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_tomogram_voxel_spacing(
     input: TomogramVoxelSpacingCreateInput,
@@ -514,9 +437,7 @@ async def create_tomogram_voxel_spacing(
     # Validate that the user can read all of the entities they're linking to.
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
 
@@ -531,8 +452,6 @@ async def create_tomogram_voxel_spacing(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_tomogram_voxel_spacing(
     input: TomogramVoxelSpacingUpdateInput,
@@ -556,18 +475,14 @@ async def update_tomogram_voxel_spacing(
     # Validate that the user can read all of the entities they're linking to.
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
         params["run"] = run[0]
         del params["run_id"]
 
     # Fetch entities for update, if we have access to them
-    entities = await get_db_rows(
-        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.UPDATE,
-    )
+    entities = await get_db_rows(db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.UPDATE)
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
 
@@ -597,9 +512,7 @@ async def delete_tomogram_voxel_spacing(
     Delete TomogramVoxelSpacing objects. Used for mutations (see graphql_api/mutations.py).
     """
     # Fetch entities for deletion, if we have access to them
-    entities = await get_db_rows(
-        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.DELETE,
-    )
+    entities = await get_db_rows(db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.DELETE)
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")
 

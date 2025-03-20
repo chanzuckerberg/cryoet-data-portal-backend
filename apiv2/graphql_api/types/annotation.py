@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -80,7 +93,6 @@ if TYPE_CHECKING:
         DepositionWhereClause,
     )
     from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
-
     pass
 else:
     RunWhereClause = "RunWhereClause"
@@ -112,8 +124,6 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_run_rows(
     root: "Annotation",
@@ -124,28 +134,20 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id) # type:ignore
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]],  # type:ignore
 )
 async def load_annotation_shape_rows(
     root: "Annotation",
     info: Info,
     where: Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")] | None = None,
-    order_by: Optional[
-        list[Annotated["AnnotationShapeOrderByClause", strawberry.lazy("graphql_api.types.annotation_shape")]]
-    ] = [],
+    order_by: Optional[list[Annotated["AnnotationShapeOrderByClause", strawberry.lazy("graphql_api.types.annotation_shape")]]] = [],
 ) -> Sequence[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["annotation_shapes"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_annotation_shape_aggregate_rows(
     root: "Annotation",
@@ -159,38 +161,24 @@ async def load_annotation_shape_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_annotation_shape_aggregate_output(rows)
     return aggregate_output
-
-
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]],  # type:ignore
 )
 async def load_annotation_method_link_rows(
     root: "Annotation",
     info: Info,
-    where: (
-        Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")] | None
-    ) = None,
-    order_by: Optional[
-        list[
-            Annotated["AnnotationMethodLinkOrderByClause", strawberry.lazy("graphql_api.types.annotation_method_link")]
-        ]
-    ] = [],
+    where: Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")] | None = None,
+    order_by: Optional[list[Annotated["AnnotationMethodLinkOrderByClause", strawberry.lazy("graphql_api.types.annotation_method_link")]]] = [],
 ) -> Sequence[Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["method_links"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_annotation_method_link_aggregate_rows(
     root: "Annotation",
     info: Info,
-    where: (
-        Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")] | None
-    ) = None,
+    where: Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")] | None = None,
 ) -> Optional[Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]]:
     selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
@@ -199,36 +187,24 @@ async def load_annotation_method_link_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_annotation_method_link_aggregate_output(rows)
     return aggregate_output
-
-
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]],  # type:ignore
 )
 async def load_annotation_author_rows(
     root: "Annotation",
     info: Info,
-    where: (
-        Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")] | None
-    ) = None,
-    order_by: Optional[
-        list[Annotated["AnnotationAuthorOrderByClause", strawberry.lazy("graphql_api.types.annotation_author")]]
-    ] = [],
+    where: Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")] | None = None,
+    order_by: Optional[list[Annotated["AnnotationAuthorOrderByClause", strawberry.lazy("graphql_api.types.annotation_author")]]] = [],
 ) -> Sequence[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["authors"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_annotation_author_aggregate_rows(
     root: "Annotation",
     info: Info,
-    where: (
-        Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")] | None
-    ) = None,
+    where: Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")] | None = None,
 ) -> Optional[Annotated["AnnotationAuthorAggregate", strawberry.lazy("graphql_api.types.annotation_author")]]:
     selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
@@ -237,22 +213,17 @@ async def load_annotation_author_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_annotation_author_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.field
 async def load_deposition_rows(
     root: "Annotation",
     info: Info,
     where: Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")] | None = None,
-    order_by: Optional[
-        list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]
-    ] = [],
+    order_by: Optional[list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]] = [],
 ) -> Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -265,8 +236,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class AnnotationWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -275,47 +244,18 @@ class AnnotationWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class AnnotationWhereClause(TypedDict):
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    run_id: Optional[IntComparators] | None
-    annotation_shapes: (
-        Optional[Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
-    )
-    annotation_shapes_aggregate: (
-        Optional[
-            Annotated["AnnotationShapeAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]
-        ]
-        | None
-    )
-    method_links: (
-        Optional[
-            Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")]
-        ]
-        | None
-    )
-    method_links_aggregate: (
-        Optional[
-            Annotated[
-                "AnnotationMethodLinkAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link"),
-            ]
-        ]
-        | None
-    )
-    authors: (
-        Optional[Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")]]
-        | None
-    )
-    authors_aggregate: (
-        Optional[
-            Annotated["AnnotationAuthorAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_author")]
-        ]
-        | None
-    )
+    run_id : Optional[IntComparators] | None
+    annotation_shapes: Optional[Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
+    annotation_shapes_aggregate : Optional[Annotated["AnnotationShapeAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
+    method_links: Optional[Annotated["AnnotationMethodLinkWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")]] | None
+    method_links_aggregate : Optional[Annotated["AnnotationMethodLinkAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link")]] | None
+    authors: Optional[Annotated["AnnotationAuthorWhereClause", strawberry.lazy("graphql_api.types.annotation_author")]] | None
+    authors_aggregate : Optional[Annotated["AnnotationAuthorAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_author")]] | None
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
-    deposition_id: Optional[IntComparators] | None
+    deposition_id : Optional[IntComparators] | None
     s3_metadata_path: Optional[StrComparators] | None
     https_metadata_path: Optional[StrComparators] | None
     annotation_publication: Optional[StrComparators] | None
@@ -337,12 +277,9 @@ class AnnotationWhereClause(TypedDict):
     last_modified_date: Optional[DatetimeComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class AnnotationOrderByClause(TypedDict):
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
@@ -372,92 +309,38 @@ class AnnotationOrderByClause(TypedDict):
 """
 Define Annotation type
 """
-
-
-@strawberry.type(description="Metadata for an annotation")
+@strawberry.type(description='Metadata for an annotation')
 class Annotation(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: Optional[int]
-    annotation_shapes: Sequence[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = (
-        load_annotation_shape_rows
-    )  # type:ignore
-    annotation_shapes_aggregate: Optional[
-        Annotated["AnnotationShapeAggregate", strawberry.lazy("graphql_api.types.annotation_shape")]
-    ] = load_annotation_shape_aggregate_rows  # type:ignore
-    method_links: Sequence[
-        Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]
-    ] = load_annotation_method_link_rows  # type:ignore
-    method_links_aggregate: Optional[
-        Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]
-    ] = load_annotation_method_link_aggregate_rows  # type:ignore
-    authors: Sequence[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]] = (
-        load_annotation_author_rows
-    )  # type:ignore
-    authors_aggregate: Optional[
-        Annotated["AnnotationAuthorAggregate", strawberry.lazy("graphql_api.types.annotation_author")]
-    ] = load_annotation_author_aggregate_rows  # type:ignore
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
-    deposition_id: Optional[int]
-    s3_metadata_path: str = strawberry.field(description="S3 path for the metadata json file for this annotation")
-    https_metadata_path: str = strawberry.field(description="HTTPS path for the metadata json file for this annotation")
-    annotation_publication: Optional[str] = strawberry.field(
-        description="DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.",
-        default=None,
-    )
-    annotation_method: str = strawberry.field(
-        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
-    )
-    ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
-    )
-    object_id: str = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.",
-    )
-    object_name: str = strawberry.field(
-        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
-    )
-    object_description: Optional[str] = strawberry.field(
-        description="A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.",
-        default=None,
-    )
-    object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)", default=None,
-    )
-    object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
-    confidence_precision: Optional[float] = strawberry.field(
-        description="Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive",
-        default=None,
-    )
-    confidence_recall: Optional[float] = strawberry.field(
-        description="Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly",
-        default=None,
-    )
-    ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall", default=None,
-    )
-    annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation", default=None,
-    )
-    is_curator_recommended: Optional[bool] = strawberry.field(
-        description="Data curator’s subjective choice as the best annotation of the same annotation object ID",
-        default=None,
-    )
-    method_type: annotation_method_type_enum = strawberry.field(
-        description="The method type for generating the annotation (e.g. manual, hybrid, automated)",
-    )
-    deposition_date: datetime.datetime = strawberry.field(
-        description="Date when an annotation set is initially received by the Data Portal.",
-    )
-    release_date: datetime.datetime = strawberry.field(
-        description="Date when annotation data is made public by the Data Portal.",
-    )
-    last_modified_date: datetime.datetime = strawberry.field(
-        description="Date when an annotation was last modified in the Data Portal",
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    run_id :  Optional[int]
+    annotation_shapes: Sequence[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = load_annotation_shape_rows  # type:ignore
+    annotation_shapes_aggregate : Optional[Annotated["AnnotationShapeAggregate", strawberry.lazy("graphql_api.types.annotation_shape")]] = load_annotation_shape_aggregate_rows  # type:ignore
+    method_links: Sequence[Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]] = load_annotation_method_link_rows  # type:ignore
+    method_links_aggregate : Optional[Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]] = load_annotation_method_link_aggregate_rows  # type:ignore
+    authors: Sequence[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]] = load_annotation_author_rows  # type:ignore
+    authors_aggregate : Optional[Annotated["AnnotationAuthorAggregate", strawberry.lazy("graphql_api.types.annotation_author")]] = load_annotation_author_aggregate_rows  # type:ignore
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type:ignore
+    deposition_id :  Optional[int]
+    s3_metadata_path: str = strawberry.field(description='S3 path for the metadata json file for this annotation')
+    https_metadata_path: str = strawberry.field(description='HTTPS path for the metadata json file for this annotation')
+    annotation_publication: Optional[str] = strawberry.field(description='DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.', default=None)
+    annotation_method: str = strawberry.field(description='Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)')
+    ground_truth_status: Optional[bool] = strawberry.field(description='Whether an annotation is considered ground truth, as determined by the annotator.', default=None)
+    object_id: str = strawberry.field(description='Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.')
+    object_name: str = strawberry.field(description='Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)')
+    object_description: Optional[str] = strawberry.field(description='A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.', default=None)
+    object_state: Optional[str] = strawberry.field(description='Molecule state annotated (e.g. open, closed)', default=None)
+    object_count: Optional[int] = strawberry.field(description='Number of objects identified', default=None)
+    confidence_precision: Optional[float] = strawberry.field(description='Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive', default=None)
+    confidence_recall: Optional[float] = strawberry.field(description='Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly', default=None)
+    ground_truth_used: Optional[str] = strawberry.field(description='Annotation filename used as ground truth for precision and recall', default=None)
+    annotation_software: Optional[str] = strawberry.field(description='Software used for generating this annotation', default=None)
+    is_curator_recommended: Optional[bool] = strawberry.field(description='Data curator’s subjective choice as the best annotation of the same annotation object ID', default=None)
+    method_type:  annotation_method_type_enum = strawberry.field(description='The method type for generating the annotation (e.g. manual, hybrid, automated)')
+    deposition_date: datetime.datetime = strawberry.field(description='Date when an annotation set is initially received by the Data Portal.')
+    release_date: datetime.datetime = strawberry.field(description='Date when annotation data is made public by the Data Portal.')
+    last_modified_date: datetime.datetime = strawberry.field(description='Date when an annotation was last modified in the Data Portal')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -475,47 +358,39 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class AnnotationNumericalColumns:
-    object_count: Optional[int] = None
-    confidence_precision: Optional[float] = None
-    confidence_recall: Optional[float] = None
-    id: Optional[int] = None
-
+    object_count:  Optional[int] = None
+    confidence_precision:  Optional[float] = None
+    confidence_recall:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class AnnotationMinMaxColumns:
-    s3_metadata_path: Optional[str] = None
-    https_metadata_path: Optional[str] = None
-    annotation_publication: Optional[str] = None
-    annotation_method: Optional[str] = None
-    object_id: Optional[str] = None
-    object_name: Optional[str] = None
-    object_description: Optional[str] = None
-    object_state: Optional[str] = None
-    object_count: Optional[int] = None
-    confidence_precision: Optional[float] = None
-    confidence_recall: Optional[float] = None
-    ground_truth_used: Optional[str] = None
-    annotation_software: Optional[str] = None
-    deposition_date: Optional[datetime.datetime] = None
-    release_date: Optional[datetime.datetime] = None
-    last_modified_date: Optional[datetime.datetime] = None
-    id: Optional[int] = None
-
+    s3_metadata_path:  Optional[str] = None
+    https_metadata_path:  Optional[str] = None
+    annotation_publication:  Optional[str] = None
+    annotation_method:  Optional[str] = None
+    object_id:  Optional[str] = None
+    object_name:  Optional[str] = None
+    object_description:  Optional[str] = None
+    object_state:  Optional[str] = None
+    object_count:  Optional[int] = None
+    confidence_precision:  Optional[float] = None
+    confidence_recall:  Optional[float] = None
+    ground_truth_used:  Optional[str] = None
+    annotation_software:  Optional[str] = None
+    deposition_date:  Optional[datetime.datetime] = None
+    release_date:  Optional[datetime.datetime] = None
+    last_modified_date:  Optional[datetime.datetime] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class AnnotationCountColumns(enum.Enum):
     s3MetadataPath = "s3_metadata_path"
@@ -539,12 +414,9 @@ class AnnotationCountColumns(enum.Enum):
     lastModifiedDate = "last_modified_date"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class AnnotationAggregateWhereClauseCount(TypedDict):
     arguments: Optional["AnnotationCountColumns"] | None
@@ -557,22 +429,16 @@ class AnnotationAggregateWhereClauseCount(TypedDict):
 class AnnotationAggregateWhereClause(TypedDict):
     count: AnnotationAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class AnnotationAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[AnnotationCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[AnnotationNumericalColumns] = None
     avg: Optional[AnnotationNumericalColumns] = None
     stddev: Optional[AnnotationNumericalColumns] = None
@@ -581,16 +447,12 @@ class AnnotationAggregateFunctions:
     max: Optional[AnnotationMinMaxColumns] = None
     groupBy: Optional[AnnotationGroupByOptions] = None
 
-
 """
 Wrapper around AnnotationAggregateFunctions
 """
-
-
 @strawberry.type
 class AnnotationAggregate:
     aggregate: Optional[list[AnnotationAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -603,138 +465,56 @@ Mutation types
 class AnnotationCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    s3_metadata_path: str = strawberry.field(description="S3 path for the metadata json file for this annotation")
-    https_metadata_path: str = strawberry.field(description="HTTPS path for the metadata json file for this annotation")
-    annotation_publication: Optional[str] = strawberry.field(
-        description="DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.",
-        default=None,
-    )
-    annotation_method: str = strawberry.field(
-        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
-    )
-    ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
-    )
-    object_id: str = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.",
-    )
-    object_name: str = strawberry.field(
-        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
-    )
-    object_description: Optional[str] = strawberry.field(
-        description="A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.",
-        default=None,
-    )
-    object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)", default=None,
-    )
-    object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
-    confidence_precision: Optional[float] = strawberry.field(
-        description="Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive",
-        default=None,
-    )
-    confidence_recall: Optional[float] = strawberry.field(
-        description="Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly",
-        default=None,
-    )
-    ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall", default=None,
-    )
-    annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation", default=None,
-    )
-    is_curator_recommended: Optional[bool] = strawberry.field(
-        description="Data curator’s subjective choice as the best annotation of the same annotation object ID",
-        default=None,
-    )
-    method_type: annotation_method_type_enum = strawberry.field(
-        description="The method type for generating the annotation (e.g. manual, hybrid, automated)",
-    )
-    deposition_date: datetime.datetime = strawberry.field(
-        description="Date when an annotation set is initially received by the Data Portal.",
-    )
-    release_date: datetime.datetime = strawberry.field(
-        description="Date when annotation data is made public by the Data Portal.",
-    )
-    last_modified_date: datetime.datetime = strawberry.field(
-        description="Date when an annotation was last modified in the Data Portal",
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    s3_metadata_path: str = strawberry.field(description='S3 path for the metadata json file for this annotation')
+    https_metadata_path: str = strawberry.field(description='HTTPS path for the metadata json file for this annotation')
+    annotation_publication: Optional[str] = strawberry.field(description='DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.', default=None)
+    annotation_method: str = strawberry.field(description='Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)')
+    ground_truth_status: Optional[bool] = strawberry.field(description='Whether an annotation is considered ground truth, as determined by the annotator.', default=None)
+    object_id: str = strawberry.field(description='Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.')
+    object_name: str = strawberry.field(description='Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)')
+    object_description: Optional[str] = strawberry.field(description='A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.', default=None)
+    object_state: Optional[str] = strawberry.field(description='Molecule state annotated (e.g. open, closed)', default=None)
+    object_count: Optional[int] = strawberry.field(description='Number of objects identified', default=None)
+    confidence_precision: Optional[float] = strawberry.field(description='Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive', default=None)
+    confidence_recall: Optional[float] = strawberry.field(description='Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly', default=None)
+    ground_truth_used: Optional[str] = strawberry.field(description='Annotation filename used as ground truth for precision and recall', default=None)
+    annotation_software: Optional[str] = strawberry.field(description='Software used for generating this annotation', default=None)
+    is_curator_recommended: Optional[bool] = strawberry.field(description='Data curator’s subjective choice as the best annotation of the same annotation object ID', default=None)
+    method_type: annotation_method_type_enum = strawberry.field(description='The method type for generating the annotation (e.g. manual, hybrid, automated)')
+    deposition_date: datetime.datetime = strawberry.field(description='Date when an annotation set is initially received by the Data Portal.')
+    release_date: datetime.datetime = strawberry.field(description='Date when annotation data is made public by the Data Portal.')
+    last_modified_date: datetime.datetime = strawberry.field(description='Date when an annotation was last modified in the Data Portal')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class AnnotationUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    s3_metadata_path: Optional[str] = strawberry.field(
-        description="S3 path for the metadata json file for this annotation",
-    )
-    https_metadata_path: Optional[str] = strawberry.field(
-        description="HTTPS path for the metadata json file for this annotation",
-    )
-    annotation_publication: Optional[str] = strawberry.field(
-        description="DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.",
-        default=None,
-    )
-    annotation_method: Optional[str] = strawberry.field(
-        description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
-    )
-    ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
-    )
-    object_id: Optional[str] = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.",
-    )
-    object_name: Optional[str] = strawberry.field(
-        description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
-    )
-    object_description: Optional[str] = strawberry.field(
-        description="A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.",
-        default=None,
-    )
-    object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)", default=None,
-    )
-    object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
-    confidence_precision: Optional[float] = strawberry.field(
-        description="Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive",
-        default=None,
-    )
-    confidence_recall: Optional[float] = strawberry.field(
-        description="Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly",
-        default=None,
-    )
-    ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall", default=None,
-    )
-    annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation", default=None,
-    )
-    is_curator_recommended: Optional[bool] = strawberry.field(
-        description="Data curator’s subjective choice as the best annotation of the same annotation object ID",
-        default=None,
-    )
-    method_type: Optional[annotation_method_type_enum] = strawberry.field(
-        description="The method type for generating the annotation (e.g. manual, hybrid, automated)",
-    )
-    deposition_date: Optional[datetime.datetime] = strawberry.field(
-        description="Date when an annotation set is initially received by the Data Portal.",
-    )
-    release_date: Optional[datetime.datetime] = strawberry.field(
-        description="Date when annotation data is made public by the Data Portal.",
-    )
-    last_modified_date: Optional[datetime.datetime] = strawberry.field(
-        description="Date when an annotation was last modified in the Data Portal",
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    s3_metadata_path: Optional[str] = strawberry.field(description='S3 path for the metadata json file for this annotation')
+    https_metadata_path: Optional[str] = strawberry.field(description='HTTPS path for the metadata json file for this annotation')
+    annotation_publication: Optional[str] = strawberry.field(description='DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.', default=None)
+    annotation_method: Optional[str] = strawberry.field(description='Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)')
+    ground_truth_status: Optional[bool] = strawberry.field(description='Whether an annotation is considered ground truth, as determined by the annotator.', default=None)
+    object_id: Optional[str] = strawberry.field(description='Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.')
+    object_name: Optional[str] = strawberry.field(description='Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)')
+    object_description: Optional[str] = strawberry.field(description='A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.', default=None)
+    object_state: Optional[str] = strawberry.field(description='Molecule state annotated (e.g. open, closed)', default=None)
+    object_count: Optional[int] = strawberry.field(description='Number of objects identified', default=None)
+    confidence_precision: Optional[float] = strawberry.field(description='Describe the confidence level of the annotation. Precision is defined as the % of annotation objects being true positive', default=None)
+    confidence_recall: Optional[float] = strawberry.field(description='Describe the confidence level of the annotation. Recall is defined as the % of true positives being annotated correctly', default=None)
+    ground_truth_used: Optional[str] = strawberry.field(description='Annotation filename used as ground truth for precision and recall', default=None)
+    annotation_software: Optional[str] = strawberry.field(description='Software used for generating this annotation', default=None)
+    is_curator_recommended: Optional[bool] = strawberry.field(description='Data curator’s subjective choice as the best annotation of the same annotation object ID', default=None)
+    method_type: Optional[annotation_method_type_enum] = strawberry.field(description='The method type for generating the annotation (e.g. manual, hybrid, automated)')
+    deposition_date: Optional[datetime.datetime] = strawberry.field(description='Date when an annotation set is initially received by the Data Portal.')
+    release_date: Optional[datetime.datetime] = strawberry.field(description='Date when annotation data is made public by the Data Portal.')
+    last_modified_date: Optional[datetime.datetime] = strawberry.field(description='Date when an annotation was last modified in the Data Portal')
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_annotations(
@@ -762,11 +542,10 @@ def format_annotation_aggregate_output(query_results: Sequence[RowMapping] | Row
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_aggregate_row(row))
     return AnnotationAggregate(aggregate=aggregate)
-
 
 def format_annotation_aggregate_row(row: RowMapping) -> AnnotationAggregateFunctions:
     """
@@ -798,7 +577,6 @@ def format_annotation_aggregate_row(row: RowMapping) -> AnnotationAggregateFunct
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_annotations_aggregate(
     info: Info,
@@ -821,8 +599,6 @@ async def resolve_annotations_aggregate(
     rows = await get_aggregate_db_rows(db.Annotation, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_annotation(
     input: AnnotationCreateInput,
@@ -842,22 +618,12 @@ async def create_annotation(
     # Validate that the user can read all of the entities they're linking to.
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
 
@@ -872,8 +638,6 @@ async def create_annotation(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_annotation(
     input: AnnotationUpdateInput,
@@ -897,24 +661,14 @@ async def update_annotation(
     # Validate that the user can read all of the entities they're linking to.
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
         params["run"] = run[0]
         del params["run_id"]
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
         params["deposition"] = deposition[0]

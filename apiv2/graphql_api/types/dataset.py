@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -70,7 +83,6 @@ if TYPE_CHECKING:
         DepositionWhereClause,
     )
     from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
-
     pass
 else:
     DepositionWhereClause = "DepositionWhereClause"
@@ -98,42 +110,30 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_deposition_rows(
     root: "Dataset",
     info: Info,
     where: Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")] | None = None,
-    order_by: Optional[
-        list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]
-    ] = [],
+    order_by: Optional[list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]] = [],
 ) -> Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Dataset)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id) # type:ignore
 @relay.connection(
-    relay.ListConnection[
-        Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]],  # type:ignore
 )
 async def load_dataset_funding_rows(
     root: "Dataset",
     info: Info,
     where: Annotated["DatasetFundingWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")] | None = None,
-    order_by: Optional[
-        list[Annotated["DatasetFundingOrderByClause", strawberry.lazy("graphql_api.types.dataset_funding")]]
-    ] = [],
+    order_by: Optional[list[Annotated["DatasetFundingOrderByClause", strawberry.lazy("graphql_api.types.dataset_funding")]]] = [],
 ) -> Sequence[Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Dataset)
     relationship = mapper.relationships["funding_sources"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_dataset_funding_aggregate_rows(
     root: "Dataset",
@@ -147,25 +147,19 @@ async def load_dataset_funding_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_dataset_funding_aggregate_output(rows)
     return aggregate_output
-
-
 @relay.connection(
-    relay.ListConnection[Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]],  # type:ignore
+        relay.ListConnection[Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]],  # type:ignore
 )
 async def load_dataset_author_rows(
     root: "Dataset",
     info: Info,
     where: Annotated["DatasetAuthorWhereClause", strawberry.lazy("graphql_api.types.dataset_author")] | None = None,
-    order_by: Optional[
-        list[Annotated["DatasetAuthorOrderByClause", strawberry.lazy("graphql_api.types.dataset_author")]]
-    ] = [],
+    order_by: Optional[list[Annotated["DatasetAuthorOrderByClause", strawberry.lazy("graphql_api.types.dataset_author")]]] = [],
 ) -> Sequence[Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Dataset)
     relationship = mapper.relationships["authors"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_dataset_author_aggregate_rows(
     root: "Dataset",
@@ -179,10 +173,8 @@ async def load_dataset_author_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_dataset_author_aggregate_output(rows)
     return aggregate_output
-
-
 @relay.connection(
-    relay.ListConnection[Annotated["Run", strawberry.lazy("graphql_api.types.run")]],  # type:ignore
+        relay.ListConnection[Annotated["Run", strawberry.lazy("graphql_api.types.run")]],  # type:ignore
 )
 async def load_run_rows(
     root: "Dataset",
@@ -194,8 +186,6 @@ async def load_run_rows(
     mapper = inspect(db.Dataset)
     relationship = mapper.relationships["runs"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_run_aggregate_rows(
     root: "Dataset",
@@ -210,7 +200,6 @@ async def load_run_aggregate_rows(
     aggregate_output = format_run_aggregate_output(rows)
     return aggregate_output
 
-
 """
 ------------------------------------------------------------------------------
 Define Strawberry GQL types
@@ -222,8 +211,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class DatasetWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -232,26 +219,16 @@ class DatasetWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class DatasetWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
-    deposition_id: Optional[IntComparators] | None
-    funding_sources: (
-        Optional[Annotated["DatasetFundingWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")]] | None
-    )
-    funding_sources_aggregate: (
-        Optional[Annotated["DatasetFundingAggregateWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")]]
-        | None
-    )
+    deposition_id : Optional[IntComparators] | None
+    funding_sources: Optional[Annotated["DatasetFundingWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")]] | None
+    funding_sources_aggregate : Optional[Annotated["DatasetFundingAggregateWhereClause", strawberry.lazy("graphql_api.types.dataset_funding")]] | None
     authors: Optional[Annotated["DatasetAuthorWhereClause", strawberry.lazy("graphql_api.types.dataset_author")]] | None
-    authors_aggregate: (
-        Optional[Annotated["DatasetAuthorAggregateWhereClause", strawberry.lazy("graphql_api.types.dataset_author")]]
-        | None
-    )
+    authors_aggregate : Optional[Annotated["DatasetAuthorAggregateWhereClause", strawberry.lazy("graphql_api.types.dataset_author")]] | None
     runs: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    runs_aggregate: Optional[Annotated["RunAggregateWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
+    runs_aggregate : Optional[Annotated["RunAggregateWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     title: Optional[StrComparators] | None
     description: Optional[StrComparators] | None
     organism_name: Optional[StrComparators] | None
@@ -280,12 +257,9 @@ class DatasetWhereClause(TypedDict):
     file_size: Optional[FloatComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class DatasetOrderByClause(TypedDict):
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
@@ -321,100 +295,43 @@ class DatasetOrderByClause(TypedDict):
 """
 Define Dataset type
 """
-
-
-@strawberry.type(description="A collection of imaging experiments on the same organism")
+@strawberry.type(description='A collection of imaging experiments on the same organism')
 class Dataset(EntityInterface):
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
-    deposition_id: int
-    funding_sources: Sequence[Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]] = (
-        load_dataset_funding_rows
-    )  # type:ignore
-    funding_sources_aggregate: Optional[
-        Annotated["DatasetFundingAggregate", strawberry.lazy("graphql_api.types.dataset_funding")]
-    ] = load_dataset_funding_aggregate_rows  # type:ignore
-    authors: Sequence[Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]] = (
-        load_dataset_author_rows
-    )  # type:ignore
-    authors_aggregate: Optional[
-        Annotated["DatasetAuthorAggregate", strawberry.lazy("graphql_api.types.dataset_author")]
-    ] = load_dataset_author_aggregate_rows  # type:ignore
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type:ignore
+    deposition_id :  int
+    funding_sources: Sequence[Annotated["DatasetFunding", strawberry.lazy("graphql_api.types.dataset_funding")]] = load_dataset_funding_rows  # type:ignore
+    funding_sources_aggregate : Optional[Annotated["DatasetFundingAggregate", strawberry.lazy("graphql_api.types.dataset_funding")]] = load_dataset_funding_aggregate_rows  # type:ignore
+    authors: Sequence[Annotated["DatasetAuthor", strawberry.lazy("graphql_api.types.dataset_author")]] = load_dataset_author_rows  # type:ignore
+    authors_aggregate : Optional[Annotated["DatasetAuthorAggregate", strawberry.lazy("graphql_api.types.dataset_author")]] = load_dataset_author_aggregate_rows  # type:ignore
     runs: Sequence[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    runs_aggregate: Optional[Annotated["RunAggregate", strawberry.lazy("graphql_api.types.run")]] = (
-        load_run_aggregate_rows
-    )  # type:ignore
-    title: str = strawberry.field(description="Title of a CryoET dataset")
-    description: str = strawberry.field(
-        description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
-    )
-    organism_name: Optional[str] = strawberry.field(
-        description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
-        default=None,
-    )
-    organism_taxid: Optional[int] = strawberry.field(
-        description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,
-    )
-    tissue_name: Optional[str] = strawberry.field(
-        description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
-        default=None,
-    )
-    tissue_id: Optional[str] = strawberry.field(description="UBERON identifier for the tissue", default=None)
-    cell_name: Optional[str] = strawberry.field(
-        description="Name of the cell from which a biological sample used in a CryoET study is derived from.",
-        default=None,
-    )
-    cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type", default=None,
-    )
-    cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
-    cell_strain_id: Optional[str] = strawberry.field(
-        description="Link to more information about the cell strain", default=None,
-    )
-    sample_type: Optional[sample_type_enum] = strawberry.field(
-        description="Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)",
-        default=None,
-    )
-    sample_preparation: Optional[str] = strawberry.field(
-        description="Describe how the sample was prepared.", default=None,
-    )
-    grid_preparation: Optional[str] = strawberry.field(description="Describe Cryo-ET grid preparation.", default=None)
-    other_setup: Optional[str] = strawberry.field(
-        description="Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication",
-        default=None,
-    )
-    key_photo_url: Optional[str] = strawberry.field(description="URL for the dataset preview image.", default=None)
-    key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of preview image.", default=None,
-    )
-    cell_component_name: Optional[str] = strawberry.field(description="Name of the cellular component", default=None)
-    cell_component_id: Optional[str] = strawberry.field(
-        description="If the dataset focuses on a specific part of a cell, the subset is included here", default=None,
-    )
-    deposition_date: datetime.datetime = strawberry.field(
-        description="Date when a dataset is initially received by the Data Portal.",
-    )
-    release_date: datetime.datetime = strawberry.field(
-        description="Date when a dataset is made available on the Data Portal.",
-    )
-    last_modified_date: datetime.datetime = strawberry.field(
-        description="Date when a released dataset is last modified.",
-    )
-    dataset_publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
-    )
-    related_database_entries: Optional[str] = strawberry.field(
-        description="If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.",
-        default=None,
-    )
-    s3_prefix: str = strawberry.field(description="The S3 public bucket path where this dataset is contained")
-    https_prefix: str = strawberry.field(description="The https directory path where this dataset is contained")
-    file_size: Optional[float] = strawberry.field(description="Size of the dataset in bytes", default=None)
-    id: int = strawberry.field(
-        description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
-    )
-
+    runs_aggregate : Optional[Annotated["RunAggregate", strawberry.lazy("graphql_api.types.run")]] = load_run_aggregate_rows  # type:ignore
+    title: str = strawberry.field(description='Title of a CryoET dataset')
+    description: str = strawberry.field(description='A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.')
+    organism_name: Optional[str] = strawberry.field(description='Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens', default=None)
+    organism_taxid: Optional[int] = strawberry.field(description='NCBI taxonomy identifier for the organism, e.g. 9606', default=None)
+    tissue_name: Optional[str] = strawberry.field(description='Name of the tissue from which a biological sample used in a CryoET study is derived from.', default=None)
+    tissue_id: Optional[str] = strawberry.field(description='UBERON identifier for the tissue', default=None)
+    cell_name: Optional[str] = strawberry.field(description='Name of the cell from which a biological sample used in a CryoET study is derived from.', default=None)
+    cell_type_id: Optional[str] = strawberry.field(description='Cell Ontology identifier for the cell type', default=None)
+    cell_strain_name: Optional[str] = strawberry.field(description='Cell line or strain for the sample.', default=None)
+    cell_strain_id: Optional[str] = strawberry.field(description='Link to more information about the cell strain', default=None)
+    sample_type:  Optional[sample_type_enum] = strawberry.field(description='Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)', default=None)
+    sample_preparation: Optional[str] = strawberry.field(description='Describe how the sample was prepared.', default=None)
+    grid_preparation: Optional[str] = strawberry.field(description='Describe Cryo-ET grid preparation.', default=None)
+    other_setup: Optional[str] = strawberry.field(description='Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication', default=None)
+    key_photo_url: Optional[str] = strawberry.field(description='URL for the dataset preview image.', default=None)
+    key_photo_thumbnail_url: Optional[str] = strawberry.field(description='URL for the thumbnail of preview image.', default=None)
+    cell_component_name: Optional[str] = strawberry.field(description='Name of the cellular component', default=None)
+    cell_component_id: Optional[str] = strawberry.field(description='If the dataset focuses on a specific part of a cell, the subset is included here', default=None)
+    deposition_date: datetime.datetime = strawberry.field(description='Date when a dataset is initially received by the Data Portal.')
+    release_date: datetime.datetime = strawberry.field(description='Date when a dataset is made available on the Data Portal.')
+    last_modified_date: datetime.datetime = strawberry.field(description='Date when a released dataset is last modified.')
+    dataset_publications: Optional[str] = strawberry.field(description='Comma-separated list of DOIs for publications associated with the dataset.', default=None)
+    related_database_entries: Optional[str] = strawberry.field(description='If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.', default=None)
+    s3_prefix: str = strawberry.field(description='The S3 public bucket path where this dataset is contained')
+    https_prefix: str = strawberry.field(description='The https directory path where this dataset is contained')
+    file_size: Optional[float] = strawberry.field(description='Size of the dataset in bytes', default=None)
+    id: int = strawberry.field(description='An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -432,55 +349,47 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class DatasetNumericalColumns:
-    organism_taxid: Optional[int] = None
-    file_size: Optional[float] = None
-    id: Optional[int] = None
-
+    organism_taxid:  Optional[int] = None
+    file_size:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class DatasetMinMaxColumns:
-    title: Optional[str] = None
-    description: Optional[str] = None
-    organism_name: Optional[str] = None
-    organism_taxid: Optional[int] = None
-    tissue_name: Optional[str] = None
-    tissue_id: Optional[str] = None
-    cell_name: Optional[str] = None
-    cell_type_id: Optional[str] = None
-    cell_strain_name: Optional[str] = None
-    cell_strain_id: Optional[str] = None
-    sample_preparation: Optional[str] = None
-    grid_preparation: Optional[str] = None
-    other_setup: Optional[str] = None
-    key_photo_url: Optional[str] = None
-    key_photo_thumbnail_url: Optional[str] = None
-    cell_component_name: Optional[str] = None
-    cell_component_id: Optional[str] = None
-    deposition_date: Optional[datetime.datetime] = None
-    release_date: Optional[datetime.datetime] = None
-    last_modified_date: Optional[datetime.datetime] = None
-    dataset_publications: Optional[str] = None
-    related_database_entries: Optional[str] = None
-    s3_prefix: Optional[str] = None
-    https_prefix: Optional[str] = None
-    file_size: Optional[float] = None
-    id: Optional[int] = None
-
+    title:  Optional[str] = None
+    description:  Optional[str] = None
+    organism_name:  Optional[str] = None
+    organism_taxid:  Optional[int] = None
+    tissue_name:  Optional[str] = None
+    tissue_id:  Optional[str] = None
+    cell_name:  Optional[str] = None
+    cell_type_id:  Optional[str] = None
+    cell_strain_name:  Optional[str] = None
+    cell_strain_id:  Optional[str] = None
+    sample_preparation:  Optional[str] = None
+    grid_preparation:  Optional[str] = None
+    other_setup:  Optional[str] = None
+    key_photo_url:  Optional[str] = None
+    key_photo_thumbnail_url:  Optional[str] = None
+    cell_component_name:  Optional[str] = None
+    cell_component_id:  Optional[str] = None
+    deposition_date:  Optional[datetime.datetime] = None
+    release_date:  Optional[datetime.datetime] = None
+    last_modified_date:  Optional[datetime.datetime] = None
+    dataset_publications:  Optional[str] = None
+    related_database_entries:  Optional[str] = None
+    s3_prefix:  Optional[str] = None
+    https_prefix:  Optional[str] = None
+    file_size:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class DatasetCountColumns(enum.Enum):
     title = "title"
@@ -511,12 +420,9 @@ class DatasetCountColumns(enum.Enum):
     fileSize = "file_size"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class DatasetAggregateWhereClauseCount(TypedDict):
     arguments: Optional["DatasetCountColumns"] | None
@@ -529,20 +435,16 @@ class DatasetAggregateWhereClauseCount(TypedDict):
 class DatasetAggregateWhereClause(TypedDict):
     count: DatasetAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class DatasetAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(self, distinct: Optional[bool] = False, columns: Optional[DatasetCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[DatasetNumericalColumns] = None
     avg: Optional[DatasetNumericalColumns] = None
     stddev: Optional[DatasetNumericalColumns] = None
@@ -551,16 +453,12 @@ class DatasetAggregateFunctions:
     max: Optional[DatasetMinMaxColumns] = None
     groupBy: Optional[DatasetGroupByOptions] = None
 
-
 """
 Wrapper around DatasetAggregateFunctions
 """
-
-
 @strawberry.type
 class DatasetAggregate:
     aggregate: Optional[list[DatasetAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -571,164 +469,70 @@ Mutation types
 
 @strawberry.input()
 class DatasetCreateInput:
-    deposition_id: strawberry.ID = strawberry.field(
-        description="Reference to the deposition this dataset is associated with",
-    )
-    title: str = strawberry.field(description="Title of a CryoET dataset")
-    description: str = strawberry.field(
-        description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
-    )
-    organism_name: Optional[str] = strawberry.field(
-        description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
-        default=None,
-    )
-    organism_taxid: Optional[int] = strawberry.field(
-        description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,
-    )
-    tissue_name: Optional[str] = strawberry.field(
-        description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
-        default=None,
-    )
-    tissue_id: Optional[str] = strawberry.field(description="UBERON identifier for the tissue", default=None)
-    cell_name: Optional[str] = strawberry.field(
-        description="Name of the cell from which a biological sample used in a CryoET study is derived from.",
-        default=None,
-    )
-    cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type", default=None,
-    )
-    cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
-    cell_strain_id: Optional[str] = strawberry.field(
-        description="Link to more information about the cell strain", default=None,
-    )
-    sample_type: Optional[sample_type_enum] = strawberry.field(
-        description="Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)",
-        default=None,
-    )
-    sample_preparation: Optional[str] = strawberry.field(
-        description="Describe how the sample was prepared.", default=None,
-    )
-    grid_preparation: Optional[str] = strawberry.field(description="Describe Cryo-ET grid preparation.", default=None)
-    other_setup: Optional[str] = strawberry.field(
-        description="Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication",
-        default=None,
-    )
-    key_photo_url: Optional[str] = strawberry.field(description="URL for the dataset preview image.", default=None)
-    key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of preview image.", default=None,
-    )
-    cell_component_name: Optional[str] = strawberry.field(description="Name of the cellular component", default=None)
-    cell_component_id: Optional[str] = strawberry.field(
-        description="If the dataset focuses on a specific part of a cell, the subset is included here", default=None,
-    )
-    deposition_date: datetime.datetime = strawberry.field(
-        description="Date when a dataset is initially received by the Data Portal.",
-    )
-    release_date: datetime.datetime = strawberry.field(
-        description="Date when a dataset is made available on the Data Portal.",
-    )
-    last_modified_date: datetime.datetime = strawberry.field(
-        description="Date when a released dataset is last modified.",
-    )
-    dataset_publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
-    )
-    related_database_entries: Optional[str] = strawberry.field(
-        description="If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.",
-        default=None,
-    )
-    s3_prefix: str = strawberry.field(description="The S3 public bucket path where this dataset is contained")
-    https_prefix: str = strawberry.field(description="The https directory path where this dataset is contained")
-    file_size: Optional[float] = strawberry.field(description="Size of the dataset in bytes", default=None)
-    id: int = strawberry.field(
-        description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
-    )
-
-
+    deposition_id: strawberry.ID = strawberry.field(description='Reference to the deposition this dataset is associated with')
+    title: str = strawberry.field(description='Title of a CryoET dataset')
+    description: str = strawberry.field(description='A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.')
+    organism_name: Optional[str] = strawberry.field(description='Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens', default=None)
+    organism_taxid: Optional[int] = strawberry.field(description='NCBI taxonomy identifier for the organism, e.g. 9606', default=None)
+    tissue_name: Optional[str] = strawberry.field(description='Name of the tissue from which a biological sample used in a CryoET study is derived from.', default=None)
+    tissue_id: Optional[str] = strawberry.field(description='UBERON identifier for the tissue', default=None)
+    cell_name: Optional[str] = strawberry.field(description='Name of the cell from which a biological sample used in a CryoET study is derived from.', default=None)
+    cell_type_id: Optional[str] = strawberry.field(description='Cell Ontology identifier for the cell type', default=None)
+    cell_strain_name: Optional[str] = strawberry.field(description='Cell line or strain for the sample.', default=None)
+    cell_strain_id: Optional[str] = strawberry.field(description='Link to more information about the cell strain', default=None)
+    sample_type: Optional[sample_type_enum] = strawberry.field(description='Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)', default=None)
+    sample_preparation: Optional[str] = strawberry.field(description='Describe how the sample was prepared.', default=None)
+    grid_preparation: Optional[str] = strawberry.field(description='Describe Cryo-ET grid preparation.', default=None)
+    other_setup: Optional[str] = strawberry.field(description='Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication', default=None)
+    key_photo_url: Optional[str] = strawberry.field(description='URL for the dataset preview image.', default=None)
+    key_photo_thumbnail_url: Optional[str] = strawberry.field(description='URL for the thumbnail of preview image.', default=None)
+    cell_component_name: Optional[str] = strawberry.field(description='Name of the cellular component', default=None)
+    cell_component_id: Optional[str] = strawberry.field(description='If the dataset focuses on a specific part of a cell, the subset is included here', default=None)
+    deposition_date: datetime.datetime = strawberry.field(description='Date when a dataset is initially received by the Data Portal.')
+    release_date: datetime.datetime = strawberry.field(description='Date when a dataset is made available on the Data Portal.')
+    last_modified_date: datetime.datetime = strawberry.field(description='Date when a released dataset is last modified.')
+    dataset_publications: Optional[str] = strawberry.field(description='Comma-separated list of DOIs for publications associated with the dataset.', default=None)
+    related_database_entries: Optional[str] = strawberry.field(description='If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.', default=None)
+    s3_prefix: str = strawberry.field(description='The S3 public bucket path where this dataset is contained')
+    https_prefix: str = strawberry.field(description='The https directory path where this dataset is contained')
+    file_size: Optional[float] = strawberry.field(description='Size of the dataset in bytes', default=None)
+    id: int = strawberry.field(description='An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree')
 @strawberry.input()
 class DatasetUpdateInput:
-    deposition_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to the deposition this dataset is associated with",
-    )
-    title: Optional[str] = strawberry.field(description="Title of a CryoET dataset")
-    description: Optional[str] = strawberry.field(
-        description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
-    )
-    organism_name: Optional[str] = strawberry.field(
-        description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
-        default=None,
-    )
-    organism_taxid: Optional[int] = strawberry.field(
-        description="NCBI taxonomy identifier for the organism, e.g. 9606", default=None,
-    )
-    tissue_name: Optional[str] = strawberry.field(
-        description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
-        default=None,
-    )
-    tissue_id: Optional[str] = strawberry.field(description="UBERON identifier for the tissue", default=None)
-    cell_name: Optional[str] = strawberry.field(
-        description="Name of the cell from which a biological sample used in a CryoET study is derived from.",
-        default=None,
-    )
-    cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type", default=None,
-    )
-    cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
-    cell_strain_id: Optional[str] = strawberry.field(
-        description="Link to more information about the cell strain", default=None,
-    )
-    sample_type: Optional[sample_type_enum] = strawberry.field(
-        description="Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)",
-        default=None,
-    )
-    sample_preparation: Optional[str] = strawberry.field(
-        description="Describe how the sample was prepared.", default=None,
-    )
-    grid_preparation: Optional[str] = strawberry.field(description="Describe Cryo-ET grid preparation.", default=None)
-    other_setup: Optional[str] = strawberry.field(
-        description="Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication",
-        default=None,
-    )
-    key_photo_url: Optional[str] = strawberry.field(description="URL for the dataset preview image.", default=None)
-    key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the thumbnail of preview image.", default=None,
-    )
-    cell_component_name: Optional[str] = strawberry.field(description="Name of the cellular component", default=None)
-    cell_component_id: Optional[str] = strawberry.field(
-        description="If the dataset focuses on a specific part of a cell, the subset is included here", default=None,
-    )
-    deposition_date: Optional[datetime.datetime] = strawberry.field(
-        description="Date when a dataset is initially received by the Data Portal.",
-    )
-    release_date: Optional[datetime.datetime] = strawberry.field(
-        description="Date when a dataset is made available on the Data Portal.",
-    )
-    last_modified_date: Optional[datetime.datetime] = strawberry.field(
-        description="Date when a released dataset is last modified.",
-    )
-    dataset_publications: Optional[str] = strawberry.field(
-        description="Comma-separated list of DOIs for publications associated with the dataset.", default=None,
-    )
-    related_database_entries: Optional[str] = strawberry.field(
-        description="If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.",
-        default=None,
-    )
-    s3_prefix: Optional[str] = strawberry.field(description="The S3 public bucket path where this dataset is contained")
-    https_prefix: Optional[str] = strawberry.field(
-        description="The https directory path where this dataset is contained",
-    )
-    file_size: Optional[float] = strawberry.field(description="Size of the dataset in bytes", default=None)
-    id: Optional[int] = strawberry.field(
-        description="An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree",
-    )
-
+    deposition_id: Optional[strawberry.ID] = strawberry.field(description='Reference to the deposition this dataset is associated with')
+    title: Optional[str] = strawberry.field(description='Title of a CryoET dataset')
+    description: Optional[str] = strawberry.field(description='A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.')
+    organism_name: Optional[str] = strawberry.field(description='Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens', default=None)
+    organism_taxid: Optional[int] = strawberry.field(description='NCBI taxonomy identifier for the organism, e.g. 9606', default=None)
+    tissue_name: Optional[str] = strawberry.field(description='Name of the tissue from which a biological sample used in a CryoET study is derived from.', default=None)
+    tissue_id: Optional[str] = strawberry.field(description='UBERON identifier for the tissue', default=None)
+    cell_name: Optional[str] = strawberry.field(description='Name of the cell from which a biological sample used in a CryoET study is derived from.', default=None)
+    cell_type_id: Optional[str] = strawberry.field(description='Cell Ontology identifier for the cell type', default=None)
+    cell_strain_name: Optional[str] = strawberry.field(description='Cell line or strain for the sample.', default=None)
+    cell_strain_id: Optional[str] = strawberry.field(description='Link to more information about the cell strain', default=None)
+    sample_type: Optional[sample_type_enum] = strawberry.field(description='Type of samples used in a CryoET study. (cell, tissue, organism, intact organelle, in-vitro mixture, in-silico synthetic data, other)', default=None)
+    sample_preparation: Optional[str] = strawberry.field(description='Describe how the sample was prepared.', default=None)
+    grid_preparation: Optional[str] = strawberry.field(description='Describe Cryo-ET grid preparation.', default=None)
+    other_setup: Optional[str] = strawberry.field(description='Describe other setup not covered by sample preparation or grid preparation that may make this dataset unique in the same publication', default=None)
+    key_photo_url: Optional[str] = strawberry.field(description='URL for the dataset preview image.', default=None)
+    key_photo_thumbnail_url: Optional[str] = strawberry.field(description='URL for the thumbnail of preview image.', default=None)
+    cell_component_name: Optional[str] = strawberry.field(description='Name of the cellular component', default=None)
+    cell_component_id: Optional[str] = strawberry.field(description='If the dataset focuses on a specific part of a cell, the subset is included here', default=None)
+    deposition_date: Optional[datetime.datetime] = strawberry.field(description='Date when a dataset is initially received by the Data Portal.')
+    release_date: Optional[datetime.datetime] = strawberry.field(description='Date when a dataset is made available on the Data Portal.')
+    last_modified_date: Optional[datetime.datetime] = strawberry.field(description='Date when a released dataset is last modified.')
+    dataset_publications: Optional[str] = strawberry.field(description='Comma-separated list of DOIs for publications associated with the dataset.', default=None)
+    related_database_entries: Optional[str] = strawberry.field(description='If a CryoET dataset is also deposited into another database, enter the database identifier here (e.g. EMPIAR-11445). Use a comma to separate multiple identifiers.', default=None)
+    s3_prefix: Optional[str] = strawberry.field(description='The S3 public bucket path where this dataset is contained')
+    https_prefix: Optional[str] = strawberry.field(description='The https directory path where this dataset is contained')
+    file_size: Optional[float] = strawberry.field(description='Size of the dataset in bytes', default=None)
+    id: Optional[int] = strawberry.field(description='An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_datasets(
@@ -756,11 +560,10 @@ def format_dataset_aggregate_output(query_results: Sequence[RowMapping] | RowMap
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_dataset_aggregate_row(row))
     return DatasetAggregate(aggregate=aggregate)
-
 
 def format_dataset_aggregate_row(row: RowMapping) -> DatasetAggregateFunctions:
     """
@@ -792,7 +595,6 @@ def format_dataset_aggregate_row(row: RowMapping) -> DatasetAggregateFunctions:
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_datasets_aggregate(
     info: Info,
@@ -815,8 +617,6 @@ async def resolve_datasets_aggregate(
     rows = await get_aggregate_db_rows(db.Dataset, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_dataset_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_dataset(
     input: DatasetCreateInput,
@@ -836,15 +636,7 @@ async def create_dataset(
     # Validate that the user can read all of the entities they're linking to.
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
 
@@ -859,8 +651,6 @@ async def create_dataset(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_dataset(
     input: DatasetUpdateInput,
@@ -884,15 +674,7 @@ async def update_dataset(
     # Validate that the user can read all of the entities they're linking to.
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
         params["deposition"] = deposition[0]

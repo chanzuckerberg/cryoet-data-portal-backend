@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 import datetime
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
@@ -43,28 +45,19 @@ Define groupby options for Deposition type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class DepositionGroupByOptions:
-    authors: Optional[
-        Annotated["DepositionAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition_author")]
-    ] = None
+    authors: Optional[Annotated["DepositionAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition_author")]] = None
     alignments: Optional[Annotated["AlignmentGroupByOptions", strawberry.lazy("graphql_api.helpers.alignment")]] = None
-    annotations: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = (
-        None
-    )
+    annotations: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = None
     datasets: Optional[Annotated["DatasetGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset")]] = None
     frames: Optional[Annotated["FrameGroupByOptions", strawberry.lazy("graphql_api.helpers.frame")]] = None
-    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = (
-        None
-    )
+    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = None
     tomograms: Optional[Annotated["TomogramGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram")]] = None
     title: Optional[str] = None
     description: Optional[str] = None
     tag: Optional[str] = None
-    deposition_types: Optional[
-        Annotated["DepositionTypeGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition_type")]
-    ] = None
+    deposition_types: Optional[Annotated["DepositionTypeGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition_type")]] = None
     deposition_publications: Optional[str] = None
     related_database_entries: Optional[str] = None
     deposition_date: Optional[datetime.datetime] = None

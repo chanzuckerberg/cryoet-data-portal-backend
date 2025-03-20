@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.dataset as dataset_helper
@@ -20,7 +22,6 @@ else:
 Define groupby options for DatasetFunding type.
 These are only used in aggregate queries.
 """
-
 
 @strawberry.type
 class DatasetFundingGroupByOptions:

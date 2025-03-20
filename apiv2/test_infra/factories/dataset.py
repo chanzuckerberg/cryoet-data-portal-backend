@@ -29,6 +29,7 @@ class DatasetFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     deposition = factory.SubFactory(
         DepositionFactory,
     )
@@ -44,9 +45,16 @@ class DatasetFactory(CommonFactory):
     cell_type_id = fuzzy.FuzzyText()
     cell_strain_name = fuzzy.FuzzyText()
     cell_strain_id = fuzzy.FuzzyText()
-    sample_type = fuzzy.FuzzyChoice(
-        ["cell", "tissue", "organism", "organelle", "virus", "in_vitro", "in_silico", "other"],
-    )
+    sample_type = fuzzy.FuzzyChoice([
+        "cell",
+        "tissue",
+        "organism",
+        "organelle",
+        "virus",
+        "in_vitro",
+        "in_silico",
+        "other",
+    ])
     sample_preparation = fuzzy.FuzzyText()
     grid_preparation = fuzzy.FuzzyText()
     other_setup = fuzzy.FuzzyText()

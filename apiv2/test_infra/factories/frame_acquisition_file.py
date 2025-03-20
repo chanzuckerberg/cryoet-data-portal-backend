@@ -29,6 +29,7 @@ class FrameAcquisitionFileFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     run = factory.SubFactory(
         RunFactory,
     )

@@ -29,12 +29,14 @@ class DepositionAuthorFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     deposition = factory.SubFactory(
         DepositionFactory,
     )
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)
+
 
     author_list_order = fuzzy.FuzzyInteger(1, 1000)
 

@@ -30,6 +30,7 @@ class TiltseriesFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     run = factory.SubFactory(
         RunFactory,
     )
@@ -48,7 +49,12 @@ class TiltseriesFactory(CommonFactory):
     acceleration_voltage = fuzzy.FuzzyInteger(1, 1000)
 
     spherical_aberration_constant = fuzzy.FuzzyFloat(1, 100)
-    microscope_manufacturer = fuzzy.FuzzyChoice(["FEI", "TFS", "JEOL", "SIMULATED"])
+    microscope_manufacturer = fuzzy.FuzzyChoice([
+        "FEI",
+        "TFS",
+        "JEOL",
+        "SIMULATED",
+    ])
     microscope_model = fuzzy.FuzzyText()
     microscope_energy_filter = fuzzy.FuzzyText()
     microscope_phase_plate = fuzzy.FuzzyText()
@@ -74,11 +80,15 @@ class TiltseriesFactory(CommonFactory):
 
     aligned_tiltseries_binning = fuzzy.FuzzyInteger(1, 1000)
 
+
     size_x = fuzzy.FuzzyInteger(1, 1000)
+
 
     size_y = fuzzy.FuzzyInteger(1, 1000)
 
+
     size_z = fuzzy.FuzzyInteger(1, 1000)
+
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)

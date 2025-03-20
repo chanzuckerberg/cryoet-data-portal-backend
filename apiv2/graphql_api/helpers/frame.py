@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.deposition as deposition_helper
@@ -27,20 +29,15 @@ Define groupby options for Frame type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class FrameGroupByOptions:
-    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
-        None
-    )
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = None
     run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     acquisition_order: Optional[int] = None
     accumulated_dose: Optional[float] = None
     exposure_dose: Optional[float] = None
     is_gain_corrected: Optional[bool] = None
-    per_section_parameters: Optional[
-        Annotated["PerSectionParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_parameters")]
-    ] = None
+    per_section_parameters: Optional[Annotated["PerSectionParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_parameters")]] = None
     s3_frame_path: Optional[str] = None
     https_frame_path: Optional[str] = None
     file_size: Optional[float] = None

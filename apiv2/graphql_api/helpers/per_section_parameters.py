@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.frame as frame_helper
@@ -27,7 +29,6 @@ Define groupby options for PerSectionParameters type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class PerSectionParametersGroupByOptions:
     astigmatic_angle: Optional[float] = None
@@ -38,9 +39,7 @@ class PerSectionParametersGroupByOptions:
     phase_shift: Optional[float] = None
     raw_angle: Optional[float] = None
     run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
-    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = (
-        None
-    )
+    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = None
     z_index: Optional[int] = None
     id: Optional[int] = None
 

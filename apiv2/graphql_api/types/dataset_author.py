@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -45,7 +58,6 @@ T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.dataset import Dataset, DatasetAggregateWhereClause, DatasetOrderByClause, DatasetWhereClause
-
     pass
 else:
     DatasetWhereClause = "DatasetWhereClause"
@@ -61,8 +73,6 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_dataset_rows(
     root: "DatasetAuthor",
@@ -73,8 +83,7 @@ async def load_dataset_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.DatasetAuthor)
     relationship = mapper.relationships["dataset"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.dataset_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.dataset_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -87,8 +96,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class DatasetAuthorWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -97,12 +104,10 @@ class DatasetAuthorWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class DatasetAuthorWhereClause(TypedDict):
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
-    dataset_id: Optional[IntComparators] | None
+    dataset_id : Optional[IntComparators] | None
     id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
     orcid: Optional[StrComparators] | None
@@ -115,12 +120,9 @@ class DatasetAuthorWhereClause(TypedDict):
     corresponding_author_status: Optional[BoolComparators] | None
     primary_author_status: Optional[BoolComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class DatasetAuthorOrderByClause(TypedDict):
     dataset: Optional[Annotated["DatasetOrderByClause", strawberry.lazy("graphql_api.types.dataset")]] | None
@@ -140,42 +142,21 @@ class DatasetAuthorOrderByClause(TypedDict):
 """
 Define DatasetAuthor type
 """
-
-
-@strawberry.type(description="An author of a dataset")
+@strawberry.type(description='An author of a dataset')
 class DatasetAuthor(EntityInterface):
-    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_rows
-    )  # type:ignore
-    dataset_id: Optional[int]
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-    author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
-    orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
-    )
-    kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
-    )
-    name: str = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
-    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
-    affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
-    )
-    affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
-    )
-    affiliation_identifier: Optional[str] = strawberry.field(
-        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
-        default=None,
-    )
-    corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
-    )
-    primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person associated with the corresponding dataset",
-        default=None,
-    )
-
+    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type:ignore
+    dataset_id :  Optional[int]
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
+    author_list_order: int = strawberry.field(description='The order in which the author appears in the publication')
+    orcid: Optional[str] = strawberry.field(description='A unique, persistent identifier for researchers, provided by ORCID.', default=None)
+    kaggle_id: Optional[str] = strawberry.field(description='A unique, persistent identifier for kaggle users at kaggle.com.', default=None)
+    name: str = strawberry.field(description='Full name of a dataset author (e.g. Jane Doe).')
+    email: Optional[str] = strawberry.field(description='Email address for this author', default=None)
+    affiliation_name: Optional[str] = strawberry.field(description='Name of the institutions an author is affiliated with. Comma separated', default=None)
+    affiliation_address: Optional[str] = strawberry.field(description='Address of the institution an author is affiliated with.', default=None)
+    affiliation_identifier: Optional[str] = strawberry.field(description='A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).', default=None)
+    corresponding_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the corresponding author', default=None)
+    primary_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the main person associated with the corresponding dataset', default=None)
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -193,37 +174,29 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class DatasetAuthorNumericalColumns:
-    id: Optional[int] = None
-    author_list_order: Optional[int] = None
-
+    id:  Optional[int] = None
+    author_list_order:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class DatasetAuthorMinMaxColumns:
-    id: Optional[int] = None
-    author_list_order: Optional[int] = None
-    orcid: Optional[str] = None
-    kaggle_id: Optional[str] = None
-    name: Optional[str] = None
-    email: Optional[str] = None
-    affiliation_name: Optional[str] = None
-    affiliation_address: Optional[str] = None
-    affiliation_identifier: Optional[str] = None
-
+    id:  Optional[int] = None
+    author_list_order:  Optional[int] = None
+    orcid:  Optional[str] = None
+    kaggle_id:  Optional[str] = None
+    name:  Optional[str] = None
+    email:  Optional[str] = None
+    affiliation_name:  Optional[str] = None
+    affiliation_address:  Optional[str] = None
+    affiliation_identifier:  Optional[str] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class DatasetAuthorCountColumns(enum.Enum):
     id = "id"
@@ -238,12 +211,9 @@ class DatasetAuthorCountColumns(enum.Enum):
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class DatasetAuthorAggregateWhereClauseCount(TypedDict):
     arguments: Optional["DatasetAuthorCountColumns"] | None
@@ -256,22 +226,16 @@ class DatasetAuthorAggregateWhereClauseCount(TypedDict):
 class DatasetAuthorAggregateWhereClause(TypedDict):
     count: DatasetAuthorAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class DatasetAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DatasetAuthorCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[DatasetAuthorCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[DatasetAuthorNumericalColumns] = None
     avg: Optional[DatasetAuthorNumericalColumns] = None
     stddev: Optional[DatasetAuthorNumericalColumns] = None
@@ -280,16 +244,12 @@ class DatasetAuthorAggregateFunctions:
     max: Optional[DatasetAuthorMinMaxColumns] = None
     groupBy: Optional[DatasetAuthorGroupByOptions] = None
 
-
 """
 Wrapper around DatasetAuthorAggregateFunctions
 """
-
-
 @strawberry.type
 class DatasetAuthorAggregate:
     aggregate: Optional[list[DatasetAuthorAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -300,76 +260,38 @@ Mutation types
 
 @strawberry.input()
 class DatasetAuthorCreateInput:
-    dataset_id: Optional[strawberry.ID] = strawberry.field(description="Dataset authored by this person", default=None)
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-    author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
-    orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
-    )
-    kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
-    )
-    name: str = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
-    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
-    affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
-    )
-    affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
-    )
-    affiliation_identifier: Optional[str] = strawberry.field(
-        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
-        default=None,
-    )
-    corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
-    )
-    primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person associated with the corresponding dataset",
-        default=None,
-    )
-
-
+    dataset_id: Optional[strawberry.ID] = strawberry.field(description='Dataset authored by this person', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
+    author_list_order: int = strawberry.field(description='The order in which the author appears in the publication')
+    orcid: Optional[str] = strawberry.field(description='A unique, persistent identifier for researchers, provided by ORCID.', default=None)
+    kaggle_id: Optional[str] = strawberry.field(description='A unique, persistent identifier for kaggle users at kaggle.com.', default=None)
+    name: str = strawberry.field(description='Full name of a dataset author (e.g. Jane Doe).')
+    email: Optional[str] = strawberry.field(description='Email address for this author', default=None)
+    affiliation_name: Optional[str] = strawberry.field(description='Name of the institutions an author is affiliated with. Comma separated', default=None)
+    affiliation_address: Optional[str] = strawberry.field(description='Address of the institution an author is affiliated with.', default=None)
+    affiliation_identifier: Optional[str] = strawberry.field(description='A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).', default=None)
+    corresponding_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the corresponding author', default=None)
+    primary_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the main person associated with the corresponding dataset', default=None)
 @strawberry.input()
 class DatasetAuthorUpdateInput:
-    dataset_id: Optional[strawberry.ID] = strawberry.field(description="Dataset authored by this person", default=None)
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-    author_list_order: Optional[int] = strawberry.field(
-        description="The order in which the author appears in the publication",
-    )
-    orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
-    )
-    kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
-    )
-    name: Optional[str] = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
-    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
-    affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
-    )
-    affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
-    )
-    affiliation_identifier: Optional[str] = strawberry.field(
-        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
-        default=None,
-    )
-    corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
-    )
-    primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person associated with the corresponding dataset",
-        default=None,
-    )
-
+    dataset_id: Optional[strawberry.ID] = strawberry.field(description='Dataset authored by this person', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
+    author_list_order: Optional[int] = strawberry.field(description='The order in which the author appears in the publication')
+    orcid: Optional[str] = strawberry.field(description='A unique, persistent identifier for researchers, provided by ORCID.', default=None)
+    kaggle_id: Optional[str] = strawberry.field(description='A unique, persistent identifier for kaggle users at kaggle.com.', default=None)
+    name: Optional[str] = strawberry.field(description='Full name of a dataset author (e.g. Jane Doe).')
+    email: Optional[str] = strawberry.field(description='Email address for this author', default=None)
+    affiliation_name: Optional[str] = strawberry.field(description='Name of the institutions an author is affiliated with. Comma separated', default=None)
+    affiliation_address: Optional[str] = strawberry.field(description='Address of the institution an author is affiliated with.', default=None)
+    affiliation_identifier: Optional[str] = strawberry.field(description='A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).', default=None)
+    corresponding_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the corresponding author', default=None)
+    primary_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the main person associated with the corresponding dataset', default=None)
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_dataset_authors(
@@ -397,11 +319,10 @@ def format_dataset_author_aggregate_output(query_results: Sequence[RowMapping] |
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_dataset_author_aggregate_row(row))
     return DatasetAuthorAggregate(aggregate=aggregate)
-
 
 def format_dataset_author_aggregate_row(row: RowMapping) -> DatasetAuthorAggregateFunctions:
     """
@@ -433,7 +354,6 @@ def format_dataset_author_aggregate_row(row: RowMapping) -> DatasetAuthorAggrega
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_dataset_authors_aggregate(
     info: Info,
@@ -456,8 +376,6 @@ async def resolve_dataset_authors_aggregate(
     rows = await get_aggregate_db_rows(db.DatasetAuthor, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_dataset_author_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_dataset_author(
     input: DatasetAuthorCreateInput,
@@ -477,9 +395,7 @@ async def create_dataset_author(
     # Validate that the user can read all of the entities they're linking to.
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
-        dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
-        )
+        dataset = await get_db_rows(db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id } }, [], AuthzAction.VIEW)
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
 
@@ -494,8 +410,6 @@ async def create_dataset_author(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_dataset_author(
     input: DatasetAuthorUpdateInput,
@@ -519,9 +433,7 @@ async def update_dataset_author(
     # Validate that the user can read all of the entities they're linking to.
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
-        dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
-        )
+        dataset = await get_db_rows(db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id } }, [], AuthzAction.VIEW)
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
         params["dataset"] = dataset[0]

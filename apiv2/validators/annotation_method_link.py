@@ -8,6 +8,7 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
@@ -18,38 +19,16 @@ from typing_extensions import Annotated
 class AnnotationMethodLinkCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    annotation_id: Annotated[uuid.UUID | None, Field()]
-    link_type: Annotated[annotation_method_link_type_enum, Field()]
-    name: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    link: Annotated[
-        str,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    id: Annotated[int, Field()]
-
-
+    annotation_id: Annotated[ uuid.UUID | None, Field()]
+    link_type: Annotated[ annotation_method_link_type_enum, Field()]
+    name: Annotated[ str | None, StringConstraints(strip_whitespace=True)]
+    link: Annotated[ str, StringConstraints(strip_whitespace=True)]
+    id: Annotated[ int, Field()]
 class AnnotationMethodLinkUpdateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    annotation_id: Annotated[uuid.UUID | None, Field()]
-    link_type: Annotated[annotation_method_link_type_enum | None, Field()]
-    name: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    link: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    id: Annotated[int | None, Field()]
+    annotation_id: Annotated[ uuid.UUID | None, Field()]
+    link_type: Annotated[ annotation_method_link_type_enum | None, Field()]
+    name: Annotated[ str | None, StringConstraints(strip_whitespace=True)]
+    link: Annotated[ str | None, StringConstraints(strip_whitespace=True)]
+    id: Annotated[ int | None, Field()]

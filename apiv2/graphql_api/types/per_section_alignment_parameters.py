@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -55,7 +68,6 @@ if TYPE_CHECKING:
         AlignmentOrderByClause,
         AlignmentWhereClause,
     )
-
     pass
 else:
     AlignmentWhereClause = "AlignmentWhereClause"
@@ -71,8 +83,6 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_alignment_rows(
     root: "PerSectionAlignmentParameters",
@@ -83,8 +93,7 @@ async def load_alignment_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.PerSectionAlignmentParameters)
     relationship = mapper.relationships["alignment"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.alignment_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.alignment_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -97,8 +106,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class PerSectionAlignmentParametersWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -107,12 +114,10 @@ class PerSectionAlignmentParametersWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class PerSectionAlignmentParametersWhereClause(TypedDict):
     alignment: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
-    alignment_id: Optional[IntComparators] | None
+    alignment_id : Optional[IntComparators] | None
     z_index: Optional[IntComparators] | None
     x_offset: Optional[FloatComparators] | None
     y_offset: Optional[FloatComparators] | None
@@ -120,12 +125,9 @@ class PerSectionAlignmentParametersWhereClause(TypedDict):
     tilt_angle: Optional[FloatComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class PerSectionAlignmentParametersOrderByClause(TypedDict):
     alignment: Optional[Annotated["AlignmentOrderByClause", strawberry.lazy("graphql_api.types.alignment")]] | None
@@ -141,28 +143,17 @@ class PerSectionAlignmentParametersOrderByClause(TypedDict):
 """
 Define PerSectionAlignmentParameters type
 """
-
-
-@strawberry.type(description="Map alignment parameters to tilt series frames")
+@strawberry.type(description='Map alignment parameters to tilt series frames')
 class PerSectionAlignmentParameters(EntityInterface):
-    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_rows
-    )  # type:ignore
-    alignment_id: int
-    z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
-    x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
-    )
-    y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
-    )
-    volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
-    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
-    )
-    tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
+    alignment_id :  int
+    z_index: int = strawberry.field(description='z-index of the frame in the tiltseries')
+    x_offset: Optional[float] = strawberry.field(description='In-plane X-shift of the projection in angstrom', default=None)
+    y_offset: Optional[float] = strawberry.field(description='In-plane Y-shift of the projection in angstrom', default=None)
+    volume_x_rotation: Optional[float] = strawberry.field(description='X-axis rotation in degrees', default=None)
+    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(description='In-plane rotation of the projection in degrees', default=None)
+    tilt_angle: Optional[float] = strawberry.field(description='Tilt angle of the projection in degrees', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -180,38 +171,30 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class PerSectionAlignmentParametersNumericalColumns:
-    z_index: Optional[int] = None
-    x_offset: Optional[float] = None
-    y_offset: Optional[float] = None
-    volume_x_rotation: Optional[float] = None
-    tilt_angle: Optional[float] = None
-    id: Optional[int] = None
-
+    z_index:  Optional[int] = None
+    x_offset:  Optional[float] = None
+    y_offset:  Optional[float] = None
+    volume_x_rotation:  Optional[float] = None
+    tilt_angle:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class PerSectionAlignmentParametersMinMaxColumns:
-    z_index: Optional[int] = None
-    x_offset: Optional[float] = None
-    y_offset: Optional[float] = None
-    volume_x_rotation: Optional[float] = None
-    tilt_angle: Optional[float] = None
-    id: Optional[int] = None
-
+    z_index:  Optional[int] = None
+    x_offset:  Optional[float] = None
+    y_offset:  Optional[float] = None
+    volume_x_rotation:  Optional[float] = None
+    tilt_angle:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class PerSectionAlignmentParametersCountColumns(enum.Enum):
     zIndex = "z_index"
@@ -222,12 +205,9 @@ class PerSectionAlignmentParametersCountColumns(enum.Enum):
     tiltAngle = "tilt_angle"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class PerSectionAlignmentParametersAggregateWhereClauseCount(TypedDict):
     arguments: Optional["PerSectionAlignmentParametersCountColumns"] | None
@@ -240,22 +220,16 @@ class PerSectionAlignmentParametersAggregateWhereClauseCount(TypedDict):
 class PerSectionAlignmentParametersAggregateWhereClause(TypedDict):
     count: PerSectionAlignmentParametersAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class PerSectionAlignmentParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[PerSectionAlignmentParametersCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[PerSectionAlignmentParametersCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[PerSectionAlignmentParametersNumericalColumns] = None
     avg: Optional[PerSectionAlignmentParametersNumericalColumns] = None
     stddev: Optional[PerSectionAlignmentParametersNumericalColumns] = None
@@ -264,16 +238,12 @@ class PerSectionAlignmentParametersAggregateFunctions:
     max: Optional[PerSectionAlignmentParametersMinMaxColumns] = None
     groupBy: Optional[PerSectionAlignmentParametersGroupByOptions] = None
 
-
 """
 Wrapper around PerSectionAlignmentParametersAggregateFunctions
 """
-
-
 @strawberry.type
 class PerSectionAlignmentParametersAggregate:
     aggregate: Optional[list[PerSectionAlignmentParametersAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -284,46 +254,30 @@ Mutation types
 
 @strawberry.input()
 class PerSectionAlignmentParametersCreateInput:
-    alignment_id: strawberry.ID = strawberry.field(description="Tiltseries Alignment")
-    z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
-    x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
-    )
-    y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
-    )
-    volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
-    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
-    )
-    tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    alignment_id: strawberry.ID = strawberry.field(description='Tiltseries Alignment')
+    z_index: int = strawberry.field(description='z-index of the frame in the tiltseries')
+    x_offset: Optional[float] = strawberry.field(description='In-plane X-shift of the projection in angstrom', default=None)
+    y_offset: Optional[float] = strawberry.field(description='In-plane Y-shift of the projection in angstrom', default=None)
+    volume_x_rotation: Optional[float] = strawberry.field(description='X-axis rotation in degrees', default=None)
+    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(description='In-plane rotation of the projection in degrees', default=None)
+    tilt_angle: Optional[float] = strawberry.field(description='Tilt angle of the projection in degrees', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class PerSectionAlignmentParametersUpdateInput:
-    alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment")
-    z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
-    x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
-    )
-    y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
-    )
-    volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
-    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
-    )
-    tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    alignment_id: Optional[strawberry.ID] = strawberry.field(description='Tiltseries Alignment')
+    z_index: Optional[int] = strawberry.field(description='z-index of the frame in the tiltseries')
+    x_offset: Optional[float] = strawberry.field(description='In-plane X-shift of the projection in angstrom', default=None)
+    y_offset: Optional[float] = strawberry.field(description='In-plane Y-shift of the projection in angstrom', default=None)
+    volume_x_rotation: Optional[float] = strawberry.field(description='X-axis rotation in degrees', default=None)
+    in_plane_rotation: Optional[List[List[float]]] = strawberry.field(description='In-plane rotation of the projection in degrees', default=None)
+    tilt_angle: Optional[float] = strawberry.field(description='Tilt angle of the projection in degrees', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_per_section_alignment_parameters(
@@ -344,24 +298,19 @@ async def resolve_per_section_alignment_parameters(
     return await get_db_rows(db.PerSectionAlignmentParameters, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_per_section_alignment_parameters_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> PerSectionAlignmentParametersAggregate:
+def format_per_section_alignment_parameters_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> PerSectionAlignmentParametersAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_per_section_alignment_parameters_aggregate_row(row))
     return PerSectionAlignmentParametersAggregate(aggregate=aggregate)
 
-
-def format_per_section_alignment_parameters_aggregate_row(
-    row: RowMapping,
-) -> PerSectionAlignmentParametersAggregateFunctions:
+def format_per_section_alignment_parameters_aggregate_row(row: RowMapping) -> PerSectionAlignmentParametersAggregateFunctions:
     """
     Given a single row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
@@ -391,7 +340,6 @@ def format_per_section_alignment_parameters_aggregate_row(
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_per_section_alignment_parameters_aggregate(
     info: Info,
@@ -414,8 +362,6 @@ async def resolve_per_section_alignment_parameters_aggregate(
     rows = await get_aggregate_db_rows(db.PerSectionAlignmentParameters, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_per_section_alignment_parameters_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_per_section_alignment_parameters(
     input: PerSectionAlignmentParametersCreateInput,
@@ -435,15 +381,7 @@ async def create_per_section_alignment_parameters(
     # Validate that the user can read all of the entities they're linking to.
     # Check that alignment relationship is accessible.
     if validated.alignment_id:
-        alignment = await get_db_rows(
-            db.Alignment,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.alignment_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        alignment = await get_db_rows(db.Alignment, session, authz_client, principal, {"id": {"_eq": validated.alignment_id } }, [], AuthzAction.VIEW)
         if not alignment:
             raise PlatformicsError("Unauthorized: alignment does not exist")
 
@@ -458,8 +396,6 @@ async def create_per_section_alignment_parameters(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_per_section_alignment_parameters(
     input: PerSectionAlignmentParametersUpdateInput,
@@ -483,24 +419,14 @@ async def update_per_section_alignment_parameters(
     # Validate that the user can read all of the entities they're linking to.
     # Check that alignment relationship is accessible.
     if validated.alignment_id:
-        alignment = await get_db_rows(
-            db.Alignment,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.alignment_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        alignment = await get_db_rows(db.Alignment, session, authz_client, principal, {"id": {"_eq": validated.alignment_id } }, [], AuthzAction.VIEW)
         if not alignment:
             raise PlatformicsError("Unauthorized: alignment does not exist")
         params["alignment"] = alignment[0]
         del params["alignment_id"]
 
     # Fetch entities for update, if we have access to them
-    entities = await get_db_rows(
-        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE,
-    )
+    entities = await get_db_rows(db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE)
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
 
@@ -530,9 +456,7 @@ async def delete_per_section_alignment_parameters(
     Delete PerSectionAlignmentParameters objects. Used for mutations (see graphql_api/mutations.py).
     """
     # Fetch entities for deletion, if we have access to them
-    entities = await get_db_rows(
-        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.DELETE,
-    )
+    entities = await get_db_rows(db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.DELETE)
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")
 

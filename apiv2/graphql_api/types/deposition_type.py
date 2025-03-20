@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -50,7 +63,6 @@ if TYPE_CHECKING:
         DepositionOrderByClause,
         DepositionWhereClause,
     )
-
     pass
 else:
     DepositionWhereClause = "DepositionWhereClause"
@@ -66,22 +78,17 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_deposition_rows(
     root: "DepositionType",
     info: Info,
     where: Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")] | None = None,
-    order_by: Optional[
-        list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]
-    ] = [],
+    order_by: Optional[list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]] = [],
 ) -> Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.DepositionType)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -94,8 +101,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class DepositionTypeWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -104,21 +109,16 @@ class DepositionTypeWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class DepositionTypeWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
-    deposition_id: Optional[IntComparators] | None
+    deposition_id : Optional[IntComparators] | None
     type: Optional[EnumComparators[deposition_types_enum]] | None
     id: Optional[IntComparators] | None
-
 
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class DepositionTypeOrderByClause(TypedDict):
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
@@ -129,20 +129,12 @@ class DepositionTypeOrderByClause(TypedDict):
 """
 Define DepositionType type
 """
-
-
 @strawberry.type(description=None)
 class DepositionType(EntityInterface):
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
-    deposition_id: int
-    type: Optional[deposition_types_enum] = strawberry.field(
-        description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
-        default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type:ignore
+    deposition_id :  int
+    type:  Optional[deposition_types_enum] = strawberry.field(description='The type of data submitted as a part of this deposition (annotation, dataset, tomogram)', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -160,39 +152,28 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class DepositionTypeNumericalColumns:
-    id: Optional[int] = None
-
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class DepositionTypeMinMaxColumns:
-    id: Optional[int] = None
-
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class DepositionTypeCountColumns(enum.Enum):
     type = "type"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class DepositionTypeAggregateWhereClauseCount(TypedDict):
     arguments: Optional["DepositionTypeCountColumns"] | None
@@ -205,22 +186,16 @@ class DepositionTypeAggregateWhereClauseCount(TypedDict):
 class DepositionTypeAggregateWhereClause(TypedDict):
     count: DepositionTypeAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class DepositionTypeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DepositionTypeCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[DepositionTypeCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[DepositionTypeNumericalColumns] = None
     avg: Optional[DepositionTypeNumericalColumns] = None
     stddev: Optional[DepositionTypeNumericalColumns] = None
@@ -229,16 +204,12 @@ class DepositionTypeAggregateFunctions:
     max: Optional[DepositionTypeMinMaxColumns] = None
     groupBy: Optional[DepositionTypeGroupByOptions] = None
 
-
 """
 Wrapper around DepositionTypeAggregateFunctions
 """
-
-
 @strawberry.type
 class DepositionTypeAggregate:
     aggregate: Optional[list[DepositionTypeAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -250,29 +221,19 @@ Mutation types
 @strawberry.input()
 class DepositionTypeCreateInput:
     deposition_id: strawberry.ID = strawberry.field(description=None)
-    type: Optional[deposition_types_enum] = strawberry.field(
-        description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
-        default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    type: Optional[deposition_types_enum] = strawberry.field(description='The type of data submitted as a part of this deposition (annotation, dataset, tomogram)', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class DepositionTypeUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None)
-    type: Optional[deposition_types_enum] = strawberry.field(
-        description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
-        default=None,
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    type: Optional[deposition_types_enum] = strawberry.field(description='The type of data submitted as a part of this deposition (annotation, dataset, tomogram)', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_deposition_types(
@@ -293,20 +254,17 @@ async def resolve_deposition_types(
     return await get_db_rows(db.DepositionType, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_deposition_type_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> DepositionTypeAggregate:
+def format_deposition_type_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> DepositionTypeAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_deposition_type_aggregate_row(row))
     return DepositionTypeAggregate(aggregate=aggregate)
-
 
 def format_deposition_type_aggregate_row(row: RowMapping) -> DepositionTypeAggregateFunctions:
     """
@@ -338,7 +296,6 @@ def format_deposition_type_aggregate_row(row: RowMapping) -> DepositionTypeAggre
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_deposition_types_aggregate(
     info: Info,
@@ -361,8 +318,6 @@ async def resolve_deposition_types_aggregate(
     rows = await get_aggregate_db_rows(db.DepositionType, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_deposition_type_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_deposition_type(
     input: DepositionTypeCreateInput,
@@ -382,15 +337,7 @@ async def create_deposition_type(
     # Validate that the user can read all of the entities they're linking to.
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
 
@@ -405,8 +352,6 @@ async def create_deposition_type(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_deposition_type(
     input: DepositionTypeUpdateInput,
@@ -430,15 +375,7 @@ async def update_deposition_type(
     # Validate that the user can read all of the entities they're linking to.
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
         params["deposition"] = deposition[0]

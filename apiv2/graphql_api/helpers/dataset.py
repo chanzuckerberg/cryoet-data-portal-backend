@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 import datetime
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
@@ -32,18 +34,11 @@ Define groupby options for Dataset type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class DatasetGroupByOptions:
-    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
-        None
-    )
-    funding_sources: Optional[
-        Annotated["DatasetFundingGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset_funding")]
-    ] = None
-    authors: Optional[
-        Annotated["DatasetAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset_author")]
-    ] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = None
+    funding_sources: Optional[Annotated["DatasetFundingGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset_funding")]] = None
+    authors: Optional[Annotated["DatasetAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset_author")]] = None
     runs: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     title: Optional[str] = None
     description: Optional[str] = None

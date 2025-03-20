@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.deposition as deposition_helper
@@ -22,12 +24,9 @@ Define groupby options for DepositionType type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class DepositionTypeGroupByOptions:
-    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
-        None
-    )
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = None
     type: Optional[deposition_types_enum] = None
     id: Optional[int] = None
 

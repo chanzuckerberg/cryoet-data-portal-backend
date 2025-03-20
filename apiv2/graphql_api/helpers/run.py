@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.alignment as alignment_helper
@@ -48,28 +50,17 @@ Define groupby options for Run type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class RunGroupByOptions:
     alignments: Optional[Annotated["AlignmentGroupByOptions", strawberry.lazy("graphql_api.helpers.alignment")]] = None
-    annotations: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = (
-        None
-    )
+    annotations: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = None
     dataset: Optional[Annotated["DatasetGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset")]] = None
     frames: Optional[Annotated["FrameGroupByOptions", strawberry.lazy("graphql_api.helpers.frame")]] = None
     gain_files: Optional[Annotated["GainFileGroupByOptions", strawberry.lazy("graphql_api.helpers.gain_file")]] = None
-    frame_acquisition_files: Optional[
-        Annotated["FrameAcquisitionFileGroupByOptions", strawberry.lazy("graphql_api.helpers.frame_acquisition_file")]
-    ] = None
-    per_section_parameters: Optional[
-        Annotated["PerSectionParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_parameters")]
-    ] = None
-    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = (
-        None
-    )
-    tomogram_voxel_spacings: Optional[
-        Annotated["TomogramVoxelSpacingGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_voxel_spacing")]
-    ] = None
+    frame_acquisition_files: Optional[Annotated["FrameAcquisitionFileGroupByOptions", strawberry.lazy("graphql_api.helpers.frame_acquisition_file")]] = None
+    per_section_parameters: Optional[Annotated["PerSectionParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_parameters")]] = None
+    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = None
+    tomogram_voxel_spacings: Optional[Annotated["TomogramVoxelSpacingGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_voxel_spacing")]] = None
     tomograms: Optional[Annotated["TomogramGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram")]] = None
     name: Optional[str] = None
     s3_prefix: Optional[str] = None

@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 import datetime
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
@@ -35,22 +37,13 @@ Define groupby options for Annotation type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class AnnotationGroupByOptions:
     run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
-    annotation_shapes: Optional[
-        Annotated["AnnotationShapeGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_shape")]
-    ] = None
-    method_links: Optional[
-        Annotated["AnnotationMethodLinkGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_method_link")]
-    ] = None
-    authors: Optional[
-        Annotated["AnnotationAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_author")]
-    ] = None
-    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
-        None
-    )
+    annotation_shapes: Optional[Annotated["AnnotationShapeGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_shape")]] = None
+    method_links: Optional[Annotated["AnnotationMethodLinkGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_method_link")]] = None
+    authors: Optional[Annotated["AnnotationAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_author")]] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = None
     s3_metadata_path: Optional[str] = None
     https_metadata_path: Optional[str] = None
     annotation_publication: Optional[str] = None

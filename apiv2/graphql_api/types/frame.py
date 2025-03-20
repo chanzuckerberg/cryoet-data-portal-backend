@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -63,7 +76,6 @@ if TYPE_CHECKING:
         PerSectionParametersWhereClause,
     )
     from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
-
     pass
 else:
     DepositionWhereClause = "DepositionWhereClause"
@@ -87,23 +99,17 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_deposition_rows(
     root: "Frame",
     info: Info,
     where: Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")] | None = None,
-    order_by: Optional[
-        list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]
-    ] = [],
+    order_by: Optional[list[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]]] = [],
 ) -> Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Frame)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id) # type:ignore
 @strawberry.field
 async def load_run_rows(
     root: "Frame",
@@ -114,39 +120,25 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Frame)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id) # type:ignore
 @relay.connection(
-    relay.ListConnection[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]],  # type:ignore
 )
 async def load_per_section_parameters_rows(
     root: "Frame",
     info: Info,
-    where: (
-        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
-    ) = None,
-    order_by: Optional[
-        list[
-            Annotated["PerSectionParametersOrderByClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
-        ]
-    ] = [],
+    where: Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None = None,
+    order_by: Optional[list[Annotated["PerSectionParametersOrderByClause", strawberry.lazy("graphql_api.types.per_section_parameters")]]] = [],
 ) -> Sequence[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Frame)
     relationship = mapper.relationships["per_section_parameters"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_per_section_parameters_aggregate_rows(
     root: "Frame",
     info: Info,
-    where: (
-        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
-    ) = None,
+    where: Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None = None,
 ) -> Optional[Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
     selections = get_nested_selected_fields(info.selected_fields)
     dataloader = info.context["sqlalchemy_loader"]
@@ -155,7 +147,6 @@ async def load_per_section_parameters_aggregate_rows(
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_per_section_parameters_aggregate_output(rows)
     return aggregate_output
-
 
 """
 ------------------------------------------------------------------------------
@@ -168,8 +159,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class FrameWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -178,43 +167,26 @@ class FrameWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class FrameWhereClause(TypedDict):
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
-    deposition_id: Optional[IntComparators] | None
+    deposition_id : Optional[IntComparators] | None
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    run_id: Optional[IntComparators] | None
+    run_id : Optional[IntComparators] | None
     acquisition_order: Optional[IntComparators] | None
     accumulated_dose: Optional[FloatComparators] | None
     exposure_dose: Optional[FloatComparators] | None
     is_gain_corrected: Optional[BoolComparators] | None
-    per_section_parameters: (
-        Optional[
-            Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
-        ]
-        | None
-    )
-    per_section_parameters_aggregate: (
-        Optional[
-            Annotated[
-                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters"),
-            ]
-        ]
-        | None
-    )
+    per_section_parameters: Optional[Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]] | None
+    per_section_parameters_aggregate : Optional[Annotated["PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]] | None
     s3_frame_path: Optional[StrComparators] | None
     https_frame_path: Optional[StrComparators] | None
     file_size: Optional[FloatComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class FrameOrderByClause(TypedDict):
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
@@ -232,37 +204,22 @@ class FrameOrderByClause(TypedDict):
 """
 Define Frame type
 """
-
-
 @strawberry.type(description=None)
 class Frame(EntityInterface):
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
-    deposition_id: int
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type:ignore
+    deposition_id :  int
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: int
-    acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment", default=None,
-    )
-    accumulated_dose: Optional[float] = strawberry.field(
-        description="The total accumulated dose exposure frame", default=None,
-    )
-    exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
-    is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected", default=None,
-    )
-    per_section_parameters: Sequence[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ] = load_per_section_parameters_rows  # type:ignore
-    per_section_parameters_aggregate: Optional[
-        Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ] = load_per_section_parameters_aggregate_rows  # type:ignore
-    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
-    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
-    file_size: Optional[float] = strawberry.field(description="Size of the frame file in bytes", default=None)
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    run_id :  int
+    acquisition_order: Optional[int] = strawberry.field(description="Frame's acquistion order within a tilt experiment", default=None)
+    accumulated_dose: Optional[float] = strawberry.field(description='The total accumulated dose exposure frame', default=None)
+    exposure_dose: Optional[float] = strawberry.field(description='The dose exposure of this frame', default=None)
+    is_gain_corrected: Optional[bool] = strawberry.field(description='Whether this frame has been gain corrected', default=None)
+    per_section_parameters: Sequence[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]] = load_per_section_parameters_rows  # type:ignore
+    per_section_parameters_aggregate : Optional[Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]] = load_per_section_parameters_aggregate_rows  # type:ignore
+    s3_frame_path: Optional[str] = strawberry.field(description='S3 path to the frame file', default=None)
+    https_frame_path: Optional[str] = strawberry.field(description='HTTPS path to the frame file', default=None)
+    file_size: Optional[float] = strawberry.field(description='Size of the frame file in bytes', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -280,38 +237,30 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class FrameNumericalColumns:
-    acquisition_order: Optional[int] = None
-    accumulated_dose: Optional[float] = None
-    exposure_dose: Optional[float] = None
-    file_size: Optional[float] = None
-    id: Optional[int] = None
-
+    acquisition_order:  Optional[int] = None
+    accumulated_dose:  Optional[float] = None
+    exposure_dose:  Optional[float] = None
+    file_size:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class FrameMinMaxColumns:
-    acquisition_order: Optional[int] = None
-    accumulated_dose: Optional[float] = None
-    exposure_dose: Optional[float] = None
-    s3_frame_path: Optional[str] = None
-    https_frame_path: Optional[str] = None
-    file_size: Optional[float] = None
-    id: Optional[int] = None
-
+    acquisition_order:  Optional[int] = None
+    accumulated_dose:  Optional[float] = None
+    exposure_dose:  Optional[float] = None
+    s3_frame_path:  Optional[str] = None
+    https_frame_path:  Optional[str] = None
+    file_size:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class FrameCountColumns(enum.Enum):
     acquisitionOrder = "acquisition_order"
@@ -323,12 +272,9 @@ class FrameCountColumns(enum.Enum):
     fileSize = "file_size"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class FrameAggregateWhereClauseCount(TypedDict):
     arguments: Optional["FrameCountColumns"] | None
@@ -341,20 +287,16 @@ class FrameAggregateWhereClauseCount(TypedDict):
 class FrameAggregateWhereClause(TypedDict):
     count: FrameAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class FrameAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(self, distinct: Optional[bool] = False, columns: Optional[FrameCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[FrameNumericalColumns] = None
     avg: Optional[FrameNumericalColumns] = None
     stddev: Optional[FrameNumericalColumns] = None
@@ -363,16 +305,12 @@ class FrameAggregateFunctions:
     max: Optional[FrameMinMaxColumns] = None
     groupBy: Optional[FrameGroupByOptions] = None
 
-
 """
 Wrapper around FrameAggregateFunctions
 """
-
-
 @strawberry.type
 class FrameAggregate:
     aggregate: Optional[list[FrameAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -385,48 +323,32 @@ Mutation types
 class FrameCreateInput:
     deposition_id: strawberry.ID = strawberry.field(description=None)
     run_id: strawberry.ID = strawberry.field(description=None)
-    acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment", default=None,
-    )
-    accumulated_dose: Optional[float] = strawberry.field(
-        description="The total accumulated dose exposure frame", default=None,
-    )
-    exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
-    is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected", default=None,
-    )
-    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
-    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
-    file_size: Optional[float] = strawberry.field(description="Size of the frame file in bytes", default=None)
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    acquisition_order: Optional[int] = strawberry.field(description="Frame's acquistion order within a tilt experiment", default=None)
+    accumulated_dose: Optional[float] = strawberry.field(description='The total accumulated dose exposure frame', default=None)
+    exposure_dose: Optional[float] = strawberry.field(description='The dose exposure of this frame', default=None)
+    is_gain_corrected: Optional[bool] = strawberry.field(description='Whether this frame has been gain corrected', default=None)
+    s3_frame_path: Optional[str] = strawberry.field(description='S3 path to the frame file', default=None)
+    https_frame_path: Optional[str] = strawberry.field(description='HTTPS path to the frame file', default=None)
+    file_size: Optional[float] = strawberry.field(description='Size of the frame file in bytes', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class FrameUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None)
-    acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment", default=None,
-    )
-    accumulated_dose: Optional[float] = strawberry.field(
-        description="The total accumulated dose exposure frame", default=None,
-    )
-    exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
-    is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected", default=None,
-    )
-    s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
-    https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
-    file_size: Optional[float] = strawberry.field(description="Size of the frame file in bytes", default=None)
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    acquisition_order: Optional[int] = strawberry.field(description="Frame's acquistion order within a tilt experiment", default=None)
+    accumulated_dose: Optional[float] = strawberry.field(description='The total accumulated dose exposure frame', default=None)
+    exposure_dose: Optional[float] = strawberry.field(description='The dose exposure of this frame', default=None)
+    is_gain_corrected: Optional[bool] = strawberry.field(description='Whether this frame has been gain corrected', default=None)
+    s3_frame_path: Optional[str] = strawberry.field(description='S3 path to the frame file', default=None)
+    https_frame_path: Optional[str] = strawberry.field(description='HTTPS path to the frame file', default=None)
+    file_size: Optional[float] = strawberry.field(description='Size of the frame file in bytes', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_frames(
@@ -454,11 +376,10 @@ def format_frame_aggregate_output(query_results: Sequence[RowMapping] | RowMappi
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_frame_aggregate_row(row))
     return FrameAggregate(aggregate=aggregate)
-
 
 def format_frame_aggregate_row(row: RowMapping) -> FrameAggregateFunctions:
     """
@@ -490,7 +411,6 @@ def format_frame_aggregate_row(row: RowMapping) -> FrameAggregateFunctions:
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_frames_aggregate(
     info: Info,
@@ -513,8 +433,6 @@ async def resolve_frames_aggregate(
     rows = await get_aggregate_db_rows(db.Frame, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_frame_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_frame(
     input: FrameCreateInput,
@@ -534,22 +452,12 @@ async def create_frame(
     # Validate that the user can read all of the entities they're linking to.
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
 
@@ -564,8 +472,6 @@ async def create_frame(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_frame(
     input: FrameUpdateInput,
@@ -589,24 +495,14 @@ async def update_frame(
     # Validate that the user can read all of the entities they're linking to.
     # Check that deposition relationship is accessible.
     if validated.deposition_id:
-        deposition = await get_db_rows(
-            db.Deposition,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.deposition_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        deposition = await get_db_rows(db.Deposition, session, authz_client, principal, {"id": {"_eq": validated.deposition_id } }, [], AuthzAction.VIEW)
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
         params["deposition"] = deposition[0]
         del params["deposition_id"]
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
         params["run"] = run[0]

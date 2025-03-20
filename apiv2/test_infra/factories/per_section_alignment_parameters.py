@@ -31,6 +31,7 @@ class PerSectionAlignmentParametersFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     alignment = factory.SubFactory(
         AlignmentFactory,
     )
@@ -40,9 +41,7 @@ class PerSectionAlignmentParametersFactory(CommonFactory):
     x_offset = fuzzy.FuzzyFloat(1, 100)
     y_offset = fuzzy.FuzzyFloat(1, 100)
     volume_x_rotation = fuzzy.FuzzyFloat(1, 100)
-    in_plane_rotation = factory.LazyAttribute(
-        lambda o: [[random.uniform(1, 100) for _ in range(5)]] * random.randint(2, 5),
-    )
+    in_plane_rotation = factory.LazyAttribute(lambda o: [ [random.uniform(1, 100) for _ in range(5)] ] * random.randint(2, 5) )
     tilt_angle = fuzzy.FuzzyFloat(1, 100)
 
     # Auto increment integer identifiers starting with 1

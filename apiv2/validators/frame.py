@@ -8,6 +8,8 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+
+
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
@@ -17,48 +19,26 @@ from typing_extensions import Annotated
 class FrameCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    deposition_id: Annotated[uuid.UUID, Field()]
-    run_id: Annotated[uuid.UUID, Field()]
-    acquisition_order: Annotated[int | None, Field()]
-    accumulated_dose: Annotated[float | None, Field()]
-    exposure_dose: Annotated[float | None, Field()]
-    is_gain_corrected: Annotated[bool | None, Field()]
-    s3_frame_path: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_frame_path: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    file_size: Annotated[float | None, Field()]
-    id: Annotated[int, Field()]
-
-
+    deposition_id: Annotated[ uuid.UUID, Field()]
+    run_id: Annotated[ uuid.UUID, Field()]
+    acquisition_order: Annotated[ int | None, Field()]
+    accumulated_dose: Annotated[ float | None, Field()]
+    exposure_dose: Annotated[ float | None, Field()]
+    is_gain_corrected: Annotated[ bool | None, Field()]
+    s3_frame_path: Annotated[ str | None, StringConstraints(strip_whitespace=True)]
+    https_frame_path: Annotated[ str | None, StringConstraints(strip_whitespace=True)]
+    file_size: Annotated[ float | None, Field()]
+    id: Annotated[ int, Field()]
 class FrameUpdateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    deposition_id: Annotated[uuid.UUID | None, Field()]
-    run_id: Annotated[uuid.UUID | None, Field()]
-    acquisition_order: Annotated[int | None, Field()]
-    accumulated_dose: Annotated[float | None, Field()]
-    exposure_dose: Annotated[float | None, Field()]
-    is_gain_corrected: Annotated[bool | None, Field()]
-    s3_frame_path: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    https_frame_path: Annotated[
-        str | None,
-        StringConstraints(
-            strip_whitespace=True,
-        ),
-    ]
-    file_size: Annotated[float | None, Field()]
-    id: Annotated[int | None, Field()]
+    deposition_id: Annotated[ uuid.UUID | None, Field()]
+    run_id: Annotated[ uuid.UUID | None, Field()]
+    acquisition_order: Annotated[ int | None, Field()]
+    accumulated_dose: Annotated[ float | None, Field()]
+    exposure_dose: Annotated[ float | None, Field()]
+    is_gain_corrected: Annotated[ bool | None, Field()]
+    s3_frame_path: Annotated[ str | None, StringConstraints(strip_whitespace=True)]
+    https_frame_path: Annotated[ str | None, StringConstraints(strip_whitespace=True)]
+    file_size: Annotated[ float | None, Field()]
+    id: Annotated[ int | None, Field()]

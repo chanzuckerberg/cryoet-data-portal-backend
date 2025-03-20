@@ -29,10 +29,17 @@ class AnnotationMethodLinkFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     annotation = factory.SubFactory(
         AnnotationFactory,
     )
-    link_type = fuzzy.FuzzyChoice(["documentation", "models_weights", "other", "source_code", "website"])
+    link_type = fuzzy.FuzzyChoice([
+        "documentation",
+        "models_weights",
+        "other",
+        "source_code",
+        "website",
+    ])
     name = fuzzy.FuzzyText()
     link = fuzzy.FuzzyText()
 

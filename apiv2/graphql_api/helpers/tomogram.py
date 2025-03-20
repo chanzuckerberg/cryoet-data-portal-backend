@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 import datetime
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
@@ -35,20 +37,13 @@ Define groupby options for Tomogram type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class TomogramGroupByOptions:
     alignment: Optional[Annotated["AlignmentGroupByOptions", strawberry.lazy("graphql_api.helpers.alignment")]] = None
-    authors: Optional[
-        Annotated["TomogramAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_author")]
-    ] = None
-    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
-        None
-    )
+    authors: Optional[Annotated["TomogramAuthorGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_author")]] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = None
     run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
-    tomogram_voxel_spacing: Optional[
-        Annotated["TomogramVoxelSpacingGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_voxel_spacing")]
-    ] = None
+    tomogram_voxel_spacing: Optional[Annotated["TomogramVoxelSpacingGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_voxel_spacing")]] = None
     name: Optional[str] = None
     size_x: Optional[int] = None
     size_y: Optional[int] = None

@@ -8,6 +8,7 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -18,14 +19,12 @@ from typing_extensions import Annotated
 class AnnotationShapeCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    annotation_id: Annotated[uuid.UUID | None, Field()]
-    shape_type: Annotated[annotation_file_shape_type_enum | None, Field()]
-    id: Annotated[int, Field()]
-
-
+    annotation_id: Annotated[ uuid.UUID | None, Field()]
+    shape_type: Annotated[ annotation_file_shape_type_enum | None, Field()]
+    id: Annotated[ int, Field()]
 class AnnotationShapeUpdateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    annotation_id: Annotated[uuid.UUID | None, Field()]
-    shape_type: Annotated[annotation_file_shape_type_enum | None, Field()]
-    id: Annotated[int | None, Field()]
+    annotation_id: Annotated[ uuid.UUID | None, Field()]
+    shape_type: Annotated[ annotation_file_shape_type_enum | None, Field()]
+    id: Annotated[ int | None, Field()]

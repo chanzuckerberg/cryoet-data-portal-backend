@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.alignment as alignment_helper
@@ -31,14 +33,11 @@ Define groupby options for Tiltseries type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class TiltseriesGroupByOptions:
     alignments: Optional[Annotated["AlignmentGroupByOptions", strawberry.lazy("graphql_api.helpers.alignment")]] = None
     run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
-    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
-        None
-    )
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = None
     s3_omezarr_dir: Optional[str] = None
     file_size_omezarr: Optional[float] = None
     s3_mrc_file: Optional[str] = None
@@ -55,9 +54,7 @@ class TiltseriesGroupByOptions:
     microscope_phase_plate: Optional[str] = None
     microscope_image_corrector: Optional[str] = None
     microscope_additional_info: Optional[str] = None
-    per_section_parameters: Optional[
-        Annotated["PerSectionParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_parameters")]
-    ] = None
+    per_section_parameters: Optional[Annotated["PerSectionParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_parameters")]] = None
     camera_manufacturer: Optional[str] = None
     camera_model: Optional[str] = None
     tilt_min: Optional[float] = None

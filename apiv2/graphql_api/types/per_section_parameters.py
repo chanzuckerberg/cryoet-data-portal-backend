@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -57,7 +70,6 @@ if TYPE_CHECKING:
         TiltseriesOrderByClause,
         TiltseriesWhereClause,
     )
-
     pass
 else:
     FrameWhereClause = "FrameWhereClause"
@@ -81,8 +93,6 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_frame_rows(
     root: "PerSectionParameters",
@@ -93,9 +103,7 @@ async def load_frame_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.PerSectionParameters)
     relationship = mapper.relationships["frame"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.frame_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.frame_id) # type:ignore
 @strawberry.field
 async def load_run_rows(
     root: "PerSectionParameters",
@@ -106,23 +114,18 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.PerSectionParameters)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id) # type:ignore
 @strawberry.field
 async def load_tiltseries_rows(
     root: "PerSectionParameters",
     info: Info,
     where: Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")] | None = None,
-    order_by: Optional[
-        list[Annotated["TiltseriesOrderByClause", strawberry.lazy("graphql_api.types.tiltseries")]]
-    ] = [],
+    order_by: Optional[list[Annotated["TiltseriesOrderByClause", strawberry.lazy("graphql_api.types.tiltseries")]]] = [],
 ) -> Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.PerSectionParameters)
     relationship = mapper.relationships["tiltseries"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.tiltseries_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.tiltseries_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -135,8 +138,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class PerSectionParametersWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -145,31 +146,26 @@ class PerSectionParametersWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class PerSectionParametersWhereClause(TypedDict):
     astigmatic_angle: Optional[FloatComparators] | None
     frame: Optional[Annotated["FrameWhereClause", strawberry.lazy("graphql_api.types.frame")]] | None
-    frame_id: Optional[IntComparators] | None
+    frame_id : Optional[IntComparators] | None
     major_defocus: Optional[FloatComparators] | None
     max_resolution: Optional[FloatComparators] | None
     minor_defocus: Optional[FloatComparators] | None
     phase_shift: Optional[FloatComparators] | None
     raw_angle: Optional[FloatComparators] | None
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    run_id: Optional[IntComparators] | None
+    run_id : Optional[IntComparators] | None
     tiltseries: Optional[Annotated["TiltseriesWhereClause", strawberry.lazy("graphql_api.types.tiltseries")]] | None
-    tiltseries_id: Optional[IntComparators] | None
+    tiltseries_id : Optional[IntComparators] | None
     z_index: Optional[IntComparators] | None
     id: Optional[IntComparators] | None
-
 
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class PerSectionParametersOrderByClause(TypedDict):
     astigmatic_angle: Optional[orderBy] | None
@@ -188,39 +184,22 @@ class PerSectionParametersOrderByClause(TypedDict):
 """
 Define PerSectionParameters type
 """
-
-
-@strawberry.type(description="Map individual Frames to a Tiltseries")
+@strawberry.type(description='Map individual Frames to a Tiltseries')
 class PerSectionParameters(EntityInterface):
-    astigmatic_angle: Optional[float] = strawberry.field(
-        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
-    )
+    astigmatic_angle: Optional[float] = strawberry.field(description='Angle (in degrees) from reciprocal space X axis to the major axis of defocus.', default=None)
     frame: Optional[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
-    frame_id: int
-    major_defocus: Optional[float] = strawberry.field(
-        description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
-        default=None,
-    )
-    max_resolution: Optional[float] = strawberry.field(description="Maximum resolution of the frame", default=None)
-    minor_defocus: Optional[float] = strawberry.field(
-        description="Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
-        default=None,
-    )
-    phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in degrees.", default=None,
-    )
-    raw_angle: float = strawberry.field(
-        description="Nominal tilt angle for this tilt image reported by the microscope.",
-    )
+    frame_id :  int
+    major_defocus: Optional[float] = strawberry.field(description='Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).', default=None)
+    max_resolution: Optional[float] = strawberry.field(description='Maximum resolution of the frame', default=None)
+    minor_defocus: Optional[float] = strawberry.field(description='Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).', default=None)
+    phase_shift: Optional[float] = strawberry.field(description='Phase shift estimated for this tilt image in degrees.', default=None)
+    raw_angle: float = strawberry.field(description='Nominal tilt angle for this tilt image reported by the microscope.')
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: int
-    tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows
-    )  # type:ignore
-    tiltseries_id: int
-    z_index: int = strawberry.field(description="Index (0-based) of this tilt image in the tilt series stack.")
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    run_id :  int
+    tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = load_tiltseries_rows  # type:ignore
+    tiltseries_id :  int
+    z_index: int = strawberry.field(description='Index (0-based) of this tilt image in the tilt series stack.')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -238,42 +217,34 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class PerSectionParametersNumericalColumns:
-    astigmatic_angle: Optional[float] = None
-    major_defocus: Optional[float] = None
-    max_resolution: Optional[float] = None
-    minor_defocus: Optional[float] = None
-    phase_shift: Optional[float] = None
-    raw_angle: Optional[float] = None
-    z_index: Optional[int] = None
-    id: Optional[int] = None
-
+    astigmatic_angle:  Optional[float] = None
+    major_defocus:  Optional[float] = None
+    max_resolution:  Optional[float] = None
+    minor_defocus:  Optional[float] = None
+    phase_shift:  Optional[float] = None
+    raw_angle:  Optional[float] = None
+    z_index:  Optional[int] = None
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class PerSectionParametersMinMaxColumns:
-    astigmatic_angle: Optional[float] = None
-    major_defocus: Optional[float] = None
-    max_resolution: Optional[float] = None
-    minor_defocus: Optional[float] = None
-    phase_shift: Optional[float] = None
-    raw_angle: Optional[float] = None
-    z_index: Optional[int] = None
-    id: Optional[int] = None
-
+    astigmatic_angle:  Optional[float] = None
+    major_defocus:  Optional[float] = None
+    max_resolution:  Optional[float] = None
+    minor_defocus:  Optional[float] = None
+    phase_shift:  Optional[float] = None
+    raw_angle:  Optional[float] = None
+    z_index:  Optional[int] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class PerSectionParametersCountColumns(enum.Enum):
     astigmaticAngle = "astigmatic_angle"
@@ -285,12 +256,9 @@ class PerSectionParametersCountColumns(enum.Enum):
     zIndex = "z_index"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class PerSectionParametersAggregateWhereClauseCount(TypedDict):
     arguments: Optional["PerSectionParametersCountColumns"] | None
@@ -303,22 +271,16 @@ class PerSectionParametersAggregateWhereClauseCount(TypedDict):
 class PerSectionParametersAggregateWhereClause(TypedDict):
     count: PerSectionParametersAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class PerSectionParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[PerSectionParametersCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[PerSectionParametersCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[PerSectionParametersNumericalColumns] = None
     avg: Optional[PerSectionParametersNumericalColumns] = None
     stddev: Optional[PerSectionParametersNumericalColumns] = None
@@ -327,16 +289,12 @@ class PerSectionParametersAggregateFunctions:
     max: Optional[PerSectionParametersMinMaxColumns] = None
     groupBy: Optional[PerSectionParametersGroupByOptions] = None
 
-
 """
 Wrapper around PerSectionParametersAggregateFunctions
 """
-
-
 @strawberry.type
 class PerSectionParametersAggregate:
     aggregate: Optional[list[PerSectionParametersAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -347,66 +305,36 @@ Mutation types
 
 @strawberry.input()
 class PerSectionParametersCreateInput:
-    astigmatic_angle: Optional[float] = strawberry.field(
-        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
-    )
-    frame_id: strawberry.ID = strawberry.field(description="Frame that this section is a part of")
-    major_defocus: Optional[float] = strawberry.field(
-        description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
-        default=None,
-    )
-    max_resolution: Optional[float] = strawberry.field(description="Maximum resolution of the frame", default=None)
-    minor_defocus: Optional[float] = strawberry.field(
-        description="Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
-        default=None,
-    )
-    phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in degrees.", default=None,
-    )
-    raw_angle: float = strawberry.field(
-        description="Nominal tilt angle for this tilt image reported by the microscope.",
-    )
-    run_id: strawberry.ID = strawberry.field(description="Run that this section is a part of")
-    tiltseries_id: strawberry.ID = strawberry.field(description="Tiltseries that this section is a part of")
-    z_index: int = strawberry.field(description="Index (0-based) of this tilt image in the tilt series stack.")
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    astigmatic_angle: Optional[float] = strawberry.field(description='Angle (in degrees) from reciprocal space X axis to the major axis of defocus.', default=None)
+    frame_id: strawberry.ID = strawberry.field(description='Frame that this section is a part of')
+    major_defocus: Optional[float] = strawberry.field(description='Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).', default=None)
+    max_resolution: Optional[float] = strawberry.field(description='Maximum resolution of the frame', default=None)
+    minor_defocus: Optional[float] = strawberry.field(description='Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).', default=None)
+    phase_shift: Optional[float] = strawberry.field(description='Phase shift estimated for this tilt image in degrees.', default=None)
+    raw_angle: float = strawberry.field(description='Nominal tilt angle for this tilt image reported by the microscope.')
+    run_id: strawberry.ID = strawberry.field(description='Run that this section is a part of')
+    tiltseries_id: strawberry.ID = strawberry.field(description='Tiltseries that this section is a part of')
+    z_index: int = strawberry.field(description='Index (0-based) of this tilt image in the tilt series stack.')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class PerSectionParametersUpdateInput:
-    astigmatic_angle: Optional[float] = strawberry.field(
-        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
-    )
-    frame_id: Optional[strawberry.ID] = strawberry.field(description="Frame that this section is a part of")
-    major_defocus: Optional[float] = strawberry.field(
-        description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
-        default=None,
-    )
-    max_resolution: Optional[float] = strawberry.field(description="Maximum resolution of the frame", default=None)
-    minor_defocus: Optional[float] = strawberry.field(
-        description="Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
-        default=None,
-    )
-    phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in degrees.", default=None,
-    )
-    raw_angle: Optional[float] = strawberry.field(
-        description="Nominal tilt angle for this tilt image reported by the microscope.",
-    )
-    run_id: Optional[strawberry.ID] = strawberry.field(description="Run that this section is a part of")
-    tiltseries_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries that this section is a part of")
-    z_index: Optional[int] = strawberry.field(
-        description="Index (0-based) of this tilt image in the tilt series stack.",
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    astigmatic_angle: Optional[float] = strawberry.field(description='Angle (in degrees) from reciprocal space X axis to the major axis of defocus.', default=None)
+    frame_id: Optional[strawberry.ID] = strawberry.field(description='Frame that this section is a part of')
+    major_defocus: Optional[float] = strawberry.field(description='Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).', default=None)
+    max_resolution: Optional[float] = strawberry.field(description='Maximum resolution of the frame', default=None)
+    minor_defocus: Optional[float] = strawberry.field(description='Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).', default=None)
+    phase_shift: Optional[float] = strawberry.field(description='Phase shift estimated for this tilt image in degrees.', default=None)
+    raw_angle: Optional[float] = strawberry.field(description='Nominal tilt angle for this tilt image reported by the microscope.')
+    run_id: Optional[strawberry.ID] = strawberry.field(description='Run that this section is a part of')
+    tiltseries_id: Optional[strawberry.ID] = strawberry.field(description='Tiltseries that this section is a part of')
+    z_index: Optional[int] = strawberry.field(description='Index (0-based) of this tilt image in the tilt series stack.')
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_per_section_parameters(
@@ -427,20 +355,17 @@ async def resolve_per_section_parameters(
     return await get_db_rows(db.PerSectionParameters, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_per_section_parameters_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> PerSectionParametersAggregate:
+def format_per_section_parameters_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> PerSectionParametersAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_per_section_parameters_aggregate_row(row))
     return PerSectionParametersAggregate(aggregate=aggregate)
-
 
 def format_per_section_parameters_aggregate_row(row: RowMapping) -> PerSectionParametersAggregateFunctions:
     """
@@ -472,7 +397,6 @@ def format_per_section_parameters_aggregate_row(row: RowMapping) -> PerSectionPa
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_per_section_parameters_aggregate(
     info: Info,
@@ -495,8 +419,6 @@ async def resolve_per_section_parameters_aggregate(
     rows = await get_aggregate_db_rows(db.PerSectionParameters, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_per_section_parameters_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_per_section_parameters(
     input: PerSectionParametersCreateInput,
@@ -516,29 +438,17 @@ async def create_per_section_parameters(
     # Validate that the user can read all of the entities they're linking to.
     # Check that frame relationship is accessible.
     if validated.frame_id:
-        frame = await get_db_rows(
-            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW,
-        )
+        frame = await get_db_rows(db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id } }, [], AuthzAction.VIEW)
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
     # Check that tiltseries relationship is accessible.
     if validated.tiltseries_id:
-        tiltseries = await get_db_rows(
-            db.Tiltseries,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.tiltseries_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        tiltseries = await get_db_rows(db.Tiltseries, session, authz_client, principal, {"id": {"_eq": validated.tiltseries_id } }, [], AuthzAction.VIEW)
         if not tiltseries:
             raise PlatformicsError("Unauthorized: tiltseries does not exist")
 
@@ -553,8 +463,6 @@ async def create_per_section_parameters(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_per_section_parameters(
     input: PerSectionParametersUpdateInput,
@@ -578,42 +486,28 @@ async def update_per_section_parameters(
     # Validate that the user can read all of the entities they're linking to.
     # Check that frame relationship is accessible.
     if validated.frame_id:
-        frame = await get_db_rows(
-            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW,
-        )
+        frame = await get_db_rows(db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id } }, [], AuthzAction.VIEW)
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
         params["frame"] = frame[0]
         del params["frame_id"]
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
         params["run"] = run[0]
         del params["run_id"]
     # Check that tiltseries relationship is accessible.
     if validated.tiltseries_id:
-        tiltseries = await get_db_rows(
-            db.Tiltseries,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.tiltseries_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        tiltseries = await get_db_rows(db.Tiltseries, session, authz_client, principal, {"id": {"_eq": validated.tiltseries_id } }, [], AuthzAction.VIEW)
         if not tiltseries:
             raise PlatformicsError("Unauthorized: tiltseries does not exist")
         params["tiltseries"] = tiltseries[0]
         del params["tiltseries_id"]
 
     # Fetch entities for update, if we have access to them
-    entities = await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE,
-    )
+    entities = await get_db_rows(db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE)
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
 
@@ -643,9 +537,7 @@ async def delete_per_section_parameters(
     Delete PerSectionParameters objects. Used for mutations (see graphql_api/mutations.py).
     """
     # Fetch entities for deletion, if we have access to them
-    entities = await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.DELETE,
-    )
+    entities = await get_db_rows(db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.DELETE)
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")
 

@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -58,7 +71,6 @@ if TYPE_CHECKING:
         AnnotationFileOrderByClause,
         AnnotationFileWhereClause,
     )
-
     pass
 else:
     AnnotationWhereClause = "AnnotationWhereClause"
@@ -78,42 +90,30 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_annotation_rows(
     root: "AnnotationShape",
     info: Info,
     where: Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")] | None = None,
-    order_by: Optional[
-        list[Annotated["AnnotationOrderByClause", strawberry.lazy("graphql_api.types.annotation")]]
-    ] = [],
+    order_by: Optional[list[Annotated["AnnotationOrderByClause", strawberry.lazy("graphql_api.types.annotation")]]] = [],
 ) -> Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationShape)
     relationship = mapper.relationships["annotation"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id) # type:ignore
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]
-    ],  # type:ignore
+        relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]],  # type:ignore
 )
 async def load_annotation_file_rows(
     root: "AnnotationShape",
     info: Info,
     where: Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")] | None = None,
-    order_by: Optional[
-        list[Annotated["AnnotationFileOrderByClause", strawberry.lazy("graphql_api.types.annotation_file")]]
-    ] = [],
+    order_by: Optional[list[Annotated["AnnotationFileOrderByClause", strawberry.lazy("graphql_api.types.annotation_file")]]] = [],
 ) -> Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationShape)
     relationship = mapper.relationships["annotation_files"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
-
-
 @strawberry.field
 async def load_annotation_file_aggregate_rows(
     root: "AnnotationShape",
@@ -128,7 +128,6 @@ async def load_annotation_file_aggregate_rows(
     aggregate_output = format_annotation_file_aggregate_output(rows)
     return aggregate_output
 
-
 """
 ------------------------------------------------------------------------------
 Define Strawberry GQL types
@@ -140,8 +139,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class AnnotationShapeWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -150,28 +147,18 @@ class AnnotationShapeWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class AnnotationShapeWhereClause(TypedDict):
     annotation: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
-    annotation_id: Optional[IntComparators] | None
-    annotation_files: (
-        Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
-    )
-    annotation_files_aggregate: (
-        Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]]
-        | None
-    )
+    annotation_id : Optional[IntComparators] | None
+    annotation_files: Optional[Annotated["AnnotationFileWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
+    annotation_files_aggregate : Optional[Annotated["AnnotationFileAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_file")]] | None
     shape_type: Optional[EnumComparators[annotation_file_shape_type_enum]] | None
     id: Optional[IntComparators] | None
-
 
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class AnnotationShapeOrderByClause(TypedDict):
     annotation: Optional[Annotated["AnnotationOrderByClause", strawberry.lazy("graphql_api.types.annotation")]] | None
@@ -182,26 +169,14 @@ class AnnotationShapeOrderByClause(TypedDict):
 """
 Define AnnotationShape type
 """
-
-
-@strawberry.type(description="Shapes associated with an annotation")
+@strawberry.type(description='Shapes associated with an annotation')
 class AnnotationShape(EntityInterface):
-    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
-    annotation_id: Optional[int]
-    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
-        load_annotation_file_rows
-    )  # type:ignore
-    annotation_files_aggregate: Optional[
-        Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
-    ] = load_annotation_file_aggregate_rows  # type:ignore
-    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
-        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
-        default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_rows  # type:ignore
+    annotation_id :  Optional[int]
+    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_rows  # type:ignore
+    annotation_files_aggregate : Optional[Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_aggregate_rows  # type:ignore
+    shape_type:  Optional[annotation_file_shape_type_enum] = strawberry.field(description='The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -219,39 +194,28 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class AnnotationShapeNumericalColumns:
-    id: Optional[int] = None
-
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class AnnotationShapeMinMaxColumns:
-    id: Optional[int] = None
-
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class AnnotationShapeCountColumns(enum.Enum):
     shapeType = "shape_type"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class AnnotationShapeAggregateWhereClauseCount(TypedDict):
     arguments: Optional["AnnotationShapeCountColumns"] | None
@@ -264,22 +228,16 @@ class AnnotationShapeAggregateWhereClauseCount(TypedDict):
 class AnnotationShapeAggregateWhereClause(TypedDict):
     count: AnnotationShapeAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class AnnotationShapeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationShapeCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[AnnotationShapeCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[AnnotationShapeNumericalColumns] = None
     avg: Optional[AnnotationShapeNumericalColumns] = None
     stddev: Optional[AnnotationShapeNumericalColumns] = None
@@ -288,16 +246,12 @@ class AnnotationShapeAggregateFunctions:
     max: Optional[AnnotationShapeMinMaxColumns] = None
     groupBy: Optional[AnnotationShapeGroupByOptions] = None
 
-
 """
 Wrapper around AnnotationShapeAggregateFunctions
 """
-
-
 @strawberry.type
 class AnnotationShapeAggregate:
     aggregate: Optional[list[AnnotationShapeAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -308,34 +262,20 @@ Mutation types
 
 @strawberry.input()
 class AnnotationShapeCreateInput:
-    annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an shapes for an annotation", default=None,
-    )
-    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
-        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
-        default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    annotation_id: Optional[strawberry.ID] = strawberry.field(description='Metadata about an shapes for an annotation', default=None)
+    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description='The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class AnnotationShapeUpdateInput:
-    annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an shapes for an annotation", default=None,
-    )
-    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
-        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
-        default=None,
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    annotation_id: Optional[strawberry.ID] = strawberry.field(description='Metadata about an shapes for an annotation', default=None)
+    shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(description='The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_annotation_shapes(
@@ -356,20 +296,17 @@ async def resolve_annotation_shapes(
     return await get_db_rows(db.AnnotationShape, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_annotation_shape_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> AnnotationShapeAggregate:
+def format_annotation_shape_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> AnnotationShapeAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_shape_aggregate_row(row))
     return AnnotationShapeAggregate(aggregate=aggregate)
-
 
 def format_annotation_shape_aggregate_row(row: RowMapping) -> AnnotationShapeAggregateFunctions:
     """
@@ -401,7 +338,6 @@ def format_annotation_shape_aggregate_row(row: RowMapping) -> AnnotationShapeAgg
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_annotation_shapes_aggregate(
     info: Info,
@@ -424,8 +360,6 @@ async def resolve_annotation_shapes_aggregate(
     rows = await get_aggregate_db_rows(db.AnnotationShape, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_shape_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_annotation_shape(
     input: AnnotationShapeCreateInput,
@@ -445,15 +379,7 @@ async def create_annotation_shape(
     # Validate that the user can read all of the entities they're linking to.
     # Check that annotation relationship is accessible.
     if validated.annotation_id:
-        annotation = await get_db_rows(
-            db.Annotation,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.annotation_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        annotation = await get_db_rows(db.Annotation, session, authz_client, principal, {"id": {"_eq": validated.annotation_id } }, [], AuthzAction.VIEW)
         if not annotation:
             raise PlatformicsError("Unauthorized: annotation does not exist")
 
@@ -468,8 +394,6 @@ async def create_annotation_shape(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_annotation_shape(
     input: AnnotationShapeUpdateInput,
@@ -493,15 +417,7 @@ async def update_annotation_shape(
     # Validate that the user can read all of the entities they're linking to.
     # Check that annotation relationship is accessible.
     if validated.annotation_id:
-        annotation = await get_db_rows(
-            db.Annotation,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.annotation_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        annotation = await get_db_rows(db.Annotation, session, authz_client, principal, {"id": {"_eq": validated.annotation_id } }, [], AuthzAction.VIEW)
         if not annotation:
             raise PlatformicsError("Unauthorized: annotation does not exist")
         params["annotation"] = annotation[0]

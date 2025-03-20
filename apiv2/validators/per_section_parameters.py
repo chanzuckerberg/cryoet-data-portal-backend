@@ -8,6 +8,8 @@ Make changes to the template codegen/templates/validators/class_name.py.j2 inste
 # ruff: noqa: E501 Line too long
 
 
+
+
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -17,40 +19,30 @@ from typing_extensions import Annotated
 class PerSectionParametersCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    astigmatic_angle: Annotated[float | None, Field()]
-    frame_id: Annotated[uuid.UUID, Field()]
-    major_defocus: Annotated[float | None, Field()]
-    max_resolution: Annotated[float | None, Field()]
-    minor_defocus: Annotated[float | None, Field()]
-    phase_shift: Annotated[float | None, Field()]
-    raw_angle: Annotated[float, Field()]
-    run_id: Annotated[uuid.UUID, Field()]
-    tiltseries_id: Annotated[uuid.UUID, Field()]
-    z_index: Annotated[
-        int,
-        Field(
-            ge=0,
-        ),
-    ]
-    id: Annotated[int, Field()]
-
-
+    astigmatic_angle: Annotated[ float | None, Field()]
+    frame_id: Annotated[ uuid.UUID, Field()]
+    major_defocus: Annotated[ float | None, Field()]
+    max_resolution: Annotated[ float | None, Field()]
+    minor_defocus: Annotated[ float | None, Field()]
+    phase_shift: Annotated[ float | None, Field()]
+    raw_angle: Annotated[ float, Field()]
+    run_id: Annotated[ uuid.UUID, Field()]
+    tiltseries_id: Annotated[ uuid.UUID, Field()]
+    z_index: Annotated[ int, Field(
+    ge=0)]
+    id: Annotated[ int, Field()]
 class PerSectionParametersUpdateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
-    astigmatic_angle: Annotated[float | None, Field()]
-    frame_id: Annotated[uuid.UUID | None, Field()]
-    major_defocus: Annotated[float | None, Field()]
-    max_resolution: Annotated[float | None, Field()]
-    minor_defocus: Annotated[float | None, Field()]
-    phase_shift: Annotated[float | None, Field()]
-    raw_angle: Annotated[float | None, Field()]
-    run_id: Annotated[uuid.UUID | None, Field()]
-    tiltseries_id: Annotated[uuid.UUID | None, Field()]
-    z_index: Annotated[
-        int | None,
-        Field(
-            ge=0,
-        ),
-    ]
-    id: Annotated[int | None, Field()]
+    astigmatic_angle: Annotated[ float | None, Field()]
+    frame_id: Annotated[ uuid.UUID | None, Field()]
+    major_defocus: Annotated[ float | None, Field()]
+    max_resolution: Annotated[ float | None, Field()]
+    minor_defocus: Annotated[ float | None, Field()]
+    phase_shift: Annotated[ float | None, Field()]
+    raw_angle: Annotated[ float | None, Field()]
+    run_id: Annotated[ uuid.UUID | None, Field()]
+    tiltseries_id: Annotated[ uuid.UUID | None, Field()]
+    z_index: Annotated[ int | None, Field(
+    ge=0)]
+    id: Annotated[ int | None, Field()]

@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.annotation_file as annotation_file_helper
@@ -37,24 +39,12 @@ Define groupby options for Alignment type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class AlignmentGroupByOptions:
-    annotation_files: Optional[
-        Annotated["AnnotationFileGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_file")]
-    ] = None
-    per_section_alignments: Optional[
-        Annotated[
-            "PerSectionAlignmentParametersGroupByOptions",
-            strawberry.lazy("graphql_api.helpers.per_section_alignment_parameters"),
-        ]
-    ] = None
-    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
-        None
-    )
-    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = (
-        None
-    )
+    annotation_files: Optional[Annotated["AnnotationFileGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_file")]] = None
+    per_section_alignments: Optional[Annotated["PerSectionAlignmentParametersGroupByOptions", strawberry.lazy("graphql_api.helpers.per_section_alignment_parameters")]] = None
+    deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = None
+    tiltseries: Optional[Annotated["TiltseriesGroupByOptions", strawberry.lazy("graphql_api.helpers.tiltseries")]] = None
     tomograms: Optional[Annotated["TomogramGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram")]] = None
     run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     alignment_type: Optional[alignment_type_enum] = None

@@ -172,12 +172,8 @@ class Mutation:
 
     # PerSectionAlignmentParameters mutations
     create_per_section_alignment_parameters: PerSectionAlignmentParameters = create_per_section_alignment_parameters
-    update_per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = (
-        update_per_section_alignment_parameters
-    )
-    delete_per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = (
-        delete_per_section_alignment_parameters
-    )
+    update_per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = update_per_section_alignment_parameters
+    delete_per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = delete_per_section_alignment_parameters
 
     # PerSectionParameters mutations
     create_per_section_parameters: PerSectionParameters = create_per_section_parameters

@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -50,7 +63,6 @@ if TYPE_CHECKING:
         AnnotationOrderByClause,
         AnnotationWhereClause,
     )
-
     pass
 else:
     AnnotationWhereClause = "AnnotationWhereClause"
@@ -66,22 +78,17 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_annotation_rows(
     root: "AnnotationAuthor",
     info: Info,
     where: Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")] | None = None,
-    order_by: Optional[
-        list[Annotated["AnnotationOrderByClause", strawberry.lazy("graphql_api.types.annotation")]]
-    ] = [],
+    order_by: Optional[list[Annotated["AnnotationOrderByClause", strawberry.lazy("graphql_api.types.annotation")]]] = [],
 ) -> Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationAuthor)
     relationship = mapper.relationships["annotation"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -94,8 +101,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class AnnotationAuthorWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -104,12 +109,10 @@ class AnnotationAuthorWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class AnnotationAuthorWhereClause(TypedDict):
     annotation: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
-    annotation_id: Optional[IntComparators] | None
+    annotation_id : Optional[IntComparators] | None
     id: Optional[IntComparators] | None
     author_list_order: Optional[IntComparators] | None
     orcid: Optional[StrComparators] | None
@@ -122,12 +125,9 @@ class AnnotationAuthorWhereClause(TypedDict):
     corresponding_author_status: Optional[BoolComparators] | None
     primary_author_status: Optional[BoolComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class AnnotationAuthorOrderByClause(TypedDict):
     annotation: Optional[Annotated["AnnotationOrderByClause", strawberry.lazy("graphql_api.types.annotation")]] | None
@@ -147,43 +147,21 @@ class AnnotationAuthorOrderByClause(TypedDict):
 """
 Define AnnotationAuthor type
 """
-
-
 @strawberry.type(description="Metadata for an annotation's authors")
 class AnnotationAuthor(EntityInterface):
-    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
-    annotation_id: Optional[int]
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-    author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
-    orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
-    )
-    kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
-    )
-    name: str = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
-    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
-    affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.",
-        default=None,
-    )
-    affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an annotator is affiliated with.", default=None,
-    )
-    affiliation_identifier: Optional[str] = strawberry.field(
-        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
-        default=None,
-    )
-    corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an annotator is the corresponding author", default=None,
-    )
-    primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person executing the annotation, especially on manual annotation",
-        default=None,
-    )
-
+    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_rows  # type:ignore
+    annotation_id :  Optional[int]
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
+    author_list_order: int = strawberry.field(description='The order in which the author appears in the publication')
+    orcid: Optional[str] = strawberry.field(description='A unique, persistent identifier for researchers, provided by ORCID.', default=None)
+    kaggle_id: Optional[str] = strawberry.field(description='A unique, persistent identifier for kaggle users at kaggle.com.', default=None)
+    name: str = strawberry.field(description='Full name of an annotation author (e.g. Jane Doe).')
+    email: Optional[str] = strawberry.field(description='Email address for this author', default=None)
+    affiliation_name: Optional[str] = strawberry.field(description='Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.', default=None)
+    affiliation_address: Optional[str] = strawberry.field(description='Address of the institution an annotator is affiliated with.', default=None)
+    affiliation_identifier: Optional[str] = strawberry.field(description='A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).', default=None)
+    corresponding_author_status: Optional[bool] = strawberry.field(description='Indicates whether an annotator is the corresponding author', default=None)
+    primary_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the main person executing the annotation, especially on manual annotation', default=None)
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -201,37 +179,29 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class AnnotationAuthorNumericalColumns:
-    id: Optional[int] = None
-    author_list_order: Optional[int] = None
-
+    id:  Optional[int] = None
+    author_list_order:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class AnnotationAuthorMinMaxColumns:
-    id: Optional[int] = None
-    author_list_order: Optional[int] = None
-    orcid: Optional[str] = None
-    kaggle_id: Optional[str] = None
-    name: Optional[str] = None
-    email: Optional[str] = None
-    affiliation_name: Optional[str] = None
-    affiliation_address: Optional[str] = None
-    affiliation_identifier: Optional[str] = None
-
+    id:  Optional[int] = None
+    author_list_order:  Optional[int] = None
+    orcid:  Optional[str] = None
+    kaggle_id:  Optional[str] = None
+    name:  Optional[str] = None
+    email:  Optional[str] = None
+    affiliation_name:  Optional[str] = None
+    affiliation_address:  Optional[str] = None
+    affiliation_identifier:  Optional[str] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class AnnotationAuthorCountColumns(enum.Enum):
     id = "id"
@@ -246,12 +216,9 @@ class AnnotationAuthorCountColumns(enum.Enum):
     correspondingAuthorStatus = "corresponding_author_status"
     primaryAuthorStatus = "primary_author_status"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class AnnotationAuthorAggregateWhereClauseCount(TypedDict):
     arguments: Optional["AnnotationAuthorCountColumns"] | None
@@ -264,22 +231,16 @@ class AnnotationAuthorAggregateWhereClauseCount(TypedDict):
 class AnnotationAuthorAggregateWhereClause(TypedDict):
     count: AnnotationAuthorAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class AnnotationAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationAuthorCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[AnnotationAuthorCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[AnnotationAuthorNumericalColumns] = None
     avg: Optional[AnnotationAuthorNumericalColumns] = None
     stddev: Optional[AnnotationAuthorNumericalColumns] = None
@@ -288,16 +249,12 @@ class AnnotationAuthorAggregateFunctions:
     max: Optional[AnnotationAuthorMinMaxColumns] = None
     groupBy: Optional[AnnotationAuthorGroupByOptions] = None
 
-
 """
 Wrapper around AnnotationAuthorAggregateFunctions
 """
-
-
 @strawberry.type
 class AnnotationAuthorAggregate:
     aggregate: Optional[list[AnnotationAuthorAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -308,82 +265,38 @@ Mutation types
 
 @strawberry.input()
 class AnnotationAuthorCreateInput:
-    annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to the annotation this author contributed to", default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-    author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
-    orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
-    )
-    kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
-    )
-    name: str = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
-    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
-    affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.",
-        default=None,
-    )
-    affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an annotator is affiliated with.", default=None,
-    )
-    affiliation_identifier: Optional[str] = strawberry.field(
-        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
-        default=None,
-    )
-    corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an annotator is the corresponding author", default=None,
-    )
-    primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person executing the annotation, especially on manual annotation",
-        default=None,
-    )
-
-
+    annotation_id: Optional[strawberry.ID] = strawberry.field(description='Reference to the annotation this author contributed to', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
+    author_list_order: int = strawberry.field(description='The order in which the author appears in the publication')
+    orcid: Optional[str] = strawberry.field(description='A unique, persistent identifier for researchers, provided by ORCID.', default=None)
+    kaggle_id: Optional[str] = strawberry.field(description='A unique, persistent identifier for kaggle users at kaggle.com.', default=None)
+    name: str = strawberry.field(description='Full name of an annotation author (e.g. Jane Doe).')
+    email: Optional[str] = strawberry.field(description='Email address for this author', default=None)
+    affiliation_name: Optional[str] = strawberry.field(description='Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.', default=None)
+    affiliation_address: Optional[str] = strawberry.field(description='Address of the institution an annotator is affiliated with.', default=None)
+    affiliation_identifier: Optional[str] = strawberry.field(description='A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).', default=None)
+    corresponding_author_status: Optional[bool] = strawberry.field(description='Indicates whether an annotator is the corresponding author', default=None)
+    primary_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the main person executing the annotation, especially on manual annotation', default=None)
 @strawberry.input()
 class AnnotationAuthorUpdateInput:
-    annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to the annotation this author contributed to", default=None,
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-    author_list_order: Optional[int] = strawberry.field(
-        description="The order in which the author appears in the publication",
-    )
-    orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
-    )
-    kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
-    )
-    name: Optional[str] = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
-    email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
-    affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.",
-        default=None,
-    )
-    affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an annotator is affiliated with.", default=None,
-    )
-    affiliation_identifier: Optional[str] = strawberry.field(
-        description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
-        default=None,
-    )
-    corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an annotator is the corresponding author", default=None,
-    )
-    primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person executing the annotation, especially on manual annotation",
-        default=None,
-    )
-
+    annotation_id: Optional[strawberry.ID] = strawberry.field(description='Reference to the annotation this author contributed to', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
+    author_list_order: Optional[int] = strawberry.field(description='The order in which the author appears in the publication')
+    orcid: Optional[str] = strawberry.field(description='A unique, persistent identifier for researchers, provided by ORCID.', default=None)
+    kaggle_id: Optional[str] = strawberry.field(description='A unique, persistent identifier for kaggle users at kaggle.com.', default=None)
+    name: Optional[str] = strawberry.field(description='Full name of an annotation author (e.g. Jane Doe).')
+    email: Optional[str] = strawberry.field(description='Email address for this author', default=None)
+    affiliation_name: Optional[str] = strawberry.field(description='Name of the institution an annotator is affiliated with. Sometimes, one annotator may have multiple affiliations.', default=None)
+    affiliation_address: Optional[str] = strawberry.field(description='Address of the institution an annotator is affiliated with.', default=None)
+    affiliation_identifier: Optional[str] = strawberry.field(description='A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).', default=None)
+    corresponding_author_status: Optional[bool] = strawberry.field(description='Indicates whether an annotator is the corresponding author', default=None)
+    primary_author_status: Optional[bool] = strawberry.field(description='Indicates whether an author is the main person executing the annotation, especially on manual annotation', default=None)
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_annotation_authors(
@@ -404,20 +317,17 @@ async def resolve_annotation_authors(
     return await get_db_rows(db.AnnotationAuthor, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_annotation_author_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> AnnotationAuthorAggregate:
+def format_annotation_author_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> AnnotationAuthorAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_author_aggregate_row(row))
     return AnnotationAuthorAggregate(aggregate=aggregate)
-
 
 def format_annotation_author_aggregate_row(row: RowMapping) -> AnnotationAuthorAggregateFunctions:
     """
@@ -449,7 +359,6 @@ def format_annotation_author_aggregate_row(row: RowMapping) -> AnnotationAuthorA
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_annotation_authors_aggregate(
     info: Info,
@@ -472,8 +381,6 @@ async def resolve_annotation_authors_aggregate(
     rows = await get_aggregate_db_rows(db.AnnotationAuthor, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_author_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_annotation_author(
     input: AnnotationAuthorCreateInput,
@@ -493,15 +400,7 @@ async def create_annotation_author(
     # Validate that the user can read all of the entities they're linking to.
     # Check that annotation relationship is accessible.
     if validated.annotation_id:
-        annotation = await get_db_rows(
-            db.Annotation,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.annotation_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        annotation = await get_db_rows(db.Annotation, session, authz_client, principal, {"id": {"_eq": validated.annotation_id } }, [], AuthzAction.VIEW)
         if not annotation:
             raise PlatformicsError("Unauthorized: annotation does not exist")
 
@@ -516,8 +415,6 @@ async def create_annotation_author(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_annotation_author(
     input: AnnotationAuthorUpdateInput,
@@ -541,15 +438,7 @@ async def update_annotation_author(
     # Validate that the user can read all of the entities they're linking to.
     # Check that annotation relationship is accessible.
     if validated.annotation_id:
-        annotation = await get_db_rows(
-            db.Annotation,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.annotation_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        annotation = await get_db_rows(db.Annotation, session, authz_client, principal, {"id": {"_eq": validated.annotation_id } }, [], AuthzAction.VIEW)
         if not annotation:
             raise PlatformicsError("Unauthorized: annotation does not exist")
         params["annotation"] = annotation[0]

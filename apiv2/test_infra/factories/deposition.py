@@ -28,6 +28,7 @@ class DepositionFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     title = fuzzy.FuzzyText()
     description = fuzzy.FuzzyText()
     tag = fuzzy.FuzzyText()

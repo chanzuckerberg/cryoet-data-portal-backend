@@ -29,10 +29,15 @@ class DepositionTypeFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     deposition = factory.SubFactory(
         DepositionFactory,
     )
-    type = fuzzy.FuzzyChoice(["annotation", "dataset", "tomogram"])
+    type = fuzzy.FuzzyChoice([
+        "annotation",
+        "dataset",
+        "tomogram",
+    ])
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)

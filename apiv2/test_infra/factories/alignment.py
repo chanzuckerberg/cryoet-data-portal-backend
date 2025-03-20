@@ -31,6 +31,7 @@ class AlignmentFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     deposition = factory.SubFactory(
         DepositionFactory,
     )
@@ -40,8 +41,15 @@ class AlignmentFactory(CommonFactory):
     run = factory.SubFactory(
         RunFactory,
     )
-    alignment_type = fuzzy.FuzzyChoice(["LOCAL", "GLOBAL"])
-    alignment_method = fuzzy.FuzzyChoice(["projection_matching", "patch_tracking", "fiducial_based"])
+    alignment_type = fuzzy.FuzzyChoice([
+        "LOCAL",
+        "GLOBAL",
+    ])
+    alignment_method = fuzzy.FuzzyChoice([
+        "projection_matching",
+        "patch_tracking",
+        "fiducial_based",
+    ])
     volume_x_dimension = fuzzy.FuzzyFloat(1, 100)
     volume_y_dimension = fuzzy.FuzzyFloat(1, 100)
     volume_z_dimension = fuzzy.FuzzyFloat(1, 100)

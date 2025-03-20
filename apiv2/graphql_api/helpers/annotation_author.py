@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.annotation as annotation_helper
@@ -21,12 +23,9 @@ Define groupby options for AnnotationAuthor type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class AnnotationAuthorGroupByOptions:
-    annotation: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = (
-        None
-    )
+    annotation: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = None
     id: Optional[int] = None
     author_list_order: Optional[int] = None
     orcid: Optional[str] = None

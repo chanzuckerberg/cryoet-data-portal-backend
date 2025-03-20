@@ -32,6 +32,7 @@ class TomogramFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     alignment = factory.SubFactory(
         AlignmentFactory,
     )
@@ -48,14 +49,30 @@ class TomogramFactory(CommonFactory):
 
     size_x = fuzzy.FuzzyInteger(1, 1000)
 
+
     size_y = fuzzy.FuzzyInteger(1, 1000)
+
 
     size_z = fuzzy.FuzzyInteger(1, 1000)
 
     voxel_spacing = fuzzy.FuzzyFloat(1, 100)
-    fiducial_alignment_status = fuzzy.FuzzyChoice(["FIDUCIAL", "NON_FIDUCIAL"])
-    reconstruction_method = fuzzy.FuzzyChoice(["SART", "Fourier Space", "SIRT", "WBP", "Unknown"])
-    processing = fuzzy.FuzzyChoice(["denoised", "filtered", "raw"])
+    fiducial_alignment_status = fuzzy.FuzzyChoice([
+        "FIDUCIAL",
+        "NON_FIDUCIAL",
+    ])
+    reconstruction_method = fuzzy.FuzzyChoice([
+        "SART",
+        "Fourier Space",
+        "SIRT",
+        "WBP",
+        "Unknown",
+    ])
+    processing = fuzzy.FuzzyChoice([
+        "denoised",
+        "filtered",
+        "raw",
+        "filtered_odd",
+    ])
     tomogram_version = fuzzy.FuzzyFloat(1, 100)
     processing_software = fuzzy.FuzzyText()
     reconstruction_software = fuzzy.FuzzyText()
@@ -75,7 +92,9 @@ class TomogramFactory(CommonFactory):
 
     offset_x = fuzzy.FuzzyInteger(1, 1000)
 
+
     offset_y = fuzzy.FuzzyInteger(1, 1000)
+
 
     offset_z = fuzzy.FuzzyInteger(1, 1000)
 

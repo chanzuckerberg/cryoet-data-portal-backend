@@ -115,10 +115,10 @@ from graphql_api.types.tomogram_voxel_spacing import (
 @strawberry.type
 class Query:
     # Allow relay-style queries by node ID
-    #    node: relay.Node = relay.node()
-    #    nodes: List[relay.Node] = relay.node()
+#    node: relay.Node = relay.node()
+#    nodes: List[relay.Node] = relay.node()
 
-    #
+#
 
     # Query entities
     gain_files: Sequence[GainFile] = resolve_gain_files
@@ -159,9 +159,7 @@ class Query:
     depositions_aggregate: DepositionAggregate = resolve_depositions_aggregate
     deposition_types_aggregate: DepositionTypeAggregate = resolve_deposition_types_aggregate
     frames_aggregate: FrameAggregate = resolve_frames_aggregate
-    per_section_alignment_parameters_aggregate: PerSectionAlignmentParametersAggregate = (
-        resolve_per_section_alignment_parameters_aggregate
-    )
+    per_section_alignment_parameters_aggregate: PerSectionAlignmentParametersAggregate = resolve_per_section_alignment_parameters_aggregate
     per_section_parameters_aggregate: PerSectionParametersAggregate = resolve_per_section_parameters_aggregate
     runs_aggregate: RunAggregate = resolve_runs_aggregate
     tiltseries_aggregate: TiltseriesAggregate = resolve_tiltseries_aggregate

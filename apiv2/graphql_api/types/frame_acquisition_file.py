@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -50,7 +63,6 @@ T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
-
     pass
 else:
     RunWhereClause = "RunWhereClause"
@@ -66,8 +78,6 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_run_rows(
     root: "FrameAcquisitionFile",
@@ -78,8 +88,7 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.FrameAcquisitionFile)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -92,8 +101,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class FrameAcquisitionFileWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -102,22 +109,17 @@ class FrameAcquisitionFileWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class FrameAcquisitionFileWhereClause(TypedDict):
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
-    run_id: Optional[IntComparators] | None
+    run_id : Optional[IntComparators] | None
     s3_mdoc_path: Optional[StrComparators] | None
     https_mdoc_path: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class FrameAcquisitionFileOrderByClause(TypedDict):
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
@@ -129,16 +131,13 @@ class FrameAcquisitionFileOrderByClause(TypedDict):
 """
 Define FrameAcquisitionFile type
 """
-
-
-@strawberry.type(description="References to files containing more information about frame acquisition")
+@strawberry.type(description='References to files containing more information about frame acquisition')
 class FrameAcquisitionFile(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
-    run_id: Optional[int]
-    s3_mdoc_path: str = strawberry.field(description="Path to the frame acquisition mdoc file in s3")
-    https_mdoc_path: str = strawberry.field(description="Path to the frame acquisition mdoc file as an https url")
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    run_id :  Optional[int]
+    s3_mdoc_path: str = strawberry.field(description='Path to the frame acquisition mdoc file in s3')
+    https_mdoc_path: str = strawberry.field(description='Path to the frame acquisition mdoc file as an https url')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -156,42 +155,31 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class FrameAcquisitionFileNumericalColumns:
-    id: Optional[int] = None
-
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class FrameAcquisitionFileMinMaxColumns:
-    s3_mdoc_path: Optional[str] = None
-    https_mdoc_path: Optional[str] = None
-    id: Optional[int] = None
-
+    s3_mdoc_path:  Optional[str] = None
+    https_mdoc_path:  Optional[str] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class FrameAcquisitionFileCountColumns(enum.Enum):
     s3MdocPath = "s3_mdoc_path"
     httpsMdocPath = "https_mdoc_path"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class FrameAcquisitionFileAggregateWhereClauseCount(TypedDict):
     arguments: Optional["FrameAcquisitionFileCountColumns"] | None
@@ -204,22 +192,16 @@ class FrameAcquisitionFileAggregateWhereClauseCount(TypedDict):
 class FrameAcquisitionFileAggregateWhereClause(TypedDict):
     count: FrameAcquisitionFileAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class FrameAcquisitionFileAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[FrameAcquisitionFileCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[FrameAcquisitionFileCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[FrameAcquisitionFileNumericalColumns] = None
     avg: Optional[FrameAcquisitionFileNumericalColumns] = None
     stddev: Optional[FrameAcquisitionFileNumericalColumns] = None
@@ -228,16 +210,12 @@ class FrameAcquisitionFileAggregateFunctions:
     max: Optional[FrameAcquisitionFileMinMaxColumns] = None
     groupBy: Optional[FrameAcquisitionFileGroupByOptions] = None
 
-
 """
 Wrapper around FrameAcquisitionFileAggregateFunctions
 """
-
-
 @strawberry.type
 class FrameAcquisitionFileAggregate:
     aggregate: Optional[list[FrameAcquisitionFileAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -249,27 +227,21 @@ Mutation types
 @strawberry.input()
 class FrameAcquisitionFileCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    s3_mdoc_path: str = strawberry.field(description="Path to the frame acquisition mdoc file in s3")
-    https_mdoc_path: str = strawberry.field(description="Path to the frame acquisition mdoc file as an https url")
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    s3_mdoc_path: str = strawberry.field(description='Path to the frame acquisition mdoc file in s3')
+    https_mdoc_path: str = strawberry.field(description='Path to the frame acquisition mdoc file as an https url')
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class FrameAcquisitionFileUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
-    s3_mdoc_path: Optional[str] = strawberry.field(description="Path to the frame acquisition mdoc file in s3")
-    https_mdoc_path: Optional[str] = strawberry.field(
-        description="Path to the frame acquisition mdoc file as an https url",
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    s3_mdoc_path: Optional[str] = strawberry.field(description='Path to the frame acquisition mdoc file in s3')
+    https_mdoc_path: Optional[str] = strawberry.field(description='Path to the frame acquisition mdoc file as an https url')
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_frame_acquisition_files(
@@ -290,20 +262,17 @@ async def resolve_frame_acquisition_files(
     return await get_db_rows(db.FrameAcquisitionFile, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_frame_acquisition_file_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> FrameAcquisitionFileAggregate:
+def format_frame_acquisition_file_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> FrameAcquisitionFileAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_frame_acquisition_file_aggregate_row(row))
     return FrameAcquisitionFileAggregate(aggregate=aggregate)
-
 
 def format_frame_acquisition_file_aggregate_row(row: RowMapping) -> FrameAcquisitionFileAggregateFunctions:
     """
@@ -335,7 +304,6 @@ def format_frame_acquisition_file_aggregate_row(row: RowMapping) -> FrameAcquisi
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_frame_acquisition_files_aggregate(
     info: Info,
@@ -358,8 +326,6 @@ async def resolve_frame_acquisition_files_aggregate(
     rows = await get_aggregate_db_rows(db.FrameAcquisitionFile, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_frame_acquisition_file_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_frame_acquisition_file(
     input: FrameAcquisitionFileCreateInput,
@@ -379,9 +345,7 @@ async def create_frame_acquisition_file(
     # Validate that the user can read all of the entities they're linking to.
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
 
@@ -396,8 +360,6 @@ async def create_frame_acquisition_file(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_frame_acquisition_file(
     input: FrameAcquisitionFileUpdateInput,
@@ -421,18 +383,14 @@ async def update_frame_acquisition_file(
     # Validate that the user can read all of the entities they're linking to.
     # Check that run relationship is accessible.
     if validated.run_id:
-        run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
-        )
+        run = await get_db_rows(db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id } }, [], AuthzAction.VIEW)
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
         params["run"] = run[0]
         del params["run_id"]
 
     # Fetch entities for update, if we have access to them
-    entities = await get_db_rows(
-        db.FrameAcquisitionFile, session, authz_client, principal, where, [], AuthzAction.UPDATE,
-    )
+    entities = await get_db_rows(db.FrameAcquisitionFile, session, authz_client, principal, where, [], AuthzAction.UPDATE)
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
 
@@ -462,9 +420,7 @@ async def delete_frame_acquisition_file(
     Delete FrameAcquisitionFile objects. Used for mutations (see graphql_api/mutations.py).
     """
     # Fetch entities for deletion, if we have access to them
-    entities = await get_db_rows(
-        db.FrameAcquisitionFile, session, authz_client, principal, where, [], AuthzAction.DELETE,
-    )
+    entities = await get_db_rows(db.FrameAcquisitionFile, session, authz_client, principal, where, [], AuthzAction.DELETE)
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")
 

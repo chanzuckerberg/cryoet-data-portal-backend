@@ -6846,6 +6846,7 @@ enum tomogram_processing_enum {
   denoised
   filtered
   raw
+  filtered_odd
 }
 
 enum tomogram_reconstruction_method_enum {

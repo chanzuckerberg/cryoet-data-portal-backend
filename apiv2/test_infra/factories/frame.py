@@ -30,6 +30,7 @@ class FrameFactory(CommonFactory):
 
         sqlalchemy_get_or_create = ("id",)
 
+
     deposition = factory.SubFactory(
         DepositionFactory,
     )

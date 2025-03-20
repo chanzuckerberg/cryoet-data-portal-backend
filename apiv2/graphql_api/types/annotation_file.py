@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -65,7 +78,6 @@ if TYPE_CHECKING:
         TomogramVoxelSpacingOrderByClause,
         TomogramVoxelSpacingWhereClause,
     )
-
     pass
 else:
     AlignmentWhereClause = "AlignmentWhereClause"
@@ -89,8 +101,6 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_alignment_rows(
     root: "AnnotationFile",
@@ -101,44 +111,29 @@ async def load_alignment_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationFile)
     relationship = mapper.relationships["alignment"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.alignment_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.alignment_id) # type:ignore
 @strawberry.field
 async def load_annotation_shape_rows(
     root: "AnnotationFile",
     info: Info,
     where: Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")] | None = None,
-    order_by: Optional[
-        list[Annotated["AnnotationShapeOrderByClause", strawberry.lazy("graphql_api.types.annotation_shape")]]
-    ] = [],
+    order_by: Optional[list[Annotated["AnnotationShapeOrderByClause", strawberry.lazy("graphql_api.types.annotation_shape")]]] = [],
 ) -> Optional[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationFile)
     relationship = mapper.relationships["annotation_shape"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_shape_id)  # type:ignore
-
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_shape_id) # type:ignore
 @strawberry.field
 async def load_tomogram_voxel_spacing_rows(
     root: "AnnotationFile",
     info: Info,
-    where: (
-        Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")] | None
-    ) = None,
-    order_by: Optional[
-        list[
-            Annotated["TomogramVoxelSpacingOrderByClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
-        ]
-    ] = [],
+    where: Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")] | None = None,
+    order_by: Optional[list[Annotated["TomogramVoxelSpacingOrderByClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]]] = [],
 ) -> Optional[Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]]:
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationFile)
     relationship = mapper.relationships["tomogram_voxel_spacing"]
-    return await dataloader.loader_for(relationship, where, order_by).load(
-        root.tomogram_voxel_spacing_id,
-    )  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.tomogram_voxel_spacing_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -151,8 +146,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class AnnotationFileWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -161,23 +154,14 @@ class AnnotationFileWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class AnnotationFileWhereClause(TypedDict):
     alignment: Optional[Annotated["AlignmentWhereClause", strawberry.lazy("graphql_api.types.alignment")]] | None
-    alignment_id: Optional[IntComparators] | None
-    annotation_shape: (
-        Optional[Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
-    )
-    annotation_shape_id: Optional[IntComparators] | None
-    tomogram_voxel_spacing: (
-        Optional[
-            Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
-        ]
-        | None
-    )
-    tomogram_voxel_spacing_id: Optional[IntComparators] | None
+    alignment_id : Optional[IntComparators] | None
+    annotation_shape: Optional[Annotated["AnnotationShapeWhereClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
+    annotation_shape_id : Optional[IntComparators] | None
+    tomogram_voxel_spacing: Optional[Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]] | None
+    tomogram_voxel_spacing_id : Optional[IntComparators] | None
     format: Optional[StrComparators] | None
     s3_path: Optional[StrComparators] | None
     file_size: Optional[FloatComparators] | None
@@ -186,25 +170,14 @@ class AnnotationFileWhereClause(TypedDict):
     source: Optional[EnumComparators[annotation_file_source_enum]] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class AnnotationFileOrderByClause(TypedDict):
     alignment: Optional[Annotated["AlignmentOrderByClause", strawberry.lazy("graphql_api.types.alignment")]] | None
-    annotation_shape: (
-        Optional[Annotated["AnnotationShapeOrderByClause", strawberry.lazy("graphql_api.types.annotation_shape")]]
-        | None
-    )
-    tomogram_voxel_spacing: (
-        Optional[
-            Annotated["TomogramVoxelSpacingOrderByClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
-        ]
-        | None
-    )
+    annotation_shape: Optional[Annotated["AnnotationShapeOrderByClause", strawberry.lazy("graphql_api.types.annotation_shape")]] | None
+    tomogram_voxel_spacing: Optional[Annotated["TomogramVoxelSpacingOrderByClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]] | None
     format: Optional[orderBy] | None
     s3_path: Optional[orderBy] | None
     file_size: Optional[orderBy] | None
@@ -217,36 +190,21 @@ class AnnotationFileOrderByClause(TypedDict):
 """
 Define AnnotationFile type
 """
-
-
-@strawberry.type(description="Metadata for files associated with an annotation")
+@strawberry.type(description='Metadata for files associated with an annotation')
 class AnnotationFile(EntityInterface):
-    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_rows
-    )  # type:ignore
-    alignment_id: Optional[int]
-    annotation_shape: Optional[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = (
-        load_annotation_shape_rows
-    )  # type:ignore
-    annotation_shape_id: Optional[int]
-    tomogram_voxel_spacing: Optional[
-        Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
-    ] = load_tomogram_voxel_spacing_rows  # type:ignore
-    tomogram_voxel_spacing_id: Optional[int]
-    format: str = strawberry.field(description="File format for this file")
-    s3_path: str = strawberry.field(description="s3 path of the annotation file")
-    file_size: Optional[float] = strawberry.field(description="Size of annota file in bytes", default=None)
-    https_path: str = strawberry.field(description="HTTPS path for this annotation file")
-    is_visualization_default: Optional[bool] = strawberry.field(
-        description="Data curator’s subjective choice of default annotation to display in visualization for an object",
-        default=None,
-    )
-    source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file (dataset_author, community, or portal_standard)",
-        default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type:ignore
+    alignment_id :  Optional[int]
+    annotation_shape: Optional[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = load_annotation_shape_rows  # type:ignore
+    annotation_shape_id :  Optional[int]
+    tomogram_voxel_spacing: Optional[Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]] = load_tomogram_voxel_spacing_rows  # type:ignore
+    tomogram_voxel_spacing_id :  Optional[int]
+    format: str = strawberry.field(description='File format for this file')
+    s3_path: str = strawberry.field(description='s3 path of the annotation file')
+    file_size: Optional[float] = strawberry.field(description='Size of annota file in bytes', default=None)
+    https_path: str = strawberry.field(description='HTTPS path for this annotation file')
+    is_visualization_default: Optional[bool] = strawberry.field(description='Data curator’s subjective choice of default annotation to display in visualization for an object', default=None)
+    source:  Optional[annotation_file_source_enum] = strawberry.field(description='The source type for the annotation file (dataset_author, community, or portal_standard)', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -264,33 +222,25 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class AnnotationFileNumericalColumns:
-    file_size: Optional[float] = None
-    id: Optional[int] = None
-
+    file_size:  Optional[float] = None
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class AnnotationFileMinMaxColumns:
-    format: Optional[str] = None
-    s3_path: Optional[str] = None
-    file_size: Optional[float] = None
-    https_path: Optional[str] = None
-    id: Optional[int] = None
-
+    format:  Optional[str] = None
+    s3_path:  Optional[str] = None
+    file_size:  Optional[float] = None
+    https_path:  Optional[str] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class AnnotationFileCountColumns(enum.Enum):
     format = "format"
@@ -301,12 +251,9 @@ class AnnotationFileCountColumns(enum.Enum):
     source = "source"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class AnnotationFileAggregateWhereClauseCount(TypedDict):
     arguments: Optional["AnnotationFileCountColumns"] | None
@@ -319,22 +266,16 @@ class AnnotationFileAggregateWhereClauseCount(TypedDict):
 class AnnotationFileAggregateWhereClause(TypedDict):
     count: AnnotationFileAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class AnnotationFileAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationFileCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[AnnotationFileCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[AnnotationFileNumericalColumns] = None
     avg: Optional[AnnotationFileNumericalColumns] = None
     stddev: Optional[AnnotationFileNumericalColumns] = None
@@ -343,16 +284,12 @@ class AnnotationFileAggregateFunctions:
     max: Optional[AnnotationFileMinMaxColumns] = None
     groupBy: Optional[AnnotationFileGroupByOptions] = None
 
-
 """
 Wrapper around AnnotationFileAggregateFunctions
 """
-
-
 @strawberry.type
 class AnnotationFileAggregate:
     aggregate: Optional[list[AnnotationFileAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -363,58 +300,34 @@ Mutation types
 
 @strawberry.input()
 class AnnotationFileCreateInput:
-    alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
-    annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation", default=None,
-    )
-    tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacing that this annotation file is associated with", default=None,
-    )
-    format: str = strawberry.field(description="File format for this file")
-    s3_path: str = strawberry.field(description="s3 path of the annotation file")
-    file_size: Optional[float] = strawberry.field(description="Size of annota file in bytes", default=None)
-    https_path: str = strawberry.field(description="HTTPS path for this annotation file")
-    is_visualization_default: Optional[bool] = strawberry.field(
-        description="Data curator’s subjective choice of default annotation to display in visualization for an object",
-        default=None,
-    )
-    source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file (dataset_author, community, or portal_standard)",
-        default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    alignment_id: Optional[strawberry.ID] = strawberry.field(description='Tiltseries Alignment', default=None)
+    annotation_shape_id: Optional[strawberry.ID] = strawberry.field(description='Shapes associated with an annotation', default=None)
+    tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(description='Voxel spacing that this annotation file is associated with', default=None)
+    format: str = strawberry.field(description='File format for this file')
+    s3_path: str = strawberry.field(description='s3 path of the annotation file')
+    file_size: Optional[float] = strawberry.field(description='Size of annota file in bytes', default=None)
+    https_path: str = strawberry.field(description='HTTPS path for this annotation file')
+    is_visualization_default: Optional[bool] = strawberry.field(description='Data curator’s subjective choice of default annotation to display in visualization for an object', default=None)
+    source: Optional[annotation_file_source_enum] = strawberry.field(description='The source type for the annotation file (dataset_author, community, or portal_standard)', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class AnnotationFileUpdateInput:
-    alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
-    annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation", default=None,
-    )
-    tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacing that this annotation file is associated with", default=None,
-    )
-    format: Optional[str] = strawberry.field(description="File format for this file")
-    s3_path: Optional[str] = strawberry.field(description="s3 path of the annotation file")
-    file_size: Optional[float] = strawberry.field(description="Size of annota file in bytes", default=None)
-    https_path: Optional[str] = strawberry.field(description="HTTPS path for this annotation file")
-    is_visualization_default: Optional[bool] = strawberry.field(
-        description="Data curator’s subjective choice of default annotation to display in visualization for an object",
-        default=None,
-    )
-    source: Optional[annotation_file_source_enum] = strawberry.field(
-        description="The source type for the annotation file (dataset_author, community, or portal_standard)",
-        default=None,
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    alignment_id: Optional[strawberry.ID] = strawberry.field(description='Tiltseries Alignment', default=None)
+    annotation_shape_id: Optional[strawberry.ID] = strawberry.field(description='Shapes associated with an annotation', default=None)
+    tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(description='Voxel spacing that this annotation file is associated with', default=None)
+    format: Optional[str] = strawberry.field(description='File format for this file')
+    s3_path: Optional[str] = strawberry.field(description='s3 path of the annotation file')
+    file_size: Optional[float] = strawberry.field(description='Size of annota file in bytes', default=None)
+    https_path: Optional[str] = strawberry.field(description='HTTPS path for this annotation file')
+    is_visualization_default: Optional[bool] = strawberry.field(description='Data curator’s subjective choice of default annotation to display in visualization for an object', default=None)
+    source: Optional[annotation_file_source_enum] = strawberry.field(description='The source type for the annotation file (dataset_author, community, or portal_standard)', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_annotation_files(
@@ -435,20 +348,17 @@ async def resolve_annotation_files(
     return await get_db_rows(db.AnnotationFile, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_annotation_file_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> AnnotationFileAggregate:
+def format_annotation_file_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> AnnotationFileAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_annotation_file_aggregate_row(row))
     return AnnotationFileAggregate(aggregate=aggregate)
-
 
 def format_annotation_file_aggregate_row(row: RowMapping) -> AnnotationFileAggregateFunctions:
     """
@@ -480,7 +390,6 @@ def format_annotation_file_aggregate_row(row: RowMapping) -> AnnotationFileAggre
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_annotation_files_aggregate(
     info: Info,
@@ -503,8 +412,6 @@ async def resolve_annotation_files_aggregate(
     rows = await get_aggregate_db_rows(db.AnnotationFile, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_annotation_file_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_annotation_file(
     input: AnnotationFileCreateInput,
@@ -524,41 +431,17 @@ async def create_annotation_file(
     # Validate that the user can read all of the entities they're linking to.
     # Check that alignment relationship is accessible.
     if validated.alignment_id:
-        alignment = await get_db_rows(
-            db.Alignment,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.alignment_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        alignment = await get_db_rows(db.Alignment, session, authz_client, principal, {"id": {"_eq": validated.alignment_id } }, [], AuthzAction.VIEW)
         if not alignment:
             raise PlatformicsError("Unauthorized: alignment does not exist")
     # Check that annotation_shape relationship is accessible.
     if validated.annotation_shape_id:
-        annotation_shape = await get_db_rows(
-            db.AnnotationShape,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.annotation_shape_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        annotation_shape = await get_db_rows(db.AnnotationShape, session, authz_client, principal, {"id": {"_eq": validated.annotation_shape_id } }, [], AuthzAction.VIEW)
         if not annotation_shape:
             raise PlatformicsError("Unauthorized: annotation_shape does not exist")
     # Check that tomogram_voxel_spacing relationship is accessible.
     if validated.tomogram_voxel_spacing_id:
-        tomogram_voxel_spacing = await get_db_rows(
-            db.TomogramVoxelSpacing,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.tomogram_voxel_spacing_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        tomogram_voxel_spacing = await get_db_rows(db.TomogramVoxelSpacing, session, authz_client, principal, {"id": {"_eq": validated.tomogram_voxel_spacing_id } }, [], AuthzAction.VIEW)
         if not tomogram_voxel_spacing:
             raise PlatformicsError("Unauthorized: tomogram_voxel_spacing does not exist")
 
@@ -573,8 +456,6 @@ async def create_annotation_file(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_annotation_file(
     input: AnnotationFileUpdateInput,
@@ -598,45 +479,21 @@ async def update_annotation_file(
     # Validate that the user can read all of the entities they're linking to.
     # Check that alignment relationship is accessible.
     if validated.alignment_id:
-        alignment = await get_db_rows(
-            db.Alignment,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.alignment_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        alignment = await get_db_rows(db.Alignment, session, authz_client, principal, {"id": {"_eq": validated.alignment_id } }, [], AuthzAction.VIEW)
         if not alignment:
             raise PlatformicsError("Unauthorized: alignment does not exist")
         params["alignment"] = alignment[0]
         del params["alignment_id"]
     # Check that annotation_shape relationship is accessible.
     if validated.annotation_shape_id:
-        annotation_shape = await get_db_rows(
-            db.AnnotationShape,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.annotation_shape_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        annotation_shape = await get_db_rows(db.AnnotationShape, session, authz_client, principal, {"id": {"_eq": validated.annotation_shape_id } }, [], AuthzAction.VIEW)
         if not annotation_shape:
             raise PlatformicsError("Unauthorized: annotation_shape does not exist")
         params["annotation_shape"] = annotation_shape[0]
         del params["annotation_shape_id"]
     # Check that tomogram_voxel_spacing relationship is accessible.
     if validated.tomogram_voxel_spacing_id:
-        tomogram_voxel_spacing = await get_db_rows(
-            db.TomogramVoxelSpacing,
-            session,
-            authz_client,
-            principal,
-            {"id": {"_eq": validated.tomogram_voxel_spacing_id}},
-            [],
-            AuthzAction.VIEW,
-        )
+        tomogram_voxel_spacing = await get_db_rows(db.TomogramVoxelSpacing, session, authz_client, principal, {"id": {"_eq": validated.tomogram_voxel_spacing_id } }, [], AuthzAction.VIEW)
         if not tomogram_voxel_spacing:
             raise PlatformicsError("Unauthorized: tomogram_voxel_spacing does not exist")
         params["tomogram_voxel_spacing"] = tomogram_voxel_spacing[0]

@@ -8,6 +8,19 @@ Make changes to the template codegen/templates/graphql_api/types/class_name.py.j
 # ruff: noqa: E501 Line too long
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import datetime
 import enum
 import typing
@@ -44,7 +57,6 @@ T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
     from graphql_api.types.dataset import Dataset, DatasetAggregateWhereClause, DatasetOrderByClause, DatasetWhereClause
-
     pass
 else:
     DatasetWhereClause = "DatasetWhereClause"
@@ -60,8 +72,6 @@ Dataloaders
 ------------------------------------------------------------------------------
 These are batching functions for loading related objects to avoid N+1 queries.
 """
-
-
 @strawberry.field
 async def load_dataset_rows(
     root: "DatasetFunding",
@@ -72,8 +82,7 @@ async def load_dataset_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.DatasetFunding)
     relationship = mapper.relationships["dataset"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.dataset_id)  # type:ignore
-
+    return await dataloader.loader_for(relationship, where, order_by).load(root.dataset_id) # type:ignore
 
 """
 ------------------------------------------------------------------------------
@@ -86,8 +95,6 @@ Define Strawberry GQL types
 Only let users specify IDs in WHERE clause when mutating data (for safety).
 We can extend that list as we gather more use cases from the FE team.
 """
-
-
 @strawberry.input
 class DatasetFundingWhereClauseMutations(TypedDict):
     id: IntComparators | None
@@ -96,22 +103,17 @@ class DatasetFundingWhereClauseMutations(TypedDict):
 """
 Supported WHERE clause attributes
 """
-
-
 @strawberry.input
 class DatasetFundingWhereClause(TypedDict):
     dataset: Optional[Annotated["DatasetWhereClause", strawberry.lazy("graphql_api.types.dataset")]] | None
-    dataset_id: Optional[IntComparators] | None
+    dataset_id : Optional[IntComparators] | None
     funding_agency_name: Optional[StrComparators] | None
     grant_id: Optional[StrComparators] | None
     id: Optional[IntComparators] | None
 
-
 """
 Supported ORDER BY clause attributes
 """
-
-
 @strawberry.input
 class DatasetFundingOrderByClause(TypedDict):
     dataset: Optional[Annotated["DatasetOrderByClause", strawberry.lazy("graphql_api.types.dataset")]] | None
@@ -123,20 +125,13 @@ class DatasetFundingOrderByClause(TypedDict):
 """
 Define DatasetFunding type
 """
-
-
 @strawberry.type(description="Metadata for a dataset's funding sources")
 class DatasetFunding(EntityInterface):
-    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_rows
-    )  # type:ignore
-    dataset_id: Optional[int]
-    funding_agency_name: Optional[str] = strawberry.field(description="Name of the funding agency.", default=None)
-    grant_id: Optional[str] = strawberry.field(
-        description="Grant identifier provided by the funding agency.", default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
+    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type:ignore
+    dataset_id :  Optional[int]
+    funding_agency_name: Optional[str] = strawberry.field(description='Name of the funding agency.', default=None)
+    grant_id: Optional[str] = strawberry.field(description='Grant identifier provided by the funding agency.', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 We need to add this to each Queryable type so that strawberry will accept either our
@@ -154,42 +149,31 @@ Aggregation types
 """
 Define columns that support numerical aggregations
 """
-
-
 @strawberry.type
 class DatasetFundingNumericalColumns:
-    id: Optional[int] = None
-
+    id:  Optional[int] = None
 
 """
 Define columns that support min/max aggregations
 """
-
-
 @strawberry.type
 class DatasetFundingMinMaxColumns:
-    funding_agency_name: Optional[str] = None
-    grant_id: Optional[str] = None
-    id: Optional[int] = None
-
+    funding_agency_name:  Optional[str] = None
+    grant_id:  Optional[str] = None
+    id:  Optional[int] = None
 
 """
 Define enum of all columns to support count and count(distinct) aggregations
 """
-
-
 @strawberry.enum
 class DatasetFundingCountColumns(enum.Enum):
     fundingAgencyName = "funding_agency_name"
     grantId = "grant_id"
     id = "id"
 
-
 """
 Support *filtering* on aggregates and related aggregates
 """
-
-
 @strawberry.input
 class DatasetFundingAggregateWhereClauseCount(TypedDict):
     arguments: Optional["DatasetFundingCountColumns"] | None
@@ -202,22 +186,16 @@ class DatasetFundingAggregateWhereClauseCount(TypedDict):
 class DatasetFundingAggregateWhereClause(TypedDict):
     count: DatasetFundingAggregateWhereClauseCount
 
-
 """
 All supported aggregation functions
 """
-
-
 @strawberry.type
 class DatasetFundingAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
-    def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DatasetFundingCountColumns] = None,
-    ) -> Optional[int]:
+    def count(self, distinct: Optional[bool] = False, columns: Optional[DatasetFundingCountColumns] = None) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
-        return self.count  # type: ignore
-
+        return self.count # type: ignore
     sum: Optional[DatasetFundingNumericalColumns] = None
     avg: Optional[DatasetFundingNumericalColumns] = None
     stddev: Optional[DatasetFundingNumericalColumns] = None
@@ -226,16 +204,12 @@ class DatasetFundingAggregateFunctions:
     max: Optional[DatasetFundingMinMaxColumns] = None
     groupBy: Optional[DatasetFundingGroupByOptions] = None
 
-
 """
 Wrapper around DatasetFundingAggregateFunctions
 """
-
-
 @strawberry.type
 class DatasetFundingAggregate:
     aggregate: Optional[list[DatasetFundingAggregateFunctions]] = None
-
 
 """
 ------------------------------------------------------------------------------
@@ -246,34 +220,22 @@ Mutation types
 
 @strawberry.input()
 class DatasetFundingCreateInput:
-    dataset_id: Optional[strawberry.ID] = strawberry.field(
-        description="The dataset this dataset funding is a part of", default=None,
-    )
-    funding_agency_name: Optional[str] = strawberry.field(description="Name of the funding agency.", default=None)
-    grant_id: Optional[str] = strawberry.field(
-        description="Grant identifier provided by the funding agency.", default=None,
-    )
-    id: int = strawberry.field(description="Numeric identifier (May change!)")
-
-
+    dataset_id: Optional[strawberry.ID] = strawberry.field(description='The dataset this dataset funding is a part of', default=None)
+    funding_agency_name: Optional[str] = strawberry.field(description='Name of the funding agency.', default=None)
+    grant_id: Optional[str] = strawberry.field(description='Grant identifier provided by the funding agency.', default=None)
+    id: int = strawberry.field(description='Numeric identifier (May change!)')
 @strawberry.input()
 class DatasetFundingUpdateInput:
-    dataset_id: Optional[strawberry.ID] = strawberry.field(
-        description="The dataset this dataset funding is a part of", default=None,
-    )
-    funding_agency_name: Optional[str] = strawberry.field(description="Name of the funding agency.", default=None)
-    grant_id: Optional[str] = strawberry.field(
-        description="Grant identifier provided by the funding agency.", default=None,
-    )
-    id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
-
+    dataset_id: Optional[strawberry.ID] = strawberry.field(description='The dataset this dataset funding is a part of', default=None)
+    funding_agency_name: Optional[str] = strawberry.field(description='Name of the funding agency.', default=None)
+    grant_id: Optional[str] = strawberry.field(description='Grant identifier provided by the funding agency.', default=None)
+    id: Optional[int] = strawberry.field(description='Numeric identifier (May change!)')
 
 """
 ------------------------------------------------------------------------------
 Utilities
 ------------------------------------------------------------------------------
 """
-
 
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_dataset_funding(
@@ -294,20 +256,17 @@ async def resolve_dataset_funding(
     return await get_db_rows(db.DatasetFunding, session, authz_client, principal, where, order_by, AuthzAction.VIEW, limit, offset)  # type: ignore
 
 
-def format_dataset_funding_aggregate_output(
-    query_results: Sequence[RowMapping] | RowMapping,
-) -> DatasetFundingAggregate:
+def format_dataset_funding_aggregate_output(query_results: Sequence[RowMapping] | RowMapping) -> DatasetFundingAggregate:
     """
     Given a row from the DB containing the results of an aggregate query,
     format the results using the proper GraphQL types.
     """
     aggregate = []
     if type(query_results) is not list:
-        query_results = [query_results]  # type: ignore
+        query_results = [query_results] # type: ignore
     for row in query_results:
         aggregate.append(format_dataset_funding_aggregate_row(row))
     return DatasetFundingAggregate(aggregate=aggregate)
-
 
 def format_dataset_funding_aggregate_row(row: RowMapping) -> DatasetFundingAggregateFunctions:
     """
@@ -339,7 +298,6 @@ def format_dataset_funding_aggregate_row(row: RowMapping) -> DatasetFundingAggre
                 setattr(getattr(output, aggregator_fn), col_name, value)
     return output
 
-
 @strawberry.field(extensions=[DependencyExtension()])
 async def resolve_dataset_funding_aggregate(
     info: Info,
@@ -362,8 +320,6 @@ async def resolve_dataset_funding_aggregate(
     rows = await get_aggregate_db_rows(db.DatasetFunding, session, authz_client, principal, where, aggregate_selections, [], groupby_selections)  # type: ignore
     aggregate_output = format_dataset_funding_aggregate_output(rows)
     return aggregate_output
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def create_dataset_funding(
     input: DatasetFundingCreateInput,
@@ -383,9 +339,7 @@ async def create_dataset_funding(
     # Validate that the user can read all of the entities they're linking to.
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
-        dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
-        )
+        dataset = await get_db_rows(db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id } }, [], AuthzAction.VIEW)
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
 
@@ -400,8 +354,6 @@ async def create_dataset_funding(
     session.add(new_entity)
     await session.commit()
     return new_entity
-
-
 @strawberry.mutation(extensions=[DependencyExtension()])
 async def update_dataset_funding(
     input: DatasetFundingUpdateInput,
@@ -425,9 +377,7 @@ async def update_dataset_funding(
     # Validate that the user can read all of the entities they're linking to.
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
-        dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
-        )
+        dataset = await get_db_rows(db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id } }, [], AuthzAction.VIEW)
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
         params["dataset"] = dataset[0]

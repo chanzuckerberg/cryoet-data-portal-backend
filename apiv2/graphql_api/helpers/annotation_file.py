@@ -5,6 +5,8 @@ Auto-gereanted by running 'make codegen'. Do not edit.
 Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2 instead.
 """
 
+
+
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
 import graphql_api.helpers.alignment as alignment_helper
@@ -28,16 +30,11 @@ Define groupby options for AnnotationFile type.
 These are only used in aggregate queries.
 """
 
-
 @strawberry.type
 class AnnotationFileGroupByOptions:
     alignment: Optional[Annotated["AlignmentGroupByOptions", strawberry.lazy("graphql_api.helpers.alignment")]] = None
-    annotation_shape: Optional[
-        Annotated["AnnotationShapeGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_shape")]
-    ] = None
-    tomogram_voxel_spacing: Optional[
-        Annotated["TomogramVoxelSpacingGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_voxel_spacing")]
-    ] = None
+    annotation_shape: Optional[Annotated["AnnotationShapeGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_shape")]] = None
+    tomogram_voxel_spacing: Optional[Annotated["TomogramVoxelSpacingGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_voxel_spacing")]] = None
     format: Optional[str] = None
     s3_path: Optional[str] = None
     file_size: Optional[float] = None
