@@ -288,10 +288,12 @@ def to_template_by_run(templates, run_data_map, prefix: str, path: list[str]) ->
     return template_metadata
 
 
-def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
+def to_tiltseries(per_run_float_mapping: dict[str, dict[str, float]], data: dict[str, Any]) -> dict[str, Any]:
     tilt_series_path = data["tilt_series"].get("tilt_series_path")
     if not tilt_series_path:
         return {}
+
+    run_name = data["run_name"]
 
     tilt_series = deepcopy(data["tilt_series"])
     microscope = tilt_series.get("microscope", {})
@@ -306,9 +308,13 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
         tilt_series["camera"]["manufacturer"] = tilt_series["camera"].pop("manufactorer", None)
     tilt_series["is_aligned"] = tilt_series.pop("tilt_series_is_aligned", False)
     tilt_series["tilt_range"] = {
-        "min": tilt_series.pop("tilt_range_min"),
-        "max": tilt_series.pop("tilt_range_max"),
+        "min": per_run_float_mapping["tilt_series_min_angle"][run_name],
+        "max": per_run_float_mapping["tilt_series_max_angle"][run_name],
     }
+    tilt_series["tilt_step"] = per_run_float_mapping["tilt_series_tilt_step"][run_name]
+
+    tilt_series.pop("tilt_range_min")
+    tilt_series.pop("tilt_range_max")
 
     tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
     tilt_series["pixel_spacing"] = round(tilt_series["pixel_spacing"], 3) if tilt_series.get("pixel_spacing") else None
@@ -571,16 +577,23 @@ def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
         int(key): update_cross_reference(val) for key, val in get_json_data(input_dir, "cross_references.json").items()
     }
 
-def get_frames_dose_rate_mapping(input_dir: str) -> dict[str, float]:
+
+def get_per_run_float_mapping(input_dir: str) -> dict[str, dict[str, float]]:
     """
-    Get frame-dose mapping for run names. The data for this is sourced from the run_dose_rate_map.tsv file in
-    the input directory.
+    Get parameter to run mapping for all runs. The data for this is sourced from the per_run_float_param_map.tsv
     :param input_dir:
-    :return: dictionary mapping run name to dose rate
+    :return: dictionary mapping param names to dicts of per run values {param_name -> {run_name -> value}
     """
-    with open(os.path.join(input_dir, "run_dose_rate_map.tsv")) as csvfile:
+    with open(os.path.join(input_dir, "per_run_float_param_map.tsv")) as csvfile:
         reader = csv.DictReader(csvfile, delimiter="\t")
-        return {row["run_name"]: float(row["dose_rate"]) for row in reader}
+        params = reader.fieldnames
+        ret = {param_name: {} for param_name in params if param_name != "run_name"}
+
+        for row in reader:
+            for param_name in ret:
+                ret[param_name][row["run_name"]] = float(row[param_name])
+        return ret
+
 
 def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:
     for entity in entities:
@@ -594,25 +607,44 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
             source["parent_filters"]["exclude"]["run"].extend(runs_to_exclude)
 
 
-def handle_frame_dose_rate(data: dict[str, Any], run_data_map: dict, frame_dose_rate_mapping: dict[str, float]) -> str | float | None :
-    distinct_values = {} # Holds the mapping between distinct frame rate and the runs with those values
+def handle_per_run_float_param_maps(
+    data: dict[str, Any], run_data_map: dict, per_run_mapping: dict[str, dict[str, float]]
+) -> tuple[dict[str, str | float | None], dict]:
+    """
+    Handle per-run float parameter mappings. The function finds distinct values for each parameter in the per_run_mapping
+    and either passes a single value (if only one distinct value is found) or creates a formatted string for the field
+    and appends the values to the run_data_map.
+    :param data: The data for the dataset
+    :param run_data_map: The run data map to store the per-run values
+    :param per_run_mapping: The mapping of parameter to run name to value param_name -> {run_name -> value}
+    :return: tuple of the formatted values for the dataset and the updated run_data_map
+    """
+    distinct_values = {param: {} for param in per_run_mapping}
     for entry in data:
         run_name = entry["run_name"]
-        dose_rate = frame_dose_rate_mapping.get(run_name, 0.0)
-        if dose_rate in distinct_values:
-            distinct_values[dose_rate].append(run_name)
-        else :
-            distinct_values[dose_rate] = [run_name]
+        for param_name in per_run_mapping:
+            param_value = per_run_mapping[param_name].get(run_name, 0.0)
+            # dose_rate = frame_dose_rate_mapping.get(run_name, 0.0)
+            if param_value in distinct_values[param_name]:
+                distinct_values[param_name][param_value].append(run_name)
+            else:
+                distinct_values[param_name][param_value] = [run_name]
 
-    if len(distinct_values) == 0:
-        return None
-    if len(distinct_values) == 1:
-        return next(iter(distinct_values.keys()))
-    key = "float {frames_dose_rate}"
-    for dose_rate, runs in distinct_values.items():
-        for run_name in runs:
-            run_data_map[run_name][key] = dose_rate
-    return key
+    ret = {}
+
+    for param_name, values in distinct_values.items():
+        if len(values) == 0:
+            ret[param_name] = None
+        elif len(values) == 1:
+            ret[param_name] = next(iter(values.keys()))
+        else:
+            key = f"float {{{param_name}}}"
+            for param_value, runs in distinct_values[param_name].items():
+                for run_name in runs:
+                    run_data_map[run_name][param_name] = param_value
+            ret[param_name] = key
+
+    return ret, run_data_map
 
 
 @cli.command()
@@ -639,7 +671,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
     cross_reference_mapping = get_cross_reference_mapping(input_dir)
-    frame_dose_rate_mapping = get_frames_dose_rate_mapping(input_dir)
+    per_run_float_mapping = get_per_run_float_mapping(input_dir)
 
     deposition_mapping = get_deposition_map(input_dir)
 
@@ -659,6 +691,9 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         authors = to_author(val.get("dataset")["authors"], deposition_entity.get("metadata", {}).get("authors"))
 
         run_data_map = defaultdict(dict)
+        ds_per_run_mapping, run_data_map = handle_per_run_float_param_maps(
+            val.get("runs"), run_data_map, per_run_float_mapping
+        )
         dataset_config = {
             "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
             "depositions": [deposition_entity],
@@ -667,7 +702,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 dataset_id,
                 val.get("runs"),
                 run_data_map,
-                partial(to_tiltseries),
+                partial(to_tiltseries, per_run_float_mapping),
                 "ts",
             ),
             "tomograms": to_config_by_run(
@@ -686,7 +721,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 run_tomo_map_path,
                 run_frames_map_path,
                 deposition_mapping.get(dataset_id),
-                handle_frame_dose_rate(val.get("runs"), run_data_map, frame_dose_rate_mapping),
+                ds_per_run_mapping["frame_dose_rate"],
             ),
         }
 
