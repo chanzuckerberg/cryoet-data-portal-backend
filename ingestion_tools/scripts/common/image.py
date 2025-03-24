@@ -4,7 +4,7 @@ import os.path
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Literal, Tuple
 
 import mrcfile
 import numpy as np
@@ -272,6 +272,11 @@ class TomoConverter:
     def get_volume_info(self) -> VolumeInfo:
         return self.volume_reader.get_volume_info()
 
+    def get_contrast_limits(self, method: Literal["gmm", "cdf"] = "gmm"):
+        from cryoet_data_portal_neuroglancer.precompute.contrast_limits import compute_contrast_limits
+
+        return compute_contrast_limits(self.volume_reader.data, method=method)
+
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
         self,
@@ -471,6 +476,12 @@ def get_voxel_size(fs: FileSystemApi, tomo_filename: str) -> float:
 
 def get_volume_info(fs: FileSystemApi, tomo_filename: str) -> VolumeInfo:
     return TomoConverter(fs, tomo_filename, header_only=True).get_volume_info()
+
+
+def get_volume_contrast_limits(
+    fs: FileSystemApi, tomo_filename: str, method: Literal["gmm", "cdf"] = "gmm"
+) -> tuple[float, float]:
+    return TomoConverter(fs, tomo_filename).get_contrast_limits(method=method)
 
 
 def get_converter(

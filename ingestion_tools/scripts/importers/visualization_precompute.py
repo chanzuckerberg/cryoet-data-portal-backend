@@ -141,6 +141,7 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
         # Importing this at runtime instead of compile time since zfpy (a dependency of this
         # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.precompute import segmentation_mask
+        from cryoet_data_portal_neuroglancer.precompute.contrast_limits import compute_contrast_limits
 
         segmentation_mask.encode_segmentation(
             zarr_file_path,
