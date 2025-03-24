@@ -479,7 +479,7 @@ def get_volume_info(fs: FileSystemApi, tomo_filename: str) -> VolumeInfo:
 
 
 def get_volume_contrast_limits(
-    fs: FileSystemApi, tomo_filename: str, method: Literal["gmm", "cdf"] = "gmm"
+    fs: FileSystemApi, tomo_filename: str, method: Literal["gmm", "cdf"] = "gmm",
 ) -> tuple[float, float]:
     return TomoConverter(fs, tomo_filename).get_contrast_limits(method=method)
 
