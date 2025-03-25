@@ -156,7 +156,7 @@ class DatasetAuthor(EntityInterface):
     kaggle_id: Optional[str] = strawberry.field(
         description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
     )
-    name: str = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
+    name: str = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
         description="Name of the institutions an author is affiliated with. Comma separated", default=None,
@@ -309,7 +309,7 @@ class DatasetAuthorCreateInput:
     kaggle_id: Optional[str] = strawberry.field(
         description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
     )
-    name: str = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
+    name: str = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
         description="Name of the institutions an author is affiliated with. Comma separated", default=None,
@@ -343,7 +343,7 @@ class DatasetAuthorUpdateInput:
     kaggle_id: Optional[str] = strawberry.field(
         description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
     )
-    name: Optional[str] = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
+    name: Optional[str] = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
         description="Name of the institutions an author is affiliated with. Comma separated", default=None,

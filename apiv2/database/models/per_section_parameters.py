@@ -15,6 +15,7 @@ from platformics.database.models.file import File
 
 if TYPE_CHECKING:
     from database.models.frame import Frame
+    from database.models.run import Run
     from database.models.tiltseries import Tiltseries
 
     from platformics.database.models.file import File
@@ -23,6 +24,7 @@ if TYPE_CHECKING:
 else:
     File = "File"
     Frame = "Frame"
+    Run = "Run"
     Tiltseries = "Tiltseries"
     ...
 
@@ -31,10 +33,22 @@ class PerSectionParameters(Base):
     __tablename__ = "per_section_parameters"
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
+    astigmatic_angle: Mapped[float] = mapped_column(Float, nullable=True)
     frame_id: Mapped[int] = mapped_column(Integer, ForeignKey("frame.id"), nullable=False, index=True)
     frame: Mapped["Frame"] = relationship(
         "Frame",
         foreign_keys=frame_id,
+        back_populates="per_section_parameters",
+    )
+    major_defocus: Mapped[float] = mapped_column(Float, nullable=True)
+    max_resolution: Mapped[float] = mapped_column(Float, nullable=True)
+    minor_defocus: Mapped[float] = mapped_column(Float, nullable=True)
+    phase_shift: Mapped[float] = mapped_column(Float, nullable=True)
+    raw_angle: Mapped[float] = mapped_column(Float, nullable=False)
+    run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
+    run: Mapped["Run"] = relationship(
+        "Run",
+        foreign_keys=run_id,
         back_populates="per_section_parameters",
     )
     tiltseries_id: Mapped[int] = mapped_column(Integer, ForeignKey("tiltseries.id"), nullable=False, index=True)
@@ -44,7 +58,4 @@ class PerSectionParameters(Base):
         back_populates="per_section_parameters",
     )
     z_index: Mapped[int] = mapped_column(Integer, nullable=False)
-    defocus: Mapped[float] = mapped_column(Float, nullable=True)
-    astigmatism: Mapped[float] = mapped_column(Float, nullable=True)
-    astigmatic_angle: Mapped[float] = mapped_column(Float, nullable=True)
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)

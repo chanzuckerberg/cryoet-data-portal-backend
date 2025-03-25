@@ -17,9 +17,14 @@ import database.models as db
 import strawberry
 from fastapi import Depends
 from graphql_api.helpers.frame import FrameGroupByOptions, build_frame_groupby_output
+from graphql_api.types.per_section_parameters import (
+    PerSectionParametersAggregate,
+    format_per_section_parameters_aggregate_output,
+)
 from sqlalchemy import inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
+from strawberry import relay
 from strawberry.types import Info
 from support.limit_offset import LimitOffsetClause
 from typing_extensions import TypedDict
@@ -38,7 +43,7 @@ from platformics.graphql_api.core.query_input_types import (
 )
 from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
-from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
+from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections, get_nested_selected_fields
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
 
 E = typing.TypeVar("E")
@@ -50,6 +55,12 @@ if TYPE_CHECKING:
         DepositionAggregateWhereClause,
         DepositionOrderByClause,
         DepositionWhereClause,
+    )
+    from graphql_api.types.per_section_parameters import (
+        PerSectionParameters,
+        PerSectionParametersAggregateWhereClause,
+        PerSectionParametersOrderByClause,
+        PerSectionParametersWhereClause,
     )
     from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
 
@@ -63,6 +74,10 @@ else:
     RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
+    PerSectionParametersWhereClause = "PerSectionParametersWhereClause"
+    PerSectionParametersAggregateWhereClause = "PerSectionParametersAggregateWhereClause"
+    PerSectionParameters = "PerSectionParameters"
+    PerSectionParametersOrderByClause = "PerSectionParametersOrderByClause"
     pass
 
 
@@ -102,6 +117,46 @@ async def load_run_rows(
     return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
 
 
+@relay.connection(
+    relay.ListConnection[
+        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ],  # type:ignore
+)
+async def load_per_section_parameters_rows(
+    root: "Frame",
+    info: Info,
+    where: (
+        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
+    ) = None,
+    order_by: Optional[
+        list[
+            Annotated["PerSectionParametersOrderByClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
+        ]
+    ] = [],
+) -> Sequence[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Frame)
+    relationship = mapper.relationships["per_section_parameters"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+
+
+@strawberry.field
+async def load_per_section_parameters_aggregate_rows(
+    root: "Frame",
+    info: Info,
+    where: (
+        Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")] | None
+    ) = None,
+) -> Optional[Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]]:
+    selections = get_nested_selected_fields(info.selected_fields)
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Frame)
+    relationship = mapper.relationships["per_section_parameters"]
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    aggregate_output = format_per_section_parameters_aggregate_output(rows)
+    return aggregate_output
+
+
 """
 ------------------------------------------------------------------------------
 Define Strawberry GQL types
@@ -135,6 +190,20 @@ class FrameWhereClause(TypedDict):
     accumulated_dose: Optional[FloatComparators] | None
     exposure_dose: Optional[FloatComparators] | None
     is_gain_corrected: Optional[BoolComparators] | None
+    per_section_parameters: (
+        Optional[
+            Annotated["PerSectionParametersWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters")]
+        ]
+        | None
+    )
+    per_section_parameters_aggregate: (
+        Optional[
+            Annotated[
+                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters"),
+            ]
+        ]
+        | None
+    )
     s3_frame_path: Optional[StrComparators] | None
     https_frame_path: Optional[StrComparators] | None
     file_size: Optional[FloatComparators] | None
@@ -183,6 +252,12 @@ class Frame(EntityInterface):
     is_gain_corrected: Optional[bool] = strawberry.field(
         description="Whether this frame has been gain corrected", default=None,
     )
+    per_section_parameters: Sequence[
+        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ] = load_per_section_parameters_rows  # type:ignore
+    per_section_parameters_aggregate: Optional[
+        Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
+    ] = load_per_section_parameters_aggregate_rows  # type:ignore
     s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
     https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
     file_size: Optional[float] = strawberry.field(description="Size of the frame file in bytes", default=None)

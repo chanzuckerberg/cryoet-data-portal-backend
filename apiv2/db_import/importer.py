@@ -20,7 +20,11 @@ from db_import.importers.frame import FrameImporter
 from db_import.importers.frame_acquisition_file import FrameAcquisitionFileImporter
 from db_import.importers.gain import GainImporter
 from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
-from db_import.importers.tiltseries import StaleTiltSeriesDeletionDBImporter, TiltSeriesDBImporter
+from db_import.importers.tiltseries import (
+    PerSectionParametersImporter,
+    StaleTiltSeriesDeletionDBImporter,
+    TiltSeriesDBImporter,
+)
 from db_import.importers.tomogram import TomogramAuthorImporter, TomogramImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
 from s3fs import S3FileSystem
@@ -254,6 +258,16 @@ def load_func(
                 if tiltseries:
                     tiltseries_obj = tiltseries.import_to_db()
                     tiltseries_cleaner.mark_as_active(tiltseries_obj)
+                    # import per section parameters
+                    metadata_file_path = tiltseries.get_metadata_file_path()
+                    parents["tiltseries"] = tiltseries_obj
+                    per_section_parameters_importer = PerSectionParametersImporter(
+                        config,
+                        metadata_file_path,
+                        **parents,
+                    )
+                    per_section_parameters_importer.import_items()
+                    parents.pop("tiltseries")
                 tiltseries_cleaner.remove_stale_objects()
             if import_alignments:
                 alignment_importer = AlignmentImporter(config, **parents)

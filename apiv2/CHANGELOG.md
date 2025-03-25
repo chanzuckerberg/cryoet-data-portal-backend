@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.11.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.10.0...apiv2-v1.11.0) (2025-03-20)
+
+
+### Features
+
+* add PerSectionParameters table to apiv2 ([#461](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/461)) ([2f4fc90](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/2f4fc90f8e44cbb08e9a1738a3d87780badb76cc))
+* Adding additional tomogram processings ([#466](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/466)) ([c4e8a47](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/c4e8a47445634c35f2986eda6f6b925ba82d2d44))
+* Update DB ingestion for FramesAcquisitionFile, and Frames ([#451](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/451)) ([c8c40dd](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/c8c40dd56b1ac0bc60dd98a2026c2f5a75ba5ab7))
+
 ## [1.10.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.9.1...apiv2-v1.10.0) (2025-02-26)
 
 

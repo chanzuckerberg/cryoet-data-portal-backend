@@ -15,6 +15,7 @@ from platformics.database.models.file import File
 
 if TYPE_CHECKING:
     from database.models.deposition import Deposition
+    from database.models.per_section_parameters import PerSectionParameters
     from database.models.run import Run
 
     from platformics.database.models.file import File
@@ -24,6 +25,7 @@ else:
     File = "File"
     Deposition = "Deposition"
     Run = "Run"
+    PerSectionParameters = "PerSectionParameters"
     ...
 
 
@@ -47,6 +49,13 @@ class Frame(Base):
     accumulated_dose: Mapped[float] = mapped_column(Float, nullable=True)
     exposure_dose: Mapped[float] = mapped_column(Float, nullable=True)
     is_gain_corrected: Mapped[bool] = mapped_column(Boolean, nullable=True)
+    per_section_parameters: Mapped[list[PerSectionParameters]] = relationship(
+        "PerSectionParameters",
+        back_populates="frame",
+        uselist=True,
+        foreign_keys="PerSectionParameters.frame_id",
+        cascade="all, delete-orphan",
+    )
     s3_frame_path: Mapped[str] = mapped_column(String, nullable=True)
     https_frame_path: Mapped[str] = mapped_column(String, nullable=True)
     file_size: Mapped[float] = mapped_column(Float, nullable=True)
