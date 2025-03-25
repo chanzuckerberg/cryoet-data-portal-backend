@@ -1926,7 +1926,7 @@ type DatasetAuthor implements EntityInterface & Node {
   """A unique, persistent identifier for kaggle users at kaggle.com."""
   kaggleId: String
 
-  """Full name of an author (e.g. Jane Doe)."""
+  """Full name of a dataset author (e.g. Jane Doe)."""
   name: String!
 
   """Email address for this author"""
@@ -2017,7 +2017,7 @@ input DatasetAuthorCreateInput {
   """A unique, persistent identifier for kaggle users at kaggle.com."""
   kaggleId: String = null
 
-  """Full name of an author (e.g. Jane Doe)."""
+  """Full name of a dataset author (e.g. Jane Doe)."""
   name: String!
 
   """Email address for this author"""
@@ -2115,7 +2115,7 @@ input DatasetAuthorUpdateInput {
   """A unique, persistent identifier for kaggle users at kaggle.com."""
   kaggleId: String = null
 
-  """Full name of an author (e.g. Jane Doe)."""
+  """Full name of a dataset author (e.g. Jane Doe)."""
   name: String
 
   """Email address for this author"""
@@ -3499,6 +3499,23 @@ type Frame implements EntityInterface & Node {
 
   """Whether this frame has been gain corrected"""
   isGainCorrected: Boolean
+  perSectionParameters(
+    where: PerSectionParametersWhereClause = null
+    orderBy: [PerSectionParametersOrderByClause!] = []
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PerSectionParametersConnection!
+  perSectionParametersAggregate(where: PerSectionParametersWhereClause = null): PerSectionParametersAggregate
 
   """S3 path to the frame file"""
   s3FramePath: String
@@ -3732,6 +3749,7 @@ type FrameGroupByOptions {
   accumulatedDose: Float
   exposureDose: Float
   isGainCorrected: Boolean
+  perSectionParameters: PerSectionParametersGroupByOptions
   s3FramePath: String
   httpsFramePath: String
   fileSize: Float
@@ -3807,6 +3825,8 @@ input FrameWhereClause {
   accumulatedDose: FloatComparators
   exposureDose: FloatComparators
   isGainCorrected: BoolComparators
+  perSectionParameters: PerSectionParametersWhereClause
+  perSectionParametersAggregate: PerSectionParametersAggregateWhereClause
   s3FramePath: StrComparators
   httpsFramePath: StrComparators
   fileSize: FloatComparators
@@ -4014,6 +4034,9 @@ type Mutation {
   createPerSectionAlignmentParameters(input: PerSectionAlignmentParametersCreateInput!): PerSectionAlignmentParameters!
   updatePerSectionAlignmentParameters(input: PerSectionAlignmentParametersUpdateInput!, where: PerSectionAlignmentParametersWhereClauseMutations!): [PerSectionAlignmentParameters!]!
   deletePerSectionAlignmentParameters(where: PerSectionAlignmentParametersWhereClauseMutations!): [PerSectionAlignmentParameters!]!
+  createPerSectionParameters(input: PerSectionParametersCreateInput!): PerSectionParameters!
+  updatePerSectionParameters(input: PerSectionParametersUpdateInput!, where: PerSectionParametersWhereClauseMutations!): [PerSectionParameters!]!
+  deletePerSectionParameters(where: PerSectionParametersWhereClauseMutations!): [PerSectionParameters!]!
   createRun(input: RunCreateInput!): Run!
   updateRun(input: RunUpdateInput!, where: RunWhereClauseMutations!): [Run!]!
   deleteRun(where: RunWhereClauseMutations!): [Run!]!
@@ -4245,6 +4268,256 @@ input PerSectionAlignmentParametersWhereClauseMutations {
   id: IntComparators
 }
 
+"""Map individual Frames to a Tiltseries"""
+type PerSectionParameters implements EntityInterface & Node {
+  """The Globally Unique ID of this object"""
+  _id: GlobalID!
+
+  """Numeric identifier (May change!)"""
+  id: Int!
+
+  """
+  Angle (in degrees) from reciprocal space X axis to the major axis of defocus.
+  """
+  astigmaticAngle: Float
+  frame(where: FrameWhereClause = null, orderBy: [FrameOrderByClause!] = []): Frame
+  frameId: Int!
+
+  """
+  Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
+  """
+  majorDefocus: Float
+
+  """Maximum resolution of the frame"""
+  maxResolution: Float
+
+  """
+  Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
+  """
+  minorDefocus: Float
+
+  """Phase shift estimated for this tilt image in degrees."""
+  phaseShift: Float
+
+  """Nominal tilt angle for this tilt image reported by the microscope."""
+  rawAngle: Float!
+  run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
+  runId: Int!
+  tiltseries(where: TiltseriesWhereClause = null, orderBy: [TiltseriesOrderByClause!] = []): Tiltseries
+  tiltseriesId: Int!
+
+  """Index (0-based) of this tilt image in the tilt series stack."""
+  zIndex: Int!
+}
+
+type PerSectionParametersAggregate {
+  aggregate: [PerSectionParametersAggregateFunctions!]
+}
+
+type PerSectionParametersAggregateFunctions {
+  sum: PerSectionParametersNumericalColumns
+  avg: PerSectionParametersNumericalColumns
+  stddev: PerSectionParametersNumericalColumns
+  variance: PerSectionParametersNumericalColumns
+  min: PerSectionParametersMinMaxColumns
+  max: PerSectionParametersMinMaxColumns
+  groupBy: PerSectionParametersGroupByOptions
+  count(distinct: Boolean = false, columns: PerSectionParametersCountColumns = null): Int
+}
+
+input PerSectionParametersAggregateWhereClause {
+  count: PerSectionParametersAggregateWhereClauseCount!
+}
+
+input PerSectionParametersAggregateWhereClauseCount {
+  arguments: PerSectionParametersCountColumns
+  distinct: Boolean
+  filter: PerSectionParametersWhereClause
+  predicate: IntComparators
+}
+
+"""A connection to a list of items."""
+type PerSectionParametersConnection {
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection"""
+  edges: [PerSectionParametersEdge!]!
+}
+
+enum PerSectionParametersCountColumns {
+  astigmaticAngle
+  majorDefocus
+  maxResolution
+  minorDefocus
+  phaseShift
+  rawAngle
+  zIndex
+  id
+}
+
+input PerSectionParametersCreateInput {
+  """
+  Angle (in degrees) from reciprocal space X axis to the major axis of defocus.
+  """
+  astigmaticAngle: Float = null
+
+  """Frame that this section is a part of"""
+  frameId: ID!
+
+  """
+  Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
+  """
+  majorDefocus: Float = null
+
+  """Maximum resolution of the frame"""
+  maxResolution: Float = null
+
+  """
+  Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
+  """
+  minorDefocus: Float = null
+
+  """Phase shift estimated for this tilt image in degrees."""
+  phaseShift: Float = null
+
+  """Nominal tilt angle for this tilt image reported by the microscope."""
+  rawAngle: Float!
+
+  """Run that this section is a part of"""
+  runId: ID!
+
+  """Tiltseries that this section is a part of"""
+  tiltseriesId: ID!
+
+  """Index (0-based) of this tilt image in the tilt series stack."""
+  zIndex: Int!
+
+  """Numeric identifier (May change!)"""
+  id: Int!
+}
+
+"""An edge in a connection."""
+type PerSectionParametersEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: PerSectionParameters!
+}
+
+type PerSectionParametersGroupByOptions {
+  astigmaticAngle: Float
+  frame: FrameGroupByOptions
+  majorDefocus: Float
+  maxResolution: Float
+  minorDefocus: Float
+  phaseShift: Float
+  rawAngle: Float
+  run: RunGroupByOptions
+  tiltseries: TiltseriesGroupByOptions
+  zIndex: Int
+  id: Int
+}
+
+type PerSectionParametersMinMaxColumns {
+  astigmaticAngle: Float
+  majorDefocus: Float
+  maxResolution: Float
+  minorDefocus: Float
+  phaseShift: Float
+  rawAngle: Float
+  zIndex: Int
+  id: Int
+}
+
+type PerSectionParametersNumericalColumns {
+  astigmaticAngle: Float
+  majorDefocus: Float
+  maxResolution: Float
+  minorDefocus: Float
+  phaseShift: Float
+  rawAngle: Float
+  zIndex: Int
+  id: Int
+}
+
+input PerSectionParametersOrderByClause {
+  astigmaticAngle: orderBy
+  frame: FrameOrderByClause
+  majorDefocus: orderBy
+  maxResolution: orderBy
+  minorDefocus: orderBy
+  phaseShift: orderBy
+  rawAngle: orderBy
+  run: RunOrderByClause
+  tiltseries: TiltseriesOrderByClause
+  zIndex: orderBy
+  id: orderBy
+}
+
+input PerSectionParametersUpdateInput {
+  """
+  Angle (in degrees) from reciprocal space X axis to the major axis of defocus.
+  """
+  astigmaticAngle: Float = null
+
+  """Frame that this section is a part of"""
+  frameId: ID
+
+  """
+  Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
+  """
+  majorDefocus: Float = null
+
+  """Maximum resolution of the frame"""
+  maxResolution: Float = null
+
+  """
+  Defocus (minor axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
+  """
+  minorDefocus: Float = null
+
+  """Phase shift estimated for this tilt image in degrees."""
+  phaseShift: Float = null
+
+  """Nominal tilt angle for this tilt image reported by the microscope."""
+  rawAngle: Float
+
+  """Run that this section is a part of"""
+  runId: ID
+
+  """Tiltseries that this section is a part of"""
+  tiltseriesId: ID
+
+  """Index (0-based) of this tilt image in the tilt series stack."""
+  zIndex: Int
+
+  """Numeric identifier (May change!)"""
+  id: Int
+}
+
+input PerSectionParametersWhereClause {
+  astigmaticAngle: FloatComparators
+  frame: FrameWhereClause
+  frameId: IntComparators
+  majorDefocus: FloatComparators
+  maxResolution: FloatComparators
+  minorDefocus: FloatComparators
+  phaseShift: FloatComparators
+  rawAngle: FloatComparators
+  run: RunWhereClause
+  runId: IntComparators
+  tiltseries: TiltseriesWhereClause
+  tiltseriesId: IntComparators
+  zIndex: IntComparators
+  id: IntComparators
+}
+
+input PerSectionParametersWhereClauseMutations {
+  id: IntComparators
+}
+
 type Query {
   gainFiles(where: GainFileWhereClause = null, orderBy: [GainFileOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [GainFile!]!
   frameAcquisitionFiles(where: FrameAcquisitionFileWhereClause = null, orderBy: [FrameAcquisitionFileOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [FrameAcquisitionFile!]!
@@ -4261,6 +4534,7 @@ type Query {
   depositionTypes(where: DepositionTypeWhereClause = null, orderBy: [DepositionTypeOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [DepositionType!]!
   frames(where: FrameWhereClause = null, orderBy: [FrameOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Frame!]!
   perSectionAlignmentParameters(where: PerSectionAlignmentParametersWhereClause = null, orderBy: [PerSectionAlignmentParametersOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [PerSectionAlignmentParameters!]!
+  perSectionParameters(where: PerSectionParametersWhereClause = null, orderBy: [PerSectionParametersOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [PerSectionParameters!]!
   runs(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Run!]!
   tiltseries(where: TiltseriesWhereClause = null, orderBy: [TiltseriesOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Tiltseries!]!
   tomogramAuthors(where: TomogramAuthorWhereClause = null, orderBy: [TomogramAuthorOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [TomogramAuthor!]!
@@ -4282,6 +4556,7 @@ type Query {
   depositionTypesAggregate(where: DepositionTypeWhereClause = null): DepositionTypeAggregate!
   framesAggregate(where: FrameWhereClause = null): FrameAggregate!
   perSectionAlignmentParametersAggregate(where: PerSectionAlignmentParametersWhereClause = null): PerSectionAlignmentParametersAggregate!
+  perSectionParametersAggregate(where: PerSectionParametersWhereClause = null): PerSectionParametersAggregate!
   runsAggregate(where: RunWhereClause = null): RunAggregate!
   tiltseriesAggregate(where: TiltseriesWhereClause = null): TiltseriesAggregate!
   tomogramAuthorsAggregate(where: TomogramAuthorWhereClause = null): TomogramAuthorAggregate!
@@ -4383,6 +4658,23 @@ type Run implements EntityInterface & Node {
     last: Int = null
   ): FrameAcquisitionFileConnection!
   frameAcquisitionFilesAggregate(where: FrameAcquisitionFileWhereClause = null): FrameAcquisitionFileAggregate
+  perSectionParameters(
+    where: PerSectionParametersWhereClause = null
+    orderBy: [PerSectionParametersOrderByClause!] = []
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PerSectionParametersConnection!
+  perSectionParametersAggregate(where: PerSectionParametersWhereClause = null): PerSectionParametersAggregate
   tiltseries(
     where: TiltseriesWhereClause = null
     orderBy: [TiltseriesOrderByClause!] = []
@@ -4520,6 +4812,7 @@ type RunGroupByOptions {
   frames: FrameGroupByOptions
   gainFiles: GainFileGroupByOptions
   frameAcquisitionFiles: FrameAcquisitionFileGroupByOptions
+  perSectionParameters: PerSectionParametersGroupByOptions
   tiltseries: TiltseriesGroupByOptions
   tomogramVoxelSpacings: TomogramVoxelSpacingGroupByOptions
   tomograms: TomogramGroupByOptions
@@ -4578,6 +4871,8 @@ input RunWhereClause {
   gainFilesAggregate: GainFileAggregateWhereClause
   frameAcquisitionFiles: FrameAcquisitionFileWhereClause
   frameAcquisitionFilesAggregate: FrameAcquisitionFileAggregateWhereClause
+  perSectionParameters: PerSectionParametersWhereClause
+  perSectionParametersAggregate: PerSectionParametersAggregateWhereClause
   tiltseries: TiltseriesWhereClause
   tiltseriesAggregate: TiltseriesAggregateWhereClause
   tomogramVoxelSpacings: TomogramVoxelSpacingWhereClause
@@ -4703,6 +4998,23 @@ type Tiltseries implements EntityInterface & Node {
   Other microscope optical setup information, in addition to energy filter, phase plate and image corrector
   """
   microscopeAdditionalInfo: String
+  perSectionParameters(
+    where: PerSectionParametersWhereClause = null
+    orderBy: [PerSectionParametersOrderByClause!] = []
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): PerSectionParametersConnection!
+  perSectionParametersAggregate(where: PerSectionParametersWhereClause = null): PerSectionParametersAggregate
 
   """Name of the camera manufacturer"""
   cameraManufacturer: String!
@@ -4992,6 +5304,7 @@ type TiltseriesGroupByOptions {
   microscopePhasePlate: String
   microscopeImageCorrector: String
   microscopeAdditionalInfo: String
+  perSectionParameters: PerSectionParametersGroupByOptions
   cameraManufacturer: String
   cameraModel: String
   tiltMin: Float
@@ -5257,6 +5570,8 @@ input TiltseriesWhereClause {
   microscopePhasePlate: StrComparators
   microscopeImageCorrector: StrComparators
   microscopeAdditionalInfo: StrComparators
+  perSectionParameters: PerSectionParametersWhereClause
+  perSectionParametersAggregate: PerSectionParametersAggregateWhereClause
   cameraManufacturer: StrComparators
   cameraModel: StrComparators
   tiltMin: FloatComparators
@@ -6531,6 +6846,8 @@ enum tomogram_processing_enum {
   denoised
   filtered
   raw
+  filtered_even
+  filtered_odd
 }
 
 enum tomogram_reconstruction_method_enum {

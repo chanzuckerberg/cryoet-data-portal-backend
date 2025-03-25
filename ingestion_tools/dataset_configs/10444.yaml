@@ -123,7 +123,7 @@ datasets:
       \ ones and 6 \xB5l PBS were added before blotting and plunging into liquid ethane.\
       \ Leica GP2 was used for grid preparation."
       organism:
-        name: Homo Sapiens
+        name: Homo sapiens
         taxonomy_id: 9606
       other_setup: Samples were imaged in a cryo-fluorescence microscope before cryoET
         imaging. Some of the surface contamination originates from that additional imaging
