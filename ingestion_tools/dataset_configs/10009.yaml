@@ -312,7 +312,7 @@ frames:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: Tomo{run_name}/raw_data/imod_metadata/*.rawtlt
+          list_glob: Tomo{run_name}/raw_data/imod_metadata/*_vali.rawtlt
 runs:
   - sources:
       - source_glob:
@@ -339,7 +339,7 @@ tiltseries:
       pixel_spacing: float {pixel_spacing}
       related_empiar_entry: EMPIAR-11078
       spherical_aberration_constant: 2.7
-      tilt_axis: 0.0
+      tilt_axis: 95.0
       tilt_range:
         max: float {tilt_series_max_tilt}
         min: float {tilt_series_min_tilt}
