@@ -190,12 +190,12 @@ collection_metadata:
   - sources:
       - source_glob:
           list_glob: '{run_name}/{run_name}_vali.mdoc'
-ctfs:
-  - metadata:
-      format: 'CTFFIND'
-    sources:
-      - source_glob:
-          list_glob: '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
+#ctfs:
+#  - metadata:
+#      format: 'CTFFIND'
+#    sources:
+#      - source_glob:
+#          list_glob: '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -321,7 +321,7 @@ runs:
           name_regex: (.*)
 standardization_config:
   deposition_id: 10300
-  run_data_map_file: run_to_data_map.tsv
+  run_data_map_file: run_to_data_map_vali.tsv
   source_prefix: EMPIAR/11756/data/tomoman_minimal_project/
 tiltseries:
   - metadata:

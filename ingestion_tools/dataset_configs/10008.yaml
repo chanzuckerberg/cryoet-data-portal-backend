@@ -174,7 +174,7 @@ depositions:
             - 10008
 frames:
   - metadata:
-      dose_rate: 0
+      dose_rate: float {dose_rate}
       is_gain_corrected: false
     sources:
       - source_glob:
@@ -212,12 +212,12 @@ tiltseries:
       spherical_aberration_constant: 2.7
       tilt_axis: 175
       tilt_range:
-        max: 70
-        min: -50
+        max: float {tilt_series_max_tilt}
+        min: float {tilt_series_min_tilt}
       tilt_series_quality: 5
       tilt_step: 2
       tilting_scheme: Dose symmetric from lamella pre-tilt
-      total_flux: 120
+      total_flux: float {total_flux}
     sources:
       - source_glob:
           list_glob: tomo/raw_stacks/{session_name}/SerialEM/{processing_prefix}.st
