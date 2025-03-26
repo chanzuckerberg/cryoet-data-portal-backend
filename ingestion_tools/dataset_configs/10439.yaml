@@ -274,7 +274,7 @@ deposition_keyphotos:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: '{run_name}/TiltSeries/*.tlt'
+          list_glob: '{run_name}/TiltSeries/*.rawtlt'
 runs:
   - sources:
       - source_glob:
