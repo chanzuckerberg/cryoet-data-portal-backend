@@ -140,7 +140,7 @@ runs:
           name_regex: (.*)
 standardization_config:
   deposition_id: 10300
-  run_data_map_file: chlamy_visual_proteomics/run_to_data_map.tsv
+  run_data_map_file: chlamy_visual_proteomics/run_to_data_map_vali.tsv
   source_prefix: chlamy2/data/
 tiltseries:
   - metadata:
