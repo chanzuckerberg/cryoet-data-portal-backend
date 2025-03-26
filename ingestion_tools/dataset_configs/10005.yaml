@@ -152,7 +152,7 @@ frames:
   - metadata:
       is_gain_corrected: true
       dose_rate: 4
-  - sources:
+    sources:
       - literal:
           value:
             - default
