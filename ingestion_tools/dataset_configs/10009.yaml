@@ -309,6 +309,16 @@ frames:
     sources:
       - source_glob:
           list_glob: Tomo{run_name}/raw_data/raw_frames/*.mrc.bz2
+        parent_filters:
+          exclude:
+            run:
+              - "^12$"
+      - source_glob:
+          list_glob: Tomo{run_name}/aligned_frames/*.mrc
+        parent_filters:
+          exclude:
+            run:
+              - "^12$"
 rawtilts:
   - sources:
       - source_glob:
