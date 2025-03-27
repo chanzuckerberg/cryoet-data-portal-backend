@@ -316,7 +316,7 @@ frames:
       - source_glob:
           list_glob: Tomo{run_name}/aligned_frames/*.mrc
         parent_filters:
-          exclude:
+          include:
             run:
               - "^12$"
 rawtilts:
