@@ -197,7 +197,7 @@ annotations:
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: 'Tomo{run_name}/raw_data/mdocs/*_vali.mrc.mdoc'
+          list_glob: 'Tomo{run_name}/raw_data/mdocs/{run_name}_vali.mrc.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -312,7 +312,7 @@ frames:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: Tomo{run_name}/raw_data/imod_metadata/*_vali.rawtlt
+          list_glob: Tomo{run_name}/raw_data/imod_metadata/{run_name}_vali.rawtlt
 runs:
   - sources:
       - source_glob:

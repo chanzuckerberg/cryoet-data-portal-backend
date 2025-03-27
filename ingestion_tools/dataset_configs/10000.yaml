@@ -503,7 +503,7 @@ tiltseries:
       pixel_spacing: 3.3702
       related_empiar_entry: EMPIAR-10988
       spherical_aberration_constant: 2.7
-      tilt_axis: -84.7
+      tilt_axis: 84.7
       tilt_range:
         max: float {tilt_series_max_tilt}
         min: float {tilt_series_min_tilt}
