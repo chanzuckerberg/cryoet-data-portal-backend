@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.11.0...apiv2-v1.11.1) (2025-03-28)
+
+
+### Bug Fixes
+
+* adding back schema diagram ([#473](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/473)) ([725f037](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/725f0376aaa73a5f96d56bc6cfb0ced11f503383))
+
 ## [1.11.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.10.0...apiv2-v1.11.0) (2025-03-20)
 
 
