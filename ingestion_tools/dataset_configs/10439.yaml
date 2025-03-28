@@ -1,339 +1,356 @@
 alignments:
-- metadata:
-    format: IMOD
-    method_type: patch_tracking
-  sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/TiltSeries/*.tlt'
-      - '{run_name}/TiltSeries/*.xf'
+  - metadata:
+      format: IMOD
+      method_type: undefined
+      alignment_type: GLOBAL
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/TiltSeries/*.tlt'
+            - '{run_name}/TiltSeries/*.xf'
 annotations:
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      id: GO:0016020
-      name: membrane
-    annotation_publications: 10.1109/TMI.2024.3398401
-    annotation_software: polnet
-    authors: &id001
-    - ORCID: 0000-0002-8063-6951
-      name: Jonathan Schwartz
-      primary_author_status: true
-    - ORCID: 0000-0002-0624-5020
-      corresponding_author_status: true
-      name: Bridget Carragher
-    dates: &id002
-      deposition_date: '2024-08-21'
-      last_modified_date: '2024-08-21'
-      release_date: '2024-08-21'
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: &id003
-    - custom_name: polnet on GitHub
-      link: https://github.com/anmartinezs/polnet
-      link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_strings: &id004
-      - '{run_name}/Segmentations/ground_truth.mrc'
-      is_visualization_default: true
-      mask_label: 1
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      id: GO:1990220
-      name: GroEL-GroES complex
-    annotation_publications: 10.1109/TMI.2024.3398401, PDB-6MRD
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: simulated
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_strings: *id004
-      is_visualization_default: true
-      mask_label: 2
-  - OrientedPoint:
-      binning: 10
-      file_format: relion3_star
-      glob_strings:
-      - '{run_name}/Picks/adp-mitochondrial.star'
-      is_visualization_default: true
-      order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      id: UniProtKB:P05187
-      name: Alkaline phosphatase, placental type
-    annotation_publications: 10.1109/TMI.2024.3398401, PDB-1ZEF
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: simulated
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_strings: *id004
-      is_visualization_default: true
-      mask_label: 3
-  - OrientedPoint:
-      binning: 10
-      file_format: relion3_star
-      glob_strings:
-      - '{run_name}/Picks/alkaline-phosphatase.star'
-      is_visualization_default: true
-      order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      id: GO:0000786
-      name: nucleosome
-    annotation_publications: 10.1109/TMI.2024.3398401, PDB-6UPH
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: simulated
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_strings: *id004
-      is_visualization_default: true
-      mask_label: 4
-  - OrientedPoint:
-      binning: 10
-      file_format: relion3_star
-      glob_strings:
-      - '{run_name}/Picks/nucleosome.star'
-      is_visualization_default: true
-      order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      id: GO:0022626
-      name: cytosolic ribosome
-    annotation_publications: 10.1109/TMI.2024.3398401, PDB-7TM3
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: simulated
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_strings: *id004
-      is_visualization_default: true
-      mask_label: 5
-  - OrientedPoint:
-      binning: 10
-      file_format: relion3_star
-      glob_strings:
-      - '{run_name}/Picks/ribosome.star'
-      is_visualization_default: true
-      order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      id: UniProtKB:Q62667
-      name: Major vault protein
-    annotation_publications: 10.1109/TMI.2024.3398401, PDB-7PKZ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: simulated
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_strings: *id004
-      is_visualization_default: true
-      mask_label: 6
-  - OrientedPoint:
-      binning: 10
-      file_format: relion3_star
-      glob_strings:
-      - '{run_name}/Picks/vault.star'
-      is_visualization_default: true
-      order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: Chikungunya VLP
-      id: GO:0170047
-      name: virus-like capsid
-    annotation_publications: 10.1109/TMI.2024.3398401, PDB-6NK5
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links: *id003
-    method_type: simulated
-    version: 1.0
-  sources:
-  - SemanticSegmentationMask:
-      file_format: mrc
-      glob_strings: *id004
-      is_visualization_default: true
-      mask_label: 7
-  - OrientedPoint:
-      binning: 10
-      file_format: relion3_star
-      glob_strings:
-      - '{run_name}/Picks/virus-like-particle.star'
-      is_visualization_default: true
-      order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+      annotation_publications: 10.1109/TMI.2024.3398401
+      annotation_software: polnet
+      authors: &id001
+        - ORCID: 0000-0002-8063-6951
+          name: Jonathan Schwartz
+          primary_author_status: true
+        - ORCID: 0000-0002-0624-5020
+          corresponding_author_status: true
+          name: Bridget Carragher
+      dates: &id002
+        deposition_date: '2024-08-21'
+        last_modified_date: '2024-08-21'
+        release_date: '2024-08-21'
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: &id003
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings: &id004
+            - '{run_name}/Segmentations/ground_truth.mrc'
+          is_visualization_default: true
+          mask_label: 1
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        id: GO:1990220
+        name: GroEL-GroES complex
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6MRD
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: simulated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings: *id004
+          is_visualization_default: true
+          mask_label: 2
+      - OrientedPoint:
+          binning: 10
+          file_format: relion3_star
+          glob_strings:
+            - '{run_name}/Picks/adp-mitochondrial.star'
+          is_visualization_default: true
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        id: UniProtKB:P05187
+        name: Alkaline phosphatase, placental type
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-1ZEF
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: simulated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings: *id004
+          is_visualization_default: true
+          mask_label: 3
+      - OrientedPoint:
+          binning: 10
+          file_format: relion3_star
+          glob_strings:
+            - '{run_name}/Picks/alkaline-phosphatase.star'
+          is_visualization_default: true
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        id: GO:0000786
+        name: nucleosome
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6UPH
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: simulated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings: *id004
+          is_visualization_default: true
+          mask_label: 4
+      - OrientedPoint:
+          binning: 10
+          file_format: relion3_star
+          glob_strings:
+            - '{run_name}/Picks/nucleosome.star'
+          is_visualization_default: true
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-7TM3
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: simulated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings: *id004
+          is_visualization_default: true
+          mask_label: 5
+      - OrientedPoint:
+          binning: 10
+          file_format: relion3_star
+          glob_strings:
+            - '{run_name}/Picks/ribosome.star'
+          is_visualization_default: true
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        id: UniProtKB:Q62667
+        name: Major vault protein
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-7PKZ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: simulated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings: *id004
+          is_visualization_default: true
+          mask_label: 6
+      - OrientedPoint:
+          binning: 10
+          file_format: relion3_star
+          glob_strings:
+            - '{run_name}/Picks/vault.star'
+          is_visualization_default: true
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: Chikungunya VLP
+        id: GO:0170047
+        name: virus-like capsid
+      annotation_publications: 10.1109/TMI.2024.3398401, PDB-6NK5
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: simulated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings: *id004
+          is_visualization_default: true
+          mask_label: 7
+      - OrientedPoint:
+          binning: 10
+          file_format: relion3_star
+          glob_strings:
+            - '{run_name}/Picks/virus-like-particle.star'
+          is_visualization_default: true
+          order: xyz
+collection_metadata:
+  - sources:
+      - source_glob:
+          list_glob: '{run_name}/mdocs/{run_name}_vali.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: null
-        thumbnail: null
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
 datasets:
-- metadata:
-    authors: *id001
-    cross_references: &id005
-      publications: 10.1109/TMI.2024.3398401
-      related_database_entries: PDB-6MRD, PDB-1ZEF, PDB-6UPH, PDB-7TM3, PDB-7PKZ,
-        PDB-6NK5
-    dataset_description: This dataset is comprised of simulated tiltseries, tomograms
-      and ground truth annotations for the purpose of benchmarking and training particle
-      picking algorithms for cryoET. The data was simulated using polnet.
-    dataset_identifier: 10439
-    dataset_title: CZ Imaging Institute simulated dataset 1
-    dates: *id002
-    funding:
-    - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: "CZII-2023\u2013327779"
-    grid_preparation: ''
-    sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's
-      xyzproj + addition of noise + reconstruction with IMOD's tilt
-    sample_type: in_silico
-  sources:
-  - literal:
-      value:
-      - '10439'
+  - metadata:
+      authors: *id001
+      cross_references: &id005
+        publications: 10.1109/TMI.2024.3398401
+        related_database_entries: PDB-6MRD, PDB-1ZEF, PDB-6UPH, PDB-7TM3, PDB-7PKZ,
+          PDB-6NK5
+      dataset_description: This dataset is comprised of simulated tiltseries, tomograms
+        and ground truth annotations for the purpose of benchmarking and training particle
+        picking algorithms for cryoET. The data was simulated using polnet.
+      dataset_identifier: 10439
+      dataset_title: CZ Imaging Institute simulated dataset 1
+      dates: *id002
+      funding:
+        - funding_agency_name: Chan Zuckerberg Initiative
+          grant_id: "CZII-2023\u2013327779"
+      grid_preparation: ''
+      sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's
+        xyzproj + addition of noise + reconstruction with IMOD's tilt
+      sample_type: in_silico
+    sources:
+      - literal:
+          value:
+            - '10439'
 depositions:
-- metadata:
-    authors: *id001
-    cross_references: *id005
-    dates: *id002
-    deposition_description: This deposition includes simulated data for the evaluation
-      of particle picking algorithms. The simulated data was generated using polnet
-      and includes tilt series, tomograms and ground truth annotations (oriented points,
-      as well as segmentation masks).
-    deposition_identifier: 10309
-    deposition_title: CZ Imaging Institute simulated data
-    deposition_types:
-    - dataset
-    - annotation
-  sources:
-  - literal:
-      value:
-      - 10309
+  - metadata:
+      authors: *id001
+      cross_references: *id005
+      dates: *id002
+      deposition_description: This deposition includes simulated data for the evaluation
+        of particle picking algorithms. The simulated data was generated using polnet
+        and includes tilt series, tomograms and ground truth annotations (oriented points,
+        as well as segmentation masks).
+      deposition_identifier: 10309
+      deposition_title: CZ Imaging Institute simulated data
+      deposition_types:
+        - dataset
+        - annotation
+    sources:
+      - literal:
+          value:
+            - 10309
+frames:
+  - metadata:
+      is_gain_corrected: true
+      dose_rate: 3.226
+    sources:
+      - literal:
+          value:
+            - 'default'
 deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_thumbnail.png"
+  - sources:
+      - literal:
+          value:
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_thumbnail.png"
+rawtilts:
+  - sources:
+      - source_glob:
+          list_glob: '{run_name}/TiltSeries/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: TS_*
-      match_regex: TS_\d{1,2}$
-      name_regex: (TS_\d{1,2})$
+  - sources:
+      - source_glob:
+          list_glob: TS_*
+          match_regex: TS_\d{1,2}$
+          name_regex: (TS_\d{1,2})$
 standardization_config:
   deposition_id: 10439
   source_prefix: CZII/202408_simulated_1
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    aligned_tiltseries_binning: 1
-    binning_from_frames: 1
-    camera:
-      manufacturer: simulated
-      model: simulated
-    data_acquisition_software: polnet
-    is_aligned: true
-    microscope:
-      manufacturer: SIMULATED
-      model: simulated
-    microscope_optical_setup:
-      energy_filter: None
-    pixel_spacing: 10.0
-    spherical_aberration_constant: 2.7
-    tilt_axis: 0.0
-    tilt_range:
-      max: 45
-      min: -45
-    tilt_series_quality: 5
-    tilt_step: 3.0
-    tilting_scheme: simulated
-    total_flux: 100
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
+  - metadata:
+      acceleration_voltage: 300000
+      aligned_tiltseries_binning: 1
+      binning_from_frames: 1
+      camera:
+        manufacturer: simulated
+        model: simulated
+      data_acquisition_software: polnet
+      is_aligned: true
+      microscope:
+        manufacturer: SIMULATED
+        model: simulated
+      microscope_optical_setup:
+        energy_filter: None
+      pixel_spacing: 10.0
+      spherical_aberration_constant: 2.7
+      tilt_axis: 0.0
+      tilt_range:
+        max: 45
+        min: -45
+      tilt_series_quality: 5
+      tilt_step: 3.0
+      tilting_scheme: simulated
+      total_flux: 100
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    authors: *id001
-    ctf_corrected: true
-    dates: *id002
-    fiducial_alignment_status: NON_FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 10.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/VoxelSpacing10.000/wbp.mrc'
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *id001
+      ctf_corrected: true
+      dates: *id002
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 10.0
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/VoxelSpacing10.000/wbp.mrc'
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 10.0
+  - sources:
+      - literal:
+          value:
+            - 10.0
