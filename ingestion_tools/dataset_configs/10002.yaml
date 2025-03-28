@@ -188,7 +188,18 @@ frames:
 gains:
   - sources:
       - source_glob:
-          list_glob: CountRef_{mapped_frame_name}-range.dm4
+          list_glob: frames/CountRef_TS_011_012.dm4
+        parent_filters:
+          include:
+            run:
+              - "^00011$"
+              - "^00012$"
+      - source_glob:
+          list_glob: frames/CountRef_0004.dm4
+        parent_filters:
+          include:
+            run:
+              - "^0004$"
 rawtilts:
   - sources:
       - source_glob:

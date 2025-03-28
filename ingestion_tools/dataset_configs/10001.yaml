@@ -433,7 +433,25 @@ frames:
 gains:
   - sources:
       - source_glob:
-          list_glob: VPP/frames/CountRef_{run_name}.dm4
+          list_glob: frames/CountRef_TS_0001_0004_plus_0010.dm4
+        parent_filters:
+          include:
+            run:
+              - "^TS_0001$"
+              - "^TS_0002$"
+              - "^TS_0003$"
+              - "^TS_0004$"
+              - "^TS_0010$"
+      - source_glob:
+          list_glob: frames/CountRef_TS_0005_0008.dm4
+        parent_filters:
+            include:
+                run:
+                - "^TS_0005$"
+                - "^TS_0006$"
+                - "^TS_0007$"
+                - "^TS_0008$"
+                - "^TS_0009$"
 rawtilts:
   - sources:
       - source_glob:

@@ -160,14 +160,10 @@ depositions:
 frames:
   - metadata:
       dose_rate: 0
-      is_gain_corrected: false
+      is_gain_corrected: true
     sources:
       - source_glob:
           list_glob: Frames/{run_name}_acquisition-order_angle.tif
-gains:
-  - sources:
-      - source_glob:
-          list_glob: gainRef/CountRef_mapped-{run_name}_acquisition-order_-0.0.dm4
 runs:
   - sources:
       - source_glob:

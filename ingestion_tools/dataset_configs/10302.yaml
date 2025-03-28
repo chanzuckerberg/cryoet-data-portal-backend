@@ -109,6 +109,10 @@ frames:
     sources:
       - source_glob:
           list_glob: chlamy_visual_proteomics/{run_name}/frames/*.eer
+gains:
+  - sources:
+      - source_glob:
+          list_glob: 'chlamy_visual_proteomics/{frame_gain_reference}'
 rawtilts:
   - sources:
       - source_glob:

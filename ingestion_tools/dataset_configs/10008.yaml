@@ -175,7 +175,7 @@ depositions:
 frames:
   - metadata:
       dose_rate: float {dose_rate}
-      is_gain_corrected: false
+      is_gain_corrected: true
     sources:
       - source_glob:
           list_glob: tomo/raw_stacks/{session_name}/frames/*{processing_prefix}_*.tif
