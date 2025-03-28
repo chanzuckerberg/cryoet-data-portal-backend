@@ -313,12 +313,14 @@ frames:
           exclude:
             run:
               - "^12$"
+              - "^13$"
       - source_glob:
           list_glob: Tomo{run_name}/aligned_frames/*.mrc
         parent_filters:
           include:
             run:
               - "^12$"
+              - "^13$"
 rawtilts:
   - sources:
       - source_glob:
