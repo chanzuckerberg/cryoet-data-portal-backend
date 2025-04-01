@@ -5,10 +5,6 @@ description = "Queryable interface for CryoET metadata"
 authors = ["CZI Infectious Disease Team <help@czid.org>"]
 license = "MIT License"
 readme = "README.md"
-packages = [{ include = "platformics" }]
-
-[tool.poetry.scripts]
-platformics = 'platformics.cli.main:cli'
 
 [tool.poetry.dev-dependencies]
 black = "^24.4.0"
@@ -64,18 +60,8 @@ show_error_codes = true
 warn_unreachable = true
 explicit_package_bases = true
 ignore_missing_imports = true
-exclude = ["platformics/graphql_api/relay", "platformics/thirdparty"]
 # We'd like to turn this on soon but we're not there yet.
 # disallow_untyped_defs = true
-
-# do not look at shopify and turn anything originating from it into Any
-[[tool.mypy.overrides]]
-module = ["platformics.graphql_api.relay.*"]
-follow_imports = "skip"
-
-[[tool.mypy.overrides]]
-module = ["platformics.thirdparty.*"]
-follow_imports = "skip"
 
 [tool.ruff]
 # Same as Black.
@@ -83,7 +69,6 @@ line-length = 120
 
 # Assume Python 3.12.
 target-version = "py312"
-namespace-packages = ["platformics"]
 
 [tool.ruff.lint]
 select = [
@@ -208,7 +193,6 @@ max-complexity = 10
 "**/support/enums.py" = ["N801"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["platformics"]
 known-third-party = ["cerbos"]
 
 [tool.ruff.lint.flake8-quotes]
