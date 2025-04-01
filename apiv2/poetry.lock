@@ -2789,13 +2789,13 @@ type = ["mypy (>=1.14.1)"]
 
 [[package]]
 name = "platformics"
-version = "1.0.2"
+version = "1.0.3"
 description = "Codegen Python GraphQL Entity Framework"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "platformics-1.0.2-py3-none-any.whl", hash = "sha256:51693a9c103c628ae02f97e8ae675a87e9c0c58b6b26ec2201d9852fa5187d46"},
-    {file = "platformics-1.0.2.tar.gz", hash = "sha256:4fcd8333c5752202f1fd6246f785eab5fbe7af762b87523c0557c59a1aa82eac"},
+    {file = "platformics-1.0.3-py3-none-any.whl", hash = "sha256:19e1de43507b109e51de7ec6f5249ab516a46e045dd1a572a6040b1d9df9c36a"},
+    {file = "platformics-1.0.3.tar.gz", hash = "sha256:5fdebe98db5630fb9c13ee38c3461a07b78091059bc9761758fe7928ef532aaf"},
 ]
 
 [package.dependencies]

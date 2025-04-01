@@ -339,7 +339,7 @@ input AlignmentUpdateInput {
   isPortalStandard: Boolean = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input AlignmentWhereClause {
@@ -768,10 +768,10 @@ input AnnotationAuthorUpdateInput {
   annotationId: ID = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 
   """The order in which the author appears in the publication"""
-  authorListOrder: Int
+  authorListOrder: Int = null
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
@@ -780,7 +780,7 @@ input AnnotationAuthorUpdateInput {
   kaggleId: String = null
 
   """Full name of an annotation author (e.g. Jane Doe)."""
-  name: String
+  name: String = null
 
   """Email address for this author"""
   email: String = null
@@ -1130,16 +1130,16 @@ input AnnotationFileUpdateInput {
   tomogramVoxelSpacingId: ID = null
 
   """File format for this file"""
-  format: String
+  format: String = null
 
   """s3 path of the annotation file"""
-  s3Path: String
+  s3Path: String = null
 
   """Size of annota file in bytes"""
   fileSize: Float = null
 
   """HTTPS path for this annotation file"""
-  httpsPath: String
+  httpsPath: String = null
 
   """
   Data curator’s subjective choice of default annotation to display in visualization for an object
@@ -1152,7 +1152,7 @@ input AnnotationFileUpdateInput {
   source: annotation_file_source_enum = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input AnnotationFileWhereClause {
@@ -1324,16 +1324,16 @@ input AnnotationMethodLinkUpdateInput {
   annotationId: ID = null
 
   """Type of link (e.g. model, source code, documentation)"""
-  linkType: annotation_method_link_type_enum
+  linkType: annotation_method_link_type_enum = null
 
   """user readable name of the resource"""
   name: String = null
 
   """URL to the resource"""
-  link: String
+  link: String = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input AnnotationMethodLinkWhereClause {
@@ -1527,7 +1527,7 @@ input AnnotationShapeUpdateInput {
   shapeType: annotation_file_shape_type_enum = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input AnnotationShapeWhereClause {
@@ -1548,10 +1548,10 @@ input AnnotationUpdateInput {
   depositionId: ID = null
 
   """S3 path for the metadata json file for this annotation"""
-  s3MetadataPath: String
+  s3MetadataPath: String = null
 
   """HTTPS path for the metadata json file for this annotation"""
-  httpsMetadataPath: String
+  httpsMetadataPath: String = null
 
   """
   DOIs for publications that describe the dataset. Use a comma to separate multiple DOIs.
@@ -1561,7 +1561,7 @@ input AnnotationUpdateInput {
   """
   Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)
   """
-  annotationMethod: String
+  annotationMethod: String = null
 
   """
   Whether an annotation is considered ground truth, as determined by the annotator.
@@ -1571,12 +1571,12 @@ input AnnotationUpdateInput {
   """
   Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
   """
-  objectId: String
+  objectId: String = null
 
   """
   Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)
   """
-  objectName: String
+  objectName: String = null
 
   """
   A textual description of the annotation object, can be a longer description to include additional information not covered by the Annotation object name and state.
@@ -1613,19 +1613,19 @@ input AnnotationUpdateInput {
   """
   The method type for generating the annotation (e.g. manual, hybrid, automated)
   """
-  methodType: annotation_method_type_enum
+  methodType: annotation_method_type_enum = null
 
   """Date when an annotation set is initially received by the Data Portal."""
-  depositionDate: DateTime
+  depositionDate: DateTime = null
 
   """Date when annotation data is made public by the Data Portal."""
-  releaseDate: DateTime
+  releaseDate: DateTime = null
 
   """Date when an annotation was last modified in the Data Portal"""
-  lastModifiedDate: DateTime
+  lastModifiedDate: DateTime = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input AnnotationWhereClause {
@@ -2104,10 +2104,10 @@ input DatasetAuthorUpdateInput {
   datasetId: ID = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 
   """The order in which the author appears in the publication"""
-  authorListOrder: Int
+  authorListOrder: Int = null
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
@@ -2116,7 +2116,7 @@ input DatasetAuthorUpdateInput {
   kaggleId: String = null
 
   """Full name of a dataset author (e.g. Jane Doe)."""
-  name: String
+  name: String = null
 
   """Email address for this author"""
   email: String = null
@@ -2431,7 +2431,7 @@ input DatasetFundingUpdateInput {
   grantId: String = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input DatasetFundingWhereClause {
@@ -2548,15 +2548,15 @@ input DatasetOrderByClause {
 
 input DatasetUpdateInput {
   """Reference to the deposition this dataset is associated with"""
-  depositionId: ID
+  depositionId: ID = null
 
   """Title of a CryoET dataset"""
-  title: String
+  title: String = null
 
   """
   A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.
   """
-  description: String
+  description: String = null
 
   """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
@@ -2619,13 +2619,13 @@ input DatasetUpdateInput {
   cellComponentId: String = null
 
   """Date when a dataset is initially received by the Data Portal."""
-  depositionDate: DateTime
+  depositionDate: DateTime = null
 
   """Date when a dataset is made available on the Data Portal."""
-  releaseDate: DateTime
+  releaseDate: DateTime = null
 
   """Date when a released dataset is last modified."""
-  lastModifiedDate: DateTime
+  lastModifiedDate: DateTime = null
 
   """
   Comma-separated list of DOIs for publications associated with the dataset.
@@ -2638,10 +2638,10 @@ input DatasetUpdateInput {
   relatedDatabaseEntries: String = null
 
   """The S3 public bucket path where this dataset is contained"""
-  s3Prefix: String
+  s3Prefix: String = null
 
   """The https directory path where this dataset is contained"""
-  httpsPrefix: String
+  httpsPrefix: String = null
 
   """Size of the dataset in bytes"""
   fileSize: Float = null
@@ -2649,7 +2649,7 @@ input DatasetUpdateInput {
   """
   An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
   """
-  id: Int
+  id: Int = null
 }
 
 input DatasetWhereClause {
@@ -3087,13 +3087,13 @@ input DepositionAuthorOrderByClause {
 }
 
 input DepositionAuthorUpdateInput {
-  depositionId: ID
+  depositionId: ID = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 
   """The order in which the author appears in the publication"""
-  authorListOrder: Int
+  authorListOrder: Int = null
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
@@ -3102,7 +3102,7 @@ input DepositionAuthorUpdateInput {
   kaggleId: String = null
 
   """Full name of a deposition author (e.g. Jane Doe)."""
-  name: String
+  name: String = null
 
   """Email address for this author"""
   email: String = null
@@ -3345,7 +3345,7 @@ input DepositionTypeOrderByClause {
 }
 
 input DepositionTypeUpdateInput {
-  depositionId: ID
+  depositionId: ID = null
 
   """
   The type of data submitted as a part of this deposition (annotation, dataset, tomogram)
@@ -3353,7 +3353,7 @@ input DepositionTypeUpdateInput {
   type: deposition_types_enum = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input DepositionTypeWhereClause {
@@ -3369,10 +3369,10 @@ input DepositionTypeWhereClauseMutations {
 
 input DepositionUpdateInput {
   """Title for the deposition"""
-  title: String
+  title: String = null
 
   """Description for the deposition"""
-  description: String
+  description: String = null
 
   """Tag for the deposition - like ml competition"""
   tag: String = null
@@ -3384,13 +3384,13 @@ input DepositionUpdateInput {
   relatedDatabaseEntries: String = null
 
   """The date the deposition was deposited"""
-  depositionDate: DateTime
+  depositionDate: DateTime = null
 
   """The date the deposition was released"""
-  releaseDate: DateTime
+  releaseDate: DateTime = null
 
   """The date the deposition was last modified"""
-  lastModifiedDate: DateTime
+  lastModifiedDate: DateTime = null
 
   """URL for the deposition preview image."""
   keyPhotoUrl: String = null
@@ -3399,7 +3399,7 @@ input DepositionUpdateInput {
   keyPhotoThumbnailUrl: String = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input DepositionWhereClause {
@@ -3637,13 +3637,13 @@ input FrameAcquisitionFileUpdateInput {
   runId: ID = null
 
   """Path to the frame acquisition mdoc file in s3"""
-  s3MdocPath: String
+  s3MdocPath: String = null
 
   """Path to the frame acquisition mdoc file as an https url"""
-  httpsMdocPath: String
+  httpsMdocPath: String = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input FrameAcquisitionFileWhereClause {
@@ -3788,8 +3788,8 @@ input FrameOrderByClause {
 }
 
 input FrameUpdateInput {
-  depositionId: ID
-  runId: ID
+  depositionId: ID = null
+  runId: ID = null
 
   """Frame's acquistion order within a tilt experiment"""
   acquisitionOrder: Int = null
@@ -3813,7 +3813,7 @@ input FrameUpdateInput {
   fileSize: Float = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input FrameWhereClause {
@@ -3942,16 +3942,16 @@ input GainFileOrderByClause {
 }
 
 input GainFileUpdateInput {
-  runId: ID
+  runId: ID = null
 
   """Path to the file in s3"""
-  s3FilePath: String
+  s3FilePath: String = null
 
   """Path to the file as an https url"""
-  httpsFilePath: String
+  httpsFilePath: String = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input GainFileWhereClause {
@@ -4229,10 +4229,10 @@ input PerSectionAlignmentParametersOrderByClause {
 
 input PerSectionAlignmentParametersUpdateInput {
   """Tiltseries Alignment"""
-  alignmentId: ID
+  alignmentId: ID = null
 
   """z-index of the frame in the tiltseries"""
-  zIndex: Int
+  zIndex: Int = null
 
   """In-plane X-shift of the projection in angstrom"""
   xOffset: Float = null
@@ -4250,7 +4250,7 @@ input PerSectionAlignmentParametersUpdateInput {
   tiltAngle: Float = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input PerSectionAlignmentParametersWhereClause {
@@ -4463,7 +4463,7 @@ input PerSectionParametersUpdateInput {
   astigmaticAngle: Float = null
 
   """Frame that this section is a part of"""
-  frameId: ID
+  frameId: ID = null
 
   """
   Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
@@ -4482,19 +4482,19 @@ input PerSectionParametersUpdateInput {
   phaseShift: Float = null
 
   """Nominal tilt angle for this tilt image reported by the microscope."""
-  rawAngle: Float
+  rawAngle: Float = null
 
   """Run that this section is a part of"""
-  runId: ID
+  runId: ID = null
 
   """Tiltseries that this section is a part of"""
-  tiltseriesId: ID
+  tiltseriesId: ID = null
 
   """Index (0-based) of this tilt image in the tilt series stack."""
-  zIndex: Int
+  zIndex: Int = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input PerSectionParametersWhereClause {
@@ -4519,6 +4519,14 @@ input PerSectionParametersWhereClauseMutations {
 }
 
 type Query {
+  node(
+    """The ID of the object."""
+    id: GlobalID!
+  ): Node!
+  nodes(
+    """The IDs of the objects."""
+    ids: [GlobalID!]!
+  ): [Node!]!
   gainFiles(where: GainFileWhereClause = null, orderBy: [GainFileOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [GainFile!]!
   frameAcquisitionFiles(where: FrameAcquisitionFileWhereClause = null, orderBy: [FrameAcquisitionFileOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [FrameAcquisitionFile!]!
   alignments(where: AlignmentWhereClause = null, orderBy: [AlignmentOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Alignment!]!
@@ -4843,19 +4851,19 @@ input RunOrderByClause {
 
 input RunUpdateInput {
   """Dataset that this run is a part of"""
-  datasetId: ID
+  datasetId: ID = null
 
   """Short name for this experiment run"""
-  name: String
+  name: String = null
 
   """The S3 public bucket path where this run is contained"""
-  s3Prefix: String
+  s3Prefix: String = null
 
   """The HTTPS directory path where this run is contained url"""
-  httpsPrefix: String
+  httpsPrefix: String = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input RunWhereClause {
@@ -5427,7 +5435,7 @@ input TiltseriesOrderByClause {
 }
 
 input TiltseriesUpdateInput {
-  runId: ID
+  runId: ID = null
   depositionId: ID = null
 
   """S3 path to this tiltseries in multiscale OME-Zarr format"""
@@ -5455,19 +5463,19 @@ input TiltseriesUpdateInput {
   httpsAngleList: String = null
 
   """Electron Microscope Accelerator voltage in volts"""
-  accelerationVoltage: Int
+  accelerationVoltage: Int = null
 
   """Spherical Aberration Constant of the objective lens in millimeters"""
-  sphericalAberrationConstant: Float
+  sphericalAberrationConstant: Float = null
 
   """Name of the microscope manufacturer (FEI, TFS, JEOL)"""
-  microscopeManufacturer: tiltseries_microscope_manufacturer_enum
+  microscopeManufacturer: tiltseries_microscope_manufacturer_enum = null
 
   """Microscope model name"""
-  microscopeModel: String
+  microscopeModel: String = null
 
   """Energy filter setup used"""
-  microscopeEnergyFilter: String
+  microscopeEnergyFilter: String = null
 
   """Phase plate configuration"""
   microscopePhasePlate: String = null
@@ -5481,36 +5489,36 @@ input TiltseriesUpdateInput {
   microscopeAdditionalInfo: String = null
 
   """Name of the camera manufacturer"""
-  cameraManufacturer: String
+  cameraManufacturer: String = null
 
   """Camera model name"""
-  cameraModel: String
+  cameraModel: String = null
 
   """Minimal tilt angle in degrees"""
-  tiltMin: Float
+  tiltMin: Float = null
 
   """Maximal tilt angle in degrees"""
-  tiltMax: Float
+  tiltMax: Float = null
 
   """Total tilt range in degrees"""
-  tiltRange: Float
+  tiltRange: Float = null
 
   """Tilt step in degrees"""
-  tiltStep: Float
+  tiltStep: Float = null
 
   """The order of stage tilting during acquisition of the data"""
-  tiltingScheme: String
+  tiltingScheme: String = null
 
   """Rotation angle in degrees"""
-  tiltAxis: Float
+  tiltAxis: Float = null
 
   """
   Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series
   """
-  totalFlux: Float
+  totalFlux: Float = null
 
   """Software used to collect data"""
-  dataAcquisitionSoftware: String
+  dataAcquisitionSoftware: String = null
 
   """
   If a tilt series is deposited into EMPIAR, enter the EMPIAR dataset identifier
@@ -5523,13 +5531,13 @@ input TiltseriesUpdateInput {
   """
   Author assessment of tilt series quality within the dataset (1-5, 5 is best)
   """
-  tiltSeriesQuality: Int
+  tiltSeriesQuality: Int = null
 
   """Whether this tilt series is aligned"""
-  isAligned: Boolean
+  isAligned: Boolean = null
 
   """Pixel spacing equal in both axes in angstroms"""
-  pixelSpacing: Float
+  pixelSpacing: Float = null
 
   """Binning factor of the aligned tilt series"""
   alignedTiltseriesBinning: Int = null
@@ -5544,7 +5552,7 @@ input TiltseriesUpdateInput {
   sizeZ: Int = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input TiltseriesWhereClause {
@@ -5980,10 +5988,10 @@ input TomogramAuthorUpdateInput {
   tomogramId: ID = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 
   """The order in which the author appears in the publication"""
-  authorListOrder: Int
+  authorListOrder: Int = null
 
   """A unique, persistent identifier for researchers, provided by ORCID."""
   orcid: String = null
@@ -5992,7 +6000,7 @@ input TomogramAuthorUpdateInput {
   kaggleId: String = null
 
   """Full name of an author (e.g. Jane Doe)."""
-  name: String
+  name: String = null
 
   """Email address for this author"""
   email: String = null
@@ -6362,7 +6370,7 @@ input TomogramUpdateInput {
   alignmentId: ID = null
 
   """If the tomogram is part of a deposition, the related deposition"""
-  depositionId: ID
+  depositionId: ID = null
   runId: ID = null
 
   """Voxel spacings for a run"""
@@ -6372,29 +6380,29 @@ input TomogramUpdateInput {
   name: String = null
 
   """Number of pixels in the 3D data fast axis"""
-  sizeX: Int
+  sizeX: Int = null
 
   """Number of pixels in the 3D data medium axis"""
-  sizeY: Int
+  sizeY: Int = null
 
   """
   Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt
   """
-  sizeZ: Int
+  sizeZ: Int = null
 
   """Voxel spacing equal in all three axes in angstroms"""
-  voxelSpacing: Float
+  voxelSpacing: Float = null
 
   """
   Fiducial Alignment status: True = aligned with fiducial False = aligned without fiducial
   """
-  fiducialAlignmentStatus: fiducial_alignment_status_enum
+  fiducialAlignmentStatus: fiducial_alignment_status_enum = null
 
   """Describe reconstruction method (WBP, SART, SIRT)"""
-  reconstructionMethod: tomogram_reconstruction_method_enum
+  reconstructionMethod: tomogram_reconstruction_method_enum = null
 
   """Describe additional processing used to derive the tomogram"""
-  processing: tomogram_processing_enum
+  processing: tomogram_processing_enum = null
 
   """Version of tomogram"""
   tomogramVersion: Float = null
@@ -6403,7 +6411,7 @@ input TomogramUpdateInput {
   processingSoftware: String = null
 
   """Name of software used for reconstruction"""
-  reconstructionSoftware: String
+  reconstructionSoftware: String = null
 
   """whether this tomogram adheres to portal standards"""
   isPortalStandard: Boolean = null
@@ -6449,13 +6457,13 @@ input TomogramUpdateInput {
   ctfCorrected: Boolean = null
 
   """x offset data relative to the canonical tomogram in pixels"""
-  offsetX: Int
+  offsetX: Int = null
 
   """y offset data relative to the canonical tomogram in pixels"""
-  offsetY: Int
+  offsetY: Int = null
 
   """z offset data relative to the canonical tomogram in pixels"""
-  offsetZ: Int
+  offsetZ: Int = null
 
   """URL for the key photo"""
   keyPhotoUrl: String = null
@@ -6477,7 +6485,7 @@ input TomogramUpdateInput {
   relatedDatabaseEntries: String = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 
   """The date a data item was received by the cryoET data portal."""
   depositionDate: DateTime = null
@@ -6654,20 +6662,20 @@ input TomogramVoxelSpacingUpdateInput {
   runId: ID = null
 
   """The voxel spacing for the tomograms in this set in angstroms"""
-  voxelSpacing: Float
+  voxelSpacing: Float = null
 
   """
   The S3 public bucket path where this tomogram voxel spacing is contained
   """
-  s3Prefix: String
+  s3Prefix: String = null
 
   """
   The HTTPS directory path where this tomogram voxel spacing is contained
   """
-  httpsPrefix: String
+  httpsPrefix: String = null
 
   """Numeric identifier (May change!)"""
-  id: Int
+  id: Int = null
 }
 
 input TomogramVoxelSpacingWhereClause {
