@@ -23,14 +23,13 @@ from platformics.graphql_api.core.deps import (
     get_auth_principal,
     get_db_session,
     get_engine,
-    get_s3_client,
     require_auth_principal,
 )
 from platformics.graphql_api.core.error_handler import HandleErrors
 from platformics.graphql_api.setup import get_app, get_strawberry_config
 from platformics.security.authorization import Principal
 from platformics.settings import APISettings
-from platformics.test_infra.factories.base import FileFactory, SessionStorage
+from platformics.test_infra.factories.base import SessionStorage
 from pytest_postgresql import factories
 from pytest_postgresql.executor_noop import NoopExecutor
 from pytest_postgresql.janitor import DatabaseJanitor
@@ -42,7 +41,6 @@ __all__ = [
     "moto_client",
     "GQLTestClient",
     "SessionStorage",
-    "FileFactory",
 ]  # needed by tests
 
 
@@ -205,7 +203,6 @@ def overwrite_api(api: FastAPI, async_db: AsyncDB) -> None:
     api.dependency_overrides[get_db_session] = patched_session
     api.dependency_overrides[require_auth_principal] = patched_authprincipal
     api.dependency_overrides[get_auth_principal] = patched_authprincipal
-    api.dependency_overrides[get_s3_client] = patched_s3_client
 
 
 def raise_exception() -> str:
