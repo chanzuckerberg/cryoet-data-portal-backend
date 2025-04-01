@@ -59,7 +59,7 @@ start: ## Start the local dev environment.
 
 .PHONY: codegen
 codegen: ## Run codegen to convert the LinkML schema to a GQL API
-	$(docker_compose_run) $(APP_CONTAINER) python3 -m platformics.cli.main api generate --template-override-paths ./template_overrides --schemafile ./schema/schema.yaml --skip-render-files --output-prefix .
+	$(docker_compose_run) $(APP_CONTAINER) platformics api generate --template-override-paths ./template_overrides --schemafile ./schema/schema.yaml --skip-render-files --output-prefix .
 	$(docker_compose_run) $(APP_CONTAINER) black .
 
 .PHONY: test
@@ -92,7 +92,7 @@ logs: ## Tail the logs of the dev env containers. ex: make logs CONTAINER=graphq
 
 .PHONY: token
 token: ## Copy an auth token for this local dev env to the system clipboard
-	TOKEN=$$($(docker_compose_run) $(APP_CONTAINER) python3 -m platformics.cli.main auth generate-token 111 --project 444:owner --expiration 99999); echo '{"Authorization":"Bearer '$$TOKEN'"}' | tee >(pbcopy)
+	TOKEN=$$($(docker_compose_run) $(APP_CONTAINER) platformics auth generate-token 111 --project 444:owner --expiration 99999); echo '{"Authorization":"Bearer '$$TOKEN'"}' | tee >(pbcopy)
 
 .PHONY: update-cli
 update-cli:  ## Update the GQL types used by the CLI

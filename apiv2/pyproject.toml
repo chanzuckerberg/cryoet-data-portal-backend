@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "platformics"
+name = "CryoET Data Portal API"
 version = "0.1.0"
-description = "Platformics bio entities framework"
+description = "Queryable interface for CryoET metadata"
 authors = ["CZI Infectious Disease Team <help@czid.org>"]
 license = "MIT License"
 readme = "README.md"
@@ -30,8 +30,6 @@ httpx = "^0.24.1"
 python = "^3.12"
 fastapi = "^0.115.0"
 # biopython 1.83 fails installation on m1 macs. The issue is fixed upstream so we're pinning to a specific commit until the next release.
-biopython = { git = "https://github.com/biopython/biopython.git", rev = "e0731edc892b653dee10b1f68acf795086e6f3f0" }
-asyncpg = "^0.28.0"
 alembic = "^1.11.1"
 sgqlc = "^16.3"
 psycopg-binary = "^3.1.9"
@@ -52,6 +50,7 @@ strawberry-graphql = "0.257.0"
 typer = "^0.12.3"
 libcst = "^1.4.0"
 s3fs = "^2024.9.0"
+platformics = "^1.0.2"
 
 [build-system]
 requires = ["poetry-core"]
