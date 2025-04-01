@@ -7,11 +7,10 @@ SQLAlchemy database model for Alignment
 
 from typing import TYPE_CHECKING
 
+from platformics.database.models.base import Base
 from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import alignment_method_type_enum, alignment_type_enum
-
-from platformics.database.models.base import Base
 
 if TYPE_CHECKING:
     from database.models.annotation_file import AnnotationFile

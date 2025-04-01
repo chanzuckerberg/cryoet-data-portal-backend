@@ -12,9 +12,8 @@ from db_import.tests.populate_db import (
     populate_stale_dataset_authors,
     populate_stale_dataset_funding,
 )
-from sqlalchemy.orm import Session
-
 from platformics.database.models import Base
+from sqlalchemy.orm import Session
 
 
 @pytest.fixture

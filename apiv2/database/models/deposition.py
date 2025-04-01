@@ -8,10 +8,9 @@ SQLAlchemy database model for Deposition
 import datetime
 from typing import TYPE_CHECKING
 
+from platformics.database.models.base import Base
 from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from platformics.database.models.base import Base
 
 if TYPE_CHECKING:
     from database.models.alignment import Alignment

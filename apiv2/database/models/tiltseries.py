@@ -7,11 +7,10 @@ SQLAlchemy database model for Tiltseries
 
 from typing import TYPE_CHECKING
 
+from platformics.database.models.base import Base
 from sqlalchemy import Boolean, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import tiltseries_microscope_manufacturer_enum
-
-from platformics.database.models.base import Base
 
 if TYPE_CHECKING:
     from database.models.alignment import Alignment

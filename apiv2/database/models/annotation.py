@@ -8,11 +8,10 @@ SQLAlchemy database model for Annotation
 import datetime
 from typing import TYPE_CHECKING
 
+from platformics.database.models.base import Base
 from sqlalchemy import Boolean, DateTime, Enum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import annotation_method_type_enum
-
-from platformics.database.models.base import Base
 
 if TYPE_CHECKING:
     from database.models.annotation_author import AnnotationAuthor

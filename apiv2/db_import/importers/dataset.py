@@ -8,7 +8,6 @@ from db_import.importers.base_importer import (
     StaleDeletionDBImporter,
 )
 from db_import.importers.deposition import get_deposition
-
 from platformics.database.models import Base
 
 

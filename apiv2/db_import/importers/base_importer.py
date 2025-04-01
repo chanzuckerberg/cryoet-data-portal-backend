@@ -5,9 +5,8 @@ from typing import TYPE_CHECKING, Any, Optional
 
 import sqlalchemy as sa
 from db_import.common.config import DBImportConfig, map_to_value
-from sqlalchemy.exc import NoResultFound
-
 from platformics.database.models.base import Base
+from sqlalchemy.exc import NoResultFound
 
 if TYPE_CHECKING:
     from mypy_boto3_s3 import S3Client

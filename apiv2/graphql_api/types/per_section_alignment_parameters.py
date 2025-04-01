@@ -20,17 +20,6 @@ from graphql_api.helpers.per_section_alignment_parameters import (
     PerSectionAlignmentParametersGroupByOptions,
     build_per_section_alignment_parameters_groupby_output,
 )
-from sqlalchemy import inspect
-from sqlalchemy.engine.row import RowMapping
-from sqlalchemy.ext.asyncio import AsyncSession
-from strawberry.types import Info
-from support.limit_offset import LimitOffsetClause
-from typing_extensions import TypedDict
-from validators.per_section_alignment_parameters import (
-    PerSectionAlignmentParametersCreateInputValidator,
-    PerSectionAlignmentParametersUpdateInputValidator,
-)
-
 from platformics.graphql_api.core.deps import get_authz_client, get_db_session, is_system_user, require_auth_principal
 from platformics.graphql_api.core.errors import PlatformicsError
 from platformics.graphql_api.core.query_builder import get_aggregate_db_rows, get_db_rows
@@ -44,6 +33,16 @@ from platformics.graphql_api.core.relay_interface import EntityInterface
 from platformics.graphql_api.core.strawberry_extensions import DependencyExtension
 from platformics.graphql_api.core.strawberry_helpers import get_aggregate_selections
 from platformics.security.authorization import AuthzAction, AuthzClient, Principal
+from sqlalchemy import inspect
+from sqlalchemy.engine.row import RowMapping
+from sqlalchemy.ext.asyncio import AsyncSession
+from strawberry.types import Info
+from support.limit_offset import LimitOffsetClause
+from typing_extensions import TypedDict
+from validators.per_section_alignment_parameters import (
+    PerSectionAlignmentParametersCreateInputValidator,
+    PerSectionAlignmentParametersUpdateInputValidator,
+)
 
 E = typing.TypeVar("E")
 T = typing.TypeVar("T")

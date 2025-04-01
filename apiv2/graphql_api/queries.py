@@ -110,7 +110,6 @@ from graphql_api.types.tomogram_voxel_spacing import (
     resolve_tomogram_voxel_spacings,
     resolve_tomogram_voxel_spacings_aggregate,
 )
-
 from platformics.graphql_api import relay
 
 

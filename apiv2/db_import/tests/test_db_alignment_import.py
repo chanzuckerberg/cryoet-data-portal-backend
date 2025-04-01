@@ -12,9 +12,8 @@ from db_import.tests.populate_db import (
     populate_stale_per_section_alignment_parameters,
     populate_stale_run,
 )
-from sqlalchemy.orm import Session
-
 from platformics.database.models.base import Base
+from sqlalchemy.orm import Session
 
 
 @pytest.fixture

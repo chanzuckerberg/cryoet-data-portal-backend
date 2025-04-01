@@ -7,11 +7,10 @@ SQLAlchemy database model for AnnotationMethodLink
 
 from typing import TYPE_CHECKING
 
+from platformics.database.models.base import Base
 from sqlalchemy import Enum, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from support.enums import annotation_method_link_type_enum
-
-from platformics.database.models.base import Base
 
 if TYPE_CHECKING:
     from database.models.annotation import Annotation

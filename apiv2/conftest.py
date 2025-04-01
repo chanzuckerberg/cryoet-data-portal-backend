@@ -17,12 +17,6 @@ from graphql_api.queries import Query
 from httpx import AsyncClient
 from moto import mock_s3
 from mypy_boto3_s3.client import S3Client
-from pytest_postgresql import factories
-from pytest_postgresql.executor_noop import NoopExecutor
-from pytest_postgresql.janitor import DatabaseJanitor
-from sqlalchemy.ext.asyncio import AsyncSession
-from starlette.requests import Request
-
 from platformics.database.connect import AsyncDB, SyncDB, init_async_db, init_sync_db
 from platformics.database.models.base import Base
 from platformics.graphql_api.core.deps import (
@@ -37,6 +31,11 @@ from platformics.graphql_api.setup import get_app, get_strawberry_config
 from platformics.security.authorization import Principal
 from platformics.settings import APISettings
 from platformics.test_infra.factories.base import FileFactory, SessionStorage
+from pytest_postgresql import factories
+from pytest_postgresql.executor_noop import NoopExecutor
+from pytest_postgresql.janitor import DatabaseJanitor
+from sqlalchemy.ext.asyncio import AsyncSession
+from starlette.requests import Request
 
 __all__ = [
     "gql_client",

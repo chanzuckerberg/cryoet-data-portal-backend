@@ -3,10 +3,10 @@ Populate the database with mock data for local development
 """
 
 import factory.random
-
 from platformics.database.connect import init_sync_db
 from platformics.settings import CLISettings
 from platformics.test_infra.factories.base import FileFactory, SessionStorage
+
 from test_infra.factories.alignment import AlignmentFactory
 from test_infra.factories.annotation import AnnotationFactory
 from test_infra.factories.annotation_author import AnnotationAuthorFactory
