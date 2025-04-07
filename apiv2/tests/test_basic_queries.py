@@ -5,9 +5,9 @@ Test basic queries and mutations
 import datetime
 
 import pytest
-
 from platformics.database.connect import SyncDB
 from platformics.test_infra.factories.base import SessionStorage
+
 from test_infra.factories.dataset import DatasetFactory
 
 date_now = datetime.datetime.now()

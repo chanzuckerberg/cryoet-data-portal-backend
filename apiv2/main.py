@@ -8,9 +8,6 @@ import strawberry
 import uvicorn
 from graphql_api.mutations import Mutation
 from graphql_api.queries import Query
-from starlette.middleware.cors import CORSMiddleware
-from starlette.requests import Request
-
 from platformics.database.connect import AsyncDB, init_async_db
 from platformics.graphql_api.core.deps import (
     get_auth_principal,
@@ -20,6 +17,8 @@ from platformics.graphql_api.core.error_handler import HandleErrors
 from platformics.graphql_api.setup import get_app, get_strawberry_config
 from platformics.security.authorization import Principal
 from platformics.settings import APISettings
+from starlette.middleware.cors import CORSMiddleware
+from starlette.requests import Request
 
 settings = APISettings.model_validate({})  # Workaround for https://github.com/pydantic/pydantic/issues/3753
 schema = strawberry.Schema(query=Query, mutation=Mutation, config=get_strawberry_config(), extensions=[HandleErrors()])

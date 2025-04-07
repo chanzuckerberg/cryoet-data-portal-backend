@@ -17,9 +17,8 @@ from db_import.tests.populate_db import (
     populate_tomogram_authors,
     populate_tomograms,
 )
-from sqlalchemy.orm import Session
-
 from platformics.database.models import Base
+from sqlalchemy.orm import Session
 
 
 @pytest.fixture
