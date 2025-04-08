@@ -17,6 +17,7 @@ from platformics.database.models.file import File
 if TYPE_CHECKING:
     from database.models.alignment import Alignment
     from database.models.deposition import Deposition
+    from database.models.per_section_parameters import PerSectionParameters
     from database.models.run import Run
 
     from platformics.database.models.file import File
@@ -27,6 +28,7 @@ else:
     Alignment = "Alignment"
     Run = "Run"
     Deposition = "Deposition"
+    PerSectionParameters = "PerSectionParameters"
     ...
 
 
@@ -71,6 +73,13 @@ class Tiltseries(Base):
     microscope_phase_plate: Mapped[str] = mapped_column(String, nullable=True)
     microscope_image_corrector: Mapped[str] = mapped_column(String, nullable=True)
     microscope_additional_info: Mapped[str] = mapped_column(String, nullable=True)
+    per_section_parameters: Mapped[list[PerSectionParameters]] = relationship(
+        "PerSectionParameters",
+        back_populates="tiltseries",
+        uselist=True,
+        foreign_keys="PerSectionParameters.tiltseries_id",
+        cascade="all, delete-orphan",
+    )
     camera_manufacturer: Mapped[str] = mapped_column(String, nullable=False)
     camera_model: Mapped[str] = mapped_column(String, nullable=False)
     tilt_min: Mapped[float] = mapped_column(Float, nullable=False)

@@ -55,7 +55,7 @@ class TomogramFactory(CommonFactory):
     voxel_spacing = fuzzy.FuzzyFloat(1, 100)
     fiducial_alignment_status = fuzzy.FuzzyChoice(["FIDUCIAL", "NON_FIDUCIAL"])
     reconstruction_method = fuzzy.FuzzyChoice(["SART", "Fourier Space", "SIRT", "WBP", "Unknown"])
-    processing = fuzzy.FuzzyChoice(["denoised", "filtered", "raw"])
+    processing = fuzzy.FuzzyChoice(["denoised", "filtered", "raw", "filtered_even", "filtered_odd"])
     tomogram_version = fuzzy.FuzzyFloat(1, 100)
     processing_software = fuzzy.FuzzyText()
     reconstruction_software = fuzzy.FuzzyText()

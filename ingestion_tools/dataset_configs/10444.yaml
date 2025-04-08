@@ -86,7 +86,7 @@ datasets:
     other_setup: Samples were imaged in a cryo-fluorescence microscope before cryoET imaging. Some of the surface
       contamination originates from that additional imaging step.
     organism:
-      name: Homo Sapiens
+      name: Homo sapiens
       taxonomy_id: 9606
     sample_preparation: Affinity-grids were prepared by overlaying holey carbon grids with a thin layer of graphene
       oxide. GFP-nanobodies were immoblilized on the graphene oxide surface using a PEG-linker. Cells expressing
