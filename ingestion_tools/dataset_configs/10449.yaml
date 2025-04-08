@@ -9,6 +9,14 @@ alignments:
           list_globs:
             - '{run_name}.aln'
 
+ctfs:
+  - metadata:
+      format: CTFFIND
+    sources:
+      - source_glob:
+          list_glob: '{run_name}_CTFFIND_format_CTF.txt'
+
+
 depositions:
   - sources:
       - literal:
