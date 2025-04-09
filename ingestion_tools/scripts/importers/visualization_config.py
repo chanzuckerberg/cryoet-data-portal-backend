@@ -1,6 +1,7 @@
 import json
 import os.path
 from pathlib import Path
+from time import time
 from typing import TYPE_CHECKING, Any
 
 import cryoet_data_portal_neuroglancer.state_generator as state_generator
@@ -55,6 +56,8 @@ class VisualizationConfigImporter(BaseImporter):
         contrast_limits: tuple[float, float],
     ) -> dict[str, Any]:
         zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
+        # import ipdb; ipdb.set_trace()  # fmt: skip
+        print("Computed contrast limit", contrast_limits)
         return state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
@@ -176,7 +179,10 @@ class VisualizationConfigImporter(BaseImporter):
         volume_info = tomogram.get_output_volume_info()
         voxel_size = round(volume_info.voxel_size, 3)
         resolution = (voxel_size * 1e-10,) * 3
-        contrast_limits = tomogram.get_contrast_limits(method="gmm")
+        t = time()
+        print("Start contrast limit computation for", tomogram)
+        contrast_limits = tomogram.get_contrast_limits()
+        print("Took", (time() - t), "s")
         layers = [self._to_tomogram_layer(tomogram, volume_info, resolution, contrast_limits)]
 
         annotation_layer_info = self.get_annotation_layer_info(alignment_metadata_path)

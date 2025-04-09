@@ -214,6 +214,7 @@ class OMEZarrReader(VolumeReader):
 
         if not header_only:
             self.data = np.asarray(nodes[0].data[0])
+            self.lowest_resolution_data = np.asarray(nodes[0].data[-1])
 
     def get_pyramid_base_data(self) -> np.ndarray:
         return self.data.astype(np.float32)
@@ -273,9 +274,10 @@ class TomoConverter:
         return self.volume_reader.get_volume_info()
 
     def get_contrast_limits(self, method: Literal["gmm", "cdf"] = "gmm"):
+        assert isinstance(self.volume_reader, OMEZarrReader)
         from cryoet_data_portal_neuroglancer.precompute.contrast_limits import compute_contrast_limits
 
-        return compute_contrast_limits(self.volume_reader.data, method=method)
+        return compute_contrast_limits(self.volume_reader.lowest_resolution_data, method=method)
 
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(

@@ -1,13 +1,12 @@
 import contextlib
 import os
 from collections.abc import Iterator
-from typing import TYPE_CHECKING, Any, Literal, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from common.copy import copy_by_src
 from common.finders import DepositionObjectImporterFactory
 from common.image import (
     VolumeInfo,
-    get_volume_contrast_limits,
     get_volume_info,
     get_volume_metadata,
     get_voxel_size,
@@ -261,10 +260,6 @@ class VolumeImporter(BaseImporter):
     def get_output_volume_info(self) -> VolumeInfo:
         output_prefix = self.get_output_path()
         return get_volume_info(self.config.fs, f"{output_prefix}.mrc")
-
-    def get_contrast_limits(self, method: Literal["gmm", "cdf"] = "gmm") -> tuple[float, float]:
-        output_prefix = self.get_output_path()
-        return get_volume_contrast_limits(self.config.fs, f"{output_prefix}.mrc", method=method)
 
     def scale_mrcfile(
         self,
