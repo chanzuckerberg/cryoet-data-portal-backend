@@ -76,6 +76,7 @@ def validate_config(
         layers = [expected_tomogram_layer] + (anno_layers or [])
         scale = (parents["voxel_spacing"].as_float() * 1e-10,) * 3
         tomo_volume_info = parents["tomogram"].get_output_volume_info()
+        contrast_limits = parents["tomogram"].get_tomogram().get_contrast_limits()
         mock_state_generator.generate_image_layer.assert_called_once_with(
             os.path.relpath(os.path.join(vs_path, "Tomograms", "100", "TS_run1.zarr"), "output"),
             scale=scale,
@@ -85,6 +86,7 @@ def validate_config(
             size=tomo_volume_info.get_dimensions(),
             mean=tomo_volume_info.dmean,
             rms=tomo_volume_info.rms,
+            threedee_contrast_limits=contrast_limits,
         )
         mock_state_generator.combine_json_layers.assert_called_once_with(layers, scale=scale)
 

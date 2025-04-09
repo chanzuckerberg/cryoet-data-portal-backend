@@ -1,11 +1,11 @@
 import os
 import re
-from typing import Any
+from typing import Any, Literal
 
 from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
 from common.id_helper import IdentifierHelper
-from common.image import VolumeInfo, get_volume_info
+from common.image import VolumeInfo, get_volume_contrast_limits, get_volume_info
 from common.metadata import TomoMetadata
 from common.normalize_fields import normalize_fiducial_alignment
 from importers.base_importer import VolumeImporter
@@ -129,6 +129,10 @@ class TomogramImporter(VolumeImporter):
 
     def get_source_volume_info(self) -> VolumeInfo:
         return get_volume_info(self.config.fs, self.volume_filename)
+
+    def get_contrast_limits(self, method: Literal["gmm", "cdf"] = "gmm") -> tuple[float, float]:
+        output_prefix = self.get_output_path()
+        return get_volume_contrast_limits(self.config.fs, f"{output_prefix}.zarr", method=method)
 
     def get_alignment_metadata_path(self) -> str:
         from importers.alignment import AlignmentImporter
