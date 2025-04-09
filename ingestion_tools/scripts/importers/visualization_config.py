@@ -56,7 +56,6 @@ class VisualizationConfigImporter(BaseImporter):
         contrast_limits: tuple[float, float],
     ) -> dict[str, Any]:
         zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
-        # import ipdb; ipdb.set_trace()  # fmt: skip
         print("Computed contrast limit", contrast_limits)
         return state_generator.generate_image_layer(
             zarr_dir_path,
