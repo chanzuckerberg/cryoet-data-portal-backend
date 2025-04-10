@@ -1,5 +1,5 @@
-run_name,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_range-min,ts-total_flux
-wnj2018-04-18-1,12.656,6.328,-70.0,168.0
-wnj2018-04-18-2,12.656,6.328,-70.0,168.0
-wnj2018-04-18-3,12.656,6.328,-70.0,168.0
-wnj2018-04-19-4,9.138,4.569,-50.0,175.0
+run_name,tilt_series_min_angle,tilt_series_total_flux,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_range-min,ts-total_flux
+wnj2018-04-18-1,-70.0,168.0,12.656,6.328,-70.0,168.0
+wnj2018-04-18-2,-70.0,168.0,12.656,6.328,-70.0,168.0
+wnj2018-04-18-3,-70.0,168.0,12.656,6.328,-70.0,168.0
+wnj2018-04-19-4,-50.0,175.0,9.138,4.569,-50.0,175.0
