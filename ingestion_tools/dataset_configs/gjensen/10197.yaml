@@ -100,7 +100,7 @@ tiltseries:
     tilt_alignment_software: RAPTOR
     tilt_axis: 0.0
     tilt_range:
-      max: 60
+      max: 60.0
       min: float {ts-tilt_range-min}
     tilt_series_quality: 4
     tilt_step: 1.0

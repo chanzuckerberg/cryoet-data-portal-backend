@@ -288,7 +288,11 @@ def to_template_by_run(templates, run_data_map, prefix: str, path: list[str]) ->
     return template_metadata
 
 
-def to_tiltseries(per_run_float_mapping: dict[str, dict[str, float]], data: dict[str, Any]) -> dict[str, Any]:
+def to_tiltseries(
+    per_run_float_mapping: dict[str, dict[str, float]],
+    per_run_string_mapping: dict[str, dict[str, str]],
+    data: dict[str, Any],
+) -> dict[str, Any]:
     tilt_series_path = data["tilt_series"].get("tilt_series_path")
     if not tilt_series_path:
         return {}
@@ -312,6 +316,8 @@ def to_tiltseries(per_run_float_mapping: dict[str, dict[str, float]], data: dict
         "max": per_run_float_mapping["tilt_series_max_angle"][run_name],
     }
     tilt_series["tilt_step"] = per_run_float_mapping["tilt_series_tilt_step"][run_name]
+    tilt_series["tilting_scheme"] = per_run_string_mapping["tilt_series_tilting_scheme"][run_name]
+    tilt_series["tilt_axis"] = per_run_float_mapping["tilt_series_tilt_axis"][run_name]
 
     tilt_series.pop("tilt_range_min")
     tilt_series.pop("tilt_range_max")
@@ -591,7 +597,28 @@ def get_per_run_float_mapping(input_dir: str) -> dict[str, dict[str, float]]:
 
         for row in reader:
             for param_name in ret:
-                ret[param_name][row["run_name"]] = float(row[param_name])
+                try:
+                    ret[param_name][row["run_name"]] = float(row[param_name])
+                except ValueError:
+                    ret[param_name][row["run_name"]] = 0.0
+                    print(f"Invalid value for {param_name} in run {row['run_name']}: {row[param_name]}")
+        return ret
+
+
+def get_per_run_string_mapping(input_dir: str) -> dict[str, dict[str, str]]:
+    """
+    Get parameter to run mapping for all runs. The data for this is sourced from the per_run_string_param_map.tsv
+    :param input_dir:
+    :return: dictionary mapping param names to dicts of per run values {param_name -> {run_name -> value}
+    """
+    with open(os.path.join(input_dir, "per_run_string_param_map.tsv")) as csvfile:
+        reader = csv.DictReader(csvfile, delimiter="\t")
+        params = reader.fieldnames
+        ret = {param_name: {} for param_name in params if param_name != "run_name"}
+
+        for row in reader:
+            for param_name in ret:
+                ret[param_name][row["run_name"]] = row[param_name]
         return ret
 
 
@@ -607,11 +634,11 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
             source["parent_filters"]["exclude"]["run"].extend(runs_to_exclude)
 
 
-def handle_per_run_float_param_maps(
-    data: dict[str, Any], run_data_map: dict, per_run_mapping: dict[str, dict[str, float]]
+def handle_per_run_param_maps(
+    data: dict[str, Any], run_data_map: dict, per_run_mapping: dict[str, dict[str, float]] | dict[str, dict[str, str]]
 ) -> tuple[dict[str, str | float | None], dict]:
     """
-    Handle per-run float parameter mappings. The function finds distinct values for each parameter in the per_run_mapping
+    Handle per-run parameter mappings. The function finds distinct values for each parameter in the per_run_mapping
     and either passes a single value (if only one distinct value is found) or creates a formatted string for the field
     and appends the values to the run_data_map.
     :param data: The data for the dataset
@@ -672,6 +699,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_frames_map_path)
     cross_reference_mapping = get_cross_reference_mapping(input_dir)
     per_run_float_mapping = get_per_run_float_mapping(input_dir)
+    per_run_string_mapping = get_per_run_string_mapping(input_dir)
 
     deposition_mapping = get_deposition_map(input_dir)
 
@@ -691,7 +719,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         authors = to_author(val.get("dataset")["authors"], deposition_entity.get("metadata", {}).get("authors"))
 
         run_data_map = defaultdict(dict)
-        ds_per_run_mapping, run_data_map = handle_per_run_float_param_maps(
+        ds_per_run_mapping, run_data_map = handle_per_run_param_maps(
             val.get("runs"), run_data_map, per_run_float_mapping
         )
         dataset_config = {
@@ -702,7 +730,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 dataset_id,
                 val.get("runs"),
                 run_data_map,
-                partial(to_tiltseries, per_run_float_mapping),
+                partial(to_tiltseries, per_run_float_mapping, per_run_string_mapping),
                 "ts",
             ),
             "tomograms": to_config_by_run(

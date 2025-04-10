@@ -76,6 +76,7 @@ runs:
       name_regex: (.*)
 standardization_config:
   deposition_id: 10022
+  run_data_map_file: run_data_map/10230.csv
   source_prefix: GJensen_full
 tiltseries:
 - metadata:

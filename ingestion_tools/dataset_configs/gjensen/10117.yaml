@@ -56,7 +56,7 @@ depositions:
       - 10027
 frames:
 - metadata:
-    dose_rate: 0.0
+    dose_rate: 1.2396694214876034
     is_gain_corrected: false
   sources:
   - literal:
@@ -98,7 +98,7 @@ tiltseries:
     pixel_spacing: float {ts-pixel_spacing}
     spherical_aberration_constant: float {ts-spherical_aberration_constant}
     tilt_alignment_software: RAPTOR
-    tilt_axis: 84.3
+    tilt_axis: 77.6
     tilt_range:
       max: 60.0
       min: -60.0

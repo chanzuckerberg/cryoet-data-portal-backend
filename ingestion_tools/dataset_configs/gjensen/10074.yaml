@@ -71,7 +71,7 @@ depositions:
       - 10038
 frames:
 - metadata:
-    dose_rate: 0.0
+    dose_rate: 1.2345679012345678
     is_gain_corrected: false
   sources:
   - literal:
@@ -86,7 +86,7 @@ runs:
 - sources:
   - source_glob:
       list_glob: '*'
-      match_regex: (dga2016-08-09-2|dga2016-08-09-5|dga2016-08-09-7|dga2016-08-09-8|dga2016-08-09-9|dga2016-08-09-11|dga2016-08-09-12|dga2016-08-09-13|dga2016-08-09-14|dga2016-08-09-15|dga2016-08-09-16|dga2016-08-09-17|dga2016-08-09-18|dga2016-08-09-19|dga2016-08-09-20|dga2016-08-09-21|dga2016-08-09-22|dga2016-08-09-23|dga2016-08-09-24|dga2016-08-09-25|dga2016-08-09-26|dga2016-08-09-27|dga2016-08-09-28|dga2016-08-09-29|dga2016-08-09-30|dga2016-08-09-31|dga2016-08-09-32|dga2016-08-09-33|dga2016-08-09-34|dga2016-08-09-35|dga2016-08-09-36|dga2016-08-09-37|dga2016-08-09-38|dga2016-08-09-39|dga2016-08-09-40|dga2016-08-09-41|dga2016-08-09-42|dga2016-08-09-43|dga2016-08-09-44|dga2016-08-09-45|dga2016-08-09-46|dga2016-08-09-47|dga2016-08-09-48|dga2016-08-09-49|dga2016-08-09-50|dga2016-08-09-51|dga2016-08-09-52|dga2016-08-09-53|dga2016-08-09-54|dga2016-08-09-55|dga2016-08-09-56|dga2016-08-09-57|dga2016-08-09-58|dga2016-08-09-59|dga2016-08-09-60|dga2016-08-09-61|dga2016-08-09-63|dga2016-08-09-64|dga2016-08-09-65|dga2016-08-09-66|dga2016-08-09-67|dga2016-08-09-68|dga2016-08-09-69|dga2016-08-09-70|dga2016-08-09-71|dga2016-08-09-72|dga2016-08-09-73|dga2016-08-09-74|dga2016-08-09-75|dga2016-08-09-76|dga2016-08-09-77|dga2016-08-09-78|dga2016-08-09-79|dga2016-08-09-80|dga2016-08-09-81|dga2016-08-09-82|dga2016-08-09-83|dga2016-08-09-84|dga2016-08-09-85|dga2016-08-09-86|dga2016-08-09-87|dga2016-08-09-88|dga2016-08-09-89|dga2016-08-09-90|dga2016-08-09-91|dga2016-08-09-92|dga2016-08-09-93|dga2016-08-09-94|dga2016-08-09-95|dga2016-08-09-96|dga2016-08-09-97|dga2016-08-09-98|dga2016-08-09-99|dga2016-08-09-101|dga2016-08-09-104|dga2016-08-09-105|dga2016-08-09-107|dga2016-08-09-108|dga2016-08-09-109|dga2016-08-09-110|dga2016-08-09-111|dga2016-08-09-112|dga2016-08-09-113|dga2016-08-09-114)$
+      match_regex: (dga2016-08-09-2|dga2016-08-09-5|dga2016-08-09-7|dga2016-08-09-8|dga2016-08-09-9|dga2016-08-09-11|dga2016-08-09-12|dga2016-08-09-13|dga2016-08-09-14|dga2016-08-09-15|dga2016-08-09-16|dga2016-08-09-17|dga2016-08-09-18|dga2016-08-09-19|dga2016-08-09-20|dga2016-08-09-21|dga2016-08-09-22|dga2016-08-09-23|dga2016-08-09-24|dga2016-08-09-25|dga2016-08-09-26|dga2016-08-09-27|dga2016-08-09-28|dga2016-08-09-29|dga2016-08-09-30|dga2016-08-09-31|dga2016-08-09-32|dga2016-08-09-33|dga2016-08-09-34|dga2016-08-09-35|dga2016-08-09-36|dga2016-08-09-37|dga2016-08-09-38|dga2016-08-09-39|dga2016-08-09-40|dga2016-08-09-41|dga2016-08-09-42|dga2016-08-09-43|dga2016-08-09-44|dga2016-08-09-45|dga2016-08-09-46|dga2016-08-09-47|dga2016-08-09-48|dga2016-08-09-49|dga2016-08-09-50|dga2016-08-09-51|dga2016-08-09-52|dga2016-08-09-53|dga2016-08-09-54|dga2016-08-09-55|dga2016-08-09-56|dga2016-08-09-57|dga2016-08-09-58|dga2016-08-09-59|dga2016-08-09-60|dga2016-08-09-61|dga2016-08-09-63|dga2016-08-09-64|dga2016-08-09-65|dga2016-08-09-66|dga2016-08-09-67|dga2016-08-09-68|dga2016-08-09-69|dga2016-08-09-70|dga2016-08-09-71|dga2016-08-09-72|dga2016-08-09-73|dga2016-08-09-74|dga2016-08-09-75|dga2016-08-09-76|dga2016-08-09-77|dga2016-08-09-78|dga2016-08-09-79|dga2016-08-09-80|dga2016-08-09-81|dga2016-08-09-82|dga2016-08-09-83|dga2016-08-09-84|dga2016-08-09-85|dga2016-08-09-86|dga2016-08-09-87|dga2016-08-09-88|dga2016-08-09-89|dga2016-08-09-90|dga2016-08-09-91|dga2016-08-09-93|dga2016-08-09-94|dga2016-08-09-95|dga2016-08-09-96|dga2016-08-09-97|dga2016-08-09-98|dga2016-08-09-99|dga2016-08-09-101|dga2016-08-09-104|dga2016-08-09-105|dga2016-08-09-107|dga2016-08-09-108|dga2016-08-09-109|dga2016-08-09-110|dga2016-08-09-111|dga2016-08-09-112|dga2016-08-09-113|dga2016-08-09-114)$
       name_regex: (.*)
 standardization_config:
   deposition_id: 10038
@@ -115,11 +115,11 @@ tiltseries:
     pixel_spacing: 4.2
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 84.3
+    tilt_axis: -10.7
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_quality: int {ts-tilt_series_quality}
+    tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
     total_flux: 100.0
@@ -150,7 +150,7 @@ tomograms:
     authors: *id001
     ctf_corrected: null
     dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
       x: 0
@@ -161,7 +161,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
+    voxel_spacing: 16.8
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'
@@ -171,8 +171,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^dga2016-08-09-92$
+      - 16.8
