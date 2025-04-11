@@ -1,4 +1,5 @@
 import re
+from typing import Any
 
 import allure
 import numpy as np
@@ -39,3 +40,9 @@ class TiltSeriesHelper(HelperTestMRCZarrHeader):
         assert (
             metadata_tilt_axis - 10 <= mdoc_tilt_axis_angle <= metadata_tilt_axis + 10
         ), f"Tilt axis angle mismatch: MDOC: {mdoc_tilt_axis_angle} vs Metadata: {metadata_tilt_axis}"
+
+    @allure.title("Tiltseries: number of frames >= # of per section parameters.")
+    def test_persion_section_parameter_with_num_frames(self, tiltseries_metadata: dict[str, Any], frame_metadata: dict[str, dict]):
+        num_frames = len(frame_metadata["frames"])
+        num_per_section_parameters = len(tiltseries_metadata["per_section_parameter"])
+        assert num_frames >= num_per_section_parameters, f"Number of frames {num_frames} is less than number of per section parameters {num_per_section_parameters}."
