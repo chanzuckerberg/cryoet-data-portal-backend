@@ -56,7 +56,7 @@ python enqueue_runs.py db-import --import-runs --include-dataset 10000
 
 
 ### Running validation tests
-Coming soon..
+see [ingestion_tools/scripts/data_validation/README.md](ingestion_tools/scripts/data_validation/README.md)
 
 
 ### Tracking the progress of your ingestion
