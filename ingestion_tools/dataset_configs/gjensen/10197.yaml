@@ -98,7 +98,7 @@ tiltseries:
     pixel_spacing: float {ts-pixel_spacing}
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
-    tilt_axis: 0.0
+    tilt_axis: -12.8
     tilt_range:
       max: 60.0
       min: float {ts-tilt_range-min}

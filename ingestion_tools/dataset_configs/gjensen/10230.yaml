@@ -8,8 +8,8 @@ dataset_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-07-18-1/keyimg_mba2011-07-18-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-07-18-1/keyimg_mba2011-07-18-1_s.jpg
+        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-07-18-2/keyimg_mba2011-07-18-2.jpg
+        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2011-07-18-2/keyimg_mba2011-07-18-2_s.jpg
 datasets:
 - metadata:
     authors: &id001
@@ -57,7 +57,7 @@ depositions:
       - 10022
 frames:
 - metadata:
-    dose_rate: 0.0
+    dose_rate: 200.0
     is_gain_corrected: false
   sources:
   - literal:
@@ -72,7 +72,7 @@ runs:
 - sources:
   - source_glob:
       list_glob: '*'
-      match_regex: (mba2011-07-18-1|mba2011-07-18-2|mba2011-07-18-3|mba2011-07-18-4|mba2011-07-18-5|mba2011-07-18-8|mba2011-07-18-10|mba2011-07-18-11|mba2011-07-18-13|mba2011-07-18-14|mba2011-07-18-15|mba2011-07-18-17|mba2011-07-18-18|mba2011-07-18-19|mba2011-07-18-20|mba2011-07-18-21)$
+      match_regex: (mba2011-07-18-2|mba2011-07-18-3|mba2011-07-18-4|mba2011-07-18-5|mba2011-07-18-8|mba2011-07-18-10|mba2011-07-18-11|mba2011-07-18-13|mba2011-07-18-14|mba2011-07-18-15|mba2011-07-18-17|mba2011-07-18-18|mba2011-07-18-19|mba2011-07-18-20|mba2011-07-18-21)$
       name_regex: (.*)
 standardization_config:
   deposition_id: 10022
@@ -99,20 +99,16 @@ tiltseries:
     pixel_spacing: 6.26
     spherical_aberration_constant: 2.0
     tilt_alignment_software: IMOD
-    tilt_axis: 0.0
+    tilt_axis: -10.5
     tilt_range:
-      max: 65.0
-      min: -65.0
+      max: float {ts-tilt_range-max}
+      min: -64.5
     tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
     total_flux: 200.0
   sources:
-  - parent_filters:
-      exclude:
-        run:
-        - ^mba2011-07-18-1$
-    source_glob:
+  - source_glob:
       list_glob: '{run_name}/rawdata/*'
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:

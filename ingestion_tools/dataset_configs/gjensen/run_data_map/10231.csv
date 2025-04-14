@@ -1,7 +1,7 @@
-run_name,tilt_series_max_angle,tilt_series_min_angle,tilt_series_tilt_step,tilt_series_total_flux,tomo-align_software
-mba2011-02-03-1,65.0,-65.0,1.0,200.0,IMOD
-mba2011-02-03-3,0.0,0.0,0.0,0.0,RAPTOR
-mba2011-02-03-4,0.0,0.0,0.0,0.0,RAPTOR
-mba2011-02-03-5,0.0,0.0,0.0,0.0,RAPTOR
-mba2011-02-03-6,0.0,0.0,0.0,0.0,RAPTOR
-mba2011-02-03-7,0.0,0.0,0.0,0.0,RAPTOR
+run_name,frame_dose_rate,tilt_series_max_angle,tilt_series_min_angle,tilt_series_quality_score,tilt_series_tilt_step,tomo-align_software
+mba2011-02-03-1,200.0,65.0,-63.0,3.0,1.0,IMOD
+mba2011-02-03-3,0.0,0.0,0.0,0.0,0.0,RAPTOR
+mba2011-02-03-4,0.0,0.0,0.0,0.0,0.0,RAPTOR
+mba2011-02-03-5,0.0,0.0,0.0,0.0,0.0,RAPTOR
+mba2011-02-03-6,0.0,0.0,0.0,0.0,0.0,RAPTOR
+mba2011-02-03-7,0.0,0.0,0.0,0.0,0.0,RAPTOR

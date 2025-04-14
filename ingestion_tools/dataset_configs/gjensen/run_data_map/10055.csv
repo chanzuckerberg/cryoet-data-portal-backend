@@ -1,7 +1,6 @@
 run_name,tomo-align_software,tomo-processing_software,tomo-reconstruction_method,tomo-reconstruction_software,tomo-voxel_spacing,ts-tilt_alignment_software
 dga2016-11-04-1,TOMO3D,tomo3D,SIRT,TOMO3D,15.6,TOMO3D
 dga2016-11-04-4,TOMO3D,tomo3D,SIRT,TOMO3D,15.6,TOMO3D
-dga2016-11-04-7,TOMO3D,tomo3D,SIRT,TOMO3D,46.8,TOMO3D
 dga2016-11-04-8,TOMO3D,tomo3D,SIRT,TOMO3D,15.6,TOMO3D
 dga2016-11-04-31,TOMO3D,tomo3D,SIRT,TOMO3D,15.6,TOMO3D
 dga2016-11-04-33,TOMO3D,tomo3D,SIRT,TOMO3D,15.6,TOMO3D

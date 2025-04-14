@@ -1,4 +1,4 @@
-run_name,tilt_series_total_flux,ts-data_acquisition_software,ts-total_flux
+run_name,frame_dose_rate,ts-data_acquisition_software,ts-total_flux
 ycw2012-09-23-13,75.0,UCSF Tomo,75.0
 ycw2012-09-23-17,75.0,UCSF Tomo,75.0
 ycw2012-09-23-18,75.0,UCSFTomo,75.0

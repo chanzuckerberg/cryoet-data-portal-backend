@@ -1,13 +1,13 @@
-run_name,tilt_series_max_angle,tilt_series_total_flux,tomo-reconstruction_method,tomo-voxel_spacing,ts-microscope_optical_setup-phase_plate,ts-tilt_range-max,ts-total_flux
-wnj2018-05-16-6,60.0,181.0,WBP,8.638,volta phase plate,60.0,181.0
-wnj2018-05-16-7,60.0,181.0,WBP,8.638,volta phase plate,60.0,181.0
-wnj2018-05-16-8,60.0,181.0,WBP,8.638,volta phase plate,60.0,181.0
-wnj2018-05-16-10,60.0,181.0,SIRT,17.276,volta phase plate,60.0,181.0
-wnj2018-05-16-11,60.0,181.0,WBP,8.638,volta phase plate,60.0,181.0
-wnj2018-05-17-3,52.0,181.0,WBP,8.638,volta phase plate,52.0,181.0
-wnj2018-05-16-13,60.0,181.0,WBP,8.638,,60.0,181.0
-wnj2018-05-16-14,60.0,181.0,WBP,8.638,,60.0,181.0
-wnj2018-05-17-1,48.0,164.0,WBP,8.638,volta phase plate,48.0,164.0
-wnj2018-05-17-2,50.0,164.0,WBP,8.638,,50.0,164.0
-wnj2018-05-17-4,54.0,178.0,WBP,8.638,volta phase plate,54.0,178.0
-wnj2018-05-16-12,50.0,166.0,SIRT,17.276,,50.0,166.0
+run_name,frame_dose_rate,tilt_series_max_angle,tilt_series_quality_score,tomo-reconstruction_method,tomo-voxel_spacing,ts-microscope_optical_setup-phase_plate,ts-tilt_range-max,ts-total_flux
+wnj2018-05-16-6,181.0,60.0,4.0,WBP,8.638,volta phase plate,60.0,181.0
+wnj2018-05-16-7,181.0,60.0,4.0,WBP,8.638,volta phase plate,60.0,181.0
+wnj2018-05-16-8,181.0,60.0,4.0,WBP,8.638,volta phase plate,60.0,181.0
+wnj2018-05-16-10,181.0,60.0,4.0,SIRT,17.276,volta phase plate,60.0,181.0
+wnj2018-05-16-11,181.0,60.0,4.0,WBP,8.638,volta phase plate,60.0,181.0
+wnj2018-05-17-3,181.0,52.0,3.0,WBP,8.638,volta phase plate,52.0,181.0
+wnj2018-05-16-13,181.0,60.0,4.0,WBP,8.638,,60.0,181.0
+wnj2018-05-16-14,181.0,60.0,4.0,WBP,8.638,,60.0,181.0
+wnj2018-05-17-1,164.0,48.0,3.0,WBP,8.638,volta phase plate,48.0,164.0
+wnj2018-05-17-2,164.0,50.0,3.0,WBP,8.638,,50.0,164.0
+wnj2018-05-17-4,178.0,54.0,3.0,WBP,8.638,volta phase plate,54.0,178.0
+wnj2018-05-16-12,166.0,56.0,3.0,SIRT,17.276,,56.0,166.0
