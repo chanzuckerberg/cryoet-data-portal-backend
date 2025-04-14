@@ -672,7 +672,7 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
 
 
 def handle_per_run_param_maps(
-    data: dict[str, Any], run_data_map: dict, per_run_mapping: dict[str, dict[str, float]] | dict[str, dict[str, str]]
+    data: dict[str, Any], run_data_map: dict, per_run_mapping: dict[str, dict[str, float]] | dict[str, dict[str, str]],
 ) -> tuple[dict[str, str | float | None], dict]:
     """
     Handle per-run parameter mappings. The function finds distinct values for each parameter in the per_run_mapping
@@ -760,7 +760,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
 
         run_data_map = defaultdict(dict)
         ds_per_run_mapping, run_data_map = handle_per_run_param_maps(
-            val.get("runs"), run_data_map, per_run_float_mapping
+            val.get("runs"), run_data_map, per_run_float_mapping,
         )
         dataset_config = {
             "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
