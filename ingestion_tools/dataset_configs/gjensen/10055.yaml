@@ -65,7 +65,7 @@ depositions:
       - 10045
 frames:
 - metadata:
-    dose_rate: 130.0
+    dose_rate: 1.6049382716049383
     is_gain_corrected: false
   sources:
   - literal:
