@@ -318,6 +318,7 @@ def to_tiltseries(
     tilt_series["tilt_step"] = per_run_float_mapping["tilt_series_tilt_step"][run_name]
     tilt_series["tilting_scheme"] = per_run_string_mapping["tilt_series_tilting_scheme"][run_name]
     tilt_series["tilt_axis"] = per_run_float_mapping["tilt_series_tilt_axis"][run_name]
+    tilt_series["tilt_series_quality"] = int(per_run_float_mapping["tilt_series_quality_score"][run_name])
 
     tilt_series.pop("tilt_range_min")
     tilt_series.pop("tilt_range_max")
@@ -622,6 +623,42 @@ def get_per_run_string_mapping(input_dir: str) -> dict[str, dict[str, str]]:
         return ret
 
 
+def get_included_run_map(input_dir: str) -> dict[str, bool]:
+    """
+    Get map of runs to include/exclude during generation.
+    :param input_dir:
+    :return: dictionary mapping run names to bool indicating whether to include {run_name -> include}
+    """
+    with open(os.path.join(input_dir, "included_runs.tsv")) as csvfile:
+        reader = csv.DictReader(csvfile, delimiter="\t", fieldnames=["run_name", "include"])
+        # Skip the header row
+        next(reader)
+
+        ret = {}
+        for row in reader:
+            ret[row["run_name"]] = bool(int(row["include"]))
+        return ret
+
+
+def exclude_runs(data: dict[str, Any], run_include_mapping: dict[str, bool]) -> dict[str, Any]:
+    """
+    Exclude runs based on the run_include_mapping. If the run is not in the mapping, it is excluded.
+    :param data: The data to process
+    :param run_include_mapping: The mapping of run names to include/exclude
+    :return: The processed data with excluded runs
+    """
+    runs = data["runs"]
+    runs_out = []
+    for entry in runs:
+        if run_include_mapping.get(entry["run_name"], True):
+            runs_out.append(entry)
+        else:
+            print(f"Excluding run {entry['run_name']}")
+
+    data["runs"] = runs_out
+    return data
+
+
 def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:
     for entity in entities:
         for source in entity["sources"]:
@@ -700,6 +737,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     cross_reference_mapping = get_cross_reference_mapping(input_dir)
     per_run_float_mapping = get_per_run_float_mapping(input_dir)
     per_run_string_mapping = get_per_run_string_mapping(input_dir)
+    run_include_mapping = get_included_run_map(input_dir)
 
     deposition_mapping = get_deposition_map(input_dir)
 
@@ -709,7 +747,9 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     for file_path in file_paths:
         with open(file_path, "r") as file:
             val = json.load(file)
+
         print(f"Processing file {file_path}")
+        val = exclude_runs(val, run_include_mapping)
         dataset_id = val.get("dataset", {}).get("czportal_dataset_id")
         if not dataset_id or dataset_id > 10300:
             print(f"Skipping dataset with id: {dataset_id}")
