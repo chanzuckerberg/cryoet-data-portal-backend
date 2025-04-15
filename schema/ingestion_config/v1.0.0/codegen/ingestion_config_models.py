@@ -2884,7 +2884,7 @@ class Container(ConfiguredBaseModel):
     alignments: Optional[List[AlignmentEntity]] = Field(None, description="""An alignment entity.""", json_schema_extra = { "linkml_meta": {'alias': 'alignments', 'domain_of': ['Container']} })
     annotations: Optional[List[AnnotationEntity]] = Field(None, description="""An annotation entity.""", json_schema_extra = { "linkml_meta": {'alias': 'annotations', 'domain_of': ['Container']} })
     collection_metadata: Optional[List[CollectionMetadataEntity]] = Field(None, description="""A collection_metadata entity.""", json_schema_extra = { "linkml_meta": {'alias': 'collection_metadata', 'domain_of': ['Container']} })
-    ctf: Optional[List[CtfEntity]] = Field(None, description="""A ctf entity.""", json_schema_extra = { "linkml_meta": {'alias': 'ctf', 'domain_of': ['Container']} })
+    ctfs: Optional[List[CtfEntity]] = Field(None, description="""A ctf entity.""", json_schema_extra = { "linkml_meta": {'alias': 'ctfs', 'domain_of': ['Container']} })
     dataset_keyphotos: Optional[List[DatasetKeyPhotoEntity]] = Field(None, description="""A dataset key photo entity.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_keyphotos', 'domain_of': ['Container']} })
     datasets: List[DatasetEntity] = Field(..., description="""A dataset entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'datasets', 'domain_of': ['Container']} })
     deposition_keyphotos: Optional[List[DepositionKeyPhotoEntity]] = Field(None, description="""A deposition key photo entity.""", json_schema_extra = { "linkml_meta": {'alias': 'deposition_keyphotos', 'domain_of': ['Container']} })
