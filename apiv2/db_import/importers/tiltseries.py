@@ -8,7 +8,6 @@ from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 from db_import.importers.base_importer import BaseDBImporter, StaleParentDeletionDBImporter
 from db_import.importers.deposition import get_deposition
 from db_import.importers.run import RunDBImporter
-
 from platformics.database.models.base import Base
 
 

@@ -8,9 +8,8 @@ from db_import.tests.populate_db import (
     populate_run,
     write_data,
 )
-from sqlalchemy.orm import Session
-
 from platformics.database.models import Base
+from sqlalchemy.orm import Session
 
 
 @pytest.fixture

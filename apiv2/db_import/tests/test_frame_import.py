@@ -4,9 +4,8 @@ import pytest as pytest
 import sqlalchemy as sa
 from database import models
 from db_import.tests.populate_db import DEPOSITION_ID1, FRAME_ID, RUN1_ID, populate_run, write_data
-from sqlalchemy.orm import Session
-
 from platformics.database.models import Base
+from sqlalchemy.orm import Session
 
 
 @pytest.fixture

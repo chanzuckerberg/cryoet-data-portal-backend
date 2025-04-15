@@ -4,7 +4,6 @@ import os
 import click
 import sqlalchemy as sa
 from database import models
-
 from platformics.database.connect import init_sync_db
 
 
