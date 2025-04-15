@@ -1,32 +1,4 @@
 annotations: []
-collection_metadata:
-- sources:
-  - parent_filters:
-      exclude:
-        run:
-        - ^mst2010-12-10-1$
-        - ^mst2010-12-10-2$
-        - ^mst2010-12-10-3$
-        - ^mst2010-12-10-4$
-        - ^mst2010-12-10-5$
-        - ^mst2010-12-10-7$
-        - ^mst2010-12-10-8$
-        - ^mst2010-12-10-9$
-        - ^mst2010-12-11-1$
-        - ^mst2010-12-11-2$
-        - ^mst2010-12-11-3$
-        - ^mst2010-12-11-4$
-        - ^mst2010-12-11-5$
-        - ^mst2010-12-11-6$
-        - ^mst2010-12-11-7$
-        - ^mst2010-12-11-8$
-        - ^mst2010-12-11-9$
-        - ^mst2010-12-11-10$
-        - ^mst2010-12-11-11$
-        - ^mst2010-12-11-12$
-    source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -82,37 +54,6 @@ depositions:
   - literal:
       value:
       - 10031
-frames:
-- metadata:
-    dose_rate: 0.0
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
-    parent_filters:
-      exclude:
-        run:
-        - ^mst2010-12-10-1$
-        - ^mst2010-12-10-2$
-        - ^mst2010-12-10-3$
-        - ^mst2010-12-10-4$
-        - ^mst2010-12-10-5$
-        - ^mst2010-12-10-7$
-        - ^mst2010-12-10-8$
-        - ^mst2010-12-10-9$
-        - ^mst2010-12-11-1$
-        - ^mst2010-12-11-2$
-        - ^mst2010-12-11-3$
-        - ^mst2010-12-11-4$
-        - ^mst2010-12-11-5$
-        - ^mst2010-12-11-6$
-        - ^mst2010-12-11-7$
-        - ^mst2010-12-11-8$
-        - ^mst2010-12-11-9$
-        - ^mst2010-12-11-10$
-        - ^mst2010-12-11-11$
-        - ^mst2010-12-11-12$
 rawtilts:
 - sources:
   - source_multi_glob:
@@ -122,68 +63,11 @@ runs:
 - sources:
   - source_glob:
       list_glob: '*'
-      match_regex: (mst2010-12-10-1|mst2010-12-10-2|mst2010-12-10-3|mst2010-12-10-4|mst2010-12-10-5|mst2010-12-10-6|mst2010-12-10-7|mst2010-12-10-8|mst2010-12-10-9|mst2010-12-11-1|mst2010-12-11-2|mst2010-12-11-3|mst2010-12-11-4|mst2010-12-11-5|mst2010-12-11-6|mst2010-12-11-7|mst2010-12-11-8|mst2010-12-11-9|mst2010-12-11-10|mst2010-12-11-11|mst2010-12-11-12)$
+      match_regex: (mst2010-12-10-1|mst2010-12-10-2|mst2010-12-10-3|mst2010-12-10-4|mst2010-12-10-5|mst2010-12-10-7|mst2010-12-10-8|mst2010-12-10-9|mst2010-12-11-1|mst2010-12-11-2|mst2010-12-11-3|mst2010-12-11-4|mst2010-12-11-5|mst2010-12-11-6|mst2010-12-11-7|mst2010-12-11-8|mst2010-12-11-9|mst2010-12-11-10|mst2010-12-11-11|mst2010-12-11-12)$
       name_regex: (.*)
 standardization_config:
   deposition_id: 10031
-  run_data_map_file: run_data_map/10195.csv
   source_prefix: GJensen_full
-tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: null
-      manufacturer: Gatan
-      model: UltraCam
-    data_acquisition_software: Leginon
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 19.24
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: null
-    tilt_axis: 0.0
-    tilt_range:
-      max: 63.0
-      min: -63.0
-    tilt_series_quality: 1
-    tilt_step: 1.0
-    tilting_scheme: bidirectional
-    total_flux: 180.0
-  sources:
-  - parent_filters:
-      exclude:
-        run:
-        - ^mst2010-12-10-1$
-        - ^mst2010-12-10-2$
-        - ^mst2010-12-10-3$
-        - ^mst2010-12-10-4$
-        - ^mst2010-12-10-5$
-        - ^mst2010-12-10-7$
-        - ^mst2010-12-10-8$
-        - ^mst2010-12-10-9$
-        - ^mst2010-12-11-1$
-        - ^mst2010-12-11-2$
-        - ^mst2010-12-11-3$
-        - ^mst2010-12-11-4$
-        - ^mst2010-12-11-5$
-        - ^mst2010-12-11-6$
-        - ^mst2010-12-11-7$
-        - ^mst2010-12-11-8$
-        - ^mst2010-12-11-9$
-        - ^mst2010-12-11-10$
-        - ^mst2010-12-11-11$
-        - ^mst2010-12-11-12$
-    source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -203,11 +87,11 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_software}'
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
       x: 0
@@ -215,10 +99,10 @@ tomograms:
       z: 0
     processing: raw
     processing_software: null
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: '{tomo-reconstruction_software}'
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
+    voxel_spacing: 19.24
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'
@@ -228,8 +112,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^mst2010-12-10-6$
+      - 19.24
