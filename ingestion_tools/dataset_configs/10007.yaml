@@ -52,12 +52,6 @@ collection_metadata:
   - sources:
       - source_glob:
           list_glob: '{run_name}/{run_name}_vali.mdoc'
-ctf:
-  - metadata:
-      format: CTFFIND
-    sources:
-      - source_glob:
-          list_glob: '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
 dataset_keyphotos:
   - sources:
       - literal:

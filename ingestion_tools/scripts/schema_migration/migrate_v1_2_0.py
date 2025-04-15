@@ -5,7 +5,7 @@ def add_frames_metadata(config: dict):
     if not frame_dose_rate and "collection_metadata" not in config:
         return
 
-    if "frames" not in config:
+    if "frames" not in config and len(config.get("tiltseries", [])) > 0:
         config["frames"] = [
             {
                 "sources": [
@@ -14,16 +14,19 @@ def add_frames_metadata(config: dict):
             },
         ]
 
-    for entry in config["frames"]:
-        if "metadata" not in entry:
-            entry["metadata"] = {
-                "dose_rate": frame_dose_rate,
-                "is_gain_corrected": "gain" in config,
-            }
+    if "frames" in config:
+        for entry in config["frames"]:
+            if "metadata" not in entry:
+                entry["metadata"] = {
+                    "dose_rate": frame_dose_rate,
+                    "is_gain_corrected": "gain" in config,
+                }
+
 
 def clean_up_standard_config(config: dict):
     standardization_config = config.get("standardization_config")
     standardization_config.pop("frame_dose_rate", None)
+
 
 def upgrade(config: dict) -> dict:
     add_frames_metadata(config)

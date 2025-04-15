@@ -1,7 +1,15 @@
 annotations: []
 collection_metadata:
 - sources:
-  - source_multi_glob:
+  - parent_filters:
+      exclude:
+        run:
+        - ^mba2011-02-03-3$
+        - ^mba2011-02-03-4$
+        - ^mba2011-02-03-5$
+        - ^mba2011-02-03-6$
+        - ^mba2011-02-03-7$
+    source_multi_glob:
       list_globs:
       - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
@@ -64,6 +72,14 @@ frames:
   - literal:
       value:
       - default
+    parent_filters:
+      exclude:
+        run:
+        - ^mba2011-02-03-3$
+        - ^mba2011-02-03-4$
+        - ^mba2011-02-03-5$
+        - ^mba2011-02-03-6$
+        - ^mba2011-02-03-7$
 rawtilts:
 - sources:
   - source_multi_glob:

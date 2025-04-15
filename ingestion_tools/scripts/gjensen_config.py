@@ -813,9 +813,20 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
             f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tilt_series", {}).get("tilt_series_path")
         ]:
             exclude_runs_parent_filter(updated_dataset_config.get("tiltseries", []), runs_without_tilt)
+            exclude_runs_parent_filter(updated_dataset_config.get("frames", []), runs_without_tilt)
+            exclude_runs_parent_filter(updated_dataset_config.get("ctfs", []), runs_without_tilt)
+            exclude_runs_parent_filter(updated_dataset_config.get("rawtlts", []), runs_without_tilt)
+            exclude_runs_parent_filter(updated_dataset_config.get("collection_metadata", []), runs_without_tilt)
         # Add filter to exclude runs for tomograms that have no tomograms specified
         if runs_without_tomogram := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tomograms")]:
             exclude_runs_parent_filter(updated_dataset_config.get("voxel_spacings", []), runs_without_tomogram)
+
+        # If there are no tiltseries, remove frames, rawtlts, ctfs, and collection_metadata
+        if not updated_dataset_config.get("tiltseries"):
+            updated_dataset_config.pop("frames", None)
+            updated_dataset_config.pop("rawtlts", None)
+            updated_dataset_config.pop("ctfs", None)
+            updated_dataset_config.pop("collection_metadata", None)
 
         with open(dataset_config_file_path, "w") as outfile:
             yaml.dump(updated_dataset_config, outfile, sort_keys=True)
