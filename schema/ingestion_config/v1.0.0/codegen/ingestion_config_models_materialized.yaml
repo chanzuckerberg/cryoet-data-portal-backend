@@ -754,11 +754,11 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
-      ctf:
-        name: ctf
+      ctfs:
+        name: ctfs
         description: A ctf entity.
         from_schema: cdp-ingestion-config
-        alias: ctf
+        alias: ctfs
         owner: Container
         domain_of:
         - Container
