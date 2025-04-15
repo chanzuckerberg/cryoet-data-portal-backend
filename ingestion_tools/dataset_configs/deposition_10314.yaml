@@ -23,7 +23,7 @@ depositions:
         1829 volumes in the C. reinhardtii dataset were generated as a part of a project that explored the scaling of data
         analyses in cryoET. On the basis of these comprehensive segmentations the dataset was also 'summarized' and
         represented a searchable database (see method links).
-        
+
         All segmentations were generated using convolutional neural networks. Networks to segment macromolecules
         (membrane, ribosome, F1-F0 complex, RuBisCo complex, chaperonin-containing T complex, and proteasome complex) were
         prepared using Ais (check method links for network weights). The remaining features were segmented by a single

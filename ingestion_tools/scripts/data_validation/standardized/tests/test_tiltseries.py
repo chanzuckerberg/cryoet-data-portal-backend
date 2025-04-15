@@ -15,7 +15,7 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.tiltseries
 @pytest.mark.parametrize(
-    "dataset, run_name, ts_dir", pytest.cryoet.dataset_run_tiltseries_combinations, scope="session"
+    "dataset, run_name, ts_dir", pytest.cryoet.dataset_run_tiltseries_combinations, scope="session",
 )
 class TestTiltseries(TiltSeriesHelper):
 
@@ -93,7 +93,7 @@ class TestTiltseries(TiltSeriesHelper):
     ):
         assert len(tiltseries_zarr_metadata) == 1
         assert os.path.basename(tiltseries_metadata["omezarr_dir"]) == os.path.basename(
-            list(tiltseries_zarr_metadata.keys())[0]
+            list(tiltseries_zarr_metadata.keys())[0],
         )
 
     @allure.title("Tiltseries: metadata MRC file matches the actual file.")
@@ -104,7 +104,7 @@ class TestTiltseries(TiltSeriesHelper):
     ):
         assert len(tiltseries_mrc_header) == 1
         assert os.path.basename(tiltseries_metadata["mrc_file"]) == os.path.basename(
-            list(tiltseries_mrc_header.keys())[0]
+            list(tiltseries_mrc_header.keys())[0],
         )
 
     ### END metadata-MRC/Zarr consistency tests ###
