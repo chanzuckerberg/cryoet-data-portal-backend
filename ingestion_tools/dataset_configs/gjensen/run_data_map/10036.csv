@@ -1,9 +1,9 @@
-run_name,tilt_series_max_angle,tilt_series_quality_score,tomo-align_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_range-max
-wnj2018-04-19-7,50.0,4.0,RAPTOR,18.276,Serial EM,RAPTOR,50.0
-wnj2018-04-19-8,50.0,4.0,RAPTOR,9.138,Serial EM,RAPTOR,50.0
-wnj2018-04-19-9,50.0,4.0,RAPTOR,9.138,Undefined,RAPTOR,50.0
-wnj2018-04-19-10,50.0,4.0,RAPTOR,9.138,Serial EM,RAPTOR,50.0
-wnj2018-04-19-11,50.0,4.0,RAPTOR,9.138,Serial EM,RAPTOR,50.0
-wnj2018-04-19-13,50.0,4.0,IMOD,9.138,Serial EM,IMOD,50.0
-wnj2018-04-19-12,45.0,3.0,RAPTOR,9.138,Serial EM,RAPTOR,45.0
-wnj2018-04-19-14,49.0,3.0,RAPTOR,9.138,Serial EM,RAPTOR,49.0
+run_name,tilt_series_max_angle,tilt_series_quality_score,tomo-align_software,tomo-voxel_spacing,ts-data_acquisition_software,ts-tilt_alignment_software,ts-tilt_range-max,ts-tilt_series_quality
+wnj2018-04-19-7,50.0,4.0,RAPTOR,18.276,Serial EM,RAPTOR,50.0,4
+wnj2018-04-19-8,50.0,4.0,RAPTOR,9.138,Serial EM,RAPTOR,50.0,4
+wnj2018-04-19-9,50.0,4.0,RAPTOR,9.138,Undefined,RAPTOR,50.0,4
+wnj2018-04-19-10,50.0,4.0,RAPTOR,9.138,Serial EM,RAPTOR,50.0,4
+wnj2018-04-19-11,50.0,4.0,RAPTOR,9.138,Serial EM,RAPTOR,50.0,4
+wnj2018-04-19-13,50.0,4.0,IMOD,9.138,Serial EM,IMOD,50.0,4
+wnj2018-04-19-12,45.0,3.0,RAPTOR,9.138,Serial EM,RAPTOR,45.0,3
+wnj2018-04-19-14,49.0,3.0,RAPTOR,9.138,Serial EM,RAPTOR,49.0,3

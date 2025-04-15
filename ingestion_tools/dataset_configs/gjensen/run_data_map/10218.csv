@@ -1,6 +1,6 @@
-run_name,frame_dose_rate,tilt_series_min_angle,tilt_series_quality_score,tilt_series_tilt_step,tomo-align_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_range-min,ts-tilt_step
-mba2010-08-27-1,2.4096385542168677,-57.5,3.0,1.5,RAPTOR,10.24,RAPTOR,-57.5,1.5
-mba2010-08-27-2,2.4096385542168677,-59.0,4.0,1.5,IMOD,10.24,IMOD,-59.0,1.5
-mba2010-08-27-3,2.4096385542168677,-59.0,4.0,1.5,IMOD,10.24,IMOD,-59.0,1.5
-mba2010-08-27-4,2.4096385542168677,-57.5,3.0,1.5,IMOD,10.24,IMOD,-57.5,1.5
-mba2011-02-16-1,1.5384615384615385,-59.0,3.0,1.0,IMOD,5.12,IMOD,-59.0,1.0
+run_name,frame_dose_rate,tilt_series_min_angle,tilt_series_quality_score,tilt_series_tilt_step,tomo-align_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step
+mba2010-08-27-1,2.4096385542168677,-57.5,3.0,1.5,RAPTOR,10.24,RAPTOR,-57.5,3,1.5
+mba2010-08-27-2,2.4096385542168677,-59.0,4.0,1.5,IMOD,10.24,IMOD,-59.0,4,1.5
+mba2010-08-27-3,2.4096385542168677,-59.0,4.0,1.5,IMOD,10.24,IMOD,-59.0,4,1.5
+mba2010-08-27-4,2.4096385542168677,-57.5,3.0,1.5,IMOD,10.24,IMOD,-57.5,3,1.5
+mba2011-02-16-1,1.5384615384615385,-59.0,3.0,1.0,IMOD,5.12,IMOD,-59.0,3,1.0

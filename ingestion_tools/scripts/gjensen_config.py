@@ -318,12 +318,14 @@ def to_tiltseries(
     tilt_series["tilt_step"] = per_run_float_mapping["tilt_series_tilt_step"][run_name]
     tilt_series["tilting_scheme"] = per_run_string_mapping["tilt_series_tilting_scheme"][run_name]
     tilt_series["tilt_axis"] = per_run_float_mapping["tilt_series_tilt_axis"][run_name]
-    tilt_series["tilt_series_quality"] = int(per_run_float_mapping["tilt_series_quality_score"][run_name])
 
     tilt_series.pop("tilt_range_min")
     tilt_series.pop("tilt_range_max")
 
     tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
+    tilt_series["tilt_series_quality"] = per_run_float_mapping["tilt_series_quality_score"][run_name]
+    if isinstance(tilt_series["tilt_series_quality"], float):
+        tilt_series["tilt_series_quality"] = int(tilt_series["tilt_series_quality"])
     tilt_series["pixel_spacing"] = round(tilt_series["pixel_spacing"], 3) if tilt_series.get("pixel_spacing") else None
 
     tilt_series.pop("tilt_series_path", None)
@@ -672,7 +674,9 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
 
 
 def handle_per_run_param_maps(
-    data: dict[str, Any], run_data_map: dict, per_run_mapping: dict[str, dict[str, float]] | dict[str, dict[str, str]],
+    data: dict[str, Any],
+    run_data_map: dict,
+    per_run_mapping: dict[str, dict[str, float]] | dict[str, dict[str, str]],
 ) -> tuple[dict[str, str | float | None], dict]:
     """
     Handle per-run parameter mappings. The function finds distinct values for each parameter in the per_run_mapping
@@ -760,7 +764,9 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
 
         run_data_map = defaultdict(dict)
         ds_per_run_mapping, run_data_map = handle_per_run_param_maps(
-            val.get("runs"), run_data_map, per_run_float_mapping,
+            val.get("runs"),
+            run_data_map,
+            per_run_float_mapping,
         )
         dataset_config = {
             "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),

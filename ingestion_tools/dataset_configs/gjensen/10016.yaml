@@ -116,7 +116,7 @@ tiltseries:
     tilt_range:
       max: 44.0
       min: -44.0
-    tilt_series_quality: 4
+    tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 4.0
     tilting_scheme: dose-symmetric
     total_flux: 50.0

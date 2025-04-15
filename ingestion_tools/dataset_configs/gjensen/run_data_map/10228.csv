@@ -1,4 +1,4 @@
-run_name,frame_dose_rate,tilt_series_max_angle,tilt_series_min_angle,tilt_series_quality_score,tilt_series_tilt_step,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_step
-mba2011-04-21-1,1.5151515151515151,65.0,-48.0,3.0,1.0,10.24,5.12,65.0,-48.0,1.0
-mba2011-07-30-1,2.272727272727273,64.5,-64.5,4.0,1.5,6.44,6.44,64.5,-64.5,1.5
-mba2011-07-30-2,2.272727272727273,64.5,-64.5,4.0,1.5,6.44,6.44,64.5,-64.5,1.5
+run_name,frame_dose_rate,tilt_series_max_angle,tilt_series_min_angle,tilt_series_quality_score,tilt_series_tilt_step,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step
+mba2011-04-21-1,1.5151515151515151,65.0,-48.0,3.0,1.0,10.24,5.12,65.0,-48.0,3,1.0
+mba2011-07-30-1,2.272727272727273,64.5,-64.5,4.0,1.5,6.44,6.44,64.5,-64.5,4,1.5
+mba2011-07-30-2,2.272727272727273,64.5,-64.5,4.0,1.5,6.44,6.44,64.5,-64.5,4,1.5

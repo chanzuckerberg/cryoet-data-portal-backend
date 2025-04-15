@@ -104,7 +104,7 @@ tiltseries:
     tilt_range:
       max: 60.0
       min: float {ts-tilt_range-min}
-    tilt_series_quality: 4
+    tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: float {ts-tilt_step}
     tilting_scheme: starting tilt to max then min
     total_flux: 150.0

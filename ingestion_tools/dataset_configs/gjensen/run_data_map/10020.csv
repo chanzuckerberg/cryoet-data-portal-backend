@@ -1,4 +1,4 @@
-run_name,tilt_series_max_angle,tilt_series_min_angle,tilt_series_quality_score,tomo-reconstruction_method,ts-tilt_range-max,ts-tilt_range-min
-pda2021-02-02-20,60.0,-60.0,4.0,SIRT,60.0,-60.0
-pda2021-02-02-21,60.0,-60.0,4.0,SIRT,60.0,-60.0
-pda2022-02-02-1,54.0,-54.0,3.0,WBP,54.0,-54.0
+run_name,tilt_series_max_angle,tilt_series_min_angle,tilt_series_quality_score,tomo-reconstruction_method,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality
+pda2021-02-02-20,60.0,-60.0,4.0,SIRT,60.0,-60.0,4
+pda2021-02-02-21,60.0,-60.0,4.0,SIRT,60.0,-60.0,4
+pda2022-02-02-1,54.0,-54.0,3.0,WBP,54.0,-54.0,3
