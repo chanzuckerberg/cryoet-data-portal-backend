@@ -7,7 +7,7 @@ The data ingestion process involves transforming input data from various sources
 ### Steps
 1. The first step of this is usually bringing the raw data into an AWS environment that is accessible to our ingestion workflows.
 2. Once the data is available, create an ingestion **config.yaml** to include the metadata and file paths for data.
-3. Validate the **config.yaml** file to ensure that it is in the correct format.
+3. Validate the **config.yaml** file to ensure that it is in the correct format, and the source data is accessible and valid.
 4. The source data needs to be transformed into a standardized format that is uniform across its different datasets.
 5. The transformed data is validated against a set of rules to ensure that it is in the correct format.
 6. The validated data is then ingested into the database, to be surfaced by the GraphQL API.
