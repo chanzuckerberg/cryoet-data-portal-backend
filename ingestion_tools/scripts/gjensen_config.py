@@ -318,6 +318,7 @@ def to_tiltseries(
     tilt_series["tilt_step"] = per_run_float_mapping["tilt_series_tilt_step"][run_name]
     tilt_series["tilting_scheme"] = per_run_string_mapping["tilt_series_tilting_scheme"][run_name]
     tilt_series["tilt_axis"] = per_run_float_mapping["tilt_series_tilt_axis"][run_name]
+    tilt_series["total_flux"] = per_run_float_mapping["tilt_series_total_flux"][run_name]
 
     tilt_series.pop("tilt_range_min")
     tilt_series.pop("tilt_range_max")
