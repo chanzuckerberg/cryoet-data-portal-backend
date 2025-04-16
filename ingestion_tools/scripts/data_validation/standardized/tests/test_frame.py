@@ -18,11 +18,10 @@ class TestFrame(FrameTestHelper):
         if frame_metadata.get("is_gain_corrected") is False: # todo is none considered false?
             assert len(gain_headers) > 0
 
-    @allure.title("max(acquisitionOrder) < number of frames - 1")
+    @allure.title("max(acquisitionOrder) < number of frames")
     def test_max_acquisition_order(self, frame_metadata: Dict):
-        acquisition_order_limit = len(frame_metadata["frames"]) - 1
         acquisition_order_max = max(f.get("acquisition_order", 0) for f in frame_metadata["frames"])
-        assert acquisition_order_max < acquisition_order_limit
+        assert acquisition_order_max < len(frame_metadata["frames"])
 
     @allure.title("Sum of exposureDose of all frames associated with a tilt series == totalFlux of tilt series")
     def test_exposure_dose(self, frame_metadata: Dict, tiltseries_metadata: Dict):
