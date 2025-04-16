@@ -111,7 +111,7 @@ class BaseLiteralValueFinder(BaseFinder):
     def find(self, config: DepositionImportConfig, glob_vars: dict[str, Any]) -> dict[str, str | None]:
         if isinstance(self.literal_value, dict):
             return self.literal_value
-        return {item: None for item in self.literal_value}
+        return dict.fromkeys(self.literal_value)
 
 
 class DestinationFilteredMetadataFinder(BaseFinder):
