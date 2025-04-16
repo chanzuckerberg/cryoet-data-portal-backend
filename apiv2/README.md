@@ -57,6 +57,10 @@ git commit -am "chore: Updating schema to add X feature"
 
 ```
 
+### When Adding a New Table
+Modify the make command `update-schema` by adding the new table to the `linkml generate erdiagram` command. This will
+ensure that the new table is included in the ER diagram.
+
 ## Creating an rdev stack
 
 1. Open a pull request
