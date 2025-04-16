@@ -323,7 +323,6 @@ def to_tiltseries(
     tilt_series.pop("tilt_range_min")
     tilt_series.pop("tilt_range_max")
 
-    tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
     tilt_series["tilt_series_quality"] = per_run_float_mapping["tilt_series_quality_score"][run_name]
     if isinstance(tilt_series["tilt_series_quality"], float):
         tilt_series["tilt_series_quality"] = int(tilt_series["tilt_series_quality"])
