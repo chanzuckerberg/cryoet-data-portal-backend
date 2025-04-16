@@ -3,7 +3,7 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -59,17 +59,24 @@ depositions:
   - literal:
       value:
       - 10025
+frames:
+- metadata:
+    dose_rate: 1.2295081967213115
+    is_gain_corrected: false
+  sources:
+  - literal:
+      value:
+      - default
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
 runs:
 - sources:
   - source_glob:
       list_glob: '*'
-      match_regex: (cwl2011-08-12-1|cwl2011-08-12-3|cwl2011-08-12-4|cwl2011-08-12-5|cwl2011-08-12-6|cwl2011-08-12-8|cwl2011-08-12-9|cwl2011-08-12-10|cwl2011-08-12-11|cwl2011-08-12-12|cwl2011-08-12-13|cwl2011-08-12-14|cwl2011-08-12-15|cwl2011-08-12-16|cwl2011-08-12-17|cwl2011-08-12-18|cwl2011-08-12-19|cwl2011-08-12-20|cwl2011-08-12-21|cwl2011-08-12-23|cwl2011-08-12-24|cwl2011-08-12-25|cwl2011-08-12-26|cwl2011-08-12-27|cwl2011-08-12-28|cwl2011-08-12-29|cwl2011-08-12-30|cwl2011-08-12-31|cwl2011-08-13-1|cwl2011-08-13-2|cwl2011-08-13-3|cwl2011-08-13-4|cwl2011-08-13-5|cwl2011-08-13-6|cwl2011-08-13-7|cwl2011-08-13-8|cwl2011-08-13-9|cwl2011-08-13-10|cwl2011-08-13-11|cwl2011-08-13-12|cwl2011-08-13-13|cwl2011-08-13-14|cwl2011-08-13-15|cwl2011-08-13-16|cwl2011-08-13-17|cwl2011-08-13-18|cwl2011-08-13-19|cwl2011-08-13-20|cwl2011-08-13-21|cwl2011-08-13-22|cwl2011-08-13-23|cwl2011-08-13-24|cwl2011-08-13-25)$
+      match_regex: (cwl2011-08-12-1|cwl2011-08-12-3|cwl2011-08-12-4|cwl2011-08-12-5|cwl2011-08-12-6|cwl2011-08-12-8|cwl2011-08-12-9|cwl2011-08-12-10|cwl2011-08-12-11|cwl2011-08-12-12|cwl2011-08-12-13|cwl2011-08-12-14|cwl2011-08-12-15|cwl2011-08-12-16|cwl2011-08-12-17|cwl2011-08-12-18|cwl2011-08-12-19|cwl2011-08-12-20|cwl2011-08-12-21|cwl2011-08-12-23|cwl2011-08-12-24|cwl2011-08-12-25|cwl2011-08-12-26|cwl2011-08-12-27|cwl2011-08-12-28|cwl2011-08-12-29|cwl2011-08-12-30|cwl2011-08-12-31|cwl2011-08-13-1|cwl2011-08-13-2|cwl2011-08-13-3|cwl2011-08-13-4|cwl2011-08-13-5|cwl2011-08-13-6|cwl2011-08-13-7|cwl2011-08-13-9|cwl2011-08-13-10|cwl2011-08-13-11|cwl2011-08-13-12|cwl2011-08-13-13|cwl2011-08-13-14|cwl2011-08-13-15|cwl2011-08-13-16|cwl2011-08-13-17|cwl2011-08-13-18|cwl2011-08-13-19|cwl2011-08-13-20|cwl2011-08-13-21|cwl2011-08-13-22|cwl2011-08-13-23|cwl2011-08-13-24|cwl2011-08-13-25)$
       name_regex: (.*)
 standardization_config:
   deposition_id: 10025
@@ -98,20 +105,16 @@ tiltseries:
     pixel_spacing: float {ts-pixel_spacing}
     spherical_aberration_constant: 2.0
     tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 0.0
+    tilt_axis: -12.8
     tilt_range:
-      max: 60.0
-      min: -60.0
+      max: float {ts-tilt_range-max}
+      min: float {ts-tilt_range-min}
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
-    tilting_scheme: min to max tilt
+    tilting_scheme: bidirectional, negative first
     total_flux: 150.0
   sources:
-  - parent_filters:
-      exclude:
-        run:
-        - ^cwl2011-08-13-8$
-    source_glob:
+  - source_glob:
       list_glob: '{run_name}/rawdata/*'
       match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:

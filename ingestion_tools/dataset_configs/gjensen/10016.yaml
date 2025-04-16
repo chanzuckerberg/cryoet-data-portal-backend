@@ -3,7 +3,7 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -68,17 +68,24 @@ depositions:
   - literal:
       value:
       - 10014
+frames:
+- metadata:
+    dose_rate: 1.9565
+    is_gain_corrected: false
+  sources:
+  - literal:
+      value:
+      - default
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/3dimage_*/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
 runs:
 - sources:
   - source_glob:
       list_glob: '*'
-      match_regex: (pda2022-03-28-2|pda2022-03-28-3|pda2022-03-28-4|pda2022-03-28-5|pda2022-03-28-6|pda2022-03-28-7|pda2022-03-28-8|pda2022-03-28-9|pda2022-03-28-10|pda2022-03-28-11|pda2022-03-28-12|pda2022-03-28-13|pda2022-03-28-14|pda2022-03-28-15|pda2022-03-28-16|pda2022-03-28-17|pda2022-03-28-18|pda2022-03-28-19|pda2022-03-28-20|pda2022-03-28-21|pda2022-03-28-22|pda2022-03-28-23|pda2022-03-28-24|pda2022-03-28-25|pda2022-03-28-26|pda2022-03-28-27|pda2022-03-28-28|pda2022-03-28-29|pda2022-03-28-30|pda2022-03-28-31|pda2022-03-28-32|pda2022-03-28-33|pda2022-03-28-34|pda2022-03-28-35|pda2022-03-28-37|pda2022-03-28-38|pda2022-03-28-39|pda2022-03-28-40|pda2022-03-28-41|pda2022-03-28-42|pda2022-03-28-43|pda2022-03-28-44|pda2022-03-28-45|pda2022-03-28-46|pda2022-03-28-47|pda2022-03-28-48|pda2022-03-28-49|pda2022-03-28-50|pda2022-03-28-51|pda2022-03-28-52|pda2022-03-28-53|pda2022-03-28-54|pda2022-03-28-55|pda2022-03-28-56|pda2022-03-28-57|pda2022-03-28-58|pda2022-03-28-59|pda2022-03-28-60|pda2022-03-28-61|pda2022-03-28-62|pda2022-03-28-63|pda2022-03-28-64|pda2022-03-28-65|pda2022-03-28-66|pda2022-03-28-67|pda2022-03-28-68|pda2022-03-28-69|pda2022-03-28-70|pda2022-03-28-71|pda2022-03-28-72|pda2022-03-28-73|pda2022-03-28-74|pda2022-03-28-75|pda2022-03-28-76|pda2022-03-28-77|pda2022-03-28-78|pda2022-03-28-79|pda2022-03-28-80|pda2022-03-28-81|pda2022-03-28-83|pda2022-03-28-84|pda2022-03-28-85|pda2022-03-28-86|pda2022-03-28-87|pda2022-03-28-88|pda2022-03-28-89|pda2022-03-28-90|pda2022-03-28-91|pda2022-03-28-92|pda2022-03-28-93|pda2022-03-28-94|pda2022-03-28-95|pda2022-03-28-96|pda2022-03-28-97|pda2022-03-28-98|pda2022-03-28-99|pda2022-03-28-100|pda2022-03-28-101|pda2022-03-28-102|pda2022-03-28-103|pda2022-03-28-104|pda2022-03-28-105|pda2022-03-28-106|pda2022-03-28-107|pda2022-03-28-108|pda2022-03-28-109|pda2022-03-28-110|pda2022-03-28-111|pda2022-03-28-112|pda2022-03-28-113|pda2022-03-28-114|pda2022-03-28-115|pda2022-03-28-116|pda2022-03-28-117|pda2022-03-28-118|pda2022-03-28-119|pda2022-03-28-120|pda2022-03-28-121|pda2022-03-28-122|pda2022-03-28-123|pda2022-03-28-124|pda2022-03-28-125|pda2022-03-28-126|pda2022-03-28-127|pda2022-03-28-128|pda2022-03-28-129|pda2022-03-28-130|pda2022-03-28-131|pda2022-03-28-132|pda2022-03-28-133|pda2022-03-28-134|pda2022-03-28-135|pda2022-03-28-136|pda2022-03-28-137|pda2022-03-28-138|pda2022-03-28-139|pda2022-03-28-140|pda2022-03-28-141|pda2022-03-28-142|pda2022-03-28-143|pda2022-03-28-144|pda2022-03-28-145|pda2022-03-28-146|pda2022-03-28-147|pda2022-03-28-148|pda2022-03-28-149|pda2022-03-28-150|pda2022-03-28-151|pda2022-03-28-152|pda2022-03-28-153|pda2022-03-28-154|pda2022-03-28-155|pda2022-03-28-156|pda2022-03-28-157|pda2022-03-28-158|pda2022-03-28-159|pda2022-03-28-160|pda2022-03-28-161|pda2022-03-28-162|pda2022-03-28-163|pda2022-03-28-164|pda2022-03-28-165|pda2022-03-28-166|pda2022-03-28-167|pda2022-03-28-168|pda2022-03-28-169)$
+      match_regex: (pda2022-03-28-2|pda2022-03-28-3|pda2022-03-28-4|pda2022-03-28-5|pda2022-03-28-6|pda2022-03-28-7|pda2022-03-28-8|pda2022-03-28-9|pda2022-03-28-10|pda2022-03-28-11|pda2022-03-28-12|pda2022-03-28-13|pda2022-03-28-14|pda2022-03-28-15|pda2022-03-28-16|pda2022-03-28-17|pda2022-03-28-18|pda2022-03-28-19|pda2022-03-28-20|pda2022-03-28-21|pda2022-03-28-22|pda2022-03-28-23|pda2022-03-28-24|pda2022-03-28-25|pda2022-03-28-26|pda2022-03-28-27|pda2022-03-28-28|pda2022-03-28-29|pda2022-03-28-30|pda2022-03-28-31|pda2022-03-28-32|pda2022-03-28-33|pda2022-03-28-34|pda2022-03-28-35|pda2022-03-28-37|pda2022-03-28-38|pda2022-03-28-39|pda2022-03-28-40|pda2022-03-28-41|pda2022-03-28-42|pda2022-03-28-43|pda2022-03-28-44|pda2022-03-28-45|pda2022-03-28-46|pda2022-03-28-47|pda2022-03-28-48|pda2022-03-28-49|pda2022-03-28-50|pda2022-03-28-51|pda2022-03-28-52|pda2022-03-28-53|pda2022-03-28-54|pda2022-03-28-55|pda2022-03-28-56|pda2022-03-28-57|pda2022-03-28-58|pda2022-03-28-59|pda2022-03-28-60|pda2022-03-28-61|pda2022-03-28-62|pda2022-03-28-63|pda2022-03-28-64|pda2022-03-28-65|pda2022-03-28-66|pda2022-03-28-67|pda2022-03-28-68|pda2022-03-28-69|pda2022-03-28-70|pda2022-03-28-71|pda2022-03-28-72|pda2022-03-28-73|pda2022-03-28-74|pda2022-03-28-75|pda2022-03-28-76|pda2022-03-28-77|pda2022-03-28-78|pda2022-03-28-79|pda2022-03-28-80|pda2022-03-28-81|pda2022-03-28-83|pda2022-03-28-84|pda2022-03-28-85|pda2022-03-28-86|pda2022-03-28-87|pda2022-03-28-88|pda2022-03-28-89|pda2022-03-28-90|pda2022-03-28-91|pda2022-03-28-92|pda2022-03-28-93|pda2022-03-28-94|pda2022-03-28-95|pda2022-03-28-96|pda2022-03-28-97|pda2022-03-28-98|pda2022-03-28-99|pda2022-03-28-100|pda2022-03-28-101|pda2022-03-28-102|pda2022-03-28-103|pda2022-03-28-104|pda2022-03-28-105|pda2022-03-28-106|pda2022-03-28-107|pda2022-03-28-108|pda2022-03-28-109|pda2022-03-28-110|pda2022-03-28-111|pda2022-03-28-112|pda2022-03-28-113|pda2022-03-28-114|pda2022-03-28-115|pda2022-03-28-116|pda2022-03-28-117|pda2022-03-28-118|pda2022-03-28-119|pda2022-03-28-120|pda2022-03-28-121|pda2022-03-28-122|pda2022-03-28-123|pda2022-03-28-124|pda2022-03-28-125|pda2022-03-28-126|pda2022-03-28-127|pda2022-03-28-128|pda2022-03-28-129|pda2022-03-28-130|pda2022-03-28-131|pda2022-03-28-132|pda2022-03-28-133|pda2022-03-28-134|pda2022-03-28-135|pda2022-03-28-136|pda2022-03-28-137|pda2022-03-28-138|pda2022-03-28-139|pda2022-03-28-140|pda2022-03-28-141|pda2022-03-28-142|pda2022-03-28-143|pda2022-03-28-145|pda2022-03-28-146|pda2022-03-28-147|pda2022-03-28-148|pda2022-03-28-149|pda2022-03-28-150|pda2022-03-28-151|pda2022-03-28-152|pda2022-03-28-153|pda2022-03-28-154|pda2022-03-28-155|pda2022-03-28-156|pda2022-03-28-157|pda2022-03-28-158|pda2022-03-28-159|pda2022-03-28-160|pda2022-03-28-161|pda2022-03-28-162|pda2022-03-28-163|pda2022-03-28-164|pda2022-03-28-165|pda2022-03-28-166|pda2022-03-28-167|pda2022-03-28-168|pda2022-03-28-169)$
       name_regex: (.*)
 standardization_config:
   deposition_id: 10014
@@ -102,16 +109,16 @@ tiltseries:
       energy_filter: GIF
       image_corrector: null
       phase_plate: null
-    pixel_spacing: float {ts-pixel_spacing}
+    pixel_spacing: 1.687
     spherical_aberration_constant: 2.7
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 84.3
+    tilt_alignment_software: Warp
+    tilt_axis: 95.1
     tilt_range:
-      max: 45.0
-      min: -45.0
+      max: 44.0
+      min: -44.0
     tilt_series_quality: int {ts-tilt_series_quality}
-    tilt_step: 3.0
-    tilting_scheme: min to max tilt
+    tilt_step: 4.0
+    tilting_scheme: dose-symmetric
     total_flux: 50.0
   sources:
   - source_glob:
@@ -136,22 +143,22 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_software}'
+    align_software: Warp
     authors: *id001
     ctf_corrected: null
     dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
       x: 0
       y: 0
       z: 0
     processing: raw
-    processing_software: '{tomo-processing_software}'
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: '{tomo-reconstruction_software}'
+    processing_software: IMOD
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
+    voxel_spacing: 10.0
   sources:
   - source_glob:
       list_glob: '{run_name}/3dimage_*/*'
@@ -161,8 +168,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^pda2022-03-28-144$
+      - 10.0

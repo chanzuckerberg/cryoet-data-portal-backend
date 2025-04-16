@@ -1,9 +1,4 @@
 annotations: []
-collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/rawdata/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -63,8 +58,7 @@ rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/3dimage_*/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
 runs:
 - sources:
   - source_glob:

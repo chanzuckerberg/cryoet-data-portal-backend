@@ -3,7 +3,7 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -60,17 +60,24 @@ depositions:
   - literal:
       value:
       - 10023
+frames:
+- metadata:
+    dose_rate: 1.9672131147540983
+    is_gain_corrected: false
+  sources:
+  - literal:
+      value:
+      - default
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/3dimage_*/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
 runs:
 - sources:
   - source_glob:
       list_glob: '*'
-      match_regex: (mka2019-05-25-3|mka2019-05-25-4|mka2019-05-25-5|mka2019-05-25-6|mka2019-05-25-7|mka2019-05-25-9|mka2019-05-25-10|mka2019-05-25-11|mka2019-05-25-13|mka2019-05-25-14|mka2019-05-25-15|mka2019-05-25-17|mka2019-05-25-18|mka2019-05-25-19|mka2019-05-25-21|mka2019-05-25-22|mka2019-05-25-23|mka2019-05-25-24|mka2019-05-25-26|mka2019-05-25-27|mka2019-05-25-28|mka2019-05-25-29|mka2019-05-25-30|mka2019-05-25-31|mka2019-05-25-32|mka2019-05-25-33|mka2019-05-25-34|mka2019-05-25-35|mka2019-05-25-36|mka2019-05-25-37|mka2019-05-25-38|mka2019-05-25-39|mka2019-05-25-40|mka2019-05-25-41|mka2019-05-25-42|mka2019-05-25-43|mka2019-05-25-44|mka2019-05-25-45|mka2019-05-25-46)$
+      match_regex: (mka2019-05-25-3|mka2019-05-25-4|mka2019-05-25-5|mka2019-05-25-6|mka2019-05-25-7|mka2019-05-25-9|mka2019-05-25-10|mka2019-05-25-11|mka2019-05-25-13|mka2019-05-25-14|mka2019-05-25-15|mka2019-05-25-17|mka2019-05-25-18|mka2019-05-25-19|mka2019-05-25-21|mka2019-05-25-22|mka2019-05-25-23|mka2019-05-25-24|mka2019-05-25-26|mka2019-05-25-27|mka2019-05-25-28|mka2019-05-25-29|mka2019-05-25-30|mka2019-05-25-31|mka2019-05-25-32|mka2019-05-25-33|mka2019-05-25-34|mka2019-05-25-35|mka2019-05-25-36|mka2019-05-25-37|mka2019-05-25-38|mka2019-05-25-39|mka2019-05-25-40|mka2019-05-25-41|mka2019-05-25-43|mka2019-05-25-44|mka2019-05-25-45|mka2019-05-25-46)$
       name_regex: (.*)
 standardization_config:
   deposition_id: 10023
@@ -97,9 +104,9 @@ tiltseries:
     pixel_spacing: 4.494
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 84.3
+    tilt_axis: 84.1
     tilt_range:
-      max: 60.0
+      max: float {ts-tilt_range-max}
       min: -60.0
     tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 2.0
@@ -158,4 +165,3 @@ voxel_spacings:
       exclude:
         run:
         - ^mka2019-05-25-29$
-        - ^mka2019-05-25-42$

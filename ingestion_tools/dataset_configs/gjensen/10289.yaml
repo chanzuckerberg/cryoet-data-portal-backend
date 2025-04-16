@@ -3,7 +3,7 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -56,12 +56,19 @@ depositions:
   - literal:
       value:
       - 10043
+frames:
+- metadata:
+    dose_rate: 1.2295081967213115
+    is_gain_corrected: false
+  sources:
+  - literal:
+      value:
+      - default
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
 runs:
 - sources:
   - source_glob:
@@ -70,6 +77,7 @@ runs:
       name_regex: (.*)
 standardization_config:
   deposition_id: 10043
+  run_data_map_file: run_data_map/10289.csv
   run_to_frame_map_csv: run_frames_map/10289.csv
   run_to_tomo_map_csv: run_tomo_map/10289.csv
   source_prefix: GJensen_full
@@ -94,11 +102,11 @@ tiltseries:
     pixel_spacing: 7.74
     spherical_aberration_constant: 2.0
     tilt_alignment_software: RAPTOR
-    tilt_axis: 0.0
+    tilt_axis: 11.4
     tilt_range:
       max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
+      min: float {ts-tilt_range-min}
+    tilt_series_quality: int {ts-tilt_series_quality}
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
     total_flux: 150.0
