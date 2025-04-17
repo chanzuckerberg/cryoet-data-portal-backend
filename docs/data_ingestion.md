@@ -15,7 +15,38 @@ The data ingestion process involves transforming input data from various sources
 8. Update the database in the production environment.
 
 
-<img width="1500" alt="CryoET Architecture Diagram V1 0" src="./CryoET_Backend_Workflow.png">
+```mermaid
+---
+title: Cryoet Data Ingestion Pipeline
+---
+
+flowchart LR
+    subgraph env:local
+        direction TB
+        B1[Create ingestion config files] --> B2[Validate config files]
+
+    end
+    style env:local fill:#ffffcc
+
+    subgraph env:staging
+        direction TB
+        C1[Validate source data] --> C2[Ingest data to S3 bucket] --> C3[Validate standardized ingested data] --> C4[Ingest data to the staging database]
+
+    end
+    style env:staging fill:#ccccff
+
+    subgraph env:prod
+        direction TB
+        D1[Promote data to prod bucket] --> D2[Ingest to prod database]
+    end
+    style env:prod fill:#ccffcc
+
+    A[Fetch data from data generator] --> env:local
+    env:local --> env:staging
+    env:staging --> env:prod
+
+```
+
 
 
 ## Fetching Source Data
