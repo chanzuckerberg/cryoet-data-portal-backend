@@ -24,8 +24,7 @@ flowchart LR
     subgraph env:local
         direction TB
         B1[Create ingestion config files] --> B2[Validate config files]
-        click B1 "/ingestion_tools/docs/dataset_configs_intellisense.md" "Creating ingestion config files"
-        click B2 "/schema/readme.md" "Ingestion config schema"
+
     end
     style env:local fill:#ffffcc
 
