@@ -31,10 +31,6 @@ flowchart LR
     subgraph env:staging
         direction TB
         C1[Validate source data] --> C2[Ingest data to S3 bucket] --> C3[Validate standardized ingested data] --> C4[Ingest data to the staging database]
-        click C1 "/ingestion_tools/scripts/data_validation/source/readme.md" "Source data validation"
-        click C2 "/ingestion_tools/docs/running_data_ingestion.md#running-the-s3-ingestion" "S3 ingestion"
-        click C3 "/ingestion_tools/scripts/data_validation/standardized/readme.md" "Standardized data validation"
-        click C4 "/ingestion_tools/docs/running_data_ingestion.md#running-the-db-ingestion" "DB ingestion"
 
     end
     style env:staging fill:#ccccff
