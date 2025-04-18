@@ -61,7 +61,7 @@ classes:
         description: Metadata for the collection.
         range: CollectionMetadataEntity
         multivalued: true
-      ctf:
+      ctfs:
         description: CTF for the dataset.
         multivalued: true
         range: CtfEntity
