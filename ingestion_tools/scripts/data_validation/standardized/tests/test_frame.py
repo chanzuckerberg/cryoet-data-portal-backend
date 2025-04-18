@@ -18,7 +18,7 @@ class TestFrame(FrameTestHelper):
         if frame_metadata.get("is_gain_corrected") is False: # todo is none considered false?
             assert len(gain_headers) > 0
 
-    @allure.title("max(acquisitionOrder) < number of frames")
+    @allure.title("max(acquisitionOrder) <= number of frames -1")
     def test_max_acquisition_order(self, frame_metadata: Dict):
         acquisition_order_max = max(f.get("acquisition_order", 0) for f in frame_metadata["frames"])
         assert acquisition_order_max < len(frame_metadata["frames"])

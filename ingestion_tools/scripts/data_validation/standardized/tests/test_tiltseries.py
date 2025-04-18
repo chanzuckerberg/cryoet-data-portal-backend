@@ -1,8 +1,9 @@
 import math
 import os
-from typing import Dict
+from typing import Any, Dict
 
 import allure
+import numpy as np
 import pandas as pd
 import pytest
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
@@ -130,3 +131,80 @@ class TestTiltseries(TiltSeriesHelper):
     @allure.title("Tiltseries: sum of exposureDose of all frames associated with a tilt series == totalFlux of tilt series")
     def test_exposure_dose(self, frame_metadata: Dict, tiltseries_metadata: Dict):
         assert sum(f.get("exposure_dose", 0) for f in frame_metadata["frames"]) == tiltseries_metadata["total_flux"]
+
+
+    @allure.title("Tiltseries: tilt axis angle in mdoc file matches that in tilt series metadata (+/- 10 deg).")
+    def test_tilt_axis_angle(self, mdoc_tilt_axis_angle: float, tiltseries_metadata: dict[str, Any]):
+        metadata_tilt_axis = tiltseries_metadata["tilt_axis"]
+        assert (abs(
+            metadata_tilt_axis - mdoc_tilt_axis_angle) <= 10
+        ), f"Tilt axis angle mismatch: MDOC: {mdoc_tilt_axis_angle} vs Metadata: {metadata_tilt_axis}"
+
+    @allure.title("PerSectionParameters: number of frames >= # of per section parameters.")
+    def test_persion_section_parameter_with_num_frames(self, tiltseries_metadata: dict[str, Any], frame_metadata: dict[str, dict]):
+        num_frames = len(frame_metadata["frames"])
+        num_per_section_parameters = len(tiltseries_metadata["per_section_parameter"])
+        assert num_frames >= num_per_section_parameters, f"Number of frames {num_frames} is less than number of per section parameters {num_per_section_parameters}."
+
+    @allure.title("PerSectionParameters: -180 <= astigmatic_angle <= 180.")
+    def test_astigmatic_angle(self, tiltseries_metadata: dict[str, Any]):
+        errors = []
+        for i, per_section_parameter in enumerate(tiltseries_metadata["per_section_parameter"]):
+            astigmatic_angle = per_section_parameter["astigmatic_angle"]
+            if astigmatic_angle is None:
+                continue
+            try:
+                assert -180 <= astigmatic_angle <= 180
+            except AssertionError:
+                errors.append(f"per_section_parameter[{i}].astigmatic_angle= {astigmatic_angle} is out of range [-180, 180].")
+        assert len(errors) == 0, "\n".join(errors)
+
+    @allure.title("PerSectionParameters: 0 <= phaseShift <= 2*pi.")
+    def test_phase_shift(self, tiltseries_metadata: dict[str, Any]):
+        errors = []
+        for i, per_section_parameter in enumerate(tiltseries_metadata["per_section_parameter"]):
+            phase_shift = per_section_parameter["phase_shift"]
+            if phase_shift is None:
+                continue
+            try:
+                assert 0 <= phase_shift <= 2 * np.pi
+            except AssertionError:
+                errors.append(f"per_section_parameter[{i}].phase_shift= {phase_shift} is out of range [0, 2*pi].")
+        assert len(errors) == 0, "\n".join(errors)
+
+    @allure.title("PerSectionParameters: maxResolution > 0.")
+    def test_max_resolution(self, tiltseries_metadata: dict[str, Any]):
+        errors = []
+        for i, per_section_parameter in enumerate(tiltseries_metadata["per_section_parameter"]):
+            max_resolution = per_section_parameter["max_resolution"]
+            if max_resolution is None:
+                continue
+            try:
+                assert max_resolution > 0
+            except AssertionError:
+                errors.append(f"per_section_parameter[{i}].max_resolution= {max_resolution} is not greater than 0.")
+        assert len(errors) == 0, "\n".join(errors)
+
+    @allure.title("PerSectionParameters: rawAngle matches mdoc TiltAngle (+-10^-3 deg).")
+    def test_raw_angle(self, tiltseries_metadata: dict[str, Any], mdoc_data: pd.DataFrame):
+        errors = []
+        for i, per_section_parameter in enumerate(tiltseries_metadata["per_section_parameter"]):
+            mdoc_tilt_axis_angle = mdoc_data["TiltAngle"].iloc[i]
+            raw_angle = per_section_parameter["raw_angle"]
+            try:
+                assert abs(mdoc_tilt_axis_angle - raw_angle) <= 10**-3
+            except AssertionError:
+                errors.append(f"per_section_parameter[{i}].raw_angle= {raw_angle} does not match mdoc angle {mdoc_tilt_axis_angle}.")
+        if errors:
+            raise AssertionError("\n".join(errors))
+
+    @allure.title("PerSectionParameters: 0 <= zIndex <= (z-Dimension of tilt series - 1).")
+    def test_z_index(self, tiltseries_metadata: dict[str, Any]):
+        errors = []
+        for i, per_section_parameter in enumerate(tiltseries_metadata["per_section_parameter"]):
+            z_index = per_section_parameter["z_index"]
+            try:
+                assert 0 <= z_index <= (tiltseries_metadata["size"]["z"] - 1)
+            except AssertionError:
+                errors.append(f"per_section_parameter[{i}].z_index= {z_index} is out of range [0, {tiltseries_metadata['size']['z'] - 1}].")
+        assert len(errors) == 0, "\n".join(errors)
