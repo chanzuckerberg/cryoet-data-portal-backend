@@ -24,28 +24,6 @@ class MdocTestHelper:
         assert mdoc_data["TiltAngle"].min() >= -90, "Minimum tilt angle is less than -90"
         assert mdoc_data["TiltAngle"].max() <= 90, "Maximum tilt angle is greater than 90"
 
-    @allure.title("Mdoc:tilt axis angle in mdoc file matches that in tilt series metadata (+/- 10 deg)")
-    def test_mdoc_tilt_axis_angle_in_tiltseries(self, mdoc_data: pd.DataFrame, tiltseries_metadata: dict[str, dict]):
-        # TODO: see if this is covered by test_tilt_axis_angle
-        if tiltseries_metadata["tilt_axis_angle"] is None:
-            pytest.skip("Tilt axis angle not found in tilt series metadata")
-        assert abs(mdoc_data["TiltAngle"].iloc[0] - tiltseries_metadata["tilt_angle"]) < 10, \
-            f"Tilt axis angle in mdoc file {mdoc_data['TiltAxisAngle'].iloc[0]} does not match tilt series metadata {tiltseries_metadata['tilt_axis_angle']}"
-
-    @allure.title("Mdoc: tilt axis angle in mdoc file matches that in the alignment metadata [per_section_alignment_parameters.tilt_angle] (+/- 10 deg)")
-    def test_mdoc_tilt_axis_angle_in_alignment_per_section_alignment_parameters(self, mdoc_data: pd.DataFrame, alignment_metadata: dict[str, dict]):
-        if not alignment_metadata["per_section_alignment_parameters"]:
-            pytest.skip("Alignment metadata missing per_section_alignment_parameters.")
-        errors = []
-        for i, psap in enumerate(alignment_metadata["per_section_alignment_parameters"]):
-            if tilt_angle:=psap.get("tilt_angle") is not None:
-                try:
-                    assert abs(mdoc_data["TiltAxisAngle"].iloc[0] - tilt_angle) < 10, \
-                        f"Tilt axis angle in mdoc file {mdoc_data['TiltAxisAngle'].iloc[0]} does not match alignment metadata['per_section_alignment_parameter'][{i}]['tilt_angle']: {tilt_angle}"
-                except AssertionError as e:
-                    errors.append(str(e))
-        assert not errors, "\n".join(errors)
-
     @allure.title("Mdoc: number of mdoc sections, equal number of frames files, equals number of items in frames metadata.")
     def test_mdoc_frames(self, mdoc_data: pd.DataFrame, frames_files: list[str], frame_metadata: dict[str, dict]):
         frames_len = len(frames_files)

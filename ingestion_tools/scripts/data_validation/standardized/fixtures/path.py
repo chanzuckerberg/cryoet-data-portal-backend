@@ -84,7 +84,7 @@ def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/Frames/*"""
     files = filesystem.glob(f"{frames_dir}/*")
     # Exclude mdoc files, add s3 prefix
-    refined_files = ["s3://" + file for file in files if ".mdoc" not in file]
+    refined_files = ["s3://" + file for file in files if ".mdoc" not in file and ".json" not in file]
     # mdoc files are in the folder, but just no frames
     if len(refined_files) == 0 and len(files) != 0:
         pytest.skip(f"No frame files in frames directory: {frames_dir}")

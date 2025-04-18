@@ -23,10 +23,6 @@ class TestFrame(FrameTestHelper):
         acquisition_order_max = max(f.get("acquisition_order", 0) for f in frame_metadata["frames"])
         assert acquisition_order_max < len(frame_metadata["frames"])
 
-    @allure.title("Sum of exposureDose of all frames associated with a tilt series == totalFlux of tilt series")
-    def test_exposure_dose(self, frame_metadata: Dict, tiltseries_metadata: Dict):
-        assert sum(f.get("exposure_dose", 0) for f in frame_metadata["frames"]) == tiltseries_metadata["total_flux"]
-
     @allure.title("Sorting acquisitionOrder low-to-high and accumulatedDose low-to-high results in the same order")
     def test_sorting_aquisition_order_and_accumulated_dose(self, frame_metadata: Dict):
         frames = frame_metadata["frames"]

@@ -34,11 +34,11 @@ class TiltSeriesHelper(HelperTestMRCZarrHeader):
                 return float(result[1])
         pytest.fail("No Tilt axis angle found")
 
-    @allure.title("Tiltseries: tilt axis angle is consistent with mdoc file.")
-    def test_tilt_axis_angle(self, mdoc_tilt_axis_angle: float, tiltseries_metadata: dict):
-        metadata_tilt_axis = tiltseries_metadata.get("tilt_axis")
-        assert (
-            metadata_tilt_axis - 10 <= mdoc_tilt_axis_angle <= metadata_tilt_axis + 10
+    @allure.title("Tiltseries: tilt axis angle in mdoc file matches that in tilt series metadata (+/- 10 deg).")
+    def test_tilt_axis_angle(self, mdoc_tilt_axis_angle: float, tiltseries_metadata: dict[str, Any]):
+        metadata_tilt_axis = tiltseries_metadata["tilt_axis"]
+        assert (abs(
+            metadata_tilt_axis - mdoc_tilt_axis_angle) <= 10
         ), f"Tilt axis angle mismatch: MDOC: {mdoc_tilt_axis_angle} vs Metadata: {metadata_tilt_axis}"
 
     @allure.title("PerSectionParameters: number of frames >= # of per section parameters.")
