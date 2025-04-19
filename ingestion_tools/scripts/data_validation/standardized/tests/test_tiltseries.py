@@ -128,7 +128,7 @@ class TestTiltseries(TiltSeriesHelper):
 
     ### END metadata-mdoc consistency tests ###
 
-    @allure.title("Tiltseries: sum of exposureDose of all frames associated with a tilt series == totalFlux of tilt series")
+    @allure.title("Tiltseries: sum of exposureDose of all frames associated with a tilt series == totalFlux +-1 of tilt series")
     def test_exposure_dose(self, frame_metadata: Dict, tiltseries_metadata: Dict):
         assert sum(f.get("exposure_dose", 0) for f in frame_metadata["frames"]) == pytest.approx(["total_flux"], rel=1)
 
