@@ -1,5 +1,7 @@
 import re
+from typing import Any
 
+import allure
 import numpy as np
 import pandas as pd
 import pytest
@@ -31,3 +33,10 @@ class TiltSeriesHelper(HelperTestMRCZarrHeader):
             if result := re.match(TILT_AXIS_ANGLE_REGEX, title.lower()):
                 return float(result[1])
         pytest.fail("No Tilt axis angle found")
+
+    @allure.title("Tiltseries: tilt axis angle in mdoc file matches that in tilt series metadata (+/- 10 deg).")
+    def test_tilt_axis_angle(self, mdoc_tilt_axis_angle: float, tiltseries_metadata: dict[str, Any]):
+        metadata_tilt_axis = tiltseries_metadata["tilt_axis"]
+        assert (abs(
+            metadata_tilt_axis - mdoc_tilt_axis_angle) <= 10
+        ), f"Tilt axis angle mismatch: MDOC: {mdoc_tilt_axis_angle} vs Metadata: {metadata_tilt_axis}"

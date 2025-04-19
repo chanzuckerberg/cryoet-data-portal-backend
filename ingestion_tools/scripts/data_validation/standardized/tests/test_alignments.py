@@ -52,7 +52,8 @@ class TestAlignments:
             "tilt file",
             "raw tilt file",
         )
-        assert len(errors) == 0, "\n".join(errors)
+        if len(errors) > 0:
+            raise AssertionError("\n".join(errors))
 
     @allure.title("Alignment: every tilt angle maps to a mdoc tilt angle.")
     def test_tilt_mdoc(self, alignment_tilt: pd.DataFrame, mdoc_data: pd.DataFrame):
@@ -62,7 +63,8 @@ class TestAlignments:
             "tilt file",
             "mdoc file",
         )
-        assert len(errors) == 0, "\n".join(errors)
+        if len(errors) > 0:
+            raise AssertionError("\n".join(errors))
 
     @allure.title(
         "Raw tilt: number of raw tilt angles are must be equal to tiltseries size['z'] (implied to be the number of frames files).",

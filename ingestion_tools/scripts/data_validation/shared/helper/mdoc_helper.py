@@ -71,7 +71,8 @@ class MdocTestHelper:
         if frames_with_missing_mdoc:
             errors.append(f"Frames files do not have mdoc entries: {frames_with_missing_mdoc}")
 
-        assert len(errors) == 0, "\n".join(errors)
+        if len(errors) > 0:
+            raise AssertionError("\n".join(errors))
 
     @allure.title("Mdoc: number of subframes in mdoc matches the number of subframes in the frame file.")
     def test_mdoc_numsubframes(
