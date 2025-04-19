@@ -52,7 +52,8 @@ class TestAlignments:
             "tilt file",
             "raw tilt file",
         )
-        assert len(errors) == 0, "\n".join(errors)
+        if len(errors) > 0:
+            raise AssertionError("\n".join(errors))
 
     @allure.title("Alignment: every tilt angle maps to a mdoc tilt angle.")
     def test_tilt_mdoc(self, alignment_tilt: pd.DataFrame, mdoc_data: pd.DataFrame):
@@ -62,7 +63,8 @@ class TestAlignments:
             "tilt file",
             "mdoc file",
         )
-        assert len(errors) == 0, "\n".join(errors)
+        if len(errors) > 0:
+            raise AssertionError("\n".join(errors))
 
     @allure.title(
         "Raw tilt: number of raw tilt angles are must be equal to tiltseries size['z'] (implied to be the number of frames files).",
@@ -80,7 +82,7 @@ class TestAlignments:
     ):
         errors = helper_angles_injection_errors(
             alignment_tilt["TiltAngle"].to_list(),
-            alignment_tiltseries_metadata_range,
+            alignment_tiltseries_metadata_range.copy(),
             "tilt file",
             "tiltseries metadata tilt_range",
         )
@@ -88,5 +90,20 @@ class TestAlignments:
             "\n".join(errors)
             + f"\nRange: {alignment_tiltseries_metadata['tilt_range']['min']} to {alignment_tiltseries_metadata['tilt_range']['max']}, with step {alignment_tiltseries_metadata['tilt_step']}"
         )
+
+    @allure.title("Alignment: tilt axis angle in mdoc file matches that in the alignment metadata [per_section_alignment_parameters.in_plane_rotation] (+/- 10 deg)")
+    def test_mdoc_tilt_axis_angle_in_alignment_per_section_alignment_parameters(self, mdoc_data: pd.DataFrame, alignment_tiltseries_metadata: dict[str, dict]):
+        per_section_alignment_parameters = alignment_tiltseries_metadata.get("per_section_alignment_parameters")
+        if not per_section_alignment_parameters:
+            pytest.skip("Alignment metadata missing per_section_alignment_parameters.")
+        errors = []
+        for i, psap in enumerate(per_section_alignment_parameters):
+            if in_plane_rotation:=psap.get("in_plane_rotation") is not None:
+                try:
+                    assert abs(mdoc_data["TiltAxisAngle"].iloc[0] - in_plane_rotation) < 10, \
+                        f"Tilt axis angle in mdoc file {mdoc_data['TiltAxisAngle'].iloc[0]} does not match alignment metadata['per_section_alignment_parameter'][{i}]['tilt_angle']: {in_plane_rotation}"
+                except AssertionError as e:
+                    errors.append(str(e))
+        assert not errors, "\n".join(errors)
 
     ### END Tiltseries consistency tests ###
