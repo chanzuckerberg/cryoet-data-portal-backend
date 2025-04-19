@@ -21,7 +21,7 @@ class TestFrame(FrameTestHelper):
     @allure.title("max(acquisitionOrder) <= number of frames -1")
     def test_max_acquisition_order(self, frame_metadata: Dict):
         acquisition_order_max = max(f.get("acquisition_order", 0) for f in frame_metadata["frames"])
-        assert acquisition_order_max < len(frame_metadata["frames"])
+        assert acquisition_order_max <= len(frame_metadata["frames"]) -1
 
     @allure.title("Sorting acquisitionOrder low-to-high and accumulatedDose low-to-high results in the same order")
     def test_sorting_aquisition_order_and_accumulated_dose(self, frame_metadata: Dict):
