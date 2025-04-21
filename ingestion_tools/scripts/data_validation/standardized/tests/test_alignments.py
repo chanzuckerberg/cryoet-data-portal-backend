@@ -82,7 +82,7 @@ class TestAlignments:
     ):
         errors = helper_angles_injection_errors(
             alignment_tilt["TiltAngle"].to_list(),
-            alignment_tiltseries_metadata_range.copy(),
+            alignment_tiltseries_metadata_range,
             "tilt file",
             "tiltseries metadata tilt_range",
         )

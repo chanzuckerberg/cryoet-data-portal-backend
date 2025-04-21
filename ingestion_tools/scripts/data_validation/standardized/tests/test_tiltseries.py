@@ -116,7 +116,7 @@ class TestTiltseries(TiltSeriesHelper):
     ):
         errors = helper_angles_injection_errors(
             mdoc_data["TiltAngle"].to_list(),
-            tiltseries_metadata_range.copy(),
+            tiltseries_metadata_range,
             "mdoc file",
             "tiltseries metadata tilt_range",
         )
