@@ -130,10 +130,10 @@ class TestTiltseries(TiltSeriesHelper):
 
     @allure.title("Tiltseries: sum of exposureDose of all frames associated with a tilt series == totalFlux +-1 of tilt series")
     def test_exposure_dose(self, frame_metadata: Dict, tiltseries_metadata: Dict):
-        assert sum(f.get("exposure_dose", 0) for f in frame_metadata["frames"]) == pytest.approx(tiltseries_metadata["total_flux"], rel=1)
+        assert sum(f.get("exposure_dose", 0) for f in frame_metadata["frames"]) == pytest.approx(tiltseries_metadata["total_flux"], abs=1)
 
     @allure.title("PerSectionParameters: number of frames >= # of per section parameters.")
-    def test_persion_section_parameter_with_num_frames(self, tiltseries_metadata: dict[str, Any], frame_metadata: dict[str, dict]):
+    def test_per_section_parameter_with_num_frames(self, tiltseries_metadata: dict[str, Any], frame_metadata: dict[str, dict]):
         num_frames = len(frame_metadata["frames"])
         num_per_section_parameters = len(tiltseries_metadata["per_section_parameter"])
         assert num_frames >= num_per_section_parameters, f"Number of frames {num_frames} is less than number of per section parameters {num_per_section_parameters}."

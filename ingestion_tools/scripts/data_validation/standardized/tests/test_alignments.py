@@ -98,7 +98,7 @@ class TestAlignments:
             pytest.skip("Alignment metadata missing per_section_alignment_parameters.")
         errors = []
         for i, psap in enumerate(per_section_alignment_parameters):
-            if in_plane_rotation:=psap.get("in_plane_rotation") is not None:
+            if (in_plane_rotation := psap.get("in_plane_rotation")) is not None:
                 try:
                     assert abs(mdoc_data["TiltAxisAngle"].iloc[0] - in_plane_rotation) < 10, \
                         f"Tilt axis angle in mdoc file {mdoc_data['TiltAxisAngle'].iloc[0]} does not match alignment metadata['per_section_alignment_parameter'][{i}]['tilt_angle']: {in_plane_rotation}"

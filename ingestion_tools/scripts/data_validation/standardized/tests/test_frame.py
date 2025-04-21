@@ -24,8 +24,8 @@ class TestFrame(FrameTestHelper):
         assert acquisition_order_max <= len(frame_metadata["frames"]) -1
 
     @allure.title("Frames: Sorting acquisitionOrder low-to-high and accumulatedDose low-to-high results in the same order")
-    def test_sorting_aquisition_order_and_accumulated_dose(self, frame_metadata: Dict):
+    def test_sorting_acquisition_order_and_accumulated_dose(self, frame_metadata: Dict):
         frames = frame_metadata["frames"]
-        frames_sorted_by_aquisition_order = sorted(frames, key=lambda f: (f["acquisition_order"]))
+        frames_sorted_by_acquisition_order = sorted(frames, key=lambda f: (f["acquisition_order"]))
         frames_sorted_by_accumulated_dose = sorted(frames, key=lambda f: (f["accumulated_dose"]))
-        assert frames_sorted_by_aquisition_order == frames_sorted_by_accumulated_dose
+        assert frames_sorted_by_acquisition_order == frames_sorted_by_accumulated_dose
