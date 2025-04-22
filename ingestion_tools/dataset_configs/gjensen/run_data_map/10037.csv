@@ -1,5 +1,5 @@
-run_name,frame_dose_rate,tilt_series_max_angle,tilt_series_min_angle,tilt_series_quality_score,tilt_series_total_flux,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-total_flux
-wnj2018-04-18-1,1.3884297520661157,50.0,-70.0,4.0,168.0,12.656,6.328,50.0,-70.0,4,168.0
-wnj2018-04-18-2,1.3884297520661157,50.0,-70.0,4.0,168.0,12.656,6.328,50.0,-70.0,4,168.0
-wnj2018-04-18-3,1.3884297520661157,45.0,-70.0,3.0,168.0,12.656,6.328,45.0,-70.0,3,168.0
-wnj2018-04-19-4,1.4462809917355373,50.0,-50.0,4.0,175.0,9.138,4.569,50.0,-50.0,4,175.0
+run_name,tomo-voxel_spacing,ts-pixel_spacing,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-total_flux
+wnj2018-04-18-1,12.656,6.328,50.0,-70.0,4,168.0
+wnj2018-04-18-2,12.656,6.328,50.0,-70.0,4,168.0
+wnj2018-04-18-3,12.656,6.328,45.0,-70.0,3,168.0
+wnj2018-04-19-4,9.138,4.569,50.0,-50.0,4,175.0

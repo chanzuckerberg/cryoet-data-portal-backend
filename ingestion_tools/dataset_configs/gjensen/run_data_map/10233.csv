@@ -1,6 +1,6 @@
-run_name,tilt_series_min_angle,tilt_series_quality_score,ts-tilt_range-min,ts-tilt_series_quality
-mba2010-03-04-1,-64.5,4.0,-64.5,4
-mba2010-03-04-4,-64.5,4.0,-64.5,4
-mba2010-03-04-2,-58.5,3.0,-58.5,3
-mba2010-03-04-3,-51.0,3.0,-51.0,3
-mba2010-03-04-5,-57.0,3.0,-57.0,3
+run_name,ts-tilt_range-min,ts-tilt_series_quality
+mba2010-03-04-1,-64.5,4
+mba2010-03-04-4,-64.5,4
+mba2010-03-04-2,-58.5,3
+mba2010-03-04-3,-51.0,3
+mba2010-03-04-5,-57.0,3

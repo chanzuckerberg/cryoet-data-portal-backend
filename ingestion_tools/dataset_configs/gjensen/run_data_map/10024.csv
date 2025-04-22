@@ -1,6 +1,6 @@
-run_name,frame_dose_rate,tilt_series_max_angle,tilt_series_min_angle,tilt_series_quality_score,tilt_series_tilt_step,tilt_series_total_flux,tomo-voxel_spacing,ts-microscope-model,ts-pixel_spacing,ts-spherical_aberration_constant,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step,ts-total_flux
-wnj2019-02-21-1,0.10524590163934426,58.0,-60.0,3.0,2.0,6.42,45.44,0,22.72,2.2,58.0,-60.0,3,2.0,6.42
-wnj2019-02-21-2,0.9508196721311475,-2.0,-50.0,2.0,1.0,58.0,21.64,Krios,5.41,2.7,-2.0,-50.0,2,1.0,58.0
-wnj2019-02-21-3,0.9508196721311475,60.0,-50.0,4.0,2.0,58.0,21.64,Krios,5.41,2.7,60.0,-50.0,4,2.0,58.0
-wnj2019-02-21-7,0.9508196721311475,2.0,-50.0,4.0,1.0,58.0,21.64,Krios,5.41,2.7,2.0,-50.0,4,1.0,58.0
-wnj2019-02-21-8,0.9508196721311475,60.0,-50.0,4.0,2.0,58.0,21.64,Krios,5.41,2.7,60.0,-50.0,4,2.0,58.0
+run_name,tomo-voxel_spacing,ts-microscope-model,ts-pixel_spacing,ts-spherical_aberration_constant,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step,ts-total_flux
+wnj2019-02-21-1,45.44,0,22.72,2.2,58.0,-60.0,3,2.0,6.42
+wnj2019-02-21-2,21.64,Krios,5.41,2.7,-2.0,-50.0,2,1.0,58.0
+wnj2019-02-21-3,21.64,Krios,5.41,2.7,60.0,-50.0,4,2.0,58.0
+wnj2019-02-21-8,21.64,Krios,5.41,2.7,60.0,-50.0,4,2.0,58.0
+wnj2019-02-21-7,21.64,Krios,5.41,2.7,2.0,-50.0,4,1.0,58.0

@@ -1,42 +1,42 @@
-run_name,frame_dose_rate,tilt_series_max_angle,tilt_series_min_angle,tilt_series_tilt_step,tilt_series_total_flux,ts-data_acquisition_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_step,ts-tilting_scheme,ts-total_flux
-ycw2014-02-14-1,1.6942148760330578,60.0,-60.0,1.0,205.0,UCSFTomo,60.0,-60.0,1.0,starting tilt to max then min,205.0
-ycw2014-02-14-2,1.6942148760330578,60.0,-60.0,1.0,205.0,UCSFTomo,60.0,-60.0,1.0,starting tilt to max then min,205.0
-ycw2014-02-14-3,1.6942148760330578,60.0,-60.0,1.0,205.0,UCSFTomo,60.0,-60.0,1.0,starting tilt to max then min,205.0
-ycw2014-03-31-1,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-2,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-4,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-5,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-6,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-7,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-8,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-9,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-10,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-11,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-12,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-13,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-14,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-15,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-16,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-17,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-18,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-19,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-20,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-21,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-22,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-23,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-24,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-25,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-26,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-27,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-28,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-29,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-30,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-31,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-32,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-33,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-34,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-35,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-36,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-37,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-38,1.4942528735632183,64.5,-64.5,1.5,130.0,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
-ycw2014-03-31-3,1.5267175572519085,65.0,-65.0,1.0,200.0,Undefined,65.0,-65.0,1.0,min to max tilt,200.0
+run_name,ts-data_acquisition_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_step,ts-tilting_scheme,ts-total_flux
+ycw2014-02-14-1,UCSFTomo,60.0,-60.0,1.0,starting tilt to max then min,205.0
+ycw2014-02-14-2,UCSFTomo,60.0,-60.0,1.0,starting tilt to max then min,205.0
+ycw2014-02-14-3,UCSFTomo,60.0,-60.0,1.0,starting tilt to max then min,205.0
+ycw2014-03-31-1,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-2,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-4,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-5,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-6,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-7,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-8,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-9,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-10,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-11,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-12,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-13,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-14,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-15,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-16,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-17,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-18,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-19,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-20,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-21,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-22,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-23,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-24,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-25,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-26,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-27,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-28,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-29,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-30,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-31,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-32,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-33,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-34,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-35,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-36,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-37,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-38,Undefined,64.5,-64.5,1.5,min to max tilt,130.0
+ycw2014-03-31-3,Undefined,65.0,-65.0,1.0,min to max tilt,200.0

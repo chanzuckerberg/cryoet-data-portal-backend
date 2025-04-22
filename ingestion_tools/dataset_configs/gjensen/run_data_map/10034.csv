@@ -1,7 +1,7 @@
-run_name,tilt_series_max_angle,tilt_series_quality_score,ts-tilt_range-max,ts-tilt_series_quality
-wnj2018-10-04-1,50.0,4.0,50.0,4
-wnj2018-10-04-2,50.0,4.0,50.0,4
-wnj2018-10-04-5,50.0,4.0,50.0,4
-wnj2018-10-04-7,50.0,4.0,50.0,4
-wnj2018-10-04-8,50.0,4.0,50.0,4
-wnj2018-10-04-9,43.0,3.0,43.0,3
+run_name,ts-tilt_range-max,ts-tilt_series_quality
+wnj2018-10-04-1,50.0,4
+wnj2018-10-04-2,50.0,4
+wnj2018-10-04-5,50.0,4
+wnj2018-10-04-7,50.0,4
+wnj2018-10-04-8,50.0,4
+wnj2018-10-04-9,43.0,3

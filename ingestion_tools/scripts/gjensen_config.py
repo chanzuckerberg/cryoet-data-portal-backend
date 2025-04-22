@@ -238,6 +238,7 @@ float_fields = {
     "ts-tilt_range-min",
     "ts-tilt_range-max",
     "ts-total_flux",
+    "frame_dose_rate",
 }
 
 
@@ -675,17 +676,15 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
 
 def handle_per_run_param_maps(
     data: dict[str, Any],
-    run_data_map: dict,
     per_run_mapping: dict[str, dict[str, float]] | dict[str, dict[str, str]],
-) -> tuple[dict[str, str | float | None], dict]:
+) -> dict[str, str | float | None]:
     """
     Handle per-run parameter mappings. The function finds distinct values for each parameter in the per_run_mapping
     and either passes a single value (if only one distinct value is found) or creates a formatted string for the field
     and appends the values to the run_data_map.
     :param data: The data for the dataset
-    :param run_data_map: The run data map to store the per-run values
     :param per_run_mapping: The mapping of parameter to run name to value param_name -> {run_name -> value}
-    :return: tuple of the formatted values for the dataset and the updated run_data_map
+    :return: the formatted values for the dataset
     """
     distinct_values = {param: {} for param in per_run_mapping}
     for entry in data:
@@ -707,12 +706,9 @@ def handle_per_run_param_maps(
             ret[param_name] = next(iter(values.keys()))
         else:
             key = f"float {{{param_name}}}"
-            for param_value, runs in distinct_values[param_name].items():
-                for run_name in runs:
-                    run_data_map[run_name][param_name] = param_value
             ret[param_name] = key
 
-    return ret, run_data_map
+    return ret
 
 
 @cli.command()
@@ -762,12 +758,11 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         deposition_entity = deposition_entity_by_id.get(deposition_mapping.get(dataset_id))
         authors = to_author(val.get("dataset")["authors"], deposition_entity.get("metadata", {}).get("authors"))
 
-        run_data_map = defaultdict(dict)
-        ds_per_run_mapping, run_data_map = handle_per_run_param_maps(
+        dataset_data_map = handle_per_run_param_maps(
             val.get("runs"),
-            run_data_map,
             per_run_float_mapping,
         )
+        run_data_map: dict = defaultdict(dict)
         dataset_config = {
             "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
             "depositions": [deposition_entity],
@@ -795,7 +790,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 run_tomo_map_path,
                 run_frames_map_path,
                 deposition_mapping.get(dataset_id),
-                ds_per_run_mapping["frame_dose_rate"],
+                dataset_data_map["frame_dose_rate"],
             ),
         }
 

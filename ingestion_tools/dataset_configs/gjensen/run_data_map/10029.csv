@@ -1,13 +1,13 @@
-run_name,frame_dose_rate,tilt_series_max_angle,tilt_series_quality_score,tilt_series_total_flux,tomo-reconstruction_method,tomo-voxel_spacing,ts-microscope_optical_setup-phase_plate,ts-tilt_range-max,ts-tilt_series_quality,ts-total_flux
-wnj2018-05-16-6,2.9672131147540983,60.0,4.0,181.0,WBP,8.638,volta phase plate,60.0,4,181.0
-wnj2018-05-16-7,2.9672131147540983,60.0,4.0,181.0,WBP,8.638,volta phase plate,60.0,4,181.0
-wnj2018-05-16-8,2.9672131147540983,60.0,4.0,181.0,WBP,8.638,volta phase plate,60.0,4,181.0
-wnj2018-05-16-10,2.9672131147540983,60.0,4.0,181.0,SIRT,17.276,volta phase plate,60.0,4,181.0
-wnj2018-05-16-11,2.9672131147540983,60.0,4.0,181.0,WBP,8.638,volta phase plate,60.0,4,181.0
-wnj2018-05-17-3,2.9672131147540983,52.0,3.0,181.0,WBP,8.638,volta phase plate,52.0,3,181.0
-wnj2018-05-16-13,2.9672131147540983,60.0,4.0,181.0,WBP,8.638,,60.0,4,181.0
-wnj2018-05-16-14,2.9672131147540983,60.0,4.0,181.0,WBP,8.638,,60.0,4,181.0
-wnj2018-05-17-1,2.6885245901639343,48.0,3.0,164.0,WBP,8.638,volta phase plate,48.0,3,164.0
-wnj2018-05-17-2,2.6885245901639343,50.0,3.0,164.0,WBP,8.638,,50.0,3,164.0
-wnj2018-05-17-4,2.918032786885246,54.0,3.0,178.0,WBP,8.638,volta phase plate,54.0,3,178.0
-wnj2018-05-16-12,2.721311475409836,56.0,3.0,166.0,SIRT,17.276,,56.0,3,166.0
+run_name,tomo-reconstruction_method,tomo-voxel_spacing,ts-microscope_optical_setup-phase_plate,ts-tilt_range-max,ts-tilt_series_quality,ts-total_flux
+wnj2018-05-16-6,WBP,8.638,volta phase plate,60.0,4,181.0
+wnj2018-05-16-7,WBP,8.638,volta phase plate,60.0,4,181.0
+wnj2018-05-16-8,WBP,8.638,volta phase plate,60.0,4,181.0
+wnj2018-05-16-10,SIRT,17.276,volta phase plate,60.0,4,181.0
+wnj2018-05-16-11,WBP,8.638,volta phase plate,60.0,4,181.0
+wnj2018-05-17-1,WBP,8.638,volta phase plate,48.0,3,164.0
+wnj2018-05-17-2,WBP,8.638,,50.0,3,164.0
+wnj2018-05-17-3,WBP,8.638,volta phase plate,52.0,3,181.0
+wnj2018-05-17-4,WBP,8.638,volta phase plate,54.0,3,178.0
+wnj2018-05-16-12,SIRT,17.276,,56.0,3,166.0
+wnj2018-05-16-13,WBP,8.638,,60.0,4,181.0
+wnj2018-05-16-14,WBP,8.638,,60.0,4,181.0
