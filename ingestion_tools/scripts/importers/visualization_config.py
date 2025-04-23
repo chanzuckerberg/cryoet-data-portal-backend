@@ -56,7 +56,6 @@ class VisualizationConfigImporter(BaseImporter):
         contrast_limits: tuple[float, float],
     ) -> dict[str, Any]:
         zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
-        print("Computed contrast limit", contrast_limits)
         return state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
@@ -181,7 +180,7 @@ class VisualizationConfigImporter(BaseImporter):
         t = time()
         print("Start contrast limit computation for", tomogram)
         contrast_limits = tomogram.get_contrast_limits()
-        print("Took", (time() - t), "s")
+        print(f"Computed contrast limit {contrast_limits} in  {(time() - t):.2f}s")
         layers = [self._to_tomogram_layer(tomogram, volume_info, resolution, contrast_limits)]
 
         annotation_layer_info = self.get_annotation_layer_info(alignment_metadata_path)
