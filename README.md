@@ -45,7 +45,7 @@ This folder contains high-level documentation covering the overall architecture,
 This module contains all the code related to the process of importing datasets into the backend, transforming the data into standardized format, validating the standardized data. It also contains the yamls that are used for configuring the ingestion process.
 
 ### schema
-This module is responsible for maintaining the schemas used in both the ingestion configuration and the API. It is implemented using LinkML.
+This module is responsible for maintaining the schemas used in the ingestion configuration. It is implemented using LinkML.
 
 ### test_infra
 This module has resources required for setting up mock resources for testing, such as files needed for setting up the mock s3 and nginx (mock http servers). This is used by both the ingestion_tools and apiv2 modules.
@@ -53,15 +53,14 @@ This module has resources required for setting up mock resources for testing, su
 
 ## Common Commands
 
-| Command                                                                                 | Description                                                             |
-|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| `make init`                                                                    | Starts the container for ingestor, API v1, API v2 locally along with required resource. |
-| `make ingestor-init`                                                                    | Starts the container for ingestor locally along with required resource. |
-| `make api-init`                                                                         | Starts the API V1 locally.                                              |
-| `make apiv2-init`                                                                       | Starts the API V2 locally.                                              |
-| `make apiv2-test`                                                                       | Runs unit tests for db ingestion for api v2.                            |
-| `make stop`                                                                    | Stops all the docker containers started by this application. |
-| `make clean`                                                                    | Removes all the docker containers started by this application. |
+| Command                                                                                 | Description                                                                     |
+|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| `make init`                                                                    | Starts the container for ingestor, API v2 locally along with required resource. |
+| `make ingestor-init`                                                                    | Starts the container for ingestor locally along with required resource.         |
+| `make apiv2-init`                                                                       | Starts the API V2 locally.                                                      |
+| `make apiv2-test`                                                                       | Runs unit tests for db ingestion for api v2.                                    |
+| `make stop`                                                                    | Stops all the docker containers started by this application.                    |
+| `make clean`                                                                    | Removes all the docker containers started by this application.                  |
 
 ### Environment variables
 
