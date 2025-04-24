@@ -1,5 +1,5 @@
-run_name,ts-data_acquisition_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-total_flux
-wnj2018-06-28-2,SerialEM,60.0,-60.0,4,188.0
-wnj2018-06-28-3,Undefined,57.0,-60.0,3,188.0
-wnj2018-06-28-4,Undefined,60.0,-60.0,4,188.0
-wnj2018-06-28-5,Undefined,60.0,-49.5,3,173.0
+run_name,frame_dose_rate,ts-data_acquisition_software,ts-tilt_range-max,ts-tilt_range-min,ts-tilt_series_quality,ts-total_flux
+wnj2018-06-28-2,2.3209876543209877,SerialEM,60.0,-60.0,4,188.0
+wnj2018-06-28-3,2.3209876543209877,Undefined,57.0,-60.0,3,188.0
+wnj2018-06-28-4,2.3209876543209877,Undefined,60.0,-60.0,4,188.0
+wnj2018-06-28-5,2.1358024691358026,Undefined,60.0,-49.5,3,173.0

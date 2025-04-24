@@ -1,7 +1,7 @@
-run_name,tomo-align_software
-mba2011-02-03-1,IMOD
-mba2011-02-03-3,RAPTOR
-mba2011-02-03-4,RAPTOR
-mba2011-02-03-5,RAPTOR
-mba2011-02-03-6,RAPTOR
-mba2011-02-03-7,RAPTOR
+run_name,frame_dose_rate,tomo-align_software
+mba2011-02-03-1,1.5151515151515151,IMOD
+mba2011-02-03-3,0.0,RAPTOR
+mba2011-02-03-4,0.0,RAPTOR
+mba2011-02-03-5,0.0,RAPTOR
+mba2011-02-03-6,0.0,RAPTOR
+mba2011-02-03-7,0.0,RAPTOR

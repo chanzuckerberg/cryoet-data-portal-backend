@@ -675,40 +675,44 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
 
 
 def handle_per_run_param_maps(
-    data: dict[str, Any],
+    data: list[dict[str, Any]],
+    run_data_map: dict,
     per_run_mapping: dict[str, dict[str, float]] | dict[str, dict[str, str]],
-) -> dict[str, str | float | None]:
+    param_type="float",
+    only_check: list[str] = None,
+) -> tuple[dict[str, str | float | None], dict]:
     """
     Handle per-run parameter mappings. The function finds distinct values for each parameter in the per_run_mapping
     and either passes a single value (if only one distinct value is found) or creates a formatted string for the field
     and appends the values to the run_data_map.
     :param data: The data for the dataset
+    :param run_data_map: The run data map to store the per-run values
     :param per_run_mapping: The mapping of parameter to run name to value param_name -> {run_name -> value}
-    :return: the formatted values for the dataset
+    :param param_type: The type of parameter (float or string)
+    :param only_check: List of parameters to check for distinct values. All other keys will be ignored.
+    :return: tuple of the formatted values for the dataset and the updated run_data_map
     """
-    distinct_values = {param: {} for param in per_run_mapping}
+    target_params = only_check or per_run_mapping.keys()
+    distinct_values = {param: defaultdict(list) for param in target_params}
     for entry in data:
         run_name = entry["run_name"]
-        for param_name in per_run_mapping:
+        for param_name in distinct_values:
             param_value = per_run_mapping[param_name].get(run_name, 0.0)
-            # dose_rate = frame_dose_rate_mapping.get(run_name, 0.0)
-            if param_value in distinct_values[param_name]:
-                distinct_values[param_name][param_value].append(run_name)
-            else:
-                distinct_values[param_name][param_value] = [run_name]
+            distinct_values[param_name][param_value].append(run_name)
 
     ret = {}
 
-    for param_name, values in distinct_values.items():
-        if len(values) == 0:
+    for param_name, value_by_runs in distinct_values.items():
+        if len(value_by_runs) == 0:
             ret[param_name] = None
-        elif len(values) == 1:
-            ret[param_name] = next(iter(values.keys()))
+        elif len(value_by_runs) == 1:
+            ret[param_name] = next(iter(value_by_runs.keys()))
         else:
-            key = f"float {{{param_name}}}"
-            ret[param_name] = key
-
-    return ret
+            ret[param_name] = f"{param_type} {{{param_name}}}"
+            for param_value, runs in value_by_runs.items():
+                for run_name in runs:
+                    run_data_map[run_name][param_name] = param_value
+    return ret, run_data_map
 
 
 @cli.command()
@@ -758,11 +762,13 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         deposition_entity = deposition_entity_by_id.get(deposition_mapping.get(dataset_id))
         authors = to_author(val.get("dataset")["authors"], deposition_entity.get("metadata", {}).get("authors"))
 
-        dataset_data_map = handle_per_run_param_maps(
+        run_data_map = defaultdict(dict)
+        dataset_data_map, run_data_map = handle_per_run_param_maps(
             val.get("runs"),
+            run_data_map,
             per_run_float_mapping,
+            only_check=["frame_dose_rate"],
         )
-        run_data_map: dict = defaultdict(dict)
         dataset_config = {
             "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
             "depositions": [deposition_entity],

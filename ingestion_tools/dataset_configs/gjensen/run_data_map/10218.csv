@@ -1,6 +1,6 @@
-run_name,tomo-align_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step
-mba2010-08-27-1,RAPTOR,10.24,RAPTOR,-57.5,3,1.5
-mba2010-08-27-2,IMOD,10.24,IMOD,-59.0,4,1.5
-mba2010-08-27-3,IMOD,10.24,IMOD,-59.0,4,1.5
-mba2010-08-27-4,IMOD,10.24,IMOD,-57.5,3,1.5
-mba2011-02-16-1,IMOD,5.12,IMOD,-59.0,3,1.0
+run_name,frame_dose_rate,tomo-align_software,tomo-voxel_spacing,ts-tilt_alignment_software,ts-tilt_range-min,ts-tilt_series_quality,ts-tilt_step
+mba2010-08-27-1,2.4096385542168677,RAPTOR,10.24,RAPTOR,-57.5,3,1.5
+mba2010-08-27-2,2.4096385542168677,IMOD,10.24,IMOD,-59.0,4,1.5
+mba2010-08-27-3,2.4096385542168677,IMOD,10.24,IMOD,-59.0,4,1.5
+mba2010-08-27-4,2.4096385542168677,IMOD,10.24,IMOD,-57.5,3,1.5
+mba2011-02-16-1,1.5384615384615385,IMOD,5.12,IMOD,-59.0,3,1.0
