@@ -31,10 +31,6 @@ If you believe you have found a security issue, please responsibly disclose by c
 
 This repository contains all components related to the CryoET backend. Below is a brief overview of each module:
 
-### api_server
-This module contains the v1 version of the GraphQL API for the CryoET backend. It is implemented using **Hasura**.
-**Note**: This version is on the path to deprecation. We should be using the v2 API for building new features.
-
 ### apiv2
 This module contains the v2 version of the GraphQL API for the CryoET backend. It is implemented using **Platformics**, offering more features over v1.
 
