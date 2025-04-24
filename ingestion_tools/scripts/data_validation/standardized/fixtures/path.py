@@ -99,7 +99,7 @@ def frames_meta_file(frames_dir: str, filesystem: FileSystemApi) -> str:
     if filesystem.exists(dst):
         return dst
     else:
-        pytest.fail(f"Frames metadata file not found: {dst}")
+        pytest.fail(f"The frames directory exists, but frames_metadata.json is not found: {dst}")
 
 
 @pytest.fixture(scope="session")

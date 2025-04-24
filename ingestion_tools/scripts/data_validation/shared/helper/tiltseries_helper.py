@@ -10,6 +10,17 @@ from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeade
 TILT_AXIS_ANGLE_REGEX = re.compile(r".*tilt\s*axis\s*angle\s*=\s*([-+]?(?:\d*\.*\d+))")
 
 
+
+@pytest.fixture
+def mdoc_tilt_axis_angle(mdoc_data: pd.DataFrame) -> float:
+    # To convert the data from the mdoc into a data frame, all the global records are added to each section's data
+    titles = mdoc_data["titles"][0]
+    for title in titles:
+        if result := re.match(TILT_AXIS_ANGLE_REGEX, title.lower()):
+            return float(result[1])
+    pytest.fail("No Tilt axis angle found")
+
+
 class TiltSeriesHelper(HelperTestMRCZarrHeader):
 
     @pytest.fixture(autouse=True)
@@ -24,15 +35,6 @@ class TiltSeriesHelper(HelperTestMRCZarrHeader):
             tiltseries_metadata["tilt_range"]["max"] + tiltseries_metadata["tilt_step"],
             tiltseries_metadata["tilt_step"],
         ).tolist()
-
-    @pytest.fixture
-    def mdoc_tilt_axis_angle(self, mdoc_data: pd.DataFrame) -> float:
-        # To convert the data from the mdoc into a data frame, all the global records are added to each section's data
-        titles = mdoc_data["titles"][0]
-        for title in titles:
-            if result := re.match(TILT_AXIS_ANGLE_REGEX, title.lower()):
-                return float(result[1])
-        pytest.fail("No Tilt axis angle found")
 
     @allure.title("Tiltseries: tilt axis angle in mdoc file matches that in tilt series metadata (+/- 10 deg).")
     def test_tilt_axis_angle(self, mdoc_tilt_axis_angle: float, tiltseries_metadata: dict[str, Any]):
