@@ -5,7 +5,7 @@ from typing import Any
 
 import yaml
 
-from schema_migration import migrate_v1_0_0, migrate_v1_1_0
+from schema_migration import migrate_v1_0_0, migrate_v1_1_0, migrate_v1_2_0
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +18,7 @@ def upgrade_config(data: dict[str, Any]) -> dict[str, Any]:
             # current_version: (update_function, next_version)
             "0.0.0": (migrate_v1_0_0.upgrade, "1.0.0"),
             "1.0.0": (migrate_v1_1_0.upgrade, "1.1.0"),
+            "1.1.0": (migrate_v1_2_0.upgrade, "1.2.0"),
         },
     )
 

@@ -3,7 +3,7 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -64,12 +64,19 @@ depositions:
   - literal:
       value:
       - 10014
+frames:
+- metadata:
+    dose_rate: 1.2195121951219512
+    is_gain_corrected: false
+  sources:
+  - literal:
+      value:
+      - default
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/3dimage_*/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
 runs:
 - sources:
   - source_glob:
@@ -100,7 +107,7 @@ tiltseries:
     pixel_spacing: 3.332
     spherical_aberration_constant: 2.7
     tilt_alignment_software: IMOD
-    tilt_axis: 84.3
+    tilt_axis: 94.4
     tilt_range:
       max: 60.0
       min: -60.0

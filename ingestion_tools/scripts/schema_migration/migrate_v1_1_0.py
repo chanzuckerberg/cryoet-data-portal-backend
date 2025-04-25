@@ -1,8 +1,6 @@
-import json
 from typing import Union
 
 import numpy as np
-import yaml
 
 
 def rawtilts_to_collection_metadata(config: dict) -> None:
@@ -167,12 +165,6 @@ def check_deposition(config: dict) -> bool:
     if "depositions" in config:
         return True
     raise ValueError("depositions is not in the config")
-
-
-def has_changes(file, config):
-    with open(file, "r") as file:
-        old_config = yaml.safe_load(file)
-    return json.dumps(old_config) != json.dumps(config)
 
 
 def upgrade(config: dict) -> dict:

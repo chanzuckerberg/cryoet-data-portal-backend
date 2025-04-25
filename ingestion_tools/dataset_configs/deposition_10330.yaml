@@ -1,9 +1,9 @@
 alignments:
-- sources:
-  - destination_glob:
-      list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
-      match_regex: .*
-      name_regex: (.*)
+  - sources:
+      - destination_glob:
+          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          match_regex: .*
+          name_regex: (.*)
 
 annotations:
   - metadata:
@@ -48,57 +48,57 @@ annotations:
           order: xyz
 
 datasets:
-- sources:
-  - source_glob:
-      list_glob: 10???
-      match_regex: .*
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: 10???
+          match_regex: .*
+          name_regex: (.*)
 
 depositions:
-- metadata:
-    authors:
-      - corresponding_author_status: false
-        name: Sarah Muth
-        primary_author_status: true
-        ORCID: 0009-0003-4337-7924
-      - corresponding_author_status: true
-        name: Constantin Pape
-        primary_author_status: false
-        ORCID: 0000-0001-6562-7187
-    dates:
-      deposition_date: '2025-02-19'
-      last_modified_date: '2025-02-19'
-      release_date: '2025-02-19'
-    deposition_description: "This deposition contains segmentations of synaptic vesicles in cryo ET data of
+  - metadata:
+      authors:
+        - corresponding_author_status: false
+          name: Sarah Muth
+          primary_author_status: true
+          ORCID: 0009-0003-4337-7924
+        - corresponding_author_status: true
+          name: Constantin Pape
+          primary_author_status: false
+          ORCID: 0000-0001-6562-7187
+      dates:
+        deposition_date: '2025-02-19'
+        last_modified_date: '2025-02-19'
+        release_date: '2025-02-19'
+      deposition_description: "This deposition contains segmentations of synaptic vesicles in cryo ET data of
       synaptosomes. The segmentations were produced with SynapseNet by re-training its vesicle segmentation network on
       ca. 50 synaptosome tomograms via unsupervised domain adaptation. TThe vesicles are segmented as instances: each
       vesicle is assigned a unique id per tomogram by SynapseNet (however, represented as binary masks on the cryoET
       data portal), each vesicle is also assigned its centroid calculated using the SynapseNet instances. For more
       details on SynapseNet check out the GitHub repository and the preprint linked below."
-    deposition_identifier: 10330
-    deposition_title: Automated Synaptic Vesicle Segmentation in Synaptosomes
-    cross_references:
-      publications: 10.1101/2024.12.02.626387
-    deposition_types:
-    - annotation
-  sources:
-  - literal:
-      value:
-      - 10330
+      deposition_identifier: 10330
+      deposition_title: Automated Synaptic Vesicle Segmentation in Synaptosomes
+      cross_references:
+        publications: 10.1101/2024.12.02.626387
+      deposition_types:
+        - annotation
+    sources:
+      - literal:
+          value:
+            - 10330
 
 deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
-        thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
+  - sources:
+      - literal:
+          value:
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
 
 runs:
-- sources:
-  - source_glob:
-      list_glob: '{dataset_name}/*'
-      match_regex: '.*\.zarr'
-      name_regex: '(.*)\.zarr'
+  - sources:
+      - source_glob:
+          list_glob: '{dataset_name}/*'
+          match_regex: '.*\.zarr'
+          name_regex: '(.*)\.zarr'
 
 standardization_config:
   deposition_id: 10330
@@ -106,8 +106,8 @@ standardization_config:
 
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - destination_glob:
-      list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
-      match_regex: .*
-      name_regex: VoxelSpacing(.*)
+  - sources:
+      - destination_glob:
+          list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+          match_regex: .*
+          name_regex: VoxelSpacing(.*)
