@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Update Prod Stack
-        uses: chanzuckerberg/argus-artifacts/ci/packages/create-stack@v0.27.0
+        uses: chanzuckerberg/argus-artifacts/ci/packages/create-stack@v0
         with:
           appName: cryoet-apiv2
           envName: prod

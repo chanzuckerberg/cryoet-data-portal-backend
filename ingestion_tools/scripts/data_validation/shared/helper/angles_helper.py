@@ -1,7 +1,6 @@
 ANGLE_TOLERANCE = 0.05
 
 
-# TODO FIXME account for double 0 sample
 def helper_angles_injection_errors(
     domain_angles: list[float],
     codomain_angles: list[float],
@@ -14,7 +13,7 @@ def helper_angles_injection_errors(
     remaining_angles = codomain_angles.copy()
     for domain_angle in domain_angles:
         found_match = False
-        for codomain_angle in codomain_angles:
+        for codomain_angle in remaining_angles:
             if abs(domain_angle - codomain_angle) < angle_tolerance:
                 found_match = True
                 remaining_angles.remove(codomain_angle)
