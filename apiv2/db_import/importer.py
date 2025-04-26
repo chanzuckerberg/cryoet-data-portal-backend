@@ -27,9 +27,8 @@ from db_import.importers.tiltseries import (
 )
 from db_import.importers.tomogram import TomogramAuthorImporter, TomogramImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
-from s3fs import S3FileSystem
-
 from platformics.database.connect import init_sync_db
+from s3fs import S3FileSystem
 
 logger = logging.getLogger("db_import")
 logging.basicConfig(level=logging.INFO)

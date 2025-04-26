@@ -1,14 +1,10 @@
 [tool.poetry]
-name = "platformics"
+name = "CryoET Data Portal API"
 version = "0.1.0"
-description = "Platformics bio entities framework"
+description = "Queryable interface for CryoET metadata"
 authors = ["CZI Infectious Disease Team <help@czid.org>"]
 license = "MIT License"
 readme = "README.md"
-packages = [{include = "platformics"}]
-
-[tool.poetry.scripts]
-platformics = 'platformics.cli.main:cli'
 
 [tool.poetry.dev-dependencies]
 black = "^24.4.0"
@@ -30,8 +26,6 @@ httpx = "^0.24.1"
 python = "^3.12"
 fastapi = "^0.115.0"
 # biopython 1.83 fails installation on m1 macs. The issue is fixed upstream so we're pinning to a specific commit until the next release.
-biopython = { git = "https://github.com/biopython/biopython.git", rev = "e0731edc892b653dee10b1f68acf795086e6f3f0" }
-asyncpg = "^0.28.0"
 alembic = "^1.11.1"
 sgqlc = "^16.3"
 psycopg-binary = "^3.1.9"
@@ -42,7 +36,7 @@ jwcrypto = "^1.5.6"
 uuid6 = "^2023.5.2"
 types-requests = "^2.31.0.2"
 boto3 = "^1.28.43"
-boto3-stubs = {extras = ["s3", "sts"], version = "^1.28.61"}
+boto3-stubs = { extras = ["s3", "sts"], version = "^1.28.61" }
 jinja2 = "^3.1.3"
 linkml = "^1.5.7"
 strcase = "^1.0.0"
@@ -52,6 +46,7 @@ strawberry-graphql = "0.257.0"
 typer = "^0.12.3"
 libcst = "^1.4.0"
 s3fs = "^2024.9.0"
+platformics = "^1.0.2"
 
 [build-system]
 requires = ["poetry-core"]
@@ -65,21 +60,8 @@ show_error_codes = true
 warn_unreachable = true
 explicit_package_bases = true
 ignore_missing_imports = true
-exclude = [
-  "platformics/graphql_api/relay",
-  "platformics/thirdparty"
-]
 # We'd like to turn this on soon but we're not there yet.
 # disallow_untyped_defs = true
-
-# do not look at shopify and turn anything originating from it into Any
-[[tool.mypy.overrides]]
-module = ["platformics.graphql_api.relay.*"]
-follow_imports = "skip"
-
-[[tool.mypy.overrides]]
-module = ["platformics.thirdparty.*"]
-follow_imports = "skip"
 
 [tool.ruff]
 # Same as Black.
@@ -87,61 +69,106 @@ line-length = 120
 
 # Assume Python 3.12.
 target-version = "py312"
-namespace-packages = ["platformics"]
 
 [tool.ruff.lint]
 select = [
-    "E", "W",  # pycodestyle
-    "F",  # pyflakes
-    "B",  # bugbear
-    "I",  # isort
-    "N",  # pep8-naming
-    "ASYNC",  # async
-    "COM",  # commas
-    "C4",  # comprehensions
-    "DTZ",  # datetimez
-    "ISC",  # implicit-str-concat
-    "G",  # logging-format
-    "T20",  # print
-    "SIM",  # simplify
+  "E",
+  "W",     # pycodestyle
+  "F",     # pyflakes
+  "B",     # bugbear
+  "I",     # isort
+  "N",     # pep8-naming
+  "ASYNC", # async
+  "COM",   # commas
+  "C4",    # comprehensions
+  "DTZ",   # datetimez
+  "ISC",   # implicit-str-concat
+  "G",     # logging-format
+  "T20",   # print
+  "SIM",   # simplify
 ]
 ignore = [
-    "E501",  # line too long
-    "C408",  # rewrite empty built-ins as literals
-    "T201",  # print statements.
-    "DTZ001", # Datetime objects without timezones.
-    "DTZ007", # Datetime objects without timezones.
-    "DTZ005", # More datetimes without timezones.
-    "B008",   # FastAPI's Dependency Injection tools make function calls in arg defaults.
+  "E501",   # line too long
+  "C408",   # rewrite empty built-ins as literals
+  "T201",   # print statements.
+  "DTZ001", # Datetime objects without timezones.
+  "DTZ007", # Datetime objects without timezones.
+  "DTZ005", # More datetimes without timezones.
+  "B008",   # FastAPI's Dependency Injection tools make function calls in arg defaults.
 ]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+fixable = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "I",
+  "N",
+  "Q",
+  "S",
+  "T",
+  "W",
+  "ANN",
+  "ARG",
+  "BLE",
+  "COM",
+  "DJ",
+  "DTZ",
+  "EM",
+  "ERA",
+  "EXE",
+  "FBT",
+  "ICN",
+  "INP",
+  "ISC",
+  "NPY",
+  "PD",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  "PTH",
+  "PYI",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "SLF",
+  "TCH",
+  "TID",
+  "TRY",
+  "UP",
+  "YTT",
+]
 unfixable = []
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
 ]
 
 # Allow unused variables when underscore-prefixed.
@@ -152,17 +179,24 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 max-complexity = 10
 
 [tool.ruff.lint.per-file-ignores]
-"**/graphql_api/**" = ["B008", "N815", "B006", "N801", "E721", "SIM118", "B904", "DTZ001", "E722"]
+"**/graphql_api/**" = [
+  "B008",
+  "N815",
+  "B006",
+  "N801",
+  "E721",
+  "SIM118",
+  "B904",
+  "DTZ001",
+  "E722",
+]
 "**/support/enums.py" = ["N801"]
 
 [tool.ruff.lint.isort]
-known-first-party =["platformics"]
-known-third-party =["cerbos"]
+known-third-party = ["cerbos"]
 
 [tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
 [tool.pytest.ini_options]
-markers = [
-    "asyncio",
-]
+markers = ["asyncio"]

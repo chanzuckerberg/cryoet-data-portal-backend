@@ -13,7 +13,6 @@ from database.models import (
 from db_import.importer import load_func
 from db_import.tests.populate_db import DATASET_ID
 from mypy_boto3_s3 import S3Client
-
 from platformics.database.connect import SyncDB
 from platformics.database.models import Base
 

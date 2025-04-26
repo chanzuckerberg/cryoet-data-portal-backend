@@ -12,9 +12,8 @@ from db_import.tests.populate_db import (
     stale_deposition_author,
     stale_deposition_metadata,
 )
-from sqlalchemy.orm import Session
-
 from platformics.database.models import Base
+from sqlalchemy.orm import Session
 
 
 @pytest.fixture
