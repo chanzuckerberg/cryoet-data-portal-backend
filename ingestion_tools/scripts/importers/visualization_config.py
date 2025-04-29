@@ -177,6 +177,9 @@ class VisualizationConfigImporter(BaseImporter):
         volume_info = tomogram.get_output_volume_info()
         voxel_size = round(volume_info.voxel_size, 3)
         resolution = (voxel_size * 1e-10,) * 3
+        # we display information about when the contrast limit computation starts and finishes
+        # to give feedback to the user why the script is hanging as the computation limit might
+        # take time depending on use pyramid level as well as the used computation method.
         t = time()
         print("Start contrast limit computation for", tomogram)
         contrast_limits = tomogram.get_contrast_limits()
