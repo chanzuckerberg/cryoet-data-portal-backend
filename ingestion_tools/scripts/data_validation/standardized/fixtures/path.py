@@ -93,6 +93,16 @@ def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
 
 
 @pytest.fixture(scope="session")
+def frames_meta_file(frames_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Frames/frames_metadata.json"""
+    dst = f"{frames_dir}/frames_metadata.json"
+    if filesystem.exists(dst):
+        return dst
+    else:
+        pytest.fail(f"The frames directory exists, but frames_metadata.json is not found: {dst}")
+
+
+@pytest.fixture(scope="session")
 def mdoc_file(frames_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Frames/*.mdoc"""
     mdoc_files = filesystem.glob(f"{frames_dir}/*.mdoc")
