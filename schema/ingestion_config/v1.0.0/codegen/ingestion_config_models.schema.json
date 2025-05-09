@@ -1774,7 +1774,7 @@
                         "null"
                     ]
                 },
-                "ctf": {
+                "ctfs": {
                     "description": "A ctf entity.",
                     "items": {
                         "$ref": "#/$defs/CtfEntity"
@@ -5621,7 +5621,7 @@
                 "null"
             ]
         },
-        "ctf": {
+        "ctfs": {
             "description": "A ctf entity.",
             "items": {
                 "$ref": "#/$defs/CtfEntity"

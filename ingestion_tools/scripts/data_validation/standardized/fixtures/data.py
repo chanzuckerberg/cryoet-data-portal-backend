@@ -53,7 +53,11 @@ def frames_headers(
     """Get the headers for a list of frame files."""
     return helper_util.get_tiff_mrc_headers(frames_files, filesystem)
 
-
+@pytest.fixture(scope="session")
+def frame_metadata(frames_meta_file: str, filesystem: FileSystemApi) -> Dict:
+    """Load the frame metadata."""
+    with filesystem.open(frames_meta_file, "r") as f:
+        return json.load(f)
 # ==================================================================================================
 # Gain fixtures
 # ==================================================================================================

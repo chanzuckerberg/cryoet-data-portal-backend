@@ -37,4 +37,5 @@ class TiltAnglesHelper:
             "raw tilt file",
             "mdoc file",
         )
-        assert len(errors) == 0, "\n".join(errors)
+        if len(errors) > 0:
+            raise AssertionError("\n".join(errors))

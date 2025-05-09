@@ -344,7 +344,7 @@ collection_metadata:
       - source_glob:
           list_glob: '{mapped_run_name}.mdoc'
 
-ctf:
+ctfs:
   - metadata:
       format: CTFFIND
     sources:
