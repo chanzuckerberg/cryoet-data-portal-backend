@@ -142,10 +142,11 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
         # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.precompute import segmentation_mask
 
+        resolution_in_nm = voxel_spacing * 0.1 # original in angstrom
         segmentation_mask.encode_segmentation(
             zarr_file_path,
             Path(tmp_path),
-            resolution=(voxel_spacing,) * 3,
+            resolution=(resolution_in_nm,) * 3,
             delete_existing=True,
             include_mesh=True,
         )
