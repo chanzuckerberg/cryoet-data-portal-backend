@@ -3,7 +3,7 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -55,21 +55,27 @@ depositions:
   - literal:
       value:
       - 10043
+frames:
+- metadata:
+    dose_rate: 1.2295081967213115
+    is_gain_corrected: false
+  sources:
+  - literal:
+      value:
+      - default
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
 runs:
 - sources:
   - source_glob:
       list_glob: '*'
-      match_regex: (jsa2009-12-29-1|jsa2009-12-29-2|jsa2009-12-29-3|jsa2009-12-29-4|jsa2009-12-29-5|jsa2009-12-29-6|jsa2009-12-29-7|jsa2009-12-29-8|jsa2009-12-29-9|jsa2009-12-29-10|jsa2009-12-29-11|jsa2009-12-29-12|jsa2009-12-29-13|jsa2009-12-29-14|jsa2009-12-29-15|jsa2009-12-29-16|jsa2009-12-29-17|jsa2009-12-29-18|jsa2009-12-29-19|jsa2009-12-29-20|jsa2009-12-29-21|jsa2009-12-29-22|jsa2009-12-29-23|jsa2009-12-29-24|jsa2009-12-29-25|jsa2009-12-29-26|jsa2009-12-29-27|jsa2009-12-29-28|jsa2009-12-29-29|jsa2009-12-29-30|jsa2009-12-29-31|jsa2009-12-29-32|jsa2009-12-29-33)$
+      match_regex: (jsa2009-12-29-1|jsa2009-12-29-2|jsa2009-12-29-4|jsa2009-12-29-5|jsa2009-12-29-6|jsa2009-12-29-7|jsa2009-12-29-8|jsa2009-12-29-9|jsa2009-12-29-10|jsa2009-12-29-11|jsa2009-12-29-12|jsa2009-12-29-13|jsa2009-12-29-14|jsa2009-12-29-15|jsa2009-12-29-16|jsa2009-12-29-17|jsa2009-12-29-18|jsa2009-12-29-19|jsa2009-12-29-20|jsa2009-12-29-21|jsa2009-12-29-22|jsa2009-12-29-23|jsa2009-12-29-24|jsa2009-12-29-25|jsa2009-12-29-26|jsa2009-12-29-27|jsa2009-12-29-28|jsa2009-12-29-29|jsa2009-12-29-30|jsa2009-12-29-31|jsa2009-12-29-32|jsa2009-12-29-33)$
       name_regex: (.*)
 standardization_config:
   deposition_id: 10043
-  run_data_map_file: run_data_map/10294.csv
   run_to_frame_map_csv: run_frames_map/10294.csv
   run_to_tomo_map_csv: run_tomo_map/10294.csv
   source_prefix: GJensen_full
@@ -93,12 +99,12 @@ tiltseries:
       phase_plate: null
     pixel_spacing: 7.74
     spherical_aberration_constant: 2.0
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 0.0
+    tilt_alignment_software: RAPTOR
+    tilt_axis: 11.4
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_quality: int {ts-tilt_series_quality}
+    tilt_series_quality: 4
     tilt_step: 1.0
     tilting_scheme: starting tilt to max then min
     total_flux: 150.0
@@ -125,11 +131,11 @@ tomograms:
       - 0
       - 0
       - 1
-    align_software: '{tomo-align_software}'
+    align_software: RAPTOR
     authors: *id001
     ctf_corrected: null
     dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
       x: 0
@@ -137,10 +143,10 @@ tomograms:
       z: 0
     processing: raw
     processing_software: null
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: '{tomo-reconstruction_software}'
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
     tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
+    voxel_spacing: 15.64
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'
@@ -150,8 +156,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^jsa2009-12-29-3$
+      - 15.64

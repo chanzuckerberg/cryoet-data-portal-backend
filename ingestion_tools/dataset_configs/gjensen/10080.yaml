@@ -3,7 +3,7 @@ collection_metadata:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/rawdata/*.mdoc'
+      - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -69,17 +69,24 @@ depositions:
   - literal:
       value:
       - 10038
+frames:
+- metadata:
+    dose_rate: 1.2345679012345678
+    is_gain_corrected: false
+  sources:
+  - literal:
+      value:
+      - default
 rawtilts:
 - sources:
   - source_multi_glob:
       list_globs:
-      - '{run_name}/file_*/*.rawtlt'
-      - '{run_name}/{mapped_frame_name}/*.rawtlt'
+      - '{run_name}/generated/*.rawtlt'
 runs:
 - sources:
   - source_glob:
       list_glob: '*'
-      match_regex: (dga2016-08-11-1|dga2016-08-11-2|dga2016-08-11-3|dga2016-08-11-4|dga2016-08-11-5|dga2016-08-11-6|dga2016-08-11-7|dga2016-08-11-9|dga2016-08-11-10|dga2016-08-11-11|dga2016-08-11-12|dga2016-08-11-14|dga2016-08-11-15|dga2016-08-11-16|dga2016-08-11-17|dga2016-08-11-18|dga2016-08-11-19|dga2016-08-11-20|dga2016-08-11-21|dga2016-08-11-22|dga2016-08-11-23|dga2016-08-11-24|dga2016-08-11-26|dga2016-08-11-27|dga2016-08-11-28|dga2016-08-11-29|dga2016-08-11-30|dga2016-08-11-31|dga2016-08-11-32|dga2016-08-11-33|dga2016-08-11-34|dga2016-08-11-35|dga2016-08-11-36|dga2016-08-11-37|dga2016-08-11-38|dga2016-08-11-39|dga2016-08-11-40|dga2016-08-11-41|dga2016-08-11-42|dga2016-08-11-43|dga2016-08-11-44|dga2016-08-11-45|dga2016-08-11-46|dga2016-08-11-47|dga2016-08-11-48|dga2016-08-11-51|dga2016-08-11-52|dga2016-08-11-54|dga2016-08-11-55|dga2016-08-11-56|dga2016-08-11-57|dga2016-08-11-58|dga2016-08-11-59|dga2016-08-11-61|dga2016-08-11-62|dga2016-08-11-63|dga2016-08-11-64|dga2016-08-11-65|dga2016-08-11-66|dga2016-08-11-67|dga2016-08-11-68|dga2016-08-11-69|dga2016-08-11-70|dga2016-08-11-71|dga2016-08-11-72|dga2016-08-11-73|dga2016-08-11-74|dga2016-08-11-75|dga2016-08-11-76|dga2016-08-11-77|dga2016-08-11-78|dga2016-08-11-79|dga2016-08-11-80)$
+      match_regex: (dga2016-08-11-1|dga2016-08-11-2|dga2016-08-11-3|dga2016-08-11-4|dga2016-08-11-5|dga2016-08-11-6|dga2016-08-11-7|dga2016-08-11-9|dga2016-08-11-10|dga2016-08-11-11|dga2016-08-11-12|dga2016-08-11-14|dga2016-08-11-15|dga2016-08-11-16|dga2016-08-11-17|dga2016-08-11-18|dga2016-08-11-19|dga2016-08-11-20|dga2016-08-11-21|dga2016-08-11-22|dga2016-08-11-23|dga2016-08-11-26|dga2016-08-11-27|dga2016-08-11-28|dga2016-08-11-29|dga2016-08-11-30|dga2016-08-11-31|dga2016-08-11-32|dga2016-08-11-33|dga2016-08-11-34|dga2016-08-11-35|dga2016-08-11-36|dga2016-08-11-37|dga2016-08-11-38|dga2016-08-11-39|dga2016-08-11-40|dga2016-08-11-41|dga2016-08-11-42|dga2016-08-11-43|dga2016-08-11-44|dga2016-08-11-45|dga2016-08-11-46|dga2016-08-11-47|dga2016-08-11-48|dga2016-08-11-51|dga2016-08-11-54|dga2016-08-11-55|dga2016-08-11-56|dga2016-08-11-57|dga2016-08-11-58|dga2016-08-11-59|dga2016-08-11-61|dga2016-08-11-62|dga2016-08-11-63|dga2016-08-11-64|dga2016-08-11-65|dga2016-08-11-66|dga2016-08-11-67|dga2016-08-11-68|dga2016-08-11-69|dga2016-08-11-70|dga2016-08-11-71|dga2016-08-11-72|dga2016-08-11-73|dga2016-08-11-74|dga2016-08-11-76|dga2016-08-11-77|dga2016-08-11-78|dga2016-08-11-79|dga2016-08-11-80)$
       name_regex: (.*)
 standardization_config:
   deposition_id: 10038
@@ -108,11 +115,11 @@ tiltseries:
     pixel_spacing: 4.2
     spherical_aberration_constant: 2.7
     tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 84.3
+    tilt_axis: -10.7
     tilt_range:
       max: 60.0
       min: -60.0
-    tilt_series_quality: int {ts-tilt_series_quality}
+    tilt_series_quality: 4
     tilt_step: 1.5
     tilting_scheme: starting tilt to max then min
     total_flux: 100.0
@@ -143,7 +150,7 @@ tomograms:
     authors: *id001
     ctf_corrected: null
     dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+    fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
       x: 0
@@ -154,7 +161,7 @@ tomograms:
     reconstruction_method: '{tomo-reconstruction_method}'
     reconstruction_software: '{tomo-reconstruction_software}'
     tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
+    voxel_spacing: 16.8
   sources:
   - source_glob:
       list_glob: '{run_name}/{mapped_tomo_name}'
@@ -164,10 +171,4 @@ voxel_spacings:
 - sources:
   - literal:
       value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^dga2016-08-11-24$
-        - ^dga2016-08-11-52$
-        - ^dga2016-08-11-75$
+      - 16.8

@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Update Staging Stack
-        uses: chanzuckerberg/argus-artifacts/ci/packages/create-stack@v0.27.0
+        uses: chanzuckerberg/argus-artifacts/ci/packages/create-stack@v0
         with:
           appName: cryoet-apiv2
           envName: staging

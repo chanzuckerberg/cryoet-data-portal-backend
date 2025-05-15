@@ -83,13 +83,23 @@ def frames_dir(run_dir: str, filesystem: FileSystemApi) -> str:
 def frames_files(frames_dir: str, filesystem: FileSystemApi) -> List[str]:
     """[Dataset]/[ExperimentRun]/Frames/*"""
     files = filesystem.glob(f"{frames_dir}/*")
-    # Exclude mdoc files, add s3 prefix
-    refined_files = ["s3://" + file for file in files if ".mdoc" not in file]
+    # Exclude mdoc and frames_metadata.json files, add "s3://" prefix to the file path.
+    refined_files = ["s3://" + file for file in files if ".mdoc" not in file and ".json" not in file]
     # mdoc files are in the folder, but just no frames
     if len(refined_files) == 0 and len(files) != 0:
         pytest.skip(f"No frame files in frames directory: {frames_dir}")
 
     return refined_files
+
+
+@pytest.fixture(scope="session")
+def frames_meta_file(frames_dir: str, filesystem: FileSystemApi) -> str:
+    """[Dataset]/[ExperimentRun]/Frames/frames_metadata.json"""
+    dst = f"{frames_dir}/frames_metadata.json"
+    if filesystem.exists(dst):
+        return dst
+    else:
+        pytest.fail(f"The frames directory exists, but frames_metadata.json is not found: {dst}")
 
 
 @pytest.fixture(scope="session")
@@ -169,7 +179,7 @@ def tiltseries_mrc_file(
 ) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].mrc"""
 
-    file = os.path.join(bucket, tiltseries_metadata['mrc_file'])
+    file = os.path.join(bucket, tiltseries_metadata["mrc_file"])
     if not filesystem.exists(file):
         pytest.fail(f"Tilt series mrc file not found: {file}")
     return file
@@ -183,7 +193,7 @@ def tiltseries_zarr_file(
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].zarr"""
-    file = os.path.join(bucket, tiltseries_metadata['omezarr_dir'])
+    file = os.path.join(bucket, tiltseries_metadata["omezarr_dir"])
     if not filesystem.exists(file):
         pytest.fail(f"Tilt series Zarr file not found: {file}")
     return file
@@ -206,12 +216,14 @@ def alignment_dir(run_dir: str, aln_dir: str, filesystem: FileSystemApi) -> str:
     else:
         pytest.skip(f"Alignment directory not found: {dst}")
 
+
 @pytest.fixture(scope="session")
 def alignment_tiltseries_metadata_file(alignment_metadata: Dict, bucket: str) -> str:
     """Load the tiltseries metadata for this alignment"""
     if "tiltseries_path" not in alignment_metadata:
         pytest.skip("No tiltseries path in alignment metadata")
     return f"{bucket}/{alignment_metadata['tiltseries_path']}"
+
 
 @pytest.fixture(scope="session")
 def alignment_tiltseries_rawtilt_file(alignment_tiltseries_metadata_file: Dict, filesystem: FileSystemApi) -> str:
@@ -230,6 +242,7 @@ def alignment_metadata_file(alignment_dir: str, filesystem: FileSystemApi) -> st
     if len(metadata_file) == 0:
         pytest.skip("No alignment metadata file found.")
     return metadata_file[0]
+
 
 @pytest.fixture(scope="session")
 def alignment_tilt_file(alignment_dir: str, filesystem: FileSystemApi) -> str:
@@ -311,7 +324,7 @@ def tomo_mrc_file(
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Reconstructions/VoxelSpacing[voxel_spacing]/Tomograms/[tomodir]/[tomo_name].mrc"""
-    file = os.path.join(bucket, tomogram_metadata['mrc_file'])
+    file = os.path.join(bucket, tomogram_metadata["mrc_file"])
     if not filesystem.exists(file):
         pytest.fail(f"Tomogram mrc file not found: {file}")
     return file
@@ -325,7 +338,7 @@ def tomo_zarr_file(
     filesystem: FileSystemApi,
 ) -> str:
     """[Dataset]/[ExperimentRun]/Reconstructions/VoxelSpacing[voxel_spacing]/Tomograms/[tomodir]/[tomo_name].zarr"""
-    file = os.path.join(bucket, tomogram_metadata['omezarr_dir'])
+    file = os.path.join(bucket, tomogram_metadata["omezarr_dir"])
     if not filesystem.exists(file):
         pytest.fail(f"Tomogram Zarr file not found: {file}")
     return file

@@ -151,6 +151,7 @@ def to_standardization_config(
     run_tomo_map_path: str,
     run_frames_map_path: str,
     deposition_id: int | None,
+    frame_dose_rate: float | str | None,
 ) -> dict[str, Any]:
     """
     Creates standardization config entity.This adds all the required path globs and regexes needed for the sources.
@@ -164,7 +165,6 @@ def to_standardization_config(
             run_has_multiple_tomos = True
         mapped_tomo_name[run["run_name"]] = get_canonical_tomogram_name(run) or "*"
 
-    tlt_tomo_path = "{mapped_frame_name}" if run_has_multiple_tomos else "3dimage_*"
     tomo_path = "{mapped_tomo_name}" if run_has_multiple_tomos else "3dimage_*/*"
 
     config = {
@@ -172,11 +172,14 @@ def to_standardization_config(
         "destination_prefix": str(dataset_id),
         "source_prefix": "GJensen_full",
         "frames_glob": None,
+        "frame_dose_rate": frame_dose_rate,
         "gain_glob": None,
         "rawtlt_files": [
-            "{run_name}/rawdata/*.mdoc",
-            "{run_name}/file_*/*.rawtlt",
-            f"{{run_name}}/{tlt_tomo_path}/*.rawtlt",
+            # Only specifying the generated path to prevent multiple mdoc files or rawtlt files from being associated
+            # to a run. If the original file has correct data, it will be copied over to the generated folder inside
+            # the run. If a new file is to be added, it would be added to the generated folder.
+            "{run_name}/generated/*.mdoc",
+            "{run_name}/generated/*.rawtlt",
         ],
         "tiltseries_glob": "{run_name}/rawdata/*",
         "ts_name_regex": r".*/rawdata/[^\._].*\.(mrc|st|ali)$",
@@ -235,6 +238,7 @@ float_fields = {
     "ts-tilt_range-min",
     "ts-tilt_range-max",
     "ts-total_flux",
+    "frame_dose_rate",
 }
 
 
@@ -285,10 +289,16 @@ def to_template_by_run(templates, run_data_map, prefix: str, path: list[str]) ->
     return template_metadata
 
 
-def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
+def to_tiltseries(
+    per_run_float_mapping: dict[str, dict[str, float]],
+    per_run_string_mapping: dict[str, dict[str, str]],
+    data: dict[str, Any],
+) -> dict[str, Any]:
     tilt_series_path = data["tilt_series"].get("tilt_series_path")
     if not tilt_series_path:
         return {}
+
+    run_name = data["run_name"]
 
     tilt_series = deepcopy(data["tilt_series"])
     microscope = tilt_series.get("microscope", {})
@@ -303,11 +313,20 @@ def to_tiltseries(data: dict[str, Any]) -> dict[str, Any]:
         tilt_series["camera"]["manufacturer"] = tilt_series["camera"].pop("manufactorer", None)
     tilt_series["is_aligned"] = tilt_series.pop("tilt_series_is_aligned", False)
     tilt_series["tilt_range"] = {
-        "min": tilt_series.pop("tilt_range_min"),
-        "max": tilt_series.pop("tilt_range_max"),
+        "min": per_run_float_mapping["tilt_series_min_angle"][run_name],
+        "max": per_run_float_mapping["tilt_series_max_angle"][run_name],
     }
+    tilt_series["tilt_step"] = per_run_float_mapping["tilt_series_tilt_step"][run_name]
+    tilt_series["tilting_scheme"] = per_run_string_mapping["tilt_series_tilting_scheme"][run_name]
+    tilt_series["tilt_axis"] = per_run_float_mapping["tilt_series_tilt_axis"][run_name]
+    tilt_series["total_flux"] = per_run_float_mapping["tilt_series_total_flux"][run_name]
 
-    tilt_series["tilt_series_quality"] = 4 if len(data["tomograms"]) else 1
+    tilt_series.pop("tilt_range_min")
+    tilt_series.pop("tilt_range_max")
+
+    tilt_series["tilt_series_quality"] = per_run_float_mapping["tilt_series_quality_score"][run_name]
+    if isinstance(tilt_series["tilt_series_quality"], float):
+        tilt_series["tilt_series_quality"] = int(tilt_series["tilt_series_quality"])
     tilt_series["pixel_spacing"] = round(tilt_series["pixel_spacing"], 3) if tilt_series.get("pixel_spacing") else None
 
     tilt_series.pop("tilt_series_path", None)
@@ -392,7 +411,7 @@ def to_config_by_run(
 
     if len(templates) == 0:
         return {}
-    elif len(templates) <= 1:
+    elif len(templates) == 1:
         return next(iter(templates.values()), {}).get("metadata")
 
     print(f"{dataset_id} has {len(templates)} configs for {prefix}")
@@ -569,6 +588,80 @@ def get_cross_reference_mapping(input_dir: str) -> dict[int, dict[str, str]]:
     }
 
 
+def get_per_run_float_mapping(input_dir: str) -> dict[str, dict[str, float]]:
+    """
+    Get parameter to run mapping for all runs. The data for this is sourced from the per_run_float_param_map.tsv
+    :param input_dir:
+    :return: dictionary mapping param names to dicts of per run values {param_name -> {run_name -> value}
+    """
+    with open(os.path.join(input_dir, "per_run_float_param_map.tsv")) as csvfile:
+        reader = csv.DictReader(csvfile, delimiter="\t")
+        params = reader.fieldnames
+        ret = {param_name: {} for param_name in params if param_name != "run_name"}
+
+        for row in reader:
+            for param_name in ret:
+                try:
+                    ret[param_name][row["run_name"]] = float(row[param_name])
+                except ValueError:
+                    ret[param_name][row["run_name"]] = 0.0
+                    print(f"Invalid value for {param_name} in run {row['run_name']}: {row[param_name]}")
+        return ret
+
+
+def get_per_run_string_mapping(input_dir: str) -> dict[str, dict[str, str]]:
+    """
+    Get parameter to run mapping for all runs. The data for this is sourced from the per_run_string_param_map.tsv
+    :param input_dir:
+    :return: dictionary mapping param names to dicts of per run values {param_name -> {run_name -> value}
+    """
+    with open(os.path.join(input_dir, "per_run_string_param_map.tsv")) as csvfile:
+        reader = csv.DictReader(csvfile, delimiter="\t")
+        params = reader.fieldnames
+        ret = {param_name: {} for param_name in params if param_name != "run_name"}
+
+        for row in reader:
+            for param_name in ret:
+                ret[param_name][row["run_name"]] = row[param_name]
+        return ret
+
+
+def get_included_run_map(input_dir: str) -> dict[str, bool]:
+    """
+    Get map of runs to include/exclude during generation.
+    :param input_dir:
+    :return: dictionary mapping run names to bool indicating whether to include {run_name -> include}
+    """
+    with open(os.path.join(input_dir, "included_runs.tsv")) as csvfile:
+        reader = csv.DictReader(csvfile, delimiter="\t", fieldnames=["run_name", "include"])
+        # Skip the header row
+        next(reader)
+
+        ret = {}
+        for row in reader:
+            ret[row["run_name"]] = bool(int(row["include"]))
+        return ret
+
+
+def exclude_runs(data: dict[str, Any], run_include_mapping: dict[str, bool]) -> dict[str, Any]:
+    """
+    Exclude runs based on the run_include_mapping. If the run is not in the mapping, it is excluded.
+    :param data: The data to process
+    :param run_include_mapping: The mapping of run names to include/exclude
+    :return: The processed data with excluded runs
+    """
+    runs = data["runs"]
+    runs_out = []
+    for entry in runs:
+        if run_include_mapping.get(entry["run_name"], True):
+            runs_out.append(entry)
+        else:
+            print(f"Excluding run {entry['run_name']}")
+
+    data["runs"] = runs_out
+    return data
+
+
 def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> None:
     for entity in entities:
         for source in entity["sources"]:
@@ -581,6 +674,47 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
             source["parent_filters"]["exclude"]["run"].extend(runs_to_exclude)
 
 
+def handle_per_run_param_maps(
+    data: list[dict[str, Any]],
+    run_data_map: dict,
+    per_run_mapping: dict[str, dict[str, float]] | dict[str, dict[str, str]],
+    param_type="float",
+    only_check: list[str] = None,
+) -> tuple[dict[str, str | float | None], dict]:
+    """
+    Handle per-run parameter mappings. The function finds distinct values for each parameter in the per_run_mapping
+    and either passes a single value (if only one distinct value is found) or creates a formatted string for the field
+    and appends the values to the run_data_map.
+    :param data: The data for the dataset
+    :param run_data_map: The run data map to store the per-run values
+    :param per_run_mapping: The mapping of parameter to run name to value param_name -> {run_name -> value}
+    :param param_type: The type of parameter (float or string)
+    :param only_check: List of parameters to check for distinct values. All other keys will be ignored.
+    :return: tuple of the formatted values for the dataset and the updated run_data_map
+    """
+    target_params = only_check or per_run_mapping.keys()
+    distinct_values = {param: defaultdict(list) for param in target_params}
+    for entry in data:
+        run_name = entry["run_name"]
+        for param_name in distinct_values:
+            param_value = per_run_mapping[param_name].get(run_name, 0.0)
+            distinct_values[param_name][param_value].append(run_name)
+
+    ret = {}
+
+    for param_name, value_by_runs in distinct_values.items():
+        if len(value_by_runs) == 0:
+            ret[param_name] = None
+        elif len(value_by_runs) == 1:
+            ret[param_name] = next(iter(value_by_runs.keys()))
+        else:
+            ret[param_name] = f"{param_type} {{{param_name}}}"
+            for param_value, runs in value_by_runs.items():
+                for run_name in runs:
+                    run_data_map[run_name][param_name] = param_value
+    return ret, run_data_map
+
+
 @cli.command()
 @click.argument("input_dir", required=True, type=str)
 @click.argument("output_dir", type=str, default="../dataset_configs/gjensen")
@@ -589,6 +723,8 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     """
     Create dataset configs for Grant Jensen datasets from the data czii-data-portal-processing repository. The db data
     is store in the path czii-data-portal-processing/src/data_portal_processing/jensendb.
+    Requires the latest version of https://github.com/czimaginginstitute/czii-data-portal-processing repository's
+    src/data_portal_processing/jensendb to be available locally.
     :param ctx:
     :param input_dir: Path to the local jensendb directory containing the input files. "
     :param output_dir: The output directory to store the dataset configs.
@@ -603,14 +739,21 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     fs.makedirs(run_tomo_map_path)
     fs.makedirs(run_frames_map_path)
     cross_reference_mapping = get_cross_reference_mapping(input_dir)
+    per_run_float_mapping = get_per_run_float_mapping(input_dir)
+    per_run_string_mapping = get_per_run_string_mapping(input_dir)
+    run_include_mapping = get_included_run_map(input_dir)
+
     deposition_mapping = get_deposition_map(input_dir)
+
     deposition_entity_by_id = create_deposition_entity_map(input_dir, cross_reference_mapping, deposition_mapping)
     file_paths = fs.glob(os.path.join(input_dir, "portal_[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
         with open(file_path, "r") as file:
             val = json.load(file)
+
         print(f"Processing file {file_path}")
+        val = exclude_runs(val, run_include_mapping)
         dataset_id = val.get("dataset", {}).get("czportal_dataset_id")
         if not dataset_id or dataset_id > 10300:
             print(f"Skipping dataset with id: {dataset_id}")
@@ -620,6 +763,12 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
         authors = to_author(val.get("dataset")["authors"], deposition_entity.get("metadata", {}).get("authors"))
 
         run_data_map = defaultdict(dict)
+        dataset_data_map, run_data_map = handle_per_run_param_maps(
+            val.get("runs"),
+            run_data_map,
+            per_run_float_mapping,
+            only_check=["frame_dose_rate"],
+        )
         dataset_config = {
             "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
             "depositions": [deposition_entity],
@@ -628,7 +777,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 dataset_id,
                 val.get("runs"),
                 run_data_map,
-                partial(to_tiltseries),
+                partial(to_tiltseries, per_run_float_mapping, per_run_string_mapping),
                 "ts",
             ),
             "tomograms": to_config_by_run(
@@ -647,6 +796,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
                 run_tomo_map_path,
                 run_frames_map_path,
                 deposition_mapping.get(dataset_id),
+                dataset_data_map["frame_dose_rate"],
             ),
         }
 
@@ -663,9 +813,20 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
             f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tilt_series", {}).get("tilt_series_path")
         ]:
             exclude_runs_parent_filter(updated_dataset_config.get("tiltseries", []), runs_without_tilt)
+            exclude_runs_parent_filter(updated_dataset_config.get("frames", []), runs_without_tilt)
+            exclude_runs_parent_filter(updated_dataset_config.get("ctfs", []), runs_without_tilt)
+            exclude_runs_parent_filter(updated_dataset_config.get("rawtlts", []), runs_without_tilt)
+            exclude_runs_parent_filter(updated_dataset_config.get("collection_metadata", []), runs_without_tilt)
         # Add filter to exclude runs for tomograms that have no tomograms specified
         if runs_without_tomogram := [f"^{run['run_name']}$" for run in val.get("runs") if not run.get("tomograms")]:
             exclude_runs_parent_filter(updated_dataset_config.get("voxel_spacings", []), runs_without_tomogram)
+
+        # If there are no tiltseries, remove frames, rawtlts, ctfs, and collection_metadata
+        if not updated_dataset_config.get("tiltseries"):
+            updated_dataset_config.pop("frames", None)
+            updated_dataset_config.pop("rawtlts", None)
+            updated_dataset_config.pop("ctfs", None)
+            updated_dataset_config.pop("collection_metadata", None)
 
         with open(dataset_config_file_path, "w") as outfile:
             yaml.dump(updated_dataset_config, outfile, sort_keys=True)
