@@ -1,0 +1,274 @@
+id: metadata
+name: cdp-meta-files
+version: 2.0.0
+prefixes:
+  linkml: https://w3id.org/linkml/
+  ORCID: https://orcid.org/
+  ROR: https://ror.org/
+  UBERON: http://purl.obolibrary.org/obo/UBERON_
+  CL: http://purl.obolibrary.org/obo/CL_
+  GO: http://purl.obolibrary.org/obo/GO_
+imports:
+  - linkml:types
+  - ../../core/v2.0.0/codegen/metadata_materialized
+  - ../../core/v2.0.0/common
+default_range: Any
+default_prefix: cdp-meta-files
+
+classes:
+  # ============================================================================
+  # Default Mixin
+  # ============================================================================
+  DefaultMetadata:
+    description: |
+      Default metadata for metadata files.
+    attributes:
+      deposition_id:
+        exact_mappings:
+          - cdp-common:deposition_identifier
+      last_updated_at:
+        exact_mappings:
+          - cdp-common:last_updated_at
+  # ============================================================================
+
+  # ============================================================================
+  # Alignment Metadata
+  # ============================================================================
+  AlignmentMetadata:
+    is_a: Alignment
+    description: |
+      Metadata describing a tomographic alignment entity.
+    mixins:
+      - DefaultMetadata
+    attributes:
+      per_section_alignment_parameters:
+        description: The alignment parameters for each section of the tilt series.
+        range: PerSectionAlignmentParameters
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+      alignment_path:
+        exact_mappings:
+          - cdp-common:alignment_path
+      tilt_path:
+        exact_mappings:
+          - cdp-common:alignment_tilt_path
+      tiltx_path:
+        exact_mappings:
+          - cdp-common:alignment_tiltx_path
+      tiltseries_path:
+        exact_mappings:
+          - cdp-common:alignment_tiltseries_path
+      files:
+        exact_mappings:
+          - cdp-common:alignment_files
+    slot_usage:
+      format:
+        required: false
+
+  # ============================================================================
+
+  # ============================================================================
+  # Annotation Metadata
+  # ============================================================================
+  AnnotationFileMetadata:
+    description: Metadata relating to an annotation file.
+    attributes:
+      format:
+        description: The format of the annotation file.
+        range: cdp-common:annotation_file_format_enum
+        required: true
+      path:
+        description: The path to the annotation file.
+        range: string
+        required: true
+      shape:
+        description: The shape type of the annotation file.
+        range: cdp-common:annotation_file_shape_type_enum
+        required: true
+      is_visualization_default:
+        description: Whether the annotation file is selected for visualization by default.
+        range: boolean
+        required: true
+
+  AnnotationMetadata:
+    is_a: Annotation
+    description: |
+      Metadata describing an annotation.
+    mixins:
+      - DefaultMetadata
+    attributes:
+      files:
+        description: The file metadata associated with the annotation.
+        range: AnnotationFileMetadata
+        multivalued: true
+        inlined_as_list: true
+      alignment_metadata_path:
+        exact_mappings:
+          - cdp-common:annotation_alignment_metadata_path
+
+  # ============================================================================
+
+  # ============================================================================
+  # Frames Metadata
+  # ============================================================================
+  PerFrameMetadata:
+    description: Per-movie stack metadata.
+    attributes:
+      acquisition_order:
+        exact_mappings:
+          - cdp-common:frames_acquisition_order
+      accumulated_dose:
+        exact_mappings:
+          - cdp-common:frames_accumulated_dose
+      exposure_dose:
+        exact_mappings:
+          - cdp-common:frames_exposure_dose
+      is_gain_corrected:
+        exact_mappings:
+          - cdp-common:frames_is_gain_corrected
+      path:
+        exact_mappings:
+          - cdp-common:frames_path
+
+  FramesMetadata:
+    description: |
+      Metadata for movie stack files and acquisition conditions of a run.
+    mixins:
+      - DefaultMetadata
+    attributes:
+      dose_rate:
+        exact_mappings:
+          - cdp-common:frames_dose_rate
+      is_gain_corrected:
+        exact_mappings:
+          - cdp-common:frames_is_gain_corrected
+      frames:
+        description: The frames metadata for each movie stack.
+        range: PerFrameMetadata
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+      frames_acquisition_file:
+        exact_mappings:
+          - cdp-common:frames_acquisition_file
+  # ============================================================================
+
+  # ============================================================================
+  # Dataset Metadata
+  # ============================================================================
+  DatasetMetadata:
+    is_a: Dataset
+    description: |
+      Metadata describing a dataset.
+    mixins:
+      - PicturedMetadataEntity
+      - DefaultMetadata
+
+  # ============================================================================
+
+  # ============================================================================
+  # Deposition Metadata
+  # ============================================================================
+  DepositionMetadata:
+    is_a: Deposition
+    description: |
+      Metadata describing a deposition.
+    mixins:
+      - PicturedMetadataEntity
+      - DefaultMetadata
+
+  # ============================================================================
+
+  # ============================================================================
+  # Run Metadata
+  # ============================================================================
+  RunMetadata:
+    description: |
+      Metadata pertaining to this run.
+    attributes:
+      run_name:
+        exact_mappings:
+          - cdp-common:metadata_run_name
+
+  # ============================================================================
+
+  # ============================================================================
+  # Tilt series Metadata
+  # ============================================================================
+  TiltSeriesMetadata:
+    is_a: TiltSeries
+    description: |
+      Metadata describing a tilt series.
+    attributes:
+      size:
+        description: The size in pixels of the original tilt series.
+        range: TiltSeriesSize
+        required: true
+      scales:
+        description: The size in pixels of the tilt series multiscale levels.
+        range: TiltSeriesSize
+        multivalued: true
+        inlined_as_list: true
+      omezarr_dir:
+        exact_mappings:
+          - cdp-common:tiltseries_metadata_omezarr_dir
+      mrc_file:
+        exact_mappings:
+          - cdp-common:tiltseries_metadata_mrc_file
+      run_name:
+        exact_mappings:
+          - cdp-common:metadata_run_name
+      raw_tlt_path:
+        exact_mappings:
+          - cdp-common:tiltseries_metadata_raw_tlt_path
+      ctf_path:
+        exact_mappings:
+          - cdp-common:tiltseries_metadata_ctf_path
+      #TODO: pluralize this
+      per_section_parameter:
+        description: Parameters for each section of the associated tilt series.
+        range: PerSectionParameter
+        multivalued: true
+        inlined_as_list: true
+        list_elements_ordered: true
+    mixins:
+      - DefaultMetadata
+
+  # ============================================================================
+
+  # ============================================================================
+  # Tomogram Metadata
+  # ============================================================================
+  TomogramMetadata:
+    is_a: Tomogram
+    description: |
+      Metadata describing a tomogram.
+    mixins:
+      - DefaultMetadata
+    attributes:
+      scales:
+        description: The size in voxels of the tomogram multiscale levels.
+        range: TomogramSize
+        multivalued: true
+        inlined_as_list: true
+      omezarr_dir:
+        exact_mappings:
+          - cdp-common:tomogram_metadata_omezarr_dir
+      mrc_file:
+        exact_mappings:
+          - cdp-common:tomogram_metadata_mrc_file
+      run_name:
+        exact_mappings:
+          - cdp-common:metadata_run_name
+      key_photo:
+        range: MetadataPicturePath
+      alignment_metadata_path:
+        exact_mappings:
+          - cdp-common:tomogram_alignment_metadata_path
+      neuroglancer_config_path:
+        exact_mappings:
+          - cdp-common:tomogram_neuroglancer_config_path
+
+  # ============================================================================
+

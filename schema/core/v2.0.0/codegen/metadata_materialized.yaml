@@ -462,6 +462,23 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+  annotation_file_format_enum:
+    name: annotation_file_format_enum
+    description: Describes the format of the annotation file
+    from_schema: metadata
+    permissible_values:
+      mrc:
+        text: mrc
+        description: MRC format
+      zarr:
+        text: zarr
+        description: OMEZARR format
+      ndjson:
+        text: ndjson
+        description: NDJSON format
+      glb:
+        text: glb
+        description: GLB format
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -660,6 +677,7 @@ classes:
         owner: PicturePath
         domain_of:
         - PicturePath
+        - MetadataPicturePath
         range: URLorS3URI
         recommended: true
         inlined: true
@@ -676,11 +694,50 @@ classes:
         owner: PicturePath
         domain_of:
         - PicturePath
+        - MetadataPicturePath
         range: URLorS3URI
         recommended: true
         inlined: true
         inlined_as_list: true
         pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
+  MetadataPicturePath:
+    name: MetadataPicturePath
+    description: A set of paths to representative images of a piece of data for metadata
+      files.
+    from_schema: metadata
+    attributes:
+      snapshot:
+        name: snapshot
+        description: Relative path (non-URL/URI) to the dataset preview image relative
+          to the dataset directory root.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:metadata_snapshot
+        alias: snapshot
+        owner: MetadataPicturePath
+        domain_of:
+        - PicturePath
+        - MetadataPicturePath
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      thumbnail:
+        name: thumbnail
+        description: Relative path (non-URL/URI) to the thumbnail of preview image
+          relative to the dataset directory root.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:metadata_thumbnail
+        alias: thumbnail
+        owner: MetadataPicturePath
+        domain_of:
+        - PicturePath
+        - MetadataPicturePath
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
   Author:
     name: Author
     description: Author of a scientific data entity.
@@ -1052,7 +1109,27 @@ classes:
         owner: PicturedEntity
         domain_of:
         - PicturedEntity
+        - PicturedMetadataEntity
         range: PicturePath
+        required: true
+        inlined: true
+        inlined_as_list: true
+  PicturedMetadataEntity:
+    name: PicturedMetadataEntity
+    description: An entity with associated preview images for metadata files.
+    from_schema: metadata
+    attributes:
+      key_photos:
+        name: key_photos
+        description: A set of paths to representative images of a piece of data for
+          metadata files.
+        from_schema: metadata
+        alias: key_photos
+        owner: PicturedMetadataEntity
+        domain_of:
+        - PicturedEntity
+        - PicturedMetadataEntity
+        range: MetadataPicturePath
         required: true
         inlined: true
         inlined_as_list: true
@@ -1969,6 +2046,218 @@ classes:
             symbol: °
             descriptive_name: degrees
         - range: FloatFormattedString
+  PerSectionParameter:
+    name: PerSectionParameter
+    description: Parameters for a section of a tilt series.
+    from_schema: metadata
+    attributes:
+      z_index:
+        name: z_index
+        description: z-index of the frame in the tiltseries
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_z_index
+        alias: z_index
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        - PerSectionAlignmentParameters
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      frame_acquisition_order:
+        name: frame_acquisition_order
+        description: The 0-based index of this movie stack in the order of acquisition.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:frames_acquisition_order
+        alias: frame_acquisition_order
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      raw_angle:
+        name: raw_angle
+        description: Nominal angle of the tilt series section.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_nominal_tilt_angle
+        alias: raw_angle
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: -90
+        maximum_value: 90
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      astigmatic_angle:
+        name: astigmatic_angle
+        description: Angle of astigmatism.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_astigmatic_angle
+        alias: astigmatic_angle
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: -180
+        maximum_value: 180
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      minor_defocus:
+        name: minor_defocus
+        description: Minor axis defocus amount, underfocus is positive.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_minor_defocus
+        alias: minor_defocus
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: angstrom
+      major_defocus:
+        name: major_defocus
+        description: Major axis defocus amount, underfocus is positive.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_major_defocus
+        alias: major_defocus
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: angstrom
+      max_resolution:
+        name: max_resolution
+        description: Maximum resolution of the CTF fit for this section.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_max_resolution
+        alias: max_resolution
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: angstrom
+      phase_shift:
+        name: phase_shift
+        description: Phase shift measured for this section.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_phase_shift
+        alias: phase_shift
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: rad
+          descriptive_name: radians
+      cross_correlation:
+        name: cross_correlation
+        description: CTF fit cross correlation value for this section.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_cross_correlation
+        alias: cross_correlation
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+  TiltSeriesSize:
+    name: TiltSeriesSize
+    description: The size of a tiltseries in sctions/pixels in each dimension.
+    from_schema: metadata
+    attributes:
+      x:
+        name: x
+        description: Number of pixels in the 2D data fast axis
+        from_schema: metadata
+        alias: x
+        owner: TiltSeriesSize
+        domain_of:
+        - TiltSeriesSize
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+        unit:
+          symbol: px
+          descriptive_name: pixels
+      y:
+        name: y
+        description: Number of pixels in the 2D data medium axis
+        from_schema: metadata
+        alias: y
+        owner: TiltSeriesSize
+        domain_of:
+        - TiltSeriesSize
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+        unit:
+          symbol: px
+          descriptive_name: pixels
+      z:
+        name: z
+        description: Number of sections in the 2D stack.
+        from_schema: metadata
+        alias: z
+        owner: TiltSeriesSize
+        domain_of:
+        - TiltSeriesSize
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+        unit:
+          descriptive_name: sections
   TiltSeries:
     name: TiltSeries
     description: Metadata describing a tilt series.
@@ -2348,6 +2637,7 @@ classes:
         alias: x
         owner: TomogramSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2367,6 +2657,7 @@ classes:
         alias: y
         owner: TomogramSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2387,6 +2678,7 @@ classes:
         alias: z
         owner: TomogramSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2412,6 +2704,7 @@ classes:
         alias: x
         owner: TomogramOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2430,6 +2723,7 @@ classes:
         alias: y
         owner: TomogramOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2448,6 +2742,7 @@ classes:
         alias: z
         owner: TomogramOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2658,7 +2953,6 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        - Alignment
         range: TomogramOffset
         required: true
         inlined: true
@@ -4041,6 +4335,7 @@ classes:
         alias: x
         owner: AlignmentSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4063,6 +4358,7 @@ classes:
         alias: y
         owner: AlignmentSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4085,6 +4381,7 @@ classes:
         alias: z
         owner: AlignmentSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4114,6 +4411,7 @@ classes:
         alias: x
         owner: AlignmentOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4137,6 +4435,7 @@ classes:
         alias: y
         owner: AlignmentOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4160,6 +4459,7 @@ classes:
         alias: z
         owner: AlignmentOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4175,6 +4475,123 @@ classes:
         any_of:
         - range: float
         - range: FloatFormattedString
+  PerSectionAlignmentParameters:
+    name: PerSectionAlignmentParameters
+    description: Alignment parameters for one section of a tilt series.
+    from_schema: metadata
+    attributes:
+      z_index:
+        name: z_index
+        description: z-index of the frame in the tiltseries
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_z_index
+        alias: z_index
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionParameter
+        - PerSectionAlignmentParameters
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      tilt_angle:
+        name: tilt_angle
+        description: Tilt angle of the projection in degrees
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_alignment_tilt_angle
+        alias: tilt_angle
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      volume_x_rotation:
+        name: volume_x_rotation
+        description: Additional X rotation of the reconstruction volume in degrees
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:alignment_volume_x_rotation
+        alias: volume_x_rotation
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      in_plane_rotation:
+        name: in_plane_rotation
+        description: In-plane rotation of the projection as a rotation matrix.
+        from_schema: metadata
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+          - exact_cardinality: 2
+          - exact_cardinality: 2
+        alias: in_plane_rotation
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+      x_offset:
+        name: x_offset
+        description: In-plane X-shift of the projection in angstrom
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_alignment_x_offset
+        alias: x_offset
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      y_offset:
+        name: y_offset
+        description: In-plane Y-shift of the projection in angstrom
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_alignment_y_offset
+        alias: y_offset
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      beam_tilt:
+        name: beam_tilt
+        description: Beam tilt during projection in degrees
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_alignment_beam_tilt
+        alias: beam_tilt
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
   Alignment:
     name: Alignment
     from_schema: metadata
@@ -4191,24 +4608,23 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^LOCAL$)|(^GLOBAL$)
-      offset:
-        name: offset
+      volume_offset:
+        name: volume_offset
         description: The offset of a alignment in voxels in each dimension relative
           to the canonical tomogram.
         from_schema: metadata
-        alias: offset
+        alias: volume_offset
         owner: Alignment
         domain_of:
-        - Tomogram
         - Alignment
         range: AlignmentOffset
         inlined: true
         inlined_as_list: true
-      volume_dimesion:
-        name: volume_dimesion
+      volume_dimension:
+        name: volume_dimension
         description: The size of an alignment in voxels in each dimension.
         from_schema: metadata
-        alias: volume_dimesion
+        alias: volume_dimension
         owner: Alignment
         domain_of:
         - Alignment

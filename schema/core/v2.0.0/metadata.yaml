@@ -30,6 +30,16 @@ classes:
         exact_mappings:
           - cdp-common:thumbnail
 
+  MetadataPicturePath:
+    description: A set of paths to representative images of a piece of data for metadata files.
+    attributes:
+      snapshot:
+        exact_mappings:
+          - cdp-common:metadata_snapshot
+      thumbnail:
+        exact_mappings:
+          - cdp-common:metadata_thumbnail
+
   # ============================================================================
 
   # ============================================================================
@@ -122,6 +132,14 @@ classes:
       key_photos:
         range: PicturePath
         description: A set of paths to representative images of the entity.
+        required: true
+
+  PicturedMetadataEntity:
+    description: An entity with associated preview images for metadata files.
+    attributes:
+      key_photos:
+        range: MetadataPicturePath
+        description: A set of relative paths (non-URL/URI) to representative images of the entity.
         required: true
   # ============================================================================
 
@@ -320,11 +338,86 @@ classes:
         any_of:
           - exact_mappings: cdp-common:tiltseries_tilt_max
           - range: cdp-common:FloatFormattedString
+
+  PerSectionParameter:
+    description: Parameters for a section of a tilt series.
+    attributes:
+      z_index:
+        exact_mappings:
+          - cdp-common:per_section_z_index
+      frame_acquisition_order:
+        exact_mappings:
+          - cdp-common:frames_acquisition_order
+      raw_angle:
+        exact_mappings:
+          - cdp-common:per_section_nominal_tilt_angle
+      astigmatic_angle:
+        exact_mappings:
+          - cdp-common:per_section_astigmatic_angle
+      minor_defocus:
+        exact_mappings:
+          - cdp-common:per_section_minor_defocus
+      major_defocus:
+        exact_mappings:
+          - cdp-common:per_section_major_defocus
+      max_resolution:
+        exact_mappings:
+          - cdp-common:per_section_max_resolution
+      phase_shift:
+        exact_mappings:
+          - cdp-common:per_section_phase_shift
+      cross_correlation:
+        exact_mappings:
+          - cdp-common:per_section_cross_correlation
+
   # ============================================================================
 
   # ============================================================================
   # tiltseries_metadata.json
   # ============================================================================
+  TiltSeriesSize:
+    description: &desc_tiltseries_size The size of a tiltseries in sctions/pixels in each dimension.
+    attributes:
+      x:
+        range: integer
+        minimum_value: 0
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #     minimum_value: 0
+        #   - range: IntegerFormattedString
+        required: true
+        description: Number of pixels in the 2D data fast axis
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      y:
+        range: integer
+        minimum_value: 0
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #     minimum_value: 0
+        #   - range: IntegerFormattedString
+        required: true
+        description: Number of pixels in the 2D data medium axis
+        unit:
+          descriptive_name: pixels
+          symbol: px
+      z:
+        range: integer
+        minimum_value: 0
+        # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+        # any_of:
+        #   - range: integer
+        #     minimum_value: 0
+        #   - range: IntegerFormattedString
+        required: true
+        description: Number of sections in the 2D stack.
+        unit:
+          descriptive_name: sections
+
+
   TiltSeries:
     description: Metadata describing a tilt series.
 
@@ -713,7 +806,6 @@ classes:
     mixins:
       - DateStampedEntity
       - AuthoredEntity
-
     attributes:
       annotation_method:
         exact_mappings:
@@ -827,16 +919,45 @@ classes:
           descriptive_name: Angstrom
           symbol: Å
 
+  PerSectionAlignmentParameters:
+    description: Alignment parameters for one section of a tilt series.
+    attributes:
+      z_index:
+        exact_mappings:
+          - cdp-common:per_section_z_index
+      tilt_angle:
+        exact_mappings:
+          - cdp-common:per_section_alignment_tilt_angle
+      volume_x_rotation:
+        exact_mappings:
+          - cdp-common:alignment_volume_x_rotation
+      in_plane_rotation:
+        description: In-plane rotation of the projection as a rotation matrix.
+        range: float
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+            - exact_cardinality: 2
+            - exact_cardinality: 2
+      x_offset:
+        exact_mappings:
+          - cdp-common:per_section_alignment_x_offset
+      y_offset:
+        exact_mappings:
+          - cdp-common:per_section_alignment_y_offset
+      beam_tilt:
+        exact_mappings:
+          - cdp-common:per_section_alignment_beam_tilt
 
   Alignment:
     attributes:
       alignment_type:
         description: The type of alignment.
         range: alignment_type_enum
-      offset:
+      volume_offset:
         description: *desc_alignment_offset
         range: AlignmentOffset
-      volume_dimesion:
+      volume_dimension:
         description: *desc_alignment_size
         range: AlignmentSize
       x_rotation_offset:
