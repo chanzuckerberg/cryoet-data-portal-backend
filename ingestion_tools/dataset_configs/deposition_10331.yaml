@@ -67,7 +67,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: zarr
-          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_bacteria-multilabel.zarr'
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_bacteria-multilabel.zarr'
           is_visualization_default: true
           threshold: 0.5
         parent_filters:
@@ -147,7 +147,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: zarr
-          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_granules-multilabel.zarr'
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_granules-multilabel.zarr'
           is_visualization_default: true
           threshold: 0.5
         parent_filters:
