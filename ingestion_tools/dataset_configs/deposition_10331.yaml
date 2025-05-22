@@ -30,13 +30,18 @@ annotations:
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_bacteria-multilabel.zarr'
           is_visualization_default: true
           threshold: 0.5
+        parent_filters:
+          include:
+            dataset:
+              - '10062'
+              - '10064'
       - InstanceSegmentation:
           binning: 15.600
           file_format: copick
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
           is_visualization_default: true
           order: xyz
-      - parent_filters:
+        parent_filters:
           include:
             dataset:
               - '10062'
@@ -65,13 +70,18 @@ annotations:
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_bacteria-multilabel.zarr'
           is_visualization_default: true
           threshold: 0.5
+        parent_filters:
+          include:
+            dataset:
+              - '10077'
+              - '10084'
       - InstanceSegmentation:
           binning: 16.800
           file_format: copick
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
           is_visualization_default: true
           order: xyz
-      - parent_filters:
+        parent_filters:
           include:
             dataset:
               - '10077'
@@ -100,13 +110,18 @@ annotations:
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_granules-multilabel.zarr'
           is_visualization_default: true
           threshold: 0.5
+        parent_filters:
+          include:
+            dataset:
+              - '10062'
+              - '10064'
       - InstanceSegmentation:
           binning: 15.600
           file_format: copick
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
           is_visualization_default: true
           order: xyz
-      - parent_filters:
+        parent_filters:
           include:
             dataset:
               - '10062'
@@ -135,13 +150,18 @@ annotations:
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_granules-multilabel.zarr'
           is_visualization_default: true
           threshold: 0.5
+        parent_filters:
+          include:
+            dataset:
+              - '10077'
+              - '10084'
       - InstanceSegmentation:
           binning: 16.800
           file_format: copick
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
           is_visualization_default: true
           order: xyz
-      - parent_filters:
+        parent_filters:
           include:
             dataset:
               - '10077'
@@ -171,13 +191,17 @@ annotations:
           is_visualization_default: true
           threshold: 0.5
           rescale: true
+        parent_filters:
+          include:
+            dataset:
+              - '10442'
       - InstanceSegmentation:
           binning: 5.006
           file_format: copick
           glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
           is_visualization_default: true
           order: xyz
-      - parent_filters:
+        parent_filters:
           include:
             dataset:
               - '10442'
@@ -202,17 +226,11 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: zarr
-          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/10.000_SABER_2_lysosomes-multilabel.zarr'
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/10.000_SABER_2_lysosome-multilabel.zarr'
           is_visualization_default: true
           threshold: 0.5
           rescale: true
-      - InstanceSegmentation:
-          binning: 4.99
-          file_format: copick
-          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_2_lysosomes.json'
-          is_visualization_default: true
-          order: xyz
-      - parent_filters:
+        parent_filters:
           include:
             dataset:
               - '10444'
