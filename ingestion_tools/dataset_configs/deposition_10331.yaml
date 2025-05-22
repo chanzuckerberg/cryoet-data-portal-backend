@@ -234,9 +234,9 @@ depositions:
         deposition_date: '2025-05-22'
         last_modified_date: '2025-05-22'
         release_date: '2025-05-22'
-      deposition_description: "This deposition contains segmentations of whole cells, lysosomes and components of 
+      deposition_description: "This deposition contains segmentations of whole cells, lysosomes and components of
       bacterial cells. The segmentations were generated using the SABER package, which is a SAM2-based segmentation
-      framework that uses an expert-in-the-loop approach to refine segmentations based on the embedding space of SAM2. 
+      framework that uses an expert-in-the-loop approach to refine segmentations based on the embedding space of SAM2.
       Segmentations are provided as semantic masks, with a point at the center of mask indicating object instances.
       Authors are redacted pending peer review process."
       deposition_identifier: 10330
