@@ -1,0 +1,275 @@
+alignments:
+  - sources:
+      - destination_glob:
+          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          match_regex: .*
+          name_regex: (.*)
+
+annotations:
+  - metadata:
+      annotation_method: Prediction using SABER
+      annotation_object:
+        id: GO:0005622
+        name: intracellular anatomical structure
+      annotation_software: SABER
+      authors:
+        - corresponding_author_status: true
+          name: Anonymous Author
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-05-22'
+        last_modified_date: '2025-05-22'
+        release_date: '2025-05-22'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_bacteria-multilabel.zarr'
+          is_visualization_default: true
+          threshold: 0.5
+      - InstanceSegmentation:
+          binning: 15.600
+          file_format: copick
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
+          is_visualization_default: true
+          order: xyz
+      - parent_filters:
+          include:
+            dataset:
+              - '10062'
+              - '10064'
+  - metadata:
+      annotation_method: Prediction using SABER
+      annotation_object:
+        id: GO:0005622
+        name: intracellular anatomical structure
+      annotation_software: SABER
+      authors:
+        - corresponding_author_status: true
+          name: Anonymous Author
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-05-22'
+        last_modified_date: '2025-05-22'
+        release_date: '2025-05-22'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_bacteria-multilabel.zarr'
+          is_visualization_default: true
+          threshold: 0.5
+      - InstanceSegmentation:
+          binning: 16.800
+          file_format: copick
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
+          is_visualization_default: true
+          order: xyz
+      - parent_filters:
+          include:
+            dataset:
+              - '10077'
+              - '10084'
+  - metadata:
+      annotation_method: Prediction using SABER
+      annotation_object:
+        id: GO:0016234
+        name: inclusion body
+      annotation_software: SABER
+      authors:
+        - corresponding_author_status: true
+          name: Anonymous Author
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-05-22'
+        last_modified_date: '2025-05-22'
+        release_date: '2025-05-22'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_granules-multilabel.zarr'
+          is_visualization_default: true
+          threshold: 0.5
+      - InstanceSegmentation:
+          binning: 15.600
+          file_format: copick
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
+          is_visualization_default: true
+          order: xyz
+      - parent_filters:
+          include:
+            dataset:
+              - '10062'
+              - '10064'
+  - metadata:
+      annotation_method: Prediction using SABER
+      annotation_object:
+        id: GO:0016234
+        name: inclusion body
+      annotation_software: SABER
+      authors:
+        - corresponding_author_status: true
+          name: Anonymous Author
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-05-22'
+        last_modified_date: '2025-05-22'
+        release_date: '2025-05-22'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_granules-multilabel.zarr'
+          is_visualization_default: true
+          threshold: 0.5
+      - InstanceSegmentation:
+          binning: 16.800
+          file_format: copick
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
+          is_visualization_default: true
+          order: xyz
+      - parent_filters:
+          include:
+            dataset:
+              - '10077'
+              - '10084'
+  - metadata:
+      annotation_method: Prediction using SABER
+      annotation_object:
+        id: GO:0005622
+        name: intracellular anatomical structure
+      annotation_software: SABER
+      authors:
+        - corresponding_author_status: true
+          name: Anonymous Author
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-05-22'
+        last_modified_date: '2025-05-22'
+        release_date: '2025-05-22'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/10.000_SABER_1_minicell-multilabel.zarr'
+          is_visualization_default: true
+          threshold: 0.5
+          rescale: true
+      - InstanceSegmentation:
+          binning: 5.006
+          file_format: copick
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
+          is_visualization_default: true
+          order: xyz
+      - parent_filters:
+          include:
+            dataset:
+              - '10442'
+  - metadata:
+      annotation_method: Prediction using SABER
+      annotation_object:
+        id: GO:0005764
+        name: lysosome
+      annotation_software: SABER
+      authors:
+        - corresponding_author_status: true
+          name: Anonymous Author
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-05-22'
+        last_modified_date: '2025-05-22'
+        release_date: '2025-05-22'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/10.000_SABER_2_lysosomes-multilabel.zarr'
+          is_visualization_default: true
+          threshold: 0.5
+          rescale: true
+      - InstanceSegmentation:
+          binning: 4.99
+          file_format: copick
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_2_lysosomes.json'
+          is_visualization_default: true
+          order: xyz
+      - parent_filters:
+          include:
+            dataset:
+              - '10444'
+
+datasets:
+  - sources:
+      - source_glob:
+          list_glob: 10???
+          match_regex: .*
+          name_regex: (.*)
+
+depositions:
+  - metadata:
+      authors:
+        - corresponding_author_status: true
+          name: Anonymous Author
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-05-22'
+        last_modified_date: '2025-05-22'
+        release_date: '2025-05-22'
+      deposition_description: "This deposition contains segmentations of whole cells, lysosomes and components of 
+      bacterial cells. The segmentations were generated using the SABER package, which is a SAM2-based segmentation
+      framework that uses an expert-in-the-loop approach to refine segmentations based on the embedding space of SAM2. 
+      Segmentations are provided as semantic masks, with a point at the center of mask indicating object instances.
+      Authors are redacted pending peer review process."
+      deposition_identifier: 10330
+      deposition_title: Expert-in-the-loop guided automatic segmentations of cells and cellular structures using SABER
+      deposition_types:
+        - annotation
+    sources:
+      - literal:
+          value:
+            - 10331
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
+            thumbnail: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: '{dataset_name}/*'
+          match_regex: '.*\.zarr'
+          name_regex: '(.*)\.zarr'
+
+standardization_config:
+  deposition_id: 10331
+  source_prefix: CZII/20250522_sam2/
+
+version: 1.1.0
+voxel_spacings:
+  - sources:
+      - destination_glob:
+          list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+          match_regex: .*
+          name_regex: VoxelSpacing(.*)
