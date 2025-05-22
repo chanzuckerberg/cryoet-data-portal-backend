@@ -258,9 +258,9 @@ deposition_keyphotos:
 runs:
   - sources:
       - source_glob:
-          list_glob: '{dataset_name}/*'
-          match_regex: '.*\.zarr'
-          name_regex: '(.*)\.zarr'
+          list_glob: '{dataset_name}/overlay/ExperimentRuns/*'
+          match_regex: '.*'
+          name_regex: '(.*)'
 
 standardization_config:
   deposition_id: 10331
