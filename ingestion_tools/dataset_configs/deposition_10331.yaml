@@ -257,7 +257,7 @@ depositions:
       framework that uses an expert-in-the-loop approach to refine segmentations based on the embedding space of SAM2.
       Segmentations are provided as semantic masks, with a point at the center of mask indicating object instances.
       Authors are redacted pending peer review process."
-      deposition_identifier: 10330
+      deposition_identifier: 10331
       deposition_title: Expert-in-the-loop guided automatic segmentations of cells and cellular structures using SABER
       deposition_types:
         - annotation
@@ -270,8 +270,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
-            thumbnail: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
+            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10331_snapshot.png"
+            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10331_thumbnail.png"
 
 runs:
   - sources:
