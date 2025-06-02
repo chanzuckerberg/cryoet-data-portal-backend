@@ -34,9 +34,6 @@ class VisualizationConfigImporter(BaseImporter):
             return
 
         tomogram = self.get_tomogram()
-        if not tomogram.get_base_metadata().get("is_visualization_default"):
-            print("Skipping import for tomogram that is not configured for default_visualization")
-            return
         ng_contents = self._create_config(tomogram.alignment_metadata_path)
         meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
         meta.write_metadata(self.get_output_path())
@@ -45,18 +42,27 @@ class VisualizationConfigImporter(BaseImporter):
         # Getting a list of paths to the annotation metadata files using glob instead of using the annotation finder
         # to get all the annotations and not just the ones associated with the current deposition
         annotation_path = self.config.resolve_output_path("annotation_metadata", self, {"annotation_id": "*"})
-        return self.config.fs.glob(os.path.join(annotation_path, "*.json"))
+        # Replace the voxel spacing path with wildcard to get all annotations
+        template_path = annotation_path.replace(
+            f"VoxelSpacing{self.get_voxel_spacing().name}",
+            "VoxelSpacing*",
+        )
+        return self.config.fs.glob(os.path.join(template_path, "*.json"))
 
     def _to_tomogram_layer(
         self,
         tomogram: TomogramImporter,
         volume_info: VolumeInfo,
         resolution: tuple[float, float, float],
+        output_resolution: tuple[float, float, float] | None = None,
     ) -> dict[str, Any]:
+        if output_resolution is None:
+            output_resolution = resolution
         zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
         return state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
+            output_scale=output_resolution,
             url=self.config.https_prefix,
             size=volume_info.get_dimensions(),
             name=self.get_run().name,
@@ -72,14 +78,18 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
+        output_resolution: tuple[float, float, float] | None = None,
         **kwargs,
     ) -> dict[str, Any]:
+        if output_resolution is None:
+            output_resolution = resolution
         return state_generator.generate_segmentation_mask_layer(
             source=source_path,
             name=f"{name_prefix} segmentation",
             url=self.config.https_prefix,
             color=color,
             scale=resolution,
+            output_scale=output_resolution,
             is_visible=file_metadata.get("is_visualization_default"),
         )
 
@@ -91,14 +101,18 @@ class VisualizationConfigImporter(BaseImporter):
         color: str,
         resolution: tuple[float, float, float],
         shape: str,
+        output_resolution: tuple[float, float, float] | None = None,
         **kwargs,
     ) -> dict[str, Any]:
+        if output_resolution is None:
+            output_resolution = resolution
         is_instance_segmentation = shape == "InstanceSegmentation"
         args = {
             "source": source_path,
             "url": self.config.https_prefix,
             "color": color,
             "scale": resolution,
+            "output_scale": output_resolution,
             "is_visible": file_metadata.get("is_visualization_default"),
             "is_instance_segmentation": is_instance_segmentation,
         }
@@ -108,11 +122,47 @@ class VisualizationConfigImporter(BaseImporter):
         args["name"] = f"{name_prefix} point"
         return state_generator.generate_point_layer(**args)
 
-    def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
-        precompute_path = self.config.resolve_output_path("annotation_viz", self)
+    def _find_annotation_metadata(self, metadata_file_name: str, shape: str) -> tuple[str, float] | None:
+        """
+        Find the real path to a metadata file.
 
-        # TODO: Update the annotation metadata to be fetched from all voxel spacings once, we start supporting the
-        #  co-ordinate transformation in neuroglancer
+        If the file for the current voxel spacing doesn't exist,
+        try matching files across all possible voxel spacings.
+        Returns a tuple of (file_path, voxel_spacing_float) or None if no match is found.
+        """
+        precompute_path = self.config.resolve_output_path("annotation_viz", self)
+        shape_suffix = shape.lower()
+        file_path = os.path.join(precompute_path, f"{metadata_file_name}_{shape_suffix}")
+        voxel_spacing = self.get_voxel_spacing().as_float()
+
+        if self.config.fs.exists(file_path):
+            return file_path, voxel_spacing
+
+        # Try finding matching files across all voxel spacings
+        voxel_spacing_name = self.get_voxel_spacing().name
+        base_dir = Path(self.config.resolve_output_path("voxel_spacing", self)).parent
+        file_glob = file_path.replace(f"VoxelSpacing{voxel_spacing_name}", "VoxelSpacing*")
+        matched_files = self.config.fs.glob(file_glob)
+
+        if not matched_files:
+            print(f"File {file_path} not found, skipping annotation {metadata_file_name}")
+            return None
+
+        if len(matched_files) > 1:
+            print(f"Multiple files found for {file_path}, using the first one")
+
+        matched_file_path = matched_files[0]
+        try:
+            relative_path = Path(matched_file_path).relative_to(base_dir)
+        except ValueError:
+            print(f"File {matched_file_path} is not relative to the base directory {base_dir}, skipping")
+            return None
+        voxel_spacing_str = relative_path.parts[0].lstrip("VoxelSpacing")
+        voxel_spacing = round(float(voxel_spacing_str), 3)
+
+        return matched_file_path, voxel_spacing
+
+    def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
         annotation_metadata_paths = self._get_annotation_metadata_files()
         colors_used = []
 
@@ -147,9 +197,9 @@ class VisualizationConfigImporter(BaseImporter):
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
                 hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
 
-                path = self.config.to_formatted_path(
-                    os.path.join(precompute_path, f"{metadata_file_name}_{shape.lower()}"),
-                )
+                file_path, voxel_spacing = self._find_annotation_metadata(metadata_file_name, shape)
+
+                path = self.config.to_formatted_path(file_path)
 
                 is_instance_seg = shape == "InstanceSegmentation"
 
@@ -161,6 +211,7 @@ class VisualizationConfigImporter(BaseImporter):
                         "name_prefix": name_prefix,
                         "color": hex_colors[0],
                         "shape": shape,
+                        "resolution": (voxel_spacing * 1e-10,) * 3,
                     },
                 }
 
@@ -179,7 +230,7 @@ class VisualizationConfigImporter(BaseImporter):
         annotation_layer_info = self.get_annotation_layer_info(alignment_metadata_path)
 
         for _, info in annotation_layer_info.items():
-            args = {**info["args"], "resolution": resolution}
+            args = {**info["args"], "output_resolution": resolution}
 
             if info["shape"] == "SegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
