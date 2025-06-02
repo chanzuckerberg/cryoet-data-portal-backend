@@ -122,13 +122,13 @@ class VisualizationConfigImporter(BaseImporter):
         args["name"] = f"{name_prefix} point"
         return state_generator.generate_point_layer(**args)
 
-    def _find_annotation_metadata(self, metadata_file_name: str, shape: str) -> tuple[str, float] | None:
+    def _find_annotation_metadata(self, metadata_file_name: str, shape: str) -> tuple[str, float, float] | None:
         """
         Find the real path to a metadata file.
 
         If the file for the current voxel spacing doesn't exist,
         try matching files across all possible voxel spacings.
-        Returns a tuple of (file_path, voxel_spacing_float) or None if no match is found.
+        Returns a tuple of (file_path, voxel_spacing_float, ratio) or None if no match is found.
         """
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
         shape_suffix = shape.lower()
@@ -136,7 +136,7 @@ class VisualizationConfigImporter(BaseImporter):
         voxel_spacing = self.get_voxel_spacing().as_float()
 
         if self.config.fs.exists(file_path):
-            return file_path, voxel_spacing
+            return file_path, voxel_spacing, 1.0
 
         # Try finding matching files across all voxel spacings
         voxel_spacing_name = self.get_voxel_spacing().name
@@ -158,9 +158,10 @@ class VisualizationConfigImporter(BaseImporter):
             print(f"File {matched_file_path} is not relative to the base directory {base_dir}, skipping")
             return None
         voxel_spacing_str = relative_path.parts[0].lstrip("VoxelSpacing")
-        voxel_spacing = round(float(voxel_spacing_str), 3)
+        new_voxel_spacing = round(float(voxel_spacing_str), 3)
+        ratio = new_voxel_spacing / voxel_spacing
 
-        return matched_file_path, voxel_spacing
+        return matched_file_path, new_voxel_spacing, ratio
 
     def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
         annotation_metadata_paths = self._get_annotation_metadata_files()
@@ -197,7 +198,7 @@ class VisualizationConfigImporter(BaseImporter):
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
                 hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
 
-                file_path, voxel_spacing = self._find_annotation_metadata(metadata_file_name, shape)
+                file_path, voxel_spacing, ratio = self._find_annotation_metadata(metadata_file_name, shape)
 
                 path = self.config.to_formatted_path(file_path)
 
@@ -205,6 +206,7 @@ class VisualizationConfigImporter(BaseImporter):
 
                 annotation_layer_info[file.get("path")] = {
                     "shape": shape,
+                    "voxel_spacing_ratio": ratio,
                     "args": {
                         "source_path": path,
                         "file_metadata": file,
@@ -228,6 +230,7 @@ class VisualizationConfigImporter(BaseImporter):
         layers = [self._to_tomogram_layer(tomogram, volume_info, resolution)]
 
         annotation_layer_info = self.get_annotation_layer_info(alignment_metadata_path)
+        largest_ratio = 1.0
 
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "output_resolution": resolution}
@@ -236,7 +239,9 @@ class VisualizationConfigImporter(BaseImporter):
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
-        return state_generator.combine_json_layers(layers, scale=resolution)
+            largest_ratio = max(largest_ratio, info.get("voxel_spacing_ratio", 1.0))
+
+        return state_generator.combine_json_layers(layers, scale=resolution, voxel_size_scale=largest_ratio)
 
     @classmethod
     def _get_annotation_name_prefix(cls, metadata: dict[str, Any], stemmed_metadata_path: str) -> str:
