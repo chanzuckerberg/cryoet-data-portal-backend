@@ -56,8 +56,7 @@ class VisualizationConfigImporter(BaseImporter):
         resolution: tuple[float, float, float],
         output_resolution: tuple[float, float, float] | None = None,
     ) -> dict[str, Any]:
-        if output_resolution is None:
-            output_resolution = resolution
+        output_resolution = output_resolution or resolution
         zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
         return state_generator.generate_image_layer(
             zarr_dir_path,
@@ -81,8 +80,7 @@ class VisualizationConfigImporter(BaseImporter):
         output_resolution: tuple[float, float, float] | None = None,
         **kwargs,
     ) -> dict[str, Any]:
-        if output_resolution is None:
-            output_resolution = resolution
+        output_resolution = output_resolution or resolution
         return state_generator.generate_segmentation_mask_layer(
             source=source_path,
             name=f"{name_prefix} segmentation",
@@ -104,8 +102,7 @@ class VisualizationConfigImporter(BaseImporter):
         output_resolution: tuple[float, float, float] | None = None,
         **kwargs,
     ) -> dict[str, Any]:
-        if output_resolution is None:
-            output_resolution = resolution
+        output_resolution = output_resolution or resolution
         is_instance_segmentation = shape == "InstanceSegmentation"
         args = {
             "source": source_path,
