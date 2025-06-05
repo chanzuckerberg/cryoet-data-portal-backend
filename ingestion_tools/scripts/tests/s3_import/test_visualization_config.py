@@ -128,6 +128,7 @@ def test_no_viz_config_for_is_visualization_default_false(
     test_output_bucket: str,
     s3_client: S3Client,
     config: DepositionImportConfig,
+    validate_config: Callable[[str, dict[str, BaseImporter], list[dict]], None],
 ) -> None:
     parents = get_parents(config)
 
@@ -137,10 +138,12 @@ def test_no_viz_config_for_is_visualization_default_false(
     for item in viz_config:
         item.import_item()
 
-    prefix = os.path.join(get_vs_path(parents), "NeuroglancerPrecompute")
+    vs_path = get_vs_path(parents)
+    prefix = os.path.join(vs_path, "NeuroglancerPrecompute")
     config_files = get_children(s3_client, test_output_bucket, prefix)
-    assert set() == config_files
-
+    expected_file_name = "100-neuroglancer_config.json"
+    assert expected_file_name in config_files
+    validate_config(vs_path, parents)
 
 @pytest.fixture(
     params=[
