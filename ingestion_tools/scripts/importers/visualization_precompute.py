@@ -106,6 +106,56 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
     def neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
         return {"is_oriented": True}
 
+    def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
+        # Build the oriented points
+        super().neuroglancer_precompute(output_prefix, voxel_spacing)
+
+        fs = self.config.fs
+        annotation_path = self.annotation.get_output_path()
+
+        metadata = self.annotation.metadata
+
+        # Importing this at runtime instead of compile time since zfpy (a dependency of this
+        # module) cannot be imported successfully on darwin/ARM machines.
+        import cryoet_data_portal_neuroglancer.io as io
+        from cryoet_data_portal_neuroglancer.precompute.instance_mesh import (
+            encode_oriented_mesh,
+        )
+        from cryoet_data_portal_neuroglancer.precompute.mesh import (
+            generate_mesh_from_lods,
+        )
+
+        # Convert the mesh to a precomputed format oriented mesh if a mesh file exists
+        mesh_folder = self.config.get_mesh_folder(self.annotation)
+        obj_name = metadata["annotation_object"]["name"]
+        mesh_filename = obj_name.lower().translate(str.maketrans({"-": "_", " ": "_"}))
+        mesh_file = mesh_folder / f"{mesh_filename}.glb"
+        if mesh_file.exists():
+            print("Loading", mesh_filename, "from", mesh_file)
+            # Generates the precomputed version of the mesh in memory
+            scene = io.load_glb_file(mesh_file)
+            oriented_mesh_at_each_lod = encode_oriented_mesh(
+                scene,
+                self.annotation.get_output_data(annotation_path),
+                max_lod=2,
+                max_faces_for_first_lod=10e6,
+                decimation_aggressiveness=5.5,
+            )
+
+            # Dump the precomputed version on the output folder
+            precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
+            tmp_path = fs.localwritable(precompute_path)
+            oriented_mesh_path = tmp_path.replace("_orientedpoint", "_orientedmesh")
+            print(f"Generating oriented mesh for oriented point in {oriented_mesh_path}")
+            generate_mesh_from_lods(
+                oriented_mesh_at_each_lod,
+                Path(oriented_mesh_path),
+                min_mesh_chunk_dim=2,
+            )
+            fs.push(oriented_mesh_path)
+        else:
+            print(f"No mesh found for '{obj_name}' [looked for '{mesh_filename}' GLB file]")
+
 
 class InstanceSegmentationAnnotationPrecompute(PointAnnotationPrecompute):
     annotation: InstanceSegmentationAnnotation
@@ -142,7 +192,7 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
         # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.precompute import segmentation_mask
 
-        resolution_in_nm = voxel_spacing * 0.1 # original in angstrom
+        resolution_in_nm = voxel_spacing * 0.1  # original in angstrom
         segmentation_mask.encode_segmentation(
             zarr_file_path,
             Path(tmp_path),

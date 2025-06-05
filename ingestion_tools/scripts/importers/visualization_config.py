@@ -169,6 +169,26 @@ class VisualizationConfigImporter(BaseImporter):
 
         return annotation_layer_info
 
+    def _to_mesh_layer(
+        self,
+        source_path: str,
+        file_metadata: dict[str, Any],
+        name_prefix: str,
+        color: str,
+        resolution: tuple[float, float, float],
+        **_,
+    ):
+        args = {
+            "name": f"{name_prefix} orientedmesh",
+            "source": source_path.replace("_orientedpoint", "_orientedmesh"),
+            "url": self.config.https_prefix,
+            "color": color,
+            "scale": resolution,
+            "is_visible": file_metadata.get("is_visualization_default"),
+        }
+
+        return state_generator.generate_oriented_point_mesh_layer(**args)
+
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
@@ -181,10 +201,13 @@ class VisualizationConfigImporter(BaseImporter):
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "resolution": resolution}
 
-            if info["shape"] == "SegmentationMask":
+            shape = info["shape"]
+            if shape == "SegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
-            elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
+            elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
+                if shape == "OrientedPoint":
+                    layers.append(self._to_mesh_layer(**args))
         return state_generator.combine_json_layers(layers, scale=resolution)
 
     @classmethod
