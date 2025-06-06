@@ -72,6 +72,7 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
+        display_mesh: bool,
         **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_segmentation_mask_layer(
@@ -81,6 +82,7 @@ class VisualizationConfigImporter(BaseImporter):
             color=color,
             scale=resolution,
             is_visible=file_metadata.get("is_visualization_default"),
+            display_mesh=display_mesh,
         )
 
     def _to_point_layer(
@@ -189,6 +191,13 @@ class VisualizationConfigImporter(BaseImporter):
 
         return state_generator.generate_oriented_point_mesh_layer(**args)
 
+    def _has_mesh(self, path: str):
+        fs = self.config.fs
+        mesh_folder_path = Path(self.config.output_prefix) / path.replace("_orientedpoint", "_orientedmesh").replace(
+            "_segmentationmask", "_orientedmesh",
+        )
+        return fs.exists(f"{mesh_folder_path}")
+
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
@@ -200,13 +209,18 @@ class VisualizationConfigImporter(BaseImporter):
 
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "resolution": resolution}
-
+            has_mesh = self._has_mesh(args["source_path"])
             shape = info["shape"]
             if shape == "SegmentationMask":
+                if has_mesh:
+                    print(
+                        f"Segmentation layer {args['name_prefix']} as oriented mesh, disabling segmentation mesh display",
+                    )
+                args = {**args, "display_mesh": not has_mesh}
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
-                if shape == "OrientedPoint":
+                if shape == "OrientedPoint" and has_mesh:
                     layers.append(self._to_mesh_layer(**args))
         return state_generator.combine_json_layers(layers, scale=resolution)
 
