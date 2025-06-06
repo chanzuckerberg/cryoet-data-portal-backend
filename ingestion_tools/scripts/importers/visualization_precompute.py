@@ -126,12 +126,18 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
         )
 
         # Convert the mesh to a precomputed format oriented mesh if a mesh file exists
-        mesh_folder = self.config.get_mesh_folder(self.annotation)
+        mesh_folder = next(iter(self.config.glob_files(self.annotation, "**/OrientedMeshes")), None)
+        if not mesh_folder:
+            print("No mesh folder found")
+            return
+
+        mesh_folder = Path(mesh_folder)
         obj_name = metadata["annotation_object"]["name"]
         mesh_filename = obj_name.lower().translate(str.maketrans({"-": "_", " ": "_"}))
         mesh_file = mesh_folder / f"{mesh_filename}.glb"
-        if mesh_file.exists():
-            print("Loading", mesh_filename, "from", mesh_file)
+        local_mesh_file = fs.localreadable(f"{mesh_file}")
+        if fs.exists(local_mesh_file):
+            print("Found mesh for", mesh_filename, "in", mesh_file)
             # Generates the precomputed version of the mesh in memory
             scene = io.load_glb_file(mesh_file)
             oriented_mesh_at_each_lod = encode_oriented_mesh(
