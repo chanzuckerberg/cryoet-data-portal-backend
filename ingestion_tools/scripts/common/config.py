@@ -262,5 +262,5 @@ class DepositionImportConfig:
             return path
         return None
 
-    def get_mesh_folder(self, obj: BaseImporter) -> Path:
+    def get_oriented_mesh_folder(self, obj: BaseImporter) -> Path:
         return Path(self.input_path) / self.get_run_name(obj) / self.oriented_mesh_prefix

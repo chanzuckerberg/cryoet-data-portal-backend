@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from common import colors
 from common.config import DepositionImportConfig
@@ -9,6 +9,7 @@ from importers.annotation import (
     AbstractPointAnnotation,
     BaseAnnotationSource,
     InstanceSegmentationAnnotation,
+    OrientedPointAnnotation,
     VolumeAnnotationSource,
 )
 from importers.base_importer import BaseImporter
@@ -126,13 +127,13 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
         )
 
         # Convert the mesh to a precomputed format oriented mesh if a mesh file exists
-        mesh_folder = next(iter(self.config.glob_files(self.annotation, "**/OrientedMeshes")), None)
+        obj_name = metadata["annotation_object"]["name"]
+        mesh_folder = cast(OrientedPointAnnotation, self.annotation).mesh_folder
         if not mesh_folder:
-            print("No mesh folder found")
+            print(f"No mesh folder found, skipping mesh generation for {obj_name}")
             return
 
         mesh_folder = Path(mesh_folder)
-        obj_name = metadata["annotation_object"]["name"]
         mesh_filename = obj_name.lower().translate(str.maketrans({"-": "_", " ": "_"}))
         mesh_file = mesh_folder / f"{mesh_filename}.glb"
         local_mesh_file = fs.localreadable(f"{mesh_file}")
