@@ -12,6 +12,7 @@ from common.finders import DefaultImporterFactory
 from common.image import VolumeInfo
 from common.metadata import NeuroglancerMetadata
 from importers.base_importer import BaseImporter
+from importers.visualization_precompute import get_annotation_neuroglancer_precompute_path
 
 if TYPE_CHECKING:
     from importers.tomogram import TomogramImporter
@@ -122,7 +123,7 @@ class VisualizationConfigImporter(BaseImporter):
         args["name"] = f"{name_prefix} point"
         return state_generator.generate_point_layer(**args)
 
-    def _find_annotation_metadata(self, metadata_file_name: str, shape: str) -> tuple[str, float, float] | None:
+    def _find_annotation_metadata(self, precomputed_output_path: str, shape: str) -> tuple[str, float, float] | None:
         """
         Find the real path to a metadata file.
 
@@ -130,26 +131,22 @@ class VisualizationConfigImporter(BaseImporter):
         try matching files across all possible voxel spacings.
         Returns a tuple of (file_path, voxel_spacing_float, ratio) or None if no match is found.
         """
-        precompute_path = self.config.resolve_output_path("annotation_viz", self)
-        shape_suffix = shape.lower()
-        file_path = os.path.join(precompute_path, f"{metadata_file_name}_{shape_suffix}")
         voxel_spacing = self.get_voxel_spacing().as_float()
 
-        if self.config.fs.exists(file_path):
-            return file_path, voxel_spacing, 1.0
+        if self.config.fs.exists(precomputed_output_path):
+            return precomputed_output_path, voxel_spacing, 1.0
 
         # Try finding matching files across all voxel spacings
         voxel_spacing_name = self.get_voxel_spacing().name
         base_dir = Path(self.config.resolve_output_path("voxel_spacing", self)).parent
-        file_glob = file_path.replace(f"VoxelSpacing{voxel_spacing_name}", "VoxelSpacing*")
+        file_glob = precomputed_output_path.replace(f"VoxelSpacing{voxel_spacing_name}", "VoxelSpacing*")
         matched_files = self.config.fs.glob(file_glob)
 
         if not matched_files:
-            print(f"File {file_path} not found, skipping annotation {metadata_file_name}")
             return None
 
         if len(matched_files) > 1:
-            print(f"Multiple files found for {file_path}, using the first one")
+            print(f"Multiple files found for {precomputed_output_path}, using the first one")
 
         matched_file_path = matched_files[0]
         try:
@@ -178,18 +175,18 @@ class VisualizationConfigImporter(BaseImporter):
                 continue
             annotation_hash_input = to_base_hash_input(metadata)
 
-            metadata_file_name = Path(annotation_metadata_path).stem
-            if not metadata_file_name.split("-")[0].isdigit():
-                # If the file name does not start with a number, use the id from the directory
-                annotation_id = os.path.basename(os.path.dirname(annotation_metadata_path))
-                metadata_file_name = f"{annotation_id}-{metadata_file_name}"
-            name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
-
             for file in metadata.get("files", []):
                 shape = file.get("shape")
                 if shape not in {"SegmentationMask", "Point", "OrientedPoint", "InstanceSegmentation"}:
                     print(f"Skipping file with unknown shape {shape}")
                     continue
+                output_annotation_path = get_annotation_neuroglancer_precompute_path(
+                    str(Path(annotation_metadata_path).with_suffix("")),
+                    self.config.resolve_output_path("annotation_viz", self),
+                    shape,
+                )
+                metadata_file_name = Path(output_annotation_path).stem
+                name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
 
                 # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
                 if file.get("format") not in {"zarr", "ndjson"}:
@@ -198,8 +195,11 @@ class VisualizationConfigImporter(BaseImporter):
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
                 hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
 
-                file_path, voxel_spacing, ratio = self._find_annotation_metadata(metadata_file_name, shape)
-
+                result = self._find_annotation_metadata(output_annotation_path, shape)
+                if result is None:
+                    print(f"Skipping annotation {output_annotation_path} for shape {shape} as no matching file found")
+                    continue
+                file_path, voxel_spacing, ratio = result
                 path = self.config.to_formatted_path(file_path)
 
                 is_instance_seg = shape == "InstanceSegmentation"

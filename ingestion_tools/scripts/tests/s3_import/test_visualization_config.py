@@ -1,5 +1,6 @@
 import json
 import os.path
+from pathlib import Path
 from typing import Any, Callable
 from unittest.mock import ANY, MagicMock
 
@@ -9,6 +10,7 @@ import pytest
 from importers.base_importer import BaseImporter
 from importers.tomogram import TomogramImporter
 from importers.visualization_config import VisualizationConfigImporter
+from importers.visualization_precompute import get_annotation_neuroglancer_precompute_path
 from importers.voxel_spacing import VoxelSpacingImporter
 from mypy_boto3_s3 import S3Client
 
@@ -221,6 +223,33 @@ def put_annotation_metadata_file(
         "fatty_acid_synthase_complex-1.0.json",
     )
     s3_client.put_object(Bucket=test_output_bucket, Key=annotation_metadata_path, Body=json.dumps(annotation_metadata))
+    return annotation_metadata_path
+
+
+def put_annotation_precompute_dir(
+    s3_client: S3Client,
+    test_output_bucket: str,
+    input_metadata_path: str,
+    output_precompute_path: str,
+    shape: str,
+) -> None:
+    precompute_path = get_annotation_neuroglancer_precompute_path(
+        str(Path(input_metadata_path).with_suffix("")),
+        output_precompute_path,
+        shape,
+    )
+    s3_client.put_object(
+        Bucket=test_output_bucket,
+        Key=precompute_path,
+        Body=b"",
+    )
+    # Add an info file to the precompute directory
+    info_file_path = os.path.join(precompute_path, "info.json")
+    s3_client.put_object(
+        Bucket=test_output_bucket,
+        Key=info_file_path,
+        Body=json.dumps({"key": "value"}).encode("utf-8"),
+    )
 
 
 def test_viz_config_with_tomogram_and_annotation(
@@ -233,9 +262,17 @@ def test_viz_config_with_tomogram_and_annotation(
 ) -> None:
     parents = get_parents(config)
     # Creates annotation metadata file
-    put_annotation_metadata_file(s3_client, test_output_bucket, annotation_usecases, parents)
-
+    input_metadata_path = put_annotation_metadata_file(s3_client, test_output_bucket, annotation_usecases, parents)
     vs_path = get_vs_path(parents)
+    output_precompute_path = os.path.join(vs_path, "NeuroglancerPrecompute")
+    put_annotation_precompute_dir(
+        s3_client,
+        test_output_bucket,
+        input_metadata_path,
+        output_precompute_path,
+        annotation_usecases["shape"],
+    )
+
     anno_layers = []
     if method := annotation_usecases["generator_method"]:
         mock_state_generator.__getattr__(method).return_value = annotation_usecases["generator_return_value"]
@@ -245,8 +282,7 @@ def test_viz_config_with_tomogram_and_annotation(
     for item in viz_config:
         item.import_item()
 
-    prefix = os.path.join(vs_path, "NeuroglancerPrecompute")
-    assert "100-neuroglancer_config.json" in get_children(s3_client, test_output_bucket, prefix)
+    assert "100-neuroglancer_config.json" in get_children(s3_client, test_output_bucket, output_precompute_path)
     validate_config(vs_path, parents, anno_layers)
 
     # If a layer can be generated for an annotation, we should have called the method with the correct args
