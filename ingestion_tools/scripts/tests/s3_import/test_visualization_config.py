@@ -80,6 +80,7 @@ def validate_config(
         mock_state_generator.generate_image_layer.assert_called_once_with(
             os.path.relpath(os.path.join(vs_path, "Tomograms", "100", "TS_run1.zarr"), "output"),
             scale=scale,
+            output_scale=scale,
             url=expected_url,
             name=parents["run"].name,
             start={"x": 0, "y": 0, "z": 0},
@@ -88,7 +89,11 @@ def validate_config(
             rms=tomo_volume_info.rms,
             threedee_contrast_limits=contrast_limits,
         )
-        mock_state_generator.combine_json_layers.assert_called_once_with(layers, scale=scale)
+        mock_state_generator.combine_json_layers.assert_called_once_with(
+            layers,
+            scale=scale,
+            voxel_size_scale=1.0,
+        )
 
     return validate
 
@@ -106,13 +111,19 @@ def mock_state_generator(
     yield state_generator_mock
 
 
+@pytest.mark.parametrize(
+    "is_visualization_default",
+    [True, False],
+)
 def test_viz_config_with_only_tomogram(
     test_output_bucket: str,
     s3_client: S3Client,
     config: DepositionImportConfig,
     validate_config: Callable[[str, dict[str, BaseImporter], list[dict]], None],
+    is_visualization_default: bool,
 ) -> None:
     parents = get_parents(config)
+    parents["tomogram"].metadata["is_visualization_default"] = is_visualization_default
 
     viz_config = list(VisualizationConfigImporter.finder(config, **parents))
     for item in viz_config:
@@ -125,27 +136,6 @@ def test_viz_config_with_only_tomogram(
     assert expected_file_name in config_files
     validate_config(vs_path, parents)
 
-
-def test_no_viz_config_for_is_visualization_default_false(
-    test_output_bucket: str,
-    s3_client: S3Client,
-    config: DepositionImportConfig,
-    validate_config: Callable[[str, dict[str, BaseImporter], list[dict]], None],
-) -> None:
-    parents = get_parents(config)
-
-    parents["tomogram"].metadata["is_visualization_default"] = False
-
-    viz_config = list(VisualizationConfigImporter.finder(config, **parents))
-    for item in viz_config:
-        item.import_item()
-
-    vs_path = get_vs_path(parents)
-    prefix = os.path.join(vs_path, "NeuroglancerPrecompute")
-    config_files = get_children(s3_client, test_output_bucket, prefix)
-    expected_file_name = "100-neuroglancer_config.json"
-    assert expected_file_name in config_files
-    validate_config(vs_path, parents)
 
 @pytest.fixture(
     params=[
@@ -168,7 +158,9 @@ def is_visualization_default(request) -> bool:
 
 @pytest.fixture
 def annotation_usecases(
-    shape_and_format: tuple[str, str], is_visualization_default: bool, expected_url: str,
+    shape_and_format: tuple[str, str],
+    is_visualization_default: bool,
+    expected_url: str,
 ) -> dict[str, Any]:
     shape, format = shape_and_format
     annotation_files = {
@@ -223,7 +215,10 @@ def put_annotation_metadata_file(
         "files": annotation_usecases["annotation_files"],
     }
     annotation_metadata_path = os.path.join(
-        get_vs_path(parents), "Annotations", "100", "fatty_acid_synthase_complex-1.0.json",
+        get_vs_path(parents),
+        "Annotations",
+        "100",
+        "fatty_acid_synthase_complex-1.0.json",
     )
     s3_client.put_object(Bucket=test_output_bucket, Key=annotation_metadata_path, Body=json.dumps(annotation_metadata))
 
@@ -258,10 +253,12 @@ def test_viz_config_with_tomogram_and_annotation(
     if method_name := annotation_usecases["generator_method"]:
         shape = annotation_usecases["shape"].lower()
         precompute_path = f"{vs_path}/NeuroglancerPrecompute/100-fatty_acid_synthase_complex-1.0_{shape}"
+        scale = (parents["voxel_spacing"].as_float() * 1e-10,) * 3
         args = {
             **annotation_usecases["generator_args"],
             "source": os.path.relpath(precompute_path, "output"),
-            "scale": (parents["voxel_spacing"].as_float() * 1e-10,) * 3,
+            "scale": scale,
+            "output_scale": scale,
         }
 
         mock_state_generator.__getattr__(method_name).assert_called_once_with(**args)
