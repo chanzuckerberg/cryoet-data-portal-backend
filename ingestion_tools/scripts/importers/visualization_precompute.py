@@ -14,6 +14,15 @@ from importers.annotation import (
 from importers.base_importer import BaseImporter
 
 
+def get_annotation_neuroglancer_precompute_path(annotation_path: str, output_prefix: str, shape: str) -> str:
+    file_name = os.path.basename(f"{annotation_path}_{shape.lower()}")
+    if not file_name.split("-")[0].isdigit():
+        # If the file name does not start with a number, use the id from the directory
+        annotation_id = os.path.basename(os.path.dirname(annotation_path))
+        file_name = f"{annotation_id}-{file_name}"
+    return os.path.join(output_prefix, file_name, "")
+
+
 class AnnotationVisualizationImporter(BaseImporter):
     type_key = "annotation_viz"
     plural_key = "annotation_viz"
@@ -47,12 +56,7 @@ class BaseAnnotationPrecompute:
         return self.annotation.shape
 
     def _get_neuroglancer_precompute_path(self, annotation_path: str, output_prefix: str) -> str:
-        file_name = os.path.basename(f"{annotation_path}_{self._get_shape().lower()}")
-        if not file_name.split("-")[0].isdigit():
-            # If the file name does not start with a number, use the id from the directory
-            annotation_id = os.path.basename(os.path.dirname(annotation_path))
-            file_name = f"{annotation_id}-{file_name}"
-        return os.path.join(output_prefix, file_name, "")
+        return get_annotation_neuroglancer_precompute_path(annotation_path, output_prefix, self._get_shape())
 
     def neuroglancer_precompute(self, *args, **kwargs) -> None:
         pass
@@ -142,7 +146,7 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
         # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.precompute import segmentation_mask
 
-        resolution_in_nm = voxel_spacing * 0.1 # original in angstrom
+        resolution_in_nm = voxel_spacing * 0.1  # original in angstrom
         segmentation_mask.encode_segmentation(
             zarr_file_path,
             Path(tmp_path),
