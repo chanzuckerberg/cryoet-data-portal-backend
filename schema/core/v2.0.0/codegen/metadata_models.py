@@ -2908,6 +2908,17 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
             }
         },
     )
+    mesh_source_path: Optional[str] = Field(
+        None,
+        description="""The path to the mesh source file associated with an oriented point file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "mesh_source_path",
+                "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
+                "exact_mappings": ["cdp-common:annotation_source_file_mesh_source_path"],
+            }
+        },
+    )
     file_format: str = Field(
         ...,
         description="""File format for this file""",
@@ -3062,6 +3073,17 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_order"],
                 "ifabsent": "string(xyz)",
+            }
+        },
+    )
+    mesh_source_path: Optional[str] = Field(
+        None,
+        description="""The path to the mesh source file associated with an oriented point file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "mesh_source_path",
+                "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
+                "exact_mappings": ["cdp-common:annotation_source_file_mesh_source_path"],
             }
         },
     )
@@ -4931,3 +4953,4 @@ CrossReferencesMixin.model_rebuild()
 CrossReferences.model_rebuild()
 AuthorMixin.model_rebuild()
 Author.model_rebuild()
+
