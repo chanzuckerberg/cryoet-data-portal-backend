@@ -213,7 +213,7 @@ class VisualizationConfigImporter(BaseImporter):
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
-            elif info["shape"] in {"TriangularMeshAnnotation"}:
+            elif info["shape"] in {"TriangularMesh"}:
                 layers.append(self._to_triangular_mesh_layer(**args))
         return state_generator.combine_json_layers(layers, scale=resolution)
 
