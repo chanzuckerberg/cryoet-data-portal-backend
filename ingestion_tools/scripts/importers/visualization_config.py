@@ -111,6 +111,24 @@ class VisualizationConfigImporter(BaseImporter):
         args["name"] = f"{name_prefix} point"
         return state_generator.generate_point_layer(**args)
 
+    def _to_triangular_mesh_layer(
+        self,
+        source_path: str,
+        file_metadata: dict[str, Any],
+        name_prefix: str,
+        color: str,
+        resolution: tuple[float, float, float],
+        **kwargs,
+    ) -> dict[str, Any]:
+        return state_generator.generate_mesh_layer(
+            source=source_path,
+            name=f"{name_prefix} mesh",
+            url=self.config.https_prefix,
+            color=color,
+            scale=resolution,
+            is_visible=file_metadata.get("is_visualization_default"),
+        )
+
     def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
 
@@ -195,6 +213,8 @@ class VisualizationConfigImporter(BaseImporter):
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
+            elif info["shape"] in {"TriangularMeshAnnotation"}:
+                layers.append(self._to_triangular_mesh_layer(**args))
         return state_generator.combine_json_layers(layers, scale=resolution)
 
     @classmethod
