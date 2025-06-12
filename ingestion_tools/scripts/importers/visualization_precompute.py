@@ -7,9 +7,9 @@ from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
 from importers.annotation import (
     AbstractPointAnnotation,
+    AbstractTriangularMeshAnnotation,
     BaseAnnotationSource,
     InstanceSegmentationAnnotation,
-    TriangularMeshAnnotation,
     VolumeAnnotationSource,
 )
 from importers.base_importer import BaseImporter
@@ -157,11 +157,16 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
 
 
 class MeshAnnotatationPrecompute(BaseAnnotationPrecompute):
-    annotation: TriangularMeshAnnotation
+    annotation: AbstractTriangularMeshAnnotation
 
     def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
         fs = self.config.fs
         annotation_path = self.annotation.get_output_path()
+        # TODO this won't correctly handle the annotation group right now
+        # Because the annotation group is a set of glb files
+        # so we need to either create a different segmentation for each glb file
+        # or create a single scene with all the glb files combined
+        # And I'm not sure which one is desired
         precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         tmp_path = fs.localwritable(precompute_path)
         glb_file_path = fs.destformat(self.annotation.get_output_filename(annotation_path, "glb"))
