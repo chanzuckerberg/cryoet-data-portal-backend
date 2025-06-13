@@ -84,6 +84,7 @@ annotations:
             - '{run_name}/Picks/apo-ferritin.star'
           is_visualization_default: true
           order: xyz
+          mesh_source_path: 'mesh_source/ferritin_complex.glb'
 
   - metadata:
       annotation_method: polnet-simulated ground truth
@@ -112,6 +113,7 @@ annotations:
             - '{run_name}/Picks/beta-amylase.star'
           is_visualization_default: true
           order: xyz
+          mesh_source_path: 'mesh_source/beta-amylase.glb'
 
   - metadata:
       annotation_method: polnet-simulated ground truth
@@ -140,6 +142,7 @@ annotations:
             - '{run_name}/Picks/beta-galactoside.star'
           is_visualization_default: true
           order: xyz
+          mesh_source_path: 'mesh_source/beta-galactosidase.glb'
 
   - metadata:
       annotation_method: polnet-simulated ground truth
@@ -168,6 +171,7 @@ annotations:
             - '{run_name}/Picks/ribosome.star'
           is_visualization_default: true
           order: xyz
+          mesh_source_path: 'mesh_source/ribosome.glb'
 
   - metadata:
       annotation_method: polnet-simulated ground truth
@@ -196,6 +200,7 @@ annotations:
             - '{run_name}/Picks/thyroglobulin.star'
           is_visualization_default: true
           order: xyz
+          mesh_source_path: 'mesh_source/thyroglobulin.glb'
 
   - metadata:
       annotation_method: polnet-simulated ground truth
@@ -225,6 +230,8 @@ annotations:
             - '{run_name}/Picks/virus-like-particle.star'
           is_visualization_default: true
           order: xyz
+          mesh_source_path: 'mesh_source/virus_like_capsid.glb'
+
 collection_metadata:
   - sources:
       - source_glob:

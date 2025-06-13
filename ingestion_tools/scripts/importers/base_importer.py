@@ -5,7 +5,13 @@ from typing import TYPE_CHECKING, Any, Optional
 
 from common.copy import copy_by_src
 from common.finders import DepositionObjectImporterFactory
-from common.image import VolumeInfo, get_volume_info, get_volume_metadata, get_voxel_size, make_pyramids
+from common.image import (
+    VolumeInfo,
+    get_volume_info,
+    get_volume_metadata,
+    get_voxel_size,
+    make_pyramids,
+)
 
 if TYPE_CHECKING:
     from common.config import DepositionImportConfig
@@ -39,6 +45,7 @@ class BaseImporter:
         dir_path (str | None): Path in the destination for the entity.
         metadata_path (str | None): Path in the destination for the metadata file.
     """
+
     type_key: str
     plural_key: str
     cached_find_results: dict[str, "BaseImporter"] = {}
@@ -231,6 +238,7 @@ class VolumeImporter(BaseImporter):
         volume_filename (str): The filename of the volume to be imported.
         identifier (Any): An identifier for the volume importer.
     """
+
     def __init__(
         self,
         path: str,
@@ -302,6 +310,7 @@ class BaseFileImporter(BaseImporter):
     This class extends the BaseImporter to handle the import of files. This is suited for case where no transformations
     are required, and source files can be copied to the destination.
     """
+
     def get_destination_path(self) -> str:
         return os.path.join(self.get_output_path(), os.path.basename(self.path))
 
@@ -314,9 +323,10 @@ class BaseFileImporter(BaseImporter):
 
 class BaseKeyPhotoImporter(BaseImporter):
     """
-   This class extends the BaseImporter to handle the import of key photos. This importer supports copying of images from
-   a source, and generating the image based on its parent importer.
-   """
+    This class extends the BaseImporter to handle the import of key photos. This importer supports copying of images from
+    a source, and generating the image based on its parent importer.
+    """
+
     image_keys = ["snapshot", "thumbnail"]
 
     def import_item(self) -> None:
