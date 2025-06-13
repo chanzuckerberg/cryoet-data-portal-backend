@@ -1,5 +1,5 @@
 import os
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Any, cast
 
 from common import colors
@@ -128,19 +128,18 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
 
         # Convert the mesh to a precomputed format oriented mesh if a mesh file exists
         obj_name = metadata["annotation_object"]["name"]
-        mesh_folder = cast(OrientedPointAnnotation, self.annotation).mesh_folder
-        if not mesh_folder:
+
+        mesh_path = cast(OrientedPointAnnotation, self.annotation).mesh_source_path
+        if not mesh_path:
             print(f"No mesh folder found, skipping mesh generation for {obj_name}")
             return
 
-        mesh_folder = Path(mesh_folder)
-        mesh_filename = obj_name.lower().translate(str.maketrans({"-": "_", " ": "_"}))
-        mesh_file = mesh_folder / f"{mesh_filename}.glb"
-        local_mesh_file = fs.localreadable(f"{mesh_file}")
+        mesh_path = PurePath(self.config.input_path) / mesh_path
+        local_mesh_file = fs.localreadable(f"{mesh_path}")
+
         if fs.exists(local_mesh_file):
-            print("Found mesh for", mesh_filename, "in", mesh_file)
             # Generates the precomputed version of the mesh in memory
-            scene = io.load_glb_file(mesh_file)
+            scene = io.load_glb_file(Path(local_mesh_file))
             oriented_mesh_at_each_lod = encode_oriented_mesh(
                 scene,
                 self.annotation.get_output_data(annotation_path),
@@ -161,7 +160,7 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
             )
             fs.push(oriented_mesh_path)
         else:
-            print(f"No mesh found for '{obj_name}' [looked for '{mesh_filename}' GLB file]")
+            print(f"No mesh found for '{obj_name}' [looked for '{local_mesh_file}', but the file doesn't exist]")
 
 
 class InstanceSegmentationAnnotationPrecompute(PointAnnotationPrecompute):

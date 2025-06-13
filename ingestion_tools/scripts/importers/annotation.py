@@ -513,12 +513,6 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
             "filter_value": self.filter_value,
         }
 
-    @property
-    def mesh_folder(self) -> str | None:
-        if not hasattr(self, "_mesh_folder"):
-            self._mesh_folder = next(iter(self.config.glob_files(self, "**/OrientedMeshes")), None)
-        return self._mesh_folder
-
 
 class InstanceSegmentationAnnotation(OrientedPointAnnotation):
     shape = "InstanceSegmentation"
