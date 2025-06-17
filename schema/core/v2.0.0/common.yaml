@@ -32,6 +32,18 @@ slots:
     range: URLorS3URI
     recommended: true
 
+  metadata_snapshot:
+    description: >-
+      Relative path (non-URL/URI) to the dataset preview image relative to the dataset directory root.
+    range: string
+    recommended: true
+
+  metadata_thumbnail:
+    description: >-
+      Relative path (non-URL/URI) to the thumbnail of preview image relative to the dataset directory root.
+    range: string
+    recommended: true
+
   # ============================================================================
   # Dates (re-used in Dataset, Tomogram, Tiltseries, Annotation)
   # ============================================================================
@@ -483,6 +495,21 @@ slots:
     unit:
       descriptive_name: electrons per square Angstrom
       symbol: e^-/Å^2
+
+  tiltseries_metadata_omezarr_dir:
+    range: string
+    description: Relative path to the tilt series in OME-Zarr format.
+  tiltseries_metadata_mrc_file:
+    range: string
+    description: Relative path to the tilt series in MRC format.
+  tiltseries_metadata_raw_tlt_path:
+    range: string
+    description: Path to the rawtlt file for this tilt series.
+  tiltseries_metadata_ctf_path:
+    range: string
+    description: Path to the ctf file for this tilt series.
+
+
   # ============================================================================
 
 
@@ -573,6 +600,19 @@ slots:
     unit:
       descriptive_name: Angstroms per voxel
       symbol: Å/voxel
+
+  tomogram_metadata_omezarr_dir:
+    range: string
+    description: Relative path to the tomogram in OME-Zarr format.
+  tomogram_metadata_mrc_file:
+    range: string
+    description: Relative path to the tomogram in MRC format.
+  tomogram_alignment_metadata_path:
+    range: string
+    description: Path to the alignment metadata file for this tomogram.
+  tomogram_neuroglancer_config_path:
+    range: string
+    description: Path to the neuroglancer config file for this tomogram.
   # ============================================================================
 
   # ============================================================================
@@ -712,6 +752,9 @@ slots:
     range: boolean
     required: false
     ifabsent: false
+  annotation_alignment_metadata_path:
+    range: string
+    description: Path to the alignment metadata file for the tomograms this annotation applies to.
 
   #Annotation (Annotation): The annotation this file is a part of
   # ============================================================================
@@ -765,6 +808,7 @@ slots:
     description: z-index of the frame in the tiltseries
     minimum_value: 0
     required: true
+  #TODO: remove this field.
   per_section_defocus:
     range: float
     description: defocus amount
@@ -773,17 +817,53 @@ slots:
     unit:
       descriptive_name: microns
       symbol: µm
+  per_section_minor_defocus:
+    range: float
+    description: Minor axis defocus amount, underfocus is positive.
+    unit:
+      descriptive_name: angstrom
+      symbol: Å
+  per_section_major_defocus:
+    range: float
+    description: Major axis defocus amount, underfocus is positive.
+    unit:
+      descriptive_name: angstrom
+      symbol: Å
+  # TODO: remove this field.
   per_section_astigmatism:
     range: float
     description: Astigmatism amount for this frame
   per_section_astigmatic_angle:
     range: float
-    description: Angle of ast
+    description: Angle of astigmatism.
     minimum_value: -180
     maximum_value: 180
     unit:
       descriptive_name: degrees
       symbol: °
+  per_section_nominal_tilt_angle:
+    range: float
+    description: Nominal angle of the tilt series section.
+    minimum_value: -90
+    maximum_value: 90
+    unit:
+      descriptive_name: degrees
+      symbol: °
+  per_section_max_resolution:
+    range: float
+    description: Maximum resolution of the CTF fit for this section.
+    unit:
+      descriptive_name: angstrom
+      symbol: Å
+  per_section_phase_shift:
+    range: float
+    description: Phase shift measured for this section.
+    unit:
+      descriptive_name: radians
+      symbol: rad
+  per_section_cross_correlation:
+    range: float
+    description: CTF fit cross correlation value for this section.
 
   # ============================================================================
   # Alignment Parameters fields
@@ -852,6 +932,28 @@ slots:
     range: string
     description: Path to the local alignment file
 
+  alignment_path:
+    range: string
+    description: Path to the alignment file (aln or xf).
+
+  alignment_tilt_path:
+    range: string
+    description: Path to the aligned tilt angle file (tlt).
+
+  alignment_tiltx_path:
+    range: string
+    description: Path to the aligned xtilt angle file (xtilt).
+
+  alignment_tiltseries_path:
+    range: string
+    description: Path to the tilt series metadata file this alignment applies to.
+
+  #TODO: fix the bug in AlignmentImporter that causes this to be a list of None sometimes [None]
+  alignment_files:
+    range: Any
+    description: List of all alignment files.
+    multivalued: true
+
   # ============================================================================
   # Per Section Alignment Parameters fields
   # ============================================================================
@@ -889,6 +991,48 @@ slots:
     unit:
       descriptive_name: degrees
       symbol: °
+
+  # ============================================================================
+  # Frames metadata slots
+  # ============================================================================
+  frames_dose_rate:
+    range: float
+    description: The dose rate of the camera in electrons per square angstrom per second
+    unit:
+      descriptive_name: electrons per square angstrom per second
+      symbol: e-/(Å*Å*s)
+
+  frames_is_gain_corrected:
+    range: boolean
+    description: Whether this movie stack has been gain corrected
+    ifabsent: false
+
+  frames_acquisition_file:
+    range: string
+    description: Path to the acquisition metadata file (MDOC) for this tilt series.
+
+  frames_acquisition_order:
+    range: integer
+    description: The 0-based index of this movie stack in the order of acquisition.
+    required: true
+
+  frames_accumulated_dose:
+    range: float
+    description: The accumulated dose prior to acquisition of this movie stack in electrons per square angstrom.
+    unit:
+      descriptive_name: electrons per square angstrom
+      symbol: e-/Å2
+
+  frames_exposure_dose:
+    range: float
+    description: The exposure dose of this movie stack in electrons per square angstrom.
+    unit:
+      descriptive_name: electrons per square angstrom
+      symbol: e-/Å2
+
+  frames_path:
+    range: string
+    description: Path to the movie stack file.
 
   # ============================================================================
   # API slots
@@ -996,6 +1140,18 @@ slots:
     range: boolean
     description: Whether this frame has been gain corrected
 
+  # ============================================================================
+  # Metadata file slots
+  # ============================================================================
+  last_updated_at:
+    range: float
+    required: true
+    description: >-
+      POSIX timestamp of the last time this metadata file was updated.
+
+  metadata_run_name:
+    range: string
+    description: Name of the run this metadata file is a part of.
 
 enums:
   # ============================================================================
@@ -1061,6 +1217,18 @@ enums:
         description: A series of coordinates
       InstanceSegmentation:
         description: A volume with labels for multiple instances
+
+  annotation_file_format_enum:
+    description: Describes the format of the annotation file
+    permissible_values:
+      mrc:
+        description: MRC format
+      zarr:
+        description: OMEZARR format
+      ndjson:
+        description: NDJSON format
+      glb:
+        description: GLB format
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.
