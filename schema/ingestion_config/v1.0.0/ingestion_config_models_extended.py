@@ -437,7 +437,7 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 @alru_cache
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
     doi = doi.replace("doi:", "")
-    url = f"https://api.crossref.org/works/{doi}/agency"
+    url = f"https://api.crossref.org/works/{doi}"
     logger.debug("Checking DOI %s at %s", doi, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         return doi, response.status == 200
