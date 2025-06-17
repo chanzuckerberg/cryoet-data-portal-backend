@@ -567,6 +567,21 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     InstanceSegmentation = "InstanceSegmentation"
 
 
+class AnnotationFileFormatEnum(str, Enum):
+    """
+    Describes the format of the annotation file
+    """
+
+    # MRC format
+    mrc = "mrc"
+    # OMEZARR format
+    zarr = "zarr"
+    # NDJSON format
+    ndjson = "ndjson"
+    # GLB format
+    glb = "glb"
+
+
 class AnnotationMethodLinkTypeEnum(str, Enum):
     """
     Describes the type of link associated to the annotation method.
@@ -739,7 +754,7 @@ class PicturePath(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "snapshot",
-                "domain_of": ["PicturePath"],
+                "domain_of": ["PicturePath", "MetadataPicturePath"],
                 "exact_mappings": ["cdp-common:snapshot"],
                 "recommended": True,
             }
@@ -751,7 +766,7 @@ class PicturePath(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "thumbnail",
-                "domain_of": ["PicturePath"],
+                "domain_of": ["PicturePath", "MetadataPicturePath"],
                 "exact_mappings": ["cdp-common:thumbnail"],
                 "recommended": True,
             }
@@ -781,6 +796,39 @@ class PicturePath(ConfiguredBaseModel):
             if not pattern.match(v):
                 raise ValueError(f"Invalid thumbnail format: {v}")
         return v
+
+
+class MetadataPicturePath(ConfiguredBaseModel):
+    """
+    A set of paths to representative images of a piece of data for metadata files.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    snapshot: Optional[str] = Field(
+        None,
+        description="""Relative path (non-URL/URI) to the dataset preview image relative to the dataset directory root.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "snapshot",
+                "domain_of": ["PicturePath", "MetadataPicturePath"],
+                "exact_mappings": ["cdp-common:metadata_snapshot"],
+                "recommended": True,
+            }
+        },
+    )
+    thumbnail: Optional[str] = Field(
+        None,
+        description="""Relative path (non-URL/URI) to the thumbnail of preview image relative to the dataset directory root.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "thumbnail",
+                "domain_of": ["PicturePath", "MetadataPicturePath"],
+                "exact_mappings": ["cdp-common:metadata_thumbnail"],
+                "recommended": True,
+            }
+        },
+    )
 
 
 class FundingDetails(ConfiguredBaseModel):
@@ -906,7 +954,25 @@ class PicturedEntity(ConfiguredBaseModel):
     key_photos: PicturePath = Field(
         ...,
         description="""A set of paths to representative images of a piece of data.""",
-        json_schema_extra={"linkml_meta": {"alias": "key_photos", "domain_of": ["PicturedEntity"]}},
+        json_schema_extra={
+            "linkml_meta": {"alias": "key_photos", "domain_of": ["PicturedEntity", "PicturedMetadataEntity"]}
+        },
+    )
+
+
+class PicturedMetadataEntity(ConfiguredBaseModel):
+    """
+    An entity with associated preview images for metadata files.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    key_photos: MetadataPicturePath = Field(
+        ...,
+        description="""A set of paths to representative images of a piece of data for metadata files.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "key_photos", "domain_of": ["PicturedEntity", "PicturedMetadataEntity"]}
+        },
     )
 
 
@@ -1809,6 +1875,170 @@ class TiltRange(ConfiguredBaseModel):
         return v
 
 
+class PerSectionParameter(ConfiguredBaseModel):
+    """
+    Parameters for a section of a tilt series.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    z_index: int = Field(
+        ...,
+        description="""z-index of the frame in the tiltseries""",
+        ge=0,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "z_index",
+                "domain_of": ["PerSectionParameter", "PerSectionAlignmentParameters"],
+                "exact_mappings": ["cdp-common:per_section_z_index"],
+            }
+        },
+    )
+    frame_acquisition_order: int = Field(
+        ...,
+        description="""The 0-based index of this movie stack in the order of acquisition.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "frame_acquisition_order",
+                "domain_of": ["PerSectionParameter"],
+                "exact_mappings": ["cdp-common:frames_acquisition_order"],
+            }
+        },
+    )
+    raw_angle: Optional[float] = Field(
+        None,
+        description="""Nominal angle of the tilt series section.""",
+        ge=-90,
+        le=90,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "raw_angle",
+                "domain_of": ["PerSectionParameter"],
+                "exact_mappings": ["cdp-common:per_section_nominal_tilt_angle"],
+                "unit": {"descriptive_name": "degrees", "symbol": "°"},
+            }
+        },
+    )
+    astigmatic_angle: Optional[float] = Field(
+        None,
+        description="""Angle of astigmatism.""",
+        ge=-180,
+        le=180,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "astigmatic_angle",
+                "domain_of": ["PerSectionParameter"],
+                "exact_mappings": ["cdp-common:per_section_astigmatic_angle"],
+                "unit": {"descriptive_name": "degrees", "symbol": "°"},
+            }
+        },
+    )
+    minor_defocus: Optional[float] = Field(
+        None,
+        description="""Minor axis defocus amount, underfocus is positive.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "minor_defocus",
+                "domain_of": ["PerSectionParameter"],
+                "exact_mappings": ["cdp-common:per_section_minor_defocus"],
+                "unit": {"descriptive_name": "angstrom", "symbol": "Å"},
+            }
+        },
+    )
+    major_defocus: Optional[float] = Field(
+        None,
+        description="""Major axis defocus amount, underfocus is positive.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "major_defocus",
+                "domain_of": ["PerSectionParameter"],
+                "exact_mappings": ["cdp-common:per_section_major_defocus"],
+                "unit": {"descriptive_name": "angstrom", "symbol": "Å"},
+            }
+        },
+    )
+    max_resolution: Optional[float] = Field(
+        None,
+        description="""Maximum resolution of the CTF fit for this section.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "max_resolution",
+                "domain_of": ["PerSectionParameter"],
+                "exact_mappings": ["cdp-common:per_section_max_resolution"],
+                "unit": {"descriptive_name": "angstrom", "symbol": "Å"},
+            }
+        },
+    )
+    phase_shift: Optional[float] = Field(
+        None,
+        description="""Phase shift measured for this section.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "phase_shift",
+                "domain_of": ["PerSectionParameter"],
+                "exact_mappings": ["cdp-common:per_section_phase_shift"],
+                "unit": {"descriptive_name": "radians", "symbol": "rad"},
+            }
+        },
+    )
+    cross_correlation: Optional[float] = Field(
+        None,
+        description="""CTF fit cross correlation value for this section.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "cross_correlation",
+                "domain_of": ["PerSectionParameter"],
+                "exact_mappings": ["cdp-common:per_section_cross_correlation"],
+            }
+        },
+    )
+
+
+class TiltSeriesSize(ConfiguredBaseModel):
+    """
+    The size of a tiltseries in sctions/pixels in each dimension.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    x: int = Field(
+        ...,
+        description="""Number of pixels in the 2D data fast axis""",
+        ge=0,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "x",
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+    y: int = Field(
+        ...,
+        description="""Number of pixels in the 2D data medium axis""",
+        ge=0,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "y",
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "pixels", "symbol": "px"},
+            }
+        },
+    )
+    z: int = Field(
+        ...,
+        description="""Number of sections in the 2D stack.""",
+        ge=0,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "z",
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "unit": {"descriptive_name": "sections"},
+            }
+        },
+    )
+
+
 class TiltSeries(ConfiguredBaseModel):
     """
     Metadata describing a tilt series.
@@ -2225,7 +2455,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2237,7 +2467,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2249,7 +2479,7 @@ class TomogramSize(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2269,7 +2499,7 @@ class TomogramOffset(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2280,7 +2510,7 @@ class TomogramOffset(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2291,7 +2521,7 @@ class TomogramOffset(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
             }
         },
@@ -2458,7 +2688,7 @@ class Tomogram(AuthoredEntity):
     offset: TomogramOffset = Field(
         ...,
         description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""",
-        json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram", "Alignment"]}},
+        json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram"]}},
     )
     is_visualization_default: bool = Field(
         True,
@@ -4083,7 +4313,7 @@ class AlignmentSize(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "x",
                 "any_of": [{"range": "float"}, {"range": "FloatFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "Angstrom", "symbol": "Å"},
             }
         },
@@ -4095,7 +4325,7 @@ class AlignmentSize(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "y",
                 "any_of": [{"range": "float"}, {"range": "FloatFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "Angstrom", "symbol": "Å"},
             }
         },
@@ -4107,7 +4337,7 @@ class AlignmentSize(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "z",
                 "any_of": [{"range": "float"}, {"range": "FloatFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "Angstrom", "symbol": "Å"},
             }
         },
@@ -4164,7 +4394,7 @@ class AlignmentOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "x",
                 "any_of": [{"range": "float"}, {"range": "FloatFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "float(0)",
                 "unit": {"descriptive_name": "Angstrom", "symbol": "Å"},
             }
@@ -4177,7 +4407,7 @@ class AlignmentOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "y",
                 "any_of": [{"range": "float"}, {"range": "FloatFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "float(0)",
                 "unit": {"descriptive_name": "Angstrom", "symbol": "Å"},
             }
@@ -4190,7 +4420,7 @@ class AlignmentOffset(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "z",
                 "any_of": [{"range": "float"}, {"range": "FloatFormattedString"}],
-                "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
+                "domain_of": ["TiltSeriesSize", "TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "float(0)",
                 "unit": {"descriptive_name": "Angstrom", "symbol": "Å"},
             }
@@ -4234,6 +4464,103 @@ class AlignmentOffset(ConfiguredBaseModel):
         return v
 
 
+class PerSectionAlignmentParameters(ConfiguredBaseModel):
+    """
+    Alignment parameters for one section of a tilt series.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    z_index: int = Field(
+        ...,
+        description="""z-index of the frame in the tiltseries""",
+        ge=0,
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "z_index",
+                "domain_of": ["PerSectionParameter", "PerSectionAlignmentParameters"],
+                "exact_mappings": ["cdp-common:per_section_z_index"],
+            }
+        },
+    )
+    tilt_angle: Optional[float] = Field(
+        None,
+        description="""Tilt angle of the projection in degrees""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "tilt_angle",
+                "domain_of": ["PerSectionAlignmentParameters"],
+                "exact_mappings": ["cdp-common:per_section_alignment_tilt_angle"],
+                "unit": {"descriptive_name": "degrees", "symbol": "°"},
+            }
+        },
+    )
+    volume_x_rotation: Optional[float] = Field(
+        None,
+        description="""Additional X rotation of the reconstruction volume in degrees""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "volume_x_rotation",
+                "domain_of": ["PerSectionAlignmentParameters"],
+                "exact_mappings": ["cdp-common:alignment_volume_x_rotation"],
+                "unit": {"descriptive_name": "degrees", "symbol": "°"},
+            }
+        },
+    )
+    in_plane_rotation: Optional[
+        conlist(min_length=2, max_length=2, item_type=conlist(min_length=2, max_length=2, item_type=float))
+    ] = Field(
+        None,
+        description="""In-plane rotation of the projection as a rotation matrix.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "in_plane_rotation",
+                "array": {
+                    "dimensions": [{"exact_cardinality": 2}, {"exact_cardinality": 2}],
+                    "exact_number_dimensions": 2,
+                },
+                "domain_of": ["PerSectionAlignmentParameters"],
+            }
+        },
+    )
+    x_offset: Optional[float] = Field(
+        None,
+        description="""In-plane X-shift of the projection in angstrom""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "x_offset",
+                "domain_of": ["PerSectionAlignmentParameters"],
+                "exact_mappings": ["cdp-common:per_section_alignment_x_offset"],
+                "unit": {"descriptive_name": "Angstrom", "symbol": "Å"},
+            }
+        },
+    )
+    y_offset: Optional[float] = Field(
+        None,
+        description="""In-plane Y-shift of the projection in angstrom""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "y_offset",
+                "domain_of": ["PerSectionAlignmentParameters"],
+                "exact_mappings": ["cdp-common:per_section_alignment_y_offset"],
+                "unit": {"descriptive_name": "Angstrom", "symbol": "Å"},
+            }
+        },
+    )
+    beam_tilt: Optional[float] = Field(
+        None,
+        description="""Beam tilt during projection in degrees""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "beam_tilt",
+                "domain_of": ["PerSectionAlignmentParameters"],
+                "exact_mappings": ["cdp-common:per_section_alignment_beam_tilt"],
+                "unit": {"descriptive_name": "degrees", "symbol": "°"},
+            }
+        },
+    )
+
+
 class Alignment(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
@@ -4242,15 +4569,15 @@ class Alignment(ConfiguredBaseModel):
         description="""The type of alignment.""",
         json_schema_extra={"linkml_meta": {"alias": "alignment_type", "domain_of": ["Alignment"]}},
     )
-    offset: Optional[AlignmentOffset] = Field(
+    volume_offset: Optional[AlignmentOffset] = Field(
         None,
         description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""",
-        json_schema_extra={"linkml_meta": {"alias": "offset", "domain_of": ["Tomogram", "Alignment"]}},
+        json_schema_extra={"linkml_meta": {"alias": "volume_offset", "domain_of": ["Alignment"]}},
     )
-    volume_dimesion: Optional[AlignmentSize] = Field(
+    volume_dimension: Optional[AlignmentSize] = Field(
         None,
         description="""The size of an alignment in voxels in each dimension.""",
-        json_schema_extra={"linkml_meta": {"alias": "volume_dimesion", "domain_of": ["Alignment"]}},
+        json_schema_extra={"linkml_meta": {"alias": "volume_dimension", "domain_of": ["Alignment"]}},
     )
     x_rotation_offset: Optional[Union[int, str]] = Field(
         0,
@@ -4908,12 +5235,14 @@ class Author(AuthorMixin):
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
+MetadataPicturePath.model_rebuild()
 FundingDetails.model_rebuild()
 DateStampedEntity.model_rebuild()
 AuthoredEntity.model_rebuild()
 FundedEntity.model_rebuild()
 CrossReferencedEntity.model_rebuild()
 PicturedEntity.model_rebuild()
+PicturedMetadataEntity.model_rebuild()
 OrganismDetails.model_rebuild()
 TissueDetails.model_rebuild()
 CellType.model_rebuild()
@@ -4926,6 +5255,8 @@ CameraDetails.model_rebuild()
 MicroscopeDetails.model_rebuild()
 MicroscopeOpticalSetup.model_rebuild()
 TiltRange.model_rebuild()
+PerSectionParameter.model_rebuild()
+TiltSeriesSize.model_rebuild()
 TiltSeries.model_rebuild()
 TomogramSize.model_rebuild()
 TomogramOffset.model_rebuild()
@@ -4944,6 +5275,7 @@ AnnotationTriangularMeshGroupFile.model_rebuild()
 Annotation.model_rebuild()
 AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()
+PerSectionAlignmentParameters.model_rebuild()
 Alignment.model_rebuild()
 Frame.model_rebuild()
 Ctf.model_rebuild()
