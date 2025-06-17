@@ -4,7 +4,7 @@ import os.path
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Literal, Tuple
 
 import mrcfile
 import numpy as np
@@ -195,7 +195,7 @@ class OMEZarrReader(VolumeReader):
     _header_only: bool
     _attrs: dict[str, Any]
 
-    def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False):
+    def __init__(self, fs: FileSystemApi, filename: str, header_only: bool = False, level: int = 0):
         self.filename = filename
 
         if isinstance(fs, S3Filesystem):
@@ -213,7 +213,7 @@ class OMEZarrReader(VolumeReader):
         self._header_only = header_only
 
         if not header_only:
-            self.data = np.asarray(nodes[0].data[0])
+            self.data = np.asarray(nodes[0].data[level])
 
     def get_pyramid_base_data(self) -> np.ndarray:
         return self.data.astype(np.float32)
@@ -248,9 +248,10 @@ class TomoConverter:
         filename: str,
         header_only: bool = False,
         scale_0_dims: tuple[int, int, int] | None = None,
+        level=0,
     ):
         if ".zarr" in filename:
-            self.volume_reader = OMEZarrReader(fs, filename, header_only)
+            self.volume_reader = OMEZarrReader(fs, filename, header_only, level=level)
         else:
             self.volume_reader = MRCReader(fs, filename, header_only)
         self.scale_0_dims = scale_0_dims
@@ -271,6 +272,12 @@ class TomoConverter:
 
     def get_volume_info(self) -> VolumeInfo:
         return self.volume_reader.get_volume_info()
+
+    def get_contrast_limits(self, method: Literal["gmm", "cdf"] = "gmm"):
+        assert isinstance(self.volume_reader, OMEZarrReader)
+        from cryoet_data_portal_neuroglancer.precompute.contrast_limits import compute_contrast_limits
+
+        return compute_contrast_limits(self.volume_reader.data, method=method)
 
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
@@ -471,6 +478,14 @@ def get_voxel_size(fs: FileSystemApi, tomo_filename: str) -> float:
 
 def get_volume_info(fs: FileSystemApi, tomo_filename: str) -> VolumeInfo:
     return TomoConverter(fs, tomo_filename, header_only=True).get_volume_info()
+
+
+def get_volume_contrast_limits(
+    fs: FileSystemApi,
+    tomo_filename: str,
+    method: Literal["gmm", "cdf"] = "gmm",
+) -> tuple[float, float]:
+    return TomoConverter(fs, tomo_filename, level=-1).get_contrast_limits(method=method)
 
 
 def get_converter(
