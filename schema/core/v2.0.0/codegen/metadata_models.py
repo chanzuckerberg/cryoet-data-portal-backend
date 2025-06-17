@@ -5263,4 +5263,3 @@ CrossReferencesMixin.model_rebuild()
 CrossReferences.model_rebuild()
 AuthorMixin.model_rebuild()
 Author.model_rebuild()
-
