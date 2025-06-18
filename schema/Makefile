@@ -51,8 +51,9 @@ build-ingestion-config: clean-core clean-ingestion-config
 	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
 	python3 schema.py materialize $(INGESTION_CONFIG_MODELS_YAML) $(COMMON_YAML) $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML)
 
-	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) > $(METADATA_MODELS_PY)
-	linkml generate pydantic $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_MODELS_PY)
+# Have to explicitly set `--meta AUTO`, see https://github.com/linkml/linkml/issues/2685; fixed in linkml 1.9.3 (but still in pre-release)
+	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) --meta AUTO > $(METADATA_MODELS_PY)
+	linkml generate pydantic $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) --meta AUTO > $(INGESTION_CONFIG_MODELS_PY)
 	linkml generate json-schema $(INGESTION_CONFIG_MODELS_MATERIALIZED_YAML) > $(INGESTION_CONFIG_JSON_SCHEMA)
 	cd ingestion_config && ln -sf $(INGESTION_CONFIG_VERSION) latest && cd ..
 

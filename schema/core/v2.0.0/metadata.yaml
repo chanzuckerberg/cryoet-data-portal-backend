@@ -336,12 +336,14 @@ classes:
         any_of:
           - exact_mappings: cdp-common:tiltseries_aligned_tiltseries_binning
           - range: cdp-common:FloatFormattedString
-        ifabsent: "float(1)"
+        # currently not supported, see https://github.com/orgs/linkml/discussions/2777
+        # ifabsent: "float(1)"
       binning_from_frames:
         any_of:
           - exact_mappings: cdp-common:tiltseries_binning_from_frames
           - range: cdp-common:FloatFormattedString
-        ifabsent: "float(1)"
+        # currently not supported, see https://github.com/orgs/linkml/discussions/2777
+        # ifabsent: "float(1)"
       camera:
         description: *desc_camera
         range: CameraDetails
@@ -802,7 +804,8 @@ classes:
           - range: cdp-common:FloatFormattedString
         required: true
         description: X shift of the reconstruction volume in angstrom
-        ifabsent: "float(0)"
+        # currently not supported, see https://github.com/orgs/linkml/discussions/2777
+        # ifabsent: "float(0)"
         unit:
           descriptive_name: Angstrom
           symbol: Å
@@ -812,7 +815,8 @@ classes:
         - range: cdp-common:FloatFormattedString
         required: true
         description: Y shift of the reconstruction volume in angstrom
-        ifabsent: "float(0)"
+        # currently not supported, see https://github.com/orgs/linkml/discussions/2777
+        # ifabsent: "float(0)"
         unit:
           descriptive_name: Angstrom
           symbol: Å
@@ -822,7 +826,8 @@ classes:
         - range: cdp-common:FloatFormattedString
         required: true
         description: Z shift of the reconstruction volume in angstrom
-        ifabsent: "float(0)"
+        # currently not supported, see https://github.com/orgs/linkml/discussions/2777
+        # ifabsent: "float(0)"
         unit:
           descriptive_name: Angstrom
           symbol: Å
@@ -844,7 +849,8 @@ classes:
         any_of:
           - range: integer
           - range: cdp-common:IntegerFormattedString
-        ifabsent: "int(0)"
+        # currently not supported, see https://github.com/orgs/linkml/discussions/2777
+        # ifabsent: "int(0)"
       tilt_offset:
         description: The tilt offset relative to the tomogram.
         range: float
