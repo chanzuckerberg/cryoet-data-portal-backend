@@ -1,4 +1,4 @@
-from __future__ import annotations 
+from __future__ import annotations
 
 import re
 import sys
@@ -7,8 +7,8 @@ from datetime import (
     datetime,
     time
 )
-from decimal import Decimal 
-from enum import Enum 
+from decimal import Decimal
+from enum import Enum
 from typing import (
     Any,
     ClassVar,
@@ -4514,4 +4514,3 @@ DepositionMetadata.model_rebuild()
 RunMetadata.model_rebuild()
 TiltSeriesMetadata.model_rebuild()
 TomogramMetadata.model_rebuild()
-

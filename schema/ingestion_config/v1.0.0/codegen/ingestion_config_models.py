@@ -1,4 +1,4 @@
-from __future__ import annotations 
+from __future__ import annotations
 
 import re
 import sys
@@ -7,8 +7,8 @@ from datetime import (
     datetime,
     time
 )
-from decimal import Decimal 
-from enum import Enum 
+from decimal import Decimal
+from enum import Enum
 from typing import (
     Any,
     ClassVar,
@@ -7831,4 +7831,3 @@ VoxelSpacingParentFilters.model_rebuild()
 VoxelSpacingParent.model_rebuild()
 VoxelSpacingLiteral.model_rebuild()
 TomogramHeader.model_rebuild()
-
