@@ -446,6 +446,23 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+  annotation_file_format_enum:
+    name: annotation_file_format_enum
+    description: Describes the format of the annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      mrc:
+        text: mrc
+        description: MRC format
+      zarr:
+        text: zarr
+        description: OMEZARR format
+      ndjson:
+        text: ndjson
+        description: NDJSON format
+      glb:
+        text: glb
+        description: GLB format
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -5946,7 +5963,11 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         minimum_cardinality: 1
+        any_of:
+        - range: float
+        - range: FloatFormattedString
   TomogramHeader:
     name: TomogramHeader
     description: A tomogram header, a unique source attribute for voxel spacing.
