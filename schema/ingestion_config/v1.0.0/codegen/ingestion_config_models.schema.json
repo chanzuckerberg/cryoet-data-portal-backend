@@ -43,17 +43,6 @@
                     "description": "The alignment method type.",
                     "pattern": "(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)"
                 },
-                "offset": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/AlignmentOffset"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram."
-                },
                 "tilt_offset": {
                     "description": "The tilt offset relative to the tomogram.",
                     "type": [
@@ -61,7 +50,7 @@
                         "null"
                     ]
                 },
-                "volume_dimesion": {
+                "volume_dimension": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/AlignmentSize"
@@ -71,6 +60,17 @@
                         }
                     ],
                     "description": "The size of an alignment in voxels in each dimension."
+                },
+                "volume_offset": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentOffset"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram."
                 },
                 "x_rotation_offset": {
                     "anyOf": [
@@ -575,6 +575,17 @@
             ],
             "title": "AnnotationEntity",
             "type": "object"
+        },
+        "AnnotationFileFormatEnum": {
+            "description": "Describes the format of the annotation file",
+            "enum": [
+                "mrc",
+                "zarr",
+                "ndjson",
+                "glb"
+            ],
+            "title": "AnnotationFileFormatEnum",
+            "type": "string"
         },
         "AnnotationFileShapeTypeEnum": {
             "description": "Describes the shape of the annotation",
@@ -3722,6 +3733,28 @@
             "title": "KeyPhotoLiteral",
             "type": "object"
         },
+        "MetadataPicturePath": {
+            "additionalProperties": false,
+            "description": "A set of paths to representative images of a piece of data for metadata files.",
+            "properties": {
+                "snapshot": {
+                    "description": "Relative path (non-URL/URI) to the dataset preview image relative to the dataset directory root.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "thumbnail": {
+                    "description": "Relative path (non-URL/URI) to the thumbnail of preview image relative to the dataset directory root.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "MetadataPicturePath",
+            "type": "object"
+        },
         "MicroscopeDetails": {
             "additionalProperties": false,
             "description": "The microscope used to collect the tilt series.",
@@ -3812,6 +3845,148 @@
             "title": "OrganismDetails",
             "type": "object"
         },
+        "PerSectionAlignmentParameters": {
+            "additionalProperties": false,
+            "description": "Alignment parameters for one section of a tilt series.",
+            "properties": {
+                "beam_tilt": {
+                    "description": "Beam tilt during projection in degrees",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "in_plane_rotation": {
+                    "items": {
+                        "additionalProperties": true,
+                        "type": [
+                            "null",
+                            "boolean",
+                            "object",
+                            "number",
+                            "string",
+                            "array"
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "tilt_angle": {
+                    "description": "Tilt angle of the projection in degrees",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "volume_x_rotation": {
+                    "description": "Additional X rotation of the reconstruction volume in degrees",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_offset": {
+                    "description": "In-plane X-shift of the projection in angstrom",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_offset": {
+                    "description": "In-plane Y-shift of the projection in angstrom",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_index": {
+                    "description": "z-index of the frame in the tiltseries",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "z_index"
+            ],
+            "title": "PerSectionAlignmentParameters",
+            "type": "object"
+        },
+        "PerSectionParameter": {
+            "additionalProperties": false,
+            "description": "Parameters for a section of a tilt series.",
+            "properties": {
+                "astigmatic_angle": {
+                    "description": "Angle of astigmatism.",
+                    "maximum": 180,
+                    "minimum": -180,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "cross_correlation": {
+                    "description": "CTF fit cross correlation value for this section.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "frame_acquisition_order": {
+                    "description": "The 0-based index of this movie stack in the order of acquisition.",
+                    "type": "integer"
+                },
+                "major_defocus": {
+                    "description": "Major axis defocus amount, underfocus is positive.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "max_resolution": {
+                    "description": "Maximum resolution of the CTF fit for this section.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "minor_defocus": {
+                    "description": "Minor axis defocus amount, underfocus is positive.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "phase_shift": {
+                    "description": "Phase shift measured for this section.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "raw_angle": {
+                    "description": "Nominal angle of the tilt series section.",
+                    "maximum": 90,
+                    "minimum": -90,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_index": {
+                    "description": "z-index of the frame in the tiltseries",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "z_index",
+                "frame_acquisition_order"
+            ],
+            "title": "PerSectionParameter",
+            "type": "object"
+        },
         "PicturePath": {
             "additionalProperties": false,
             "description": "A set of paths to representative images of a piece of data.",
@@ -3849,6 +4024,21 @@
                 "key_photos"
             ],
             "title": "PicturedEntity",
+            "type": "object"
+        },
+        "PicturedMetadataEntity": {
+            "additionalProperties": false,
+            "description": "An entity with associated preview images for metadata files.",
+            "properties": {
+                "key_photos": {
+                    "$ref": "#/$defs/MetadataPicturePath",
+                    "description": "A set of paths to representative images of a piece of data for metadata files."
+                }
+            },
+            "required": [
+                "key_photos"
+            ],
+            "title": "PicturedMetadataEntity",
             "type": "object"
         },
         "RawTiltEntity": {
@@ -4797,6 +4987,34 @@
                 }
             },
             "title": "TiltSeriesParentFilters",
+            "type": "object"
+        },
+        "TiltSeriesSize": {
+            "additionalProperties": false,
+            "description": "The size of a tiltseries in sctions/pixels in each dimension.",
+            "properties": {
+                "x": {
+                    "description": "Number of pixels in the 2D data fast axis",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "y": {
+                    "description": "Number of pixels in the 2D data medium axis",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "z": {
+                    "description": "Number of sections in the 2D stack.",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "TiltSeriesSize",
             "type": "object"
         },
         "TiltSeriesSource": {

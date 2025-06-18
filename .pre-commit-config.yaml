@@ -8,7 +8,8 @@ repos:
       (?x)(
           ^apiv2/.*|
           ^schema/.*/metadata_models.py|
-          ^schema/.*/ingestion_config_models.py
+          ^schema/.*/ingestion_config_models.py|
+          ^schema/.*/metadata_files.py
       )
     args:
     - --fix
