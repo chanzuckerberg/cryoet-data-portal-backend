@@ -21,7 +21,7 @@ jobs:
         run: |
           set -ue
           set -o pipefail
-          URL="https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip"
+          URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
           curl $URL -o /tmp/awscliv2.zip -v
           unzip -q /tmp/awscliv2.zip -d /tmp
           rm /tmp/awscliv2.zip
