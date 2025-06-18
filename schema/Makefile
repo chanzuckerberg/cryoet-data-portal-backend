@@ -57,7 +57,7 @@ clean-all: clean
 	rm -rf ingestion_config/latest
 
 .PHONY: build
-build: build-ingestion-config
+build: build-ingestion-config build-metadata-files
 
 # To build-ingestion-config for the non-default version, run `make build-ingestion-config INGESTION_CONFIG_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
 .PHONY: build-ingestion-config
@@ -72,13 +72,14 @@ build-ingestion-config: clean-core clean-ingestion-config
 	cd ingestion_config && ln -sf $(INGESTION_CONFIG_VERSION) latest && cd ..
 
 # To build-ingestion-config for the non-default version, run `make build-ingestion-config INGESTION_CONFIG_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
-.PHONY: build-metadata_files
+.PHONY: build-metadata-files
 build-metadata-files:
 	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
 	python3 schema.py materialize $(METADATA_FILES_MODELS_YAML) $(COMMON_YAML) $(METADATA_FILES_MODELS_MATERIALIZED_YAML)
 
-	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) > $(METADATA_MODELS_PY)
-	linkml generate pydantic $(METADATA_FILES_MODELS_MATERIALIZED_YAML) > $(METADATA_FILES_MODELS_PY)
+# Have to explicitly set `--meta AUTO`, see https://github.com/linkml/linkml/issues/2685; fixed in linkml 1.9.3 (but still in pre-release)
+	linkml generate pydantic --black $(METADATA_MATERIALIZED_YAML) --meta AUTO > $(METADATA_MODELS_PY)
+	linkml generate pydantic $(METADATA_FILES_MODELS_MATERIALIZED_YAML) --meta AUTO > $(METADATA_FILES_MODELS_PY)
 	linkml generate json-schema $(METADATA_FILES_MODELS_MATERIALIZED_YAML) > $(METADATA_FILES_JSON_SCHEMA)
 	cd ingestion_config && ln -sf $(METADATA_FILES_VERSION) latest && cd ..
 

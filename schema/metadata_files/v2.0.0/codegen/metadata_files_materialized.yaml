@@ -860,7 +860,6 @@ classes:
         name: x_rotation_offset
         description: A placeholder for any type of data.
         from_schema: metadata
-        ifabsent: int(0)
         alias: x_rotation_offset
         owner: AlignmentMetadata
         domain_of:
@@ -2113,7 +2112,6 @@ classes:
         name: aligned_tiltseries_binning
         description: A placeholder for any type of data.
         from_schema: metadata
-        ifabsent: float(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeriesMetadata
         domain_of:
@@ -2134,7 +2132,6 @@ classes:
         name: binning_from_frames
         description: A placeholder for any type of data.
         from_schema: metadata
-        ifabsent: float(1)
         alias: binning_from_frames
         owner: TiltSeriesMetadata
         domain_of:
