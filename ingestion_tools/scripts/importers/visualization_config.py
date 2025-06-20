@@ -157,12 +157,20 @@ class VisualizationConfigImporter(BaseImporter):
 
             for file in metadata.get("files", []):
                 shape = file.get("shape")
-                if shape not in {"SegmentationMask", "Point", "OrientedPoint", "InstanceSegmentation"}:
+                if shape not in {
+                    "SegmentationMask",
+                    "Point",
+                    "OrientedPoint",
+                    "InstanceSegmentation",
+                    "TriangularMesh",
+                    "TriangularMeshGroup",
+                }:
                     print(f"Skipping file with unknown shape {shape}")
                     continue
 
                 # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
-                if file.get("format") not in {"zarr", "ndjson"}:
+                if file.get("format") not in {"zarr", "ndjson", "glb"}:
+                    print(f"Skipping file with unsupported format {file.get('format')}")
                     continue
 
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
@@ -213,7 +221,7 @@ class VisualizationConfigImporter(BaseImporter):
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
-            elif info["shape"] in {"TriangularMesh"}:
+            elif info["shape"] == "TriangularMesh":
                 layers.append(self._to_triangular_mesh_layer(**args))
         return state_generator.combine_json_layers(layers, scale=resolution)
 

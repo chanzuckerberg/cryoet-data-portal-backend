@@ -170,6 +170,7 @@ class MeshAnnotatationPrecompute(BaseAnnotationPrecompute):
         precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         tmp_path = fs.localwritable(precompute_path)
         glb_file_path = fs.destformat(self.annotation.get_output_filename(annotation_path, "glb"))
+        print(f"Precomputing mesh annotation {annotation_path} to {tmp_path}")
         # Importing this at runtime instead of compile time since zfpy (a dependency of this
         # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.io import load_glb_file
@@ -181,6 +182,6 @@ class MeshAnnotatationPrecompute(BaseAnnotationPrecompute):
             tmp_path,
             min_mesh_chunk_dim=8,
             max_lod=2,
-            string_label=Path(annotation_path).stem.with_suffix("").replace(" ", "_"),
+            string_label=Path(annotation_path).with_suffix("").stem.replace(" ", "_"),
         )
         fs.push(tmp_path)
