@@ -169,6 +169,8 @@ class VisualizationConfigImporter(BaseImporter):
                     continue
 
                 # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
+                # TODO does this also need to have the other mesh formats listed here?
+                # Not entirely sure how the conversion to glb is handled
                 if file.get("format") not in {"zarr", "ndjson", "glb"}:
                     print(f"Skipping file with unsupported format {file.get('format')}")
                     continue
