@@ -2,7 +2,7 @@ import json
 import os.path
 from pathlib import Path
 from time import time
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import cryoet_data_portal_neuroglancer.state_generator as state_generator
 
@@ -75,7 +75,6 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
-        display_mesh: bool,
         **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_segmentation_mask_layer(
@@ -85,7 +84,6 @@ class VisualizationConfigImporter(BaseImporter):
             color=color,
             scale=resolution,
             is_visible=file_metadata.get("is_visualization_default"),
-            display_mesh=display_mesh,
         )
 
     def _to_point_layer(
@@ -96,6 +94,7 @@ class VisualizationConfigImporter(BaseImporter):
         color: str,
         resolution: tuple[float, float, float],
         shape: str,
+        visible: bool | None = None,
         **kwargs,
     ) -> dict[str, Any]:
         is_instance_segmentation = shape == "InstanceSegmentation"
@@ -104,7 +103,7 @@ class VisualizationConfigImporter(BaseImporter):
             "url": self.config.https_prefix,
             "color": color,
             "scale": resolution,
-            "is_visible": file_metadata.get("is_visualization_default"),
+            "is_visible": file_metadata.get("is_visualization_default") if visible is None else visible,
             "is_instance_segmentation": is_instance_segmentation,
         }
         if shape == "OrientedPoint":
@@ -183,22 +182,19 @@ class VisualizationConfigImporter(BaseImporter):
         resolution: tuple[float, float, float],
         **_,
     ):
-        args = {
-            "name": f"{name_prefix} orientedmesh",
-            "source": source_path.replace("_orientedpoint", "_orientedmesh"),
-            "url": self.config.https_prefix,
-            "color": color,
-            "scale": resolution,
-            "is_visible": file_metadata.get("is_visualization_default"),
-        }
-
-        return state_generator.generate_oriented_point_mesh_layer(**args)
-
-    def _has_mesh(self, path: str):
-        fs = self.config.fs
-        mesh_folder_path = Path(self.config.output_prefix) / path.replace("_orientedpoint", "_orientedmesh").replace(
-            "_segmentationmask", "_orientedmesh",
+        return state_generator.generate_oriented_point_mesh_layer(
+            name=f"{name_prefix} orientedmesh",
+            source=source_path.replace("_orientedpoint", "_orientedmesh"),
+            url=self.config.https_prefix,
+            color=color,
+            scale=resolution,
+            is_visible=cast(bool, file_metadata.get("is_visualization_default")),
         )
+
+    def _has_oriented_mesh(self, path: str):
+        fs = self.config.fs
+        path = f"{'_'.join(path.split('_')[:-1])}_orientedmesh"
+        mesh_folder_path = Path(self.config.output_prefix) / path
         return fs.exists(f"{mesh_folder_path}")
 
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
@@ -219,19 +215,21 @@ class VisualizationConfigImporter(BaseImporter):
 
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "resolution": resolution}
-            has_mesh = self._has_mesh(args["source_path"])
             shape = info["shape"]
             if shape == "SegmentationMask":
-                if has_mesh:
-                    print(
-                        f"Segmentation layer {args['name_prefix']} as oriented mesh, disabling segmentation mesh display",
-                    )
-                args = {**args, "display_mesh": not has_mesh}
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
-                layers.append(self._to_point_layer(**args))
-                if shape == "OrientedPoint" and has_mesh:
+                has_mesh = None
+                if shape == "OrientedPoint":
+                    # Check if oriented point has produced meshes
+                    has_mesh = self._has_oriented_mesh(args["source_path"])
                     layers.append(self._to_mesh_layer(**args))
+                if has_mesh:
+                    print(
+                        f"Oriented point {args['name_prefix']} has an oriented mesh -> hiding oriented point layer",
+                    )
+                args = {**args, "visible": not has_mesh}
+                layers.append(self._to_point_layer(**args))
         return state_generator.combine_json_layers(layers, scale=resolution)
 
     @classmethod

@@ -159,8 +159,6 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
                 min_mesh_chunk_dim=2,
             )
             fs.push(oriented_mesh_path)
-        else:
-            print(f"No mesh found for '{obj_name}' [looked for '{local_mesh_file}', but the file doesn't exist]")
 
 
 class InstanceSegmentationAnnotationPrecompute(PointAnnotationPrecompute):
