@@ -446,6 +446,23 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+  annotation_file_format_enum:
+    name: annotation_file_format_enum
+    description: Describes the format of the annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      mrc:
+        text: mrc
+        description: MRC format
+      zarr:
+        text: zarr
+        description: OMEZARR format
+      ndjson:
+        text: ndjson
+        description: NDJSON format
+      glb:
+        text: glb
+        description: GLB format
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -839,6 +856,18 @@ classes:
         domain_of:
         - Container
         range: GainEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      identified_objects:
+        name: identified_objects
+        description: An identified object entity.
+        from_schema: cdp-ingestion-config
+        alias: identified_objects
+        owner: Container
+        domain_of:
+        - Container
+        range: IdentifiedObjectEntity
         multivalued: true
         inlined: true
         inlined_as_list: true
@@ -1420,6 +1449,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Alignment
@@ -1442,6 +1472,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -1719,6 +1750,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Annotation
@@ -1742,6 +1774,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -2075,6 +2108,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -2355,6 +2389,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Ctf
@@ -2377,6 +2412,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -2654,6 +2690,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
@@ -2676,6 +2713,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -2912,6 +2950,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -3144,6 +3183,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Deposition
@@ -3166,6 +3206,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -3283,6 +3324,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -3519,6 +3561,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -3542,6 +3585,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Frame
@@ -3816,6 +3860,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -4075,6 +4120,62 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+  IdentifiedObjectEntity:
+    name: IdentifiedObjectEntity
+    description: An identified object entity.
+    from_schema: cdp-ingestion-config
+    attributes:
+      metadata:
+        name: metadata
+        description: Metadata for a list of identified objects.
+        from_schema: cdp-ingestion-config
+        alias: metadata
+        owner: IdentifiedObjectEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - CtfEntity
+        - DatasetEntity
+        - DepositionEntity
+        - FrameEntity
+        - IdentifiedObjectEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: IdentifiedObjectList
+        required: false
+        inlined: true
+        inlined_as_list: true
+      sources:
+        name: sources
+        description: A generalized source class with glob finders. Inherited by a
+          majority of source classes.
+        from_schema: cdp-ingestion-config
+        alias: sources
+        owner: IdentifiedObjectEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - CollectionMetadataEntity
+        - CtfEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - DepositionEntity
+        - DepositionKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - IdentifiedObjectEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: StandardSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        minimum_cardinality: 1
   KeyImageEntity:
     name: KeyImageEntity
     description: A key image entity.
@@ -4097,6 +4198,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -4409,6 +4511,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -4692,6 +4795,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -5019,6 +5123,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
@@ -5041,6 +5146,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -5332,6 +5438,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Tomogram
@@ -5354,6 +5461,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -5665,6 +5773,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity

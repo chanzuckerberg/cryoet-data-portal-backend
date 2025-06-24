@@ -477,6 +477,20 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     InstanceSegmentation = "InstanceSegmentation"
 
 
+class AnnotationFileFormatEnum(str, Enum):
+    """
+    Describes the format of the annotation file
+    """
+    # MRC format
+    mrc = "mrc"
+    # OMEZARR format
+    zarr = "zarr"
+    # NDJSON format
+    ndjson = "ndjson"
+    # GLB format
+    glb = "glb"
+
+
 class AnnotationMethodLinkTypeEnum(str, Enum):
     """
     Describes the type of link associated to the annotation method.
@@ -633,11 +647,11 @@ class PicturePath(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     snapshot: Optional[str] = Field(None, description="""Path to the dataset preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'snapshot',
-         'domain_of': ['PicturePath'],
+         'domain_of': ['PicturePath', 'MetadataPicturePath'],
          'exact_mappings': ['cdp-common:snapshot'],
          'recommended': True} })
     thumbnail: Optional[str] = Field(None, description="""Path to the thumbnail of preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'thumbnail',
-         'domain_of': ['PicturePath'],
+         'domain_of': ['PicturePath', 'MetadataPicturePath'],
          'exact_mappings': ['cdp-common:thumbnail'],
          'recommended': True} })
 
@@ -664,6 +678,22 @@ class PicturePath(ConfiguredBaseModel):
             if not pattern.match(v):
                 raise ValueError(f"Invalid thumbnail format: {v}")
         return v
+
+
+class MetadataPicturePath(ConfiguredBaseModel):
+    """
+    A set of paths to representative images of a piece of data for metadata files.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    snapshot: Optional[str] = Field(None, description="""Relative path (non-URL/URI) to the dataset preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'snapshot',
+         'domain_of': ['PicturePath', 'MetadataPicturePath'],
+         'exact_mappings': ['cdp-common:metadata_snapshot'],
+         'recommended': True} })
+    thumbnail: Optional[str] = Field(None, description="""Relative path (non-URL/URI) to the thumbnail of preview image relative to the dataset directory root.""", json_schema_extra = { "linkml_meta": {'alias': 'thumbnail',
+         'domain_of': ['PicturePath', 'MetadataPicturePath'],
+         'exact_mappings': ['cdp-common:metadata_thumbnail'],
+         'recommended': True} })
 
 
 class FundingDetails(ConfiguredBaseModel):
@@ -739,7 +769,18 @@ class PicturedEntity(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    key_photos: PicturePath = Field(..., description="""A set of paths to representative images of a piece of data.""", json_schema_extra = { "linkml_meta": {'alias': 'key_photos', 'domain_of': ['PicturedEntity']} })
+    key_photos: PicturePath = Field(..., description="""A set of paths to representative images of a piece of data.""", json_schema_extra = { "linkml_meta": {'alias': 'key_photos',
+         'domain_of': ['PicturedEntity', 'PicturedMetadataEntity']} })
+
+
+class PicturedMetadataEntity(ConfiguredBaseModel):
+    """
+    An entity with associated preview images for metadata files.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    key_photos: MetadataPicturePath = Field(..., description="""A set of paths to representative images of a piece of data for metadata files.""", json_schema_extra = { "linkml_meta": {'alias': 'key_photos',
+         'domain_of': ['PicturedEntity', 'PicturedMetadataEntity']} })
 
 
 class OrganismDetails(ConfiguredBaseModel):
@@ -1233,6 +1274,76 @@ class TiltRange(ConfiguredBaseModel):
         return v
 
 
+class PerSectionParameter(ConfiguredBaseModel):
+    """
+    Parameters for a section of a tilt series.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    z_index: int = Field(..., description="""z-index of the frame in the tiltseries""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'z_index',
+         'domain_of': ['PerSectionParameter', 'PerSectionAlignmentParameters'],
+         'exact_mappings': ['cdp-common:per_section_z_index']} })
+    frame_acquisition_order: int = Field(..., description="""The 0-based index of this movie stack in the order of acquisition.""", json_schema_extra = { "linkml_meta": {'alias': 'frame_acquisition_order',
+         'domain_of': ['PerSectionParameter'],
+         'exact_mappings': ['cdp-common:frames_acquisition_order']} })
+    raw_angle: Optional[float] = Field(None, description="""Nominal angle of the tilt series section.""", ge=-90, le=90, json_schema_extra = { "linkml_meta": {'alias': 'raw_angle',
+         'domain_of': ['PerSectionParameter'],
+         'exact_mappings': ['cdp-common:per_section_nominal_tilt_angle'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
+    astigmatic_angle: Optional[float] = Field(None, description="""Angle of astigmatism.""", ge=-180, le=180, json_schema_extra = { "linkml_meta": {'alias': 'astigmatic_angle',
+         'domain_of': ['PerSectionParameter'],
+         'exact_mappings': ['cdp-common:per_section_astigmatic_angle'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
+    minor_defocus: Optional[float] = Field(None, description="""Minor axis defocus amount, underfocus is positive.""", json_schema_extra = { "linkml_meta": {'alias': 'minor_defocus',
+         'domain_of': ['PerSectionParameter'],
+         'exact_mappings': ['cdp-common:per_section_minor_defocus'],
+         'unit': {'descriptive_name': 'angstrom', 'symbol': 'Å'}} })
+    major_defocus: Optional[float] = Field(None, description="""Major axis defocus amount, underfocus is positive.""", json_schema_extra = { "linkml_meta": {'alias': 'major_defocus',
+         'domain_of': ['PerSectionParameter'],
+         'exact_mappings': ['cdp-common:per_section_major_defocus'],
+         'unit': {'descriptive_name': 'angstrom', 'symbol': 'Å'}} })
+    max_resolution: Optional[float] = Field(None, description="""Maximum resolution of the CTF fit for this section.""", json_schema_extra = { "linkml_meta": {'alias': 'max_resolution',
+         'domain_of': ['PerSectionParameter'],
+         'exact_mappings': ['cdp-common:per_section_max_resolution'],
+         'unit': {'descriptive_name': 'angstrom', 'symbol': 'Å'}} })
+    phase_shift: Optional[float] = Field(None, description="""Phase shift measured for this section.""", json_schema_extra = { "linkml_meta": {'alias': 'phase_shift',
+         'domain_of': ['PerSectionParameter'],
+         'exact_mappings': ['cdp-common:per_section_phase_shift'],
+         'unit': {'descriptive_name': 'radians', 'symbol': 'rad'}} })
+    cross_correlation: Optional[float] = Field(None, description="""CTF fit cross correlation value for this section.""", json_schema_extra = { "linkml_meta": {'alias': 'cross_correlation',
+         'domain_of': ['PerSectionParameter'],
+         'exact_mappings': ['cdp-common:per_section_cross_correlation']} })
+
+
+class TiltSeriesSize(ConfiguredBaseModel):
+    """
+    The size of a tiltseries in sctions/pixels in each dimension.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    x: int = Field(..., description="""Number of pixels in the 2D data fast axis""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'x',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+    y: int = Field(..., description="""Number of pixels in the 2D data medium axis""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'y',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
+    z: int = Field(..., description="""Number of sections in the 2D stack.""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'z',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
+                       'TomogramOffset',
+                       'AlignmentSize',
+                       'AlignmentOffset'],
+         'unit': {'descriptive_name': 'sections'}} })
+
+
 class TiltSeries(ConfiguredBaseModel):
     """
     Metadata describing a tilt series.
@@ -1466,19 +1577,22 @@ class TomogramSize(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     x: int = Field(..., description="""Number of pixels in the 3D data fast axis""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     y: int = Field(..., description="""Number of pixels in the 3D data medium axis""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     z: int = Field(..., description="""Number of pixels in the 3D data slow axis.  This is the image projection direction at zero stage tilt""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
@@ -1492,19 +1606,22 @@ class TomogramOffset(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     x: int = Field(..., description="""x offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'x',
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     y: int = Field(..., description="""y offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'y',
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'pixels', 'symbol': 'px'}} })
     z: int = Field(..., description="""z offset data relative to the canonical tomogram in pixels""", json_schema_extra = { "linkml_meta": {'alias': 'z',
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
@@ -1572,7 +1689,7 @@ class Tomogram(AuthoredEntity):
                    'exact_number_dimensions': 2},
          'domain_of': ['Tomogram', 'Alignment']} })
     size: Optional[TomogramSize] = Field(None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'size', 'domain_of': ['Tomogram']} })
-    offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
+    offset: TomogramOffset = Field(..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram']} })
     is_visualization_default: bool = Field(True, description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'alias': 'is_visualization_default',
          'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -1820,6 +1937,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
     filter_value: Optional[str] = Field(None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     order: Optional[str] = Field("xyz", description="""The order of axes for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'order',
@@ -1898,6 +2016,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
     filter_value: Optional[str] = Field(None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     order: Optional[str] = Field("xyz", description="""The order of axes for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'order',
@@ -1984,6 +2103,7 @@ class AnnotationPointFile(AnnotationSourceFile):
     filter_value: Optional[str] = Field(None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     file_format: str = Field(..., description="""File format for this file""", json_schema_extra = { "linkml_meta": {'alias': 'file_format',
@@ -2322,6 +2442,53 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
          'ifabsent': 'False'} })
 
 
+class IdentifiedObject(ConfiguredBaseModel):
+    """
+    Metadata describing an identified object.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    object_id: str = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'object_id',
+         'any_of': [{'range': 'GO_ID'}, {'range': 'UNIPROT_ID'}],
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_id']} })
+    object_name: str = Field(..., description="""Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)""", json_schema_extra = { "linkml_meta": {'alias': 'object_name',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_name']} })
+    object_description: Optional[str] = Field(None, description="""A textual description of the identified object, can be a longer description to include additional information not covered by the identified object name and state.""", json_schema_extra = { "linkml_meta": {'alias': 'object_description',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_description']} })
+    object_state: Optional[str] = Field(None, description="""Molecule state identified (e.g. open, closed)""", json_schema_extra = { "linkml_meta": {'alias': 'object_state',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_state']} })
+
+    @field_validator('object_id')
+    def pattern_object_id(cls, v):
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid object_id format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid object_id format: {v}")
+        return v
+
+
+class IdentifiedObjectList(ConfiguredBaseModel):
+    """
+    Metadata for a list of identified objects.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    filter_value: Optional[str] = Field(None, description="""Filter value for the identified object, used to filter the list of identified objects by run name.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationPointFile',
+                       'IdentifiedObjectList',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:identified_object_filter_value']} })
+
+
 class Annotation(AuthoredEntity, DateStampedEntity):
     """
     Metadata describing an annotation.
@@ -2407,21 +2574,24 @@ class AlignmentSize(ConfiguredBaseModel):
 
     x: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
     y: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
          'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
     z: Union[float, str] = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
@@ -2472,7 +2642,8 @@ class AlignmentOffset(ConfiguredBaseModel):
 
     x: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x',
          'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
@@ -2480,7 +2651,8 @@ class AlignmentOffset(ConfiguredBaseModel):
          'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
     y: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'y',
          'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
@@ -2488,7 +2660,8 @@ class AlignmentOffset(ConfiguredBaseModel):
          'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
     z: Union[float, str] = Field(0.0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'z',
          'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
-         'domain_of': ['TomogramSize',
+         'domain_of': ['TiltSeriesSize',
+                       'TomogramSize',
                        'TomogramOffset',
                        'AlignmentSize',
                        'AlignmentOffset'],
@@ -2532,12 +2705,47 @@ class AlignmentOffset(ConfiguredBaseModel):
         return v
 
 
+class PerSectionAlignmentParameters(ConfiguredBaseModel):
+    """
+    Alignment parameters for one section of a tilt series.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    z_index: int = Field(..., description="""z-index of the frame in the tiltseries""", ge=0, json_schema_extra = { "linkml_meta": {'alias': 'z_index',
+         'domain_of': ['PerSectionParameter', 'PerSectionAlignmentParameters'],
+         'exact_mappings': ['cdp-common:per_section_z_index']} })
+    tilt_angle: Optional[float] = Field(None, description="""Tilt angle of the projection in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'tilt_angle',
+         'domain_of': ['PerSectionAlignmentParameters'],
+         'exact_mappings': ['cdp-common:per_section_alignment_tilt_angle'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
+    volume_x_rotation: Optional[float] = Field(None, description="""Additional X rotation of the reconstruction volume in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'volume_x_rotation',
+         'domain_of': ['PerSectionAlignmentParameters'],
+         'exact_mappings': ['cdp-common:alignment_volume_x_rotation'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
+    in_plane_rotation: Optional[conlist(min_length=2, max_length=2, item_type=conlist(min_length=2, max_length=2, item_type=float))] = Field(None, description="""In-plane rotation of the projection as a rotation matrix.""", json_schema_extra = { "linkml_meta": {'alias': 'in_plane_rotation',
+         'array': {'dimensions': [{'exact_cardinality': 2}, {'exact_cardinality': 2}],
+                   'exact_number_dimensions': 2},
+         'domain_of': ['PerSectionAlignmentParameters']} })
+    x_offset: Optional[float] = Field(None, description="""In-plane X-shift of the projection in angstrom""", json_schema_extra = { "linkml_meta": {'alias': 'x_offset',
+         'domain_of': ['PerSectionAlignmentParameters'],
+         'exact_mappings': ['cdp-common:per_section_alignment_x_offset'],
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    y_offset: Optional[float] = Field(None, description="""In-plane Y-shift of the projection in angstrom""", json_schema_extra = { "linkml_meta": {'alias': 'y_offset',
+         'domain_of': ['PerSectionAlignmentParameters'],
+         'exact_mappings': ['cdp-common:per_section_alignment_y_offset'],
+         'unit': {'descriptive_name': 'Angstrom', 'symbol': 'Å'}} })
+    beam_tilt: Optional[float] = Field(None, description="""Beam tilt during projection in degrees""", json_schema_extra = { "linkml_meta": {'alias': 'beam_tilt',
+         'domain_of': ['PerSectionAlignmentParameters'],
+         'exact_mappings': ['cdp-common:per_section_alignment_beam_tilt'],
+         'unit': {'descriptive_name': 'degrees', 'symbol': '°'}} })
+
+
 class Alignment(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     alignment_type: Optional[AlignmentTypeEnum] = Field(None, description="""The type of alignment.""", json_schema_extra = { "linkml_meta": {'alias': 'alignment_type', 'domain_of': ['Alignment']} })
-    offset: Optional[AlignmentOffset] = Field(None, description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'offset', 'domain_of': ['Tomogram', 'Alignment']} })
-    volume_dimesion: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimesion', 'domain_of': ['Alignment']} })
+    volume_offset: Optional[AlignmentOffset] = Field(None, description="""The offset of a alignment in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_offset', 'domain_of': ['Alignment']} })
+    volume_dimension: Optional[AlignmentSize] = Field(None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'alias': 'volume_dimension', 'domain_of': ['Alignment']} })
     x_rotation_offset: Optional[Union[int, str]] = Field(0, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'x_rotation_offset',
          'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['Alignment'],
@@ -2891,6 +3099,7 @@ class Container(ConfiguredBaseModel):
     depositions: List[DepositionEntity] = Field(..., description="""A deposition entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'depositions', 'domain_of': ['Container']} })
     frames: Optional[List[FrameEntity]] = Field(None, description="""A frame entity.""", json_schema_extra = { "linkml_meta": {'alias': 'frames', 'domain_of': ['Container']} })
     gains: Optional[List[GainEntity]] = Field(None, description="""A gain entity.""", json_schema_extra = { "linkml_meta": {'alias': 'gains', 'domain_of': ['Container']} })
+    identified_objects: Optional[List[IdentifiedObjectEntity]] = Field(None, description="""An identified object entity.""", json_schema_extra = { "linkml_meta": {'alias': 'identified_objects', 'domain_of': ['Container']} })
     key_images: Optional[List[KeyImageEntity]] = Field(None, description="""A key image entity.""", json_schema_extra = { "linkml_meta": {'alias': 'key_images', 'domain_of': ['Container']} })
     rawtilts: Optional[List[RawTiltEntity]] = Field(None, description="""A raw tilt entity.""", json_schema_extra = { "linkml_meta": {'alias': 'rawtilts', 'domain_of': ['Container']} })
     runs: List[RunEntity] = Field(..., description="""A run entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'runs', 'domain_of': ['Container']} })
@@ -3311,6 +3520,7 @@ class AlignmentEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: Optional[List[AlignmentSource]] = Field(None, description="""An alignment source.""", json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -3324,6 +3534,7 @@ class AlignmentEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -3583,6 +3794,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[AnnotationSource] = Field(..., description="""An annotation source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -3596,6 +3808,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -3800,6 +4013,7 @@ class CollectionMetadataEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4059,6 +4273,7 @@ class CtfEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[CtfSource] = Field(..., description="""A ctf source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -4072,6 +4287,7 @@ class CtfEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4331,6 +4547,7 @@ class DatasetEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[DatasetSource] = Field(..., description="""A dataset source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -4344,6 +4561,7 @@ class DatasetEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4582,6 +4800,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4816,6 +5035,7 @@ class DepositionEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[DepositionSource] = Field(..., description="""A deposition source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -4829,6 +5049,7 @@ class DepositionEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4968,6 +5189,7 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -5206,6 +5428,7 @@ class FrameEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -5219,6 +5442,7 @@ class FrameEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
 
@@ -5478,6 +5702,7 @@ class GainEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -5724,6 +5949,42 @@ class GainParent(ConfiguredBaseModel):
                        'VoxelSpacingParent']} })
 
 
+class IdentifiedObjectEntity(ConfiguredBaseModel):
+    """
+    An identified object entity.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    metadata: Optional[IdentifiedObjectList] = Field(None, description="""Metadata for a list of identified objects.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'CtfEntity',
+                       'DatasetEntity',
+                       'DepositionEntity',
+                       'FrameEntity',
+                       'IdentifiedObjectEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity']} })
+    sources: List[StandardSource] = Field(..., description="""A generalized source class with glob finders. Inherited by a majority of source classes.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'CollectionMetadataEntity',
+                       'CtfEntity',
+                       'DatasetEntity',
+                       'DatasetKeyPhotoEntity',
+                       'DepositionEntity',
+                       'DepositionKeyPhotoEntity',
+                       'FrameEntity',
+                       'GainEntity',
+                       'IdentifiedObjectEntity',
+                       'KeyImageEntity',
+                       'RawTiltEntity',
+                       'RunEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity',
+                       'VoxelSpacingEntity']} })
+
+
 class KeyImageEntity(ConfiguredBaseModel):
     """
     A key image entity.
@@ -5741,6 +6002,7 @@ class KeyImageEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -6010,6 +6272,7 @@ class RawTiltEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -6273,6 +6536,7 @@ class RunEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -6534,6 +6798,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[TiltSeriesSource] = Field(..., description="""A tilt series source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -6547,6 +6812,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -6808,6 +7074,7 @@ class TomogramEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: List[TomogramSource] = Field(..., description="""A tomogram source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -6821,6 +7088,7 @@ class TomogramEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -7091,6 +7359,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -7359,12 +7628,14 @@ class TomogramHeader(ConfiguredBaseModel):
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 PicturePath.model_rebuild()
+MetadataPicturePath.model_rebuild()
 FundingDetails.model_rebuild()
 DateStampedEntity.model_rebuild()
 AuthoredEntity.model_rebuild()
 FundedEntity.model_rebuild()
 CrossReferencedEntity.model_rebuild()
 PicturedEntity.model_rebuild()
+PicturedMetadataEntity.model_rebuild()
 OrganismDetails.model_rebuild()
 TissueDetails.model_rebuild()
 CellType.model_rebuild()
@@ -7377,6 +7648,8 @@ CameraDetails.model_rebuild()
 MicroscopeDetails.model_rebuild()
 MicroscopeOpticalSetup.model_rebuild()
 TiltRange.model_rebuild()
+PerSectionParameter.model_rebuild()
+TiltSeriesSize.model_rebuild()
 TiltSeries.model_rebuild()
 TomogramSize.model_rebuild()
 TomogramOffset.model_rebuild()
@@ -7392,9 +7665,12 @@ AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
+IdentifiedObject.model_rebuild()
+IdentifiedObjectList.model_rebuild()
 Annotation.model_rebuild()
 AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()
+PerSectionAlignmentParameters.model_rebuild()
 Alignment.model_rebuild()
 Frame.model_rebuild()
 Ctf.model_rebuild()
@@ -7454,6 +7730,7 @@ GainEntity.model_rebuild()
 GainSource.model_rebuild()
 GainParentFilters.model_rebuild()
 GainParent.model_rebuild()
+IdentifiedObjectEntity.model_rebuild()
 KeyImageEntity.model_rebuild()
 KeyImageSource.model_rebuild()
 KeyImageParentFilters.model_rebuild()

@@ -57,7 +57,7 @@ clean-all: clean
 	rm -rf ingestion_config/latest
 
 .PHONY: build
-build: build-ingestion-config
+build: build-ingestion-config build-metadata-files
 
 # To build-ingestion-config for the non-default version, run `make build-ingestion-config INGESTION_CONFIG_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
 .PHONY: build-ingestion-config
