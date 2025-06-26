@@ -20,6 +20,7 @@ from codegen.ingestion_config_models import (
     AnnotationEntity,
     AnnotationObject,
     AnnotationSource,
+    IdentifiedObject,
     Assay,
     Author,
     CameraDetails,
