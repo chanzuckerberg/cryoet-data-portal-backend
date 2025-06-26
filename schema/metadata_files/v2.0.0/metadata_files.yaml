@@ -190,6 +190,11 @@ classes:
       run_name:
         exact_mappings:
           - cdp-common:metadata_run_name
+      identified_objects:
+        description: The objects identified in this run.
+        range: IdentifiedObject
+        multivalued: true
+        inlined_as_list: true
 
   # ============================================================================
 

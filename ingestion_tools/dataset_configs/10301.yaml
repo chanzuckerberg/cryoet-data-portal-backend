@@ -309,6 +309,12 @@ gains:
   - sources:
       - source_glob:
           list_glob: '{run_name}/*.gain'
+identified_objects:
+  - metadata:
+      filter_value: '{run_name}'
+    sources:
+      - source_glob:
+          list_glob: 'identified_objects.csv'
 rawtilts:
   - sources:
       - source_glob:

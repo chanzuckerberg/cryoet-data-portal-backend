@@ -801,6 +801,30 @@ slots:
     description: The name that identifies to a single annotation mesh among multiple meshes.
 
   # ============================================================================
+  # Identified Objects fields
+  # ============================================================================
+  identified_object_description:
+    range: string
+    description: A textual description of the identified object, can be a longer description to include additional
+      information not covered by the identified object name and state.
+  identified_object_id:
+    any_of:
+      - range: GO_ID
+      - range: UNIPROT_ID
+    required: true
+    description: Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.
+  identified_object_name:
+    range: string
+    required: true
+    description: Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)
+  identified_object_state:
+    range: string
+    description: Molecule state identified (e.g. open, closed)
+  identified_object_filter_value:
+    range: string
+    description: Filter value for the identified object, used to filter the list of identified objects by run name.
+
+  # ============================================================================
   # Per Section Parameters fields
   # ============================================================================
   per_section_z_index:
