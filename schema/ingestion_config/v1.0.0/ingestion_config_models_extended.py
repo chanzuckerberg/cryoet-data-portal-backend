@@ -20,6 +20,7 @@ from codegen.ingestion_config_models import (
     AnnotationEntity,
     AnnotationObject,
     AnnotationSource,
+    IdentifiedObject,
     Author,
     CameraDetails,
     CellComponent,
@@ -590,6 +591,7 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
         return self
 
 
+
 # ==============================================================================
 # Annotation Confidence Validation
 # ==============================================================================
@@ -898,6 +900,17 @@ class ExtendedValidationGainEntity(GainEntity):
     @classmethod
     def valid_sources(cls: Self, source_list: List[GainSource]) -> List[GainSource]:
         return validate_sources(source_list)
+
+
+# ==============================================================================
+# Identified Object Validation
+# ==============================================================================
+class ExtendedValidationIdentifiedObject(IdentifiedObject):
+    @model_validator(mode="after")
+    def validate_identified_object(self) -> Self:
+        if re.match(GO_ID_REGEX, self.object_id):
+            validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_name=True, ancestor=CELLULAR_COMPONENT_GO_ID)
+        return self
 
 
 # ==============================================================================
