@@ -1,12 +1,29 @@
 from __future__ import annotations
-
-import re
-from datetime import date
+from datetime import (
+    datetime,
+    date
+)
+from decimal import Decimal
 from enum import Enum
-from typing import Any, ClassVar, Dict, List, Optional, Union
-
-from pydantic import BaseModel, ConfigDict, Field, RootModel, conlist, field_validator
-
+import re
+import sys
+from typing import (
+    Any,
+    ClassVar,
+    List,
+    Literal,
+    Dict,
+    Optional,
+    Union
+)
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    RootModel,
+    field_validator,
+    conlist
+)
 metamodel_version = "None"
 version = "2.0.0"
 
@@ -2009,6 +2026,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
     filter_value: Optional[str] = Field(None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     order: Optional[str] = Field("xyz", description="""The order of axes for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'order',
@@ -2090,6 +2108,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
     filter_value: Optional[str] = Field(None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     order: Optional[str] = Field("xyz", description="""The order of axes for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'order',
@@ -2179,6 +2198,7 @@ class AnnotationPointFile(AnnotationSourceFile):
     filter_value: Optional[str] = Field(None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     file_format: str = Field(..., description="""File format for this file""", json_schema_extra = { "linkml_meta": {'alias': 'file_format',
@@ -2530,6 +2550,53 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AlignmentMetadata'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
+
+
+class IdentifiedObject(ConfiguredBaseModel):
+    """
+    Metadata describing an identified object.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    object_id: str = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'object_id',
+         'any_of': [{'range': 'GO_ID'}, {'range': 'UNIPROT_ID'}],
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_id']} })
+    object_name: str = Field(..., description="""Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)""", json_schema_extra = { "linkml_meta": {'alias': 'object_name',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_name']} })
+    object_description: Optional[str] = Field(None, description="""A textual description of the identified object, can be a longer description to include additional information not covered by the identified object name and state.""", json_schema_extra = { "linkml_meta": {'alias': 'object_description',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_description']} })
+    object_state: Optional[str] = Field(None, description="""Molecule state identified (e.g. open, closed)""", json_schema_extra = { "linkml_meta": {'alias': 'object_state',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_state']} })
+
+    @field_validator('object_id')
+    def pattern_object_id(cls, v):
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid object_id format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid object_id format: {v}")
+        return v
+
+
+class IdentifiedObjectList(ConfiguredBaseModel):
+    """
+    Metadata for a list of identified objects.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    filter_value: Optional[str] = Field(None, description="""Filter value for the identified object, used to filter the list of identified objects by run name.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationPointFile',
+                       'IdentifiedObjectList',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:identified_object_filter_value']} })
 
 
 class Annotation(AuthoredEntity, DateStampedEntity):
@@ -3776,6 +3843,7 @@ class RunMetadata(ConfiguredBaseModel):
     run_name: Optional[str] = Field(None, description="""Name of the run this metadata file is a part of.""", json_schema_extra = { "linkml_meta": {'alias': 'run_name',
          'domain_of': ['RunMetadata', 'TiltSeriesMetadata', 'TomogramMetadata'],
          'exact_mappings': ['cdp-common:metadata_run_name']} })
+    identified_objects: Optional[List[IdentifiedObject]] = Field(None, description="""Metadata describing an identified object.""", json_schema_extra = { "linkml_meta": {'alias': 'identified_objects', 'domain_of': ['RunMetadata']} })
 
 
 class TiltSeriesMetadata(DefaultMetadata, TiltSeries):
@@ -4280,6 +4348,8 @@ AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
+IdentifiedObject.model_rebuild()
+IdentifiedObjectList.model_rebuild()
 Annotation.model_rebuild()
 AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()
