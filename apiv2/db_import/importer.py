@@ -289,7 +289,7 @@ def load_func(
                     per_section_alignment_parameters_importer.import_items()
 
             if import_identified_objects:
-                identified_object_importer = IdentifiedObjectImporter(config, run=run, run_id=run_id)
+                identified_object_importer = IdentifiedObjectImporter(config, run_obj, **parents)
                 identified_object_importer.import_items()
 
             if not import_tomogram_voxel_spacing:
