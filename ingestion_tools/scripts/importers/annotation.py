@@ -486,11 +486,13 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
     binning: int
     order: str | None
     filter_value: str | None
+    mesh_source_path: str | None
 
     def __init__(
         self,
         filter_value: str | None = None,
         order: str | None = None,
+        mesh_source_path: str | None = None,
         *args,
         **kwargs,
     ) -> None:
@@ -499,6 +501,10 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
         self.filter_value = None
         if filter_value:
             self.filter_value = filter_value.format(**self.get_glob_vars())
+
+        self.mesh_source_path = None
+        if mesh_source_path:
+            self.mesh_source_path = mesh_source_path.format(**self.get_glob_vars())
 
     def get_converter_args(self):
         return {
