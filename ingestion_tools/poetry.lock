@@ -1807,7 +1807,7 @@ tqdm = ">=4.67,<5.0"
 
 [[package]]
 name = "cryoet-data-portal-neuroglancer"
-version = "1.4.2"
+version = "1.6.1"
 description = "Utility package for working with Neuroglancer data in the CZI Cryo-ET Data Portal"
 optional = false
 python-versions = "^3.11"
@@ -1818,7 +1818,7 @@ develop = false
 [package.dependencies]
 cloud-files = "4.27.0"
 cloud-volume = "10.5.0"
-igneous-pipeline = {git = "https://github.com/metacell/igneous.git", tag = "patchv1.0"}
+igneous-pipeline = "4.30.0"
 kimimaro = "4.1.2"
 ndjson = "^0.3.1"
 neuroglancer = "^2.40.1"
@@ -1831,8 +1831,8 @@ zarr = "^2.18.2"
 [package.source]
 type = "git"
 url = "https://github.com/chanzuckerberg/cryoet-data-portal-neuroglancer.git"
-reference = "v1.4.2"
-resolved_reference = "2ebe5f7178d87ce463d6fb3fad2528c11718c5e0"
+reference = "v1.6.1"
+resolved_reference = "e4cf29c84b3e8cb395fd1860894b83a6b1230e6f"
 
 [[package]]
 name = "cycler"
@@ -3403,14 +3403,16 @@ files = [
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
 [[package]]
-name = "igneous_pipeline"
-version = "0.0.1.dev853"
+name = "igneous-pipeline"
+version = "4.30.0"
 description = "Manage, Downsample, Mesh, Skeletonize, and Transform Neuroglancer Datasets"
 optional = false
 python-versions = "*"
 groups = ["main"]
-files = []
-develop = false
+files = [
+    {file = "igneous_pipeline-4.30.0-py3-none-any.whl", hash = "sha256:88bd833613ef185d25e5f59366663a30373d50ede17e7aca90b42757865bfa29"},
+    {file = "igneous_pipeline-4.30.0.tar.gz", hash = "sha256:1a00440c19838edf4a92aa5315d63f72d076ab70630ded2a9dafc8a558f677bd"},
+]
 
 [package.dependencies]
 click = ">=6.7"
@@ -3427,6 +3429,7 @@ kimimaro = ">=3.4.0"
 mapbuffer = ">=0.7.1"
 networkx = "*"
 numpy = ">=1.14.2"
+opencv-python = "*"
 pathos = "*"
 Pillow = ">=4.2.1"
 pyfqmr = "*"
@@ -3440,12 +3443,6 @@ tqdm = "*"
 trimesh = {version = "*", extras = ["easy"]}
 xs3d = ">=1.2.0"
 zmesh = ">=1.4,<2.0"
-
-[package.source]
-type = "git"
-url = "https://github.com/metacell/igneous.git"
-reference = "patchv1.0"
-resolved_reference = "bd483ea85cf6831eb627c540ff4cdd7b2b1e88ce"
 
 [[package]]
 name = "imagecodecs"
@@ -4895,6 +4892,29 @@ requests = "*"
 scikit-image = "*"
 toolz = "*"
 zarr = ">=2.8.1"
+
+[[package]]
+name = "opencv-python"
+version = "4.11.0.86"
+description = "Wrapper package for OpenCV python bindings."
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "opencv-python-4.11.0.86.tar.gz", hash = "sha256:03d60ccae62304860d232272e4a4fda93c39d595780cb40b161b310244b736a4"},
+    {file = "opencv_python-4.11.0.86-cp37-abi3-macosx_13_0_arm64.whl", hash = "sha256:432f67c223f1dc2824f5e73cdfcd9db0efc8710647d4e813012195dc9122a52a"},
+    {file = "opencv_python-4.11.0.86-cp37-abi3-macosx_13_0_x86_64.whl", hash = "sha256:9d05ef13d23fe97f575153558653e2d6e87103995d54e6a35db3f282fe1f9c66"},
+    {file = "opencv_python-4.11.0.86-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1b92ae2c8852208817e6776ba1ea0d6b1e0a1b5431e971a2a0ddd2a8cc398202"},
+    {file = "opencv_python-4.11.0.86-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6b02611523803495003bd87362db3e1d2a0454a6a63025dc6658a9830570aa0d"},
+    {file = "opencv_python-4.11.0.86-cp37-abi3-win32.whl", hash = "sha256:810549cb2a4aedaa84ad9a1c92fbfdfc14090e2749cedf2c1589ad8359aa169b"},
+    {file = "opencv_python-4.11.0.86-cp37-abi3-win_amd64.whl", hash = "sha256:085ad9b77c18853ea66283e98affefe2de8cc4c1f43eda4c100cf9b2721142ec"},
+]
+
+[package.dependencies]
+numpy = [
+    {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
+    {version = ">=1.23.5", markers = "python_version == \"3.11\""},
+]
 
 [[package]]
 name = "opentelemetry-api"
@@ -8199,4 +8219,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "7167aa90ec82ab20bd2ea677ca6fc813de8842c95a3705fb6b515e766748a7e1"
+content-hash = "b2f02857cf5111f7820579f0d89b8359402f6365b8fe0efd55f58d343d69155d"

@@ -53,7 +53,7 @@ imageio = "^2.33.1"
 pytest = "^8.3.2"
 boto3-stubs = {extras = ["s3"], version = "^1.34.34"}
 mypy = "^1.8.0"
-cryoet-data-portal-neuroglancer = { git = "https://github.com/chanzuckerberg/cryoet-data-portal-neuroglancer.git", tag = "v1.4.2" }
+cryoet-data-portal-neuroglancer = { git = "https://github.com/chanzuckerberg/cryoet-data-portal-neuroglancer.git", tag = "v1.6.1" }
 distinctipy = "^1.3.4"
 imodmodel = "0.0.12"
 mdocfile = "^0.1.2"
