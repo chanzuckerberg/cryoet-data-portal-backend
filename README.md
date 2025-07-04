@@ -27,7 +27,7 @@ If you believe you have found a security issue, please responsibly disclose by c
 5. PR should be squashed and merged.
 
 
-## Modules
+## Modules:
 
 This repository contains all components related to the CryoET backend. Below is a brief overview of each module:
 
