@@ -78,6 +78,12 @@ from graphql_api.types.frame_acquisition_file import (
     resolve_frame_acquisition_files_aggregate,
 )
 from graphql_api.types.gain_file import GainFile, GainFileAggregate, resolve_gain_files, resolve_gain_files_aggregate
+from graphql_api.types.identified_object import (
+    IdentifiedObject,
+    IdentifiedObjectAggregate,
+    resolve_identified_objects,
+    resolve_identified_objects_aggregate,
+)
 from graphql_api.types.per_section_alignment_parameters import (
     PerSectionAlignmentParameters,
     PerSectionAlignmentParametersAggregate,
@@ -135,6 +141,7 @@ class Query:
     depositions: Sequence[Deposition] = resolve_depositions
     deposition_types: Sequence[DepositionType] = resolve_deposition_types
     frames: Sequence[Frame] = resolve_frames
+    identified_objects: Sequence[IdentifiedObject] = resolve_identified_objects
     per_section_alignment_parameters: Sequence[PerSectionAlignmentParameters] = resolve_per_section_alignment_parameters
     per_section_parameters: Sequence[PerSectionParameters] = resolve_per_section_parameters
     runs: Sequence[Run] = resolve_runs
@@ -159,6 +166,7 @@ class Query:
     depositions_aggregate: DepositionAggregate = resolve_depositions_aggregate
     deposition_types_aggregate: DepositionTypeAggregate = resolve_deposition_types_aggregate
     frames_aggregate: FrameAggregate = resolve_frames_aggregate
+    identified_objects_aggregate: IdentifiedObjectAggregate = resolve_identified_objects_aggregate
     per_section_alignment_parameters_aggregate: PerSectionAlignmentParametersAggregate = (
         resolve_per_section_alignment_parameters_aggregate
     )

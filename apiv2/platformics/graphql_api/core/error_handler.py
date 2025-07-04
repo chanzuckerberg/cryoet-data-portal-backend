@@ -40,6 +40,7 @@ class ValidationExceptionHandler(ExceptionHandler):
             )
         return errors
 
+
 class ValueErrorHandler(ExceptionHandler):
     def convert_exception(self, err: ValueError) -> list[ValueError]:
         value_err: ValueError | None = err.original_error  # type: ignore

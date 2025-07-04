@@ -68,6 +68,12 @@ from graphql_api.types.frame_acquisition_file import (
     update_frame_acquisition_file,
 )
 from graphql_api.types.gain_file import GainFile, create_gain_file, delete_gain_file, update_gain_file
+from graphql_api.types.identified_object import (
+    IdentifiedObject,
+    create_identified_object,
+    delete_identified_object,
+    update_identified_object,
+)
 from graphql_api.types.per_section_alignment_parameters import (
     PerSectionAlignmentParameters,
     create_per_section_alignment_parameters,
@@ -169,6 +175,11 @@ class Mutation:
     create_frame: Frame = create_frame
     update_frame: Sequence[Frame] = update_frame
     delete_frame: Sequence[Frame] = delete_frame
+
+    # IdentifiedObject mutations
+    create_identified_object: IdentifiedObject = create_identified_object
+    update_identified_object: Sequence[IdentifiedObject] = update_identified_object
+    delete_identified_object: Sequence[IdentifiedObject] = delete_identified_object
 
     # PerSectionAlignmentParameters mutations
     create_per_section_alignment_parameters: PerSectionAlignmentParameters = create_per_section_alignment_parameters
