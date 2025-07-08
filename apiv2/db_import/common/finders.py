@@ -5,7 +5,6 @@ import re
 from abc import ABC, abstractmethod
 from functools import lru_cache
 from typing import TYPE_CHECKING, Any
-import pandas as pd
 
 from db_import.common.config import DBImportConfig
 
@@ -104,9 +103,9 @@ class JsonDataFinder(ItemFinder):
         try:
             json_data = self.load_metadata(self.path)
         except Exception as e:
-            logger.error(f"JsonDataFinder.find: error loading metadata from {self.path}: {e}")
+            logger.error("JsonDataFinder.find: error loading metadata from %s: %s", self.path, e)
             return []
-        
+
         original_json_data = json_data
         for key in self.list_key:
             try:
@@ -115,14 +114,14 @@ class JsonDataFinder(ItemFinder):
                 return []
         if self.match_key and self.match_value:
             json_data = [item for item in json_data if item.get(self.match_key) == self.match_value]
-        
+
         for idx, item in enumerate(json_data):
             item["file"] = self.path
             item["index"] = idx + 1
             item["original_data"] = original_json_data
             item.update(parents)
             results.append(item_importer(self.config, item))
-        
+
         return results
 
 

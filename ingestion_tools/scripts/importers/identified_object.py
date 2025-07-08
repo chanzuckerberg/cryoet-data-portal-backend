@@ -2,12 +2,12 @@
 from typing import Any
 
 import pandas as pd
+
 from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
 from common.id_helper import IdentifierHelper
 from common.metadata import IdentifiedObjectMetadata
 from importers.base_importer import BaseFileImporter
-
 
 
 class IdentifiedObjectIdentifierHelper(IdentifierHelper):
@@ -66,17 +66,17 @@ class IdentifiedObjectImporter(BaseFileImporter):
             name=name,
             path=path,
             allow_imports=allow_imports,
-            parents=parents
+            parents=parents,
         )
         self.identifier = IdentifiedObjectIdentifierHelper.get_identifier(
-            config, self.get_base_metadata(), self.parents
+            config, self.get_base_metadata(), self.parents,
         )
-    
+
     def import_item(self) -> None:
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-        
+
         dest_path = self.get_output_path()
         self.config.fs.makedirs(dest_path)
         try:
@@ -92,13 +92,13 @@ class IdentifiedObjectImporter(BaseFileImporter):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name} metadata")
             return
-        
+
         try:
             df = pd.read_csv(self.path)
         except Exception as e:
             print(f"Error reading CSV {self.path}: {e}")
             return
-        
+
         extra_data = {
             "object_count": len(df),
             "columns": list(df.columns),
@@ -108,9 +108,9 @@ class IdentifiedObjectImporter(BaseFileImporter):
         }
 
         metadata = IdentifiedObjectMetadata(
-            self.config.fs, 
-            self.get_deposition().name, 
-            self.get_base_metadata()
+            self.config.fs,
+            self.get_deposition().name,
+            self.get_base_metadata(),
         )
-        
+
         metadata.write_metadata(self.get_metadata_path(), extra_data)

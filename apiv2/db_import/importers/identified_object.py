@@ -1,7 +1,6 @@
 from typing import Any
 
 import sqlalchemy as sa
-
 from database import models
 from db_import.common.finders import JsonDataFinder
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
@@ -25,11 +24,11 @@ class IdentifiedObjectItem(ItemDBImporter):
                 run = self.config.session.scalars(run_query).one()
                 self.model_args["run_id"] = run.id
             except Exception as e:
-                raise ValueError(f"Could not find run with identifier '{run_identifier}': {e}")
+                raise ValueError(f"Could not find run with identifier '{run_identifier}': {e}") from e
         else:
             extra_data = {"run_id": self.input_data["run"].id}
             self.model_args.update(extra_data)
-    
+
     def load(self, session):
         return super().load(session)
 
@@ -52,7 +51,6 @@ class IdentifiedObjectImporter(IntegratedDBImporter):
             parts = s3_prefix.split("/", 3)
             if len(parts) >= 4:
                 s3_prefix = parts[3]
-        
+
         path = f"{self.config.bucket_name}/{s3_prefix.rstrip('/')}/IdentifiedObjects/identified_objects.json"
         return {"path": path}
-

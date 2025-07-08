@@ -1,7 +1,9 @@
 import json
-from mypy_boto3_s3 import S3Client
+
 import pytest
 from importers.identified_object import IdentifiedObjectImporter
+from mypy_boto3_s3 import S3Client
+
 from common.fs import FileSystemApi
 from tests.s3_import.util import create_config, get_children, get_run_and_parents
 
@@ -35,7 +37,7 @@ def test_identified_object_import(
 
     for expected_file in expected_files:
         assert expected_file in files
-    
+
 
 @pytest.mark.parametrize(
     "file_type,expected_structure",
@@ -66,7 +68,7 @@ def test_identified_object_files(
         "json": "identified_objects.json",
         "metadata": "identified_objects_metadata.json",
     }
-    
+
     file_path = f"{base_path}/{file_mapping[file_type]}"
 
     with s3_fs.open(file_path, "r") as f:
