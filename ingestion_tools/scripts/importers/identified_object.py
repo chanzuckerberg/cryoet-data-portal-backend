@@ -87,7 +87,7 @@ class IdentifiedObjectImporter(BaseFileImporter):
             return
         output_file = f"{dest_path}/identified_objects.json"
         with self.config.fs.open(output_file, "w") as f:
-            df.to_json(f, orient='records')
+            df.to_json(f, orient='records', indent=4)
 
     def import_metadata(self) -> None:
         if not self.is_import_allowed():
