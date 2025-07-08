@@ -243,8 +243,7 @@ def load_func(
 
         run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
         run_objects = []
-        
-        # Phase 1: Import all runs first
+
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
             logger.info("Processing Run with prefix %s", run.dir_prefix)
             run_obj = run.import_to_db()
@@ -289,9 +288,8 @@ def load_func(
                     )
                     per_section_alignment_parameters_importer.import_items()
 
-        # Phase 2: Import identified objects after all runs are processed
         if import_identified_objects:
-            for run_obj, run in run_objects:
+            for run_obj, _ in run_objects:
                 parents = {"run": run_obj, "dataset": dataset_obj}
                 identified_object_importer = IdentifiedObjectImporter(config, **parents)
                 identified_object_importer.import_items()
