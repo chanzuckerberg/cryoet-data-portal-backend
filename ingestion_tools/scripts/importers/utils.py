@@ -16,6 +16,7 @@ from importers.tomogram import TomogramImporter
 from importers.visualization_config import VisualizationConfigImporter
 from importers.visualization_precompute import AnnotationVisualizationImporter
 from importers.voxel_spacing import VoxelSpacingImporter
+from importers.identified_object import IdentifiedObjectImporter
 
 IMPORTERS = [
     AlignmentImporter,
@@ -29,6 +30,7 @@ IMPORTERS = [
     DepositionKeyPhotoImporter,
     FrameImporter,
     GainImporter,
+    IdentifiedObjectImporter,
     KeyImageImporter,
     RawTiltImporter,
     RunImporter,
@@ -52,6 +54,7 @@ IMPORTER_DEP_TREE = {
                     RawTiltImporter: {},
                 },
                 AlignmentImporter: {},
+                IdentifiedObjectImporter: {},
                 VoxelSpacingImporter: {
                     AnnotationImporter: {
                         AnnotationVisualizationImporter: {},
