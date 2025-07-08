@@ -80,7 +80,8 @@ class IdentifiedObjectImporter(BaseFileImporter):
         dest_path = self.get_output_path()
         self.config.fs.makedirs(dest_path)
         try:
-            df = pd.read_csv(self.path)
+            with self.config.fs.open(self.path, "r") as f:
+                df = pd.read_csv(f)
         except Exception as e:
             print(f"Error reading CSV {self.path}: {e}")
             return
@@ -94,7 +95,8 @@ class IdentifiedObjectImporter(BaseFileImporter):
             return
 
         try:
-            df = pd.read_csv(self.path)
+            with self.config.fs.open(self.path, "r") as f:
+                df = pd.read_csv(f)
         except Exception as e:
             print(f"Error reading CSV {self.path}: {e}")
             return
