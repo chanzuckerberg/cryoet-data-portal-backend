@@ -1,4 +1,4 @@
 run_identifier,object_id,object_name,object_state,object_description
 TS_run1,GO:0005739,mitochondrion,active,Mitochondrial organelle
-TS_run1,GO:0005794,Golgi apparatus,inactive,Golgi apparatus organelle  
+TS_run1,GO:0005794,Golgi apparatus,inactive,Golgi apparatus organelle
 TS_run1,GO:0005783,endoplasmic reticulum,active,ER organelle
