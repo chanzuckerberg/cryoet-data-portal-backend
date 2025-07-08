@@ -910,6 +910,8 @@ class ExtendedValidationIdentifiedObject(IdentifiedObject):
     def validate_identified_object(self) -> Self:
         if re.match(GO_ID_REGEX, self.object_id):
             validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_name=True, ancestor=CELLULAR_COMPONENT_GO_ID)
+        elif re.match(UNIPROT_ID_REGEX, self.object_id):
+            validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_id_function=validate_uniprot_id)
         return self
 
 
