@@ -71,7 +71,7 @@ def test_psp_close_tilt_angles(s3_fs: FileSystemApi, test_output_bucket: str, s3
     Test the PerSectionParameterGenerator with a configuration that uses tilt angles that are within 0.1 degrees of each other,
     an uncommon case that should still be handled correctly.
     """
-    config = create_config(s3_fs, test_output_bucket, "tiltseries/close_tilt_angles.yaml")
+    config = create_config(s3_fs, test_output_bucket, "tiltseries/close_tilt_angles_mdoc_rawtlt.yaml")
     parents = get_parents(config)
     setup_psp_generator(config, parents)
 
