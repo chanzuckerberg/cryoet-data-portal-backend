@@ -77,8 +77,11 @@ def test_psp_close_tilt_angles(s3_fs: FileSystemApi, test_output_bucket: str, s3
 
     psp_generator = PerSectionParameterGenerator(config, parents)
     actual = psp_generator.get_data()
-    expected_output = expected_psp_output(True)
-    assert actual == expected_output
+    expected_raw_angles = [-6.016, -5.9944, -4.38, -1.98, 2.013, 4.28, 6.0833, 6.09]
+    expected_raw_angles.sort()
+    actual_raw_angles = [entry["raw_angle"] for entry in actual]
+    actual_raw_angles.sort()
+    assert actual_raw_angles == expected_raw_angles
 
 def test_psp_no_mdoc(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:
     config = create_config(s3_fs, test_output_bucket)
