@@ -156,16 +156,6 @@ class PerSectionParameterGenerator:
             psp_section = PerSectionParameter(index, mdoc_entry, ctf_entry)
             psp.append(psp_section.to_json())
 
-        if len(psp) != len(rawtlt):
-            raise ValueError(
-                f"Mismatch in number of sections: {len(psp)} vs {len(rawtlt)}. Ensure that the raw_tlt, mdoc, and ctf data are consistent.",
-            )
-
-        if len(psp) != len({(p["raw_angle"] for p in psp)}):
-            raise ValueError(
-                "Duplicate tilt angles exist in the per section parameters. Ensure that the raw_tlt, mdoc, and ctf data are consistent.",
-            )
-
         return psp
 
     def get_raw_tlt_path(self) -> str:
