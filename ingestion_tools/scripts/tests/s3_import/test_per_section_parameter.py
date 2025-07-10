@@ -66,6 +66,19 @@ def test_psp_success(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S
     assert len(actual) == len(expected_output)
     assert actual == expected_output
 
+def test_psp_close_tilt_angles(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:
+    """
+    Test the PerSectionParameterGenerator with a configuration that uses tilt angles that are within 0.1 degrees of each other,
+    an uncommon case that should still be handled correctly.
+    """
+    config = create_config(s3_fs, test_output_bucket, "tiltseries/close_tilt_angles.yaml")
+    parents = get_parents(config)
+    setup_psp_generator(config, parents)
+
+    psp_generator = PerSectionParameterGenerator(config, parents)
+    actual = psp_generator.get_data()
+    expected_output = expected_psp_output(True)
+    assert actual == expected_output
 
 def test_psp_no_mdoc(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:
     config = create_config(s3_fs, test_output_bucket)
