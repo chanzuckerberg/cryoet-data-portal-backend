@@ -801,6 +801,34 @@ classes:
   # ============================================================================
 
   # ============================================================================
+  # Identified object metadata
+  # ============================================================================
+  IdentifiedObject:
+    description: Metadata describing an identified object.
+    attributes:
+      object_id:
+        exact_mappings:
+          - cdp-common:identified_object_id
+      object_name:
+        exact_mappings:
+          - cdp-common:identified_object_name
+      object_description:
+        exact_mappings:
+          - cdp-common:identified_object_description
+      object_state:
+        exact_mappings:
+          - cdp-common:identified_object_state
+
+  IdentifiedObjectList:
+    description: Metadata for a list of identified objects.
+    attributes:
+      filter_value:
+        exact_mappings:
+          - cdp-common:identified_object_filter_value
+  # ============================================================================
+
+
+  # ============================================================================
   # annotation_metadata.json
   # ============================================================================
   Annotation:

@@ -1943,6 +1943,18 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
+      identified_objects:
+        name: identified_objects
+        description: Metadata describing an identified object.
+        from_schema: metadata
+        alias: identified_objects
+        owner: RunMetadata
+        domain_of:
+        - RunMetadata
+        range: IdentifiedObject
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
   TiltSeriesMetadata:
     name: TiltSeriesMetadata
     description: 'Metadata describing a tilt series.

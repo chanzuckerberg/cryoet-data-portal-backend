@@ -2095,6 +2095,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
     filter_value: Optional[str] = Field(default=None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     order: Optional[str] = Field(default="xyz", description="""The order of axes for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'order',
@@ -2173,6 +2174,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
     filter_value: Optional[str] = Field(default=None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     order: Optional[str] = Field(default="xyz", description="""The order of axes for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'order',
@@ -2259,6 +2261,7 @@ class AnnotationPointFile(AnnotationSourceFile):
     filter_value: Optional[str] = Field(default=None, description="""The filter value for an oriented point / instance segmentation annotation file.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
          'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
+                       'IdentifiedObjectList',
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_filter_value']} })
     file_format: str = Field(default=..., description="""File format for this file""", json_schema_extra = { "linkml_meta": {'alias': 'file_format',
@@ -2595,6 +2598,54 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationTriangularMeshGroupFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
+
+
+class IdentifiedObject(ConfiguredBaseModel):
+    """
+    Metadata describing an identified object.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    object_id: str = Field(default=..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'object_id',
+         'any_of': [{'range': 'GO_ID'}, {'range': 'UNIPROT_ID'}],
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_id']} })
+    object_name: str = Field(default=..., description="""Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)""", json_schema_extra = { "linkml_meta": {'alias': 'object_name',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_name']} })
+    object_description: Optional[str] = Field(default=None, description="""A textual description of the identified object, can be a longer description to include additional information not covered by the identified object name and state.""", json_schema_extra = { "linkml_meta": {'alias': 'object_description',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_description']} })
+    object_state: Optional[str] = Field(default=None, description="""Molecule state identified (e.g. open, closed)""", json_schema_extra = { "linkml_meta": {'alias': 'object_state',
+         'domain_of': ['IdentifiedObject'],
+         'exact_mappings': ['cdp-common:identified_object_state']} })
+
+    @field_validator('object_id')
+    def pattern_object_id(cls, v):
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid object_id format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid object_id format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+
+class IdentifiedObjectList(ConfiguredBaseModel):
+    """
+    Metadata for a list of identified objects.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    filter_value: Optional[str] = Field(default=None, description="""Filter value for the identified object, used to filter the list of identified objects by run name.""", json_schema_extra = { "linkml_meta": {'alias': 'filter_value',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationPointFile',
+                       'IdentifiedObjectList',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:identified_object_filter_value']} })
 
 
 class Annotation(AuthoredEntity, DateStampedEntity):
@@ -3222,6 +3273,7 @@ class Container(ConfiguredBaseModel):
     depositions: list[DepositionEntity] = Field(default=..., description="""A deposition entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'depositions', 'domain_of': ['Container']} })
     frames: Optional[list[FrameEntity]] = Field(default=None, description="""A frame entity.""", json_schema_extra = { "linkml_meta": {'alias': 'frames', 'domain_of': ['Container']} })
     gains: Optional[list[GainEntity]] = Field(default=None, description="""A gain entity.""", json_schema_extra = { "linkml_meta": {'alias': 'gains', 'domain_of': ['Container']} })
+    identified_objects: Optional[list[IdentifiedObjectEntity]] = Field(default=None, description="""An identified object entity.""", json_schema_extra = { "linkml_meta": {'alias': 'identified_objects', 'domain_of': ['Container']} })
     key_images: Optional[list[KeyImageEntity]] = Field(default=None, description="""A key image entity.""", json_schema_extra = { "linkml_meta": {'alias': 'key_images', 'domain_of': ['Container']} })
     rawtilts: Optional[list[RawTiltEntity]] = Field(default=None, description="""A raw tilt entity.""", json_schema_extra = { "linkml_meta": {'alias': 'rawtilts', 'domain_of': ['Container']} })
     runs: list[RunEntity] = Field(default=..., description="""A run entity.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'runs', 'domain_of': ['Container']} })
@@ -3642,6 +3694,7 @@ class AlignmentEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: Optional[list[AlignmentSource]] = Field(default=None, description="""An alignment source.""", json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -3655,6 +3708,7 @@ class AlignmentEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -3914,6 +3968,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: list[AnnotationSource] = Field(default=..., description="""An annotation source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -3927,6 +3982,7 @@ class AnnotationEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4131,6 +4187,7 @@ class CollectionMetadataEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4390,6 +4447,7 @@ class CtfEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: list[CtfSource] = Field(default=..., description="""A ctf source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -4403,6 +4461,7 @@ class CtfEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4662,6 +4721,7 @@ class DatasetEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: list[DatasetSource] = Field(default=..., description="""A dataset source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -4675,6 +4735,7 @@ class DatasetEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -4913,6 +4974,7 @@ class DatasetKeyPhotoEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -5147,6 +5209,7 @@ class DepositionEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: list[DepositionSource] = Field(default=..., description="""A deposition source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -5160,6 +5223,7 @@ class DepositionEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -5299,6 +5363,7 @@ class DepositionKeyPhotoEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -5537,6 +5602,7 @@ class FrameEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -5550,6 +5616,7 @@ class FrameEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
 
@@ -5809,6 +5876,7 @@ class GainEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -6055,6 +6123,42 @@ class GainParent(ConfiguredBaseModel):
                        'VoxelSpacingParent']} })
 
 
+class IdentifiedObjectEntity(ConfiguredBaseModel):
+    """
+    An identified object entity.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    metadata: Optional[IdentifiedObjectList] = Field(default=None, description="""Metadata for a list of identified objects.""", json_schema_extra = { "linkml_meta": {'alias': 'metadata',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'CtfEntity',
+                       'DatasetEntity',
+                       'DepositionEntity',
+                       'FrameEntity',
+                       'IdentifiedObjectEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity']} })
+    sources: list[StandardSource] = Field(default=..., description="""A generalized source class with glob finders. Inherited by a majority of source classes.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
+         'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'CollectionMetadataEntity',
+                       'CtfEntity',
+                       'DatasetEntity',
+                       'DatasetKeyPhotoEntity',
+                       'DepositionEntity',
+                       'DepositionKeyPhotoEntity',
+                       'FrameEntity',
+                       'GainEntity',
+                       'IdentifiedObjectEntity',
+                       'KeyImageEntity',
+                       'RawTiltEntity',
+                       'RunEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity',
+                       'VoxelSpacingEntity']} })
+
+
 class KeyImageEntity(ConfiguredBaseModel):
     """
     A key image entity.
@@ -6072,6 +6176,7 @@ class KeyImageEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -6341,6 +6446,7 @@ class RawTiltEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -6604,6 +6710,7 @@ class RunEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -6865,6 +6972,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: list[TiltSeriesSource] = Field(default=..., description="""A tilt series source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -6878,6 +6986,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -7139,6 +7248,7 @@ class TomogramEntity(ConfiguredBaseModel):
                        'DatasetEntity',
                        'DepositionEntity',
                        'FrameEntity',
+                       'IdentifiedObjectEntity',
                        'TiltSeriesEntity',
                        'TomogramEntity']} })
     sources: list[TomogramSource] = Field(default=..., description="""A tomogram source.""", min_length=1, json_schema_extra = { "linkml_meta": {'alias': 'sources',
@@ -7152,6 +7262,7 @@ class TomogramEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -7422,6 +7533,7 @@ class VoxelSpacingEntity(ConfiguredBaseModel):
                        'DepositionKeyPhotoEntity',
                        'FrameEntity',
                        'GainEntity',
+                       'IdentifiedObjectEntity',
                        'KeyImageEntity',
                        'RawTiltEntity',
                        'RunEntity',
@@ -7741,6 +7853,8 @@ AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
+IdentifiedObject.model_rebuild()
+IdentifiedObjectList.model_rebuild()
 Annotation.model_rebuild()
 AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()
@@ -7804,6 +7918,7 @@ GainEntity.model_rebuild()
 GainSource.model_rebuild()
 GainParentFilters.model_rebuild()
 GainParent.model_rebuild()
+IdentifiedObjectEntity.model_rebuild()
 KeyImageEntity.model_rebuild()
 KeyImageSource.model_rebuild()
 KeyImageParentFilters.model_rebuild()

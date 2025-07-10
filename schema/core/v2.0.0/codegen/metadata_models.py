@@ -3278,6 +3278,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 "domain_of": [
                     "AnnotationOrientedPointFile",
                     "AnnotationPointFile",
+                    "IdentifiedObjectList",
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
@@ -3435,6 +3436,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 "domain_of": [
                     "AnnotationOrientedPointFile",
                     "AnnotationPointFile",
+                    "IdentifiedObjectList",
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
@@ -3616,6 +3618,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 "domain_of": [
                     "AnnotationOrientedPointFile",
                     "AnnotationPointFile",
+                    "IdentifiedObjectList",
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
@@ -4257,6 +4260,100 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
+            }
+        },
+    )
+
+
+class IdentifiedObject(ConfiguredBaseModel):
+    """
+    Metadata describing an identified object.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    object_id: str = Field(
+        default=...,
+        description="""A placeholder for any type of data.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "object_id",
+                "any_of": [{"range": "GO_ID"}, {"range": "UNIPROT_ID"}],
+                "domain_of": ["IdentifiedObject"],
+                "exact_mappings": ["cdp-common:identified_object_id"],
+            }
+        },
+    )
+    object_name: str = Field(
+        default=...,
+        description="""Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "object_name",
+                "domain_of": ["IdentifiedObject"],
+                "exact_mappings": ["cdp-common:identified_object_name"],
+            }
+        },
+    )
+    object_description: Optional[str] = Field(
+        default=None,
+        description="""A textual description of the identified object, can be a longer description to include additional information not covered by the identified object name and state.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "object_description",
+                "domain_of": ["IdentifiedObject"],
+                "exact_mappings": ["cdp-common:identified_object_description"],
+            }
+        },
+    )
+    object_state: Optional[str] = Field(
+        default=None,
+        description="""Molecule state identified (e.g. open, closed)""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "object_state",
+                "domain_of": ["IdentifiedObject"],
+                "exact_mappings": ["cdp-common:identified_object_state"],
+            }
+        },
+    )
+
+    @field_validator("object_id")
+    def pattern_object_id(cls, v):
+        pattern = re.compile(
+            r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid object_id format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid object_id format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+
+class IdentifiedObjectList(ConfiguredBaseModel):
+    """
+    Metadata for a list of identified objects.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
+
+    filter_value: Optional[str] = Field(
+        default=None,
+        description="""Filter value for the identified object, used to filter the list of identified objects by run name.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "filter_value",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationPointFile",
+                    "IdentifiedObjectList",
+                    "AnnotationInstanceSegmentationFile",
+                ],
+                "exact_mappings": ["cdp-common:identified_object_filter_value"],
             }
         },
     )
@@ -5423,6 +5520,8 @@ AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
+IdentifiedObject.model_rebuild()
+IdentifiedObjectList.model_rebuild()
 Annotation.model_rebuild()
 AlignmentSize.model_rebuild()
 AlignmentOffset.model_rebuild()

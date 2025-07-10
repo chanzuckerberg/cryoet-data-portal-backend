@@ -91,6 +91,10 @@ classes:
         description: Gains for the dataset.
         multivalued: true
         range: GainEntity
+      identified_objects:
+        description: Identified objects for the runs in this dataset.
+        range: IdentifiedObjectEntity
+        multivalued: true
       key_images:
         description: Key images for the dataset.
         multivalued: true
@@ -588,6 +592,19 @@ classes:
       - dataset
       - deposition
       - run
+
+  IdentifiedObjectEntity:
+    description: An identified object entity.
+    attributes:
+      metadata:
+        description: The metadata for the identified object list.
+        range: IdentifiedObjectList
+        required: false
+      sources:
+        description: The sources for the identified object list.
+        multivalued: true
+        range: StandardSource
+        required: true
 
   KeyImageEntity:
     description: A key image entity.
