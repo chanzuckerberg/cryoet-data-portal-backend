@@ -111,6 +111,24 @@ class VisualizationConfigImporter(BaseImporter):
         args["name"] = f"{name_prefix} point"
         return state_generator.generate_point_layer(**args)
 
+    def _to_triangular_mesh_layer(
+        self,
+        source_path: str,
+        file_metadata: dict[str, Any],
+        name_prefix: str,
+        color: str,
+        resolution: tuple[float, float, float],
+        **kwargs,
+    ) -> dict[str, Any]:
+        return state_generator.generate_mesh_layer(
+            source=source_path,
+            name=f"{name_prefix} mesh",
+            url=self.config.https_prefix,
+            color=color,
+            scale=resolution,
+            is_visible=file_metadata.get("is_visualization_default"),
+        )
+
     def get_annotation_layer_info(self, alignment_metadata_path: str) -> dict[str, Any]:
         precompute_path = self.config.resolve_output_path("annotation_viz", self)
 
@@ -139,12 +157,22 @@ class VisualizationConfigImporter(BaseImporter):
 
             for file in metadata.get("files", []):
                 shape = file.get("shape")
-                if shape not in {"SegmentationMask", "Point", "OrientedPoint", "InstanceSegmentation"}:
+                if shape not in {
+                    "SegmentationMask",
+                    "Point",
+                    "OrientedPoint",
+                    "InstanceSegmentation",
+                    "TriangularMesh",
+                    "TriangularMeshGroup",
+                }:
                     print(f"Skipping file with unknown shape {shape}")
                     continue
 
                 # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
-                if file.get("format") not in {"zarr", "ndjson"}:
+                # TODO does this also need to have the other mesh formats listed here?
+                # Not entirely sure how the conversion to glb is handled
+                if file.get("format") not in {"zarr", "ndjson", "glb"}:
+                    print(f"Skipping file with unsupported format {file.get('format')}")
                     continue
 
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
@@ -195,6 +223,8 @@ class VisualizationConfigImporter(BaseImporter):
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 layers.append(self._to_point_layer(**args))
+            elif info["shape"] in {"TriangularMesh", "TriangularMeshGroup"}:
+                layers.append(self._to_triangular_mesh_layer(**args))
         return state_generator.combine_json_layers(layers, scale=resolution)
 
     @classmethod

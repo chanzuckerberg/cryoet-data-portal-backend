@@ -7,6 +7,7 @@ from common.config import DepositionImportConfig
 from common.finders import DefaultImporterFactory
 from importers.annotation import (
     AbstractPointAnnotation,
+    AbstractTriangularMeshAnnotation,
     BaseAnnotationSource,
     InstanceSegmentationAnnotation,
     VolumeAnnotationSource,
@@ -71,6 +72,8 @@ class AnnotationPrecomputeFactory:
             return InstanceSegmentationAnnotationPrecompute(**params)
         elif shape == "SegmentationMask" or shape == "SemanticSegmentationMask":
             return SegmentationMaskAnnotationPrecompute(**params)
+        elif shape == "TriangularMesh":
+            return MeshAnnotatationPrecompute(**params)
 
         print(f"No precompute for {shape} shape")
         return None
@@ -142,12 +145,41 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
         # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.precompute import segmentation_mask
 
-        resolution_in_nm = voxel_spacing * 0.1 # original in angstrom
+        resolution_in_nm = voxel_spacing * 0.1  # original in angstrom
         segmentation_mask.encode_segmentation(
             zarr_file_path,
             Path(tmp_path),
             resolution=(resolution_in_nm,) * 3,
             delete_existing=True,
             include_mesh=True,
+        )
+        fs.push(tmp_path)
+
+
+class MeshAnnotatationPrecompute(BaseAnnotationPrecompute):
+    annotation: AbstractTriangularMeshAnnotation
+
+    def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
+        fs = self.config.fs
+        annotation_path = self.annotation.get_output_path()
+        # TODO this might no correctly handle the annotation group right now
+        # The from_hff converter looks like it spits out one glb
+        # But the docstring suggets it can output multiple glb files
+        precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
+        tmp_path = fs.localwritable(precompute_path)
+        glb_file_path = fs.destformat(self.annotation.get_output_filename(annotation_path, "glb"))
+        print(f"Precomputing mesh annotation {annotation_path} to {tmp_path}")
+        # Importing this at runtime instead of compile time since zfpy (a dependency of this
+        # module) cannot be imported successfully on darwin/ARM machines.
+        from cryoet_data_portal_neuroglancer.io import load_glb_file
+        from cryoet_data_portal_neuroglancer.precompute import mesh
+
+        scene = load_glb_file(glb_file_path)
+        mesh.generate_multiresolution_mesh(
+            scene,
+            tmp_path,
+            min_mesh_chunk_dim=8,
+            max_lod=2,
+            string_label=Path(annotation_path).with_suffix("").stem.replace(" ", "_"),
         )
         fs.push(tmp_path)
