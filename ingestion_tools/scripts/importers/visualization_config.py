@@ -222,8 +222,8 @@ class VisualizationConfigImporter(BaseImporter):
                 if shape == "OrientedPoint":
                     # Check if oriented point has produced meshes
                     has_mesh = self._has_oriented_mesh(args["source_path"])
-                    layers.append(self._to_mesh_layer(**args))
                     if has_mesh:
+                        layers.append(self._to_mesh_layer(**args))
                         print(
                             f"Oriented point {args['name_prefix']} has an oriented mesh -> hiding oriented point layer",
                         )
