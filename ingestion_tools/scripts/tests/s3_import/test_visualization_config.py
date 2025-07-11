@@ -239,7 +239,7 @@ def put_annotation_metadata_file(
         s3_client.put_object(
             Bucket=test_output_bucket,
             Key=annotation_mesh_path,
-            Body=b"",  # Replace with actual mesh data if available
+            Body=b"",
         )
     s3_client.put_object(Bucket=test_output_bucket, Key=annotation_metadata_path, Body=json.dumps(annotation_metadata))
 
