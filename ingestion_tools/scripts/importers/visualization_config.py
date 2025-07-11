@@ -219,16 +219,15 @@ class VisualizationConfigImporter(BaseImporter):
             if shape == "SegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
-                has_mesh = None
                 if shape == "OrientedPoint":
                     # Check if oriented point has produced meshes
                     has_mesh = self._has_oriented_mesh(args["source_path"])
                     layers.append(self._to_mesh_layer(**args))
-                if has_mesh:
-                    print(
-                        f"Oriented point {args['name_prefix']} has an oriented mesh -> hiding oriented point layer",
-                    )
-                args = {**args, "visible": not has_mesh}
+                    if has_mesh:
+                        print(
+                            f"Oriented point {args['name_prefix']} has an oriented mesh -> hiding oriented point layer",
+                        )
+                        args = {**args, "visible": False}
                 layers.append(self._to_point_layer(**args))
         return state_generator.combine_json_layers(layers, scale=resolution)
 
