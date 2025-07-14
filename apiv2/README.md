@@ -69,7 +69,7 @@ ensure that the new table is included in the ER diagram.
 2. Add a label called "stack" to the PR. This will trigger an action that creates an rdev stack. Once the stack has been created, the PR comment will be updated to reflect the URL you can use to access your rdev instance.
 3. **NOTE!!:** For now, all rdevs share a database. Fixing this is a TODO.
 
-## RELEASES - Updating staging/prod:
+## RELEASES - Updating staging/prod - 
 
 **TL;DR**
 
