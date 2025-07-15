@@ -13,6 +13,7 @@ import graphql_api.helpers.dataset as dataset_helper
 import graphql_api.helpers.frame as frame_helper
 import graphql_api.helpers.frame_acquisition_file as frame_acquisition_file_helper
 import graphql_api.helpers.gain_file as gain_file_helper
+import graphql_api.helpers.identified_object as identified_object_helper
 import graphql_api.helpers.per_section_parameters as per_section_parameters_helper
 import graphql_api.helpers.tiltseries as tiltseries_helper
 import graphql_api.helpers.tomogram as tomogram_helper
@@ -26,6 +27,7 @@ if TYPE_CHECKING:
     from graphql_api.helpers.frame import FrameGroupByOptions
     from graphql_api.helpers.frame_acquisition_file import FrameAcquisitionFileGroupByOptions
     from graphql_api.helpers.gain_file import GainFileGroupByOptions
+    from graphql_api.helpers.identified_object import IdentifiedObjectGroupByOptions
     from graphql_api.helpers.per_section_parameters import PerSectionParametersGroupByOptions
     from graphql_api.helpers.tiltseries import TiltseriesGroupByOptions
     from graphql_api.helpers.tomogram import TomogramGroupByOptions
@@ -36,6 +38,7 @@ else:
     DatasetGroupByOptions = "DatasetGroupByOptions"
     FrameGroupByOptions = "FrameGroupByOptions"
     GainFileGroupByOptions = "GainFileGroupByOptions"
+    IdentifiedObjectGroupByOptions = "IdentifiedObjectGroupByOptions"
     FrameAcquisitionFileGroupByOptions = "FrameAcquisitionFileGroupByOptions"
     PerSectionParametersGroupByOptions = "PerSectionParametersGroupByOptions"
     TiltseriesGroupByOptions = "TiltseriesGroupByOptions"
@@ -58,6 +61,9 @@ class RunGroupByOptions:
     dataset: Optional[Annotated["DatasetGroupByOptions", strawberry.lazy("graphql_api.helpers.dataset")]] = None
     frames: Optional[Annotated["FrameGroupByOptions", strawberry.lazy("graphql_api.helpers.frame")]] = None
     gain_files: Optional[Annotated["GainFileGroupByOptions", strawberry.lazy("graphql_api.helpers.gain_file")]] = None
+    identified_objects: Optional[
+        Annotated["IdentifiedObjectGroupByOptions", strawberry.lazy("graphql_api.helpers.identified_object")]
+    ] = None
     frame_acquisition_files: Optional[
         Annotated["FrameAcquisitionFileGroupByOptions", strawberry.lazy("graphql_api.helpers.frame_acquisition_file")]
     ] = None
@@ -152,6 +158,19 @@ def build_run_groupby_output(
                 )
             else:
                 value = gain_file_helper.build_gain_file_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "identified_objects":
+            if getattr(group_object, key):
+                value = identified_object_helper.build_identified_object_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = identified_object_helper.build_identified_object_groupby_output(
                     None,
                     keys,
                     value,

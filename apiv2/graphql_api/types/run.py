@@ -25,6 +25,7 @@ from graphql_api.types.frame_acquisition_file import (
     format_frame_acquisition_file_aggregate_output,
 )
 from graphql_api.types.gain_file import GainFileAggregate, format_gain_file_aggregate_output
+from graphql_api.types.identified_object import IdentifiedObjectAggregate, format_identified_object_aggregate_output
 from graphql_api.types.per_section_parameters import (
     PerSectionParametersAggregate,
     format_per_section_parameters_aggregate_output,
@@ -88,6 +89,12 @@ if TYPE_CHECKING:
         GainFileOrderByClause,
         GainFileWhereClause,
     )
+    from graphql_api.types.identified_object import (
+        IdentifiedObject,
+        IdentifiedObjectAggregateWhereClause,
+        IdentifiedObjectOrderByClause,
+        IdentifiedObjectWhereClause,
+    )
     from graphql_api.types.per_section_parameters import (
         PerSectionParameters,
         PerSectionParametersAggregateWhereClause,
@@ -135,6 +142,10 @@ else:
     GainFileAggregateWhereClause = "GainFileAggregateWhereClause"
     GainFile = "GainFile"
     GainFileOrderByClause = "GainFileOrderByClause"
+    IdentifiedObjectWhereClause = "IdentifiedObjectWhereClause"
+    IdentifiedObjectAggregateWhereClause = "IdentifiedObjectAggregateWhereClause"
+    IdentifiedObject = "IdentifiedObject"
+    IdentifiedObjectOrderByClause = "IdentifiedObjectOrderByClause"
     FrameAcquisitionFileWhereClause = "FrameAcquisitionFileWhereClause"
     FrameAcquisitionFileAggregateWhereClause = "FrameAcquisitionFileAggregateWhereClause"
     FrameAcquisitionFile = "FrameAcquisitionFile"
@@ -298,6 +309,44 @@ async def load_gain_file_aggregate_rows(
     relationship = mapper.relationships["gain_files"]
     rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
     aggregate_output = format_gain_file_aggregate_output(rows)
+    return aggregate_output
+
+
+@relay.connection(
+    relay.ListConnection[
+        Annotated["IdentifiedObject", strawberry.lazy("graphql_api.types.identified_object")]
+    ],  # type:ignore
+)
+async def load_identified_object_rows(
+    root: "Run",
+    info: Info,
+    where: (
+        Annotated["IdentifiedObjectWhereClause", strawberry.lazy("graphql_api.types.identified_object")] | None
+    ) = None,
+    order_by: Optional[
+        list[Annotated["IdentifiedObjectOrderByClause", strawberry.lazy("graphql_api.types.identified_object")]]
+    ] = [],
+) -> Sequence[Annotated["IdentifiedObject", strawberry.lazy("graphql_api.types.identified_object")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Run)
+    relationship = mapper.relationships["identified_objects"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+
+
+@strawberry.field
+async def load_identified_object_aggregate_rows(
+    root: "Run",
+    info: Info,
+    where: (
+        Annotated["IdentifiedObjectWhereClause", strawberry.lazy("graphql_api.types.identified_object")] | None
+    ) = None,
+) -> Optional[Annotated["IdentifiedObjectAggregate", strawberry.lazy("graphql_api.types.identified_object")]]:
+    selections = get_nested_selected_fields(info.selected_fields)
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Run)
+    relationship = mapper.relationships["identified_objects"]
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    aggregate_output = format_identified_object_aggregate_output(rows)
     return aggregate_output
 
 
@@ -526,6 +575,16 @@ class RunWhereClause(TypedDict):
     gain_files_aggregate: (
         Optional[Annotated["GainFileAggregateWhereClause", strawberry.lazy("graphql_api.types.gain_file")]] | None
     )
+    identified_objects: (
+        Optional[Annotated["IdentifiedObjectWhereClause", strawberry.lazy("graphql_api.types.identified_object")]]
+        | None
+    )
+    identified_objects_aggregate: (
+        Optional[
+            Annotated["IdentifiedObjectAggregateWhereClause", strawberry.lazy("graphql_api.types.identified_object")]
+        ]
+        | None
+    )
     frame_acquisition_files: (
         Optional[
             Annotated["FrameAcquisitionFileWhereClause", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
@@ -629,6 +688,12 @@ class Run(EntityInterface):
     gain_files_aggregate: Optional[Annotated["GainFileAggregate", strawberry.lazy("graphql_api.types.gain_file")]] = (
         load_gain_file_aggregate_rows
     )  # type:ignore
+    identified_objects: Sequence[
+        Annotated["IdentifiedObject", strawberry.lazy("graphql_api.types.identified_object")]
+    ] = load_identified_object_rows  # type:ignore
+    identified_objects_aggregate: Optional[
+        Annotated["IdentifiedObjectAggregate", strawberry.lazy("graphql_api.types.identified_object")]
+    ] = load_identified_object_aggregate_rows  # type:ignore
     frame_acquisition_files: Sequence[
         Annotated["FrameAcquisitionFile", strawberry.lazy("graphql_api.types.frame_acquisition_file")]
     ] = load_frame_acquisition_file_rows  # type:ignore
