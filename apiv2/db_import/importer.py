@@ -242,14 +242,12 @@ def load_func(
             continue
 
         run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
-        run_objects = []
 
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
             logger.info("Processing Run with prefix %s", run.dir_prefix)
             run_obj = run.import_to_db()
             run_id = run_obj.id
             run_cleaner.mark_as_active(run_obj)
-            run_objects.append((run_obj, run))
 
             parents = {"run": run_obj, "dataset": dataset_obj}
             if import_frame_acquisition_files:
@@ -289,7 +287,7 @@ def load_func(
                     per_section_alignment_parameters_importer.import_items()
 
             if import_identified_objects:
-                identified_object_importer = IdentifiedObjectImporter(config, run=run, run_obj=run_obj, dataset=dataset_obj)
+                identified_object_importer = IdentifiedObjectImporter(config, run=run, run_id=run_id)
                 identified_object_importer.import_items()
 
             if not import_tomogram_voxel_spacing:

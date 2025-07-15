@@ -41,15 +41,15 @@ class IdentifiedObjectImporter(IntegratedDBImporter):
     row_importer = IdentifiedObjectItem
     clean_up_siblings = True
 
-    def __init__(self, config, run, run_obj: models.Run = None, **unused_parents):
+    def __init__(self, config, run, run_id: int = None, **unused_parents):
         self.run = run
-        self.run_obj = run_obj
+        self.run_id = run_id
         self.config = config
-        self.parents = {"run": run_obj or run}
+        self.parents = {"run": run}
 
     def get_filters(self) -> dict[str, Any]:
-        if self.run_obj:
-            return {"run_id": self.run_obj.id}
+        if self.run_id:
+            return {"run_id": self.run_id}
         else:
             return {"run_id": self.run.id}
 
