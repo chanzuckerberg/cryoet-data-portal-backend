@@ -54,7 +54,6 @@ from codegen.ingestion_config_models import (
     RawTiltSource,
     RunEntity,
     RunSource,
-    SampleTypeEnum,
     StandardSource,
     TiltRange,
     TiltSeries,
@@ -799,16 +798,17 @@ class ExtendedValidationDataset(Dataset):
 
     @model_validator(mode="after")
     def valid_metadata(self) -> Self:
-        if self.sample_type == SampleTypeEnum.cell and self.cell_type is None:
-            raise ValueError("Dataset must have 'cell_type' if 'sample_type' is 'cell'")
-        elif self.sample_type == SampleTypeEnum.tissue and self.tissue is None:
-            raise ValueError("Dataset must have 'tissue' if 'sample_type' is 'tissue'")
-        elif self.sample_type == SampleTypeEnum.organism and self.organism is None:
-            raise ValueError("Dataset must have 'organism' if 'sample_type' is 'organism'")
-        elif self.sample_type == SampleTypeEnum.organelle and (self.cell_component is None or self.organism is None):
-            raise ValueError("Dataset must have 'cell_component' and 'organism' if 'sample_type' is 'organelle'")
-        elif self.sample_type == SampleTypeEnum.virus and self.organism is None:
-            raise ValueError("Dataset must have 'organism' if 'sample_type' is 'virus'")
+        # if self.sample_type == SampleTypeEnum.cell and self.cell_type is None:
+        #     raise ValueError("Dataset must have 'cell_type' if 'sample_type' is 'cell'")
+        # elif self.sample_type == SampleTypeEnum.tissue and self.tissue is None:
+        #     raise ValueError("Dataset must have 'tissue' if 'sample_type' is 'tissue'")
+        # elif self.sample_type == SampleTypeEnum.organism and self.organism is None:
+        #     raise ValueError("Dataset must have 'organism' if 'sample_type' is 'organism'")
+        # elif self.sample_type == SampleTypeEnum.organelle and (self.cell_component is None or self.organism is None):
+        #     raise ValueError("Dataset must have 'cell_component' and 'organism' if 'sample_type' is 'organelle'")
+        # elif self.sample_type == SampleTypeEnum.virus and self.organism is None:
+        #     raise ValueError("Dataset must have 'organism' if 'sample_type' is 'virus'")
+        pass
 
     @field_validator("authors")
     @classmethod

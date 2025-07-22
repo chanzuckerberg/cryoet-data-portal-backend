@@ -1385,6 +1385,29 @@
                 "string"
             ]
         },
+        "Assay": {
+            "additionalProperties": false,
+            "description": "The assay that was used to create the dataset.",
+            "properties": {
+                "id": {
+                    "description": "The EFO identifier for the cellular component.",
+                    "pattern": "^EFO:[0-9]{7}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "Name of the assay component.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "Assay",
+            "type": "object"
+        },
         "Author": {
             "additionalProperties": false,
             "description": "Author of a scientific data entity.",
@@ -1547,7 +1570,15 @@
                             "type": "string"
                         },
                         {
-                            "pattern": "^[a-zA-Z]+:[0-9]+$",
+                            "pattern": "^NCBITaxon:[0-9]+$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^CVCL_[A-Z0-9]{4,}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^CC-[0-9]{4}$",
                             "type": "string"
                         },
                         {
@@ -1555,7 +1586,7 @@
                         }
                     ],
                     "description": "A placeholder for any type of data.",
-                    "pattern": "(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)"
+                    "pattern": "(WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)"
                 },
                 "name": {
                     "description": "Cell line or strain for the sample.",
@@ -1573,12 +1604,21 @@
             "description": "The cell type from which the sample was derived.",
             "properties": {
                 "id": {
-                    "description": "Cell Ontology identifier for the cell type",
-                    "pattern": "^CL:[0-9]{7}$",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "pattern": "^CL:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UBERON:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^CL:[0-9]{7}$)|(^UBERON:[0-9]{7}$)"
                 },
                 "name": {
                     "description": "Name of the cell type from which a biological sample used in a CryoET study is derived from.",
@@ -2174,6 +2214,10 @@
             "additionalProperties": false,
             "description": "High-level description of a cryoET dataset.",
             "properties": {
+                "assay": {
+                    "$ref": "#/$defs/Assay",
+                    "description": "The assay that was used to create the dataset."
+                },
                 "authors": {
                     "description": "Author of a scientific data entity.",
                     "items": {
@@ -2242,6 +2286,14 @@
                     "$ref": "#/$defs/DateStamp",
                     "description": "A set of dates at which a data item was deposited, published and last modified."
                 },
+                "development_stage": {
+                    "$ref": "#/$defs/DevelopmentStageDetails",
+                    "description": "The development stage of the patients or organisms from which assayed biosamples were derived."
+                },
+                "disease": {
+                    "$ref": "#/$defs/Disease",
+                    "description": "The disease or condition of the patients from which assayed biosamples were derived."
+                },
                 "funding": {
                     "description": "A funding source for a scientific data entity (base for JSON and DB representation).",
                     "items": {
@@ -2287,7 +2339,7 @@
                 "sample_type": {
                     "$ref": "#/$defs/SampleTypeEnum",
                     "description": "Type of sample imaged in a CryoET study.",
-                    "pattern": "(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+                    "pattern": "(^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)"
                 },
                 "tissue": {
                     "anyOf": [
@@ -2307,7 +2359,10 @@
                 "dataset_description",
                 "dates",
                 "authors",
-                "sample_type"
+                "sample_type",
+                "assay",
+                "development_stage",
+                "disease"
             ],
             "title": "Dataset",
             "type": "object"
@@ -3045,10 +3100,86 @@
             "title": "DestinationMetadataFilterKeyPair",
             "type": "object"
         },
+        "DevelopmentStageDetails": {
+            "additionalProperties": false,
+            "description": "The development stage of the patients or organisms from which assayed biosamples were derived.",
+            "properties": {
+                "id": {
+                    "anyOf": [
+                        {
+                            "pattern": "^unknown$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "WBls:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UBERON:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "HsapDv:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)"
+                },
+                "name": {
+                    "description": "Name of the developmental stage component.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DevelopmentStageDetails",
+            "type": "object"
+        },
+        "Disease": {
+            "additionalProperties": false,
+            "description": "The disease or condition of the patients from which assayed biosamples were derived.",
+            "properties": {
+                "id": {
+                    "anyOf": [
+                        {
+                            "pattern": "^MONDO:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^PATO:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^MONDO:[0-9]{7}$)|(^PATO:[0-9]{7}$)"
+                },
+                "name": {
+                    "description": "Name of the disease.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Disease",
+            "type": "object"
+        },
         "ExperimentMetadata": {
             "additionalProperties": false,
             "description": "Metadata describing sample and sample preparation methods used in a cryoET dataset.",
             "properties": {
+                "assay": {
+                    "$ref": "#/$defs/Assay",
+                    "description": "The assay that was used to create the dataset."
+                },
                 "cell_component": {
                     "anyOf": [
                         {
@@ -3081,6 +3212,14 @@
                         }
                     ],
                     "description": "The cell type from which the sample was derived."
+                },
+                "development_stage": {
+                    "$ref": "#/$defs/DevelopmentStageDetails",
+                    "description": "The development stage of the patients or organisms from which assayed biosamples were derived."
+                },
+                "disease": {
+                    "$ref": "#/$defs/Disease",
+                    "description": "The disease or condition of the patients from which assayed biosamples were derived."
                 },
                 "grid_preparation": {
                     "description": "Describes Cryo-ET grid preparation.",
@@ -3117,7 +3256,7 @@
                 "sample_type": {
                     "$ref": "#/$defs/SampleTypeEnum",
                     "description": "Type of sample imaged in a CryoET study.",
-                    "pattern": "(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+                    "pattern": "(^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)"
                 },
                 "tissue": {
                     "anyOf": [
@@ -3132,7 +3271,10 @@
                 }
             },
             "required": [
-                "sample_type"
+                "sample_type",
+                "assay",
+                "development_stage",
+                "disease"
             ],
             "title": "ExperimentMetadata",
             "type": "object"
@@ -4527,14 +4669,16 @@
         "SampleTypeEnum": {
             "description": "Type of sample imaged in a CryoET study.",
             "enum": [
-                "cell",
-                "tissue",
-                "organism",
-                "organelle",
-                "virus",
-                "in_vitro",
+                "cell_line",
                 "in_silico",
-                "other"
+                "in_vitro",
+                "organelle",
+                "organism",
+                "organoid",
+                "other",
+                "primary_cell_culture",
+                "tissue",
+                "virus"
             ],
             "title": "SampleTypeEnum",
             "type": "string"
@@ -5239,12 +5383,25 @@
             "description": "The type of tissue from which the sample was derived.",
             "properties": {
                 "id": {
-                    "description": "The UBERON identifier for the tissue.",
-                    "pattern": "^BTO:[0-9]{7}$",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "pattern": "^CL:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "WBbt:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UBERON:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(^UBERON:[0-9]{7}$)"
                 },
                 "name": {
                     "description": "Name of the tissue from which a biological sample used in a CryoET study is derived from.",

@@ -146,6 +146,36 @@ classes:
   # ============================================================================
   # Experimental metadata
   # ============================================================================
+  Assay:
+    description: &desc_Assay The assay that was used to create the dataset.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:assay_name
+      id:
+        exact_mappings:
+          - cdp-common:assay_id
+
+  DevelopmentStageDetails:
+    description: &desc_DevelopmentStageDetails The development stage of the patients or organisms from which assayed biosamples were derived.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:development_stage_name
+      id:
+        exact_mappings:
+          - cdp-common:development_stage_id
+
+  Disease:
+    description: &desc_Disease The disease or condition of the patients from which assayed biosamples were derived.
+    attributes:
+      name:
+        exact_mappings:
+          - cdp-common:disease_name
+      id:
+        exact_mappings:
+          - cdp-common:disease_id
+
   # Updating name from Organism to OrganismDetails to avoid conflict in case insensitive file names
   OrganismDetails:
     description: &desc_Organism The species from which the sample was derived.
@@ -228,6 +258,18 @@ classes:
       cell_component:
         description: *desc_CellComponent
         range: CellComponent
+      assay:
+        description: *desc_Assay
+        range: Assay
+        required: true
+      development_stage:
+        description: *desc_DevelopmentStageDetails
+        range: DevelopmentStageDetails
+        required: true
+      disease:
+        description: *desc_Disease
+        range: Disease
+        required: true
   # ============================================================================
 
   # ============================================================================
