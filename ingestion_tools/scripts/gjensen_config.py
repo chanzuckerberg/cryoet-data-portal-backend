@@ -681,7 +681,7 @@ def get_experimental_setup_override() -> dict[str, Any]:
     Get the values of curation.csv for datasets.
     Returns a dictionary keyed by dataset ID containing the experimental metadata.
     """
-    curation_file = os.path.join(os.path.dirname(__file__), "../curation.csv")
+    curation_file = os.path.join(os.path.dirname(__file__), "../curation.tsv")
 
     if not os.path.exists(curation_file):
         return {}
@@ -689,7 +689,7 @@ def get_experimental_setup_override() -> dict[str, Any]:
     curation_data = {}
     try:
         with open(curation_file, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
+            reader = csv.DictReader(f, delimiter = '\t')
             for row in reader:
                 dataset_id = row['id']
 
