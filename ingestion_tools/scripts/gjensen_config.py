@@ -80,6 +80,7 @@ def to_dataset_config(
     data: dict[str, Any],
     authors: list[dict[str, Any]],
     cross_reference: dict[str, str] | None,
+    experiment_override: dict[str, Any],
 ) -> dict[str, Any]:
     """
     Create dataset config from the dataset field's to the relevant config fields.
@@ -87,6 +88,7 @@ def to_dataset_config(
     :param data:
     :param authors:
     :param cross_reference:
+    :param experiment_override:
     :return: Metadata entity for dataset and key photos
     """
     dataset = data.get("dataset")
@@ -101,6 +103,7 @@ def to_dataset_config(
         "sample_preparation": clean(dataset.get("sample_prep")),
         "grid_preparation": clean(dataset.get("grid_prep")),
         "dates": RELATED_DATES,
+        **experiment_override.get(dataset_id, {}),
     }
 
     run_name = next((entry["run_name"] for entry in data.get("runs") if "run_name" in entry), None)
@@ -673,6 +676,107 @@ def exclude_runs_parent_filter(entities: list, runs_to_exclude: list[str]) -> No
                 source["parent_filters"]["exclude"]["run"] = []
             source["parent_filters"]["exclude"]["run"].extend(runs_to_exclude)
 
+def get_experimental_setup_override() -> dict[str, Any]:
+    """
+    Get the values of curation.csv for datasets.
+    Returns a dictionary keyed by dataset ID containing the experimental metadata.
+    """
+    curation_file = os.path.join(os.path.dirname(__file__), "../curation.csv")
+
+    if not os.path.exists(curation_file):
+        return {}
+
+    curation_data = {}
+    try:
+        with open(curation_file, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                dataset_id = row['id']
+
+                # Map curation data using the same structure as update_dataset_config.py
+                metadata = {}
+
+                # Map organism information
+                if row.get('organism_name') and row['organism_name'] != 'not_reported':
+                    metadata['organism'] = {
+                        'name': row['organism_name'],
+                    }
+                    if row.get('organism_taxid') and row['organism_taxid'] != 'not_reported':
+                        metadata['organism']['taxonomy_id'] = int(row['organism_taxid'])
+
+
+                # Map tissue information
+                if row.get('tissue_name') and row['tissue_name'] != 'not_reported':
+                    metadata['tissue'] = {
+                        'name': row['tissue_name'],
+                    }
+                    if row.get('tissue_id') and row['tissue_id'] != 'not_reported':
+                        metadata['tissue']['id'] = row['tissue_id']
+
+                # Map cell type information
+                if row.get('cell_name') and row['cell_name'] != 'not_reported':
+                    metadata['cell_type'] = {
+                        'name': row['cell_name'],
+                    }
+                    if row.get('cell_type_id') and row['cell_type_id'] != 'not_reported':
+                        metadata['cell_type']['id'] = row['cell_type_id']
+
+                # Map cell strain information
+                if row.get('cell_strain_name') and row['cell_strain_name'] != 'not_reported':
+                    metadata['cell_strain'] = {
+                        'name': row['cell_strain_name'],
+                    }
+                    if row.get('cell_strain_id') and row['cell_strain_id'] != 'not_reported':
+                        metadata['cell_strain']['id'] = row['cell_strain_id']
+
+                # Map cell component information
+                if row.get('cell_component_name') and row['cell_component_name'] != 'not_reported':
+                    metadata['cell_component'] = {
+                        'name': row['cell_component_name'],
+                    }
+                    if row.get('cell_component_id') and row['cell_component_id'] != 'not_reported':
+                        metadata['cell_component']['id'] = row['cell_component_id']
+
+                # Map sample type
+                if row.get('sample_type'):
+                    metadata['sample_type'] = row['sample_type']
+
+                # Map title
+                if row.get('title'):
+                    metadata['dataset_title'] = row['title']
+
+                # Map assay information
+                if row.get('assay_name') and row['assay_name'] not in ['not_reported']:
+                    metadata['assay'] = {
+                        'name': row['assay_name'],
+                    }
+                    if row.get('assay_ontology_term_id') and row['assay_ontology_term_id'] not in ['not_reported']:
+                        metadata['assay']['id'] = row['assay_ontology_term_id']
+
+                # Map development stage information
+                if row.get('development_stage') and row['development_stage'] not in ['not_reported']:
+                    metadata['development_stage'] = {
+                        'name': row['development_stage'],
+                    }
+                    if row.get('development_stage_ontology_term_id') and row['development_stage_ontology_term_id'] not in ['not_reported']:
+                        metadata['development_stage']['id'] = row['development_stage_ontology_term_id']
+
+                # Map disease information
+                if row.get('disease') and row['disease'] not in ['not_reported']:
+                    metadata['disease'] = {
+                        'name': row['disease'],
+                    }
+                    if row.get('disease_ontology_term_id') and row['disease_ontology_term_id'] not in ['not_reported']:
+                        metadata['disease']['id'] = row['disease_ontology_term_id']
+
+                curation_data[int(dataset_id)] = metadata
+
+    except Exception as e:
+        print(f"Error reading curation.csv: {e}")
+        return {}
+
+    return curation_data
+
 
 def handle_per_run_param_maps(
     data: list[dict[str, Any]],
@@ -746,6 +850,7 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
     deposition_mapping = get_deposition_map(input_dir)
 
     deposition_entity_by_id = create_deposition_entity_map(input_dir, cross_reference_mapping, deposition_mapping)
+    experimental_setup_override = get_experimental_setup_override()
     file_paths = fs.glob(os.path.join(input_dir, "portal_[0-9]*.json"))
     file_paths.sort()
     for file_path in file_paths:
@@ -770,7 +875,13 @@ def create(ctx, input_dir: str, output_dir: str) -> None:
             only_check=["frame_dose_rate"],
         )
         dataset_config = {
-            "dataset": to_dataset_config(dataset_id, val, authors, cross_reference_mapping.get(dataset_id, {})),
+            "dataset": to_dataset_config(
+                dataset_id,
+                val,
+                authors,
+                cross_reference_mapping.get(dataset_id, {}),
+                experimental_setup_override,
+            ),
             "depositions": [deposition_entity],
             "runs": {},
             "tiltseries": to_config_by_run(
