@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2010-03-04-1/keyimg_mba2010-03-04-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Morgan Beeby
@@ -22,6 +25,9 @@ datasets:
     cell_strain:
       id: null
       name: serovar Typhimurium str. LT2
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: 'This is 10th of 17 sets of data studying Salmonella typhimurium
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb. Seriously
       disrupted cell pole. User observation: Flagella:134,327,237 (Side view)'
@@ -32,13 +38,22 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: null
     organism:
       name: Salmonella typhimurium
       taxonomy_id: 99287
     sample_preparation: 'Salomella rabbit ears: 30min penicillin treatment with sucrose
       and MgSO4'
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

@@ -1,304 +1,299 @@
 alignments:
-  - metadata:
-      format: ARETOMO3
-      method_type: projection_matching
-      alignment_type: LOCAL
-      is_portal_standard: true
-    sources:
-      - source_multi_glob:
-          list_globs:
-            - '{run_name}.aln'
-
+- metadata:
+    format: ARETOMO3
+    method_type: projection_matching
+    alignment_type: LOCAL
+    is_portal_standard: true
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}.aln'
 ctfs:
-  - metadata:
-      format: CTFFIND
-    sources:
-      - source_glob:
-          list_glob: '{run_name}_CTFFIND_format_CTF.txt'
-
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_CTFFIND_format_CTF.txt'
 depositions:
-  - sources:
-      - literal:
-          value:
-            - 10313
-
+- sources:
+  - literal:
+      value:
+      - 10313
 datasets:
-  - metadata:
-      authors:
-        - name: Mallak Ali
-          primary_author_status: true
-          corresponding_author_status: false
-          ORCID: 0009-0007-8169-0996
-        - name: Julia Peukes
-          primary_author_status: true
-          corresponding_author_status: false
-          ORCID: 0000-0001-8560-7407
-        - name: Yue Yu
-          primary_author_status: true
-          corresponding_author_status: false
-          ORCID: 0000-0002-3248-9678
-        - name: Ariana Peck
-          primary_author_status: true
-          corresponding_author_status: false
-          ORCID: 0000-0002-5940-3897
-        - name: Elizabeth Montabana
-          primary_author_status: false
-          corresponding_author_status: false
-          ORCID: 0000-0002-6731-5854
-        - name: Shu-Hsien Sheu
-          primary_author_status: false
-          corresponding_author_status: true
-          ORCID: 0000-0003-0758-4654
-        - name: Mohammadreza Paraan
-          primary_author_status: false
-          corresponding_author_status: true
-          ORCID: 0000-0002-8402-0134
-      dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synaptosomes purified
-        by the homogenization of rat hippocampi. Samples were prepared by plunge-freezing via Leica GP2. Contained data
-        were collected on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
-        using AreTomo3 v2.0.7.
-      dataset_identifier: 10451
-      dataset_title: Synaptosomes from rat hippocampi (10 wk rat, 180 mg, 800 rpm, Au grid, low tilt range, 1:10)
-      dates: &dataset_dates
-        deposition_date: '2025-02-20'
-        last_modified_date: '2025-02-20'
-        release_date: '2025-02-20'
-      funding:
-        - funding_agency_name: Chan Zuckerberg Initiative
-          grant_id: 'CZII-2023–327779'
-      grid_preparation: Glow discharge Quantifoil Au R2/2 200 mesh grids + apply 4ul of diluted homogenate to grid
-        + blot for 4 seconds + pause for 10 seconds before plunge-freezing
-      organism:
-        name: Sprague Dawley Rat
-        taxonomy_id: 10116
-      sample_preparation: 180 mg of 10-week female Sprague Dawley rat hippocampus tissue placed into a glass pestle and
-        mortar with 5mL of ice-cold Artificial Cerebral Spinal Fluid (ACSF) + grind by stroking 4 times (1-2 seconds each)
-        to homogenize tissue + centrifuge for 10 minutes at 800 rpm + dilute supernatant 1:10 with ACSF
-      sample_type: tissue
-      tissue:
-        name: hippocampus
-        id: BTO:0000601
-    sources:
-      - literal:
-          value:
-            - '10451'
-
+- metadata:
+    authors:
+    - name: Mallak Ali
+      primary_author_status: true
+      corresponding_author_status: false
+      ORCID: 0009-0007-8169-0996
+    - name: Julia Peukes
+      primary_author_status: true
+      corresponding_author_status: false
+      ORCID: 0000-0001-8560-7407
+    - name: Yue Yu
+      primary_author_status: true
+      corresponding_author_status: false
+      ORCID: 0000-0002-3248-9678
+    - name: Ariana Peck
+      primary_author_status: true
+      corresponding_author_status: false
+      ORCID: 0000-0002-5940-3897
+    - name: Elizabeth Montabana
+      primary_author_status: false
+      corresponding_author_status: false
+      ORCID: 0000-0002-6731-5854
+    - name: Shu-Hsien Sheu
+      primary_author_status: false
+      corresponding_author_status: true
+      ORCID: 0000-0003-0758-4654
+    - name: Mohammadreza Paraan
+      primary_author_status: false
+      corresponding_author_status: true
+      ORCID: 0000-0002-8402-0134
+    dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synaptosomes purified by
+      the homogenization of rat hippocampi. Samples were prepared by plunge-freezing via Leica GP2. Contained data were collected
+      on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed using AreTomo3 v2.0.7.
+    dataset_identifier: 10451
+    dataset_title: Synaptosomes from rat hippocampi (10 wk rat, 180 mg, 800 rpm, Au grid, low tilt range, 1:10)
+    dates: &id001
+      deposition_date: '2025-02-20'
+      last_modified_date: '2025-02-20'
+      release_date: '2025-02-20'
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: CZII-2023–327779
+    grid_preparation: Glow discharge Quantifoil Au R2/2 200 mesh grids + apply 4ul of diluted homogenate to grid + blot for
+      4 seconds + pause for 10 seconds before plunge-freezing
+    organism:
+      name: Sprague Dawley Rat
+      taxonomy_id: 10116
+    sample_preparation: 180 mg of 10-week female Sprague Dawley rat hippocampus tissue placed into a glass pestle and mortar
+      with 5mL of ice-cold Artificial Cerebral Spinal Fluid (ACSF) + grind by stroking 4 times (1-2 seconds each) to homogenize
+      tissue + centrifuge for 10 minutes at 800 rpm + dilute supernatant 1:10 with ACSF
+    sample_type: tissue
+    tissue:
+      name: hippocampus
+      id: UBERON:0002421
+    cell_type:
+      name: hippocampus
+      id: UBERON:0002421
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: prime adult stage
+      id: UBERON:0018241
+    disease:
+      name: normal
+      id: PATO:0000461
+  sources:
+  - literal:
+      value:
+      - '10451'
 annotations:
-  - metadata:
-      annotation_method: Prediction using membrain-seg without rescaling and weights
-        MemBrain_seg_v10_alpha.ckpt
-      annotation_object:
-        id: GO:0016020
-        name: membrane
-      annotation_publications: 10.1101/2024.01.05.574336
-      annotation_software: membrain-seg 0.0.1
-      method_links:
-        - custom_name: membrain-seg on GitHub
-          link: https://github.com/teamtomo/membrain-seg
-          link_type: source_code
-        - custom_name: membrain-seg on PyPI
-          link: https://pypi.org/project/membrain-seg/
-          link_type: other
-      authors: &annotation_authors
-        - name: Jonathan Schwartz
-          primary_author_status: true
-          corresponding_author_status: true
-          ORCID: 0000-0002-8063-6951
-        - name: Yue Yu
-          primary_author_status: true
-          corresponding_author_status: true
-          ORCID: 0000-0002-3248-9678
-        - name: Mohammadreza Paraan
-          primary_author_status: true
-          corresponding_author_status: true
-          ORCID: 0000-0002-8402-0134
-        - name: Ariana Peck
-          primary_author_status: true
-          corresponding_author_status: true
-          ORCID: 0000-0002-5940-3897
-      dates: *dataset_dates
-      ground_truth_status: false
-      is_curator_recommended: true
-      method_type: automated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - '{run_name}_Vol_Segment_mask.mrc'
-          is_visualization_default: true
-          mask_label: 1
-          rescale: true
-
+- metadata:
+    annotation_method: Prediction using membrain-seg without rescaling and weights MemBrain_seg_v10_alpha.ckpt
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1101/2024.01.05.574336
+    annotation_software: membrain-seg 0.0.1
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    authors:
+    - name: Jonathan Schwartz
+      primary_author_status: true
+      corresponding_author_status: true
+      ORCID: 0000-0002-8063-6951
+    - name: Yue Yu
+      primary_author_status: true
+      corresponding_author_status: true
+      ORCID: 0000-0002-3248-9678
+    - name: Mohammadreza Paraan
+      primary_author_status: true
+      corresponding_author_status: true
+      ORCID: 0000-0002-8402-0134
+    - name: Ariana Peck
+      primary_author_status: true
+      corresponding_author_status: true
+      ORCID: 0000-0002-5940-3897
+    dates: *id001
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - '{run_name}_Vol_Segment_mask.mrc'
+      is_visualization_default: true
+      mask_label: 1
+      rescale: true
 collection_metadata:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}.mdoc'
-
+- sources:
+  - source_glob:
+      list_glob: '{run_name}.mdoc'
 frames:
-  - metadata:
-      dose_rate: float {dose_rate}
-      is_gain_corrected: false
-    sources:
-      - source_glob:
-          list_glob: '{run_name}/*.eer'
-
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/*.eer'
 gains:
-  - sources:
-      - source_glob:
-          list_glob: '{gain_file}'
-
+- sources:
+  - source_glob:
+      list_glob: '{gain_file}'
 rawtilts:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}_st.rawtlt'
-
+- sources:
+  - source_glob:
+      list_glob: '{run_name}_st.rawtlt'
 runs:
-  - sources:
-      - source_glob:
-          list_glob: '*.aln'
-          match_regex: .*\.aln$
-          name_regex: (.*)\.aln$
-
+- sources:
+  - source_glob:
+      list_glob: '*.aln'
+      match_regex: .*\.aln$
+      name_regex: (.*)\.aln$
 standardization_config:
   deposition_id: 10313
   source_prefix: CZII/20250218_synaptosome/syn_24nov18a/
   run_data_map_file: run_to_data_map_merged.tsv
-
 tiltseries:
-  - metadata:
-      acceleration_voltage: 300000
-      binning_from_frames: 1
-      camera:
-        manufacturer: TFS
-        model: FALCON 4i
-      data_acquisition_software: Tomo5
-      is_aligned: false
-      microscope:
-        manufacturer: TFS
-        model: TITAN KRIOS G4
-      microscope_optical_setup:
-        energy_filter: Selectris X
-      pixel_spacing: 1.540
-      spherical_aberration_constant: 2.7
-      tilt_axis: -96
-      tilt_range:
-        max: float {tilt_series_max_tilt}
-        min: float {tilt_series_min_tilt}
-      tilt_series_quality: int {tilt_series_quality}
-      tilt_step: 2.0
-      tilting_scheme: dose-symmetric
-      total_flux: float {tilt_series_total_flux}
-    sources:
-      - source_glob:
-          list_glob: '{run_name}_TS.mrc'
-          match_regex: .*\.mrc$
-
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i
+    data_acquisition_software: Tomo5
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: TITAN KRIOS G4
+    microscope_optical_setup:
+      energy_filter: Selectris X
+    pixel_spacing: 1.54
+    spherical_aberration_constant: 2.7
+    tilt_axis: -96
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 2.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_TS.mrc'
+      match_regex: .*\.mrc$
 tomograms:
-  - metadata:
-      affine_transformation_matrix:
-        - - 1
-          - 0
-          - 0
-          - 0
-        - - 0
-          - 1
-          - 0
-          - 0
-        - - 0
-          - 0
-          - 1
-          - 0
-        - - 0
-          - 0
-          - 0
-          - 1
-      authors: &tomogram_authors
-        - name: Mohammadreza Paraan
-          primary_author_status: true
-          corresponding_author_status: false
-          ORCID: 0000-0002-8402-0134
-        - name: Ariana Peck
-          primary_author_status: true
-          corresponding_author_status: false
-          ORCID: 0000-0002-5940-3897
-        - name: Mallak Ali
-          primary_author_status: false
-          corresponding_author_status: false
-          ORCID: 0009-0007-8169-0996
-        - name: Julia Peukes
-          primary_author_status: true
-          corresponding_author_status: false
-          ORCID: 0000-0001-8560-7407
-        - name: Yue Yu
-          primary_author_status: false
-          corresponding_author_status: false
-          ORCID: 0000-0002-3248-9678
-        - name: Shawn Zheng
-          primary_author_status: false
-          corresponding_author_status: true
-          ORCID: 0000-0001-9517-3075
-      ctf_corrected: true
-      dates: *dataset_dates
-      fiducial_alignment_status: NON_FIDUCIAL
-      is_visualization_default: true
-      offset:
-        x: 0
-        y: 0
-        z: 0
-      processing: denoised
-      processing_software: DenoisET
-      reconstruction_method: WBP
-      reconstruction_software: AreTomo3 v2.0.7
-      tomogram_version: 1
-      voxel_spacing: 4.990
-    sources:
-      - source_glob:
-          list_glob: '{run_name}_Vol.mrc'
-          match_regex: (.*)\.mrc
-
-  - metadata:
-      affine_transformation_matrix:
-        - - 1
-          - 0
-          - 0
-          - 0
-        - - 0
-          - 1
-          - 0
-          - 0
-        - - 0
-          - 0
-          - 1
-          - 0
-        - - 0
-          - 0
-          - 0
-          - 1
-      authors: *tomogram_authors
-      ctf_corrected: true
-      dates: *dataset_dates
-      fiducial_alignment_status: NON_FIDUCIAL
-      is_visualization_default: false
-      offset:
-        x: 0
-        y: 0
-        z: 0
-      processing: filtered
-      processing_software: AreTomo3 v2.0.7
-      reconstruction_method: WBP
-      reconstruction_software: AreTomo3 v2.0.7
-      tomogram_version: 1
-      voxel_spacing: 4.990
-    sources:
-      - source_glob:
-          list_glob: '{run_name}_dctf_Vol.mrc'
-          match_regex: (.*)\.mrc
-
-
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: &id002
+    - name: Mohammadreza Paraan
+      primary_author_status: true
+      corresponding_author_status: false
+      ORCID: 0000-0002-8402-0134
+    - name: Ariana Peck
+      primary_author_status: true
+      corresponding_author_status: false
+      ORCID: 0000-0002-5940-3897
+    - name: Mallak Ali
+      primary_author_status: false
+      corresponding_author_status: false
+      ORCID: 0009-0007-8169-0996
+    - name: Julia Peukes
+      primary_author_status: true
+      corresponding_author_status: false
+      ORCID: 0000-0001-8560-7407
+    - name: Yue Yu
+      primary_author_status: false
+      corresponding_author_status: false
+      ORCID: 0000-0002-3248-9678
+    - name: Shawn Zheng
+      primary_author_status: false
+      corresponding_author_status: true
+      ORCID: 0000-0001-9517-3075
+    ctf_corrected: true
+    dates: *id001
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    processing_software: DenoisET
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.0.7
+    tomogram_version: 1
+    voxel_spacing: 4.99
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_Vol.mrc'
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id002
+    ctf_corrected: true
+    dates: *id001
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    processing_software: AreTomo3 v2.0.7
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.0.7
+    tomogram_version: 1
+    voxel_spacing: 4.99
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_dctf_Vol.mrc'
+      match_regex: (.*)\.mrc
 version: 1.1.0
 voxel_spacings:
-  - sources:
-      - literal:
-          value:
-            - 4.990
+- sources:
+  - literal:
+      value:
+      - 4.99

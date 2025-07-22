@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/qya2015-12-07-1/keyimg_qya2015-12-07-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Qing Yao
@@ -22,6 +25,9 @@ datasets:
     cell_strain:
       id: null
       name: HI4320
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     cross_references:
       publications: 10.15252/embj.201696235
     dataset_description: This is 1st of 2 sets of data studying Proteus mirabilis
@@ -32,6 +38,12 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: 'single tilt. constant angular increment, step: 1.0. tilt range:
       (-60, 60). dosage: 195/A2. defocus: -10um. magnification: 22500.'
     organism:
@@ -39,7 +51,10 @@ datasets:
       taxonomy_id: 584
     sample_preparation: "OD=6, 4 ul loading. blotting condition 6s force/ 3s time/\
       \ 1s dry time, QUANTIFOIL\xAE Holey Carbon Films 200 mesh"
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

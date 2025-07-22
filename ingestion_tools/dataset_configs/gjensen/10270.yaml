@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2015-07-15-36/keyimg_aba2015-07-15-36_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Ariane Briegel
@@ -22,6 +25,9 @@ datasets:
     cell_strain:
       id: null
       name: O1 biovar El Tor
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: This is 8th of 15 sets of data studying Vibrio cholerae collected
       by Ariane Briegel and is a part of Caltech Jensen  lab etdb. delta vc1403
     dataset_identifier: 10270
@@ -30,12 +36,21 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: null
     organism:
       name: Vibrio cholerae
       taxonomy_id: 686
     sample_preparation: null
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

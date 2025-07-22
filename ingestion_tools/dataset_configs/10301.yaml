@@ -1,403 +1,409 @@
 alignments:
-  - metadata:
-      format: IMOD
-      method_type: patch_tracking
-    sources:
-      - source_multi_glob:
-          list_globs:
-            - '{run_name}/AreTomo/{run_name}_dose-filt.tlt'
-            - '{run_name}/AreTomo/{run_name}_dose-filt.xf'
+- metadata:
+    format: IMOD
+    method_type: patch_tracking
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/AreTomo/{run_name}_dose-filt.tlt'
+      - '{run_name}/AreTomo/{run_name}_dose-filt.xf'
 annotations:
-  - metadata:
-      annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_object:
-        description: proton-transporting ATP synthase complex
-        id: GO:0045259
-        name: F1-F0 complex
-      annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
-      annotation_software: STOPGAP
-      authors: &id001
-        - corresponding_author_status: false
-          name: Ron Kelley
-          primary_author_status: true
-        - name: Xianjun Zhang
-        - name: Martin Obr
-        - ORCID: 0000-0003-2020-3561
-          corresponding_author_status: true
-          name: Sagar Khavnekar
-          primary_author_status: true
-        - corresponding_author_status: false
-          name: Ricardo D. Righetto
-        - corresponding_author_status: false
-          name: Florent Waltz
-        - corresponding_author_status: false
-          name: Wojciech Wietrzynski
-        - corresponding_author_status: false
-          name: Alicia K Michael
-        - corresponding_author_status: false
-          name: Grigory Tagiltsev
-        - corresponding_author_status: false
-          name: Florian Beck
-        - corresponding_author_status: false
-          name: Ellen Zhong
-        - corresponding_author_status: false
-          name: William Wan
-        - corresponding_author_status: false
-          name: John Briggs
-        - corresponding_author_status: false
-          name: "M. J\xFCrgen Plitzko"
-        - corresponding_author_status: false
-          name: Benjamin D. Engel
-        - corresponding_author_status: true
-          name: Abhay Kotecha
-      dates: &id002
-        deposition_date: '2024-04-09'
-        last_modified_date: '2024-04-09'
-        release_date: '2024-04-09'
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: &id003
-        - custom_name: STOPGAP on GitHub
-          link: https://github.com/wan-lab-vanderbilt/STOPGAP
-          link_type: source_code
-        - custom_name: TOMOMAN on GitHub
-          link: https://github.com/wan-lab-vanderbilt/TOMOMAN
-          link_type: source_code
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - OrientedPoint:
-          binning: 4
-          file_format: stopgap_star
-          filter_value: '{annotation_micrograph_name}'
-          glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
-          is_visualization_default: true
-          order: xyz
-  - metadata:
-      annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_object:
-        description: mitochondrial proton-transporting ATP synthase complex
-        id: GO:0045259
-        name: F1-F0 complex
-      annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
-      annotation_software: STOPGAP
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - OrientedPoint:
-          binning: 4
-          file_format: stopgap_star
-          filter_value: '{annotation_micrograph_name}'
-          glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
-          is_visualization_default: true
-          order: xyz
-  - metadata:
-      annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_object:
-        description: Cytosolic ribosome
-        id: GO:0022626
-        name: cytosolic ribosome
-      annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
-      annotation_software: STOPGAP
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - OrientedPoint:
-          binning: 4
-          file_format: stopgap_star
-          filter_value: '{annotation_micrograph_name}'
-          glob_string: '{run_name}/metadata/particles/ribosome_*.star'
-          is_visualization_default: true
-          order: xyz
-  - metadata:
-      annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_object:
-        id: GO:0000786
-        name: nucleosome
-      annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
-      annotation_software: STOPGAP
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - OrientedPoint:
-          binning: 4
-          file_format: stopgap_star
-          filter_value: '{annotation_micrograph_name}'
-          glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
-          is_visualization_default: true
-          order: xyz
-  - metadata:
-      annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_object:
-        description: ribulose bisphosphate carboxylase complex
-        id: GO:0048492
-        name: RubisCO complex
-      annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
-      annotation_software: STOPGAP
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - OrientedPoint:
-          binning: 4
-          file_format: stopgap_star
-          filter_value: '{annotation_micrograph_name}'
-          glob_string: '{run_name}/metadata/particles/rubisco_*.star'
-          is_visualization_default: true
-          order: xyz
-  - metadata:
-      annotation_method: Template matching + manual filtering + 3D classification filtering
-      annotation_object:
-        id: GO:0005874
-        name: microtubule
-      annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
-      annotation_software: STOPGAP
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: hybrid
-      version: 1.0
-    sources:
-      - OrientedPoint:
-          binning: 4
-          file_format: stopgap_star
-          filter_value: '{annotation_micrograph_name}'
-          glob_string: '{run_name}/metadata/particles/microtubule_*.star'
-          is_visualization_default: true
-          order: xyz
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      description: proton-transporting ATP synthase complex
+      id: GO:0045259
+      name: F1-F0 complex
+    annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
+    annotation_software: STOPGAP
+    authors: &id001
+    - corresponding_author_status: false
+      name: Ron Kelley
+      primary_author_status: true
+    - name: Xianjun Zhang
+    - name: Martin Obr
+    - ORCID: 0000-0003-2020-3561
+      corresponding_author_status: true
+      name: Sagar Khavnekar
+      primary_author_status: true
+    - corresponding_author_status: false
+      name: Ricardo D. Righetto
+    - corresponding_author_status: false
+      name: Florent Waltz
+    - corresponding_author_status: false
+      name: Wojciech Wietrzynski
+    - corresponding_author_status: false
+      name: Alicia K Michael
+    - corresponding_author_status: false
+      name: Grigory Tagiltsev
+    - corresponding_author_status: false
+      name: Florian Beck
+    - corresponding_author_status: false
+      name: Ellen Zhong
+    - corresponding_author_status: false
+      name: William Wan
+    - corresponding_author_status: false
+      name: John Briggs
+    - corresponding_author_status: false
+      name: M. Jürgen Plitzko
+    - corresponding_author_status: false
+      name: Benjamin D. Engel
+    - corresponding_author_status: true
+      name: Abhay Kotecha
+    dates: &id002
+      deposition_date: '2024-04-09'
+      last_modified_date: '2024-04-09'
+      release_date: '2024-04-09'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: &id003
+    - custom_name: STOPGAP on GitHub
+      link: https://github.com/wan-lab-vanderbilt/STOPGAP
+      link_type: source_code
+    - custom_name: TOMOMAN on GitHub
+      link: https://github.com/wan-lab-vanderbilt/TOMOMAN
+      link_type: source_code
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
+      is_visualization_default: true
+      order: xyz
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      description: mitochondrial proton-transporting ATP synthase complex
+      id: GO:0045259
+      name: F1-F0 complex
+    annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
+    annotation_software: STOPGAP
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
+      is_visualization_default: true
+      order: xyz
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      description: Cytosolic ribosome
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
+    annotation_software: STOPGAP
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/ribosome_*.star'
+      is_visualization_default: true
+      order: xyz
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      id: GO:0000786
+      name: nucleosome
+    annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
+    annotation_software: STOPGAP
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
+      is_visualization_default: true
+      order: xyz
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      description: ribulose bisphosphate carboxylase complex
+      id: GO:0048492
+      name: RubisCO complex
+    annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
+    annotation_software: STOPGAP
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/rubisco_*.star'
+      is_visualization_default: true
+      order: xyz
+- metadata:
+    annotation_method: Template matching + manual filtering + 3D classification filtering
+    annotation_object:
+      id: GO:0005874
+      name: microtubule
+    annotation_publications: EMPIAR-11756, 10.1093/micmic/ozad067.480
+    annotation_software: STOPGAP
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 4
+      file_format: stopgap_star
+      filter_value: '{annotation_micrograph_name}'
+      glob_string: '{run_name}/metadata/particles/microtubule_*.star'
+      is_visualization_default: true
+      order: xyz
 collection_metadata:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}/{run_name}_vali.mdoc'
-#ctfs:
-#  - metadata:
-#      format: 'CTFFIND'
-#    sources:
-#      - source_glob:
-#          list_glob: '{run_name}/ctffind4/ctfphaseflip_ctffind4.txt'
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/{run_name}_vali.mdoc'
 dataset_keyphotos:
-  - sources:
-      - literal:
-          value:
-            snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11756-l.gif
-            thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11756.gif
+- sources:
+  - literal:
+      value:
+        snapshot: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11756-l.gif
+        thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11756.gif
 datasets:
-  - metadata:
-      authors: &id004
-        - corresponding_author_status: false
-          name: Ron Kelley
-          primary_author_status: true
-        - corresponding_author_status: false
-          name: Xianjun Zhang
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: Martin Obr
-          primary_author_status: false
-        - ORCID: 0000-0003-2020-3561
-          corresponding_author_status: true
-          name: Sagar Khavnekar
-          primary_author_status: true
-        - corresponding_author_status: false
-          name: Ricardo D. Righetto
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: Florent Waltz
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: Wojciech Wietrzynski
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: Alicia K Michael
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: Grigory Tagiltsev
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: Florian Beck
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: Ellen Zhong
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: William Wan
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: John Briggs
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: "M. J\xFCrgen Plitzko"
-          primary_author_status: false
-        - corresponding_author_status: false
-          name: Benjamin D. Engel
-          primary_author_status: false
-        - corresponding_author_status: true
-          name: Abhay Kotecha
-          primary_author_status: false
-      cell_type:
-        name: Chlamydomonas reinhardtii
-      cross_references: &id005
-        publications: 10.1093/micmic/ozad067.480
-        related_database_entries: EMPIAR-11756
-      dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
-        lamella.
-      dataset_identifier: 10301
-      dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
-        cryo-plasmaFIB milling
-      dates: *id002
-      organism:
-        name: Chlamydomonas reinhardtii
-        taxonomy_id: 3055
-      sample_type: organism
-    sources:
-      - literal:
-          value:
-            - '10301'
+- metadata:
+    authors: &id004
+    - corresponding_author_status: false
+      name: Ron Kelley
+      primary_author_status: true
+    - corresponding_author_status: false
+      name: Xianjun Zhang
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: Martin Obr
+      primary_author_status: false
+    - ORCID: 0000-0003-2020-3561
+      corresponding_author_status: true
+      name: Sagar Khavnekar
+      primary_author_status: true
+    - corresponding_author_status: false
+      name: Ricardo D. Righetto
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: Florent Waltz
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: Wojciech Wietrzynski
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: Alicia K Michael
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: Grigory Tagiltsev
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: Florian Beck
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: Ellen Zhong
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: William Wan
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: John Briggs
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: M. Jürgen Plitzko
+      primary_author_status: false
+    - corresponding_author_status: false
+      name: Benjamin D. Engel
+      primary_author_status: false
+    - corresponding_author_status: true
+      name: Abhay Kotecha
+      primary_author_status: false
+    cell_type:
+      name: eukaryotic cell
+      id: CL:0000254
+    cross_references: &id005
+      publications: 10.1093/micmic/ozad067.480
+      related_database_entries: EMPIAR-11756
+    dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled lamella.
+    dataset_identifier: 10301
+    dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using cryo-plasmaFIB milling
+    dates: *id002
+    organism:
+      name: Chlamydomonas reinhardtii
+      taxonomy_id: 3055
+    sample_type: primary_cell_culture
+    tissue:
+      name: eukaryotic cell
+      id: CL:0000254
+    cell_strain:
+      name: mat3-4
+      id: CC-3994
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: normal
+      id: PATO:0000461
+  sources:
+  - literal:
+      value:
+      - '10301'
 deposition_keyphotos:
-  - sources:
-      - literal:
-          value:
-            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10300_snapshot.png
-            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10300_thumbnail.png
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10300_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10300_thumbnail.png
 depositions:
-  - metadata:
-      authors: *id004
-      cross_references: *id005
-      dates: *id002
-      deposition_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
-        lamella of Chlamydomonas reinhardtii. Contained tomograms are partially annotated,
-        including annotations for ribosomes, nucleosomes, F1F0-ATPase, RubisCO, and
-        microtubules.
-      deposition_identifier: 10300
-      deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared
-        using cryo-plasmaFIB milling
-      deposition_types:
-        - dataset
-        - annotation
-    sources:
-      - literal:
-          value:
-            - 10300
+- metadata:
+    authors: *id004
+    cross_references: *id005
+    dates: *id002
+    deposition_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled lamella of Chlamydomonas reinhardtii.
+      Contained tomograms are partially annotated, including annotations for ribosomes, nucleosomes, F1F0-ATPase, RubisCO,
+      and microtubules.
+    deposition_identifier: 10300
+    deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using cryo-plasmaFIB milling
+    deposition_types:
+    - dataset
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10300
 frames:
-  - metadata:
-      dose_rate: float {dose_rate}
-      is_gain_corrected: false
-    sources:
-      - source_glob:
-          list_glob: '{run_name}/frames/*.eer'
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/frames/*.eer'
 gains:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}/*.gain'
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/*.gain'
 identified_objects:
-  - metadata:
-      filter_value: '{run_name}'
-    sources:
-      - source_glob:
-          list_glob: 'identified_objects.csv'
+- metadata:
+    filter_value: '{run_name}'
+  sources:
+  - source_glob:
+      list_glob: identified_objects.csv
 rawtilts:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}/{run_name}.rawtlt'
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/{run_name}.rawtlt'
 runs:
-  - sources:
-      - source_glob:
-          list_glob: '*_BrnoKrios_*'
-          match_regex: /.*_BrnoKrios_.*$
-          name_regex: (.*)
+- sources:
+  - source_glob:
+      list_glob: '*_BrnoKrios_*'
+      match_regex: /.*_BrnoKrios_.*$
+      name_regex: (.*)
 standardization_config:
   deposition_id: 10300
   run_data_map_file: run_to_data_map_vali.tsv
   source_prefix: EMPIAR/11756/data/tomoman_minimal_project/
 tiltseries:
-  - metadata:
-      acceleration_voltage: 300000
-      binning_from_frames: 1
-      camera:
-        manufacturer: FEI
-        model: FALCON IV
-      data_acquisition_software: TEM Tomography 5
-      is_aligned: false
-      microscope:
-        manufacturer: FEI
-        model: TITAN KRIOS
-      microscope_optical_setup:
-        energy_filter: Selectris X
-      pixel_spacing: 1.96
-      related_empiar_entry: EMPIAR-11756
-      spherical_aberration_constant: 2.7
-      tilt_axis: float {tilt_series_tilt_axis_angle}
-      tilt_range:
-        max: float {tilt_series_max_tilt}
-        min: float {tilt_series_min_tilt}
-      tilt_series_quality: 5
-      tilt_step: 3.0
-      tilting_scheme: dose-symmetric
-      total_flux: float {tilt_series_total_flux}
-    sources:
-      - source_glob:
-          list_glob: '{run_name}/{run_name}.st'
-          match_regex: (.*)
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: FEI
+      model: FALCON IV
+    data_acquisition_software: TEM Tomography 5
+    is_aligned: false
+    microscope:
+      manufacturer: FEI
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: Selectris X
+    pixel_spacing: 1.96
+    related_empiar_entry: EMPIAR-11756
+    spherical_aberration_constant: 2.7
+    tilt_axis: float {tilt_series_tilt_axis_angle}
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: 5
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/{run_name}.st'
+      match_regex: (.*)
 tomograms:
-  - metadata:
-      affine_transformation_matrix:
-        - - 1
-          - 0
-          - 0
-          - 0
-        - - 0
-          - 1
-          - 0
-          - 0
-        - - 0
-          - 0
-          - 1
-          - 0
-        - - 0
-          - 0
-          - 0
-          - 1
-      authors: *id004
-      ctf_corrected: true
-      dates: *id002
-      fiducial_alignment_status: NON_FIDUCIAL
-      is_visualization_default: true
-      offset:
-        x: 0
-        y: 0
-        z: 0
-      processing: denoised
-      reconstruction_method: WBP
-      reconstruction_software: IMOD
-      tomogram_version: 1
-      voxel_spacing: 7.84
-    sources:
-      - source_glob:
-          list_glob: cryocare_bin4_tomoname/{run_name}.mrc
-          match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id004
+    ctf_corrected: true
+    dates: *id002
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 7.84
+  sources:
+  - source_glob:
+      list_glob: cryocare_bin4_tomoname/{run_name}.mrc
+      match_regex: (.*)\.mrc
 version: 1.1.0
 voxel_spacings:
-  - sources:
-      - literal:
-          value:
-            - 7.84
+- sources:
+  - literal:
+      value:
+      - 7.84

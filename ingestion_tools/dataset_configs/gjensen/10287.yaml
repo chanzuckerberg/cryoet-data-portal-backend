@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2013-04-06-7/keyimg_aba2013-04-06-7_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Ariane Briegel
@@ -22,6 +25,9 @@ datasets:
     cell_strain:
       id: null
       name: ATCC 51449
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: This is a single dataset studying Helicobacter hepaticus
       collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10287
@@ -30,12 +36,21 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: null
     organism:
       name: Helicobacter hepaticus
       taxonomy_id: 235279
     sample_preparation: grown in the Mazmanian lab
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

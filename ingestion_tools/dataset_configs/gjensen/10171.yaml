@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/cwl2012-08-16-1/keyimg_cwl2012-08-16-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Cora Woodward
@@ -35,12 +38,21 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: MONDO:0000871
+      name: T-cell childhood acute lymphocytic leukemia
     grid_preparation: cryo-sectioned by Mark Ladinsky
     organism:
       name: Homo sapiens
       taxonomy_id: 9606
     sample_preparation: nocodazole synchronized
-    sample_type: cell
+    sample_type: cell_line
+    tissue:
+      id: CL:0000084
+      name: T cell
   sources:
   - literal:
       value:

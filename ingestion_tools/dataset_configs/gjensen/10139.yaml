@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2013-11-24-1/keyimg_ycw2013-11-24-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Yi-Wei Chang
@@ -22,6 +25,9 @@ datasets:
     cell_strain:
       id: null
       name: '26695'
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: This is 2nd of 17 sets of data studying Helicobacter pylori
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb. Incubated
       with 20 nm gold/DNA conjugate for 40 min.
@@ -31,6 +37,12 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
       \ treated gold. -3 offset, 3 sec blot time, no drain. Ethane/propane mix. Grid:\
       \ QF Cu R2/2 200"
@@ -40,7 +52,10 @@ datasets:
     sample_preparation: Cells grown in BLBB + 10% heat inactivated fetal bovine serum
       at 37 degrees in microaerobic chamber with GasPak EZ Campy Sachets for 2 days,
       OD600=0.4
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:
