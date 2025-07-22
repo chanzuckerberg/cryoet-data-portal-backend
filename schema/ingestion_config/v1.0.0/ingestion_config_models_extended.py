@@ -20,6 +20,7 @@ from codegen.ingestion_config_models import (
     AnnotationEntity,
     AnnotationObject,
     AnnotationSource,
+    Assay,
     Author,
     CameraDetails,
     CellComponent,
@@ -40,6 +41,8 @@ from codegen.ingestion_config_models import (
     DepositionKeyPhotoEntity,
     DepositionKeyPhotoSource,
     DepositionSource,
+    DevelopmentStageDetails,
+    Disease,
     Frame,
     FrameEntity,
     FrameSource,
@@ -332,6 +335,10 @@ def validate_id_name_object(
         or getattr(self, id_field_name) is None
         or skip_validation(self, id_field_name, case_sensitive=True)
     ):
+        return
+    if id.startswith("CVCL_") or id.startswith("CC-") or id.startswith("EFO:"):
+        logger.info("Skipping ontology check as Ontology not covered name=%s id=%s", name, id)
+        # TODO: Validate the id and name against the right ontology source
         return
 
     logger.debug("Validating %s with ID %s", name, id)
@@ -786,6 +793,37 @@ class ExtendedValidationOrganism(OrganismDetails):
         )
         return self
 
+class ExtendedValidationAssay(Assay):
+    @model_validator(mode="after")
+    def validate_assay(self) -> Self:
+        validate_id_name_object(
+            self,
+            self.id,
+            self.name,
+        )
+        return self
+
+class ExtendedValidationDevelopmentStageDetails(DevelopmentStageDetails):
+    @model_validator(mode="after")
+    def validate_development_stage(self) -> Self:
+        if self.id == "unknown" and self.name == "unknown":
+            return self
+        validate_id_name_object(
+            self,
+            self.id,
+            self.name,
+        )
+        return self
+
+class ExtendedValidationDisease(Disease):
+    @model_validator(mode="after")
+    def validate_disease(self) -> Self:
+        validate_id_name_object(
+            self,
+            self.id,
+            self.name,
+        )
+        return self
 
 class ExtendedValidationDataset(Dataset):
     dates: ExtendedValidationDateStamp = Dataset.model_fields["dates"]
@@ -794,6 +832,9 @@ class ExtendedValidationDataset(Dataset):
     cell_type: Optional[ExtendedValidationCellType] = Dataset.model_fields["cell_type"]
     tissue: Optional[ExtendedValidationTissue] = Dataset.model_fields["tissue"]
     organism: Optional[ExtendedValidationOrganism] = Dataset.model_fields["organism"]
+    assay: Optional[ExtendedValidationAssay] = Dataset.model_fields["assay"]
+    disease: Optional[ExtendedValidationDisease] = Dataset.model_fields["disease"]
+    development_stage: Optional[ExtendedValidationDevelopmentStageDetails] = Dataset.model_fields["development_stage"]
     cross_references: Optional[ExtendedValidationCrossReferences] = Dataset.model_fields["cross_references"]
 
     @model_validator(mode="after")
