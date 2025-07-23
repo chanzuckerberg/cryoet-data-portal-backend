@@ -681,99 +681,78 @@ def get_experimental_setup_override() -> dict[str, Any]:
     Get the values of curation.csv for datasets.
     Returns a dictionary keyed by dataset ID containing the experimental metadata.
     """
-    curation_file = os.path.join(os.path.dirname(__file__), "../curation.tsv")
-
-    if not os.path.exists(curation_file):
-        return {}
-
+    invalid_values = {None, "not_reported"}
     curation_data = {}
-    try:
-        with open(curation_file, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter = '\t')
-            for row in reader:
-                dataset_id = row['id']
+    curation_file = os.path.join(os.path.dirname(__file__), "../curation.tsv")
+    with open(curation_file, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f, delimiter = '\t')
+        for row in reader:
+            dataset_id = row['id']
 
-                # Map curation data using the same structure as update_dataset_config.py
-                metadata = {}
+            # Map sample type
+            metadata = {
+                'dataset_title': row['title'],
+                'sample_type': row['sample_type'],
+            }
 
-                # Map organism information
-                if row.get('organism_name') and row['organism_name'] != 'not_reported':
-                    metadata['organism'] = {
-                        'name': row['organism_name'],
-                    }
-                    if row.get('organism_taxid') and row['organism_taxid'] != 'not_reported':
-                        metadata['organism']['taxonomy_id'] = int(row['organism_taxid'])
+            # Map organism information
+            if row.get('organism_name') not in invalid_values:
+                metadata['organism'] = {
+                    'name': row['organism_name'],
+                    'taxonomy_id': int(row['organism_taxid']),
+                }
 
+            # Map tissue information
+            if row.get('tissue_name') not in invalid_values:
+                metadata['tissue'] = {
+                    'name': row['tissue_name'],
+                    'id': row['tissue_id'],
+                }
 
-                # Map tissue information
-                if row.get('tissue_name') and row['tissue_name'] != 'not_reported':
-                    metadata['tissue'] = {
-                        'name': row['tissue_name'],
-                    }
-                    if row.get('tissue_id') and row['tissue_id'] != 'not_reported':
-                        metadata['tissue']['id'] = row['tissue_id']
-
-                # Map cell type information
-                if row.get('cell_name') and row['cell_name'] != 'not_reported':
-                    metadata['cell_type'] = {
-                        'name': row['cell_name'],
-                    }
-                    if row.get('cell_type_id') and row['cell_type_id'] != 'not_reported':
-                        metadata['cell_type']['id'] = row['cell_type_id']
+            # Map cell type information
+            if row.get('cell_name') not in invalid_values:
+                metadata['cell_type'] = {
+                    'name': row['cell_name'],
+                    'id': row['cell_type_id'],
+                }
 
                 # Map cell strain information
-                if row.get('cell_strain_name') and row['cell_strain_name'] != 'not_reported':
+                if row.get('cell_strain_name')  not in invalid_values:
                     metadata['cell_strain'] = {
                         'name': row['cell_strain_name'],
                     }
-                    if row.get('cell_strain_id') and row['cell_strain_id'] != 'not_reported':
+                    if row.get('cell_strain_id') not in invalid_values:
                         metadata['cell_strain']['id'] = row['cell_strain_id']
 
-                # Map cell component information
-                if row.get('cell_component_name') and row['cell_component_name'] != 'not_reported':
-                    metadata['cell_component'] = {
-                        'name': row['cell_component_name'],
-                    }
-                    if row.get('cell_component_id') and row['cell_component_id'] != 'not_reported':
-                        metadata['cell_component']['id'] = row['cell_component_id']
+            # Map cell component information
+            if row.get('cell_component_name') not in invalid_values:
+                metadata['cell_component'] = {
+                    'name': row['cell_component_name'],
+                    'id': row['cell_component_id'],
+                }
 
-                # Map sample type
-                if row.get('sample_type'):
-                    metadata['sample_type'] = row['sample_type']
+            # Map assay information
+            if row.get('assay_name') not in invalid_values:
+                metadata['assay'] = {
+                    'name': row['assay_name'],
+                    'id': row['assay_ontology_term_id'],
+                }
 
-                # Map title
-                if row.get('title'):
-                    metadata['dataset_title'] = row['title']
+            # Map development stage information
+            if row.get('development_stage') not in invalid_values:
+                metadata['development_stage'] = {
+                    'name': row['development_stage'],
+                    'id': row['development_stage_ontology_term_id'],
+                }
 
-                # Map assay information
-                if row.get('assay_name') and row['assay_name'] not in ['not_reported']:
-                    metadata['assay'] = {
-                        'name': row['assay_name'],
-                    }
-                    if row.get('assay_ontology_term_id') and row['assay_ontology_term_id'] not in ['not_reported']:
-                        metadata['assay']['id'] = row['assay_ontology_term_id']
+            # Map disease information
+            if row.get('disease') not in invalid_values:
+                metadata['disease'] = {
+                    'name': row['disease'],
+                    'id': row['disease_ontology_term_id'],
+                }
 
-                # Map development stage information
-                if row.get('development_stage') and row['development_stage'] not in ['not_reported']:
-                    metadata['development_stage'] = {
-                        'name': row['development_stage'],
-                    }
-                    if row.get('development_stage_ontology_term_id') and row['development_stage_ontology_term_id'] not in ['not_reported']:
-                        metadata['development_stage']['id'] = row['development_stage_ontology_term_id']
-
-                # Map disease information
-                if row.get('disease') and row['disease'] not in ['not_reported']:
-                    metadata['disease'] = {
-                        'name': row['disease'],
-                    }
-                    if row.get('disease_ontology_term_id') and row['disease_ontology_term_id'] not in ['not_reported']:
-                        metadata['disease']['id'] = row['disease_ontology_term_id']
-
-                curation_data[int(dataset_id)] = metadata
-
-    except Exception as e:
-        print(f"Error reading curation.csv: {e}")
-        return {}
+            curation_data[int(dataset_id)] = metadata
 
     return curation_data
 
