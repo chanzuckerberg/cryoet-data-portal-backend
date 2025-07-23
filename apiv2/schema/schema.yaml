@@ -1259,6 +1259,30 @@ classes:
           - dataset_description
         range: string
         required: true
+      assay_label:
+        name: assay_label
+        description: Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography
+        range: string
+      assay_ontology_id:
+        name: assay_ontology_id
+        description: Ontology identifier for the type of assay performed in a CryoET dataset
+        range: string
+      development_stage_name:
+        name: development_stage_name
+        description: Development stage of the organism from which a biological sample used the study is derived.
+        range: string
+      development_stage_ontology_id:
+        name: development_stage_ontology_id
+        description: Ontology identifier for the development stage
+        range: string
+      disease_name:
+        name: disease_name
+        description: Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
+        range: string
+      disease_ontology_id:
+        name: disease_ontology_id
+        description: Ontology identifier for the disease associated with the biological sample used in a CryoET study
+        range: string
       organism_name:
         name: organism_name
         description: Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens

@@ -34,6 +34,12 @@ class DatasetFactory(CommonFactory):
     )
     title = fuzzy.FuzzyText()
     description = fuzzy.FuzzyText()
+    assay_label = fuzzy.FuzzyText()
+    assay_ontology_id = fuzzy.FuzzyText()
+    development_stage_name = fuzzy.FuzzyText()
+    development_stage_ontology_id = fuzzy.FuzzyText()
+    disease_name = fuzzy.FuzzyText()
+    disease_ontology_id = fuzzy.FuzzyText()
     organism_name = fuzzy.FuzzyText()
 
     organism_taxid = fuzzy.FuzzyInteger(1, 1000)

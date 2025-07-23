@@ -254,6 +254,12 @@ class DatasetWhereClause(TypedDict):
     runs_aggregate: Optional[Annotated["RunAggregateWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     title: Optional[StrComparators] | None
     description: Optional[StrComparators] | None
+    assay_label: Optional[StrComparators] | None
+    assay_ontology_id: Optional[StrComparators] | None
+    development_stage_name: Optional[StrComparators] | None
+    development_stage_ontology_id: Optional[StrComparators] | None
+    disease_name: Optional[StrComparators] | None
+    disease_ontology_id: Optional[StrComparators] | None
     organism_name: Optional[StrComparators] | None
     organism_taxid: Optional[IntComparators] | None
     tissue_name: Optional[StrComparators] | None
@@ -291,6 +297,12 @@ class DatasetOrderByClause(TypedDict):
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
     title: Optional[orderBy] | None
     description: Optional[orderBy] | None
+    assay_label: Optional[orderBy] | None
+    assay_ontology_id: Optional[orderBy] | None
+    development_stage_name: Optional[orderBy] | None
+    development_stage_ontology_id: Optional[orderBy] | None
+    disease_name: Optional[orderBy] | None
+    disease_ontology_id: Optional[orderBy] | None
     organism_name: Optional[orderBy] | None
     organism_taxid: Optional[orderBy] | None
     tissue_name: Optional[orderBy] | None
@@ -348,6 +360,28 @@ class Dataset(EntityInterface):
     title: str = strawberry.field(description="Title of a CryoET dataset")
     description: str = strawberry.field(
         description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
+    )
+    assay_label: Optional[str] = strawberry.field(
+        description="Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography",
+        default=None,
+    )
+    assay_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the type of assay performed in a CryoET dataset", default=None,
+    )
+    development_stage_name: Optional[str] = strawberry.field(
+        description="Development stage of the organism from which a biological sample used the study is derived.",
+        default=None,
+    )
+    development_stage_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the development stage", default=None,
+    )
+    disease_name: Optional[str] = strawberry.field(
+        description="Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease",
+        default=None,
+    )
+    disease_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the disease associated with the biological sample used in a CryoET study",
+        default=None,
     )
     organism_name: Optional[str] = strawberry.field(
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
@@ -450,6 +484,12 @@ Define columns that support min/max aggregations
 class DatasetMinMaxColumns:
     title: Optional[str] = None
     description: Optional[str] = None
+    assay_label: Optional[str] = None
+    assay_ontology_id: Optional[str] = None
+    development_stage_name: Optional[str] = None
+    development_stage_ontology_id: Optional[str] = None
+    disease_name: Optional[str] = None
+    disease_ontology_id: Optional[str] = None
     organism_name: Optional[str] = None
     organism_taxid: Optional[int] = None
     tissue_name: Optional[str] = None
@@ -485,6 +525,12 @@ Define enum of all columns to support count and count(distinct) aggregations
 class DatasetCountColumns(enum.Enum):
     title = "title"
     description = "description"
+    assayLabel = "assay_label"
+    assayOntologyId = "assay_ontology_id"
+    developmentStageName = "development_stage_name"
+    developmentStageOntologyId = "development_stage_ontology_id"
+    diseaseName = "disease_name"
+    diseaseOntologyId = "disease_ontology_id"
     organismName = "organism_name"
     organismTaxid = "organism_taxid"
     tissueName = "tissue_name"
@@ -578,6 +624,28 @@ class DatasetCreateInput:
     description: str = strawberry.field(
         description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
     )
+    assay_label: Optional[str] = strawberry.field(
+        description="Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography",
+        default=None,
+    )
+    assay_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the type of assay performed in a CryoET dataset", default=None,
+    )
+    development_stage_name: Optional[str] = strawberry.field(
+        description="Development stage of the organism from which a biological sample used the study is derived.",
+        default=None,
+    )
+    development_stage_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the development stage", default=None,
+    )
+    disease_name: Optional[str] = strawberry.field(
+        description="Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease",
+        default=None,
+    )
+    disease_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the disease associated with the biological sample used in a CryoET study",
+        default=None,
+    )
     organism_name: Optional[str] = strawberry.field(
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
         default=None,
@@ -653,6 +721,28 @@ class DatasetUpdateInput:
     title: Optional[str] = strawberry.field(description="Title of a CryoET dataset")
     description: Optional[str] = strawberry.field(
         description="A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.",
+    )
+    assay_label: Optional[str] = strawberry.field(
+        description="Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography",
+        default=None,
+    )
+    assay_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the type of assay performed in a CryoET dataset", default=None,
+    )
+    development_stage_name: Optional[str] = strawberry.field(
+        description="Development stage of the organism from which a biological sample used the study is derived.",
+        default=None,
+    )
+    development_stage_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the development stage", default=None,
+    )
+    disease_name: Optional[str] = strawberry.field(
+        description="Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease",
+        default=None,
+    )
+    disease_ontology_id: Optional[str] = strawberry.field(
+        description="Ontology identifier for the disease associated with the biological sample used in a CryoET study",
+        default=None,
     )
     organism_name: Optional[str] = strawberry.field(
         description="Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens",
