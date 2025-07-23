@@ -23,11 +23,11 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
+      id: CVCL_0351
       name: INS-1E
     cell_type:
       id: CL:0000169
-      name: pancreatic beta cell
+      name: type B pancreatic cell
     dataset_description: This is 3rd of 4 sets of data studying Rat INS-1E pancreatic
       beta cells collected by Stephen Carter and is a part of Caltech Jensen  lab
       etdb.

@@ -23,11 +23,11 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
+      id: CVCL_0351
       name: INS-1E
     cell_type:
       id: CL:0000169
-      name: pancreatic beta cell
+      name: type B pancreatic cell
     cross_references:
       publications: 10.1126/sciadv.aay9572
     dataset_description: This is 4th of 4 sets of data studying Rat INS-1E pancreatic

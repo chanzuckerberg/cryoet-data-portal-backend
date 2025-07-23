@@ -26,7 +26,6 @@ datasets:
       id: GO:0031411
       name: gas vesicle
     cell_strain:
-      id: null
       name: CCAP 1403/13F
     cell_type:
       id: CL:0000520

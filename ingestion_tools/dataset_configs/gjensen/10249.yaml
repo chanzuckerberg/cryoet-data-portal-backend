@@ -23,7 +23,6 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: subsp. subtilis str. 168
     cell_type:
       id: CL:0000520

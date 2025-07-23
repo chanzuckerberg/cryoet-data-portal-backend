@@ -57,6 +57,7 @@ from codegen.ingestion_config_models import (
     RawTiltSource,
     RunEntity,
     RunSource,
+    SampleTypeEnum,
     StandardSource,
     TiltRange,
     TiltSeries,
@@ -850,17 +851,20 @@ class ExtendedValidationDataset(Dataset):
 
     @model_validator(mode="after")
     def valid_metadata(self) -> Self:
-        # if self.sample_type == SampleTypeEnum.cell and self.cell_type is None:
-        #     raise ValueError("Dataset must have 'cell_type' if 'sample_type' is 'cell'")
-        # elif self.sample_type == SampleTypeEnum.tissue and self.tissue is None:
-        #     raise ValueError("Dataset must have 'tissue' if 'sample_type' is 'tissue'")
-        # elif self.sample_type == SampleTypeEnum.organism and self.organism is None:
-        #     raise ValueError("Dataset must have 'organism' if 'sample_type' is 'organism'")
-        # elif self.sample_type == SampleTypeEnum.organelle and (self.cell_component is None or self.organism is None):
-        #     raise ValueError("Dataset must have 'cell_component' and 'organism' if 'sample_type' is 'organelle'")
-        # elif self.sample_type == SampleTypeEnum.virus and self.organism is None:
-        #     raise ValueError("Dataset must have 'organism' if 'sample_type' is 'virus'")
-        pass
+        if self.sample_type in {SampleTypeEnum.organism, SampleTypeEnum.organoid, SampleTypeEnum.tissue} and \
+                (self.tissue is None or self.tissue.id is None or self.tissue.name is None):
+            raise ValueError("Dataset cannot have invalid tissue if 'sample_type' is 'organism' or 'tissue' or 'organoid'")
+        elif self.sample_type == SampleTypeEnum.cell_line and \
+                (self.cell_strain is None or self.cell_strain.id is None or self.cell_strain.name is None):
+            raise ValueError("Dataset cannot have invalid cell_strain if 'sample_type' is 'cell_line'")
+        elif self.sample_type == SampleTypeEnum.primary_cell_culture and \
+                (self.cell_type is None or self.cell_type.id is None or self.cell_type.name is None):
+            raise ValueError("Dataset cannot have invalid cell_type if 'sample_type' is 'primary_cell_culture'")
+        elif self.sample_type in {SampleTypeEnum.organelle, SampleTypeEnum.virus} and \
+                (self.cell_component is None or self.cell_component.id is None or self.cell_component.name is None):
+            raise ValueError("Dataset cannot have invalid cell_component if 'sample_type' is 'organelle'")
+
+
 
     @field_validator("authors")
     @classmethod

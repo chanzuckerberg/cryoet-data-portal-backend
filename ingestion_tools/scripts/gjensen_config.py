@@ -103,7 +103,6 @@ def to_dataset_config(
         "sample_preparation": clean(dataset.get("sample_prep")),
         "grid_preparation": clean(dataset.get("grid_prep")),
         "dates": RELATED_DATES,
-        **experiment_override.get(dataset_id, {}),
     }
 
     run_name = next((entry["run_name"] for entry in data.get("runs") if "run_name" in entry), None)
@@ -133,6 +132,7 @@ def to_dataset_config(
     if cross_reference:
         config["cross_references"] = cross_reference
 
+    config.update(experiment_override.get(dataset_id, {}))
     return config
 
 
