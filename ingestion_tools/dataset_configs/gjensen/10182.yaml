@@ -39,7 +39,7 @@ datasets:
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
     development_stage:
-      id: HsapDv:0000272
+      id: HsapDv:0000262
       name: newborn stage (0-28 days)
     disease:
       id: MONDO:0005109

@@ -219,10 +219,12 @@ class ExtendedValidationDateStamp(DateStamp):
 @alru_cache
 async def validate_id(id: str) -> Tuple[List[str], bool]:
     """
-    Returns a tuple of the ID names (including original label) and whether or not it is valid.
+    Returns a tuple of the ID names (including original label) and whether it is valid.
     """
-    # Encode the IRI
-    iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
+    if id.startswith("EFO:"):
+        iri = f"http://www.ebi.ac.uk/efo/{id.replace(':', '_')}"
+    else:
+        iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
     encoded_iri = urllib.parse.quote(iri, safe="")
 
     # OLS API URL
@@ -267,7 +269,7 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
 @alru_cache
 async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     """
-    Returns a tuple of the ID names (including original label) and whether or not it is valid.
+    Returns a tuple of the ID names (including original label) and whether it is valid.
     """
 
     url = f"http://rest.wormbase.org/rest/field/strain/{id}/name"
@@ -295,9 +297,31 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
 
 
 @alru_cache
+async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
+    """
+    Returns a tuple of the ID names (including original label) and whether it is valid.
+    """
+    url = f"https://api.cellosaurus.org/cell-line/{id}?format=json&fld=id&fld=sy"
+
+    logger.debug("Getting ID %s at %s", id, url)
+
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
+        if response.status >= 400:
+            return [], False
+        data = await response.json()
+        names = [
+            names.get("value")
+            for cll in data["Cellosaurus"]["cell-line-list"]
+            for names in cll["name-list"]
+            if "value" in cll
+        ]
+        return names, True
+
+
+@alru_cache
 async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
     """
-    Returns a tuple of the ID names and whether or not it is valid.
+    Returns a tuple of the ID names and whether it is valid.
     """
 
     # Strip the UniProtKB: prefix
@@ -336,11 +360,6 @@ def validate_id_name_object(
         or skip_validation(self, id_field_name, case_sensitive=True)
     ):
         return
-    if id.startswith("CVCL_") or id.startswith("CC-") or id.startswith("EFO:"):
-        logger.info("Skipping ontology check as Ontology not covered name=%s id=%s", name, id)
-        # TODO: Validate the id and name against the right ontology source
-        return
-
     logger.debug("Validating %s with ID %s", name, id)
 
     id = id.strip()
@@ -379,6 +398,10 @@ def validate_cell_strain_object(self: CellStrain) -> CellStrain:
 
     if self.id.startswith("WBStrain"):
         validate_id_name_object(self, self.id, self.name, validate_id_function=validate_wormbase_id)
+    elif self.id.startswith("CVCL_"):
+        validate_id_name_object(self, self.id, self.name, validate_id_function=validate_cellosaurus_id)
+    elif self.id.startswith("CC-"):
+        logger.info("Skipping check for ontology not covered name=%s id=%s", self.name, self.id)
     else:
         validate_id_name_object(self, self.id, self.name)
 
@@ -796,11 +819,7 @@ class ExtendedValidationOrganism(OrganismDetails):
 class ExtendedValidationAssay(Assay):
     @model_validator(mode="after")
     def validate_assay(self) -> Self:
-        validate_id_name_object(
-            self,
-            self.id,
-            self.name,
-        )
+        validate_id_name_object(self, self.id, self.name)
         return self
 
 class ExtendedValidationDevelopmentStageDetails(DevelopmentStageDetails):
@@ -808,21 +827,13 @@ class ExtendedValidationDevelopmentStageDetails(DevelopmentStageDetails):
     def validate_development_stage(self) -> Self:
         if self.id == "unknown" and self.name == "unknown":
             return self
-        validate_id_name_object(
-            self,
-            self.id,
-            self.name,
-        )
+        validate_id_name_object(self, self.id, self.name)
         return self
 
 class ExtendedValidationDisease(Disease):
     @model_validator(mode="after")
     def validate_disease(self) -> Self:
-        validate_id_name_object(
-            self,
-            self.id,
-            self.name,
-        )
+        validate_id_name_object(self, self.id, self.name)
         return self
 
 class ExtendedValidationDataset(Dataset):

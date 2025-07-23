@@ -71,7 +71,7 @@ datasets:
     sample_type: organelle
     tissue:
       name: tongue squamous epithelium
-      id: UBERON:0006921
+      id: UBERON:0006919
     assay:
       name: microscopy assay
       id: EFO:0002909

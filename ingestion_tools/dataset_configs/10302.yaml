@@ -69,7 +69,7 @@ datasets:
       primary_author_status: false
     cell_type:
       name: eukaryotic cell
-      id: CL:0000254
+      id: CL:0000255
     cross_references:
       publications: 10.1093/micmic/ozad067.480
       related_database_entries: EMPIAR-11830
@@ -88,7 +88,7 @@ datasets:
     sample_type: primary_cell_culture
     tissue:
       name: eukaryotic cell
-      id: CL:0000254
+      id: CL:0000255
     cell_strain:
       name: mat3-4
       id: CC-3994
