@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Any
 
 from common.finders import DefaultImporterFactory
@@ -21,7 +22,7 @@ class DatasetImporter(BaseImporter):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name} metadata")
             return
-        formatted_base_data = self.format_data(self.get_base_metadata())
+        formatted_base_data = self.format_data(deepcopy(self.get_base_metadata()))
         meta = DatasetMetadata(self.config.fs, self.get_deposition().name, formatted_base_data)
         extra_data = self.load_extra_metadata()
         meta.write_metadata(self.get_metadata_path(), extra_data)
@@ -42,9 +43,9 @@ class DatasetImporter(BaseImporter):
 
     @classmethod
     def format_data(cls, data: dict[str, Any]) -> dict[str, Any]:
-        from copy import deepcopy
-
-        data_copy = deepcopy(data)
+        """
+        Format the dataset metadata to ensure all required fields are present.
+        """
         keys = [
             "assay",
             "cell_component",

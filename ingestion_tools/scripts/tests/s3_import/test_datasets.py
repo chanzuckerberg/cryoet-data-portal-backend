@@ -63,6 +63,10 @@ def test_dataset_format_data_empty_input() -> None:
 
 
 def test_dataset_format_data_complete_data() -> None:
+    """Test format_data with a complete input dict.
+        Verifies that all input data is preserved when the input dictionary
+        contains complete information for all expected keys.
+    """
     data = {
         "assay": {"name": "assay_name", "id": "assay_id"},
         "cell_component": {"name": "component_name", "id": "component_id"},
