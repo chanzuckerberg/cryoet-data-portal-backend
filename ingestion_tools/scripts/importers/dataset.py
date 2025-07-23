@@ -42,6 +42,9 @@ class DatasetImporter(BaseImporter):
 
     @classmethod
     def format_data(cls, data: dict[str, Any]) -> dict[str, Any]:
+        from copy import deepcopy
+
+        data_copy = deepcopy(data)
         keys = [
             "assay",
             "cell_component",
