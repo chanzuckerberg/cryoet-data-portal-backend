@@ -1,3 +1,5 @@
+from typing import Any
+
 from common.finders import DefaultImporterFactory
 from common.metadata import DatasetMetadata
 from importers.base_importer import BaseImporter
@@ -19,7 +21,8 @@ class DatasetImporter(BaseImporter):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name} metadata")
             return
-        meta = DatasetMetadata(self.config.fs, self.get_deposition().name, self.get_base_metadata())
+        formatted_base_data = self.format_data(self.get_base_metadata())
+        meta = DatasetMetadata(self.config.fs, self.get_deposition().name, formatted_base_data)
         extra_data = self.load_extra_metadata()
         meta.write_metadata(self.get_metadata_path(), extra_data)
 
@@ -36,3 +39,28 @@ class DatasetImporter(BaseImporter):
         return {
             "key_photos": key_photo_importer.get_metadata(),
         }
+
+    @classmethod
+    def format_data(cls, data: dict[str, Any]) -> dict[str, Any]:
+        keys = [
+            "assay",
+            "cell_component",
+            "cell_strain",
+            "cell_type",
+            "development_stage",
+            "disease",
+            "organism",
+            "tissue",
+        ]
+        for key in keys:
+            if key not in data:
+                data[key] = {}
+            if not data[key].get("name"):
+                data[key]["name"] = "not_reported"
+            if key == "organism":
+                if not data[key].get("taxonomy_id"):
+                    data[key]["taxonomy_id"] = "not_reported"
+            elif not data[key].get("id"):
+                data[key]["id"] = "not_reported"
+
+        return data
