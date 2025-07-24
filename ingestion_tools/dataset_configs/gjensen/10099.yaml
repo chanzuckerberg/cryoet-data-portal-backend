@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2016-12-16-2/keyimg_dga2016-12-16-2_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Debnath Ghosal
@@ -19,6 +22,9 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_type:
+      id: CL:0000000
+      name: cell
     dataset_description: This is a single dataset studying Halobacterium salinarum
       collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10099
@@ -27,6 +33,12 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: "Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot\
       \ force 6, blot time 3.5 sec. Wait time 8 sec. Drain time 1 sec. Ethane/propane\
       \ mix. Grid: Quantifoil Cu 2/2 200. Add gold to cells prior to freezing: 1ul\
@@ -35,7 +47,10 @@ datasets:
       name: Halobacterium salinarum
       taxonomy_id: 64091
     sample_preparation: Standard H. salinarum medium
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000000
+      name: cell
   sources:
   - literal:
       value:

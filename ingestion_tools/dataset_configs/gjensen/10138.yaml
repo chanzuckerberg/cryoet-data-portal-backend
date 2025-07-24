@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2018-06-04-1/keyimg_ycw2018-06-04-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Yi-Wei Chang
@@ -20,8 +23,10 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: '26695'
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: This is 1st of 17 sets of data studying Helicobacter pylori
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10138
@@ -30,12 +35,21 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: null
     organism:
       name: Helicobacter pylori
       taxonomy_id: 85962
     sample_preparation: null
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2016-01-14-1/keyimg_dga2016-01-14-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Debnath Ghosal
@@ -20,8 +23,10 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: Philadelphia-1_Lp02
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     cross_references:
       publications: 10.1038/s41564-019-0427-4
     dataset_description: This is 11th of 41 sets of data studying Legionella pneumophila
@@ -33,6 +38,12 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: "6 grids were frozen for the JV3563 at OD~ 3.0 Vitrobot (MK\
       \ iv) settings: 100% humidity, 4\xB5l sample, Blot force 6, blot time 3 sec.\
       \ Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid: Quantifoil Cu\
@@ -46,7 +57,10 @@ datasets:
       dissolve in the media, adjust the cell density to 0.6 and make a dilution series.
       Start O/N culture with all of them and freeze cells next day from the one in
       early stationary phase that is OD ~ 3.0'
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

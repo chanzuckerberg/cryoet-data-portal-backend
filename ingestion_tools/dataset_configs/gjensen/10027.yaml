@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/wnj2019-02-21-4/keyimg_wnj2019-02-21-4_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: William Nicolas
@@ -20,8 +23,10 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: ATCC 23769
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     cross_references:
       publications: 10.1128/JB.00371-20
     dataset_description: This is 6th of 16 sets of data studying Gluconacetobacter
@@ -33,13 +38,22 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: BC 0% 22C - BT6s BF0 DT1s backblotted ok
     organism:
       name: Gluconacetobacter hansenii
       taxonomy_id: 714995
     sample_preparation: Little Petri dishes were inoculateed with 1mL of Ghansenii
       cultures with a gold grid layed at the bottom. Incubated at 30C for 6 hours
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

@@ -20,6 +20,7 @@ from codegen.ingestion_config_models import (
     AnnotationEntity,
     AnnotationObject,
     AnnotationSource,
+    Assay,
     Author,
     CameraDetails,
     CellComponent,
@@ -40,6 +41,8 @@ from codegen.ingestion_config_models import (
     DepositionKeyPhotoEntity,
     DepositionKeyPhotoSource,
     DepositionSource,
+    DevelopmentStageDetails,
+    Disease,
     Frame,
     FrameEntity,
     FrameSource,
@@ -218,10 +221,12 @@ class ExtendedValidationDateStamp(DateStamp):
 @alru_cache
 async def validate_id(id: str) -> Tuple[List[str], bool]:
     """
-    Returns a tuple of the ID names (including original label) and whether or not it is valid.
+    Returns a tuple of the ID names (including original label) and whether it is valid.
     """
-    # Encode the IRI
-    iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
+    if id.startswith("EFO:"):
+        iri = f"http://www.ebi.ac.uk/efo/{id.replace(':', '_')}"
+    else:
+        iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
     encoded_iri = urllib.parse.quote(iri, safe="")
 
     # OLS API URL
@@ -266,7 +271,7 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
 @alru_cache
 async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     """
-    Returns a tuple of the ID names (including original label) and whether or not it is valid.
+    Returns a tuple of the ID names (including original label) and whether it is valid.
     """
 
     url = f"http://rest.wormbase.org/rest/field/strain/{id}/name"
@@ -294,9 +299,31 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
 
 
 @alru_cache
+async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
+    """
+    Returns a tuple of the ID names (including original label) and whether it is valid.
+    """
+    url = f"https://api.cellosaurus.org/cell-line/{id}?format=json&fld=id&fld=sy"
+
+    logger.debug("Getting ID %s at %s", id, url)
+
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
+        if response.status >= 400:
+            return [], False
+        data = await response.json()
+        names = [
+            names.get("value")
+            for cll in data["Cellosaurus"]["cell-line-list"]
+            for names in cll["name-list"]
+            if "value" in cll
+        ]
+        return names, True
+
+
+@alru_cache
 async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
     """
-    Returns a tuple of the ID names and whether or not it is valid.
+    Returns a tuple of the ID names and whether it is valid.
     """
 
     # Strip the UniProtKB: prefix
@@ -335,7 +362,6 @@ def validate_id_name_object(
         or skip_validation(self, id_field_name, case_sensitive=True)
     ):
         return
-
     logger.debug("Validating %s with ID %s", name, id)
 
     id = id.strip()
@@ -374,6 +400,10 @@ def validate_cell_strain_object(self: CellStrain) -> CellStrain:
 
     if self.id.startswith("WBStrain"):
         validate_id_name_object(self, self.id, self.name, validate_id_function=validate_wormbase_id)
+    elif self.id.startswith("CVCL_"):
+        validate_id_name_object(self, self.id, self.name, validate_id_function=validate_cellosaurus_id)
+    elif self.id.startswith("CC-"):
+        logger.info("Skipping check for ontology not covered name=%s id=%s", self.name, self.id)
     else:
         validate_id_name_object(self, self.id, self.name)
 
@@ -789,6 +819,25 @@ class ExtendedValidationOrganism(OrganismDetails):
         )
         return self
 
+class ExtendedValidationAssay(Assay):
+    @model_validator(mode="after")
+    def validate_assay(self) -> Self:
+        validate_id_name_object(self, self.id, self.name)
+        return self
+
+class ExtendedValidationDevelopmentStageDetails(DevelopmentStageDetails):
+    @model_validator(mode="after")
+    def validate_development_stage(self) -> Self:
+        if self.id == "unknown" and self.name == "unknown":
+            return self
+        validate_id_name_object(self, self.id, self.name)
+        return self
+
+class ExtendedValidationDisease(Disease):
+    @model_validator(mode="after")
+    def validate_disease(self) -> Self:
+        validate_id_name_object(self, self.id, self.name)
+        return self
 
 class ExtendedValidationDataset(Dataset):
     dates: ExtendedValidationDateStamp = Dataset.model_fields["dates"]
@@ -797,20 +846,27 @@ class ExtendedValidationDataset(Dataset):
     cell_type: Optional[ExtendedValidationCellType] = Dataset.model_fields["cell_type"]
     tissue: Optional[ExtendedValidationTissue] = Dataset.model_fields["tissue"]
     organism: Optional[ExtendedValidationOrganism] = Dataset.model_fields["organism"]
+    assay: Optional[ExtendedValidationAssay] = Dataset.model_fields["assay"]
+    disease: Optional[ExtendedValidationDisease] = Dataset.model_fields["disease"]
+    development_stage: Optional[ExtendedValidationDevelopmentStageDetails] = Dataset.model_fields["development_stage"]
     cross_references: Optional[ExtendedValidationCrossReferences] = Dataset.model_fields["cross_references"]
 
     @model_validator(mode="after")
     def valid_metadata(self) -> Self:
-        if self.sample_type == SampleTypeEnum.cell and self.cell_type is None:
-            raise ValueError("Dataset must have 'cell_type' if 'sample_type' is 'cell'")
-        elif self.sample_type == SampleTypeEnum.tissue and self.tissue is None:
-            raise ValueError("Dataset must have 'tissue' if 'sample_type' is 'tissue'")
-        elif self.sample_type == SampleTypeEnum.organism and self.organism is None:
-            raise ValueError("Dataset must have 'organism' if 'sample_type' is 'organism'")
-        elif self.sample_type == SampleTypeEnum.organelle and (self.cell_component is None or self.organism is None):
-            raise ValueError("Dataset must have 'cell_component' and 'organism' if 'sample_type' is 'organelle'")
-        elif self.sample_type == SampleTypeEnum.virus and self.organism is None:
-            raise ValueError("Dataset must have 'organism' if 'sample_type' is 'virus'")
+        if self.sample_type in {SampleTypeEnum.organism, SampleTypeEnum.organoid, SampleTypeEnum.tissue} and \
+                (self.tissue is None or self.tissue.id is None or self.tissue.name is None):
+            raise ValueError("Dataset cannot have invalid tissue if 'sample_type' is 'organism' or 'tissue' or 'organoid'")
+        elif self.sample_type == SampleTypeEnum.cell_line and \
+                (self.cell_strain is None or self.cell_strain.id is None or self.cell_strain.name is None):
+            raise ValueError("Dataset cannot have invalid cell_strain if 'sample_type' is 'cell_line'")
+        elif self.sample_type == SampleTypeEnum.primary_cell_culture and \
+                (self.cell_type is None or self.cell_type.id is None or self.cell_type.name is None):
+            raise ValueError("Dataset cannot have invalid cell_type if 'sample_type' is 'primary_cell_culture'")
+        elif self.sample_type in {SampleTypeEnum.organelle, SampleTypeEnum.virus} and \
+                (self.cell_component is None or self.cell_component.id is None or self.cell_component.name is None):
+            raise ValueError("Dataset cannot have invalid cell_component if 'sample_type' is 'organelle'")
+
+
 
     @field_validator("authors")
     @classmethod
