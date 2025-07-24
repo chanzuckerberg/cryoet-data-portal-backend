@@ -1,177 +1,182 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.mdoc"
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-09-05-2/keyimg_dga2017-09-05-2.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-09-05-2/keyimg_dga2017-09-05-2_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-09-05-2/keyimg_dga2017-09-05-2.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-09-05-2/keyimg_dga2017-09-05-2_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Debnath Ghosal
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: Philadelphia-1_Lp02
-    cross_references:
-      publications: 10.1038/s41564-019-0427-4
-    dataset_description: "This is 22th of 41 sets of data studying Legionella pneumophila\
-      \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV7091_\u2206\
-      dotEP (Deletion of dotE and dotP)"
-    dataset_identifier: 10079
-    dataset_title: "L. pneumophila JV7091_\u2206dotEP"
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: "6 grids were frozen for this strain at OD~ 2.8, cell density\
-      \ was increased to 2x by centrifugation. Vitrobot (MK iv) settings: 100% humidity,\
-      \ 4\xB5l sample, Blot force 6, blot time 4 sec. Wait time 0 sec. Drain time\
-      \ 1 sec. Ethane/propane mix. Grid: Quantifoil Cu 2/2 200. Add gold to cells\
-      \ prior to freezing: 1ul of gold to 4 ul of cells, freeze."
-    organism:
-      name: Legionella pneumophila
-      taxonomy_id: 1080311
-    sample_preparation: 'Cells were grown in AYE liquid culture with following supplements:
-      ferric nitrate, cysteine hydrochloride and thymidine. Scrape cells off a plate,
-      dissolve in the media, adjust the cell density to 0.6 and make a dilution series.
-      Start O/N culture with all of them and freeze cells next day from the one in
-      early stationary phase that is OD ~ 3.0. This time cell density was ~2.8'
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10079'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Debnath Ghosal
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: Philadelphia-1_Lp02
+      cross_references:
+        publications: 10.1038/s41564-019-0427-4
+      dataset_description:
+        "This is 22th of 41 sets of data studying Legionella pneumophila\
+        \ collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. JV7091_\u2206\
+        dotEP (Deletion of dotE and dotP)"
+      dataset_identifier: 10079
+      dataset_title: "L. pneumophila JV7091_\u2206dotEP"
+      dates: &id002
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
+      grid_preparation:
+        "6 grids were frozen for this strain at OD~ 2.8, cell density\
+        \ was increased to 2x by centrifugation. Vitrobot (MK iv) settings: 100% humidity,\
+        \ 4\xB5l sample, Blot force 6, blot time 4 sec. Wait time 0 sec. Drain time\
+        \ 1 sec. Ethane/propane mix. Grid: Quantifoil Cu 2/2 200. Add gold to cells\
+        \ prior to freezing: 1ul of gold to 4 ul of cells, freeze."
+      organism:
+        name: Legionella pneumophila
+        taxonomy_id: 1080311
+      sample_preparation:
+        "Cells were grown in AYE liquid culture with following supplements:
+        ferric nitrate, cysteine hydrochloride and thymidine. Scrape cells off a plate,
+        dissolve in the media, adjust the cell density to 0.6 and make a dilution series.
+        Start O/N culture with all of them and freeze cells next day from the one in
+        early stationary phase that is OD ~ 3.0. This time cell density was ~2.8"
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - "10079"
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1038/s41564-019-0427-4,10.1038/s41564-019-0603-6
-      related_database_entries: EMD-0566
-    dates: *id002
-    deposition_description: 41 sets of data studying Legionella pneumophila collected
-      by Debnath Ghosal and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10038
-    deposition_title: Legionella pneumophila (tax_id=1080311) strain:Philadelphia-1_Lp02
-      by Debnath Ghosal
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10038
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1038/s41564-019-0427-4,10.1038/s41564-019-0603-6
+        related_database_entries: EMD-0566
+      dates: *id002
+      deposition_description:
+        41 sets of data studying Legionella pneumophila collected
+        by Debnath Ghosal and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10038
+      deposition_title:
+        Legionella pneumophila (tax_id=1080311) strain:Philadelphia-1_Lp02
+        by Debnath Ghosal
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10038
 frames:
-- metadata:
-    dose_rate: 1.639344262295082
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.639344262295082
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.rawtlt"
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (dga2017-09-05-2|dga2017-09-05-3|dga2017-09-05-4|dga2017-09-05-5|dga2017-09-05-7|dga2017-09-05-11|dga2017-09-05-12|dga2017-09-05-13|dga2017-09-05-18|dga2017-09-05-23|dga2017-09-05-24|dga2017-09-05-25|dga2017-09-05-26|dga2017-09-05-27|dga2017-09-05-28|dga2017-09-05-29|dga2017-09-05-30|dga2017-09-05-31|dga2017-09-05-32|dga2017-09-05-33|dga2017-09-05-34|dga2017-09-05-35|dga2017-09-05-36|dga2017-09-05-37|dga2017-09-05-46|dga2017-09-05-47|dga2017-09-05-49|dga2017-09-05-54|dga2017-09-05-55|dga2017-09-05-56|dga2017-09-05-66|dga2017-09-05-70|dga2017-09-05-72|dga2017-09-05-77|dga2017-09-05-83|dga2017-09-05-84|dga2017-09-05-90|dga2017-09-05-91|dga2017-09-05-92|dga2017-09-05-93|dga2017-09-05-94|dga2017-09-05-95|dga2017-09-05-96|dga2017-09-05-97|dga2017-09-05-98|dga2017-09-05-99|dga2017-10-31-1|dga2017-10-31-2|dga2017-10-31-3|dga2017-10-31-4|dga2017-10-31-5|dga2017-10-31-6|dga2017-10-31-7|dga2017-10-31-8|dga2017-10-31-9|dga2017-10-31-10|dga2017-10-31-11|dga2017-10-31-12|dga2017-10-31-13|dga2017-10-31-14|dga2017-10-31-15|dga2017-10-31-16|dga2017-10-31-17|dga2017-10-31-18|dga2017-10-31-19|dga2017-10-31-20|dga2017-10-31-21|dga2017-10-31-22|dga2017-10-31-23|dga2017-10-31-24|dga2017-10-31-25|dga2017-10-31-26|dga2017-10-31-27|dga2017-10-31-28|dga2017-10-31-29|dga2017-10-31-30|dga2017-10-31-31|dga2017-10-31-32|dga2017-10-31-33|dga2017-10-31-34|dga2017-10-31-35|dga2017-10-31-36|dga2017-10-31-37|dga2017-10-31-38|dga2017-10-31-39|dga2017-10-31-40|dga2017-10-31-41|dga2017-10-31-42|dga2017-10-31-43|dga2017-10-31-44|dga2017-10-31-45|dga2017-10-31-46|dga2017-10-31-47|dga2017-10-31-48|dga2017-10-31-49|dga2017-10-31-50|dga2017-10-31-51|dga2017-10-31-52|dga2017-10-31-53|dga2017-10-31-54|dga2017-10-31-55|dga2017-10-31-56|dga2017-10-31-57|dga2017-10-31-58|dga2017-10-31-59|dga2017-10-31-60|dga2017-10-31-61|dga2017-10-31-62|dga2017-10-31-63|dga2017-10-31-64|dga2017-10-31-65|dga2017-10-31-66|dga2017-10-31-67|dga2017-10-31-77|dga2017-10-31-78|dga2017-10-31-79|dga2017-10-31-80|dga2017-10-31-81|dga2017-10-31-82|dga2017-10-31-83|dga2017-10-31-84|dga2017-10-31-85|dga2017-10-31-86|dga2017-10-31-87)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: "*"
+          match_regex: (dga2017-09-05-2|dga2017-09-05-3|dga2017-09-05-4|dga2017-09-05-5|dga2017-09-05-7|dga2017-09-05-11|dga2017-09-05-12|dga2017-09-05-13|dga2017-09-05-18|dga2017-09-05-23|dga2017-09-05-24|dga2017-09-05-25|dga2017-09-05-26|dga2017-09-05-27|dga2017-09-05-28|dga2017-09-05-29|dga2017-09-05-30|dga2017-09-05-31|dga2017-09-05-32|dga2017-09-05-33|dga2017-09-05-34|dga2017-09-05-35|dga2017-09-05-36|dga2017-09-05-37|dga2017-09-05-46|dga2017-09-05-47|dga2017-09-05-49|dga2017-09-05-54|dga2017-09-05-55|dga2017-09-05-56|dga2017-09-05-66|dga2017-09-05-70|dga2017-09-05-72|dga2017-09-05-77|dga2017-09-05-83|dga2017-09-05-84|dga2017-09-05-90|dga2017-09-05-91|dga2017-09-05-92|dga2017-09-05-93|dga2017-09-05-94|dga2017-09-05-95|dga2017-09-05-96|dga2017-09-05-97|dga2017-09-05-98|dga2017-09-05-99|dga2017-10-31-1|dga2017-10-31-2|dga2017-10-31-3|dga2017-10-31-4|dga2017-10-31-5|dga2017-10-31-6|dga2017-10-31-7|dga2017-10-31-8|dga2017-10-31-9|dga2017-10-31-10|dga2017-10-31-11|dga2017-10-31-12|dga2017-10-31-13|dga2017-10-31-14|dga2017-10-31-15|dga2017-10-31-16|dga2017-10-31-17|dga2017-10-31-18|dga2017-10-31-19|dga2017-10-31-20|dga2017-10-31-21|dga2017-10-31-22|dga2017-10-31-23|dga2017-10-31-24|dga2017-10-31-25|dga2017-10-31-26|dga2017-10-31-27|dga2017-10-31-28|dga2017-10-31-29|dga2017-10-31-30|dga2017-10-31-31|dga2017-10-31-32|dga2017-10-31-33|dga2017-10-31-34|dga2017-10-31-35|dga2017-10-31-36|dga2017-10-31-37|dga2017-10-31-38|dga2017-10-31-39|dga2017-10-31-40|dga2017-10-31-41|dga2017-10-31-42|dga2017-10-31-43|dga2017-10-31-44|dga2017-10-31-45|dga2017-10-31-46|dga2017-10-31-47|dga2017-10-31-48|dga2017-10-31-49|dga2017-10-31-50|dga2017-10-31-51|dga2017-10-31-52|dga2017-10-31-53|dga2017-10-31-54|dga2017-10-31-55|dga2017-10-31-56|dga2017-10-31-57|dga2017-10-31-58|dga2017-10-31-59|dga2017-10-31-60|dga2017-10-31-61|dga2017-10-31-62|dga2017-10-31-63|dga2017-10-31-64|dga2017-10-31-65|dga2017-10-31-66|dga2017-10-31-67|dga2017-10-31-77|dga2017-10-31-78|dga2017-10-31-79|dga2017-10-31-80|dga2017-10-31-81|dga2017-10-31-82|dga2017-10-31-83|dga2017-10-31-84|dga2017-10-31-85|dga2017-10-31-86|dga2017-10-31-87)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10038
   run_data_map_file: run_data_map/10079.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 4.036
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 80.0
-    tilt_range:
-      max: float {ts-tilt_range-max}
-      min: -60.0
-    tilt_series_quality: int {ts-tilt_series_quality}
-    tilt_step: 2.0
-    tilting_scheme: bidirectional, negative first
-    total_flux: 100.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ""
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 4.036
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_axis: 80.0
+      tilt_range:
+        max: float {ts-tilt_range-max}
+        min: -60.0
+      tilt_series_quality: int {ts-tilt_series_quality}
+      tilt_step: 2.0
+      tilting_scheme: bidirectional, negative first
+      total_flux: 100.0
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/rawdata/*"
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: '{tomo-align_software}'
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: '{tomo-reconstruction_software}'
-    tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: "{tomo-align_software}"
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: "{tomo-reconstruction_method}"
+      reconstruction_software: "{tomo-reconstruction_software}"
+      tomogram_version: 1
+      voxel_spacing: float {tomo-voxel_spacing}
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/3dimage_*/*"
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^dga2017-09-05-83$
-        - ^dga2017-10-31-32$
+  - sources:
+      - literal:
+          value:
+            - float {tomo-voxel_spacing}
+        parent_filters:
+          exclude:
+            run:
+              - ^dga2017-09-05-83$
+              - ^dga2017-10-31-32$

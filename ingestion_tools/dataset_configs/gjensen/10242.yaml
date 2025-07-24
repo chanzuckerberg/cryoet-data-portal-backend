@@ -1,108 +1,111 @@
 annotations: []
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2009-08-27-1/keyimg_mba2009-08-27-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2009-08-27-1/keyimg_mba2009-08-27-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mba2009-08-27-1/keyimg_mba2009-08-27-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2009-08-27-1/keyimg_mba2009-08-27-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Morgan Beeby
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    dataset_description: This is a single dataset studying Spiroplasma melliferum
-      collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
-    dataset_identifier: 10242
-    dataset_title: Spiroplasma melliferum
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: 4-minute glow discharge on Harrick glow discharger, Quantifoil
-      R2/2 grids, 10 nm gold fiducials, 'MORGAN5' Vitrobot settings
-    organism:
-      name: Spiroplasma melliferum
-      taxonomy_id: 2134
-    sample_preparation: grown in modified spiroplasma media with penicillin
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10242'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Morgan Beeby
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      dataset_description:
+        This is a single dataset studying Spiroplasma melliferum
+        collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
+      dataset_identifier: 10242
+      dataset_title: Spiroplasma melliferum
+      dates: &id002
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
+      grid_preparation:
+        4-minute glow discharge on Harrick glow discharger, Quantifoil
+        R2/2 grids, 10 nm gold fiducials, 'MORGAN5' Vitrobot settings
+      organism:
+        name: Spiroplasma melliferum
+        taxonomy_id: 2134
+      sample_preparation: grown in modified spiroplasma media with penicillin
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - "10242"
 depositions:
-- metadata:
-    authors: *id001
-    dates: *id002
-    deposition_description: 'Single set of data studying Spiroplasma melliferum (tax_id=2134)
-      strain: by Morgan Beeby and is a part of Caltech Jensen lab etdb.'
-    deposition_identifier: 10042
-    deposition_title: 'Spiroplasma melliferum (tax_id=2134) strain: by Morgan Beeby'
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10042
+  - metadata:
+      authors: *id001
+      dates: *id002
+      deposition_description:
+        "Single set of data studying Spiroplasma melliferum (tax_id=2134)
+        strain: by Morgan Beeby and is a part of Caltech Jensen lab etdb."
+      deposition_identifier: 10042
+      deposition_title: "Spiroplasma melliferum (tax_id=2134) strain: by Morgan Beeby"
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10042
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.rawtlt"
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (mba2009-08-27-1|mba2009-08-27-2|mba2009-08-27-3|mba2009-08-27-4|mba2009-08-27-5|mba2009-08-27-6|mba2009-08-27-7|mba2009-08-27-8|mba2009-08-27-9|mba2009-08-27-10)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: "*"
+          match_regex: (mba2009-08-27-1|mba2009-08-27-2|mba2009-08-27-3|mba2009-08-27-4|mba2009-08-27-5|mba2009-08-27-6|mba2009-08-27-7|mba2009-08-27-8|mba2009-08-27-9|mba2009-08-27-10)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10042
   source_prefix: GJensen_full
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: IMOD
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 19.24
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: IMOD
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 19.24
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/3dimage_*/*"
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 19.24
+  - sources:
+      - literal:
+          value:
+            - 19.24

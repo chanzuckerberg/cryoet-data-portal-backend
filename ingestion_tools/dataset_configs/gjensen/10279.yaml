@@ -1,154 +1,156 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.mdoc"
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/aba2014-10-15-1/keyimg_aba2014-10-15-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2014-10-15-1/keyimg_aba2014-10-15-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/aba2014-10-15-1/keyimg_aba2014-10-15-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2014-10-15-1/keyimg_aba2014-10-15-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Ariane Briegel
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    dataset_description: This is 2nd of 9 sets of data studying Pseudomonas aeruginosa
-      collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb.
-    dataset_identifier: 10279
-    dataset_title: P. aeruginosa PAOI delta aer2
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: null
-    organism:
-      name: Pseudomonas aeruginosa
-      taxonomy_id: 287
-    sample_preparation: Pseudomonas aeruginosa delta aer2
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10279'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Ariane Briegel
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      dataset_description:
+        This is 2nd of 9 sets of data studying Pseudomonas aeruginosa
+        collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb.
+      dataset_identifier: 10279
+      dataset_title: P. aeruginosa PAOI delta aer2
+      dates: &id002
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
+      grid_preparation: null
+      organism:
+        name: Pseudomonas aeruginosa
+        taxonomy_id: 287
+      sample_preparation: Pseudomonas aeruginosa delta aer2
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - "10279"
 depositions:
-- metadata:
-    authors: *id001
-    dates: *id002
-    deposition_description: 9 sets of data studying Pseudomonas aeruginosa collected
-      by Ariane Briegel and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10040
-    deposition_title: 'Pseudomonas aeruginosa (tax_id=287) strain: by Ariane Briegel'
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10040
+  - metadata:
+      authors: *id001
+      dates: *id002
+      deposition_description:
+        9 sets of data studying Pseudomonas aeruginosa collected
+        by Ariane Briegel and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10040
+      deposition_title: "Pseudomonas aeruginosa (tax_id=287) strain: by Ariane Briegel"
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10040
 frames:
-- metadata:
-    dose_rate: 1.322314049586777
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.322314049586777
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.rawtlt"
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (aba2014-10-15-1|aba2014-10-15-2|aba2014-10-15-3|aba2014-10-15-4|aba2014-10-15-5|aba2014-10-15-6|aba2014-10-15-7|aba2014-10-15-8|aba2014-10-15-9|aba2014-10-15-10|aba2014-10-15-11|aba2014-10-15-12|aba2014-10-15-13|aba2014-10-15-14|aba2014-10-15-15|aba2014-10-15-16|aba2014-10-15-17|aba2014-10-15-18|aba2014-10-15-19|aba2014-10-15-20|aba2014-10-15-21|aba2014-10-15-22)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: "*"
+          match_regex: (aba2014-10-15-1|aba2014-10-15-2|aba2014-10-15-3|aba2014-10-15-4|aba2014-10-15-5|aba2014-10-15-6|aba2014-10-15-7|aba2014-10-15-8|aba2014-10-15-9|aba2014-10-15-10|aba2014-10-15-11|aba2014-10-15-12|aba2014-10-15-13|aba2014-10-15-14|aba2014-10-15-15|aba2014-10-15-16|aba2014-10-15-17|aba2014-10-15-18|aba2014-10-15-19|aba2014-10-15-20|aba2014-10-15-21|aba2014-10-15-22)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10040
   run_data_map_file: run_data_map/10279.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 3.265
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 79.3
-    tilt_range:
-      max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
-    tilt_step: 1.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 160.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ""
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 3.265
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_axis: 79.3
+      tilt_range:
+        max: 60.0
+        min: -60.0
+      tilt_series_quality: 4
+      tilt_step: 1.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 160.0
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/rawdata/*"
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: '{tomo-align_software}'
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 13.059
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: "{tomo-align_software}"
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 13.059
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/3dimage_*/*"
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 13.059
+  - sources:
+      - literal:
+          value:
+            - 13.059

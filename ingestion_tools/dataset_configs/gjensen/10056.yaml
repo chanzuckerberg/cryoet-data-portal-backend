@@ -1,175 +1,179 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.mdoc"
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-09-25-2/keyimg_dga2017-09-25-2.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-09-25-2/keyimg_dga2017-09-25-2_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-09-25-2/keyimg_dga2017-09-25-2.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-09-25-2/keyimg_dga2017-09-25-2_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Debnath Ghosal
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: Nine Mile phase II clone 4
-    cross_references:
-      publications: 10.1016/j.isci.2023.107210
-      related_database_entries: EMD-28281,EMD-28282,EMD-28283
-    dataset_description: This is 4th of 5 sets of data studying Coxiella burnetii
-      collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Coxiella
-      burnetii Nine Mile phase II clone 4 (NMIIC4) strain. Coxiella cells purified
-      from infected Vero cells.
-    dataset_identifier: 10056
-    dataset_title: C. burnetii Coxiella_ Verocells_28dpi
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: "Freezing: 100% humidity, 4\xB5l sample, Blot force 6, blot\
-      \ time 4 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid: Quantifoil\
-      \ Cu 2/2 200. Add gold to cells prior to freezing: 1ul of gold to 4 ul of cells,\
-      \ freeze.T"
-    organism:
-      name: Coxiella burnetii
-      taxonomy_id: 777
-    sample_preparation: Refer to Heinzen lab.
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10056'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Debnath Ghosal
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: Nine Mile phase II clone 4
+      cross_references:
+        publications: 10.1016/j.isci.2023.107210
+        related_database_entries: EMD-28281,EMD-28282,EMD-28283
+      dataset_description:
+        This is 4th of 5 sets of data studying Coxiella burnetii
+        collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Coxiella
+        burnetii Nine Mile phase II clone 4 (NMIIC4) strain. Coxiella cells purified
+        from infected Vero cells.
+      dataset_identifier: 10056
+      dataset_title: C. burnetii Coxiella_ Verocells_28dpi
+      dates: &id002
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
+      grid_preparation:
+        "Freezing: 100% humidity, 4\xB5l sample, Blot force 6, blot\
+        \ time 4 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid: Quantifoil\
+        \ Cu 2/2 200. Add gold to cells prior to freezing: 1ul of gold to 4 ul of cells,\
+        \ freeze.T"
+      organism:
+        name: Coxiella burnetii
+        taxonomy_id: 777
+      sample_preparation: Refer to Heinzen lab.
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - "10056"
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1016/j.isci.2023.107210
-      related_database_entries: EMD-28281,EMD-28282,EMD-28283
-    dates: *id002
-    deposition_description: 5 sets of data studying Coxiella burnetii collected by
-      Debnath Ghosal and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10045
-    deposition_title: Coxiella burnetii (tax_id=777) strain:Nine Mile phase II clone
-      4 by Debnath Ghosal
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10045
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1016/j.isci.2023.107210
+        related_database_entries: EMD-28281,EMD-28282,EMD-28283
+      dates: *id002
+      deposition_description:
+        5 sets of data studying Coxiella burnetii collected by
+        Debnath Ghosal and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10045
+      deposition_title:
+        Coxiella burnetii (tax_id=777) strain:Nine Mile phase II clone
+        4 by Debnath Ghosal
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10045
 frames:
-- metadata:
-    dose_rate: 2.1311475409836067
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 2.1311475409836067
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.rawtlt"
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (dga2017-09-25-2|dga2017-09-25-3|dga2017-09-25-4|dga2017-09-25-5|dga2017-09-25-6|dga2017-09-25-7|dga2017-09-25-8|dga2017-09-25-9|dga2017-09-25-10|dga2017-09-25-11|dga2017-09-25-12|dga2017-09-25-13|dga2017-09-25-14|dga2017-09-25-15|dga2017-09-25-16|dga2017-09-25-18|dga2017-09-25-19|dga2017-09-25-20|dga2017-09-25-21|dga2017-09-25-22|dga2017-09-25-23|dga2017-09-25-24|dga2017-09-25-26|dga2017-09-25-27|dga2017-09-25-28|dga2017-09-25-30|dga2017-09-25-31|dga2017-09-25-32|dga2017-09-25-33|dga2017-09-25-34|dga2017-09-25-35|dga2017-09-25-36|dga2017-09-25-37|dga2017-09-25-39|dga2017-09-25-41|dga2017-09-25-42|dga2017-09-25-43|dga2017-09-25-44|dga2017-09-25-47|dga2017-09-25-48|dga2017-09-25-50|dga2017-09-25-51|dga2017-09-25-52|dga2017-09-25-53|dga2017-09-25-54|dga2017-09-25-56|dga2017-09-25-57|dga2017-09-25-58|dga2017-09-25-59|dga2017-09-25-60|dga2017-09-25-61|dga2017-09-25-62|dga2017-09-25-63|dga2017-09-25-64|dga2017-09-25-65|dga2017-09-25-66|dga2017-09-25-67|dga2017-09-25-68|dga2017-09-25-69|dga2017-09-25-70|dga2017-09-25-71|dga2017-09-25-72|dga2017-09-25-73|dga2017-09-25-74|dga2017-09-25-75|dga2017-09-25-76|dga2017-09-25-77|dga2017-09-25-78|dga2017-09-25-80|dga2017-09-25-81|dga2017-09-25-82|dga2017-09-25-83|dga2017-09-25-84|dga2017-09-25-85|dga2017-09-25-87|dga2017-09-25-88|dga2017-09-25-90|dga2017-09-25-91|dga2017-09-25-92|dga2017-09-25-93|dga2017-09-25-94|dga2017-09-25-95|dga2017-09-25-96|dga2017-09-25-97|dga2017-09-25-98|dga2017-09-25-99|dga2017-09-25-100|dga2017-09-25-101|dga2017-09-25-103|dga2017-09-25-104|dga2017-09-25-105|dga2017-09-25-106|dga2017-09-25-107|dga2017-09-25-108|dga2017-09-25-109|dga2017-09-25-110|dga2017-09-25-111|dga2017-09-25-112|dga2017-09-25-113|dga2017-09-25-114|dga2017-09-25-115|dga2017-09-25-116|dga2017-09-25-117|dga2017-09-25-118|dga2017-09-25-119|dga2017-09-25-120|dga2017-09-25-121|dga2017-09-25-122|dga2017-09-25-123|dga2017-09-25-124|dga2017-09-25-125|dga2017-09-25-126|dga2017-09-25-127|dga2017-09-25-128|dga2017-09-25-129|dga2017-09-25-130|dga2017-09-25-131|dga2017-09-25-132|dga2017-09-25-133|dga2017-09-25-134|dga2017-09-25-135|dga2017-09-25-136|dga2017-09-25-137|dga2017-09-25-138|dga2017-09-25-139|dga2017-09-25-140|dga2017-09-25-142|dga2017-10-19-4|dga2017-10-19-5|dga2017-10-19-6|dga2017-10-19-7|dga2017-10-19-8|dga2017-10-19-9|dga2017-10-19-10|dga2017-10-19-11|dga2017-10-19-12|dga2017-10-19-13|dga2017-10-19-15|dga2017-10-19-16|dga2017-10-19-17|dga2017-10-19-18|dga2017-10-19-19|dga2017-10-19-20|dga2017-10-19-21|dga2017-10-19-22|dga2017-10-19-23|dga2017-10-19-24|dga2017-10-19-25|dga2017-10-19-26|dga2017-10-19-27|dga2017-10-19-28|dga2017-10-19-29|dga2017-10-19-31|dga2017-10-19-32|dga2017-10-19-33|dga2017-10-19-34|dga2017-10-19-35|dga2017-10-19-36|dga2017-10-19-37|dga2017-10-19-38|dga2017-10-19-39|dga2017-10-19-40|dga2017-10-19-41|dga2017-10-19-42|dga2017-10-19-43|dga2017-10-19-44|dga2017-10-19-45|dga2017-10-19-46|dga2017-10-19-47|dga2017-10-19-48|dga2017-10-19-49|dga2017-10-19-50|dga2017-10-19-51|dga2017-10-19-52|dga2017-10-19-53|dga2017-10-19-54|dga2017-10-19-55|dga2017-10-19-58|dga2017-10-19-59|dga2017-10-19-60|dga2017-10-19-61|dga2017-10-19-62|dga2017-10-19-63|dga2017-10-19-64|dga2017-10-19-65|dga2017-10-19-66|dga2017-10-19-68|dga2017-10-19-69|dga2017-10-19-70|dga2017-10-19-71|dga2017-10-19-72|dga2017-10-19-73|dga2017-10-19-74|dga2017-10-19-75|dga2017-10-19-76|dga2017-10-19-77|dga2017-10-19-78|dga2017-10-19-79|dga2017-10-19-80|dga2017-10-19-81|dga2017-10-19-82|dga2017-10-19-83|dga2017-10-19-84|dga2017-10-19-85|dga2017-10-19-86|dga2017-10-19-87|dga2017-10-19-88|dga2017-10-19-89|dga2017-10-19-90|dga2017-10-19-91|dga2017-10-19-92|dga2017-10-19-93|dga2017-10-19-94|dga2017-10-19-95|dga2017-10-19-96|dga2017-10-19-97|dga2017-10-19-98|dga2017-10-19-99|dga2017-10-19-100|dga2017-10-19-101|dga2017-10-19-102|dga2017-10-19-103|dga2017-10-19-104|dga2017-10-19-105|dga2017-10-19-106|dga2017-10-19-107|dga2017-10-19-108)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: "*"
+          match_regex: (dga2017-09-25-2|dga2017-09-25-3|dga2017-09-25-4|dga2017-09-25-5|dga2017-09-25-6|dga2017-09-25-7|dga2017-09-25-8|dga2017-09-25-9|dga2017-09-25-10|dga2017-09-25-11|dga2017-09-25-12|dga2017-09-25-13|dga2017-09-25-14|dga2017-09-25-15|dga2017-09-25-16|dga2017-09-25-18|dga2017-09-25-19|dga2017-09-25-20|dga2017-09-25-21|dga2017-09-25-22|dga2017-09-25-23|dga2017-09-25-24|dga2017-09-25-26|dga2017-09-25-27|dga2017-09-25-28|dga2017-09-25-30|dga2017-09-25-31|dga2017-09-25-32|dga2017-09-25-33|dga2017-09-25-34|dga2017-09-25-35|dga2017-09-25-36|dga2017-09-25-37|dga2017-09-25-39|dga2017-09-25-41|dga2017-09-25-42|dga2017-09-25-43|dga2017-09-25-44|dga2017-09-25-47|dga2017-09-25-48|dga2017-09-25-50|dga2017-09-25-51|dga2017-09-25-52|dga2017-09-25-53|dga2017-09-25-54|dga2017-09-25-56|dga2017-09-25-57|dga2017-09-25-58|dga2017-09-25-59|dga2017-09-25-60|dga2017-09-25-61|dga2017-09-25-62|dga2017-09-25-63|dga2017-09-25-64|dga2017-09-25-65|dga2017-09-25-66|dga2017-09-25-67|dga2017-09-25-68|dga2017-09-25-69|dga2017-09-25-70|dga2017-09-25-71|dga2017-09-25-72|dga2017-09-25-73|dga2017-09-25-74|dga2017-09-25-75|dga2017-09-25-76|dga2017-09-25-77|dga2017-09-25-78|dga2017-09-25-80|dga2017-09-25-81|dga2017-09-25-82|dga2017-09-25-83|dga2017-09-25-84|dga2017-09-25-85|dga2017-09-25-87|dga2017-09-25-88|dga2017-09-25-90|dga2017-09-25-91|dga2017-09-25-92|dga2017-09-25-93|dga2017-09-25-94|dga2017-09-25-95|dga2017-09-25-96|dga2017-09-25-97|dga2017-09-25-98|dga2017-09-25-99|dga2017-09-25-100|dga2017-09-25-101|dga2017-09-25-103|dga2017-09-25-104|dga2017-09-25-105|dga2017-09-25-106|dga2017-09-25-107|dga2017-09-25-108|dga2017-09-25-109|dga2017-09-25-110|dga2017-09-25-111|dga2017-09-25-112|dga2017-09-25-113|dga2017-09-25-114|dga2017-09-25-115|dga2017-09-25-116|dga2017-09-25-117|dga2017-09-25-118|dga2017-09-25-119|dga2017-09-25-120|dga2017-09-25-121|dga2017-09-25-122|dga2017-09-25-123|dga2017-09-25-124|dga2017-09-25-125|dga2017-09-25-126|dga2017-09-25-127|dga2017-09-25-128|dga2017-09-25-129|dga2017-09-25-130|dga2017-09-25-131|dga2017-09-25-132|dga2017-09-25-133|dga2017-09-25-134|dga2017-09-25-135|dga2017-09-25-136|dga2017-09-25-137|dga2017-09-25-138|dga2017-09-25-139|dga2017-09-25-140|dga2017-09-25-142|dga2017-10-19-4|dga2017-10-19-5|dga2017-10-19-6|dga2017-10-19-7|dga2017-10-19-8|dga2017-10-19-9|dga2017-10-19-10|dga2017-10-19-11|dga2017-10-19-12|dga2017-10-19-13|dga2017-10-19-15|dga2017-10-19-16|dga2017-10-19-17|dga2017-10-19-18|dga2017-10-19-19|dga2017-10-19-20|dga2017-10-19-21|dga2017-10-19-22|dga2017-10-19-23|dga2017-10-19-24|dga2017-10-19-25|dga2017-10-19-26|dga2017-10-19-27|dga2017-10-19-28|dga2017-10-19-29|dga2017-10-19-31|dga2017-10-19-32|dga2017-10-19-33|dga2017-10-19-34|dga2017-10-19-35|dga2017-10-19-36|dga2017-10-19-37|dga2017-10-19-38|dga2017-10-19-39|dga2017-10-19-40|dga2017-10-19-41|dga2017-10-19-42|dga2017-10-19-43|dga2017-10-19-44|dga2017-10-19-45|dga2017-10-19-46|dga2017-10-19-47|dga2017-10-19-48|dga2017-10-19-49|dga2017-10-19-50|dga2017-10-19-51|dga2017-10-19-52|dga2017-10-19-53|dga2017-10-19-54|dga2017-10-19-55|dga2017-10-19-58|dga2017-10-19-59|dga2017-10-19-60|dga2017-10-19-61|dga2017-10-19-62|dga2017-10-19-63|dga2017-10-19-64|dga2017-10-19-65|dga2017-10-19-66|dga2017-10-19-68|dga2017-10-19-69|dga2017-10-19-70|dga2017-10-19-71|dga2017-10-19-72|dga2017-10-19-73|dga2017-10-19-74|dga2017-10-19-75|dga2017-10-19-76|dga2017-10-19-77|dga2017-10-19-78|dga2017-10-19-79|dga2017-10-19-80|dga2017-10-19-81|dga2017-10-19-82|dga2017-10-19-83|dga2017-10-19-84|dga2017-10-19-85|dga2017-10-19-86|dga2017-10-19-87|dga2017-10-19-88|dga2017-10-19-89|dga2017-10-19-90|dga2017-10-19-91|dga2017-10-19-92|dga2017-10-19-93|dga2017-10-19-94|dga2017-10-19-95|dga2017-10-19-96|dga2017-10-19-97|dga2017-10-19-98|dga2017-10-19-99|dga2017-10-19-100|dga2017-10-19-101|dga2017-10-19-102|dga2017-10-19-103|dga2017-10-19-104|dga2017-10-19-105|dga2017-10-19-106|dga2017-10-19-107|dga2017-10-19-108)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10045
   run_data_map_file: run_data_map/10056.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 4.036
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 80.0
-    tilt_range:
-      max: float {ts-tilt_range-max}
-      min: -60.0
-    tilt_series_quality: int {ts-tilt_series_quality}
-    tilt_step: 2.0
-    tilting_scheme: bidirectional, negative first
-    total_flux: 130.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ""
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 4.036
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_axis: 80.0
+      tilt_range:
+        max: float {ts-tilt_range-max}
+        min: -60.0
+      tilt_series_quality: int {ts-tilt_series_quality}
+      tilt_step: 2.0
+      tilting_scheme: bidirectional, negative first
+      total_flux: 130.0
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/rawdata/*"
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: '{tomo-align_software}'
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: '{tomo-reconstruction_software}'
-    tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: "{tomo-align_software}"
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: "{tomo-reconstruction_method}"
+      reconstruction_software: "{tomo-reconstruction_software}"
+      tomogram_version: 1
+      voxel_spacing: float {tomo-voxel_spacing}
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/3dimage_*/*"
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^dga2017-09-25-52$
-        - ^dga2017-09-25-56$
-        - ^dga2017-09-25-136$
+  - sources:
+      - literal:
+          value:
+            - float {tomo-voxel_spacing}
+        parent_filters:
+          exclude:
+            run:
+              - ^dga2017-09-25-52$
+              - ^dga2017-09-25-56$
+              - ^dga2017-09-25-136$

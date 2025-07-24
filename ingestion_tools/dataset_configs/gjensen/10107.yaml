@@ -1,164 +1,167 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.mdoc"
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/scd2016-03-02-1/keyimg_scd2016-03-02-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/scd2016-03-02-1/keyimg_scd2016-03-02-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/scd2016-03-02-1/keyimg_scd2016-03-02-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/scd2016-03-02-1/keyimg_scd2016-03-02-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Stephen Carter
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: INS-1E
-    cell_type:
-      id: CL:0000169
-      name: pancreatic beta cell
-    dataset_description: This is 3rd of 4 sets of data studying Rat INS-1E pancreatic
-      beta cells collected by Stephen Carter and is a part of Caltech Jensen  lab
-      etdb.
-    dataset_identifier: 10107
-    dataset_title: INS-1E cells untransfected
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: null
-    organism:
-      name: Rattus norvegicus
-      taxonomy_id: 10116
-    sample_preparation: null
-    sample_type: cell
-  sources:
-  - literal:
-      value:
-      - '10107'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Stephen Carter
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: INS-1E
+      cell_type:
+        id: CL:0000169
+        name: pancreatic beta cell
+      dataset_description:
+        This is 3rd of 4 sets of data studying Rat INS-1E pancreatic
+        beta cells collected by Stephen Carter and is a part of Caltech Jensen  lab
+        etdb.
+      dataset_identifier: 10107
+      dataset_title: INS-1E cells untransfected
+      dates: &id002
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
+      grid_preparation: null
+      organism:
+        name: Rattus norvegicus
+        taxonomy_id: 10116
+      sample_preparation: null
+      sample_type: cell
+    sources:
+      - literal:
+          value:
+            - "10107"
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1126/sciadv.aay9572
-    dates: *id002
-    deposition_description: 4 sets of data studying Rat INS-1E pancreatic beta cells
-      collected by Stephen Carter and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10036
-    deposition_title: 'Rat INS-1E pancreatic beta cells (tax_id=10116) strain: by
-      Stephen Carter'
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10036
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1126/sciadv.aay9572
+      dates: *id002
+      deposition_description:
+        4 sets of data studying Rat INS-1E pancreatic beta cells
+        collected by Stephen Carter and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10036
+      deposition_title:
+        "Rat INS-1E pancreatic beta cells (tax_id=10116) strain: by
+        Stephen Carter"
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10036
 frames:
-- metadata:
-    dose_rate: 1.371900826446281
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.371900826446281
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.rawtlt"
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (scd2016-03-02-1|scd2016-03-02-2|scd2016-03-02-3|scd2016-03-02-4|scd2016-03-02-5|scd2016-03-02-6|scd2016-03-02-7|scd2016-03-02-8)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: "*"
+          match_regex: (scd2016-03-02-1|scd2016-03-02-2|scd2016-03-02-3|scd2016-03-02-4|scd2016-03-02-5|scd2016-03-02-6|scd2016-03-02-7|scd2016-03-02-8)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10036
   run_data_map_file: run_data_map/10107.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 6.167
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 78.0
-    tilt_range:
-      max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
-    tilt_step: 1.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 166.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ""
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 6.167
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_axis: 78.0
+      tilt_range:
+        max: 60.0
+        min: -60.0
+      tilt_series_quality: 4
+      tilt_step: 1.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 166.0
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/rawdata/*"
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: '{tomo-align_software}'
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 24.667
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: "{tomo-align_software}"
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 24.667
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/3dimage_*/*"
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 24.667
+  - sources:
+      - literal:
+          value:
+            - 24.667

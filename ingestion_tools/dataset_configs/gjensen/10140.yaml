@@ -1,164 +1,168 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.mdoc"
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/ycw2014-01-21-1/keyimg_ycw2014-01-21-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2014-01-21-1/keyimg_ycw2014-01-21-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/ycw2014-01-21-1/keyimg_ycw2014-01-21-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2014-01-21-1/keyimg_ycw2014-01-21-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Yi-Wei Chang
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: '26695'
-    dataset_description: This is 3rd of 17 sets of data studying Helicobacter pylori
-      collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
-    dataset_identifier: 10140
-    dataset_title: H. pylori 26695 / 20 nm gold-DNA
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: 'Combined 20ul cells with 10ul 10 nm gold fiducials (100ul gold
-      and 25ul BSA) and 10ul 20 nm streptavidin gold-biotin DNA.  Grids frozen 7-20
-      minutes after combining DNA labeled gold with concentrated cells.  Vitrobot
-      settings: 100% humidity, 22.5 C, -3 offset, 4.5 sec blot time, Ethane/propane
-      mix.'
-    organism:
-      name: Helicobacter pylori
-      taxonomy_id: 85962
-    sample_preparation: H.pylori cells grown in BLBB + 10% heat inactivated fetal
-      bovine serum at 37 degrees in microaerobic chamber with GasPak EZ Campy Sachets
-      for 3 days, OD600=0.4.  Spun cells down at 3000rpm for 5 minutes to concentrate
-      before using; resuspended pellet.
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10140'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Yi-Wei Chang
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: "26695"
+      dataset_description:
+        This is 3rd of 17 sets of data studying Helicobacter pylori
+        collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
+      dataset_identifier: 10140
+      dataset_title: H. pylori 26695 / 20 nm gold-DNA
+      dates: &id002
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
+      grid_preparation:
+        "Combined 20ul cells with 10ul 10 nm gold fiducials (100ul gold
+        and 25ul BSA) and 10ul 20 nm streptavidin gold-biotin DNA.  Grids frozen 7-20
+        minutes after combining DNA labeled gold with concentrated cells.  Vitrobot
+        settings: 100% humidity, 22.5 C, -3 offset, 4.5 sec blot time, Ethane/propane
+        mix."
+      organism:
+        name: Helicobacter pylori
+        taxonomy_id: 85962
+      sample_preparation:
+        H.pylori cells grown in BLBB + 10% heat inactivated fetal
+        bovine serum at 37 degrees in microaerobic chamber with GasPak EZ Campy Sachets
+        for 3 days, OD600=0.4.  Spun cells down at 3000rpm for 5 minutes to concentrate
+        before using; resuspended pellet.
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - "10140"
 depositions:
-- metadata:
-    authors: *id001
-    dates: *id002
-    deposition_description: 17 sets of data studying Helicobacter pylori collected
-      by Yi-Wei Chang and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10017
-    deposition_title: Helicobacter pylori (tax_id=85962) strain:26695 by Yi-Wei Chang
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10017
+  - metadata:
+      authors: *id001
+      dates: *id002
+      deposition_description:
+        17 sets of data studying Helicobacter pylori collected
+        by Yi-Wei Chang and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10017
+      deposition_title: Helicobacter pylori (tax_id=85962) strain:26695 by Yi-Wei Chang
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10017
 frames:
-- metadata:
-    dose_rate: float {frame_dose_rate}
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: float {frame_dose_rate}
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.rawtlt"
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (ycw2014-01-21-1|ycw2014-01-21-2|ycw2014-01-21-3|ycw2014-01-21-4|ycw2014-01-21-5|ycw2014-01-21-6|ycw2014-01-21-7|ycw2014-01-21-8|ycw2014-01-21-9|ycw2014-01-21-10|ycw2014-01-21-11|ycw2014-01-21-12|ycw2014-01-21-13|ycw2014-01-21-14|ycw2014-01-21-15|ycw2014-01-21-16|ycw2014-01-21-17|ycw2014-01-21-18|ycw2014-01-21-19|ycw2014-01-21-20|ycw2014-01-21-21|ycw2014-01-21-22|ycw2014-01-21-23|ycw2014-01-21-24|ycw2014-01-21-25|ycw2014-01-21-26|ycw2014-01-21-27|ycw2014-01-21-28|ycw2014-01-21-29|ycw2014-01-21-30|ycw2014-01-21-31|ycw2014-01-21-32|ycw2014-01-21-33|ycw2014-01-21-34|ycw2014-01-21-35|ycw2014-01-21-36|ycw2014-01-21-37|ycw2014-01-21-38|ycw2014-01-21-39|ycw2014-01-21-40|ycw2014-01-21-41|ycw2014-01-21-42|ycw2014-01-21-43|ycw2014-01-21-44|ycw2014-01-21-45|ycw2014-01-21-46|ycw2014-01-21-47)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: "*"
+          match_regex: (ycw2014-01-21-1|ycw2014-01-21-2|ycw2014-01-21-3|ycw2014-01-21-4|ycw2014-01-21-5|ycw2014-01-21-6|ycw2014-01-21-7|ycw2014-01-21-8|ycw2014-01-21-9|ycw2014-01-21-10|ycw2014-01-21-11|ycw2014-01-21-12|ycw2014-01-21-13|ycw2014-01-21-14|ycw2014-01-21-15|ycw2014-01-21-16|ycw2014-01-21-17|ycw2014-01-21-18|ycw2014-01-21-19|ycw2014-01-21-20|ycw2014-01-21-21|ycw2014-01-21-22|ycw2014-01-21-23|ycw2014-01-21-24|ycw2014-01-21-25|ycw2014-01-21-26|ycw2014-01-21-27|ycw2014-01-21-28|ycw2014-01-21-29|ycw2014-01-21-30|ycw2014-01-21-31|ycw2014-01-21-32|ycw2014-01-21-33|ycw2014-01-21-34|ycw2014-01-21-35|ycw2014-01-21-36|ycw2014-01-21-37|ycw2014-01-21-38|ycw2014-01-21-39|ycw2014-01-21-40|ycw2014-01-21-41|ycw2014-01-21-42|ycw2014-01-21-43|ycw2014-01-21-44|ycw2014-01-21-45|ycw2014-01-21-46|ycw2014-01-21-47)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10017
   run_data_map_file: run_data_map/10140.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 4.933
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: RAPTOR
-    tilt_axis: 77.6
-    tilt_range:
-      max: float {ts-tilt_range-max}
-      min: float {ts-tilt_range-min}
-    tilt_series_quality: 4
-    tilt_step: 1.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 190.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ""
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 4.933
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: RAPTOR
+      tilt_axis: 77.6
+      tilt_range:
+        max: float {ts-tilt_range-max}
+        min: float {ts-tilt_range-min}
+      tilt_series_quality: 4
+      tilt_step: 1.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 190.0
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/rawdata/*"
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: RAPTOR
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 19.733
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: RAPTOR
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 19.733
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/3dimage_*/*"
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 19.733
+  - sources:
+      - literal:
+          value:
+            - 19.733

@@ -1,177 +1,182 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.mdoc"
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/pda2020-11-04-1/keyimg_pda2020-11-04-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/pda2020-11-04-1/keyimg_pda2020-11-04-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/pda2020-11-04-1/keyimg_pda2020-11-04-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/pda2020-11-04-1/keyimg_pda2020-11-04-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Przemek Dutka
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: CCAP 1403/13F
-    cross_references:
-      publications: 10.1016/j.str.2023.03.011
-      related_database_entries: EMD-29922,EMD-29923,EMD-29924,EMD-29925
-    dataset_description: This is 4th of 7 sets of data studying Dolichospermum flos-aquae
-      collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb.
-    dataset_identifier: 10017
-    dataset_title: D. flos-aquae Gas Vesicles
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: Quantifoil C2/2 200mesh extra thick carbon, 10nm BSA-gold, 100%
-      . humidity, Blot time 4, Blot force 3, temp 4C
-    organism:
-      name: Dolichospermum flos-aquae
-      taxonomy_id: 315271
-    sample_preparation: "Lakshmanan, A., Lu, G., Farhadi, A. et al. Preparation of\
-      \ biogenic gas . vesicle nanostructures for use as contrast agents for ultrasound\
-      \ and . MRI. Nat Protoc 12, 2050\u20132080 (2017). . https://doi.org/10.1038/nprot.2017.081.\
-      \ Sample in 10mM Hepes, pH7.4; OD 5.0"
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10017'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Przemek Dutka
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: CCAP 1403/13F
+      cross_references:
+        publications: 10.1016/j.str.2023.03.011
+        related_database_entries: EMD-29922,EMD-29923,EMD-29924,EMD-29925
+      dataset_description:
+        This is 4th of 7 sets of data studying Dolichospermum flos-aquae
+        collected by Przemek Dutka and is a part of Caltech Jensen  lab etdb.
+      dataset_identifier: 10017
+      dataset_title: D. flos-aquae Gas Vesicles
+      dates: &id002
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
+      grid_preparation:
+        Quantifoil C2/2 200mesh extra thick carbon, 10nm BSA-gold, 100%
+        . humidity, Blot time 4, Blot force 3, temp 4C
+      organism:
+        name: Dolichospermum flos-aquae
+        taxonomy_id: 315271
+      sample_preparation:
+        "Lakshmanan, A., Lu, G., Farhadi, A. et al. Preparation of\
+        \ biogenic gas . vesicle nanostructures for use as contrast agents for ultrasound\
+        \ and . MRI. Nat Protoc 12, 2050\u20132080 (2017). . https://doi.org/10.1038/nprot.2017.081.\
+        \ Sample in 10mM Hepes, pH7.4; OD 5.0"
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - "10017"
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1016/j.str.2023.03.011
-      related_database_entries: EMD-29922,EMD-29923,EMD-29924,EMD-29925
-    dates: *id002
-    deposition_description: 7 sets of data studying Dolichospermum flos-aquae collected
-      by Przemek Dutka and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10014
-    deposition_title: Dolichospermum flos-aquae (tax_id=315271) strain:CCAP 1403/13F
-      by Przemek Dutka
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10014
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1016/j.str.2023.03.011
+        related_database_entries: EMD-29922,EMD-29923,EMD-29924,EMD-29925
+      dates: *id002
+      deposition_description:
+        7 sets of data studying Dolichospermum flos-aquae collected
+        by Przemek Dutka and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10014
+      deposition_title:
+        Dolichospermum flos-aquae (tax_id=315271) strain:CCAP 1403/13F
+        by Przemek Dutka
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10014
 frames:
-- metadata:
-    dose_rate: 1.0976
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.0976
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.rawtlt"
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (pda2020-11-04-1|pda2020-11-04-2|pda2020-11-04-3|pda2020-11-04-4|pda2020-11-04-5|pda2020-11-04-6|pda2020-11-04-7|pda2020-11-04-8|pda2020-11-04-9|pda2020-11-04-10|pda2020-11-04-11|pda2020-11-04-12|pda2020-11-04-13|pda2020-11-04-14)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: "*"
+          match_regex: (pda2020-11-04-1|pda2020-11-04-2|pda2020-11-04-3|pda2020-11-04-4|pda2020-11-04-5|pda2020-11-04-6|pda2020-11-04-7|pda2020-11-04-8|pda2020-11-04-9|pda2020-11-04-10|pda2020-11-04-11|pda2020-11-04-12|pda2020-11-04-13|pda2020-11-04-14)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10014
   run_data_map_file: run_data_map/10017.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K3
-    data_acquisition_software: Serial EM
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: TFS
-      model: Krios
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 1.4
-    spherical_aberration_constant: 2.7
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 94.4
-    tilt_range:
-      max: 60.0
-      min: float {ts-tilt_range-min}
-    tilt_series_quality: int {ts-tilt_series_quality}
-    tilt_step: 3.0
-    tilting_scheme: dose-symmetric
-    total_flux: 50.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K3
+      data_acquisition_software: Serial EM
+      is_aligned: false
+      microscope:
+        additional_info: ""
+        manufacturer: TFS
+        model: Krios
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 1.4
+      spherical_aberration_constant: 2.7
+      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_axis: 94.4
+      tilt_range:
+        max: 60.0
+        min: float {ts-tilt_range-min}
+      tilt_series_quality: int {ts-tilt_series_quality}
+      tilt_step: 3.0
+      tilting_scheme: dose-symmetric
+      total_flux: 50.0
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/rawdata/*"
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: '{tomo-align_software}'
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: '{tomo-processing_software}'
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: '{tomo-reconstruction_software}'
-    tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: "{tomo-align_software}"
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: "{tomo-processing_software}"
+      reconstruction_method: "{tomo-reconstruction_method}"
+      reconstruction_software: "{tomo-reconstruction_software}"
+      tomogram_version: 1
+      voxel_spacing: float {tomo-voxel_spacing}
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/3dimage_*/*"
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^pda2020-11-04-1$
-        - ^pda2020-11-04-5$
-        - ^pda2020-11-04-6$
-        - ^pda2020-11-04-7$
-        - ^pda2020-11-04-12$
-        - ^pda2020-11-04-14$
+  - sources:
+      - literal:
+          value:
+            - float {tomo-voxel_spacing}
+        parent_filters:
+          exclude:
+            run:
+              - ^pda2020-11-04-1$
+              - ^pda2020-11-04-5$
+              - ^pda2020-11-04-6$
+              - ^pda2020-11-04-7$
+              - ^pda2020-11-04-12$
+              - ^pda2020-11-04-14$

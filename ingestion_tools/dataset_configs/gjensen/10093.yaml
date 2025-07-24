@@ -1,166 +1,170 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.mdoc"
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-05-16-1/keyimg_dga2019-05-16-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-05-16-1/keyimg_dga2019-05-16-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-05-16-1/keyimg_dga2019-05-16-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2019-05-16-1/keyimg_dga2019-05-16-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Debnath Ghosal
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: Philadelphia-1_Lp02
-    cross_references:
-      publications: 10.1038/s41564-019-0603-6
-    dataset_description: This is 36th of 41 sets of data studying Legionella pneumophila
-      collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella
-      pneumophila Philadelphia-1_Lp02. Lacks all the T2SS minor pseudopilins.
-    dataset_identifier: 10093
-    dataset_title: L. pneumophila Legionella_delta-lspHIJK
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: "6 grids were frozen for this strain (2x concentrated culture);\
-      \ Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force 6, blot\
-      \ time 4.5 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid:\
-      \ Quantifoil Cu 2/2 200."
-    organism:
-      name: Legionella pneumophila
-      taxonomy_id: 1080311
-    sample_preparation: null
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10093'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Debnath Ghosal
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: Philadelphia-1_Lp02
+      cross_references:
+        publications: 10.1038/s41564-019-0603-6
+      dataset_description:
+        This is 36th of 41 sets of data studying Legionella pneumophila
+        collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. Legionella
+        pneumophila Philadelphia-1_Lp02. Lacks all the T2SS minor pseudopilins.
+      dataset_identifier: 10093
+      dataset_title: L. pneumophila Legionella_delta-lspHIJK
+      dates: &id002
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
+      grid_preparation:
+        "6 grids were frozen for this strain (2x concentrated culture);\
+        \ Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force 6, blot\
+        \ time 4.5 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix. Grid:\
+        \ Quantifoil Cu 2/2 200."
+      organism:
+        name: Legionella pneumophila
+        taxonomy_id: 1080311
+      sample_preparation: null
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - "10093"
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1038/s41564-019-0427-4,10.1038/s41564-019-0603-6
-      related_database_entries: EMD-0566
-    dates: *id002
-    deposition_description: 41 sets of data studying Legionella pneumophila collected
-      by Debnath Ghosal and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10038
-    deposition_title: Legionella pneumophila (tax_id=1080311) strain:Philadelphia-1_Lp02
-      by Debnath Ghosal
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10038
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1038/s41564-019-0427-4,10.1038/s41564-019-0603-6
+        related_database_entries: EMD-0566
+      dates: *id002
+      deposition_description:
+        41 sets of data studying Legionella pneumophila collected
+        by Debnath Ghosal and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10038
+      deposition_title:
+        Legionella pneumophila (tax_id=1080311) strain:Philadelphia-1_Lp02
+        by Debnath Ghosal
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10038
 frames:
-- metadata:
-    dose_rate: 3.225806451612903
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 3.225806451612903
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - "{run_name}/generated/*.rawtlt"
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (dga2019-05-16-1|dga2019-05-16-2|dga2019-05-16-3|dga2019-05-16-5|dga2019-05-16-6|dga2019-05-16-7|dga2019-05-16-8|dga2019-05-16-9|dga2019-05-16-10|dga2019-05-16-11|dga2019-05-16-12|dga2019-05-16-13|dga2019-05-16-14|dga2019-05-16-15|dga2019-05-16-16|dga2019-05-16-17|dga2019-05-16-18|dga2019-05-16-19|dga2019-05-16-20|dga2019-05-16-21|dga2019-05-16-22|dga2019-05-16-23|dga2019-05-16-24|dga2019-05-16-26|dga2019-05-16-27|dga2019-05-16-28|dga2019-05-16-29|dga2019-05-16-30|dga2019-05-16-31|dga2019-05-16-32|dga2019-05-16-33|dga2019-05-16-34|dga2019-05-16-35|dga2019-05-16-36|dga2019-05-16-37|dga2019-05-16-38|dga2019-05-16-39|dga2019-05-16-40|dga2019-05-16-41|dga2019-05-16-43|dga2019-05-16-44|dga2019-05-16-45|dga2019-05-16-46|dga2019-05-16-47|dga2019-05-16-48|dga2019-05-16-49|dga2019-05-16-50|dga2019-05-16-51|dga2019-05-16-52|dga2019-05-16-53|dga2019-05-16-54|dga2019-05-16-55|dga2019-05-16-56|dga2019-05-16-57|dga2019-05-16-58|dga2019-05-16-59|dga2019-05-16-60|dga2019-05-16-61|dga2019-05-16-62|dga2019-05-16-63|dga2019-05-16-64|dga2019-05-16-65|dga2019-05-16-66|dga2019-05-16-67|dga2019-05-16-68|dga2019-05-16-69|dga2019-05-16-70|dga2019-05-16-71|dga2019-05-16-72|dga2019-05-16-73|dga2019-05-16-74|dga2019-05-16-75|dga2019-05-16-76|dga2019-05-16-77|dga2019-05-16-78|dga2019-05-16-79|dga2019-05-16-80|dga2019-05-16-81|dga2019-05-16-82|dga2019-05-16-83|dga2019-05-16-84|dga2019-05-16-85|dga2019-05-16-86|dga2019-05-16-87|dga2019-05-16-88|dga2019-05-16-89|dga2019-05-16-90|dga2019-05-16-92|dga2019-05-16-93|dga2019-05-16-94|dga2019-05-16-95|dga2019-05-16-96|dga2019-05-16-97|dga2019-05-16-98|dga2019-05-16-99|dga2019-05-16-100|dga2019-05-16-101|dga2019-05-16-102|dga2019-05-16-103|dga2019-05-16-104|dga2019-05-16-105|dga2019-05-16-106|dga2019-05-16-107|dga2019-05-16-108|dga2019-05-16-109|dga2019-05-16-110|dga2019-05-16-111|dga2019-05-16-112|dga2019-05-16-113|dga2019-05-16-114|dga2019-05-16-115|dga2019-05-16-116|dga2019-05-16-117|dga2019-05-16-118|dga2019-05-16-119)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: "*"
+          match_regex: (dga2019-05-16-1|dga2019-05-16-2|dga2019-05-16-3|dga2019-05-16-5|dga2019-05-16-6|dga2019-05-16-7|dga2019-05-16-8|dga2019-05-16-9|dga2019-05-16-10|dga2019-05-16-11|dga2019-05-16-12|dga2019-05-16-13|dga2019-05-16-14|dga2019-05-16-15|dga2019-05-16-16|dga2019-05-16-17|dga2019-05-16-18|dga2019-05-16-19|dga2019-05-16-20|dga2019-05-16-21|dga2019-05-16-22|dga2019-05-16-23|dga2019-05-16-24|dga2019-05-16-26|dga2019-05-16-27|dga2019-05-16-28|dga2019-05-16-29|dga2019-05-16-30|dga2019-05-16-31|dga2019-05-16-32|dga2019-05-16-33|dga2019-05-16-34|dga2019-05-16-35|dga2019-05-16-36|dga2019-05-16-37|dga2019-05-16-38|dga2019-05-16-39|dga2019-05-16-40|dga2019-05-16-41|dga2019-05-16-43|dga2019-05-16-44|dga2019-05-16-45|dga2019-05-16-46|dga2019-05-16-47|dga2019-05-16-48|dga2019-05-16-49|dga2019-05-16-50|dga2019-05-16-51|dga2019-05-16-52|dga2019-05-16-53|dga2019-05-16-54|dga2019-05-16-55|dga2019-05-16-56|dga2019-05-16-57|dga2019-05-16-58|dga2019-05-16-59|dga2019-05-16-60|dga2019-05-16-61|dga2019-05-16-62|dga2019-05-16-63|dga2019-05-16-64|dga2019-05-16-65|dga2019-05-16-66|dga2019-05-16-67|dga2019-05-16-68|dga2019-05-16-69|dga2019-05-16-70|dga2019-05-16-71|dga2019-05-16-72|dga2019-05-16-73|dga2019-05-16-74|dga2019-05-16-75|dga2019-05-16-76|dga2019-05-16-77|dga2019-05-16-78|dga2019-05-16-79|dga2019-05-16-80|dga2019-05-16-81|dga2019-05-16-82|dga2019-05-16-83|dga2019-05-16-84|dga2019-05-16-85|dga2019-05-16-86|dga2019-05-16-87|dga2019-05-16-88|dga2019-05-16-89|dga2019-05-16-90|dga2019-05-16-92|dga2019-05-16-93|dga2019-05-16-94|dga2019-05-16-95|dga2019-05-16-96|dga2019-05-16-97|dga2019-05-16-98|dga2019-05-16-99|dga2019-05-16-100|dga2019-05-16-101|dga2019-05-16-102|dga2019-05-16-103|dga2019-05-16-104|dga2019-05-16-105|dga2019-05-16-106|dga2019-05-16-107|dga2019-05-16-108|dga2019-05-16-109|dga2019-05-16-110|dga2019-05-16-111|dga2019-05-16-112|dga2019-05-16-113|dga2019-05-16-114|dga2019-05-16-115|dga2019-05-16-116|dga2019-05-16-117|dga2019-05-16-118|dga2019-05-16-119)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10038
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: TFS
-      model: Krios
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 2.6
-    spherical_aberration_constant: 2.7
-    tilt_alignment_software: RAPTOR
-    tilt_axis: -11.3
-    tilt_range:
-      max: 45.0
-      min: -45.0
-    tilt_series_quality: 4
-    tilt_step: 3.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 100.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ""
+        manufacturer: TFS
+        model: Krios
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 2.6
+      spherical_aberration_constant: 2.7
+      tilt_alignment_software: RAPTOR
+      tilt_axis: -11.3
+      tilt_range:
+        max: 45.0
+        min: -45.0
+      tilt_series_quality: 4
+      tilt_step: 3.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 100.0
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/rawdata/*"
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: RAPTOR
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 10.4
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: RAPTOR
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 10.4
+    sources:
+      - source_glob:
+          list_glob: "{run_name}/3dimage_*/*"
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 10.4
+  - sources:
+      - literal:
+          value:
+            - 10.4
