@@ -6,7 +6,8 @@ alignments:
           name_regex: (.*)
 annotations:
   - metadata:
-      annotation_method: Prediction using membrain-seg without rescaling and weights
+      annotation_method:
+        Prediction using membrain-seg without rescaling and weights
         MemBrain_seg_v10_alpha.ckpt
       annotation_object:
         id: GO:0033172
@@ -23,9 +24,9 @@ annotations:
           name: Kyle I. S. Harrington
           primary_author_status: false
       dates: &id002
-        deposition_date: '2024-06-04'
-        last_modified_date: '2024-06-04'
-        release_date: '2024-06-04'
+        deposition_date: "2024-06-04"
+        last_modified_date: "2024-06-04"
+        release_date: "2024-06-04"
       ground_truth_status: false
       is_curator_recommended: false
       method_links:
@@ -43,7 +44,7 @@ annotations:
     sources:
       - SegmentationMask:
           file_format: zarr
-          glob_string: '{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr'
+          glob_string: "{dataset_name}/{run_name}/Tomograms/VoxelSpacing{voxel_spacing_name}/CanonicalTomogram/*ckpt_segmented_*55ar5k.zarr"
 
           is_visualization_default: true
 datasets:
@@ -58,7 +59,8 @@ depositions:
       cross_references:
         publications: 10.1101/2024.01.05.574336
       dates: *id002
-      deposition_description: Gas vesicle shell segmentations predicted using membrain-seg
+      deposition_description:
+        Gas vesicle shell segmentations predicted using membrain-seg
         without rescaling and weights MemBrain_seg_v10_alpha.ckpt
       deposition_identifier: 10308
       deposition_title: membrain-seg gas vesicle shell predictions
@@ -77,7 +79,7 @@ deposition_keyphotos:
 runs:
   - sources:
       - source_glob:
-          list_glob: '{dataset_name}/*'
+          list_glob: "{dataset_name}/*"
           match_regex: .*
           name_regex: (.*)
 standardization_config:
@@ -87,6 +89,6 @@ version: 1.1.0
 voxel_spacings:
   - sources:
       - destination_glob:
-          list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+          list_glob: "{run_output_path}/Reconstructions/VoxelSpacing*"
           match_regex: .*
           name_regex: VoxelSpacing(.*)

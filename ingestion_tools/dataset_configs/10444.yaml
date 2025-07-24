@@ -7,10 +7,11 @@ alignments:
     sources:
       - source_multi_glob:
           list_globs:
-            - '{run_name}.aln'
+            - "{run_name}.aln"
 annotations:
   - metadata:
-      annotation_method: Prediction using membrain-seg without rescaling and weights
+      annotation_method:
+        Prediction using membrain-seg without rescaling and weights
         MemBrain_seg_v10_alpha.ckpt
       annotation_object:
         id: GO:0016020
@@ -35,9 +36,9 @@ annotations:
           name: Ariana Peck
           primary_author_status: true
       dates: &id001
-        deposition_date: '2024-11-26'
-        last_modified_date: '2024-11-26'
-        release_date: '2024-11-26'
+        deposition_date: "2024-11-26"
+        last_modified_date: "2024-11-26"
+        release_date: "2024-11-26"
       ground_truth_status: false
       is_curator_recommended: true
       method_links:
@@ -53,14 +54,14 @@ annotations:
       - SemanticSegmentationMask:
           file_format: mrc
           glob_strings:
-            - '{run_name}_Vol_Segment_mask.mrc'
+            - "{run_name}_Vol_Segment_mask.mrc"
           is_visualization_default: true
           mask_label: 1
           rescale: true
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: '{run_name}.mdoc'
+          list_glob: "{run_name}.mdoc"
 dataset_keyphotos:
   - sources:
       - literal:
@@ -107,7 +108,8 @@ datasets:
       cell_type:
         id: CL:0000010
         name: cultured cell
-      dataset_description: Cryo-electron tomography data of affinity-captured LAMP1-GFP
+      dataset_description:
+        Cryo-electron tomography data of affinity-captured LAMP1-GFP
         positive organelles from HEK293T cells. Contained data were collected on a Krios
         G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
         using AreTomo3.
@@ -117,31 +119,34 @@ datasets:
       funding:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: "CZII-2023\u2013327779"
-      grid_preparation: "6 \xB5l of lysates were added to affinity grids and then blotted\
-      \ after ~15 seconds from the grid edge with filter paper 3 times,  grids were\
-      \ washed with 6 \xB5l ice cold PBS, sample addition and washing steps were repeated\
-      \ ones and 6 \xB5l PBS were added before blotting and plunging into liquid ethane.\
-      \ Leica GP2 was used for grid preparation."
+      grid_preparation:
+        "6 \xB5l of lysates were added to affinity grids and then blotted\
+        \ after ~15 seconds from the grid edge with filter paper 3 times,  grids were\
+        \ washed with 6 \xB5l ice cold PBS, sample addition and washing steps were repeated\
+        \ ones and 6 \xB5l PBS were added before blotting and plunging into liquid ethane.\
+        \ Leica GP2 was used for grid preparation."
       organism:
         name: Homo sapiens
         taxonomy_id: 9606
-      other_setup: Samples were imaged in a cryo-fluorescence microscope before cryoET
+      other_setup:
+        Samples were imaged in a cryo-fluorescence microscope before cryoET
         imaging. Some of the surface contamination originates from that additional imaging
         step.
-      sample_preparation: "Affinity-grids were prepared by overlaying holey carbon grids\
-      \ with a thin layer of graphene oxide. GFP-nanobodies were immoblilized on the\
-      \ graphene oxide surface using a PEG-linker. Cells expressing LAMP1-GFP were\
-      \ washed and detached with ice cold PBS, and transfer to chilled 15 ml falcon\
-      \ tube, pelleted by centrifugation at 500 x g for 5 min at 4\xB0C, PBS was aspirated,\
-      \ pellet was resuspended in hypotonic homogenization buffer (~1 mL), cells were\
-      \ mechanically lysed using 23G blunt needle, transferred to and mixed with isotonic\
-      \ sucrose buffer, lysates were centrifuge at 1000 x g for 10 min at 4\xB0C,\
-      \ supernatant was used for grid preparation."
+      sample_preparation:
+        "Affinity-grids were prepared by overlaying holey carbon grids\
+        \ with a thin layer of graphene oxide. GFP-nanobodies were immoblilized on the\
+        \ graphene oxide surface using a PEG-linker. Cells expressing LAMP1-GFP were\
+        \ washed and detached with ice cold PBS, and transfer to chilled 15 ml falcon\
+        \ tube, pelleted by centrifugation at 500 x g for 5 min at 4\xB0C, PBS was aspirated,\
+        \ pellet was resuspended in hypotonic homogenization buffer (~1 mL), cells were\
+        \ mechanically lysed using 23G blunt needle, transferred to and mixed with isotonic\
+        \ sucrose buffer, lysates were centrifuge at 1000 x g for 10 min at 4\xB0C,\
+        \ supernatant was used for grid preparation."
       sample_type: organelle
     sources:
       - literal:
           value:
-            - '10444'
+            - "10444"
 deposition_keyphotos:
   - sources:
       - literal:
@@ -152,10 +157,11 @@ depositions:
   - metadata:
       authors: *id002
       dates:
-        deposition_date: '2024-12-06'
-        last_modified_date: '2024-12-06'
-        release_date: '2024-12-06'
-      deposition_description: Cryo-electron tomography data of affinity-captured LAMP1-GFP
+        deposition_date: "2024-12-06"
+        last_modified_date: "2024-12-06"
+        release_date: "2024-12-06"
+      deposition_description:
+        Cryo-electron tomography data of affinity-captured LAMP1-GFP
         positive organelles from HEK293T cells. Contained data were collected on a Krios
         G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
         using AreTomo3.
@@ -174,19 +180,19 @@ frames:
       is_gain_corrected: false
     sources:
       - source_glob:
-          list_glob: '{run_name}/*.eer'
+          list_glob: "{run_name}/*.eer"
 gains:
   - sources:
       - source_glob:
-          list_glob: '{gain_file}'
+          list_glob: "{gain_file}"
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: '{run_name}_st.rawtlt'
+          list_glob: "{run_name}_st.rawtlt"
 runs:
   - sources:
       - source_glob:
-          list_glob: '*.aln'
+          list_glob: "*.aln"
           match_regex: .*\.aln$
           name_regex: (.*)\.aln$
 standardization_config:
@@ -219,7 +225,7 @@ tiltseries:
       total_flux: float {tilt_series_total_flux}
     sources:
       - source_glob:
-          list_glob: '{run_name}_TS.mrc'
+          list_glob: "{run_name}_TS.mrc"
           match_regex: .*\.mrc$
 tomograms:
   - metadata:
@@ -257,7 +263,7 @@ tomograms:
       voxel_spacing: 4.99
     sources:
       - source_glob:
-          list_glob: '{run_name}_Vol.mrc'
+          list_glob: "{run_name}_Vol.mrc"
           match_regex: (.*)\.mrc
   - metadata:
       affine_transformation_matrix:
@@ -294,7 +300,7 @@ tomograms:
       voxel_spacing: 4.99
     sources:
       - source_glob:
-          list_glob: '{run_name}_dctf_Vol.mrc'
+          list_glob: "{run_name}_dctf_Vol.mrc"
           match_regex: (.*)\.mrc
 version: 1.1.0
 voxel_spacings:

@@ -10,7 +10,8 @@ alignments:
             - Data_Set_4/{run_name}/alignment/{run_name}_vali.xf
 annotations:
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -31,9 +32,9 @@ annotations:
           corresponding_author_status: true
           name: Gira Bhabha
       dates: &id002
-        deposition_date: '2024-07-09'
-        last_modified_date: '2024-07-24'
-        release_date: '2024-07-29'
+        deposition_date: "2024-07-09"
+        last_modified_date: "2024-07-24"
+        release_date: "2024-07-29"
       ground_truth_status: true
       is_curator_recommended: true
       method_type: hybrid
@@ -47,7 +48,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -70,7 +72,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -93,7 +96,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -116,7 +120,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -140,7 +145,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -163,7 +169,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -186,7 +193,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -211,7 +219,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -236,7 +245,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -261,7 +271,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -286,7 +297,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -311,7 +323,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -336,7 +349,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -361,7 +375,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -386,7 +401,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -411,7 +427,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed.
       annotation_object:
@@ -466,11 +483,13 @@ datasets:
       cross_references:
         publications: 10.1101/2024.07.13.603322
         related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
-      dataset_description: This dataset contains tilt series, and tomogram reconstructions
+      dataset_description:
+        This dataset contains tilt series, and tomogram reconstructions
         and segmentations from Encephalitozoon hellem microsporidian spores. Samples
         were cryo-FIB milled.
       dataset_identifier: 10438
-      dataset_title: Cryo-ET dataset of dormant microporidian spores from Encephalitozoon
+      dataset_title:
+        Cryo-ET dataset of dormant microporidian spores from Encephalitozoon
         hellem
       dates: *id002
       funding:
@@ -490,19 +509,21 @@ datasets:
           grant_id: GM103310
         - funding_agency_name: NIH
           grant_id: U24GM139171
-      grid_preparation: quantifoil 2/2 200mesh, ~25nm evaporated carbon, prepared using
+      grid_preparation:
+        quantifoil 2/2 200mesh, ~25nm evaporated carbon, prepared using
         waffle method
       organism:
         name: Encephalitozoon hellem
         taxonomy_id: 27973
       other_setup: Cryo-FIB milling
-      sample_preparation: E. hellem spores were purified from infected vero cells. (see
+      sample_preparation:
+        E. hellem spores were purified from infected vero cells. (see
         methods in https://doi.org/10.1038/s41467-022-29501-3)
       sample_type: cell
     sources:
       - literal:
           value:
-            - '10438'
+            - "10438"
 collection_metadata:
   - sources:
       - source_glob:
@@ -519,11 +540,11 @@ frames:
     sources:
       - literal:
           value:
-            - 'default'
+            - "default"
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: 'Data_Set_4/{run_name}/tilt_series/{run_name}_vali.rawtlt'
+          list_glob: "Data_Set_4/{run_name}/tilt_series/{run_name}_vali.rawtlt"
 runs:
   - sources:
       - source_glob:
@@ -585,9 +606,9 @@ tomograms:
       authors: *id003
       ctf_corrected: false
       dates:
-        deposition_date: '2024-07-09'
-        last_modified_date: '2024-07-24'
-        release_date: '2024-07-29'
+        deposition_date: "2024-07-09"
+        last_modified_date: "2024-07-24"
+        release_date: "2024-07-29"
       fiducial_alignment_status: NON_FIDUCIAL
       is_visualization_default: true
       offset:

@@ -61,3 +61,4 @@ repos:
     - prettier@3.6.2
     - prettier-plugin-toml@2.0.5
     files: '^ingestion_tools/dataset_configs/.*'
+    exclude: "template.yaml"

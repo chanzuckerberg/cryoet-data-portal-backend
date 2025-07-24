@@ -7,7 +7,7 @@ alignments:
           list_globs:
             - alignmentfiles/{run_name}_binalign8_fid.tlt
             - alignmentfiles/{run_name}_binalign8_fid.xf
-annotations: [ ]
+annotations: []
 collection_metadata:
   - sources:
       - source_glob:
@@ -49,7 +49,8 @@ datasets:
       cross_references:
         publications: 10.1038/s41467-025-56045-z, 10.1101/2024.06.27.600657
         related_database_entries: EMD-44921, EMD-44909, EMD-44922, EMD-46973
-      dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
+      dataset_description:
+        Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
         contains 10 grids. This is grid 2 of 10 and contains basal membranes of HSC3
         cells.  The cell line expresses EGFR-GFP as described in Panilla-Macua et al.
         Elife 2017 and has been serum starved.  The cells were grown on Quantifoil Au
@@ -58,9 +59,9 @@ datasets:
       dataset_identifier: 10427
       dataset_title: Plasma membranes isolated by unroofing - Grid 02
       dates: &id002
-        deposition_date: '2024-07-01'
-        last_modified_date: '2025-01-08'
-        release_date: '2025-01-08'
+        deposition_date: "2024-07-01"
+        last_modified_date: "2025-01-08"
+        release_date: "2025-01-08"
       funding:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: 2021-234544
@@ -68,18 +69,20 @@ datasets:
           grant_id: 1ZIAHL006098
         - funding_agency_name: NIH
           grant_id: 1ZIADK060100
-      grid_preparation: plasma discharge 30 sec + UV treatment 20 min + 125 ng/ul fibronectin,
+      grid_preparation:
+        plasma discharge 30 sec + UV treatment 20 min + 125 ng/ul fibronectin,
         20 minutes + water rinse + seeded with 15000 cells
       organism:
         name: Homo sapiens
         taxonomy_id: 9606
-      sample_preparation: serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
+      sample_preparation:
+        serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
         grids
       sample_type: organelle
     sources:
       - literal:
           value:
-            - '10427'
+            - "10427"
 depositions:
   - sources:
       - literal:
@@ -251,7 +254,7 @@ frames:
         source_glob:
           list_glob: frames/*.tif
           match_regex: (tomo_unroof_control_c2d1_01029_\-50\.0\.tif|tomo_unroof_control_c2d1_01028_\-48\.0\.tif|tomo_unroof_control_c2d1_01027_\-46\.0\.tif|tomo_unroof_control_c2d1_01026_\-44\.0\.tif|tomo_unroof_control_c2d1_01025_\-42\.0\.tif|tomo_unroof_control_c2d1_01024_\-40\.0\.tif|tomo_unroof_control_c2d1_01023_\-38\.0\.tif|tomo_unroof_control_c2d1_01015_\-36\.0\.tif|tomo_unroof_control_c2d1_01014_\-34\.0\.tif|tomo_unroof_control_c2d1_01013_\-32\.0\.tif|tomo_unroof_control_c2d1_01009_\-30\.0\.tif|tomo_unroof_control_c2d1_01008_\-28\.0\.tif|tomo_unroof_control_c2d1_01007_\-26\.0\.tif|tomo_unroof_control_c2d1_01003_\-24\.0\.tif|tomo_unroof_control_c2d1_01002_\-22\.0\.tif|tomo_unroof_control_c2d1_01001_\-20\.0\.tif|tomo_unroof_control_c2d1_00997_\-18\.0\.tif|tomo_unroof_control_c2d1_00996_\-16\.0\.tif|tomo_unroof_control_c2d1_00995_\-14\.0\.tif|tomo_unroof_control_c2d1_00991_\-12\.0\.tif|tomo_unroof_control_c2d1_00990_\-10\.0\.tif|tomo_unroof_control_c2d1_00989_\-8\.0\.tif|tomo_unroof_control_c2d1_00985_\-6\.0\.tif|tomo_unroof_control_c2d1_00984_\-4\.0\.tif|tomo_unroof_control_c2d1_00983_\-2\.0\.tif|tomo_unroof_control_c2d1_00979_\-0\.0\.tif|tomo_unroof_control_c2d1_00980_2\.0\.tif|tomo_unroof_control_c2d1_00981_4\.0\.tif|tomo_unroof_control_c2d1_00982_6\.0\.tif|tomo_unroof_control_c2d1_00986_8\.0\.tif|tomo_unroof_control_c2d1_00987_10\.0\.tif|tomo_unroof_control_c2d1_00988_12\.0\.tif|tomo_unroof_control_c2d1_00992_14\.0\.tif|tomo_unroof_control_c2d1_00993_16\.0\.tif|tomo_unroof_control_c2d1_00994_18\.0\.tif|tomo_unroof_control_c2d1_00998_20\.0\.tif|tomo_unroof_control_c2d1_00999_22\.0\.tif|tomo_unroof_control_c2d1_01000_24\.0\.tif|tomo_unroof_control_c2d1_01004_26\.0\.tif|tomo_unroof_control_c2d1_01005_28\.0\.tif|tomo_unroof_control_c2d1_01006_30\.0\.tif|tomo_unroof_control_c2d1_01010_32\.0\.tif|tomo_unroof_control_c2d1_01011_34\.0\.tif|tomo_unroof_control_c2d1_01012_36\.0\.tif|tomo_unroof_control_c2d1_01016_38\.0\.tif|tomo_unroof_control_c2d1_01017_40\.0\.tif|tomo_unroof_control_c2d1_01018_42\.0\.tif|tomo_unroof_control_c2d1_01019_44\.0\.tif|tomo_unroof_control_c2d1_01020_46\.0\.tif|tomo_unroof_control_c2d1_01021_48\.0\.tif|tomo_unroof_control_c2d1_01022_50\.0\.tif)
-gains: [ ]
+gains: []
 rawtilts:
   - sources:
       - source_glob:

@@ -7,7 +7,7 @@ alignments:
           list_globs:
             - alignmentfiles/{run_name}_binalign8_fid.tlt
             - alignmentfiles/{run_name}_binalign8_fid.xf
-annotations: [ ]
+annotations: []
 collection_metadata:
   - sources:
       - source_glob:
@@ -43,7 +43,8 @@ datasets:
       cross_references: &id002
         publications: 10.1038/s41467-025-56045-z, 10.1101/2024.06.27.600657
         related_database_entries: EMD-44921, EMD-44909, EMD-44922, EMD-46973
-      dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
+      dataset_description:
+        Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
         contains 10 grids. This is grid 1 of 10 and contains basal membranes of HSC3
         cells.  The cell line expresses EGFR-GFP as described in Panilla-Macua et al.
         Elife 2017 and has been serum starved.  The cells were grown on Quantifoil Au
@@ -52,9 +53,9 @@ datasets:
       dataset_identifier: 10426
       dataset_title: Plasma membranes isolated by unroofing - Grid 01
       dates: &id003
-        deposition_date: '2024-07-01'
-        last_modified_date: '2025-01-08'
-        release_date: '2025-01-08'
+        deposition_date: "2024-07-01"
+        last_modified_date: "2025-01-08"
+        release_date: "2025-01-08"
       funding:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: 2021-234544
@@ -62,18 +63,20 @@ datasets:
           grant_id: 1ZIAHL006098
         - funding_agency_name: NIH
           grant_id: 1ZIADK060100
-      grid_preparation: plasma discharge 30 sec + UV treatment 20 min + 125 ng/ul fibronectin,
+      grid_preparation:
+        plasma discharge 30 sec + UV treatment 20 min + 125 ng/ul fibronectin,
         20 minutes + water rinse + seeded with 15000 cells
       organism:
         name: Homo sapiens
         taxonomy_id: 9606
-      sample_preparation: serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
+      sample_preparation:
+        serum starved and grown on Quantifoil Au 300 R2/2, 2 nm carbon
         grids
       sample_type: organelle
     sources:
       - literal:
           value:
-            - '10426'
+            - "10426"
 deposition_keyphotos:
   - sources:
       - literal:
@@ -85,7 +88,8 @@ depositions:
       authors: *id001
       cross_references: *id002
       dates: *id003
-      deposition_description: Cryo-electron tomography datasets used in the development
+      deposition_description:
+        Cryo-electron tomography datasets used in the development
         and evaluation of the unroofing method for preparation of plasma membranes and
         associated proteins.
       deposition_identifier: 10306
@@ -103,7 +107,7 @@ frames:
     sources:
       - source_glob:
           list_glob: frames/{frame_prefix}*.mrc
-gains: [ ]
+gains: []
 rawtilts:
   - sources:
       - source_glob:

@@ -7,7 +7,7 @@ alignments:
           list_globs:
             - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.tlt
             - chlamy_visual_proteomics/{run_name}/AreTomo/{run_name}_dose-filt.xf
-annotations: [ ]
+annotations: []
 collection_metadata:
   - sources:
       - source_glob:
@@ -78,15 +78,17 @@ datasets:
       cross_references:
         publications: 10.1093/micmic/ozad067.480
         related_database_entries: EMPIAR-11830
-      dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
+      dataset_description:
+        Cryo-electron tomography dataset of cryo-plasmaFIB milled
         lamella.
       dataset_identifier: 10302
-      dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
+      dataset_title:
+        In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
         cryo-plasmaFIB milling - Full Dataset
       dates:
-        deposition_date: '2024-04-10'
-        last_modified_date: '2024-04-10'
-        release_date: '2024-04-10'
+        deposition_date: "2024-04-10"
+        last_modified_date: "2024-04-10"
+        release_date: "2024-04-10"
       grid_preparation: null
       organism:
         name: Chlamydomonas reinhardtii
@@ -96,7 +98,7 @@ datasets:
     sources:
       - literal:
           value:
-            - '10302'
+            - "10302"
 depositions:
   - sources:
       - literal:
@@ -112,7 +114,7 @@ frames:
 gains:
   - sources:
       - source_glob:
-          list_glob: 'chlamy_visual_proteomics/{frame_gain_reference}'
+          list_glob: "chlamy_visual_proteomics/{frame_gain_reference}"
 rawtilts:
   - sources:
       - source_glob:
@@ -197,9 +199,9 @@ tomograms:
       authors: *id001
       ctf_corrected: true
       dates:
-        deposition_date: '2024-04-09'
-        last_modified_date: '2024-04-09'
-        release_date: '2024-04-09'
+        deposition_date: "2024-04-09"
+        last_modified_date: "2024-04-09"
+        release_date: "2024-04-09"
       fiducial_alignment_status: NON_FIDUCIAL
       is_visualization_default: true
       offset:

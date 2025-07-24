@@ -1,186 +1,188 @@
 alignments:
-- metadata:
-    format: IMOD
-  sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/{run_name}.xf
+  - metadata:
+      format: IMOD
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - metadata/{run_name}.xf
 annotations:
-- metadata:
-    annotation_method: REQUIRED
-    annotation_object:
-      description: OPTIONAL
-      id: REQUIRED
-      name: REQUIRED
-      state: OPTIONAL
-    annotation_publications: OPTIONAL
-    annotation_software: RECOMMENDED
-    authors:
-    - ORCID: 0000-XXXXXX
-      corresponding_author_status: OPTIONAL
-      name: RECOMMENDED
-      primary_annotator_status: OPTIONAL
-    confidence:
-      ground_truth_used: OPTIONAL
-      precision: REQUIRED IF ground_truth_used is specified
-      recall: REQUIRED IF ground_truth_used is specified
-    dates: &id001
-      deposition_date: 2023-XX-XX
-      last_modified_date: 2023-XX-XX
-      release_date: 2023-XX-XX
-    ground_truth_status: REQUIRED
-    version: 1.0
-  sources:
-  - columns: zyx
-    delimiter: OPTIONAL
-    file_format: csv
-    glob_string: aaaa/bbb/{ts_name}.csv
-    shape: REQUIRED
+  - metadata:
+      annotation_method: REQUIRED
+      annotation_object:
+        description: OPTIONAL
+        id: REQUIRED
+        name: REQUIRED
+        state: OPTIONAL
+      annotation_publications: OPTIONAL
+      annotation_software: RECOMMENDED
+      authors:
+        - ORCID: 0000-XXXXXX
+          corresponding_author_status: OPTIONAL
+          name: RECOMMENDED
+          primary_annotator_status: OPTIONAL
+      confidence:
+        ground_truth_used: OPTIONAL
+        precision: REQUIRED IF ground_truth_used is specified
+        recall: REQUIRED IF ground_truth_used is specified
+      dates: &id001
+        deposition_date: 2023-XX-XX
+        last_modified_date: 2023-XX-XX
+        release_date: 2023-XX-XX
+      ground_truth_status: REQUIRED
+      version: 1.0
+    sources:
+      - columns: zyx
+        delimiter: OPTIONAL
+        file_format: csv
+        glob_string: aaaa/bbb/{ts_name}.csv
+        shape: REQUIRED
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/mdocs_modified/{run_name}.mdoc
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - metadata/mdocs_modified/{run_name}.mdoc
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: null
-        thumbnail: null
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
 datasets:
-- metadata:
-    authors:
-    - ORCID: 0000-0002-1549-8521
-      name: Ryan Hylton
-    - name: Heebner JE
-    - name: Grillo MA
-    - ORCID: 0000-0002-8147-208X
-      name: Matt Swulius
-    cell_component:
-      id: OPTIONAL
-      name: OPTIONAL
-    cell_strain:
-      id: https://OPTIONAL
-      name: OPTIONAL
-    cross_references:
-      publications: doi:10.1038/s41467-022-30116-x
-    dataset_description: REQUIRED
-    dataset_identifier: 10011
-    dataset_title: Filamentous actin from a neuronal growth cone filopodium
-    dates: *id001
-    funding:
-    - funding_agency_name: Not funded
-      grant_id: null
-    grid_preparation: 'model: Quantifoil R2/2, material: GOLD, mesh: 200, support_film_film_type_id:
-      1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
-      support_film, pretreatment_type_: GLOW DISCHARGE'
-    organism:
-      name: Rattus norvegicus
-    sample_preparation: 'buffer_ph: 7.4, buffer_details: No buffer was used. The cells
-      were grown on EM grids in Neurobasal media with B-27 supplement (2%) and Penicillin/Streptomycin
-      (1%) or NbActiv4 (with 1% Penicillin/Streptomycin) neuronal cell culture media.,
-      vitrification_cryogen_name: ETHANE, vitrification_chamber_humidity: {''units'':
-      ''percentage'', ''valueOf_'': ''70''}, vitrification_chamber_temperature: {''units'':
-      ''K'', ''valueOf_'': ''295.15''}, vitrification_instrument: FEI VITROBOT MARK
-      IV, vitrification_details: 3 uL of 10 nm gold fiducials were added on top of
-      the cells prior to blotting or freezing. Grids were then blotted by hand from
-      behind (the non-cell surface) for 2 seconds before plunge-freezing.. , instance_type:
-      subtomogram_averaging_preparation'
-    sample_type: REQUIRED
-  sources:
-  - literal:
-      value:
-      - '10011'
+  - metadata:
+      authors:
+        - ORCID: 0000-0002-1549-8521
+          name: Ryan Hylton
+        - name: Heebner JE
+        - name: Grillo MA
+        - ORCID: 0000-0002-8147-208X
+          name: Matt Swulius
+      cell_component:
+        id: OPTIONAL
+        name: OPTIONAL
+      cell_strain:
+        id: https://OPTIONAL
+        name: OPTIONAL
+      cross_references:
+        publications: doi:10.1038/s41467-022-30116-x
+      dataset_description: REQUIRED
+      dataset_identifier: 10011
+      dataset_title: Filamentous actin from a neuronal growth cone filopodium
+      dates: *id001
+      funding:
+        - funding_agency_name: Not funded
+          grant_id: null
+      grid_preparation:
+        "model: Quantifoil R2/2, material: GOLD, mesh: 200, support_film_film_type_id:
+        1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
+        support_film, pretreatment_type_: GLOW DISCHARGE"
+      organism:
+        name: Rattus norvegicus
+      sample_preparation:
+        "buffer_ph: 7.4, buffer_details: No buffer was used. The cells
+        were grown on EM grids in Neurobasal media with B-27 supplement (2%) and Penicillin/Streptomycin
+        (1%) or NbActiv4 (with 1% Penicillin/Streptomycin) neuronal cell culture media.,
+        vitrification_cryogen_name: ETHANE, vitrification_chamber_humidity: {'units':
+        'percentage', 'valueOf_': '70'}, vitrification_chamber_temperature: {'units':
+        'K', 'valueOf_': '295.15'}, vitrification_instrument: FEI VITROBOT MARK
+        IV, vitrification_details: 3 uL of 10 nm gold fiducials were added on top of
+        the cells prior to blotting or freezing. Grids were then blotted by hand from
+        behind (the non-cell surface) for 2 seconds before plunge-freezing.. , instance_type:
+        subtomogram_averaging_preparation"
+      sample_type: REQUIRED
+    sources:
+      - literal:
+          value:
+            - "10011"
 frames:
-- sources:
-  - source_glob:
-      list_glob: frames/{run_name}_*.tif
+  - sources:
+      - source_glob:
+          list_glob: frames/{run_name}_*.tif
 gains:
-- sources:
-  - source_glob:
-      list_glob: frames/CountRef.dm4
+  - sources:
+      - source_glob:
+          list_glob: frames/CountRef.dm4
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - metadata/{run_name}.rawtlt
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - metadata/{run_name}.rawtlt
 runs:
-- sources:
-  - source_glob:
-      list_glob: frames/*
-      match_regex: /TS_\d\d$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: frames/*
+          match_regex: /TS_\d\d$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10011
   source_prefix: path/to/source
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: REQUIRED
-    camera:
-      manufacturer: Gatan
-      model: K2 SUMMIT
-    data_acquisition_software: REQUIRED
-    microscope:
-      manufacturer: FEI
-      model: TITAN KRIOS
-    microscope_optical_setup:
-      energy_filter: GIF Bioquantum
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: REQUIRED
-    related_empiar_entry: OPTIONAL
-    spherical_aberration_constant: 2.7
-    tilt_axis: OPTIONAL (float)
-    tilt_range:
-      max: REQUIRED
-      min: REQUIRED
-    tilt_series_quality: REQUIRED
-    tilt_step: OPTIONAL (float)
-    tilting_scheme: RECOMMENDED
-    total_flux: REQUIRED
-  sources:
-  - source_glob:
-      list_glob: metadata/{run_name}.st
-      match_regex: .*
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: REQUIRED
+      camera:
+        manufacturer: Gatan
+        model: K2 SUMMIT
+      data_acquisition_software: REQUIRED
+      microscope:
+        manufacturer: FEI
+        model: TITAN KRIOS
+      microscope_optical_setup:
+        energy_filter: GIF Bioquantum
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: REQUIRED
+      related_empiar_entry: OPTIONAL
+      spherical_aberration_constant: 2.7
+      tilt_axis: OPTIONAL (float)
+      tilt_range:
+        max: REQUIRED
+        min: REQUIRED
+      tilt_series_quality: REQUIRED
+      tilt_step: OPTIONAL (float)
+      tilting_scheme: RECOMMENDED
+      total_flux: REQUIRED
+    sources:
+      - source_glob:
+          list_glob: metadata/{run_name}.st
+          match_regex: .*
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    ctf_corrected: REQUIRED
-    fiducial_alignment_status: null
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: REQUIRED
-    reconstruction_method: null
-    reconstruction_software: Dynamo
-    tomogram_version: 1
-    voxel_spacing: null
-  sources:
-  - source_glob:
-      list_glob: tomograms/*.rec
-      match_regex: .*
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      ctf_corrected: REQUIRED
+      fiducial_alignment_status: null
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: REQUIRED
+      reconstruction_method: null
+      reconstruction_software: Dynamo
+      tomogram_version: 1
+      voxel_spacing: null
+    sources:
+      - source_glob:
+          list_glob: tomograms/*.rec
+          match_regex: .*
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - null
+  - sources:
+      - literal:
+          value:
+            - null

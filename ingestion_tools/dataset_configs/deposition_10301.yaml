@@ -6,7 +6,8 @@ alignments:
           name_regex: (.*)
 annotations:
   - metadata:
-      annotation_method: intensity normalization + rescaling + FNET segmentation + skeletonization
+      annotation_method:
+        intensity normalization + rescaling + FNET segmentation + skeletonization
         + DIST segmentation
       annotation_object:
         id: GO:0016020
@@ -19,9 +20,9 @@ annotations:
         - corresponding_author_status: true
           name: Tristan Bepler
       dates: &id002
-        deposition_date: '2024-02-20'
-        last_modified_date: '2024-02-20'
-        release_date: '2024-02-20'
+        deposition_date: "2024-02-20"
+        last_modified_date: "2024-02-20"
+        release_date: "2024-02-20"
       ground_truth_status: false
       is_curator_recommended: false
       method_links:
@@ -37,19 +38,19 @@ annotations:
       - InstanceSegmentation:
           binning: 1
           file_format: tardis
-          glob_string: '{dataset_name}/{run_name}/{run_name}_instance.csv'
+          glob_string: "{dataset_name}/{run_name}/{run_name}_instance.csv"
 
           is_visualization_default: false
           order: xyz
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: '{dataset_name}/{run_name}/{run_name}_semantic.mrc'
+          glob_string: "{dataset_name}/{run_name}/{run_name}_semantic.mrc"
 
           is_visualization_default: false
 datasets:
   - sources:
       - source_glob:
-          list_glob: '*'
+          list_glob: "*"
           match_regex: .*
           name_regex: (.*)
 depositions:
@@ -58,7 +59,8 @@ depositions:
       cross_references:
         publications: 10.1093/micmic/ozad067.485
       dates: *id002
-      deposition_description: Voxel-based and instance segmentations of membranes predicted
+      deposition_description:
+        Voxel-based and instance segmentations of membranes predicted
         using TARDIS.
       deposition_identifier: 10301
       deposition_title: TARDIS membrane predictions
@@ -77,7 +79,7 @@ deposition_keyphotos:
 runs:
   - sources:
       - source_glob:
-          list_glob: '{dataset_name}/*'
+          list_glob: "{dataset_name}/*"
           match_regex: .*
           name_regex: (.*)
 standardization_config:
@@ -87,6 +89,6 @@ version: 1.1.0
 voxel_spacings:
   - sources:
       - destination_glob:
-          list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+          list_glob: "{run_output_path}/Reconstructions/VoxelSpacing*"
           match_regex: .*
           name_regex: VoxelSpacing(.*)

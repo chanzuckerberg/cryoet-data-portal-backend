@@ -12,7 +12,8 @@ alignments:
             - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
 annotations:
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -40,9 +41,9 @@ annotations:
           corresponding_author_status: true
           name: Gira Bhabha
       dates: &id002
-        deposition_date: '2024-07-09'
-        last_modified_date: '2024-07-24'
-        release_date: '2024-07-29'
+        deposition_date: "2024-07-09"
+        last_modified_date: "2024-07-24"
+        release_date: "2024-07-29"
       ground_truth_status: false
       is_curator_recommended: true
       method_type: hybrid
@@ -55,7 +56,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -80,7 +82,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -105,7 +108,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -131,7 +135,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -157,7 +162,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -182,7 +188,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -208,7 +215,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -233,7 +241,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -258,7 +267,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -285,7 +295,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -312,7 +323,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -339,7 +351,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -366,7 +379,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -392,7 +406,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -418,7 +433,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      annotation_method:
+        Manually annotate 5 slices of object of interest on 8X binned
         tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
         + Use trained model to predict segmentation for all slices in the tomogram +
         manually correct any aberrations, then retrain + Overlay predicted segmentations
@@ -446,7 +462,7 @@ annotations:
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: 'Data_Set_3/{run_name}/mdocs/{run_name}_vali.mdoc'
+          list_glob: "Data_Set_3/{run_name}/mdocs/{run_name}_vali.mdoc"
 dataset_keyphotos:
   - sources:
       - literal:
@@ -482,23 +498,26 @@ datasets:
       cross_references:
         publications: 10.1101/2024.07.13.603322
         related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
-      dataset_description: This dataset contains raw frames, tilt series, tomogram reconstructions
+      dataset_description:
+        This dataset contains raw frames, tilt series, tomogram reconstructions
         and segmentations from Encephalitozoon intestinalis microsporidian spores. Samples
         were cryo-FIB milled.
       dataset_identifier: 10437
-      dataset_title: Cryo-ET dataset (3) of dormant microporidian spores from Encephalitozoon
+      dataset_title:
+        Cryo-ET dataset (3) of dormant microporidian spores from Encephalitozoon
         intestinalis
       dates: *id002
       funding:
         - funding_agency_name: American Heart Association
-          grant_id: '915749'
+          grant_id: "915749"
         - funding_agency_name: Searle Scholars Program
           grant_id: SSP-2018-2737
         - funding_agency_name: NIH/NIAID
           grant_id: R01AI147131
         - funding_agency_name: The Pew Charitable Trusts
           grant_id: PEW-00033055
-        - funding_agency_name: NIH Common Fund Transformative High Resolution Cryo-Electron
+        - funding_agency_name:
+            NIH Common Fund Transformative High Resolution Cryo-Electron
             Microscopy program
           grant_id: U24 GM129539
         - funding_agency_name: Simons Foundation
@@ -507,20 +526,22 @@ datasets:
         - funding_agency_name: NIH/NIGMS
           grant_id: 9 P41 GM103310
         - funding_agency_name: Irma T. Hirschl Career Scientist Award
-      grid_preparation: quantifoil 2/2 200mesh, ~20nm evaporated carbon,prepared using
+      grid_preparation:
+        quantifoil 2/2 200mesh, ~20nm evaporated carbon,prepared using
         waffle method
       organism:
         name: Encephalitozoon intestinalis
         taxonomy_id: 58839
       other_setup: Cryo-FIB milling
-      sample_preparation: 'E. intestinalis spores were purified from infected vero cells.
-      (For method details see: Cryo-ET reveals the in situ architecture of the polar
-      tube invasion apparatus from microsporidian parasites)'
+      sample_preparation:
+        "E. intestinalis spores were purified from infected vero cells.
+        (For method details see: Cryo-ET reveals the in situ architecture of the polar
+        tube invasion apparatus from microsporidian parasites)"
       sample_type: cell
     sources:
       - literal:
           value:
-            - '10437'
+            - "10437"
 depositions:
   - sources:
       - literal:
@@ -536,7 +557,7 @@ frames:
 gains:
   - sources:
       - source_glob:
-          list_glob: '{gain_ref}'
+          list_glob: "{gain_ref}"
 rawtilts:
   - sources:
       - source_glob:
@@ -615,9 +636,9 @@ tomograms:
           name: Gira Bhabha
       ctf_corrected: false
       dates:
-        deposition_date: '2024-07-09'
-        last_modified_date: '2024-07-24'
-        release_date: '2024-07-29'
+        deposition_date: "2024-07-09"
+        last_modified_date: "2024-07-24"
+        release_date: "2024-07-29"
       fiducial_alignment_status: NON_FIDUCIAL
       is_visualization_default: true
       offset:

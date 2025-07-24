@@ -6,9 +6,9 @@ depositions:
           corresponding_author_status: true
           kaggle_id: kokikoba
       dates: &dates
-        deposition_date: '2025-02-25'
-        last_modified_date: '2025-02-25'
-        release_date: '2025-02-25'
+        deposition_date: "2025-02-25"
+        last_modified_date: "2025-02-25"
+        release_date: "2025-02-25"
       deposition_description:
         The 7th place solution employs an ensemble of three model soups based on 3D U-Net architectures with ResNet50d
         and EfficientNetV2-M backbones, training them to predict per-class Gaussian heatmaps using heavily weighted BCE
@@ -67,24 +67,24 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_apo-ferritin.json'
+            - "Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_apo-ferritin.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10445'
+              - "10445"
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_apo-ferritin.json'
+            - "Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_apo-ferritin.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10446'
+              - "10446"
 
   - metadata:
       annotation_method: *method
@@ -105,24 +105,24 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_beta-galactosidase.json'
+            - "Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_beta-galactosidase.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10445'
+              - "10445"
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_beta-galactosidase.json'
+            - "Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_beta-galactosidase.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10446'
+              - "10446"
 
   - metadata:
       annotation_method: *method
@@ -142,24 +142,24 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_ribosome.json'
+            - "Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_ribosome.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10445'
+              - "10445"
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_ribosome.json'
+            - "Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_ribosome.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10446'
+              - "10446"
 
   - metadata:
       annotation_method: *method
@@ -180,24 +180,24 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_thyroglobulin.json'
+            - "Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_thyroglobulin.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10445'
+              - "10445"
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_thyroglobulin.json'
+            - "Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_thyroglobulin.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10446'
+              - "10446"
 
   - metadata:
       annotation_method: *method
@@ -218,49 +218,49 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_virus-like-particle.json'
+            - "Public/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_virus-like-particle.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10445'
+              - "10445"
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - 'Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_virus-like-particle.json'
+            - "Private/copick/ExperimentRuns/{run_name}/Picks/kobakos_0_virus-like-particle.json"
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - '10446'
+              - "10446"
 
 datasets:
   - sources:
       - literal:
           value:
-            - '10445'
-            - '10446'
+            - "10445"
+            - "10446"
 runs:
   - sources:
       - source_glob:
           list_glob: "Public/copick/ExperimentRuns/*"
-          match_regex: '.*'
-          name_regex: '(.*)'
+          match_regex: ".*"
+          name_regex: "(.*)"
         parent_filters:
           include:
             dataset:
-              - '10445'
+              - "10445"
       - source_glob:
           list_glob: "Private/copick/ExperimentRuns/*"
-          match_regex: '.*'
-          name_regex: '(.*)'
+          match_regex: ".*"
+          name_regex: "(.*)"
         parent_filters:
           include:
             dataset:
-              - '10446'
+              - "10446"
 
 standardization_config:
   deposition_id: 10325

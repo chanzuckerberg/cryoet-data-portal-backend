@@ -13,8 +13,8 @@ alignments:
     sources:
       - source_multi_glob:
           list_globs:
-            - '{run_name}/TiltSeries/*.tlt'
-            - '{run_name}/TiltSeries/*.xf'
+            - "{run_name}/TiltSeries/*.tlt"
+            - "{run_name}/TiltSeries/*.xf"
 
 annotations:
   - metadata:
@@ -37,9 +37,9 @@ annotations:
           corresponding_author_status: true
           ORCID: 0000-0002-8402-0134
       dates: &id002
-        deposition_date: '2024-10-30'
-        last_modified_date: '2024-10-30'
-        release_date: '2024-10-30'
+        deposition_date: "2024-10-30"
+        last_modified_date: "2024-10-30"
+        release_date: "2024-10-30"
       ground_truth_status: true
       is_curator_recommended: true
       method_links: &id003
@@ -52,7 +52,7 @@ annotations:
       - SemanticSegmentationMask:
           file_format: mrc
           glob_strings: &id004
-            - '{run_name}/Segmentations/ground_truth.mrc'
+            - "{run_name}/Segmentations/ground_truth.mrc"
           is_visualization_default: true
           mask_label: 1
 
@@ -81,7 +81,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - '{run_name}/Picks/apo-ferritin.star'
+            - "{run_name}/Picks/apo-ferritin.star"
           is_visualization_default: true
           order: xyz
 
@@ -109,7 +109,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - '{run_name}/Picks/beta-amylase.star'
+            - "{run_name}/Picks/beta-amylase.star"
           is_visualization_default: true
           order: xyz
 
@@ -137,7 +137,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - '{run_name}/Picks/beta-galactoside.star'
+            - "{run_name}/Picks/beta-galactoside.star"
           is_visualization_default: true
           order: xyz
 
@@ -165,7 +165,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - '{run_name}/Picks/ribosome.star'
+            - "{run_name}/Picks/ribosome.star"
           is_visualization_default: true
           order: xyz
 
@@ -193,7 +193,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - '{run_name}/Picks/thyroglobulin.star'
+            - "{run_name}/Picks/thyroglobulin.star"
           is_visualization_default: true
           order: xyz
 
@@ -222,20 +222,21 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - '{run_name}/Picks/virus-like-particle.star'
+            - "{run_name}/Picks/virus-like-particle.star"
           is_visualization_default: true
           order: xyz
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: '{run_name}/mdocs/{run_name}_vali.mdoc'
+          list_glob: "{run_name}/mdocs/{run_name}_vali.mdoc"
 datasets:
   - metadata:
       authors: *id001
       cross_references: &id005
         publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
         related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
-      dataset_description: This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for
+      dataset_description:
+        This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for
         the purpose of training object identification algorithms in the context of the CryoET Object Identification
         Challenge. The data was simulated using polnet, and contains point labels and semantic masks for all 6 protein
         complexes included in the challenge dataset (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes,
@@ -246,14 +247,15 @@ datasets:
       funding:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: "CZII-2023\u2013327779"
-      grid_preparation: ''
-      sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's
+      grid_preparation: ""
+      sample_preparation:
+        Simulation of 3D volumes with polnet + projection using IMOD's
         xyzproj + addition of noise + reconstruction with IMOD's tilt
       sample_type: in_silico
     sources:
       - literal:
           value:
-            - '10441'
+            - "10441"
 frames:
   - metadata:
       is_gain_corrected: true
@@ -261,7 +263,7 @@ frames:
     sources:
       - literal:
           value:
-            - 'default'
+            - "default"
 dataset_keyphotos:
   - sources:
       - literal:
@@ -271,7 +273,7 @@ dataset_keyphotos:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: '{run_name}/TiltSeries/*.rawtlt'
+          list_glob: "{run_name}/TiltSeries/*.rawtlt"
 runs:
   - sources:
       - source_glob:
@@ -308,7 +310,7 @@ tiltseries:
       total_flux: 100
     sources:
       - source_glob:
-          list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
+          list_glob: "{run_name}/TiltSeries/tilt_series.mrc"
 tomograms:
   - metadata:
       affine_transformation_matrix:
@@ -344,7 +346,7 @@ tomograms:
       voxel_spacing: 10.0
     sources:
       - source_glob:
-          list_glob: '{run_name}/VoxelSpacing10.000/wbp.mrc'
+          list_glob: "{run_name}/VoxelSpacing10.000/wbp.mrc"
 version: 1.1.0
 voxel_spacings:
   - sources:

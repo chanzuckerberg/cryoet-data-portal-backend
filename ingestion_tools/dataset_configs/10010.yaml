@@ -14,9 +14,9 @@ annotations:
           corresponding_author_status: true
           name: Danielle A. Grotjahn
       dates: &id002
-        deposition_date: '2023-10-01'
-        last_modified_date: '2023-12-01'
-        release_date: '2023-12-01'
+        deposition_date: "2023-10-01"
+        last_modified_date: "2023-12-01"
+        release_date: "2023-12-01"
       ground_truth_status: true
       is_curator_recommended: true
       method_type: hybrid
@@ -68,7 +68,7 @@ annotations:
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: 'Tilt_series_mdocs/{run_name}_vali.mrc.mdoc'
+          list_glob: "Tilt_series_mdocs/{run_name}_vali.mrc.mdoc"
 dataset_keyphotos:
   - sources:
       - literal:
@@ -107,7 +107,8 @@ datasets:
       cross_references: &id004
         publications: 10.1083/jcb.202204093, 10.1101/2022.01.23.477440
         related_database_entries: EMPIAR-11370
-      dataset_description: Cryo-electron tomograms of mouse embryonic fibroblasts from
+      dataset_description:
+        Cryo-electron tomograms of mouse embryonic fibroblasts from
         FIB-SEM lamella. Used to develop surface morphometrics toolkit to quantify organellar
         membrane ultrastructure.
       dataset_identifier: 10010
@@ -120,7 +121,7 @@ datasets:
     sources:
       - literal:
           value:
-            - '10010'
+            - "10010"
 deposition_keyphotos:
   - sources:
       - literal:
@@ -132,7 +133,8 @@ depositions:
       authors: *id003
       cross_references: *id004
       dates: *id002
-      deposition_description: This dataset contains cryo-electron tomograms of mouse
+      deposition_description:
+        This dataset contains cryo-electron tomograms of mouse
         embryonic fibroblasts from FIB-SEM lamella. The dataset was used to develop
         and evaluate a surface morphometrics pipeline to quantify organellar membrane
         ultrastructure.
@@ -156,7 +158,7 @@ frames:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: 'Tilt_series_mdocs/{run_name}_vali.rawtlt'
+          list_glob: "Tilt_series_mdocs/{run_name}_vali.rawtlt"
 runs:
   - sources:
       - source_glob:
@@ -179,7 +181,7 @@ tiltseries:
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
-        energy_filter: '{energy_filter}'
+        energy_filter: "{energy_filter}"
       pixel_spacing: float {tilt_series_pixel_spacing}
       spherical_aberration_constant: 2.7
       tilt_axis: 86.2

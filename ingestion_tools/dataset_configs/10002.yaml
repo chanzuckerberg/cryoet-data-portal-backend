@@ -66,9 +66,9 @@ annotations:
       confidence:
         ground_truth_used: Ground truth from related paper
       dates: &id002
-        deposition_date: '2023-05-01'
-        last_modified_date: '2023-11-08'
-        release_date: '2023-11-30'
+        deposition_date: "2023-05-01"
+        last_modified_date: "2023-11-08"
+        release_date: "2023-11-30"
       ground_truth_status: true
       is_curator_recommended: true
       method_type: manual
@@ -152,27 +152,30 @@ datasets:
       cross_references:
         publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
         related_database_entries: EMPIAR-10989
-      dataset_description: Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
+      dataset_description:
+        Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
         of actin filaments and microtubules
       dataset_identifier: 10002
       dataset_title: RPE1 cytosol with actin stress fiber
       dates: *id002
       funding:
         - funding_agency_name: European Research Council (ERC)
-          grant_id: '760067'
-      grid_preparation: 'model: Quantifoil, material: GOLD, support_film_film_type_id:
-      1, support_film_film_topology: HOLEY, support_film_instance_type: support_film,
-      pretreatment_type_: PLASMA CLEANING'
+          grant_id: "760067"
+      grid_preparation:
+        "model: Quantifoil, material: GOLD, support_film_film_type_id:
+        1, support_film_film_topology: HOLEY, support_film_instance_type: support_film,
+        pretreatment_type_: PLASMA CLEANING"
       organism:
         name: Homo sapiens
         taxonomy_id: 9606
-      sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant:
-      None, instance_type: tomography_preparation'
+      sample_preparation:
+        "buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant:
+        None, instance_type: tomography_preparation"
       sample_type: cell
     sources:
       - literal:
           value:
-            - '10002'
+            - "10002"
 depositions:
   - sources:
       - literal:
@@ -250,9 +253,9 @@ tomograms:
       authors: *id004
       ctf_corrected: false
       dates:
-        deposition_date: '2023-04-01'
-        last_modified_date: '2023-06-01'
-        release_date: '2023-06-01'
+        deposition_date: "2023-04-01"
+        last_modified_date: "2023-06-01"
+        release_date: "2023-06-01"
       fiducial_alignment_status: NON_FIDUCIAL
       is_visualization_default: true
       offset:
