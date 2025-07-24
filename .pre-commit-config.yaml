@@ -42,7 +42,8 @@ repos:
     exclude: |
       (?x)(
           ^.release-please-manifest.json|
-          ^release-please-config.json
+          ^release-please-config.json|
+          .*tsv
       )
   - id: trailing-whitespace
 - repo: local

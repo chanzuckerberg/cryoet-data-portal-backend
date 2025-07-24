@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/cwl2013-08-19-1/keyimg_cwl2013-08-19-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Cora Woodward
@@ -19,6 +22,9 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_strain:
+      id: CVCL_2960
+      name: HUVEC-C
     cell_type:
       id: CL:0002618
       name: endothelial cell of umbilical vein
@@ -34,12 +40,21 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: HsapDv:0000262
+      name: newborn stage (0-28 days)
+    disease:
+      id: MONDO:0005109
+      name: HIV infectious disease
     grid_preparation: manual blotting
     organism:
       name: Homo sapiens
       taxonomy_id: 9606
     sample_preparation: null
-    sample_type: cell
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0002618
+      name: endothelial cell of umbilical vein
   sources:
   - literal:
       value:

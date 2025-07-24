@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2013-01-03-1/keyimg_ycw2013-01-03-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Yi-Wei Chang
@@ -20,8 +23,10 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: ATCC 19624
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: This is 1st of 2 sets of data studying Hylemonella gracilis
       collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10160
@@ -30,6 +35,12 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: 'Vitrobot setting: 100% humidity, 4 ul sample, 10 nm BSA treated
       gold, -3 offset, 4 s blot time, no drain, ethane/propane mix'
     organism:
@@ -38,7 +49,10 @@ datasets:
     sample_preparation: "Hylemonella grown 48 hr in Broth 233 at 26\xB0C without antibiotics,\
       \ Final OD600 < 0.1, incubated with attack-phase Bdellovibrio for 3 days, Spun\
       \ down by 1000 rcf for 5 min and concentrated by ~10x for plunge freezing"
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:
