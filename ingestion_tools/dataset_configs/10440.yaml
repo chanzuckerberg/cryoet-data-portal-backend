@@ -1,6 +1,6 @@
 depositions:
 - metadata:
-    authors: &id001
+    authors: &deposition_authors
     - name: Ariana Peck
       primary_author_status: true
       corresponding_author_status: false
@@ -76,7 +76,7 @@ depositions:
     cross_references:
       publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
       related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
-    dates: &id002
+    dates: &deposition_dates
       deposition_date: '2024-10-30'
       last_modified_date: '2024-02-25'
       release_date: '2024-10-30'
@@ -119,11 +119,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41923
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *deposition_authors
+    dates: *deposition_dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: &id003
+    method_links: &method_links
     - custom_name: slabpick on GitHub
       link: https://github.com/apeck12/slabpick
       link_type: source_code
@@ -174,11 +174,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-30405
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *deposition_authors
+    dates: *deposition_dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 2.0
   sources:
@@ -202,11 +202,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-0153
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *deposition_authors
+    dates: *deposition_dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 2.0
   sources:
@@ -229,11 +229,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-3883
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *deposition_authors
+    dates: *deposition_dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 2.0
   sources:
@@ -257,11 +257,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-24181
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *deposition_authors
+    dates: *deposition_dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 2.0
   sources:
@@ -285,11 +285,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41917
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *deposition_authors
+    dates: *deposition_dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 2.0
   sources:
@@ -318,8 +318,8 @@ annotations:
     - custom_name: membrain-seg on PyPI
       link: https://pypi.org/project/membrain-seg/
       link_type: other
-    authors: *id001
-    dates: *id002
+    authors: *deposition_authors
+    dates: *deposition_dates
     ground_truth_status: false
     is_curator_recommended: true
     method_type: automated
@@ -348,7 +348,7 @@ ctfs:
       list_glob: '{mapped_run_name}_CTFFIND_format_CTF.txt'
 datasets:
 - metadata:
-    authors: *id001
+    authors: *deposition_authors
     cross_references:
       publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608
       related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
@@ -360,7 +360,7 @@ datasets:
       include point labels for Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP.
     dataset_identifier: 10440
     dataset_title: CZII - CryoET Object Identification Challenge - Experimental Training Data
-    dates: *id002
+    dates: *deposition_dates
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
       grant_id: "CZII-2023\u2013327779"
@@ -467,9 +467,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: *deposition_authors
     ctf_corrected: true
-    dates: *id002
+    dates: *deposition_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: true
     offset:
@@ -509,9 +509,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: *deposition_authors
     ctf_corrected: true
-    dates: *id002
+    dates: *deposition_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
@@ -550,9 +550,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: *deposition_authors
     ctf_corrected: true
-    dates: *id002
+    dates: *deposition_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
@@ -592,9 +592,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: *deposition_authors
     ctf_corrected: true
-    dates: *id002
+    dates: *deposition_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:

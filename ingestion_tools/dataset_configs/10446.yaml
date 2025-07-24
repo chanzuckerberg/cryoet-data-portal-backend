@@ -1,6 +1,6 @@
 datasets:
 - metadata:
-    authors: &id001
+    authors: &authors
     - name: Ariana Peck
       primary_author_status: true
       corresponding_author_status: false
@@ -85,7 +85,7 @@ datasets:
       Private leaderboard scores on Kaggle were computed based on this dataset.
     dataset_identifier: 10446
     dataset_title: CZII - CryoET Object Identification Challenge - Private Test Dataset
-    dates: &id002
+    dates: &dates
       deposition_date: '2025-02-25'
       last_modified_date: '2025-02-25'
       release_date: '2025-02-25'
@@ -147,8 +147,8 @@ annotations:
     - custom_name: membrain-seg on PyPI
       link: https://pypi.org/project/membrain-seg/
       link_type: other
-    authors: *id001
-    dates: *id002
+    authors: *authors
+    dates: *dates
     ground_truth_status: false
     is_curator_recommended: true
     method_type: automated
@@ -174,11 +174,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41923
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *authors
+    dates: *dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: &id003
+    method_links: &method_links
     - custom_name: slabpick on GitHub
       link: https://github.com/apeck12/slabpick
       link_type: source_code
@@ -229,11 +229,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-30405
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *authors
+    dates: *dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 1.0
   sources:
@@ -257,11 +257,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-0153
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *authors
+    dates: *dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 1.0
   sources:
@@ -284,11 +284,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-3883
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *authors
+    dates: *dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 1.0
   sources:
@@ -312,11 +312,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-24181
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *authors
+    dates: *dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 1.0
   sources:
@@ -340,11 +340,11 @@ annotations:
     annotation_publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, EMD-41917
     annotation_software: CellCanvas + ChimeraX-copick 0.5.0 + copick-live + pytom-match-pick 0.6.0 + slabpick 0.1.0 + deepfindET
       0.4.0 + topaz 0.2.5 + cryoSPARC 4.4.1
-    authors: *id001
-    dates: *id002
+    authors: *authors
+    dates: *dates
     ground_truth_status: true
     is_curator_recommended: true
-    method_links: *id003
+    method_links: *method_links
     method_type: hybrid
     version: 1.0
   sources:
@@ -446,9 +446,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: *authors
     ctf_corrected: true
-    dates: *id002
+    dates: *dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: true
     offset:
@@ -488,9 +488,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: *authors
     ctf_corrected: true
-    dates: *id002
+    dates: *dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
@@ -529,9 +529,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: *authors
     ctf_corrected: true
-    dates: *id002
+    dates: *dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
@@ -571,9 +571,9 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: *authors
     ctf_corrected: true
-    dates: *id002
+    dates: *dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
