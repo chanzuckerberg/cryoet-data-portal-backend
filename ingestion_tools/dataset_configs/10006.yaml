@@ -106,7 +106,8 @@ datasets:
       cross_references: &id003
         publications: doi:10.1038/s41586-020-2665-2
         related_database_entries: EMPIAR-10493
-      dataset_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact
+      dataset_description:
+        Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact
         virions.
       dataset_identifier: 10006
       dataset_title: Severe acute respiratory syndrome coronavirus 2
@@ -121,14 +122,16 @@ datasets:
         - funding_agency_name: Japan Society for the Promotion of Science (JSPS)
         - funding_agency_name: German Research Foundation (DFG)
           grant_id: 240245660-SFB 1129
-      grid_preparation: 'model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material:
-      CARBON, support_film_film_topology: HOLEY ARRAY, support_film_instance_type:
-      support_film, pretreatment_type_: GLOW DISCHARGE'
+      grid_preparation:
+        'model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material:
+        CARBON, support_film_film_topology: HOLEY ARRAY, support_film_instance_type:
+        support_film, pretreatment_type_: GLOW DISCHARGE'
       organism:
         name: Severe acute respiratory syndrome coronavirus 2
         taxonomy_id: 2697049
-      sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
-      LEICA EM GP, instance_type: subtomogram_averaging_preparation'
+      sample_preparation:
+        'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
+        LEICA EM GP, instance_type: subtomogram_averaging_preparation'
       sample_type: virus
     sources:
       - literal:
@@ -145,10 +148,12 @@ depositions:
       authors: *id002
       cross_references: *id003
       dates: *id001
-      deposition_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on
+      deposition_description:
+        Cryo-electron tomograms of SARS-CoV-2 spike proteins on
         intact virions with annotations of spike proteins, refined using RELION.
       deposition_identifier: 10006
-      deposition_title: Structures and distributions of severe acute respiratory syndrome
+      deposition_title:
+        Structures and distributions of severe acute respiratory syndrome
         coronavirus 2 spike proteins
       deposition_types:
         - dataset

@@ -1,12 +1,13 @@
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 annotations:
   - metadata:
-      annotation_method: intensity normalization + rescaling + FNET segmentation + skeletonization
+      annotation_method:
+        intensity normalization + rescaling + FNET segmentation + skeletonization
         + DIST segmentation
       annotation_object:
         id: GO:0016020
@@ -58,7 +59,8 @@ depositions:
       cross_references:
         publications: 10.1093/micmic/ozad067.485
       dates: *id002
-      deposition_description: Voxel-based and instance segmentations of membranes predicted
+      deposition_description:
+        Voxel-based and instance segmentations of membranes predicted
         using TARDIS.
       deposition_identifier: 10301
       deposition_title: TARDIS membrane predictions
@@ -72,8 +74,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10301_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10301_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10301_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10301_thumbnail.png'
 runs:
   - sources:
       - source_glob:

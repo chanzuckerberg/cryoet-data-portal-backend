@@ -259,10 +259,12 @@ datasets:
       cross_references: &id005
         publications: 10.1093/micmic/ozad067.480
         related_database_entries: EMPIAR-11756
-      dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
+      dataset_description:
+        Cryo-electron tomography dataset of cryo-plasmaFIB milled
         lamella.
       dataset_identifier: 10301
-      dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
+      dataset_title:
+        In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
         cryo-plasmaFIB milling
       dates: *id002
       organism:
@@ -284,12 +286,14 @@ depositions:
       authors: *id004
       cross_references: *id005
       dates: *id002
-      deposition_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
+      deposition_description:
+        Cryo-electron tomography dataset of cryo-plasmaFIB milled
         lamella of Chlamydomonas reinhardtii. Contained tomograms are partially annotated,
         including annotations for ribosomes, nucleosomes, F1F0-ATPase, RubisCO, and
         microtubules.
       deposition_identifier: 10300
-      deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared
+      deposition_title:
+        In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared
         using cryo-plasmaFIB milling
       deposition_types:
         - dataset

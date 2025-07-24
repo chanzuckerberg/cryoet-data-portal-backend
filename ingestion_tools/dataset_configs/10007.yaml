@@ -81,7 +81,8 @@ datasets:
       cross_references: &id003
         publications: doi:10.1101/2023.08.18.553799
         related_database_entries: EMPIAR-11658
-      dataset_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
+      dataset_description:
+        Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
         lamella. with CryoDRGN reconstructed 80S ribosome.
       dataset_identifier: 10007
       dataset_title: S. cerevisiae
@@ -89,14 +90,16 @@ datasets:
       funding:
         - funding_agency_name: Max Planck Society
         - funding_agency_name: Other private
-      grid_preparation: "Grid\nModel: Quantifoil R1.2/3\nMaterial: COPPER\n\nPretreatment:\
-      \ Type: GLOW DISCHARGE\nAtmosphere: Air\n\nSupport Film:\nMaterial: Carbon \n\
-      Topology: Holey\nThickness: \u2013\n\nVitrification:\nCryogen Name: ETHANE \n\
-      Instrument: Vitrobot Mark IV\n"
+      grid_preparation:
+        "Grid\nModel: Quantifoil R1.2/3\nMaterial: COPPER\n\nPretreatment:\
+        \ Type: GLOW DISCHARGE\nAtmosphere: Air\n\nSupport Film:\nMaterial: Carbon \n\
+        Topology: Holey\nThickness: \u2013\n\nVitrification:\nCryogen Name: ETHANE \n\
+        Instrument: Vitrobot Mark IV\n"
       organism:
         name: Saccharomyces cerevisiae
-      sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
-      subtomogram_averaging_preparation'
+      sample_preparation:
+        'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
+        subtomogram_averaging_preparation'
       sample_type: organism
     sources:
       - literal:
@@ -113,7 +116,8 @@ depositions:
       authors: *id002
       cross_references: *id003
       dates: *id001
-      deposition_description: Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
+      deposition_description:
+        Cryo-electron tomograms of S.cerevisiae of plasma FIB-SEM
         lamella, including 80S ribosome annotations generated using crYOLO. This dataset
         was used for evaluation of the cryoDRGN-ET reconstruction of the 80S ribosome
         conformational landscape inside cells.
@@ -154,15 +158,15 @@ rawtilts:
       - source_glob:
           list_glob: '{run_name}/*.rawtlt'
         parent_filters:
-            include:
-                run:
-                - ^ay08102021_grid_3_lamella3_pos12$
-                - ^ay18112021_grid2_lamella1_position2$
-                - ^ay18112021_grid2_lamella4_position11$
-                - ^ay18112021_grid2_lamella4_position13$
-                - ^ay18112021_grid2_lamella5_position16$
-                - ^ay18112021_gridX_lamella1_pos5$
-                - ^ay18112021_gridX_lamella8_pos6$
+          include:
+            run:
+              - ^ay08102021_grid_3_lamella3_pos12$
+              - ^ay18112021_grid2_lamella1_position2$
+              - ^ay18112021_grid2_lamella4_position11$
+              - ^ay18112021_grid2_lamella4_position13$
+              - ^ay18112021_grid2_lamella5_position16$
+              - ^ay18112021_gridX_lamella1_pos5$
+              - ^ay18112021_gridX_lamella8_pos6$
 runs:
   - sources:
       - source_glob:

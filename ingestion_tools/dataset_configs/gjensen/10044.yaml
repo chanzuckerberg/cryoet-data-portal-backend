@@ -1,174 +1,179 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mka2019-10-25-1/keyimg_mka2019-10-25-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mka2019-10-25-1/keyimg_mka2019-10-25-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/mka2019-10-25-1/keyimg_mka2019-10-25-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mka2019-10-25-1/keyimg_mka2019-10-25-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Mohammed Kaplan
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: '26695'
-    dataset_description: This is 2nd of 10 sets of data studying Helicobacter pylori
-      collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb. These
-      are fast tilt series.
-    dataset_identifier: 10044
-    dataset_title: H_pylori_dFliO_GC
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: 'The samples were prepared with Vitrobot IV. Blotting conditions
-      were either: blot force 6, blot . . time 3, drain time 1 OR blot force -3, blot
-      time 4, drain time 1, 100% humidity. Cu grids. 10 nm . . gold.'
-    organism:
-      name: Helicobacter pylori
-      taxonomy_id: 85962
-    sample_preparation: I grew the cells on blood agar plates from -80 stock at 37C
-      with 5% CO2. the cells were grown . . for 48 hours and then spread on a new
-      plate with a cotton swab and left to grow for 24 hours. . . The grids were prepared
-      from both batches (48 hours, and 24 hours, separately).
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10044'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Mohammed Kaplan
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: '26695'
+      dataset_description:
+        This is 2nd of 10 sets of data studying Helicobacter pylori
+        collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb. These
+        are fast tilt series.
+      dataset_identifier: 10044
+      dataset_title: H_pylori_dFliO_GC
+      dates: &id002
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
+      grid_preparation:
+        'The samples were prepared with Vitrobot IV. Blotting conditions
+        were either: blot force 6, blot . . time 3, drain time 1 OR blot force -3, blot
+        time 4, drain time 1, 100% humidity. Cu grids. 10 nm . . gold.'
+      organism:
+        name: Helicobacter pylori
+        taxonomy_id: 85962
+      sample_preparation:
+        I grew the cells on blood agar plates from -80 stock at 37C
+        with 5% CO2. the cells were grown . . for 48 hours and then spread on a new
+        plate with a cotton swab and left to grow for 24 hours. . . The grids were prepared
+        from both batches (48 hours, and 24 hours, separately).
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10044'
 depositions:
-- metadata:
-    authors: *id001
-    dates: *id002
-    deposition_description: 10 sets of data studying Helicobacter pylori collected
-      by Mohammed Kaplan and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10030
-    deposition_title: Helicobacter pylori (tax_id=85962) strain:26695 by Mohammed
-      Kaplan
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10030
+  - metadata:
+      authors: *id001
+      dates: *id002
+      deposition_description:
+        10 sets of data studying Helicobacter pylori collected
+        by Mohammed Kaplan and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10030
+      deposition_title:
+        Helicobacter pylori (tax_id=85962) strain:26695 by Mohammed
+        Kaplan
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10030
 frames:
-- metadata:
-    dose_rate: 3.1707317073170733
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 3.1707317073170733
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (mka2019-10-25-1|mka2019-10-25-2|mka2019-10-25-3|mka2019-10-25-4|mka2019-10-25-5|mka2019-10-25-6|mka2019-10-25-7|mka2019-10-25-8|mka2019-10-25-9|mka2019-10-25-10|mka2019-10-25-11|mka2019-10-25-12|mka2019-10-25-13|mka2019-10-25-14|mka2019-10-25-15|mka2019-10-25-16|mka2019-10-25-17|mka2019-10-25-18|mka2019-10-25-19|mka2019-10-25-20|mka2019-10-25-21|mka2019-10-25-22|mka2019-10-25-23|mka2019-10-25-24|mka2019-10-25-25|mka2019-10-25-26|mka2019-10-25-27|mka2019-10-25-28|mka2019-10-25-29|mka2019-10-25-30|mka2019-10-25-31|mka2019-10-25-32|mka2019-10-25-33|mka2019-10-25-34|mka2019-10-25-35|mka2019-10-25-36|mka2019-10-25-37|mka2019-10-25-38|mka2019-10-25-39|mka2019-10-25-40|mka2019-10-25-41|mka2019-10-25-42|mka2019-10-25-43|mka2019-10-25-44|mka2019-10-25-45|mka2019-10-25-46|mka2019-10-25-47|mka2019-10-25-48|mka2019-10-25-49|mka2019-10-25-50|mka2019-10-25-51|mka2019-10-25-52|mka2019-10-25-53|mka2019-10-25-54|mka2019-10-25-55|mka2019-10-25-56|mka2019-10-25-57|mka2019-10-25-58|mka2019-10-25-59|mka2019-10-25-60|mka2019-10-25-61|mka2019-10-25-62|mka2019-10-25-63|mka2019-10-25-64|mka2019-10-25-65|mka2019-10-25-66|mka2019-10-25-67|mka2019-10-25-68|mka2019-10-25-69|mka2019-10-25-70|mka2019-10-25-71|mka2019-10-25-72|mka2019-10-25-73|mka2019-10-25-74|mka2019-10-25-75|mka2019-10-25-76|mka2019-10-25-77|mka2019-10-25-78|mka2019-10-25-79|mka2019-10-25-80|mka2019-10-25-81|mka2019-10-25-82|mka2019-10-25-83|mka2019-10-25-84|mka2019-10-25-85|mka2019-10-25-86|mka2019-10-25-87|mka2019-10-25-88|mka2019-10-25-89|mka2019-10-25-90|mka2019-10-25-91|mka2019-10-25-92|mka2019-10-25-93|mka2019-10-25-94|mka2019-10-25-95|mka2019-10-25-96|mka2019-10-25-97|mka2019-10-25-98|mka2019-10-25-99|mka2019-10-25-100|mka2019-10-25-101|mka2019-10-25-102|mka2019-10-25-103|mka2019-10-25-104|mka2019-10-25-105|mka2019-10-25-106|mka2019-10-25-107|mka2019-10-25-109|mka2019-10-25-110|mka2019-10-25-111|mka2019-10-25-112|mka2019-10-25-113|mka2019-10-25-114|mka2019-10-25-115|mka2019-10-25-116|mka2019-10-25-117|mka2019-10-25-118|mka2019-10-25-119|mka2019-10-25-120|mka2019-10-25-121|mka2019-10-25-122|mka2019-10-25-123|mka2019-10-25-124|mka2019-10-25-125|mka2019-10-25-126|mka2019-10-25-127|mka2019-10-25-128|mka2019-10-25-129|mka2019-10-25-130|mka2019-10-25-131|mka2019-10-25-132|mka2019-10-25-133|mka2019-10-25-134|mka2019-10-25-135|mka2019-10-25-136|mka2019-10-25-137|mka2019-10-25-138|mka2019-10-25-139|mka2019-10-25-140|mka2019-10-25-141|mka2019-10-25-142|mka2019-10-25-143|mka2019-10-25-144|mka2019-10-25-145|mka2019-10-25-146|mka2019-10-25-147|mka2019-10-25-148|mka2019-10-25-149|mka2019-10-25-150|mka2019-10-25-151|mka2019-10-25-152|mka2019-10-25-153|mka2019-10-25-154|mka2019-10-25-155|mka2019-10-25-156|mka2019-10-25-157|mka2019-10-25-158|mka2019-10-25-159|mka2019-10-25-160|mka2019-10-25-161|mka2019-10-25-162|mka2019-10-25-163|mka2019-10-25-164|mka2019-10-25-165|mka2019-10-25-166|mka2019-10-25-167|mka2019-10-25-168|mka2019-10-25-169|mka2019-10-25-170|mka2019-10-25-171|mka2019-10-25-172|mka2019-10-25-173|mka2019-10-25-174|mka2019-10-25-175|mka2019-10-25-176|mka2019-10-25-177|mka2019-10-25-178|mka2019-10-25-179|mka2019-10-25-180|mka2019-10-25-181|mka2019-10-25-182|mka2019-10-25-183|mka2019-10-25-184|mka2019-10-25-185|mka2019-10-25-186|mka2019-10-25-187|mka2019-10-25-188|mka2019-10-25-189|mka2019-10-25-190|mka2019-10-25-191|mka2019-10-25-192|mka2019-10-25-193|mka2019-10-25-194|mka2019-10-25-195|mka2019-10-25-196|mka2019-10-25-197|mka2019-10-25-198|mka2019-10-25-199|mka2019-10-25-200|mka2019-10-25-201|mka2019-10-25-202|mka2019-10-25-203|mka2019-10-25-204|mka2019-10-25-205|mka2019-10-25-206|mka2019-10-25-207|mka2019-10-25-208|mka2019-10-25-209|mka2019-10-25-210|mka2019-10-25-211|mka2019-10-25-212|mka2019-10-25-213|mka2019-10-25-214|mka2019-10-25-215|mka2019-10-25-216|mka2019-10-25-217|mka2019-10-25-218|mka2019-10-25-219|mka2019-10-25-220|mka2019-10-25-221|mka2019-10-25-222|mka2019-10-25-223|mka2019-10-25-224)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: (mka2019-10-25-1|mka2019-10-25-2|mka2019-10-25-3|mka2019-10-25-4|mka2019-10-25-5|mka2019-10-25-6|mka2019-10-25-7|mka2019-10-25-8|mka2019-10-25-9|mka2019-10-25-10|mka2019-10-25-11|mka2019-10-25-12|mka2019-10-25-13|mka2019-10-25-14|mka2019-10-25-15|mka2019-10-25-16|mka2019-10-25-17|mka2019-10-25-18|mka2019-10-25-19|mka2019-10-25-20|mka2019-10-25-21|mka2019-10-25-22|mka2019-10-25-23|mka2019-10-25-24|mka2019-10-25-25|mka2019-10-25-26|mka2019-10-25-27|mka2019-10-25-28|mka2019-10-25-29|mka2019-10-25-30|mka2019-10-25-31|mka2019-10-25-32|mka2019-10-25-33|mka2019-10-25-34|mka2019-10-25-35|mka2019-10-25-36|mka2019-10-25-37|mka2019-10-25-38|mka2019-10-25-39|mka2019-10-25-40|mka2019-10-25-41|mka2019-10-25-42|mka2019-10-25-43|mka2019-10-25-44|mka2019-10-25-45|mka2019-10-25-46|mka2019-10-25-47|mka2019-10-25-48|mka2019-10-25-49|mka2019-10-25-50|mka2019-10-25-51|mka2019-10-25-52|mka2019-10-25-53|mka2019-10-25-54|mka2019-10-25-55|mka2019-10-25-56|mka2019-10-25-57|mka2019-10-25-58|mka2019-10-25-59|mka2019-10-25-60|mka2019-10-25-61|mka2019-10-25-62|mka2019-10-25-63|mka2019-10-25-64|mka2019-10-25-65|mka2019-10-25-66|mka2019-10-25-67|mka2019-10-25-68|mka2019-10-25-69|mka2019-10-25-70|mka2019-10-25-71|mka2019-10-25-72|mka2019-10-25-73|mka2019-10-25-74|mka2019-10-25-75|mka2019-10-25-76|mka2019-10-25-77|mka2019-10-25-78|mka2019-10-25-79|mka2019-10-25-80|mka2019-10-25-81|mka2019-10-25-82|mka2019-10-25-83|mka2019-10-25-84|mka2019-10-25-85|mka2019-10-25-86|mka2019-10-25-87|mka2019-10-25-88|mka2019-10-25-89|mka2019-10-25-90|mka2019-10-25-91|mka2019-10-25-92|mka2019-10-25-93|mka2019-10-25-94|mka2019-10-25-95|mka2019-10-25-96|mka2019-10-25-97|mka2019-10-25-98|mka2019-10-25-99|mka2019-10-25-100|mka2019-10-25-101|mka2019-10-25-102|mka2019-10-25-103|mka2019-10-25-104|mka2019-10-25-105|mka2019-10-25-106|mka2019-10-25-107|mka2019-10-25-109|mka2019-10-25-110|mka2019-10-25-111|mka2019-10-25-112|mka2019-10-25-113|mka2019-10-25-114|mka2019-10-25-115|mka2019-10-25-116|mka2019-10-25-117|mka2019-10-25-118|mka2019-10-25-119|mka2019-10-25-120|mka2019-10-25-121|mka2019-10-25-122|mka2019-10-25-123|mka2019-10-25-124|mka2019-10-25-125|mka2019-10-25-126|mka2019-10-25-127|mka2019-10-25-128|mka2019-10-25-129|mka2019-10-25-130|mka2019-10-25-131|mka2019-10-25-132|mka2019-10-25-133|mka2019-10-25-134|mka2019-10-25-135|mka2019-10-25-136|mka2019-10-25-137|mka2019-10-25-138|mka2019-10-25-139|mka2019-10-25-140|mka2019-10-25-141|mka2019-10-25-142|mka2019-10-25-143|mka2019-10-25-144|mka2019-10-25-145|mka2019-10-25-146|mka2019-10-25-147|mka2019-10-25-148|mka2019-10-25-149|mka2019-10-25-150|mka2019-10-25-151|mka2019-10-25-152|mka2019-10-25-153|mka2019-10-25-154|mka2019-10-25-155|mka2019-10-25-156|mka2019-10-25-157|mka2019-10-25-158|mka2019-10-25-159|mka2019-10-25-160|mka2019-10-25-161|mka2019-10-25-162|mka2019-10-25-163|mka2019-10-25-164|mka2019-10-25-165|mka2019-10-25-166|mka2019-10-25-167|mka2019-10-25-168|mka2019-10-25-169|mka2019-10-25-170|mka2019-10-25-171|mka2019-10-25-172|mka2019-10-25-173|mka2019-10-25-174|mka2019-10-25-175|mka2019-10-25-176|mka2019-10-25-177|mka2019-10-25-178|mka2019-10-25-179|mka2019-10-25-180|mka2019-10-25-181|mka2019-10-25-182|mka2019-10-25-183|mka2019-10-25-184|mka2019-10-25-185|mka2019-10-25-186|mka2019-10-25-187|mka2019-10-25-188|mka2019-10-25-189|mka2019-10-25-190|mka2019-10-25-191|mka2019-10-25-192|mka2019-10-25-193|mka2019-10-25-194|mka2019-10-25-195|mka2019-10-25-196|mka2019-10-25-197|mka2019-10-25-198|mka2019-10-25-199|mka2019-10-25-200|mka2019-10-25-201|mka2019-10-25-202|mka2019-10-25-203|mka2019-10-25-204|mka2019-10-25-205|mka2019-10-25-206|mka2019-10-25-207|mka2019-10-25-208|mka2019-10-25-209|mka2019-10-25-210|mka2019-10-25-211|mka2019-10-25-212|mka2019-10-25-213|mka2019-10-25-214|mka2019-10-25-215|mka2019-10-25-216|mka2019-10-25-217|mka2019-10-25-218|mka2019-10-25-219|mka2019-10-25-220|mka2019-10-25-221|mka2019-10-25-222|mka2019-10-25-223|mka2019-10-25-224)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10030
   run_data_map_file: run_data_map/10044.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K3
-    data_acquisition_software: Serial EM
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: TFS
-      model: Krios
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 4.494
-    spherical_aberration_constant: 2.7
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 84.1
-    tilt_range:
-      max: float {ts-tilt_range-max}
-      min: -60.0
-    tilt_series_quality: int {ts-tilt_series_quality}
-    tilt_step: 3.0
-    tilting_scheme: min to max tilt
-    total_flux: 130.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K3
+      data_acquisition_software: Serial EM
+      is_aligned: false
+      microscope:
+        additional_info: ''
+        manufacturer: TFS
+        model: Krios
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 4.494
+      spherical_aberration_constant: 2.7
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
+      tilt_axis: 84.1
+      tilt_range:
+        max: float {ts-tilt_range-max}
+        min: -60.0
+      tilt_series_quality: int {ts-tilt_series_quality}
+      tilt_step: 3.0
+      tilting_scheme: min to max tilt
+      total_flux: 130.0
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/rawdata/*'
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: '{tomo-align_software}'
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: '{tomo-processing_software}'
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: '{tomo-reconstruction_software}'
-    tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: '{tomo-align_software}'
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: '{tomo-processing_software}'
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
+      tomogram_version: 1
+      voxel_spacing: float {tomo-voxel_spacing}
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/3dimage_*/*'
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - float {tomo-voxel_spacing}
-    parent_filters:
-      exclude:
-        run:
-        - ^mka2019-10-25-14$
-        - ^mka2019-10-25-15$
-        - ^mka2019-10-25-16$
-        - ^mka2019-10-25-17$
-        - ^mka2019-10-25-61$
-        - ^mka2019-10-25-78$
-        - ^mka2019-10-25-219$
+  - sources:
+      - literal:
+          value:
+            - float {tomo-voxel_spacing}
+        parent_filters:
+          exclude:
+            run:
+              - ^mka2019-10-25-14$
+              - ^mka2019-10-25-15$
+              - ^mka2019-10-25-16$
+              - ^mka2019-10-25-17$
+              - ^mka2019-10-25-61$
+              - ^mka2019-10-25-78$
+              - ^mka2019-10-25-219$

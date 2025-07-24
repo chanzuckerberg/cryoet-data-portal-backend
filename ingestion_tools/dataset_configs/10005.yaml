@@ -100,17 +100,20 @@ datasets:
         name: sperm
       cross_references: &id004
         publications: doi:10.1101/2022.09.28.510016
-      dataset_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
+      dataset_description:
+        Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
         lamella.
       dataset_identifier: 10005
       dataset_title: Microtubule doublet from mouse sperm
       dates: *id002
       funding:
         - funding_agency_name: Howard Hughes Medical Institute (HHMI)
-        - funding_agency_name: National Institutes of Health/National Institute of General
+        - funding_agency_name:
+            National Institutes of Health/National Institute of General
             Medical Sciences (NIH/NIGMS)
           grant_id: GM118106
-        - funding_agency_name: National Institutes of Health/National Institute of General
+        - funding_agency_name:
+            National Institutes of Health/National Institute of General
             Medical Sciences (NIH/NIGMS)
           grant_id: GM118099
         - funding_agency_name: The Pew Charitable Trusts
@@ -118,8 +121,9 @@ datasets:
       grid_preparation: ''
       organism:
         name: Mus musculus
-      sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, instance_type:
-      subtomogram_averaging_preparation'
+      sample_preparation:
+        'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, instance_type:
+        subtomogram_averaging_preparation'
       sample_type: cell
     sources:
       - literal:
@@ -130,7 +134,8 @@ depositions:
       authors: *id003
       cross_references: *id004
       dates: *id002
-      deposition_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
+      deposition_description:
+        Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
         lamella, including annotations of microtubule doublets (48 nm and 96 nm repeat).
       deposition_identifier: 10005
       deposition_title: Microtubule doublet from mouse sperm
@@ -145,8 +150,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10005_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10005_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10005_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10005_thumbnail.png'
 
 frames:
   - metadata:

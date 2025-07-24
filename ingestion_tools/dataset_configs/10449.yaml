@@ -16,7 +16,6 @@ ctfs:
       - source_glob:
           list_glob: '{run_name}_CTFFIND_format_CTF.txt'
 
-
 depositions:
   - sources:
       - literal:
@@ -54,7 +53,8 @@ datasets:
           primary_author_status: false
           corresponding_author_status: true
           ORCID: 0000-0002-8402-0134
-      dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synaptosomes purified
+      dataset_description:
+        Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synaptosomes purified
         by the homogenization of rat hippocampi. Samples were prepared by plunge-freezing via Leica GP2. Contained data
         were collected on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
         using AreTomo3 v2.0.7.
@@ -67,12 +67,14 @@ datasets:
       funding:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: 'CZII-2023–327779'
-      grid_preparation: Glow discharge Quantifoil Au R2/2 200 mesh grids + apply 4ul of diluted homogenate to grid
+      grid_preparation:
+        Glow discharge Quantifoil Au R2/2 200 mesh grids + apply 4ul of diluted homogenate to grid
         + blot for 4 seconds
       organism:
         name: Sprague Dawley Rat
         taxonomy_id: 10116
-      sample_preparation: 180 mg Sprague Dawley rat hippocampus tissue placed into a glass pestle and mortar with 5mL
+      sample_preparation:
+        180 mg Sprague Dawley rat hippocampus tissue placed into a glass pestle and mortar with 5mL
         of ice-cold Artificial Cerebral Spinal Fluid (ACSF) + grind by stroking 4 times (1-2 seconds each) to homogenize
         tissue + centrifuge for 10 minutes at 800 rpm + dilute supernatant 1:50 with ACSF
       sample_type: tissue
@@ -86,7 +88,8 @@ datasets:
 
 annotations:
   - metadata:
-      annotation_method: Prediction using membrain-seg without rescaling and weights
+      annotation_method:
+        Prediction using membrain-seg without rescaling and weights
         MemBrain_seg_v10_alpha.ckpt
       annotation_object:
         id: GO:0016020
@@ -295,7 +298,6 @@ tomograms:
       - source_glob:
           list_glob: '{run_name}_dctf_Vol.mrc'
           match_regex: (.*)\.mrc
-
 
 version: 1.1.0
 voxel_spacings:

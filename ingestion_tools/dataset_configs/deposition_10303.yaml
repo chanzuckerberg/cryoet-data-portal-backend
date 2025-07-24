@@ -1,12 +1,13 @@
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 annotations:
   - metadata:
-      annotation_method: Prediction using membrain-seg without rescaling and weights
+      annotation_method:
+        Prediction using membrain-seg without rescaling and weights
         MemBrain_seg_v10_alpha.ckpt
       annotation_object:
         description: Membrain-seg prediction
@@ -69,7 +70,8 @@ depositions:
       cross_references:
         publications: 10.1101/2024.01.05.574336
       dates: *id002
-      deposition_description: Membrane segmentations predicted using membrain-seg without
+      deposition_description:
+        Membrane segmentations predicted using membrain-seg without
         rescaling and weights MemBrain_seg_v10_alpha.ckpt
       deposition_identifier: 10303
       deposition_title: membrain-seg membrane predictions
@@ -83,8 +85,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10303_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10303_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10303_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10303_thumbnail.png'
 runs:
   - sources:
       - source_glob:

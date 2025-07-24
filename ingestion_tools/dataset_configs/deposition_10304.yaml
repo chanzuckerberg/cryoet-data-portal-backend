@@ -1,12 +1,13 @@
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 annotations:
   - metadata:
-      annotation_method: Tomogram Denoising + 3D-U-Net Based Membrane Segmentation +
+      annotation_method:
+        Tomogram Denoising + 3D-U-Net Based Membrane Segmentation +
         Manual Post-Processing
       annotation_object:
         id: GO:0016020
@@ -58,7 +59,8 @@ depositions:
       cross_references:
         publications: 10.1101/2024.01.05.574336
       dates: *id002
-      deposition_description: Membrane segmentations using membrain-seg of tomograms
+      deposition_description:
+        Membrane segmentations using membrain-seg of tomograms
         denoised using a custom algorithm.
       deposition_identifier: 10304
       deposition_title: Membrane segmentations of denoised tomograms
@@ -72,8 +74,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10304_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10304_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10304_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10304_thumbnail.png'
 runs:
   - sources:
       - source_glob:

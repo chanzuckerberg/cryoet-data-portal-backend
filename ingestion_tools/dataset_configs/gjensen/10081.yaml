@@ -1,94 +1,99 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-07-06-168/keyimg_dga2017-07-06-168.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-07-06-168/keyimg_dga2017-07-06-168_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-07-06-168/keyimg_dga2017-07-06-168.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/dga2017-07-06-168/keyimg_dga2017-07-06-168_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Debnath Ghosal
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: Philadelphia-1_Lp02
-    cross_references:
-      publications: 10.1038/s41564-019-0427-4
-    dataset_description: This is 24th of 41 sets of data studying Legionella pneumophila
-      collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. DotF-sfGFP
-      fusion to the wild-type gene on the chromosome (thyA).
-    dataset_identifier: 10081
-    dataset_title: L. pneumophila JV9082
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: "6 grids were frozen for the JV9082 strain (2x concentrated\
-      \ culture); Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force\
-      \ 6, blot time 4.5 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix.\
-      \ Grid: Quantifoil Cu 2/2 200. 3 grids with extra-thick carbon (JV9082T) and\
-      \ three finder grids (JV9082F). Add gold to cells prior to freezing: 1ul of\
-      \ gold to 4 ul of cells, freeze."
-    organism:
-      name: Legionella pneumophila
-      taxonomy_id: 1080311
-    sample_preparation: 'Cells were grown in AYE liquid culture with following supplements:
-      ferric nitrate, cysteine hydrochloride and thymidine. Scrape cells off a plate,
-      dissolve in the media, adjust the cell density to 0.6 and make a dilution series.
-      Start O/N culture with all of them and freeze cells next day from the one in
-      early stationary phase that is OD ~ 3.0. This time cell density was 2.7'
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10081'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Debnath Ghosal
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: Philadelphia-1_Lp02
+      cross_references:
+        publications: 10.1038/s41564-019-0427-4
+      dataset_description:
+        This is 24th of 41 sets of data studying Legionella pneumophila
+        collected by Debnath Ghosal and is a part of Caltech Jensen  lab etdb. DotF-sfGFP
+        fusion to the wild-type gene on the chromosome (thyA).
+      dataset_identifier: 10081
+      dataset_title: L. pneumophila JV9082
+      dates: &id002
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
+      grid_preparation:
+        "6 grids were frozen for the JV9082 strain (2x concentrated\
+        \ culture); Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot force\
+        \ 6, blot time 4.5 sec. Wait time 0 sec. Drain time 1 sec. Ethane/propane mix.\
+        \ Grid: Quantifoil Cu 2/2 200. 3 grids with extra-thick carbon (JV9082T) and\
+        \ three finder grids (JV9082F). Add gold to cells prior to freezing: 1ul of\
+        \ gold to 4 ul of cells, freeze."
+      organism:
+        name: Legionella pneumophila
+        taxonomy_id: 1080311
+      sample_preparation:
+        'Cells were grown in AYE liquid culture with following supplements:
+        ferric nitrate, cysteine hydrochloride and thymidine. Scrape cells off a plate,
+        dissolve in the media, adjust the cell density to 0.6 and make a dilution series.
+        Start O/N culture with all of them and freeze cells next day from the one in
+        early stationary phase that is OD ~ 3.0. This time cell density was 2.7'
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10081'
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1038/s41564-019-0427-4,10.1038/s41564-019-0603-6
-      related_database_entries: EMD-0566
-    dates: *id002
-    deposition_description: 41 sets of data studying Legionella pneumophila collected
-      by Debnath Ghosal and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10038
-    deposition_title: Legionella pneumophila (tax_id=1080311) strain:Philadelphia-1_Lp02
-      by Debnath Ghosal
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10038
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1038/s41564-019-0427-4,10.1038/s41564-019-0603-6
+        related_database_entries: EMD-0566
+      dates: *id002
+      deposition_description:
+        41 sets of data studying Legionella pneumophila collected
+        by Debnath Ghosal and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10038
+      deposition_title:
+        Legionella pneumophila (tax_id=1080311) strain:Philadelphia-1_Lp02
+        by Debnath Ghosal
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10038
 frames:
-- metadata:
-    dose_rate: 1.639344262295082
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.639344262295082
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (dga2017-07-06-168|dga2017-07-06-169|dga2017-07-06-170|dga2017-07-06-171|dga2017-07-06-172|dga2017-07-06-173|dga2017-07-06-174|dga2017-07-06-175|dga2017-07-06-176|dga2017-07-06-177|dga2017-07-06-178|dga2017-07-06-179|dga2017-07-06-180|dga2017-07-06-181|dga2017-07-06-182|dga2017-07-06-183|dga2017-07-06-184|dga2017-07-06-185|dga2017-07-06-186|dga2017-07-06-187|dga2017-07-06-188|dga2017-07-06-189|dga2017-07-06-190|dga2017-07-06-191|dga2017-07-06-192|dga2017-07-06-193|dga2017-07-06-194|dga2017-07-06-195|dga2017-07-06-196|dga2017-07-06-197|dga2017-07-06-198|dga2017-07-06-199|dga2017-07-06-200|dga2017-07-06-201|dga2017-07-06-202|dga2017-07-06-203|dga2017-07-06-204|dga2017-07-06-205|dga2017-07-06-206|dga2017-07-06-207|dga2017-07-06-208|dga2017-07-06-209|dga2017-07-06-210|dga2017-07-06-211|dga2017-07-06-212|dga2017-07-06-213|dga2017-07-06-214|dga2017-07-06-215|dga2017-07-06-216|dga2017-07-06-217|dga2017-07-06-218|dga2017-07-06-219|dga2017-07-06-220|dga2017-07-06-221|dga2017-07-06-222|dga2017-07-06-223|dga2017-07-06-224|dga2017-07-06-225|dga2017-07-06-226|dga2017-07-06-227|dga2017-07-06-228)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: (dga2017-07-06-168|dga2017-07-06-169|dga2017-07-06-170|dga2017-07-06-171|dga2017-07-06-172|dga2017-07-06-173|dga2017-07-06-174|dga2017-07-06-175|dga2017-07-06-176|dga2017-07-06-177|dga2017-07-06-178|dga2017-07-06-179|dga2017-07-06-180|dga2017-07-06-181|dga2017-07-06-182|dga2017-07-06-183|dga2017-07-06-184|dga2017-07-06-185|dga2017-07-06-186|dga2017-07-06-187|dga2017-07-06-188|dga2017-07-06-189|dga2017-07-06-190|dga2017-07-06-191|dga2017-07-06-192|dga2017-07-06-193|dga2017-07-06-194|dga2017-07-06-195|dga2017-07-06-196|dga2017-07-06-197|dga2017-07-06-198|dga2017-07-06-199|dga2017-07-06-200|dga2017-07-06-201|dga2017-07-06-202|dga2017-07-06-203|dga2017-07-06-204|dga2017-07-06-205|dga2017-07-06-206|dga2017-07-06-207|dga2017-07-06-208|dga2017-07-06-209|dga2017-07-06-210|dga2017-07-06-211|dga2017-07-06-212|dga2017-07-06-213|dga2017-07-06-214|dga2017-07-06-215|dga2017-07-06-216|dga2017-07-06-217|dga2017-07-06-218|dga2017-07-06-219|dga2017-07-06-220|dga2017-07-06-221|dga2017-07-06-222|dga2017-07-06-223|dga2017-07-06-224|dga2017-07-06-225|dga2017-07-06-226|dga2017-07-06-227|dga2017-07-06-228)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10038
   run_data_map_file: run_data_map/10081.csv
@@ -96,80 +101,80 @@ standardization_config:
   run_to_tomo_map_csv: run_tomo_map/10081.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: TFS
-      model: Krios
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 4.2
-    spherical_aberration_constant: 2.7
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: -10.7
-    tilt_range:
-      max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
-    tilt_step: 2.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 100.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ''
+        manufacturer: TFS
+        model: Krios
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 4.2
+      spherical_aberration_constant: 2.7
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
+      tilt_axis: -10.7
+      tilt_range:
+        max: 60.0
+        min: -60.0
+      tilt_series_quality: 4
+      tilt_step: 2.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 100.0
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/rawdata/*'
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: '{tomo-align_software}'
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: '{tomo-processing_software}'
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: '{tomo-reconstruction_software}'
-    tomogram_version: 1
-    voxel_spacing: 16.8
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/{mapped_tomo_name}'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: '{tomo-align_software}'
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: '{tomo-processing_software}'
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
+      tomogram_version: 1
+      voxel_spacing: 16.8
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/{mapped_tomo_name}'
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 16.8
+  - sources:
+      - literal:
+          value:
+            - 16.8

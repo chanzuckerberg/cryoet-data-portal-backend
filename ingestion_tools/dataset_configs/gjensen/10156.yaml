@@ -1,85 +1,89 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-12-05-10/keyimg_ycw2012-12-05-10.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-12-05-10/keyimg_ycw2012-12-05-10_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-12-05-10/keyimg_ycw2012-12-05-10.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-12-05-10/keyimg_ycw2012-12-05-10_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Yi-Wei Chang
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: HD100
-    cross_references:
-      publications: 10.1038/s41564-023-01401-2
-    dataset_description: This is 2nd of 4 sets of data studying Bdellovibrio bacteriovorus
-      collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
-    dataset_identifier: 10156
-    dataset_title: Bdellovibrio/E. coli minicell
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
-      \ treated gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix. Quantifoil\
-      \ Cu Finder grid"
-    organism:
-      name: Bdellovibrio bacteriovorus
-      taxonomy_id: 264462
-    sample_preparation: Bdellovibrio/E. coli minicell
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10156'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Yi-Wei Chang
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: HD100
+      cross_references:
+        publications: 10.1038/s41564-023-01401-2
+      dataset_description:
+        This is 2nd of 4 sets of data studying Bdellovibrio bacteriovorus
+        collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
+      dataset_identifier: 10156
+      dataset_title: Bdellovibrio/E. coli minicell
+      dates: &id002
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
+      grid_preparation:
+        "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
+        \ treated gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix. Quantifoil\
+        \ Cu Finder grid"
+      organism:
+        name: Bdellovibrio bacteriovorus
+        taxonomy_id: 264462
+      sample_preparation: Bdellovibrio/E. coli minicell
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10156'
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1038/s41564-023-01401-2
-    dates: *id002
-    deposition_description: 4 sets of data studying Bdellovibrio bacteriovorus collected
-      by Yi-Wei Chang and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10032
-    deposition_title: Bdellovibrio bacteriovorus (tax_id=264462) strain:HD100 by Yi-Wei
-      Chang
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10032
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1038/s41564-023-01401-2
+      dates: *id002
+      deposition_description:
+        4 sets of data studying Bdellovibrio bacteriovorus collected
+        by Yi-Wei Chang and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10032
+      deposition_title:
+        Bdellovibrio bacteriovorus (tax_id=264462) strain:HD100 by Yi-Wei
+        Chang
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10032
 frames:
-- metadata:
-    dose_rate: float {frame_dose_rate}
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: float {frame_dose_rate}
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (ycw2012-12-05-10|ycw2012-12-05-11|ycw2012-12-05-13|ycw2012-12-05-14|ycw2012-12-05-15|ycw2012-12-05-16|ycw2012-12-05-17|ycw2012-12-05-18|ycw2012-12-05-21|ycw2012-12-05-22|ycw2012-12-05-23|ycw2012-12-05-24|ycw2012-12-05-27|ycw2013-09-10-22|ycw2013-09-10-23|ycw2013-09-10-24|ycw2013-09-10-25|ycw2013-09-10-29|ycw2013-09-27-3|ycw2013-09-27-4|ycw2013-09-27-5|ycw2013-09-27-6|ycw2013-09-27-7|ycw2013-09-27-8|ycw2013-09-27-9|ycw2013-09-27-10|ycw2013-09-27-11|ycw2013-09-27-12|ycw2013-09-27-13|ycw2013-09-27-16|ycw2013-09-27-17|ycw2013-09-27-18|ycw2013-09-27-19|ycw2013-09-27-20|ycw2013-09-27-21|ycw2013-09-27-22|ycw2013-09-27-23|ycw2013-09-28-1|ycw2013-09-28-2|ycw2013-09-28-3|ycw2013-09-28-4|ycw2013-09-28-5|ycw2013-09-28-6|ycw2013-09-28-7|ycw2013-09-28-8|ycw2013-09-28-9|ycw2013-09-28-10|ycw2013-09-28-11|ycw2013-09-28-12|ycw2013-09-28-13|ycw2013-09-28-14|ycw2013-09-28-15|ycw2013-09-28-16|ycw2013-09-28-17|ycw2013-09-28-18|ycw2013-09-28-19|ycw2013-09-28-20|ycw2013-09-28-21|ycw2013-09-28-22|ycw2013-09-28-23|ycw2013-09-28-24|ycw2013-09-28-25|ycw2013-09-28-26|ycw2013-09-28-27|ycw2013-09-28-28|ycw2013-09-28-29|ycw2013-09-28-30|ycw2013-09-28-31|ycw2013-09-28-32|ycw2013-09-28-33|ycw2013-09-28-34|ycw2013-09-28-35|ycw2013-09-28-36|ycw2013-09-28-37|ycw2013-09-28-38|ycw2013-09-28-39|ycw2013-09-28-40|ycw2013-09-28-41|ycw2013-09-28-42|ycw2013-09-28-43|ycw2013-09-28-44|ycw2013-09-28-45|ycw2013-09-28-46|ycw2013-09-28-47|ycw2013-09-28-48|ycw2013-09-28-49|ycw2013-09-28-50|ycw2013-09-28-51|ycw2013-09-28-52|ycw2013-09-28-53|ycw2013-09-28-54|ycw2013-09-28-55|ycw2013-09-28-56|ycw2013-09-28-57|ycw2013-09-28-58|ycw2013-09-28-59|ycw2013-09-28-60|ycw2013-09-28-61|ycw2013-09-28-62|ycw2013-09-28-63|ycw2013-09-28-64|ycw2013-09-28-65|ycw2013-09-28-66|ycw2013-09-28-67|ycw2013-09-28-68|ycw2013-09-28-69|ycw2013-09-28-70|ycw2013-09-28-71|ycw2013-09-28-72|ycw2013-09-28-73|ycw2013-09-28-74|ycw2013-09-28-75|ycw2013-09-28-76|ycw2013-09-28-77|ycw2013-09-28-78|ycw2013-09-28-79|ycw2013-09-28-80|ycw2013-09-28-81|ycw2013-09-28-82|ycw2013-09-28-83|ycw2013-09-28-84|ycw2013-09-28-85|ycw2013-09-28-86|ycw2013-09-28-87|ycw2013-09-28-88|ycw2013-09-28-89|ycw2013-09-28-90|ycw2013-09-28-91|ycw2013-09-28-92|ycw2013-09-28-93|ycw2013-09-28-94|ycw2013-09-28-95|ycw2013-09-28-96|ycw2013-09-28-97|ycw2013-09-28-98|ycw2013-09-28-99|ycw2013-09-28-100|ycw2013-09-28-101|ycw2013-09-28-102|ycw2013-09-28-103|ycw2013-09-28-104|ycw2013-09-28-105|ycw2013-12-06-2|ycw2013-12-06-3|ycw2013-12-06-4|ycw2013-12-06-6|ycw2013-12-06-7|ycw2013-12-06-9|ycw2013-12-06-11|ycw2013-12-06-12|ycw2013-12-06-14|ycw2013-12-06-15|ycw2013-12-06-16|ycw2013-12-06-17|ycw2013-12-06-18|ycw2013-12-06-19|ycw2013-12-06-20|ycw2013-12-06-21|ycw2013-12-06-26|ycw2013-12-06-27|ycw2013-12-06-28|ycw2013-12-06-29|ycw2013-12-06-30|ycw2013-12-06-31|ycw2013-12-06-32|ycw2013-12-06-33|ycw2013-12-06-34|ycw2013-12-06-35|ycw2013-12-06-36|ycw2013-12-06-37|ycw2013-12-06-38|ycw2013-12-06-39|ycw2013-12-06-41|ycw2013-12-06-43|ycw2013-12-06-44|ycw2013-12-06-45|ycw2013-12-06-46|ycw2013-12-06-47|ycw2013-12-06-48|ycw2013-12-06-49|ycw2013-12-06-50|ycw2013-12-06-57)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: (ycw2012-12-05-10|ycw2012-12-05-11|ycw2012-12-05-13|ycw2012-12-05-14|ycw2012-12-05-15|ycw2012-12-05-16|ycw2012-12-05-17|ycw2012-12-05-18|ycw2012-12-05-21|ycw2012-12-05-22|ycw2012-12-05-23|ycw2012-12-05-24|ycw2012-12-05-27|ycw2013-09-10-22|ycw2013-09-10-23|ycw2013-09-10-24|ycw2013-09-10-25|ycw2013-09-10-29|ycw2013-09-27-3|ycw2013-09-27-4|ycw2013-09-27-5|ycw2013-09-27-6|ycw2013-09-27-7|ycw2013-09-27-8|ycw2013-09-27-9|ycw2013-09-27-10|ycw2013-09-27-11|ycw2013-09-27-12|ycw2013-09-27-13|ycw2013-09-27-16|ycw2013-09-27-17|ycw2013-09-27-18|ycw2013-09-27-19|ycw2013-09-27-20|ycw2013-09-27-21|ycw2013-09-27-22|ycw2013-09-27-23|ycw2013-09-28-1|ycw2013-09-28-2|ycw2013-09-28-3|ycw2013-09-28-4|ycw2013-09-28-5|ycw2013-09-28-6|ycw2013-09-28-7|ycw2013-09-28-8|ycw2013-09-28-9|ycw2013-09-28-10|ycw2013-09-28-11|ycw2013-09-28-12|ycw2013-09-28-13|ycw2013-09-28-14|ycw2013-09-28-15|ycw2013-09-28-16|ycw2013-09-28-17|ycw2013-09-28-18|ycw2013-09-28-19|ycw2013-09-28-20|ycw2013-09-28-21|ycw2013-09-28-22|ycw2013-09-28-23|ycw2013-09-28-24|ycw2013-09-28-25|ycw2013-09-28-26|ycw2013-09-28-27|ycw2013-09-28-28|ycw2013-09-28-29|ycw2013-09-28-30|ycw2013-09-28-31|ycw2013-09-28-32|ycw2013-09-28-33|ycw2013-09-28-34|ycw2013-09-28-35|ycw2013-09-28-36|ycw2013-09-28-37|ycw2013-09-28-38|ycw2013-09-28-39|ycw2013-09-28-40|ycw2013-09-28-41|ycw2013-09-28-42|ycw2013-09-28-43|ycw2013-09-28-44|ycw2013-09-28-45|ycw2013-09-28-46|ycw2013-09-28-47|ycw2013-09-28-48|ycw2013-09-28-49|ycw2013-09-28-50|ycw2013-09-28-51|ycw2013-09-28-52|ycw2013-09-28-53|ycw2013-09-28-54|ycw2013-09-28-55|ycw2013-09-28-56|ycw2013-09-28-57|ycw2013-09-28-58|ycw2013-09-28-59|ycw2013-09-28-60|ycw2013-09-28-61|ycw2013-09-28-62|ycw2013-09-28-63|ycw2013-09-28-64|ycw2013-09-28-65|ycw2013-09-28-66|ycw2013-09-28-67|ycw2013-09-28-68|ycw2013-09-28-69|ycw2013-09-28-70|ycw2013-09-28-71|ycw2013-09-28-72|ycw2013-09-28-73|ycw2013-09-28-74|ycw2013-09-28-75|ycw2013-09-28-76|ycw2013-09-28-77|ycw2013-09-28-78|ycw2013-09-28-79|ycw2013-09-28-80|ycw2013-09-28-81|ycw2013-09-28-82|ycw2013-09-28-83|ycw2013-09-28-84|ycw2013-09-28-85|ycw2013-09-28-86|ycw2013-09-28-87|ycw2013-09-28-88|ycw2013-09-28-89|ycw2013-09-28-90|ycw2013-09-28-91|ycw2013-09-28-92|ycw2013-09-28-93|ycw2013-09-28-94|ycw2013-09-28-95|ycw2013-09-28-96|ycw2013-09-28-97|ycw2013-09-28-98|ycw2013-09-28-99|ycw2013-09-28-100|ycw2013-09-28-101|ycw2013-09-28-102|ycw2013-09-28-103|ycw2013-09-28-104|ycw2013-09-28-105|ycw2013-12-06-2|ycw2013-12-06-3|ycw2013-12-06-4|ycw2013-12-06-6|ycw2013-12-06-7|ycw2013-12-06-9|ycw2013-12-06-11|ycw2013-12-06-12|ycw2013-12-06-14|ycw2013-12-06-15|ycw2013-12-06-16|ycw2013-12-06-17|ycw2013-12-06-18|ycw2013-12-06-19|ycw2013-12-06-20|ycw2013-12-06-21|ycw2013-12-06-26|ycw2013-12-06-27|ycw2013-12-06-28|ycw2013-12-06-29|ycw2013-12-06-30|ycw2013-12-06-31|ycw2013-12-06-32|ycw2013-12-06-33|ycw2013-12-06-34|ycw2013-12-06-35|ycw2013-12-06-36|ycw2013-12-06-37|ycw2013-12-06-38|ycw2013-12-06-39|ycw2013-12-06-41|ycw2013-12-06-43|ycw2013-12-06-44|ycw2013-12-06-45|ycw2013-12-06-46|ycw2013-12-06-47|ycw2013-12-06-48|ycw2013-12-06-49|ycw2013-12-06-50|ycw2013-12-06-57)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10032
   run_data_map_file: run_data_map/10156.csv
@@ -87,80 +91,80 @@ standardization_config:
   run_to_tomo_map_csv: run_tomo_map/10156.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: '{ts-data_acquisition_software}'
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: '{ts-microscope-manufacturer}'
-      model: '{ts-microscope-model}'
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: float {ts-pixel_spacing}
-    spherical_aberration_constant: float {ts-spherical_aberration_constant}
-    tilt_alignment_software: RAPTOR
-    tilt_axis: -100.0
-    tilt_range:
-      max: float {ts-tilt_range-max}
-      min: float {ts-tilt_range-min}
-    tilt_series_quality: 4
-    tilt_step: float {ts-tilt_step}
-    tilting_scheme: starting tilt to max then min
-    total_flux: float {ts-total_flux}
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: '{ts-data_acquisition_software}'
+      is_aligned: false
+      microscope:
+        additional_info: ''
+        manufacturer: '{ts-microscope-manufacturer}'
+        model: '{ts-microscope-model}'
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: float {ts-pixel_spacing}
+      spherical_aberration_constant: float {ts-spherical_aberration_constant}
+      tilt_alignment_software: RAPTOR
+      tilt_axis: -100.0
+      tilt_range:
+        max: float {ts-tilt_range-max}
+        min: float {ts-tilt_range-min}
+      tilt_series_quality: 4
+      tilt_step: float {ts-tilt_step}
+      tilting_scheme: starting tilt to max then min
+      total_flux: float {ts-total_flux}
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/rawdata/*'
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: RAPTOR
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/{mapped_tomo_name}'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: RAPTOR
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: float {tomo-voxel_spacing}
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/{mapped_tomo_name}'
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - float {tomo-voxel_spacing}
+  - sources:
+      - literal:
+          value:
+            - float {tomo-voxel_spacing}

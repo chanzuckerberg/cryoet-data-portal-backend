@@ -235,7 +235,8 @@ datasets:
       cross_references: &id005
         publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
         related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
-      dataset_description: This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for
+      dataset_description:
+        This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for
         the purpose of training object identification algorithms in the context of the CryoET Object Identification
         Challenge. The data was simulated using polnet, and contains point labels and semantic masks for all 6 protein
         complexes included in the challenge dataset (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes,
@@ -247,7 +248,8 @@ datasets:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: "CZII-2023\u2013327779"
       grid_preparation: ''
-      sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's
+      sample_preparation:
+        Simulation of 3D volumes with polnet + projection using IMOD's
         xyzproj + addition of noise + reconstruction with IMOD's tilt
       sample_type: in_silico
     sources:

@@ -1,165 +1,169 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/psa2014-12-20-10/keyimg_psa2014-12-20-10.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/psa2014-12-20-10/keyimg_psa2014-12-20-10_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/psa2014-12-20-10/keyimg_psa2014-12-20-10.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/psa2014-12-20-10/keyimg_psa2014-12-20-10_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Poorna Subramanian
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: AMB-1
-    cross_references:
-      publications: 10.1128/mBio.01898-15
-    dataset_description: This is 2nd of 3 sets of data studying Magnetospirillum magneticum
-      collected by Poorna Subramanian and is a part of Caltech Jensen  lab etdb. This
-      is the wild type in which the entire island of genes responsible for magnetosome
-      formation has been deleted
-    dataset_identifier: 10136
-    dataset_title: M. magneticum island delete
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: null
-    organism:
-      name: Magnetospirillum magneticum
-      taxonomy_id: 342108
-    sample_preparation: This is the wild type in which the entire island of genes
-      responsible for magnetosome formation has been deleted
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10136'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Poorna Subramanian
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: AMB-1
+      cross_references:
+        publications: 10.1128/mBio.01898-15
+      dataset_description:
+        This is 2nd of 3 sets of data studying Magnetospirillum magneticum
+        collected by Poorna Subramanian and is a part of Caltech Jensen  lab etdb. This
+        is the wild type in which the entire island of genes responsible for magnetosome
+        formation has been deleted
+      dataset_identifier: 10136
+      dataset_title: M. magneticum island delete
+      dates: &id002
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
+      grid_preparation: null
+      organism:
+        name: Magnetospirillum magneticum
+        taxonomy_id: 342108
+      sample_preparation:
+        This is the wild type in which the entire island of genes
+        responsible for magnetosome formation has been deleted
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10136'
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1128/mBio.01898-15
-    dates: *id002
-    deposition_description: 3 sets of data studying Magnetospirillum magneticum collected
-      by Poorna Subramanian and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10028
-    deposition_title: Magnetospirillum magneticum (tax_id=342108) strain:AMB-1 by
-      Poorna Subramanian
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10028
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1128/mBio.01898-15
+      dates: *id002
+      deposition_description:
+        3 sets of data studying Magnetospirillum magneticum collected
+        by Poorna Subramanian and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10028
+      deposition_title:
+        Magnetospirillum magneticum (tax_id=342108) strain:AMB-1 by
+        Poorna Subramanian
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10028
 frames:
-- metadata:
-    dose_rate: 0.8264462809917356
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 0.8264462809917356
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (psa2014-12-20-10|psa2014-12-20-11|psa2014-12-20-12|psa2014-12-20-13|psa2014-12-20-14|psa2014-12-20-15|psa2014-12-20-16|psa2014-12-20-17|psa2014-12-20-18|psa2014-12-20-19|psa2014-12-20-20|psa2014-12-20-21|psa2014-12-20-22|psa2014-12-20-23|psa2014-12-20-24|psa2014-12-20-25|psa2014-12-20-26|psa2014-12-20-27|psa2014-12-20-28|psa2014-12-20-29|psa2014-12-20-30|psa2014-12-20-31|psa2014-12-20-32)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: (psa2014-12-20-10|psa2014-12-20-11|psa2014-12-20-12|psa2014-12-20-13|psa2014-12-20-14|psa2014-12-20-15|psa2014-12-20-16|psa2014-12-20-17|psa2014-12-20-18|psa2014-12-20-19|psa2014-12-20-20|psa2014-12-20-21|psa2014-12-20-22|psa2014-12-20-23|psa2014-12-20-24|psa2014-12-20-25|psa2014-12-20-26|psa2014-12-20-27|psa2014-12-20-28|psa2014-12-20-29|psa2014-12-20-30|psa2014-12-20-31|psa2014-12-20-32)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10028
   run_data_map_file: run_data_map/10136.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 6.167
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: '{ts-tilt_alignment_software}'
-    tilt_axis: 78.0
-    tilt_range:
-      max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
-    tilt_step: 1.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 100.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ''
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 6.167
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
+      tilt_axis: 78.0
+      tilt_range:
+        max: 60.0
+        min: -60.0
+      tilt_series_quality: 4
+      tilt_step: 1.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 100.0
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/rawdata/*'
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: '{tomo-align_software}'
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 24.667
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: '{tomo-align_software}'
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 24.667
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/3dimage_*/*'
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 24.667
+  - sources:
+      - literal:
+          value:
+            - 24.667

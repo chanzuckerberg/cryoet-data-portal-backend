@@ -9,7 +9,8 @@ alignments:
             - Data_Set_2/{run_name}/aligned_tilt_series/*.aln
 annotations:
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -53,7 +54,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -76,7 +78,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -99,7 +102,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -121,7 +125,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -143,7 +148,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -165,7 +171,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -189,7 +196,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -213,7 +221,8 @@ annotations:
           is_visualization_default: true
           mask_label: 1
   - metadata:
-      annotation_method: Each organelle was segmented as a separate region of interest
+      annotation_method:
+        Each organelle was segmented as a separate region of interest
         in 8X binned tomogram by tracing + A 3-D reconstruction of each organelle was
         generated + Reconstructions were converted to contour meshes which were smoothed
       annotation_object:
@@ -273,11 +282,13 @@ datasets:
       cross_references: &id004
         publications: 10.1101/2024.07.13.603322
         related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
-      dataset_description: This dataset contains raw frames, tilt series, tomogram reconstructions
+      dataset_description:
+        This dataset contains raw frames, tilt series, tomogram reconstructions
         and segmentations from Encephalitozoon intestinalis microsporidian spores. Samples
         were cryo-FIB milled.
       dataset_identifier: 10436
-      dataset_title: Cryo-ET datasets (1 and 2) of dormant microporidian spores from
+      dataset_title:
+        Cryo-ET datasets (1 and 2) of dormant microporidian spores from
         Encephalitozoon intestinalis
       dates: *id002
       funding:
@@ -289,7 +300,8 @@ datasets:
           grant_id: R01AI147131
         - funding_agency_name: The Pew Charitable Trusts
           grant_id: PEW-00033055
-        - funding_agency_name: NIH Common Fund Transformative High Resolution Cryo-Electron
+        - funding_agency_name:
+            NIH Common Fund Transformative High Resolution Cryo-Electron
             Microscopy program
           grant_id: U24 GM129539
         - funding_agency_name: Simons Foundation
@@ -298,16 +310,18 @@ datasets:
         - funding_agency_name: NIH/NIGMS
           grant_id: 9 P41 GM103310
         - funding_agency_name: Irma T. Hirschl Career Scientist Award
-      grid_preparation: quantifoil 2/2 200mesh, ~20nm evaporated carbon, prepared using
+      grid_preparation:
+        quantifoil 2/2 200mesh, ~20nm evaporated carbon, prepared using
         waffle method
       organism:
         name: Encephalitozoon intestinalis
         taxonomy_id: 58839
       other_setup: Cryo-FIB milling
-      sample_preparation: 'E. intestinalis spores were purified from infected vero cells,
-      then ran over a discontinuous percoll gradient to separate out mature spores.
-      For details, (see manuscript: Cryo-ET reveals the in situ architecture of the
-      polar tube invasion apparatus from microsporidian parasites)'
+      sample_preparation:
+        'E. intestinalis spores were purified from infected vero cells,
+        then ran over a discontinuous percoll gradient to separate out mature spores.
+        For details, (see manuscript: Cryo-ET reveals the in situ architecture of the
+        polar tube invasion apparatus from microsporidian parasites)'
       sample_type: cell
     sources:
       - literal:
@@ -324,13 +338,15 @@ depositions:
       authors: *id003
       cross_references: *id004
       dates: *id002
-      deposition_description: This deposition contains three datasets of dormant microsporidian
+      deposition_description:
+        This deposition contains three datasets of dormant microsporidian
         spores from Encephalitozoon intestinalis and Encephalitozoon hellem. The datasets
         contain raw frames, tilt series, tomogram reconstructions and segmentations.
         Samples were prepared using the waffle-method and cryo-FIB milled. A subset
         of runs contains manual and manually curated annotations of spore organelles.
       deposition_identifier: 10307
-      deposition_title: In situ architecture of the polar tube invasion apparatus from
+      deposition_title:
+        In situ architecture of the polar tube invasion apparatus from
         microsporidian parasites
       deposition_types:
         - dataset

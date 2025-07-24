@@ -135,14 +135,16 @@ datasets:
         - funding_agency_name: Alexander von Humboldt Foundation
         - funding_agency_name: German Research Foundation (DFG)
           grant_id: 20016/446
-      grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
-      1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
-      support_film, pretreatment_type_: GLOW DISCHARGE, pretreatment_atmosphere: AIR'
+      grid_preparation:
+        'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
+        1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
+        support_film, pretreatment_type_: GLOW DISCHARGE, pretreatment_atmosphere: AIR'
       organism:
         name: Thermoanaerobacter kivui
         taxonomy_id: 2325
-      sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
-      vitrification_instrument: FEI VITROBOT MARK IV, instance_type: subtomogram_averaging_preparation'
+      sample_preparation:
+        'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
+        vitrification_instrument: FEI VITROBOT MARK IV, instance_type: subtomogram_averaging_preparation'
       sample_type: organism
     sources:
       - literal:
@@ -159,11 +161,13 @@ depositions:
       authors: *id003
       cross_references: *id004
       dates: *id002
-      deposition_description: Cryo-electron tomograms of T. kivui FIB-SEM lamellas,
+      deposition_description:
+        Cryo-electron tomograms of T. kivui FIB-SEM lamellas,
         including annotations of membrane-anchored hydrogen-dependent CO2 reductase
         filaments and ribosomes, refined using STOPGAP.
       deposition_identifier: 10008
-      deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires
+      deposition_title:
+        Membrane-anchored Hydrogen-dependent CO2 reductase nanowires
         in T. kivui
       deposition_types:
         - dataset

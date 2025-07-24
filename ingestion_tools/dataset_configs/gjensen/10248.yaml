@@ -1,84 +1,87 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/etl2011-07-05-1/keyimg_etl2011-07-05-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/etl2011-07-05-1/keyimg_etl2011-07-05-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/etl2011-07-05-1/keyimg_etl2011-07-05-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/etl2011-07-05-1/keyimg_etl2011-07-05-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Elitza Tocheva
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: subsp. subtilis str. 168
-    cross_references:
-      publications: 10.1111/mmi.12201
-    dataset_description: This is 3rd of 4 sets of data studying Bacillus subtilis
-      collected by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. sacculi
-      of sporulating wtBsubtilis
-    dataset_identifier: 10248
-    dataset_title: wild type B. subtilis
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: quantifoil grid R2/2, 20nm gold, 100% humidity
-    organism:
-      name: Bacillus subtilis
-      taxonomy_id: 224308
-    sample_preparation: sporulation media
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10248'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Elitza Tocheva
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: subsp. subtilis str. 168
+      cross_references:
+        publications: 10.1111/mmi.12201
+      dataset_description:
+        This is 3rd of 4 sets of data studying Bacillus subtilis
+        collected by Elitza Tocheva and is a part of Caltech Jensen  lab etdb. sacculi
+        of sporulating wtBsubtilis
+      dataset_identifier: 10248
+      dataset_title: wild type B. subtilis
+      dates: &id002
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
+      grid_preparation: quantifoil grid R2/2, 20nm gold, 100% humidity
+      organism:
+        name: Bacillus subtilis
+        taxonomy_id: 224308
+      sample_preparation: sporulation media
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10248'
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1111/mmi.12201
-    dates: *id002
-    deposition_description: 4 sets of data studying Bacillus subtilis collected by
-      Elitza Tocheva and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10019
-    deposition_title: Bacillus subtilis (tax_id=224308) strain:subsp. subtilis str.
-      168 by Elitza Tocheva
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10019
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1111/mmi.12201
+      dates: *id002
+      deposition_description:
+        4 sets of data studying Bacillus subtilis collected by
+        Elitza Tocheva and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10019
+      deposition_title:
+        Bacillus subtilis (tax_id=224308) strain:subsp. subtilis str.
+        168 by Elitza Tocheva
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10019
 frames:
-- metadata:
-    dose_rate: 1.639344262295082
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.639344262295082
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (etl2011-07-05-1|etl2011-07-05-2|etl2011-07-05-3|etl2011-07-05-4|etl2011-07-05-5|etl2011-07-05-6|etl2011-07-05-7|etl2011-07-05-8|etl2011-07-05-9|etl2011-07-05-10|etl2011-07-05-11|etl2011-07-05-12|etl2011-07-05-13|etl2011-07-05-14|etl2011-07-05-15|etl2011-07-05-16|etl2011-07-05-17|etl2011-07-05-18|etl2011-07-05-19|etl2011-07-05-20|etl2011-07-05-21|etl2011-07-05-22|etl2011-07-05-23|etl2011-07-05-24|etl2011-07-05-25|etl2011-07-05-26|etl2011-07-05-27|etl2011-07-05-28|etl2011-07-05-29|etl2011-07-05-30|etl2011-07-05-31|etl2011-07-05-32)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: (etl2011-07-05-1|etl2011-07-05-2|etl2011-07-05-3|etl2011-07-05-4|etl2011-07-05-5|etl2011-07-05-6|etl2011-07-05-7|etl2011-07-05-8|etl2011-07-05-9|etl2011-07-05-10|etl2011-07-05-11|etl2011-07-05-12|etl2011-07-05-13|etl2011-07-05-14|etl2011-07-05-15|etl2011-07-05-16|etl2011-07-05-17|etl2011-07-05-18|etl2011-07-05-19|etl2011-07-05-20|etl2011-07-05-21|etl2011-07-05-22|etl2011-07-05-23|etl2011-07-05-24|etl2011-07-05-25|etl2011-07-05-26|etl2011-07-05-27|etl2011-07-05-28|etl2011-07-05-29|etl2011-07-05-30|etl2011-07-05-31|etl2011-07-05-32)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10019
   run_data_map_file: run_data_map/10248.csv
@@ -86,80 +89,80 @@ standardization_config:
   run_to_tomo_map_csv: run_tomo_map/10248.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: null
-      manufacturer: Gatan
-      model: UltraCam
-    data_acquisition_software: Leginon
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 9.46
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: RAPTOR
-    tilt_axis: -13.8
-    tilt_range:
-      max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
-    tilt_step: 1.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 200.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: null
+        manufacturer: Gatan
+        model: UltraCam
+      data_acquisition_software: Leginon
+      is_aligned: false
+      microscope:
+        additional_info: ''
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 9.46
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: RAPTOR
+      tilt_axis: -13.8
+      tilt_range:
+        max: 60.0
+        min: -60.0
+      tilt_series_quality: 4
+      tilt_step: 1.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 200.0
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/rawdata/*'
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: RAPTOR
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: '{tomo-reconstruction_method}'
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 18.92
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/{mapped_tomo_name}'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: RAPTOR
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 18.92
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/{mapped_tomo_name}'
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 18.92
+  - sources:
+      - literal:
+          value:
+            - 18.92

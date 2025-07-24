@@ -13,7 +13,8 @@ annotations:
       annotation_object:
         id: GO:0022626
         name: cytosolic ribosome
-      annotation_publications: 10.1101/2023.04.28.538734, EMD-17241, EMD-17242, EMD-17243,
+      annotation_publications:
+        10.1101/2023.04.28.538734, EMD-17241, EMD-17242, EMD-17243,
         EMD-17244, EMD-17245
       annotation_software: STOPGAP + RELION
       authors:
@@ -126,11 +127,13 @@ datasets:
       cross_references: &id003
         publications: doi:10.1101/2023.04.28.538734
         related_database_entries: EMD-17241, EMD-17242, EMD-17243, EMD-17244, EMD-17245
-      dataset_description: Partial dataset used in the ribosome subtomogram reconstruction
+      dataset_description:
+        Partial dataset used in the ribosome subtomogram reconstruction
         selected from tomograms from double-sided attachment Serial Lift-Out experiment.
       dataset_identifier: 10004
-      dataset_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular\
-      \ Anatomy of Whole Organisms"
+      dataset_title:
+        "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular\
+        \ Anatomy of Whole Organisms"
       dates: *id001
       organism:
         name: Caenorhabditis elegans
@@ -151,12 +154,14 @@ depositions:
       authors: *id002
       cross_references: *id003
       dates: *id001
-      deposition_description: Cryo-electron tomograms from double-sided attachment Serial
+      deposition_description:
+        Cryo-electron tomograms from double-sided attachment Serial
         Lift-Out experiment of C. elegans, including annotations of ribosomes identified
         and refined using STOPGAP and RELION.
       deposition_identifier: 10004
-      deposition_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular\
-      \ Anatomy of Whole Organisms"
+      deposition_title:
+        "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular\
+        \ Anatomy of Whole Organisms"
       deposition_types:
         - dataset
         - annotation

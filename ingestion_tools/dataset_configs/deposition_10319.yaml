@@ -37,19 +37,20 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10319_thumbnail.png'
 
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 
 annotations:
   - metadata:
-      annotation_method: &method Ensemble of segmentation and detection networks with feature distribution alignment
+      annotation_method:
+        &method Ensemble of segmentation and detection networks with feature distribution alignment
         scaling.
       annotation_object:
         state: apo
@@ -302,7 +303,7 @@ datasets:
 runs:
   - sources:
       - source_glob:
-          list_glob: "Public/copick/ExperimentRuns/*"
+          list_glob: 'Public/copick/ExperimentRuns/*'
           match_regex: '.*'
           name_regex: '(.*)'
         parent_filters:
@@ -310,7 +311,7 @@ runs:
             dataset:
               - '10445'
       - source_glob:
-          list_glob: "Private/copick/ExperimentRuns/*"
+          list_glob: 'Private/copick/ExperimentRuns/*'
           match_regex: '.*'
           name_regex: '(.*)'
         parent_filters:

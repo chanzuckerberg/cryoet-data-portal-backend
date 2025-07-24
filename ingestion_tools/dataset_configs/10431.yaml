@@ -7,7 +7,7 @@ alignments:
           list_globs:
             - alignmentfiles/{run_name}_bin8_align_fid.tlt
             - alignmentfiles/{run_name}_bin8_align_fid.xf
-annotations: [ ]
+annotations: []
 collection_metadata:
   - sources:
       - source_glob:
@@ -43,7 +43,8 @@ datasets:
       cross_references:
         publications: 10.1038/s41467-025-56045-z, 10.1101/2024.06.27.600657
         related_database_entries: EMD-44921, EMD-44909, EMD-44922, EMD-46973
-      dataset_description: Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
+      dataset_description:
+        Michalak, Sun, Sochacki et al. 2024 unroofing manuscript
         contains 10 grids. This is grid 6 of 10 and contains apical membranes of HEK293
         Trex cells.  The cell line is stably expressing Dynamin 1 (K44A)- GFP on a tetracycline
         inducible promoter.  The cells were grown on coverslips coated with fibronectin,
@@ -63,12 +64,14 @@ datasets:
           grant_id: 1ZIAHL006098
         - funding_agency_name: NIH
           grant_id: 1ZIADK060100
-      grid_preparation: plasma discharge 30 sec + coated with 0.01% Poly-Lysine + pressed
+      grid_preparation:
+        plasma discharge 30 sec + coated with 0.01% Poly-Lysine + pressed
         to top of cells + unroofed + 0.5% paraformaldehyde.
       organism:
         name: Homo sapiens
         taxonomy_id: 9606
-      sample_preparation: Grown on coverslips coated with fibronectin + induced with
+      sample_preparation:
+        Grown on coverslips coated with fibronectin + induced with
         tetracycline overnight + adhered to Quantifoil Au 300 R1.2/1.3 grids coated
         with poly-lysine + remove the basal membrane and cytoplasm + paraformaldehyde
         + vitrification.
@@ -89,7 +92,7 @@ frames:
     sources:
       - source_glob:
           list_glob: frames/{frame_prefix}*.mrc
-gains: [ ]
+gains: []
 rawtilts:
   - sources:
       - source_glob:

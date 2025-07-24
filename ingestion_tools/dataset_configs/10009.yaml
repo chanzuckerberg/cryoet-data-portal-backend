@@ -266,14 +266,16 @@ datasets:
           grant_id: PP00P3_187198
         - funding_agency_name: Max Planck Society
         - funding_agency_name: Helmholtz Association
-      grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
-      1, support_film_film_material: CARBON, support_film_film_topology: CONTINUOUS,
-      support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
+      grid_preparation:
+        'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
+        1, support_film_film_material: CARBON, support_film_film_topology: CONTINUOUS,
+        support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
       organism:
         name: Chlamydomonas reinhardtii
         taxonomy_id: 3055
-      sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
-      vitrification_instrument: FEI VITROBOT MARK IV, instance_type: tomography_preparation'
+      sample_preparation:
+        'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
+        vitrification_instrument: FEI VITROBOT MARK IV, instance_type: tomography_preparation'
       sample_type: organism
     sources:
       - literal:
@@ -290,7 +292,8 @@ depositions:
       authors: *id003
       cross_references: *id004
       dates: *id002
-      deposition_description: Cryo-electron tomograms of FIB-SEM lamellas of the Chlamydomonas
+      deposition_description:
+        Cryo-electron tomograms of FIB-SEM lamellas of the Chlamydomonas
         reinhardtii ciliary base, including annotations of the intraflagellar transport
         machinery, refined using STOPGAP.
       deposition_identifier: 10009
@@ -312,15 +315,15 @@ frames:
         parent_filters:
           exclude:
             run:
-              - "^12$"
-              - "^13$"
+              - '^12$'
+              - '^13$'
       - source_glob:
           list_glob: Tomo{run_name}/aligned_frames/*.mrc
         parent_filters:
           include:
             run:
-              - "^12$"
-              - "^13$"
+              - '^12$'
+              - '^13$'
 rawtilts:
   - sources:
       - source_glob:

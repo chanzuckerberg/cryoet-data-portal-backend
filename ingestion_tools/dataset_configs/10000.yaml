@@ -9,12 +9,14 @@ alignments:
             - metadata/{run_name}.tlt
 annotations:
   - metadata:
-      annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
+      annotation_method:
+        Cumulative template-matching trained 2D CNN predictions + visual
         filtering + distance constraints + manual addition
       annotation_object:
         id: GO:0005835
         name: fatty acid synthase complex
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: pyTOM + Keras
       authors: &id001
@@ -66,12 +68,14 @@ annotations:
           glob_string: particle_lists/{run_name}_fas.csv
           is_visualization_default: false
   - metadata:
-      annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
+      annotation_method:
+        Cumulative template-matching trained 2D CNN predictions + visual
         filtering + distance constraints + manual addition
       annotation_object:
         id: GO:0022626
         name: cytosolic ribosome
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: pyTOM + Keras
       authors: *id001
@@ -92,7 +96,8 @@ annotations:
       annotation_object:
         id: GO:0005737
         name: cytoplasm
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -113,7 +118,8 @@ annotations:
       annotation_object:
         id: GO:0005739
         name: mitochondrion
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -134,7 +140,8 @@ annotations:
       annotation_object:
         id: GO:0031982
         name: vesicle
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -155,7 +162,8 @@ annotations:
       annotation_object:
         id: GO:0005874
         name: microtubule
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -176,7 +184,8 @@ annotations:
       annotation_object:
         id: GO:0005783
         name: endoplasmic reticulum
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -197,7 +206,8 @@ annotations:
       annotation_object:
         id: GO:0005635
         name: nuclear envelope
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -218,7 +228,8 @@ annotations:
       annotation_object:
         id: GO:0005634
         name: nucleus
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -239,7 +250,8 @@ annotations:
       annotation_object:
         id: GO:0005773
         name: vacuole
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -260,7 +272,8 @@ annotations:
       annotation_object:
         id: GO:0005811
         name: lipid droplet
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -281,7 +294,8 @@ annotations:
       annotation_object:
         id: GO:0005794
         name: Golgi apparatus
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -302,7 +316,8 @@ annotations:
       annotation_object:
         id: GO:0005771
         name: multivesicular body
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -323,7 +338,8 @@ annotations:
       annotation_object:
         id: GO:0031974
         name: membrane-enclosed lumen
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -344,7 +360,8 @@ annotations:
       annotation_object:
         id: GO:0016020
         name: membrane
-      annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      annotation_publications:
+        EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
         EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
       annotation_software: Keras + AMIRA
       authors: *id001
@@ -407,9 +424,11 @@ datasets:
         name: Schizosaccharomyces pombe 972h-
       cross_references: &id005
         publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
-        related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        related_database_entries:
+          EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
           EMD-14418, EMD-14419, EMD-14420
-      dataset_description: Defocus cryo-electron tomography of S. pombe cryo-FIB lamellae
+      dataset_description:
+        Defocus cryo-electron tomography of S. pombe cryo-FIB lamellae
         with comprehensive annotations of structures and macromolecules
       dataset_identifier: 10000
       dataset_title: S. pombe cells with defocus
@@ -417,14 +436,16 @@ datasets:
       funding:
         - funding_agency_name: European Research Council (ERC)
           grant_id: '760067'
-      grid_preparation: 'model: Quantifoil R2/1, material: COPPER, mesh: 200, support_film_film_type_id:
-      1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
-      support_film, pretreatment_type_: GLOW DISCHARGE'
+      grid_preparation:
+        'model: Quantifoil R2/1, material: COPPER, mesh: 200, support_film_film_type_id:
+        1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
+        support_film, pretreatment_type_: GLOW DISCHARGE'
       organism:
         name: Schizosaccharomyces pombe
         taxonomy_id: 4896
-      sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
-      subtomogram_averaging_preparation'
+      sample_preparation:
+        'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
+        subtomogram_averaging_preparation'
       sample_type: organism
     sources:
       - literal:
@@ -441,7 +462,8 @@ depositions:
       authors: *id004
       cross_references: *id005
       dates: *id002
-      deposition_description: Datasets comprising 20 annotated Schizosaccharomyces pombe
+      deposition_description:
+        Datasets comprising 20 annotated Schizosaccharomyces pombe
         cryo-electron tomograms, with 10 tomograms acquired using a Volta phase plate
         (VPP) for enhanced contrast and 10 using conventional defocus. The dataset includes
         comprehensive annotations of ribosomes, fatty acid synthases, membranes, organelles,

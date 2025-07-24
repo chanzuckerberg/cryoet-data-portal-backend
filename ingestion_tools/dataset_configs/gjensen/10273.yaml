@@ -1,158 +1,161 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/aba2015-07-07-5/keyimg_aba2015-07-07-5.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2015-07-07-5/keyimg_aba2015-07-07-5_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/aba2015-07-07-5/keyimg_aba2015-07-07-5.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2015-07-07-5/keyimg_aba2015-07-07-5_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Ariane Briegel
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: O1 biovar El Tor
-    dataset_description: "This is 11th of 15 sets of data studying Vibrio cholerae\
-      \ collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb. C6706Z-\
-      \ \u2206vca1088 (MCP uncat operon F7)"
-    dataset_identifier: 10273
-    dataset_title: Vibrio cholerae PM6
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: null
-    organism:
-      name: Vibrio cholerae
-      taxonomy_id: 686
-    sample_preparation: null
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10273'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Ariane Briegel
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: O1 biovar El Tor
+      dataset_description:
+        "This is 11th of 15 sets of data studying Vibrio cholerae\
+        \ collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb. C6706Z-\
+        \ \u2206vca1088 (MCP uncat operon F7)"
+      dataset_identifier: 10273
+      dataset_title: Vibrio cholerae PM6
+      dates: &id002
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
+      grid_preparation: null
+      organism:
+        name: Vibrio cholerae
+        taxonomy_id: 686
+      sample_preparation: null
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10273'
 depositions:
-- metadata:
-    authors: *id001
-    dates: *id002
-    deposition_description: 15 sets of data studying Vibrio cholerae collected by
-      Ariane Briegel and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10021
-    deposition_title: Vibrio cholerae (tax_id=686) strain:O1 biovar El Tor by Ariane
-      Briegel
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10021
+  - metadata:
+      authors: *id001
+      dates: *id002
+      deposition_description:
+        15 sets of data studying Vibrio cholerae collected by
+        Ariane Briegel and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10021
+      deposition_title:
+        Vibrio cholerae (tax_id=686) strain:O1 biovar El Tor by Ariane
+        Briegel
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10021
 frames:
-- metadata:
-    dose_rate: 1.322314049586777
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.322314049586777
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (aba2015-07-07-5|aba2015-07-07-6|aba2015-07-07-7|aba2015-07-07-8|aba2015-07-07-9|aba2015-07-07-10|aba2015-07-07-11|aba2015-07-07-12|aba2015-07-07-13|aba2015-07-07-14|aba2015-07-07-15|aba2015-07-07-16|aba2015-07-07-17|aba2015-07-07-18|aba2015-07-07-19|aba2015-07-07-20|aba2015-07-07-21|aba2015-07-07-22|aba2015-07-07-23|aba2015-07-07-24)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: (aba2015-07-07-5|aba2015-07-07-6|aba2015-07-07-7|aba2015-07-07-8|aba2015-07-07-9|aba2015-07-07-10|aba2015-07-07-11|aba2015-07-07-12|aba2015-07-07-13|aba2015-07-07-14|aba2015-07-07-15|aba2015-07-07-16|aba2015-07-07-17|aba2015-07-07-18|aba2015-07-07-19|aba2015-07-07-20|aba2015-07-07-21|aba2015-07-07-22|aba2015-07-07-23|aba2015-07-07-24)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10021
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: TFS
-      model: Krios
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 3.309
-    spherical_aberration_constant: 2.7
-    tilt_alignment_software: RAPTOR
-    tilt_axis: -9.3
-    tilt_range:
-      max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
-    tilt_step: 1.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 160.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ''
+        manufacturer: TFS
+        model: Krios
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 3.309
+      spherical_aberration_constant: 2.7
+      tilt_alignment_software: RAPTOR
+      tilt_axis: -9.3
+      tilt_range:
+        max: 60.0
+        min: -60.0
+      tilt_series_quality: 4
+      tilt_step: 1.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 160.0
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/rawdata/*'
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: RAPTOR
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: 13.236
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: RAPTOR
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 13.236
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/3dimage_*/*'
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - 13.236
+  - sources:
+      - literal:
+          value:
+            - 13.236

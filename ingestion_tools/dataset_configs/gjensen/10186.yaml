@@ -1,164 +1,166 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/cwl2011-04-14-1/keyimg_cwl2011-04-14-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/cwl2011-04-14-1/keyimg_cwl2011-04-14-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/cwl2011-04-14-1/keyimg_cwl2011-04-14-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/cwl2011-04-14-1/keyimg_cwl2011-04-14-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Cora Woodward
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_type:
-      id: CL:0002618
-      name: endothelial cell of umbilical vein
-    cross_references:
-      publications: 10.1128/JVI.02997-14
-    dataset_description: This is 15th of 17 sets of data studying HUVECs collected
-      by Cora Woodward and is a part of Caltech Jensen  lab etdb. HUVECs cells were
-      first transfected with VPS4DN construct using Nucleofector Kit. 4.5 h post-transfection
-      cells were infected with pNLGFP-VSVG by spinoculation and then frozen 24 h post
-      infection.
-    dataset_identifier: 10186
-    dataset_title: HUVECs-pNLGFP-VPS4DN
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: manual blotting
-    organism:
-      name: Homo sapiens
-      taxonomy_id: 9606
-    sample_preparation: whole cells grown on grids, transfected and then infected
-    sample_type: cell
-  sources:
-  - literal:
-      value:
-      - '10186'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Cora Woodward
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_type:
+        id: CL:0002618
+        name: endothelial cell of umbilical vein
+      cross_references:
+        publications: 10.1128/JVI.02997-14
+      dataset_description:
+        This is 15th of 17 sets of data studying HUVECs collected
+        by Cora Woodward and is a part of Caltech Jensen  lab etdb. HUVECs cells were
+        first transfected with VPS4DN construct using Nucleofector Kit. 4.5 h post-transfection
+        cells were infected with pNLGFP-VSVG by spinoculation and then frozen 24 h post
+        infection.
+      dataset_identifier: 10186
+      dataset_title: HUVECs-pNLGFP-VPS4DN
+      dates: &id002
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
+      grid_preparation: manual blotting
+      organism:
+        name: Homo sapiens
+        taxonomy_id: 9606
+      sample_preparation: whole cells grown on grids, transfected and then infected
+      sample_type: cell
+    sources:
+      - literal:
+          value:
+            - '10186'
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1128/JVI.02997-14
-    dates: *id002
-    deposition_description: 17 sets of data studying HUVECs collected by Cora Woodward
-      and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10025
-    deposition_title: 'HUVECs (tax_id=9606) strain: by Cora Woodward'
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10025
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.1128/JVI.02997-14
+      dates: *id002
+      deposition_description:
+        17 sets of data studying HUVECs collected by Cora Woodward
+        and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10025
+      deposition_title: 'HUVECs (tax_id=9606) strain: by Cora Woodward'
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10025
 frames:
-- metadata:
-    dose_rate: 1.2295081967213115
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.2295081967213115
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (cwl2011-04-14-1|cwl2011-04-14-2|cwl2011-04-14-3|cwl2011-04-14-4|cwl2011-04-14-5|cwl2011-04-14-6|cwl2011-04-14-7|cwl2011-04-14-8|cwl2011-04-14-9|cwl2011-04-14-10|cwl2011-04-14-11|cwl2011-04-14-12|cwl2011-04-14-13|cwl2011-04-14-14|cwl2011-04-14-15|cwl2011-04-14-16|cwl2011-04-14-17|cwl2011-04-14-18|cwl2011-04-14-19|cwl2011-04-14-20|cwl2011-04-14-21|cwl2011-04-14-22)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: (cwl2011-04-14-1|cwl2011-04-14-2|cwl2011-04-14-3|cwl2011-04-14-4|cwl2011-04-14-5|cwl2011-04-14-6|cwl2011-04-14-7|cwl2011-04-14-8|cwl2011-04-14-9|cwl2011-04-14-10|cwl2011-04-14-11|cwl2011-04-14-12|cwl2011-04-14-13|cwl2011-04-14-14|cwl2011-04-14-15|cwl2011-04-14-16|cwl2011-04-14-17|cwl2011-04-14-18|cwl2011-04-14-19|cwl2011-04-14-20|cwl2011-04-14-21|cwl2011-04-14-22)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10025
   run_data_map_file: run_data_map/10186.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: null
-      manufacturer: Gatan
-      model: UltraCam
-    data_acquisition_software: leginon
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: 9.5
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: IMOD
-    tilt_axis: 13.1
-    tilt_range:
-      max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
-    tilt_step: 1.0
-    tilting_scheme: bidirectional, negative first
-    total_flux: 150.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: null
+        manufacturer: Gatan
+        model: UltraCam
+      data_acquisition_software: leginon
+      is_aligned: false
+      microscope:
+        additional_info: ''
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: 9.5
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: IMOD
+      tilt_axis: 13.1
+      tilt_range:
+        max: 60.0
+        min: -60.0
+      tilt_series_quality: 4
+      tilt_step: 1.0
+      tilting_scheme: bidirectional, negative first
+      total_flux: 150.0
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/rawdata/*'
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: IMOD
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/3dimage_*/*'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: IMOD
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: float {tomo-voxel_spacing}
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/3dimage_*/*'
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - float {tomo-voxel_spacing}
+  - sources:
+      - literal:
+          value:
+            - float {tomo-voxel_spacing}

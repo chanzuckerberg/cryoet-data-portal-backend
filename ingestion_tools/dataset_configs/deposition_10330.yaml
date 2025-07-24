@@ -1,7 +1,7 @@
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 
@@ -69,12 +69,13 @@ depositions:
         deposition_date: '2025-02-19'
         last_modified_date: '2025-02-19'
         release_date: '2025-02-19'
-      deposition_description: "This deposition contains segmentations of synaptic vesicles in cryo ET data of
-      synaptosomes. The segmentations were produced with SynapseNet by re-training its vesicle segmentation network on
-      ca. 50 synaptosome tomograms via unsupervised domain adaptation. TThe vesicles are segmented as instances: each
-      vesicle is assigned a unique id per tomogram by SynapseNet (however, represented as binary masks on the cryoET
-      data portal), each vesicle is also assigned its centroid calculated using the SynapseNet instances. For more
-      details on SynapseNet check out the GitHub repository and the preprint linked below."
+      deposition_description:
+        'This deposition contains segmentations of synaptic vesicles in cryo ET data of
+        synaptosomes. The segmentations were produced with SynapseNet by re-training its vesicle segmentation network on
+        ca. 50 synaptosome tomograms via unsupervised domain adaptation. TThe vesicles are segmented as instances: each
+        vesicle is assigned a unique id per tomogram by SynapseNet (however, represented as binary masks on the cryoET
+        data portal), each vesicle is also assigned its centroid calculated using the SynapseNet instances. For more
+        details on SynapseNet check out the GitHub repository and the preprint linked below.'
       deposition_identifier: 10330
       deposition_title: Automated Synaptic Vesicle Segmentation in Synaptosomes
       cross_references:
@@ -90,8 +91,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png'
 
 runs:
   - sources:

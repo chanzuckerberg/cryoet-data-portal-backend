@@ -1,83 +1,86 @@
 annotations: []
 collection_metadata:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.mdoc'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/GJensen_full/qya2015-11-19-1/keyimg_qya2015-11-19-1.jpg
-        thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/qya2015-11-19-1/keyimg_qya2015-11-19-1_s.jpg
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/GJensen_full/qya2015-11-19-1/keyimg_qya2015-11-19-1.jpg
+            thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/qya2015-11-19-1/keyimg_qya2015-11-19-1_s.jpg
 datasets:
-- metadata:
-    authors: &id001
-    - corresponding_author_status: false
-      name: Qing Yao
-      primary_author_status: true
-    - corresponding_author_status: true
-      name: Grant Jensen
-      primary_author_status: false
-    cell_strain:
-      id: null
-      name: HI4320
-    cross_references:
-      publications: 10.15252/embj.201696235
-    dataset_description: This is 2nd of 2 sets of data studying Proteus mirabilis
-      collected by Qing Yao and is a part of Caltech Jensen  lab etdb.
-    dataset_identifier: 10102
-    dataset_title: Swarmer cell, long cell of Proteus mirabilis
-    dates: &id002
-      deposition_date: '2023-10-01'
-      last_modified_date: '2023-12-01'
-      release_date: '2023-12-01'
-    grid_preparation: "OD=6, 4 ul loading. bloting condition 6s force/ 3s time/ 1s\
-      \ dry time, QUANTIFOIL\xAE Holey Carbon Films 200 mesh"
-    organism:
-      name: Proteus mirabilis
-      taxonomy_id: 584
-    sample_preparation: null
-    sample_type: organism
-  sources:
-  - literal:
-      value:
-      - '10102'
+  - metadata:
+      authors: &id001
+        - corresponding_author_status: false
+          name: Qing Yao
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Grant Jensen
+          primary_author_status: false
+      cell_strain:
+        id: null
+        name: HI4320
+      cross_references:
+        publications: 10.15252/embj.201696235
+      dataset_description:
+        This is 2nd of 2 sets of data studying Proteus mirabilis
+        collected by Qing Yao and is a part of Caltech Jensen  lab etdb.
+      dataset_identifier: 10102
+      dataset_title: Swarmer cell, long cell of Proteus mirabilis
+      dates: &id002
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
+      grid_preparation:
+        "OD=6, 4 ul loading. bloting condition 6s force/ 3s time/ 1s\
+        \ dry time, QUANTIFOIL\xAE Holey Carbon Films 200 mesh"
+      organism:
+        name: Proteus mirabilis
+        taxonomy_id: 584
+      sample_preparation: null
+      sample_type: organism
+    sources:
+      - literal:
+          value:
+            - '10102'
 depositions:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.15252/embj.201696235
-    dates: *id002
-    deposition_description: 2 sets of data studying Proteus mirabilis collected by
-      Qing Yao and is a part of Caltech Jensen lab etdb.
-    deposition_identifier: 10034
-    deposition_title: Proteus mirabilis (tax_id=584) strain:HI4320 by Qing Yao
-    deposition_types:
-    - dataset
-  sources:
-  - literal:
-      value:
-      - 10034
+  - metadata:
+      authors: *id001
+      cross_references:
+        publications: 10.15252/embj.201696235
+      dates: *id002
+      deposition_description:
+        2 sets of data studying Proteus mirabilis collected by
+        Qing Yao and is a part of Caltech Jensen lab etdb.
+      deposition_identifier: 10034
+      deposition_title: Proteus mirabilis (tax_id=584) strain:HI4320 by Qing Yao
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10034
 frames:
-- metadata:
-    dose_rate: 1.322314049586777
-    is_gain_corrected: false
-  sources:
-  - literal:
-      value:
-      - default
+  - metadata:
+      dose_rate: 1.322314049586777
+      is_gain_corrected: false
+    sources:
+      - literal:
+          value:
+            - default
 rawtilts:
-- sources:
-  - source_multi_glob:
-      list_globs:
-      - '{run_name}/generated/*.rawtlt'
+  - sources:
+      - source_multi_glob:
+          list_globs:
+            - '{run_name}/generated/*.rawtlt'
 runs:
-- sources:
-  - source_glob:
-      list_glob: '*'
-      match_regex: (qya2015-11-19-1|qya2015-11-19-2|qya2015-11-19-6|qya2015-11-19-7|qya2015-11-19-11|qya2015-11-19-12|qya2015-11-19-13|qya2015-11-19-14|qya2015-11-19-15|qya2015-11-19-16|qya2015-11-19-21|qya2015-11-19-22|qya2015-11-19-24|qya2015-11-19-25|qya2015-11-19-26|qya2015-11-19-27|qya2015-11-19-28|qya2015-11-19-29|qya2015-11-19-30|qya2015-11-19-31|qya2015-12-07-9|qya2015-12-07-10|qya2015-12-07-11|qya2015-12-07-12|qya2015-12-07-13|qya2015-12-07-14|qya2015-12-07-17|qya2015-12-07-18|qya2015-12-07-19|qya2015-12-07-20|qya2015-12-07-21|qya2015-12-07-22|qya2015-12-07-23|qya2015-12-07-25|qya2015-12-07-26|qya2015-12-07-31)$
-      name_regex: (.*)
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: (qya2015-11-19-1|qya2015-11-19-2|qya2015-11-19-6|qya2015-11-19-7|qya2015-11-19-11|qya2015-11-19-12|qya2015-11-19-13|qya2015-11-19-14|qya2015-11-19-15|qya2015-11-19-16|qya2015-11-19-21|qya2015-11-19-22|qya2015-11-19-24|qya2015-11-19-25|qya2015-11-19-26|qya2015-11-19-27|qya2015-11-19-28|qya2015-11-19-29|qya2015-11-19-30|qya2015-11-19-31|qya2015-12-07-9|qya2015-12-07-10|qya2015-12-07-11|qya2015-12-07-12|qya2015-12-07-13|qya2015-12-07-14|qya2015-12-07-17|qya2015-12-07-18|qya2015-12-07-19|qya2015-12-07-20|qya2015-12-07-21|qya2015-12-07-22|qya2015-12-07-23|qya2015-12-07-25|qya2015-12-07-26|qya2015-12-07-31)$
+          name_regex: (.*)
 standardization_config:
   deposition_id: 10034
   run_data_map_file: run_data_map/10102.csv
@@ -85,80 +88,80 @@ standardization_config:
   run_to_tomo_map_csv: run_tomo_map/10102.csv
   source_prefix: GJensen_full
 tiltseries:
-- metadata:
-    acceleration_voltage: 300000
-    binning_from_frames: null
-    camera:
-      acquire_mode: counting
-      manufacturer: Gatan
-      model: K2
-    data_acquisition_software: UCSFTomo
-    is_aligned: false
-    microscope:
-      additional_info: ''
-      manufacturer: FEI
-      model: Polara
-    microscope_optical_setup:
-      energy_filter: GIF
-      image_corrector: null
-      phase_plate: null
-    pixel_spacing: float {ts-pixel_spacing}
-    spherical_aberration_constant: 2.0
-    tilt_alignment_software: IMOD
-    tilt_axis: 79.3
-    tilt_range:
-      max: 60.0
-      min: -60.0
-    tilt_series_quality: 4
-    tilt_step: 1.0
-    tilting_scheme: starting tilt to max then min
-    total_flux: 160.0
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/rawdata/*'
-      match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: null
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2
+      data_acquisition_software: UCSFTomo
+      is_aligned: false
+      microscope:
+        additional_info: ''
+        manufacturer: FEI
+        model: Polara
+      microscope_optical_setup:
+        energy_filter: GIF
+        image_corrector: null
+        phase_plate: null
+      pixel_spacing: float {ts-pixel_spacing}
+      spherical_aberration_constant: 2.0
+      tilt_alignment_software: IMOD
+      tilt_axis: 79.3
+      tilt_range:
+        max: 60.0
+        min: -60.0
+      tilt_series_quality: 4
+      tilt_step: 1.0
+      tilting_scheme: starting tilt to max then min
+      total_flux: 160.0
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/rawdata/*'
+          match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
-- metadata:
-    affine_transformation_matrix:
-    - - 1
-      - 0
-      - 0
-      - 0
-    - - 0
-      - 1
-      - 0
-      - 0
-    - - 0
-      - 0
-      - 1
-      - 0
-    - - 0
-      - 0
-      - 0
-      - 1
-    align_software: IMOD
-    authors: *id001
-    ctf_corrected: null
-    dates: *id002
-    fiducial_alignment_status: FIDUCIAL
-    is_visualization_default: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    processing: raw
-    processing_software: null
-    reconstruction_method: WBP
-    reconstruction_software: IMOD
-    tomogram_version: 1
-    voxel_spacing: float {tomo-voxel_spacing}
-  sources:
-  - source_glob:
-      list_glob: '{run_name}/{mapped_tomo_name}'
-      match_regex: .*\.(mrc|rec)$
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: IMOD
+      authors: *id001
+      ctf_corrected: null
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: float {tomo-voxel_spacing}
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/{mapped_tomo_name}'
+          match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
-- sources:
-  - literal:
-      value:
-      - float {tomo-voxel_spacing}
+  - sources:
+      - literal:
+          value:
+            - float {tomo-voxel_spacing}

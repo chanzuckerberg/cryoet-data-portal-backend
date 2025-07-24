@@ -19,7 +19,8 @@ depositions:
         deposition_date: '2025-01-01'
         last_modified_date: '2025-01-09'
         release_date: '2025-01-09'
-      deposition_description: These segmentations of 23 different organelles and macromolecular structures across the
+      deposition_description:
+        These segmentations of 23 different organelles and macromolecular structures across the
         1829 volumes in the C. reinhardtii dataset were generated as a part of a project that explored the scaling of data
         analyses in cryoET. On the basis of these comprehensive segmentations the dataset was also 'summarized' and
         represented a searchable database (see method links).
@@ -29,7 +30,8 @@ depositions:
         prepared using Ais (check method links for network weights). The remaining features were segmented by a single
         network that was prepared using Pom.
       deposition_identifier: 10314
-      deposition_title: Comprehensive semi-supervised automated annotations of macromolecules and organelles in
+      deposition_title:
+        Comprehensive semi-supervised automated annotations of macromolecules and organelles in
         C. reinhardtii tomograms
       deposition_types:
         - annotation
@@ -41,12 +43,12 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_thumbnail.png'
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 annotations:

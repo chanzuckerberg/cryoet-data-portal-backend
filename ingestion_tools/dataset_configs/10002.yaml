@@ -152,7 +152,8 @@ datasets:
       cross_references:
         publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
         related_database_entries: EMPIAR-10989
-      dataset_description: Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
+      dataset_description:
+        Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
         of actin filaments and microtubules
       dataset_identifier: 10002
       dataset_title: RPE1 cytosol with actin stress fiber
@@ -160,14 +161,16 @@ datasets:
       funding:
         - funding_agency_name: European Research Council (ERC)
           grant_id: '760067'
-      grid_preparation: 'model: Quantifoil, material: GOLD, support_film_film_type_id:
-      1, support_film_film_topology: HOLEY, support_film_instance_type: support_film,
-      pretreatment_type_: PLASMA CLEANING'
+      grid_preparation:
+        'model: Quantifoil, material: GOLD, support_film_film_type_id:
+        1, support_film_film_topology: HOLEY, support_film_instance_type: support_film,
+        pretreatment_type_: PLASMA CLEANING'
       organism:
         name: Homo sapiens
         taxonomy_id: 9606
-      sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant:
-      None, instance_type: tomography_preparation'
+      sample_preparation:
+        'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant:
+        None, instance_type: tomography_preparation'
       sample_type: cell
     sources:
       - literal:
@@ -192,14 +195,14 @@ gains:
         parent_filters:
           include:
             run:
-              - "^00011$"
-              - "^00012$"
+              - '^00011$'
+              - '^00012$'
       - source_glob:
           list_glob: frames/CountRef_0004.dm4
         parent_filters:
           include:
             run:
-              - "^00004$"
+              - '^00004$'
 rawtilts:
   - sources:
       - source_glob:

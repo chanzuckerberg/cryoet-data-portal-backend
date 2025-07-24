@@ -1,7 +1,7 @@
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 
@@ -46,7 +46,8 @@ depositions:
   - metadata:
       authors: *id001
       dates: *id002
-      deposition_description: Manual annotations of complete bacterial-type flagellum basal bodies,
+      deposition_description:
+        Manual annotations of complete bacterial-type flagellum basal bodies,
         created and pre-oriented using IMOD.
       deposition_identifier: 10315
       deposition_title: Manual annotations of complete bacterial-type flagellum basal bodies
@@ -61,8 +62,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10315_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10315_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10315_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10315_thumbnail.png'
 
 runs:
   - sources:
