@@ -182,6 +182,12 @@ DepositionAuthor {
 Dataset {
     string title
     string description
+    string assay_label
+    string assay_ontology_id
+    string development_stage_name
+    string development_stage_ontology_id
+    string disease_name
+    string disease_ontology_id
     string organism_name
     integer organism_taxid
     string tissue_name
