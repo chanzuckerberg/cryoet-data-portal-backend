@@ -59,7 +59,7 @@ datasets:
     - ORCID: 0000-0003-3990-6910
       name: John Briggs
     - corresponding_author_status: false
-      name: M. Jürgen Plitzko
+      name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
     - ORCID: 0000-0002-0941-4387
       name: Benjamin D. Engel

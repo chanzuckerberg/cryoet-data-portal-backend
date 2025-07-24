@@ -683,6 +683,8 @@ def get_experimental_setup_override() -> dict[str, Any]:
     """
     invalid_values = {None, "not_reported"}
     curation_data = {}
+    # Curation tsv file is generated from the curated data associated with the ticket:
+    # https://czi.atlassian.net/browse/VC-3381.
     curation_file = os.path.join(os.path.dirname(__file__), "../curation.tsv")
     with open(curation_file, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f, delimiter = '\t')

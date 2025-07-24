@@ -114,21 +114,21 @@ datasets:
     dates: *id001
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: CZII-2023–327779
-    grid_preparation: 6 µl of lysates were added to affinity grids and then blotted after ~15 seconds from the grid edge with
-      filter paper 3 times,  grids were washed with 6 µl ice cold PBS, sample addition and washing steps were repeated ones
-      and 6 µl PBS were added before blotting and plunging into liquid ethane. Leica GP2 was used for grid preparation.
+      grant_id: "CZII-2023\u2013327779"
+    grid_preparation: "6 \xB5l of lysates were added to affinity grids and then blotted after ~15 seconds from the grid edge\
+      \ with filter paper 3 times,  grids were washed with 6 \xB5l ice cold PBS, sample addition and washing steps were repeated\
+      \ ones and 6 \xB5l PBS were added before blotting and plunging into liquid ethane. Leica GP2 was used for grid preparation."
     organism:
       name: Homo sapiens
       taxonomy_id: 9606
     other_setup: Samples were imaged in a cryo-fluorescence microscope before cryoET imaging. Some of the surface contamination
       originates from that additional imaging step.
-    sample_preparation: Affinity-grids were prepared by overlaying holey carbon grids with a thin layer of graphene oxide.
-      GFP-nanobodies were immoblilized on the graphene oxide surface using a PEG-linker. Cells expressing LAMP1-GFP were washed
-      and detached with ice cold PBS, and transfer to chilled 15 ml falcon tube, pelleted by centrifugation at 500 x g for
-      5 min at 4°C, PBS was aspirated, pellet was resuspended in hypotonic homogenization buffer (~1 mL), cells were mechanically
-      lysed using 23G blunt needle, transferred to and mixed with isotonic sucrose buffer, lysates were centrifuge at 1000
-      x g for 10 min at 4°C, supernatant was used for grid preparation.
+    sample_preparation: "Affinity-grids were prepared by overlaying holey carbon grids with a thin layer of graphene oxide.\
+      \ GFP-nanobodies were immoblilized on the graphene oxide surface using a PEG-linker. Cells expressing LAMP1-GFP were\
+      \ washed and detached with ice cold PBS, and transfer to chilled 15 ml falcon tube, pelleted by centrifugation at 500\
+      \ x g for 5 min at 4\xB0C, PBS was aspirated, pellet was resuspended in hypotonic homogenization buffer (~1 mL), cells\
+      \ were mechanically lysed using 23G blunt needle, transferred to and mixed with isotonic sucrose buffer, lysates were\
+      \ centrifuge at 1000 x g for 10 min at 4\xB0C, supernatant was used for grid preparation."
     sample_type: organelle
     tissue:
       name: kidney epithelial cell

@@ -152,7 +152,7 @@ datasets:
     dates: *id001
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: CZII-2023–327779
+      grant_id: "CZII-2023\u2013327779"
     grid_preparation: Glow discharge Quantifoil Cu 200 mesh 2/1 + apply 4ul of pellet to grid + blot for 6 seconds + plunge-freeze
     organism:
       name: Mycoplasma mycoides subsp. capri str. GM12

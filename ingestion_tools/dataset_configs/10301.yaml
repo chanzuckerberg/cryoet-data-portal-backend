@@ -45,7 +45,7 @@ annotations:
     - corresponding_author_status: false
       name: John Briggs
     - corresponding_author_status: false
-      name: M. Jürgen Plitzko
+      name: "M. J\xFCrgen Plitzko"
     - corresponding_author_status: false
       name: Benjamin D. Engel
     - corresponding_author_status: true
@@ -240,7 +240,7 @@ datasets:
       name: John Briggs
       primary_author_status: false
     - corresponding_author_status: false
-      name: M. Jürgen Plitzko
+      name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
     - corresponding_author_status: false
       name: Benjamin D. Engel

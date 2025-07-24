@@ -61,7 +61,7 @@ datasets:
       release_date: '2025-02-20'
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: CZII-2023–327779
+      grant_id: "CZII-2023\u2013327779"
     grid_preparation: Glow discharge Quantifoil Au R2/2 200 mesh grids + apply 4ul of diluted homogenate to grid + blot for
       4 seconds
     organism:

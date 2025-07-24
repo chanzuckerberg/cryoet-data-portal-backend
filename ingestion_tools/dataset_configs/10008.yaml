@@ -37,7 +37,7 @@ annotations:
       name: Benjamin D. Engel
     - ORCID: 0000-0001-7955-5508
       corresponding_author_status: true
-      name: Volker Müller
+      name: "Volker M\xFCller"
     - ORCID: 0000-0002-9121-1764
       corresponding_author_status: true
       name: Jan Michael Schuller
@@ -112,7 +112,7 @@ datasets:
       name: Benjamin D. Engel
     - ORCID: 0000-0001-7955-5508
       corresponding_author_status: true
-      name: Volker Müller
+      name: "Volker M\xFCller"
     - ORCID: 0000-0002-9121-1764
       corresponding_author_status: true
       name: Jan Michael Schuller

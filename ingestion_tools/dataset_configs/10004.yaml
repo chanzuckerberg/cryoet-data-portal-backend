@@ -22,7 +22,7 @@ annotations:
       primary_author_status: true
     - ORCID: 0009-0008-3301-8270
       corresponding_author_status: false
-      name: Oda Helene Schiøtz
+      name: "Oda Helene Schi\xF8tz"
       primary_author_status: false
     - ORCID: 0000-0002-8481-6845
       corresponding_author_status: false
@@ -50,7 +50,7 @@ annotations:
       primary_author_status: false
     - ORCID: 0000-0002-6402-8315
       corresponding_author_status: true
-      name: M. Jürgen Plitzko
+      name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
     confidence:
       ground_truth_used: Author estimation
@@ -85,7 +85,7 @@ datasets:
     authors: &id002
     - ORCID: 0009-0008-3301-8270
       corresponding_author_status: false
-      name: Oda Helene Schiøtz
+      name: "Oda Helene Schi\xF8tz"
       primary_author_status: true
     - ORCID: 0000-0002-8481-6845
       corresponding_author_status: false
@@ -117,7 +117,7 @@ datasets:
       primary_author_status: false
     - ORCID: 0000-0002-6402-8315
       corresponding_author_status: true
-      name: M. Jürgen Plitzko
+      name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
     cell_strain:
       name: NK2476
@@ -128,7 +128,7 @@ datasets:
     dataset_description: Partial dataset used in the ribosome subtomogram reconstruction selected from tomograms from double-sided
       attachment Serial Lift-Out experiment.
     dataset_identifier: 10004
-    dataset_title: C. Elegans from Serial Lift-Out – Sampling the Molecular Anatomy of Whole Organisms
+    dataset_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular Anatomy of Whole Organisms"
     dates: *id001
     organism:
       name: Caenorhabditis elegans
@@ -164,7 +164,7 @@ depositions:
     deposition_description: Cryo-electron tomograms from double-sided attachment Serial Lift-Out experiment of C. elegans,
       including annotations of ribosomes identified and refined using STOPGAP and RELION.
     deposition_identifier: 10004
-    deposition_title: C. Elegans from Serial Lift-Out – Sampling the Molecular Anatomy of Whole Organisms
+    deposition_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular Anatomy of Whole Organisms"
     deposition_types:
     - dataset
     - annotation

@@ -34,7 +34,7 @@ annotations:
       name: Julia Peukes
     - ORCID: 0000-0002-4632-9122
       name: Xiaoli Xiong
-    - name: Hans-Georg Kräusslich
+    - name: "Hans-Georg Kr\xE4usslich"
     - ORCID: 0000-0002-0462-6540
       name: Sjors H. W. Scheres
     - ORCID: 0000-0001-5601-9307
@@ -93,7 +93,7 @@ datasets:
       name: Julia Peukes
     - ORCID: 0000-0002-4632-9122
       name: Xiaoli Xiong
-    - name: Hans-Georg Kräusslich
+    - name: "Hans-Georg Kr\xE4usslich"
     - ORCID: 0000-0002-0462-6540
       name: Sjors H. W. Scheres
     - ORCID: 0000-0001-5601-9307

@@ -228,7 +228,7 @@ datasets:
     dates: *id002
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: CZII-2023–327779
+      grant_id: "CZII-2023\u2013327779"
     grid_preparation: ''
     sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's xyzproj + addition of noise + reconstruction
       with IMOD's tilt

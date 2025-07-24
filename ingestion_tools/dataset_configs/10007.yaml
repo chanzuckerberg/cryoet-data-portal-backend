@@ -90,8 +90,8 @@ datasets:
     - funding_agency_name: Max Planck Society
     - funding_agency_name: Other private
     grid_preparation: "Grid\nModel: Quantifoil R1.2/3\nMaterial: COPPER\n\nPretreatment: Type: GLOW DISCHARGE\nAtmosphere:\
-      \ Air\n\nSupport Film:\nMaterial: Carbon \nTopology: Holey\nThickness: –\n\nVitrification:\nCryogen Name: ETHANE \n\
-      Instrument: Vitrobot Mark IV\n"
+      \ Air\n\nSupport Film:\nMaterial: Carbon \nTopology: Holey\nThickness: \u2013\n\nVitrification:\nCryogen Name: ETHANE\
+      \ \nInstrument: Vitrobot Mark IV\n"
     organism:
       name: Saccharomyces cerevisiae
       taxonomy_id: 4932
