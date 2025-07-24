@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -31,9 +31,9 @@ datasets:
       dataset_identifier: 10166
       dataset_title: Hyphomonas AR46
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
         \ treated gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix."
@@ -47,7 +47,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10166"
+            - '10166'
 depositions:
   - metadata:
       authors: *id001
@@ -79,11 +79,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (ycw2012-09-07-1|ycw2012-09-07-2|ycw2012-09-07-3|ycw2012-09-07-4|ycw2012-09-07-5|ycw2012-09-07-6|ycw2012-09-07-7|ycw2012-09-07-8|ycw2012-09-07-9|ycw2012-09-07-10|ycw2012-09-07-11|ycw2012-09-07-12|ycw2012-09-07-13|ycw2012-09-07-14|ycw2012-09-07-17|ycw2012-09-07-18|ycw2012-09-07-19|ycw2012-09-07-20|ycw2012-09-07-21|ycw2012-09-07-22|ycw2012-09-07-23|ycw2012-09-07-24|ycw2012-09-07-25|ycw2012-09-07-26|ycw2012-09-07-27|ycw2012-09-07-30|ycw2012-10-08-1|ycw2012-10-08-2|ycw2012-10-08-3|ycw2012-10-08-4|ycw2012-10-08-5|ycw2012-10-08-6|ycw2012-10-08-7)$
           name_regex: (.*)
 standardization_config:
@@ -100,10 +100,10 @@ tiltseries:
         acquire_mode: counting
         manufacturer: Gatan
         model: K2
-      data_acquisition_software: "{ts-data_acquisition_software}"
+      data_acquisition_software: '{ts-data_acquisition_software}'
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -123,7 +123,7 @@ tiltseries:
       total_flux: float {ts-total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -162,7 +162,7 @@ tomograms:
       voxel_spacing: 19.733
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

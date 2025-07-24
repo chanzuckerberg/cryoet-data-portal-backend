@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -31,9 +31,9 @@ datasets:
       dataset_identifier: 10177
       dataset_title: HUVECs 24h Infx pNLgfp
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: manual blotting
       organism:
         name: Homo sapiens
@@ -43,7 +43,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10177"
+            - '10177'
 depositions:
   - metadata:
       authors: *id001
@@ -54,7 +54,7 @@ depositions:
         17 sets of data studying HUVECs collected by Cora Woodward
         and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10025
-      deposition_title: "HUVECs (tax_id=9606) strain: by Cora Woodward"
+      deposition_title: 'HUVECs (tax_id=9606) strain: by Cora Woodward'
       deposition_types:
         - dataset
     sources:
@@ -73,11 +73,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (cwl2011-03-31-26|cwl2011-03-31-27|cwl2011-03-31-28|cwl2011-03-31-29|cwl2011-03-31-30|cwl2011-03-31-31|cwl2011-03-31-32|cwl2011-03-31-33|cwl2011-03-31-34|cwl2011-03-31-35|cwl2011-03-31-36|cwl2011-03-31-37|cwl2011-03-31-38|cwl2011-03-31-39|cwl2011-03-31-40|cwl2011-03-31-41|cwl2011-03-31-42|cwl2011-03-31-43)$
           name_regex: (.*)
 standardization_config:
@@ -95,7 +95,7 @@ tiltseries:
       data_acquisition_software: UCSF tomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -115,7 +115,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -154,7 +154,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10224
       dataset_title: flgP deletion Campy mutants
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Campylobacter jejuni
@@ -42,7 +42,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10224"
+            - '10224'
 depositions:
   - metadata:
       authors: *id001
@@ -75,11 +75,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2011-08-10-1|mba2011-08-10-2|mba2011-08-10-3|mba2011-08-10-4|mba2011-08-10-5|mba2011-08-10-6|mba2011-08-10-7|mba2011-08-10-8|mba2011-08-10-9|mba2011-08-10-10|mba2011-08-10-11|mba2011-08-10-12|mba2011-08-10-13|mba2011-08-10-14|mba2011-08-10-15|mba2011-08-10-16|mba2011-08-10-17|mba2011-08-10-18|mba2011-08-10-19|mba2011-08-10-20|mba2011-08-10-21|mba2011-08-10-22|mba2011-08-10-23|mba2011-08-10-24|mba2011-08-10-25|mba2011-08-10-26|mba2011-08-10-27|mba2011-08-10-28|mba2011-08-10-29|mba2011-08-10-30|mba2011-08-10-31|mba2011-08-10-32|mba2011-08-10-33|mba2011-08-10-34|mba2011-08-10-35|mba2011-08-10-36|mba2011-08-10-37|mba2011-08-10-38|mba2011-08-10-39|mba2011-08-10-40|mba2011-08-10-41|mba2011-08-10-42)$
           name_regex: (.*)
 standardization_config:
@@ -97,7 +97,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -117,7 +117,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -156,7 +156,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

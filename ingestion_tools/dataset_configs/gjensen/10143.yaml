@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -21,16 +21,16 @@ datasets:
           primary_author_status: false
       cell_strain:
         id: null
-        name: "26695"
+        name: '26695'
       dataset_description:
         This is 6th of 17 sets of data studying Helicobacter pylori
         collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
       dataset_identifier: 10143
       dataset_title: H. pylori 26695 WT
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 mg/ml BSA\
         \ treated gold. -3.5 offset, 4 sec blot time, no drain. Ethane/propane mix.\
@@ -46,7 +46,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10143"
+            - '10143'
 depositions:
   - metadata:
       authors: *id001
@@ -74,11 +74,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (ycw2014-03-01-1|ycw2014-03-01-2|ycw2014-03-01-3|ycw2014-03-01-4|ycw2014-03-01-5|ycw2014-03-01-6|ycw2014-03-01-7|ycw2014-03-01-8|ycw2014-03-01-9|ycw2014-03-01-10|ycw2014-03-01-11|ycw2014-03-01-12|ycw2014-03-01-13|ycw2014-03-01-14|ycw2014-03-01-15|ycw2014-03-01-16|ycw2014-03-01-17|ycw2014-03-01-18|ycw2014-03-01-19|ycw2014-03-01-20|ycw2014-03-01-21|ycw2014-03-01-22|ycw2014-03-01-23|ycw2014-03-01-24|ycw2014-03-01-25|ycw2014-03-01-26|ycw2014-03-01-27|ycw2014-03-01-28|ycw2014-03-01-29|ycw2017-07-06-1|ycw2017-07-06-2|ycw2017-07-06-3|ycw2017-07-06-4|ycw2017-07-06-5|ycw2017-07-06-6|ycw2017-07-06-7|ycw2017-07-06-8|ycw2017-07-06-9|ycw2017-07-06-10|ycw2017-07-06-11|ycw2017-07-06-12|ycw2017-07-06-14|ycw2017-07-06-15|ycw2017-07-06-16|ycw2017-07-06-17|ycw2017-07-06-18|ycw2017-07-06-19|ycw2017-07-06-20|ycw2017-07-06-21|ycw2017-07-06-22|ycw2017-07-06-23|ycw2017-07-06-24|ycw2017-07-06-25|ycw2017-07-06-26|ycw2017-07-06-27|ycw2017-07-06-28|ycw2017-07-06-29|ycw2017-07-06-30|ycw2017-07-06-31|ycw2017-07-06-32|ycw2017-07-06-33|ycw2017-07-06-34|ycw2017-07-06-35|ycw2017-07-06-36|ycw2017-07-06-37|ycw2017-07-06-38|ycw2017-07-06-39|ycw2017-07-06-40|ycw2017-07-06-41|ycw2017-07-06-42|ycw2017-07-06-43|ycw2017-07-06-44|ycw2017-07-06-45|ycw2017-07-06-46|ycw2017-07-06-47|ycw2017-07-06-48|ycw2017-07-06-49|ycw2017-07-06-50|ycw2017-07-06-51|ycw2017-07-06-52|ycw2017-07-06-53|ycw2017-07-06-54|ycw2017-07-06-55|ycw2017-07-06-56|ycw2017-07-06-57|ycw2017-07-06-58|ycw2017-07-06-59|ycw2017-07-06-60|ycw2017-07-06-61|ycw2017-07-06-62|ycw2017-07-06-63|ycw2017-07-06-64|ycw2017-07-06-65|ycw2017-07-06-66|ycw2017-07-06-67|ycw2017-07-06-68|ycw2017-07-06-69|ycw2017-07-06-70|ycw2017-07-06-71|ycw2017-07-06-72|ycw2017-07-06-73|ycw2017-07-06-74|ycw2017-07-06-75|ycw2017-07-06-76|ycw2017-07-06-77|ycw2017-07-06-78|ycw2017-07-06-79|ycw2017-07-06-80|ycw2017-07-06-81|ycw2017-07-06-82|ycw2017-07-06-83|ycw2017-07-06-84|ycw2017-07-06-85|ycw2017-07-06-86|ycw2017-07-06-87|ycw2017-07-06-88|ycw2017-07-06-89|ycw2017-07-06-91|ycw2017-07-06-92|ycw2017-07-06-93|ycw2017-07-06-94|ycw2017-07-06-95|ycw2017-07-06-96|ycw2017-07-06-97|ycw2017-07-06-98|ycw2017-07-06-99|ycw2017-07-06-101|ycw2017-07-06-102|ycw2017-07-06-103|ycw2017-07-06-104|ycw2017-07-06-105|ycw2017-07-06-106|ycw2017-07-06-107|ycw2017-07-06-108|ycw2017-07-06-109|ycw2017-07-06-110|ycw2017-07-06-111|ycw2017-07-06-112|ycw2017-07-06-113|ycw2017-07-06-114|ycw2017-07-06-115|ycw2017-07-06-116|ycw2017-07-06-117|ycw2017-07-06-118|ycw2017-07-06-119|ycw2017-07-06-120|ycw2017-07-06-121|ycw2017-07-06-122|ycw2017-07-06-123|ycw2017-07-06-124|ycw2017-07-06-125|ycw2017-07-06-127|ycw2017-07-06-129|ycw2017-07-06-130|ycw2017-07-06-131|ycw2017-07-06-132|ycw2017-07-06-133|ycw2017-07-06-134|ycw2017-07-06-135|ycw2017-07-06-136|ycw2017-07-06-139|ycw2017-07-06-140|ycw2017-07-06-141|ycw2017-07-06-142|ycw2017-07-06-144|ycw2017-07-06-145|ycw2017-07-06-147|ycw2017-07-06-150|ycw2017-07-06-171|ycw2017-07-06-175|ycw2017-07-06-176|ycw2017-07-06-177|ycw2017-07-06-178|ycw2017-07-06-179|ycw2017-07-06-180|ycw2017-07-06-181|ycw2017-07-06-182|ycw2017-07-06-183|ycw2017-07-06-184|ycw2017-07-06-185|ycw2017-07-06-186|ycw2017-07-06-187|ycw2017-07-06-188|ycw2017-07-06-189|ycw2017-07-06-190|ycw2017-07-06-191|ycw2017-07-06-192)$
           name_regex: (.*)
 standardization_config:
@@ -96,7 +96,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -105,7 +105,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: float {ts-pixel_spacing}
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 80.0
       tilt_range:
         max: float {ts-tilt_range-max}
@@ -116,7 +116,7 @@ tiltseries:
       total_flux: float {ts-total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -137,11 +137,11 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
@@ -149,13 +149,13 @@ tomograms:
         z: 0
       processing: raw
       processing_software: null
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

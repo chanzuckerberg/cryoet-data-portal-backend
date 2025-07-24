@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -27,9 +27,9 @@ datasets:
       dataset_identifier: 10253
       dataset_title: M. pneumoniae P41
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Mycoplasma pneumoniae
@@ -39,7 +39,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10253"
+            - '10253'
 depositions:
   - metadata:
       authors: *id001
@@ -69,11 +69,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (scy2016-01-14-1|scy2016-01-14-2|scy2016-01-14-3|scy2016-01-14-4|scy2016-01-14-5|scy2016-01-15-1|scy2016-01-15-2|scy2016-01-15-3|scy2016-01-15-4|scy2016-01-15-5|scy2016-01-15-6|scy2016-01-15-7|scy2016-01-15-8|scy2016-01-15-9|scy2016-01-15-10|scy2016-01-15-11|scy2016-01-15-12|scy2016-01-15-13)$
           name_regex: (.*)
 standardization_config:
@@ -90,7 +90,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -110,7 +110,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -149,7 +149,7 @@ tomograms:
       voxel_spacing: 16.145
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

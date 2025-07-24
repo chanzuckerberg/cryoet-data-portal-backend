@@ -32,9 +32,9 @@ annotations:
           corresponding_author_status: true
           name: Gira Bhabha
       dates: &id002
-        deposition_date: "2024-07-09"
-        last_modified_date: "2024-07-24"
-        release_date: "2024-07-29"
+        deposition_date: '2024-07-09'
+        last_modified_date: '2024-07-24'
+        release_date: '2024-07-29'
       ground_truth_status: true
       is_curator_recommended: true
       method_type: hybrid
@@ -523,7 +523,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10438"
+            - '10438'
 collection_metadata:
   - sources:
       - source_glob:
@@ -540,11 +540,11 @@ frames:
     sources:
       - literal:
           value:
-            - "default"
+            - 'default'
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: "Data_Set_4/{run_name}/tilt_series/{run_name}_vali.rawtlt"
+          list_glob: 'Data_Set_4/{run_name}/tilt_series/{run_name}_vali.rawtlt'
 runs:
   - sources:
       - source_glob:
@@ -606,9 +606,9 @@ tomograms:
       authors: *id003
       ctf_corrected: false
       dates:
-        deposition_date: "2024-07-09"
-        last_modified_date: "2024-07-24"
-        release_date: "2024-07-29"
+        deposition_date: '2024-07-09'
+        last_modified_date: '2024-07-24'
+        release_date: '2024-07-29'
       fiducial_alignment_status: NON_FIDUCIAL
       is_visualization_default: true
       offset:

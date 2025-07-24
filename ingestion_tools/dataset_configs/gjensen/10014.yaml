@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -32,9 +32,9 @@ datasets:
       dataset_identifier: 10014
       dataset_title: D. flos-aquae Ana GVs (WT)
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "A freshly purified GV sample was diluted to  OD500 = ~20 and\
         \ mixed  with  10  nm  BSA-coated  gold  beads.  A  3  \xB5L volume of sample\
@@ -52,7 +52,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10014"
+            - '10014'
 depositions:
   - metadata:
       authors: *id001
@@ -85,11 +85,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (pda2021-02-12-1|pda2021-02-12-2|pda2021-02-12-3|pda2021-02-12-4|pda2021-02-12-5|pda2021-02-12-6|pda2021-02-12-7|pda2021-02-12-8|pda2021-02-12-9|pda2021-02-12-10|pda2021-02-12-11|pda2021-01-12-1|pda2021-02-12-12|pda2021-02-12-13|pda2021-02-12-14|pda2021-02-12-15|pda2021-02-12-16|pda2021-02-12-17|pda2021-02-12-18|pda2021-02-12-19|pda2021-02-12-20|pda2021-02-12-21|pda2021-02-12-22|pda2021-02-12-23|pda2021-02-12-24|pda2021-02-12-25|pda2021-06-24-1|pda2021-06-24-2|pda2021-06-24-3|pda2021-06-24-4|pda2021-06-24-5|pda2021-06-24-6|pda2021-06-24-7|pda2021-06-24-8|pda2021-06-24-9|pda2021-06-24-10|pda2021-06-24-11|pda2021-06-24-12|pda2021-06-24-13|pda2021-06-24-14|pda2021-06-24-15|pda2021-06-24-16|pda2021-06-24-17|pda2021-06-24-18|pda2021-06-24-19|pda2021-06-24-20|pda2021-06-24-21|pda2021-06-28-1|pda2021-06-24-22|pda2021-06-24-23|pda2021-06-24-24|pda2021-06-24-25|pda2021-06-24-26|pda2021-06-24-27|pda2021-06-24-28|pda2021-06-24-29|pda2021-06-24-30|pda2021-06-24-31|pda2021-06-24-32|pda2021-06-24-33|pda2021-06-24-34|pda2021-06-24-35|pda2021-06-24-36|pda2021-06-24-37|pda2021-06-24-38|pda2021-06-24-39|pda2021-06-24-40|pda2021-06-24-41|pda2021-06-24-42|pda2021-06-24-43|pda2021-06-24-44|pda2021-06-24-45|pda2021-06-24-46|pda2021-06-24-47|pda2021-06-24-48|pda2021-06-24-49|pda2021-06-24-50|pda2021-06-24-51|pda2021-06-24-52|pda2021-06-24-53|pda2021-06-24-54|pda2021-06-24-55|pda2021-06-24-56|pda2021-06-24-57|pda2021-06-24-58|pda2021-06-24-59|pda2021-06-24-60|pda2021-06-24-61|pda2021-06-24-62|pda2021-06-24-63|pda2021-06-24-64|pda2021-06-24-65|pda2021-06-24-66|pda2021-06-24-67|pda2021-06-24-68|pda2021-06-24-69|pda2021-06-24-70|pda2021-06-24-71|pda2021-06-24-72|pda2021-06-24-73|pda2021-06-24-74|pda2021-06-24-75|pda2021-06-24-76|pda2021-06-24-77|pda2021-06-24-78|pda2021-06-24-79|pda2021-06-24-80|pda2021-06-24-81|pda2021-06-24-82|pda2021-06-24-83|pda2021-06-24-84|pda2021-06-24-85|pda2021-06-24-86|pda2021-06-24-87|pda2021-06-24-88|pda2021-06-24-89|pda2021-06-24-90|pda2021-06-24-91|pda2021-06-24-92|pda2021-06-24-93|pda2021-06-24-94|pda2021-06-24-95|pda2021-06-24-96|pda2021-06-24-97|pda2021-06-24-98|pda2021-06-24-99|pda2021-06-24-100|pda2021-06-24-101|pda2021-06-24-102|pda2021-06-24-103|pda2021-06-24-104|pda2021-06-24-105|pda2021-06-24-106|pda2021-06-24-107|pda2021-06-24-108|pda2021-06-24-109|pda2021-06-24-110|pda2021-06-24-111|pda2021-06-24-112|pda2021-06-24-113|pda2021-06-24-114|pda2021-06-24-115|pda2021-06-24-116|pda2021-06-24-117|pda2021-06-24-118|pda2021-06-24-119|pda2021-06-24-120|pda2021-06-24-121|pda2021-06-24-122|pda2021-06-24-123|pda2021-06-24-124|pda2021-06-24-125|pda2021-06-24-126|pda2021-06-24-127|pda2021-06-24-128|pda2021-06-24-129|pda2021-06-24-130|pda2021-06-24-131|pda2021-06-24-132|pda2021-06-24-133|pda2021-06-24-134|pda2021-06-24-135|pda2021-06-24-136|pda2021-06-24-137|pda2021-07-24-1|pda2021-06-24-138|pda2021-06-24-139|pda2021-06-24-140|pda2021-06-24-141|pda2021-06-24-142|pda2021-06-24-143|pda2021-06-24-144|pda2021-06-24-145|pda2021-06-24-146|pda2021-06-24-147|pda2021-06-24-148|pda2021-06-24-149|pda2021-06-24-150|pda2021-06-24-151|pda2021-06-24-152|pda2021-06-24-153|pda2021-06-24-154|pda2021-06-24-155|pda2021-06-24-156|pda2021-06-24-157|pda2021-06-24-158|pda2021-06-24-159|pda2021-06-24-160|pda2021-06-24-161|pda2021-06-24-162|pda2021-06-24-163|pda2021-06-24-164|pda2021-06-24-165|pda2021-06-24-166|pda2021-06-24-167|pda2021-06-24-168|pda2021-06-24-169|pda2021-06-24-170|pda2021-06-24-171|pda2021-06-24-172|pda2021-06-24-173|pda2021-06-24-174|pda2021-06-24-175|pda2021-06-24-176|pda2021-06-24-177|pda2021-06-24-178|pda2021-06-24-179|pda2021-06-24-180|pda2021-06-24-181|pda2021-06-24-182|pda2021-06-24-183|pda2021-06-24-184|pda2021-06-24-185|pda2021-06-24-186|pda2021-06-24-187|pda2021-06-24-188|pda2021-06-24-189)$
           name_regex: (.*)
 standardization_config:
@@ -109,7 +109,7 @@ tiltseries:
       data_acquisition_software: Serial EM
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
@@ -118,7 +118,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 1.687
       spherical_aberration_constant: 2.7
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 95.1
       tilt_range:
         max: float {ts-tilt_range-max}
@@ -129,7 +129,7 @@ tiltseries:
       total_flux: 50.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -150,25 +150,25 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
         y: 0
         z: 0
       processing: raw
-      processing_software: "{tomo-processing_software}"
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      processing_software: '{tomo-processing_software}'
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

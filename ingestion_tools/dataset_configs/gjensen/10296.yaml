@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -27,9 +27,9 @@ datasets:
       dataset_identifier: 10296
       dataset_title: M. pneumoniae MP PrkC 27.5KX
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: QF grid, 10nm gold, 100% humidity...
       organism:
         name: Mycoplasma pneumoniae
@@ -39,7 +39,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10296"
+            - '10296'
 depositions:
   - metadata:
       authors: *id001
@@ -69,11 +69,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (jsa2010-01-02-1|jsa2010-01-02-2|jsa2010-01-02-3|jsa2010-01-02-4|jsa2010-01-02-5|jsa2010-01-02-6|jsa2010-01-02-7|jsa2010-01-02-8|jsa2010-01-02-9|jsa2010-01-02-10|jsa2010-01-02-11|jsa2010-01-02-12|jsa2010-01-02-13|jsa2010-01-02-14|jsa2010-01-02-15|jsa2010-01-02-16|jsa2010-01-02-17|jsa2010-01-02-18|jsa2010-01-02-19|jsa2010-01-02-20|jsa2010-01-02-21|jsa2010-01-02-22|jsa2010-01-02-23|jsa2010-01-02-24|jsa2010-01-02-25|jsa2010-01-02-26|jsa2010-01-02-27|jsa2010-01-02-28|jsa2010-01-02-29|jsa2010-01-02-30|jsa2010-01-02-31|jsa2010-01-02-32|jsa2010-01-02-33|jsa2010-01-02-34|jsa2010-01-02-35|jsa2010-01-02-36|jsa2010-01-02-37|jsa2010-01-02-38|jsa2010-01-02-39|jsa2010-01-02-40|jsa2010-01-02-41|jsa2010-01-02-42|jsa2010-01-02-43|jsa2010-01-02-44|jsa2010-01-02-45|jsa2010-01-02-46|jsa2010-01-02-47|jsa2010-01-02-48|jsa2010-01-02-49|jsa2010-01-02-50|jsa2010-01-02-51|jsa2010-01-02-52|jsa2010-01-02-53|jsa2010-01-02-54|jsa2010-01-02-55|jsa2010-01-02-56|jsa2010-01-02-57|jsa2010-01-02-58|jsa2010-01-02-59|jsa2010-01-02-60|jsa2010-01-02-61|jsa2010-01-02-62|jsa2010-01-02-63|jsa2010-01-02-64|jsa2010-01-02-65)$
           name_regex: (.*)
 standardization_config:
@@ -93,7 +93,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -113,7 +113,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -152,7 +152,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

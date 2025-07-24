@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -23,30 +23,30 @@ datasets:
         id: null
         name: serovar Typhimurium str. LT2
       dataset_description:
-        "This is 9th of 17 sets of data studying Salmonella typhimurium
+        'This is 9th of 17 sets of data studying Salmonella typhimurium
         collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.  User notes:
         Flagella:717,270,296 (Top view), 534,400,296 (Top view), 534,400,296 (Top view),
         259,772,296 (Top view), 215,668,338 (Side view), 574,436,402 (Top view), 645,385,405
         (Top view) Filaments:267,659,362 (Long, running along edge of cell) Chemoreceptors:641,539,315
-        (Top view)"
+        (Top view)'
       dataset_identifier: 10232
       dataset_title:
-        "S. typhimurium  Salomella rabbit ears: 15min penicillin treatment
-        with MgSO4"
+        'S. typhimurium  Salomella rabbit ears: 15min penicillin treatment
+        with MgSO4'
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Salmonella typhimurium
         taxonomy_id: 99287
-      sample_preparation: "Salomella rabbit ears: 15min penicillin treatment with MgSO4"
+      sample_preparation: 'Salomella rabbit ears: 15min penicillin treatment with MgSO4'
       sample_type: organism
     sources:
       - literal:
           value:
-            - "10232"
+            - '10232'
 depositions:
   - metadata:
       authors: *id001
@@ -76,11 +76,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2010-03-03-1|mba2010-03-03-2|mba2010-03-03-3|mba2010-03-03-4|mba2010-03-03-5|mba2010-03-03-6|mba2010-03-03-7|mba2010-03-03-8|mba2010-03-03-9|mba2010-03-03-10|mba2010-03-03-11|mba2010-03-03-12|mba2010-03-03-13|mba2010-03-03-14|mba2010-03-03-15|mba2010-03-03-16)$
           name_regex: (.*)
 standardization_config:
@@ -98,7 +98,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -118,7 +118,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -157,7 +157,7 @@ tomograms:
       voxel_spacing: 12.64
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

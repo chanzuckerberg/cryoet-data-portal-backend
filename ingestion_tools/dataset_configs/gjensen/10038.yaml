@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -25,9 +25,9 @@ datasets:
       dataset_identifier: 10038
       dataset_title: P_aeruginosa_PA14_DfliF_Krios
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         Added 3 ul on to thick carbon R2 grids and blotted them and
         plunge froze them (force either 6 or 3, time either 3 or 2 seconds respectively,
@@ -43,7 +43,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10038"
+            - '10038'
 depositions:
   - metadata:
       authors: *id001
@@ -52,7 +52,7 @@ depositions:
         5 sets of data studying Pseudomonas aeruginosa collected
         by Mohammed Kaplan and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10023
-      deposition_title: "Pseudomonas aeruginosa (tax_id=287) strain: by Mohammed Kaplan"
+      deposition_title: 'Pseudomonas aeruginosa (tax_id=287) strain: by Mohammed Kaplan'
       deposition_types:
         - dataset
     sources:
@@ -71,11 +71,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mka2018-09-29-3|mka2018-09-29-6|mka2018-09-29-8|mka2018-09-29-12|mka2018-09-29-13|mka2018-09-29-14|mka2018-09-29-15|mka2018-09-29-16|mka2018-09-29-17|mka2018-09-29-18|mka2018-09-29-19|mka2018-09-29-20|mka2018-09-29-21|mka2018-09-29-22|mka2018-09-29-23|mka2018-09-29-24|mka2018-09-29-25|mka2018-09-29-26|mka2018-09-29-27|mka2018-09-29-28|mka2018-09-29-29|mka2018-09-29-30|mka2018-09-29-31|mka2018-09-29-32|mka2018-09-29-33|mka2018-09-29-35|mka2018-09-29-36|mka2018-09-29-37|mka2018-09-29-38|mka2018-09-29-39|mka2018-09-29-40|mka2018-09-29-41|mka2018-09-29-42|mka2018-09-29-43|mka2018-09-29-44|mka2018-09-29-45|mka2018-09-29-46|mka2018-09-29-47|mka2018-09-29-48|mka2018-09-29-49|mka2018-09-29-50|mka2018-09-29-51|mka2018-09-29-52|mka2018-09-29-53|mka2018-09-29-54|mka2018-09-29-55|mka2018-09-29-56|mka2018-09-29-57|mka2018-09-29-58|mka2018-09-29-59|mka2018-09-29-60|mka2018-09-29-61|mka2018-09-29-62|mka2018-09-29-63|mka2018-09-29-64|mka2018-09-29-65|mka2018-09-29-66|mka2018-09-29-67|mka2018-09-29-68|mka2018-09-29-69|mka2018-09-29-70|mka2018-09-29-71|mka2018-09-29-72|mka2018-09-29-73|mka2018-09-29-74|mka2018-09-29-75|mka2018-09-29-76)$
           name_regex: (.*)
 standardization_config:
@@ -93,7 +93,7 @@ tiltseries:
       data_acquisition_software: Serial EM
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
@@ -113,7 +113,7 @@ tiltseries:
       total_flux: 160.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -152,7 +152,7 @@ tomograms:
       voxel_spacing: 21.64
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

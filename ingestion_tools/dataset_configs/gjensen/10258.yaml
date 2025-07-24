@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -27,9 +27,9 @@ datasets:
       dataset_identifier: 10258
       dataset_title: M. pneumoniae PrKC+MPN248
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Mycoplasma pneumoniae
@@ -39,7 +39,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10258"
+            - '10258'
 depositions:
   - metadata:
       authors: *id001
@@ -69,11 +69,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (scy2013-08-15-6|scy2013-08-15-9|scy2013-08-15-10|scy2013-08-15-13|scy2013-08-15-14|scy2013-08-15-15|scy2013-08-15-16|scy2013-08-15-17|scy2013-08-15-19|scy2013-08-15-20|scy2013-08-15-21)$
           name_regex: (.*)
 standardization_config:
@@ -90,7 +90,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -110,7 +110,7 @@ tiltseries:
       total_flux: 158.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -149,7 +149,7 @@ tomograms:
       voxel_spacing: 19.733
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

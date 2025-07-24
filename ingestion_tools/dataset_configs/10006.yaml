@@ -43,9 +43,9 @@ annotations:
           corresponding_author_status: true
           name: John Briggs
       dates: &id001
-        deposition_date: "2023-10-11"
-        last_modified_date: "2023-11-20"
-        release_date: "2023-12-10"
+        deposition_date: '2023-10-11'
+        last_modified_date: '2023-11-20'
+        release_date: '2023-12-10'
       ground_truth_status: true
       is_curator_recommended: true
       method_type: hybrid
@@ -54,7 +54,7 @@ annotations:
       - OrientedPoint:
           binning: 2
           file_format: relion4_star
-          filter_value: "{run_name}"
+          filter_value: '{run_name}'
           glob_string: motl_star/czii-remapped-points.star
           is_visualization_default: true
           order: xyz
@@ -123,20 +123,20 @@ datasets:
         - funding_agency_name: German Research Foundation (DFG)
           grant_id: 240245660-SFB 1129
       grid_preparation:
-        "model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material:
+        'model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material:
         CARBON, support_film_film_topology: HOLEY ARRAY, support_film_instance_type:
-        support_film, pretreatment_type_: GLOW DISCHARGE"
+        support_film, pretreatment_type_: GLOW DISCHARGE'
       organism:
         name: Severe acute respiratory syndrome coronavirus 2
         taxonomy_id: 2697049
       sample_preparation:
-        "buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
-        LEICA EM GP, instance_type: subtomogram_averaging_preparation"
+        'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
+        LEICA EM GP, instance_type: subtomogram_averaging_preparation'
       sample_type: virus
     sources:
       - literal:
           value:
-            - "10006"
+            - '10006'
 deposition_keyphotos:
   - sources:
       - literal:

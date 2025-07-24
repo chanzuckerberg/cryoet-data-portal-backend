@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10157
       dataset_title: Bdellovibrio/Vibrio cholerae
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
         \ treated gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix. Quantifoil\
@@ -45,7 +45,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10157"
+            - '10157'
 depositions:
   - metadata:
       authors: *id001
@@ -77,11 +77,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (ycw2013-05-01-1|ycw2013-05-01-4|ycw2013-05-01-5|ycw2013-05-01-6|ycw2013-05-01-8|ycw2013-05-01-9|ycw2013-05-01-12|ycw2013-05-01-13|ycw2013-05-01-14|ycw2013-05-01-16|ycw2013-05-01-19|ycw2013-05-01-20|ycw2013-05-01-21|ycw2013-05-01-22|ycw2013-05-01-23|ycw2013-05-01-24|ycw2013-05-01-26|ycw2013-05-01-29|ycw2013-05-01-31|ycw2013-05-01-33|ycw2013-05-01-35|ycw2013-05-01-36|ycw2013-05-01-37|ycw2013-05-01-38|ycw2013-05-01-39|ycw2013-05-01-41|ycw2013-05-01-52|ycw2013-05-01-57|ycw2013-06-04-1|ycw2013-06-04-3|ycw2013-06-04-4|ycw2013-06-04-5|ycw2013-06-04-7|ycw2013-06-04-8|ycw2013-06-04-9|ycw2013-06-04-10|ycw2013-06-04-11|ycw2013-06-04-12|ycw2013-09-10-1|ycw2013-09-10-3|ycw2013-09-10-8|ycw2013-09-10-10|ycw2013-09-10-15|ycw2013-09-10-19|ycw2013-11-06-30)$
           name_regex: (.*)
 standardization_config:
@@ -98,12 +98,12 @@ tiltseries:
         acquire_mode: counting
         manufacturer: Gatan
         model: K2
-      data_acquisition_software: "{ts-data_acquisition_software}"
+      data_acquisition_software: '{ts-data_acquisition_software}'
       is_aligned: false
       microscope:
-        additional_info: ""
-        manufacturer: "{ts-microscope-manufacturer}"
-        model: "{ts-microscope-model}"
+        additional_info: ''
+        manufacturer: '{ts-microscope-manufacturer}'
+        model: '{ts-microscope-model}'
       microscope_optical_setup:
         energy_filter: GIF
         image_corrector: null
@@ -121,7 +121,7 @@ tiltseries:
       total_flux: float {ts-total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -160,7 +160,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

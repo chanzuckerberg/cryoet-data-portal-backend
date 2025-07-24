@@ -6,8 +6,8 @@ alignments:
     sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/TiltSeries/*.tlt"
-            - "{run_name}/TiltSeries/*.xf"
+            - '{run_name}/TiltSeries/*.tlt'
+            - '{run_name}/TiltSeries/*.xf'
 annotations:
   - metadata:
       annotation_method: polnet-simulated ground truth
@@ -24,9 +24,9 @@ annotations:
           corresponding_author_status: true
           name: Bridget Carragher
       dates: &id002
-        deposition_date: "2024-08-21"
-        last_modified_date: "2024-08-21"
-        release_date: "2024-08-21"
+        deposition_date: '2024-08-21'
+        last_modified_date: '2024-08-21'
+        release_date: '2024-08-21'
       ground_truth_status: true
       is_curator_recommended: true
       method_links: &id003
@@ -39,7 +39,7 @@ annotations:
       - SemanticSegmentationMask:
           file_format: mrc
           glob_strings: &id004
-            - "{run_name}/Segmentations/ground_truth.mrc"
+            - '{run_name}/Segmentations/ground_truth.mrc'
           is_visualization_default: true
           mask_label: 1
   - metadata:
@@ -66,7 +66,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - "{run_name}/Picks/adp-mitochondrial.star"
+            - '{run_name}/Picks/adp-mitochondrial.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -93,7 +93,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - "{run_name}/Picks/alkaline-phosphatase.star"
+            - '{run_name}/Picks/alkaline-phosphatase.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -120,7 +120,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - "{run_name}/Picks/nucleosome.star"
+            - '{run_name}/Picks/nucleosome.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -147,7 +147,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - "{run_name}/Picks/ribosome.star"
+            - '{run_name}/Picks/ribosome.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -174,7 +174,7 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - "{run_name}/Picks/vault.star"
+            - '{run_name}/Picks/vault.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -202,13 +202,13 @@ annotations:
           binning: 10
           file_format: relion3_star
           glob_strings:
-            - "{run_name}/Picks/virus-like-particle.star"
+            - '{run_name}/Picks/virus-like-particle.star'
           is_visualization_default: true
           order: xyz
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: "{run_name}/mdocs/{run_name}_vali.mdoc"
+          list_glob: '{run_name}/mdocs/{run_name}_vali.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -233,7 +233,7 @@ datasets:
       funding:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: "CZII-2023\u2013327779"
-      grid_preparation: ""
+      grid_preparation: ''
       sample_preparation:
         Simulation of 3D volumes with polnet + projection using IMOD's
         xyzproj + addition of noise + reconstruction with IMOD's tilt
@@ -241,7 +241,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10439"
+            - '10439'
 depositions:
   - metadata:
       authors: *id001
@@ -268,17 +268,17 @@ frames:
     sources:
       - literal:
           value:
-            - "default"
+            - 'default'
 deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_thumbnail.png'
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: "{run_name}/TiltSeries/*.rawtlt"
+          list_glob: '{run_name}/TiltSeries/*.rawtlt'
 runs:
   - sources:
       - source_glob:
@@ -315,7 +315,7 @@ tiltseries:
       total_flux: 100
     sources:
       - source_glob:
-          list_glob: "{run_name}/TiltSeries/tilt_series.mrc"
+          list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
 tomograms:
   - metadata:
       affine_transformation_matrix:
@@ -351,7 +351,7 @@ tomograms:
       voxel_spacing: 10.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/VoxelSpacing10.000/wbp.mrc"
+          list_glob: '{run_name}/VoxelSpacing10.000/wbp.mrc'
 version: 1.1.0
 voxel_spacings:
   - sources:

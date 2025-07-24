@@ -7,7 +7,7 @@ alignments:
     sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}.aln"
+            - '{run_name}.aln'
 annotations:
   - metadata:
       annotation_method:
@@ -36,9 +36,9 @@ annotations:
           name: Ariana Peck
           primary_author_status: true
       dates: &id001
-        deposition_date: "2024-11-26"
-        last_modified_date: "2024-11-26"
-        release_date: "2024-11-26"
+        deposition_date: '2024-11-26'
+        last_modified_date: '2024-11-26'
+        release_date: '2024-11-26'
       ground_truth_status: false
       is_curator_recommended: true
       method_links:
@@ -54,14 +54,14 @@ annotations:
       - SemanticSegmentationMask:
           file_format: mrc
           glob_strings:
-            - "{run_name}_Vol_Segment_mask.mrc"
+            - '{run_name}_Vol_Segment_mask.mrc'
           is_visualization_default: true
           mask_label: 1
           rescale: true
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: "{run_name}.mdoc"
+          list_glob: '{run_name}.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -146,7 +146,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10444"
+            - '10444'
 deposition_keyphotos:
   - sources:
       - literal:
@@ -157,9 +157,9 @@ depositions:
   - metadata:
       authors: *id002
       dates:
-        deposition_date: "2024-12-06"
-        last_modified_date: "2024-12-06"
-        release_date: "2024-12-06"
+        deposition_date: '2024-12-06'
+        last_modified_date: '2024-12-06'
+        release_date: '2024-12-06'
       deposition_description:
         Cryo-electron tomography data of affinity-captured LAMP1-GFP
         positive organelles from HEK293T cells. Contained data were collected on a Krios
@@ -180,19 +180,19 @@ frames:
       is_gain_corrected: false
     sources:
       - source_glob:
-          list_glob: "{run_name}/*.eer"
+          list_glob: '{run_name}/*.eer'
 gains:
   - sources:
       - source_glob:
-          list_glob: "{gain_file}"
+          list_glob: '{gain_file}'
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: "{run_name}_st.rawtlt"
+          list_glob: '{run_name}_st.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*.aln"
+          list_glob: '*.aln'
           match_regex: .*\.aln$
           name_regex: (.*)\.aln$
 standardization_config:
@@ -225,7 +225,7 @@ tiltseries:
       total_flux: float {tilt_series_total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}_TS.mrc"
+          list_glob: '{run_name}_TS.mrc'
           match_regex: .*\.mrc$
 tomograms:
   - metadata:
@@ -263,7 +263,7 @@ tomograms:
       voxel_spacing: 4.99
     sources:
       - source_glob:
-          list_glob: "{run_name}_Vol.mrc"
+          list_glob: '{run_name}_Vol.mrc'
           match_regex: (.*)\.mrc
   - metadata:
       affine_transformation_matrix:
@@ -300,7 +300,7 @@ tomograms:
       voxel_spacing: 4.99
     sources:
       - source_glob:
-          list_glob: "{run_name}_dctf_Vol.mrc"
+          list_glob: '{run_name}_dctf_Vol.mrc'
           match_regex: (.*)\.mrc
 version: 1.1.0
 voxel_spacings:

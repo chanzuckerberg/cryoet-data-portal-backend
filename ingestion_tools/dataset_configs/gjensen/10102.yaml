@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10102
       dataset_title: Swarmer cell, long cell of Proteus mirabilis
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "OD=6, 4 ul loading. bloting condition 6s force/ 3s time/ 1s\
         \ dry time, QUANTIFOIL\xAE Holey Carbon Films 200 mesh"
@@ -44,7 +44,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10102"
+            - '10102'
 depositions:
   - metadata:
       authors: *id001
@@ -74,11 +74,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (qya2015-11-19-1|qya2015-11-19-2|qya2015-11-19-6|qya2015-11-19-7|qya2015-11-19-11|qya2015-11-19-12|qya2015-11-19-13|qya2015-11-19-14|qya2015-11-19-15|qya2015-11-19-16|qya2015-11-19-21|qya2015-11-19-22|qya2015-11-19-24|qya2015-11-19-25|qya2015-11-19-26|qya2015-11-19-27|qya2015-11-19-28|qya2015-11-19-29|qya2015-11-19-30|qya2015-11-19-31|qya2015-12-07-9|qya2015-12-07-10|qya2015-12-07-11|qya2015-12-07-12|qya2015-12-07-13|qya2015-12-07-14|qya2015-12-07-17|qya2015-12-07-18|qya2015-12-07-19|qya2015-12-07-20|qya2015-12-07-21|qya2015-12-07-22|qya2015-12-07-23|qya2015-12-07-25|qya2015-12-07-26|qya2015-12-07-31)$
           name_regex: (.*)
 standardization_config:
@@ -98,7 +98,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -118,7 +118,7 @@ tiltseries:
       total_flux: 160.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -157,7 +157,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

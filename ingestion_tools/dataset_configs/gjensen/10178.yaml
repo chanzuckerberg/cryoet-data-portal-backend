@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10178
       dataset_title: HUVECs 24h PI pNLBglI
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: manual blotting
       organism:
         name: Homo sapiens
@@ -44,7 +44,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10178"
+            - '10178'
 depositions:
   - metadata:
       authors: *id001
@@ -55,7 +55,7 @@ depositions:
         17 sets of data studying HUVECs collected by Cora Woodward
         and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10025
-      deposition_title: "HUVECs (tax_id=9606) strain: by Cora Woodward"
+      deposition_title: 'HUVECs (tax_id=9606) strain: by Cora Woodward'
       deposition_types:
         - dataset
     sources:
@@ -74,11 +74,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (cwl2013-04-30-1|cwl2013-04-30-3|cwl2013-04-30-4|cwl2013-04-30-5|cwl2013-04-30-6|cwl2013-04-30-7|cwl2013-04-30-8|cwl2013-04-30-9|cwl2013-04-30-10|cwl2013-04-30-11|cwl2013-04-30-12|cwl2013-04-30-14|cwl2013-04-30-15|cwl2013-04-30-16|cwl2013-04-30-17|cwl2013-04-30-18|cwl2013-04-30-19|cwl2013-04-30-20|cwl2013-04-30-21|cwl2013-04-30-22|cwl2013-04-30-23|cwl2013-04-30-24|cwl2013-04-30-25|cwl2013-04-30-26|cwl2013-04-30-27|cwl2013-04-30-28|cwl2013-05-09-1|cwl2013-05-09-2|cwl2013-05-09-3|cwl2013-05-09-5|cwl2013-05-09-6|cwl2013-05-09-7|cwl2013-05-09-8|cwl2013-05-09-9|cwl2013-05-09-10|cwl2013-05-10-1|cwl2013-05-10-2|cwl2013-05-10-3|cwl2013-05-10-4|cwl2013-05-10-5|cwl2013-05-10-6|cwl2013-05-10-7|cwl2013-05-10-8|cwl2013-05-10-9|cwl2013-05-10-10|cwl2013-05-10-11|cwl2013-05-10-12|cwl2013-05-10-13|cwl2013-05-10-14|cwl2013-05-10-15|cwl2013-05-10-16|cwl2013-05-10-17|cwl2013-05-10-18|cwl2013-05-10-19|cwl2013-05-10-20|cwl2013-05-11-1|cwl2013-05-11-2|cwl2013-05-11-3|cwl2013-05-11-4|cwl2013-05-11-5|cwl2013-05-11-6|cwl2013-05-11-7|cwl2013-05-11-8|cwl2013-05-11-9|cwl2013-05-11-10|cwl2013-05-11-11|cwl2013-05-11-12|cwl2013-05-11-13|cwl2013-05-11-14|cwl2013-05-11-15|cwl2013-05-11-16|cwl2013-05-11-17|cwl2013-05-11-18|cwl2013-05-11-19|cwl2013-05-11-20|cwl2013-05-11-21|cwl2013-05-11-22|cwl2013-05-11-23|cwl2013-05-11-24|cwl2013-05-11-25|cwl2013-05-11-26|cwl2013-05-12-1|cwl2013-05-12-2)$
           name_regex: (.*)
 standardization_config:
@@ -92,31 +92,31 @@ tiltseries:
       camera:
         acquire_mode: counting
         manufacturer: Gatan
-        model: "{ts-camera-model}"
-      data_acquisition_software: "{ts-data_acquisition_software}"
+        model: '{ts-camera-model}'
+      data_acquisition_software: '{ts-data_acquisition_software}'
       is_aligned: false
       microscope:
-        additional_info: ""
-        manufacturer: "{ts-microscope-manufacturer}"
-        model: "{ts-microscope-model}"
+        additional_info: ''
+        manufacturer: '{ts-microscope-manufacturer}'
+        model: '{ts-microscope-model}'
       microscope_optical_setup:
         energy_filter: GIF
         image_corrector: null
         phase_plate: null
       pixel_spacing: float {ts-pixel_spacing}
       spherical_aberration_constant: float {ts-spherical_aberration_constant}
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 168.1
       tilt_range:
         max: float {ts-tilt_range-max}
         min: float {ts-tilt_range-min}
       tilt_series_quality: 4
       tilt_step: 1.0
-      tilting_scheme: "{ts-tilting_scheme}"
+      tilting_scheme: '{ts-tilting_scheme}'
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -137,7 +137,7 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
@@ -155,7 +155,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

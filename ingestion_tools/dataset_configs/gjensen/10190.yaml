@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10190
       dataset_title: E. coli (pLE6, 20 um IPTG)
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: Induced with 20um IPTG for 2 hours starting at OD600=0.2.
       organism:
         name: Escherichia coli
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10190"
+            - '10190'
 depositions:
   - metadata:
       authors: *id001
@@ -51,7 +51,7 @@ depositions:
         5 sets of data studying Escherichia coli collected by
         Matt Swulius and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10057
-      deposition_title: "Escherichia coli (tax_id=562) strain: by Matt Swulius"
+      deposition_title: 'Escherichia coli (tax_id=562) strain: by Matt Swulius'
       deposition_types:
         - dataset
     sources:
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mst2011-07-29-1|mst2011-07-29-2|mst2011-07-29-3|mst2011-07-29-4|mst2011-07-29-5|mst2011-07-29-6|mst2011-07-29-7|mst2011-07-29-8|mst2011-07-29-9|mst2011-07-29-10|mst2011-07-29-11|mst2011-07-29-12|mst2011-07-29-13|mst2011-07-29-14|mst2011-07-29-15|mst2011-07-29-16|mst2011-07-29-17|mst2011-07-29-18|mst2011-07-29-19|mst2011-07-29-20|mst2011-07-29-21|mst2011-07-29-22|mst2011-07-29-23|mst2011-07-29-24)$
           name_regex: (.*)
 standardization_config:
@@ -91,7 +91,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -111,7 +111,7 @@ tiltseries:
       total_flux: 180.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -150,7 +150,7 @@ tomograms:
       voxel_spacing: 18.92
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

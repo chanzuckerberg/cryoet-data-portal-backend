@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10241
       dataset_title: Salmonella minicells for fliL flagella, and T3SS.
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Salmonella typhimurium
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10241"
+            - '10241'
 depositions:
   - metadata:
       authors: *id001
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2012-03-20-1|mba2012-03-09-10|mba2012-03-09-11|mba2012-03-09-12|mba2012-03-09-13|mba2012-03-09-14|mba2012-03-09-15|mba2012-03-09-16|mba2012-03-09-17|mba2012-03-09-18|mba2012-03-09-19|mba2012-03-09-20|mba2012-03-09-21|mba2012-03-09-22|mba2012-03-09-23|mba2012-03-09-24|mba2012-03-09-25|mba2012-03-09-26|mba2012-03-09-27|mba2012-03-09-28|mba2012-03-09-29|mba2012-03-09-30|mba2012-03-09-31|mba2012-03-09-32|mba2012-03-09-33|mba2012-03-09-34|mba2012-03-09-35|mba2012-03-09-36|mba2012-03-09-37|mba2012-03-09-38|mba2012-03-09-39|mba2012-03-09-40|mba2012-03-09-41|mba2012-03-09-42|mba2012-03-09-43|mba2012-03-09-44|mba2012-03-09-45|mba2012-03-09-46|mba2012-03-09-47|mba2012-03-09-48|mba2012-03-09-49|mba2012-03-09-50|mba2012-03-09-51|mba2012-03-09-52|mba2012-03-09-53|mba2012-03-09-54|mba2012-03-09-55|mba2012-03-09-56|mba2012-03-09-57|mba2012-03-09-58|mba2012-03-09-59|mba2012-03-09-60|mba2012-03-09-61|mba2012-03-09-62|mba2012-03-20-2|mba2012-03-20-3|mba2012-03-20-4|mba2012-03-20-5|mba2012-03-20-6|mba2012-03-20-7|mba2012-03-20-8|mba2012-03-20-9|mba2012-03-20-10)$
           name_regex: (.*)
 standardization_config:
@@ -91,7 +91,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -111,7 +111,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -150,7 +150,7 @@ tomograms:
       voxel_spacing: 10.36
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

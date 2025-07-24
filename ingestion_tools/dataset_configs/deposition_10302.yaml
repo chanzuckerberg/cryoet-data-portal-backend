@@ -1,7 +1,7 @@
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 annotations:
@@ -16,9 +16,9 @@ annotations:
           name: Mohammed Kaplan
           primary_author_status: true
       dates: &id002
-        deposition_date: "2024-05-20"
-        last_modified_date: "2024-12-03"
-        release_date: "2024-12-03"
+        deposition_date: '2024-05-20'
+        last_modified_date: '2024-12-03'
+        release_date: '2024-12-03'
       method_links:
         - custom_name: IMOD home page
           link: https://bio3d.colorado.edu/imod/
@@ -31,7 +31,7 @@ annotations:
       - OrientedPoint:
           binning: 1
           file_format: mod
-          glob_string: "{dataset_name}/{run_name}_*MS.mod"
+          glob_string: '{dataset_name}/{run_name}_*MS.mod'
           is_visualization_default: true
           order: xyz
 datasets:
@@ -59,24 +59,24 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10302_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10302_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10302_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10302_thumbnail.png'
 
 runs:
   - sources:
       - source_glob:
-          list_glob: "{dataset_name}/*"
+          list_glob: '{dataset_name}/*'
           match_regex: .*
           name_regex: (.*?)_.*?_MS.mod
 
 standardization_config:
   deposition_id: 10302
-  source_prefix: "braxton_owens_05_2024/CZII_size_exclusion/ms_rings"
+  source_prefix: 'braxton_owens_05_2024/CZII_size_exclusion/ms_rings'
 
 version: 1.1.0
 voxel_spacings:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Reconstructions/VoxelSpacing*"
+          list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
           match_regex: .*
           name_regex: VoxelSpacing(.*)

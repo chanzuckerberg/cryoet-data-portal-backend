@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -31,19 +31,19 @@ datasets:
       dataset_identifier: 10127
       dataset_title: M. magneticum dQ167_21h_induced
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
-        name: "Magnetospirillum magneticum "
+        name: 'Magnetospirillum magneticum '
         taxonomy_id: 342108
       sample_preparation: null
       sample_type: organism
     sources:
       - literal:
           value:
-            - "10127"
+            - '10127'
 depositions:
   - metadata:
       authors: *id001
@@ -75,11 +75,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (psa2014-12-30-15|psa2014-12-30-16|psa2014-12-30-17|psa2014-12-30-18|psa2014-12-30-19|psa2014-12-30-20|psa2014-12-30-21|psa2014-12-30-22|psa2014-12-30-23|psa2014-12-30-24|psa2014-12-30-25|psa2014-12-30-26|psa2014-12-30-27|psa2014-12-30-28|psa2014-12-30-29|psa2014-12-30-30|psa2014-12-30-31|psa2014-12-30-32|psa2014-12-30-33|psa2014-12-30-34)$
           name_regex: (.*)
 standardization_config:
@@ -97,7 +97,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -106,7 +106,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 6.167
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 78.0
       tilt_range:
         max: 60.0
@@ -117,7 +117,7 @@ tiltseries:
       total_flux: 100.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -138,7 +138,7 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
@@ -156,7 +156,7 @@ tomograms:
       voxel_spacing: 24.667
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

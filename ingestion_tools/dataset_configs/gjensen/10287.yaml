@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10287
       dataset_title: H.hepaticus
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Helicobacter hepaticus
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10287"
+            - '10287'
 depositions:
   - metadata:
       authors: *id001
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (aba2013-04-06-7|aba2013-04-06-8|aba2013-04-06-9|aba2013-04-06-10|aba2013-04-06-11|aba2013-04-06-12|aba2013-04-06-13|aba2013-04-06-14|aba2013-04-06-15|aba2013-04-06-16|aba2013-04-06-17|aba2013-04-06-18|aba2013-04-06-19|aba2013-04-06-20|aba2013-04-06-21|aba2013-04-06-22)$
           name_regex: (.*)
 standardization_config:
@@ -92,7 +92,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -101,7 +101,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 2.707
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 79.4
       tilt_range:
         max: 66.0
@@ -112,7 +112,7 @@ tiltseries:
       total_flux: 165.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -133,11 +133,11 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
@@ -151,7 +151,7 @@ tomograms:
       voxel_spacing: 10.829
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

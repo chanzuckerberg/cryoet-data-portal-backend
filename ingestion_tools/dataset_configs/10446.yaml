@@ -88,28 +88,28 @@ datasets:
       dataset_identifier: 10446
       dataset_title: CZII - CryoET Object Identification Challenge - Private Test Dataset
       dates: &dataset_dates
-        deposition_date: "2025-02-25"
-        last_modified_date: "2025-02-25"
-        release_date: "2025-02-25"
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
       funding:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: "CZII-2023\u2013327779"
       grid_preparation:
-        "Set Leica GP2 chamber to 4°C and 95% humidity + Use Whitman #1 blotting paper + Attach GFP
+        'Set Leica GP2 chamber to 4°C and 95% humidity + Use Whitman #1 blotting paper + Attach GFP
         nanobodies to grid surface using maleimide groups and kck linker + Apply 100 µL lysate in 10 rounds of 10 µL each +
         Wash grid twice with PBS + Remove excess buffer + Add sequentially 1 µL each: THG (17.8 mg/mL), Apoferritin
         (5 mg/mL), β-galactosidase (6 mg/mL), β-amylase (5 mg/mL), HSA (50 mg/mL), VLP (7.5 mg/mL) + Back-side blot for 6
-        seconds + Plunge-freeze in liquid ethane (-180°C)"
+        seconds + Plunge-freeze in liquid ethane (-180°C)'
       sample_preparation:
-        "Use HEK293T cells with LAMP1-GFP tag (from CZ BioHub) + Lyse cells using hypotonic buffer
+        'Use HEK293T cells with LAMP1-GFP tag (from CZ BioHub) + Lyse cells using hypotonic buffer
         (25mM Tris*HCl pH 7.5, 50mM sucrose, 0.2mM EGTA, 0.5mM MgCl2) with 23G syringe + Immediately add sucrose buffer
         (2.5M sucrose, 0.2mM EGTA, 0.5mM MgCl2) + Remove nuclear fraction by centrifuging at 1000 x g for 10 min + Keep all
-        steps at 4°C and lysate on ice"
+        steps at 4°C and lysate on ice'
       sample_type: in_vitro
     sources:
       - literal:
           value:
-            - "10446"
+            - '10446'
 
 depositions:
   - sources:
@@ -125,7 +125,7 @@ alignments:
       is_portal_standard: true
     sources:
       - source_glob:
-          list_glob: "{mapped_run_name}.aln"
+          list_glob: '{mapped_run_name}.aln'
 
 annotations:
   - metadata:
@@ -154,14 +154,14 @@ annotations:
       - SemanticSegmentationMask:
           file_format: mrc
           glob_strings:
-            - "{mapped_run_name}_Vol_Segment_mask.mrc"
+            - '{mapped_run_name}_Vol_Segment_mask.mrc'
           is_visualization_default: true
           mask_label: 1
           rescale: true
         parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
   - metadata:
       annotation_method:
         &method hybrid curation using CellCanvas, copick, slabpick, deepfindET, topaz, minislab
@@ -213,13 +213,13 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_apo-ferritin.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_apo-ferritin.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
 
   - metadata:
       annotation_method: *method
@@ -241,13 +241,13 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-amylase.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-amylase.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
 
   - metadata:
       annotation_method: *method
@@ -269,13 +269,13 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-galactosidase.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-galactosidase.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
 
   - metadata:
       annotation_method: *method
@@ -296,13 +296,13 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_ribosome.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_ribosome.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
 
   - metadata:
       annotation_method: *method
@@ -324,13 +324,13 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_thyroglobulin.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_thyroglobulin.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
 
   - metadata:
       annotation_method: *method
@@ -352,25 +352,25 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_virus-like-particle.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_virus-like-particle.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
 
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: "{mapped_run_name}.mdoc"
+          list_glob: '{mapped_run_name}.mdoc'
 
 ctfs:
   - metadata:
       format: CTFFIND
     sources:
       - source_glob:
-          list_glob: "{mapped_run_name}_CTFFIND_format_CTF.txt"
+          list_glob: '{mapped_run_name}_CTFFIND_format_CTF.txt'
 
 dataset_keyphotos:
   - sources:
@@ -385,24 +385,24 @@ frames:
       is_gain_corrected: false
     sources:
       - source_glob:
-          list_glob: "{mapped_run_name}/*.eer"
+          list_glob: '{mapped_run_name}/*.eer'
 
 gains:
   - sources:
       - source_glob:
-          list_glob: "{gain_file}"
+          list_glob: '{gain_file}'
 
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: "{mapped_run_name}_st.rawtlt"
+          list_glob: '{mapped_run_name}_st.rawtlt'
 
 runs:
   - sources:
       - source_glob:
-          list_glob: "copick/ExperimentRuns/*"
-          match_regex: ".*"
-          name_regex: "(.*)"
+          list_glob: 'copick/ExperimentRuns/*'
+          match_regex: '.*'
+          name_regex: '(.*)'
 
 standardization_config:
   deposition_id: 10310
@@ -435,7 +435,7 @@ tiltseries:
       total_flux: 120
     sources:
       - source_glob:
-          list_glob: "{mapped_run_name}_TS.mrc"
+          list_glob: '{mapped_run_name}_TS.mrc'
 
 tomograms:
   - metadata:
@@ -476,9 +476,9 @@ tomograms:
       - parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
         source_glob:
-          list_glob: "{mapped_run_name}_Vol.mrc"
+          list_glob: '{mapped_run_name}_Vol.mrc'
           match_regex: (.*)\.mrc
 
   - metadata:
@@ -518,9 +518,9 @@ tomograms:
       - parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
         source_glob:
-          list_glob: "{mapped_run_name}_dctf_Vol.mrc"
+          list_glob: '{mapped_run_name}_dctf_Vol.mrc'
           match_regex: (.*)\.mrc
   - metadata:
       affine_transformation_matrix:
@@ -560,9 +560,9 @@ tomograms:
       - parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
         source_glob:
-          list_glob: "{mapped_run_name}_Vol_10A.mrc"
+          list_glob: '{mapped_run_name}_Vol_10A.mrc'
           match_regex: (.*)\.mrc
 
   - metadata:
@@ -602,9 +602,9 @@ tomograms:
       - parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
         source_glob:
-          list_glob: "{mapped_run_name}_dctf_Vol_10A.mrc"
+          list_glob: '{mapped_run_name}_dctf_Vol_10A.mrc'
           match_regex: (.*)\.mrc
 
 version: 1.1.0

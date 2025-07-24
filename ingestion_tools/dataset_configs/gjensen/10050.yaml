@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -21,7 +21,7 @@ datasets:
           primary_author_status: false
       cell_strain:
         id: null
-        name: "26695"
+        name: '26695'
       dataset_description:
         This is 8th of 10 sets of data studying Helicobacter pylori
         collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb. These
@@ -31,13 +31,13 @@ datasets:
       dataset_identifier: 10050
       dataset_title: Hpylori_dflgS
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
-        "The samples were prepared with Vitrobot IV. Blotting conditions
+        'The samples were prepared with Vitrobot IV. Blotting conditions
         were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
-        time 4, drain time 1. 100% humidity. Cu grids. 10 nm . gold."
+        time 4, drain time 1. 100% humidity. Cu grids. 10 nm . gold.'
       organism:
         name: Helicobacter pylori
         taxonomy_id: 85962
@@ -50,7 +50,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10050"
+            - '10050'
 depositions:
   - metadata:
       authors: *id001
@@ -80,11 +80,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mka2019-11-23-49|mka2019-11-23-50|mka2019-11-23-51|mka2019-11-23-52|mka2019-11-23-53|mka2019-11-23-54|mka2019-11-23-55|mka2019-11-23-56|mka2019-11-23-57|mka2019-11-23-58|mka2019-11-23-59|mka2019-11-23-60|mka2019-11-23-61|mka2019-11-23-62|mka2019-11-23-63|mka2019-11-23-64|mka2019-11-23-65|mka2019-11-23-66|mka2019-11-23-67|mka2019-11-23-68|mka2019-11-23-69|mka2019-11-23-70|mka2019-11-23-71|mka2019-11-23-72|mka2019-11-23-73|mka2019-11-23-74)$
           name_regex: (.*)
 standardization_config:
@@ -102,7 +102,7 @@ tiltseries:
       data_acquisition_software: Serial EM
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
@@ -111,7 +111,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 4.494
       spherical_aberration_constant: 2.7
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 84.1
       tilt_range:
         max: float {ts-tilt_range-max}
@@ -122,7 +122,7 @@ tiltseries:
       total_flux: 120.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -143,25 +143,25 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
         y: 0
         z: 0
       processing: raw
-      processing_software: "{tomo-processing_software}"
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      processing_software: '{tomo-processing_software}'
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

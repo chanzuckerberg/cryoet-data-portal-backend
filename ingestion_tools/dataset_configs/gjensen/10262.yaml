@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10262
       dataset_title: Thermococcus kodakarensis
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Thermococcus kodakarensis
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10262"
+            - '10262'
 depositions:
   - metadata:
       authors: *id001
@@ -49,13 +49,13 @@ depositions:
         related_database_entries: EMD-8603
       dates: *id002
       deposition_description:
-        "Single set of data studying Thermococcus kodakarensis
+        'Single set of data studying Thermococcus kodakarensis
         (tax_id=69014) strain: by Ariane Briegel and is a part of Caltech Jensen lab
-        etdb."
+        etdb.'
       deposition_identifier: 10037
       deposition_title:
-        "Thermococcus kodakarensis (tax_id=69014) strain: by Ariane
-        Briegel"
+        'Thermococcus kodakarensis (tax_id=69014) strain: by Ariane
+        Briegel'
       deposition_types:
         - dataset
     sources:
@@ -74,11 +74,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (aba2014-07-15-21|aba2014-07-15-22|aba2014-07-15-23|aba2014-07-15-24|aba2014-07-15-25|aba2014-07-15-26|aba2014-07-15-27|aba2014-07-15-28|aba2014-07-15-30|aba2014-07-15-31|aba2014-07-15-32|aba2014-07-15-33|aba2014-07-15-35|aba2014-07-15-36|aba2014-07-15-37|aba2014-07-15-39|aba2014-07-15-40|aba2014-07-15-41|aba2014-07-15-60|aba2014-07-15-61|aba2014-07-15-62|aba2014-07-15-63|aba2014-07-17-8|aba2014-07-17-9|aba2014-07-17-10|aba2014-07-17-11|aba2014-07-17-12|aba2014-07-17-13|aba2014-07-17-14|aba2014-07-17-15|aba2014-07-17-16|aba2014-07-17-17|aba2014-07-17-18|aba2014-07-17-19|aba2014-07-17-20|aba2014-07-17-21|aba2014-07-17-22|aba2014-07-17-23|aba2014-07-17-24|aba2014-07-17-25|aba2014-07-17-26|aba2014-07-17-27|aba2014-07-17-28|aba2014-07-17-29|aba2014-07-17-30|aba2014-07-17-31|aba2014-07-17-32|aba2014-07-17-33|aba2015-07-08-14|aba2015-07-08-15|aba2015-07-08-16|aba2015-07-08-17|aba2015-07-08-18|aba2015-07-08-24|aba2015-07-08-25|aba2015-07-08-28|aba2015-07-08-29|aba2015-07-08-30|aba2015-07-08-32|aba2015-07-08-33)$
           name_regex: (.*)
 standardization_config:
@@ -96,16 +96,16 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
-        manufacturer: "{ts-microscope-manufacturer}"
-        model: "{ts-microscope-model}"
+        additional_info: ''
+        manufacturer: '{ts-microscope-manufacturer}'
+        model: '{ts-microscope-model}'
       microscope_optical_setup:
         energy_filter: GIF
         image_corrector: null
         phase_plate: null
       pixel_spacing: float {ts-pixel_spacing}
       spherical_aberration_constant: float {ts-spherical_aberration_constant}
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: -9.3
       tilt_range:
         max: 60.0
@@ -116,7 +116,7 @@ tiltseries:
       total_flux: 160.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -137,7 +137,7 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
@@ -155,7 +155,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

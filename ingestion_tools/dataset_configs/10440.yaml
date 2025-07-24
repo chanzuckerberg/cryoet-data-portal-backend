@@ -77,9 +77,9 @@ depositions:
         publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
         related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
       dates: &dates
-        deposition_date: "2024-10-30"
-        last_modified_date: "2024-02-25"
-        release_date: "2024-10-30"
+        deposition_date: '2024-10-30'
+        last_modified_date: '2024-02-25'
+        release_date: '2024-10-30'
       deposition_description:
         Experimental and simulated training data for the CryoET Object Identification Challenge.
         Each dataset contains tilt series, alignments, tomograms and ground truth annotations for six protein complexes
@@ -99,8 +99,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10310_thumbnail.png'
 alignments:
   - metadata:
       format: ARETOMO3
@@ -109,7 +109,7 @@ alignments:
       is_portal_standard: true
     sources:
       - source_glob:
-          list_glob: "{mapped_run_name}.aln"
+          list_glob: '{mapped_run_name}.aln'
 
 annotations:
   - metadata:
@@ -163,13 +163,13 @@ annotations:
           binning: 10.012
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_apo-ferritin.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_apo-ferritin.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
   - metadata:
       annotation_method: *method
       annotation_object:
@@ -190,13 +190,13 @@ annotations:
           binning: 10.012
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-amylase.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-amylase.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
 
   - metadata:
       annotation_method: *method
@@ -218,13 +218,13 @@ annotations:
           binning: 10.012
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-galactosidase.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_beta-galactosidase.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
 
   - metadata:
       annotation_method: *method
@@ -245,13 +245,13 @@ annotations:
           binning: 10.012
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_ribosome.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_ribosome.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
 
   - metadata:
       annotation_method: *method
@@ -273,13 +273,13 @@ annotations:
           binning: 10.012
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_thyroglobulin.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_thyroglobulin.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
 
   - metadata:
       annotation_method: *method
@@ -301,13 +301,13 @@ annotations:
           binning: 10.012
           file_format: copick
           glob_strings:
-            - "copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_virus-like-particle.json"
+            - 'copick/ExperimentRuns/{run_name}/Picks/ground-truth_0_virus-like-particle.json'
           is_visualization_default: true
           columns: xyz
         parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
   - metadata:
       annotation_method:
         Prediction using membrain-seg without rescaling and weights
@@ -334,26 +334,26 @@ annotations:
       - SemanticSegmentationMask:
           file_format: mrc
           glob_strings:
-            - "{mapped_run_name}_Vol_Segment_mask.mrc"
+            - '{mapped_run_name}_Vol_Segment_mask.mrc'
           is_visualization_default: true
           mask_label: 1
           rescale: true
         parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
 
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: "{mapped_run_name}.mdoc"
+          list_glob: '{mapped_run_name}.mdoc'
 
 ctfs:
   - metadata:
       format: CTFFIND
     sources:
       - source_glob:
-          list_glob: "{mapped_run_name}_CTFFIND_format_CTF.txt"
+          list_glob: '{mapped_run_name}_CTFFIND_format_CTF.txt'
 
 datasets:
   - metadata:
@@ -376,21 +376,21 @@ datasets:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: "CZII-2023\u2013327779"
       grid_preparation:
-        "Set Leica GP2 chamber to 4°C and 95% humidity + Use Whitman #1 blotting paper + Attach GFP
+        'Set Leica GP2 chamber to 4°C and 95% humidity + Use Whitman #1 blotting paper + Attach GFP
         nanobodies to grid surface using maleimide groups and kck linker + Apply 100 µL lysate in 10 rounds of 10 µL each +
         Wash grid twice with PBS + Remove excess buffer + Add sequentially 1 µL each: THG (17.8 mg/mL), Apoferritin
         (5 mg/mL), β-galactosidase (6 mg/mL), β-amylase (5 mg/mL), HSA (50 mg/mL), VLP (7.5 mg/mL) + Back-side blot for 6
-        seconds + Plunge-freeze in liquid ethane (-180°C)"
+        seconds + Plunge-freeze in liquid ethane (-180°C)'
       sample_preparation:
-        "Use HEK293T cells with LAMP1-GFP tag (from CZ BioHub) + Lyse cells using hypotonic buffer
+        'Use HEK293T cells with LAMP1-GFP tag (from CZ BioHub) + Lyse cells using hypotonic buffer
         (25mM Tris*HCl pH 7.5, 50mM sucrose, 0.2mM EGTA, 0.5mM MgCl2) with 23G syringe + Immediately add sucrose buffer
         (2.5M sucrose, 0.2mM EGTA, 0.5mM MgCl2) + Remove nuclear fraction by centrifuging at 1000 x g for 10 min + Keep all
-        steps at 4°C and lysate on ice"
+        steps at 4°C and lysate on ice'
       sample_type: in_vitro
     sources:
       - literal:
           value:
-            - "10440"
+            - '10440'
 
 dataset_keyphotos:
   - sources:
@@ -405,24 +405,24 @@ frames:
       is_gain_corrected: false
     sources:
       - source_glob:
-          list_glob: "{mapped_run_name}/*.eer"
+          list_glob: '{mapped_run_name}/*.eer'
 
 gains:
   - sources:
       - source_glob:
-          list_glob: "{gain_file}"
+          list_glob: '{gain_file}'
 
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: "{mapped_run_name}_st.rawtlt"
+          list_glob: '{mapped_run_name}_st.rawtlt'
 
 runs:
   - sources:
       - source_glob:
-          list_glob: "copick/ExperimentRuns/*"
-          match_regex: ".*"
-          name_regex: "(.*)"
+          list_glob: 'copick/ExperimentRuns/*'
+          match_regex: '.*'
+          name_regex: '(.*)'
 
 standardization_config:
   deposition_id: 10310
@@ -455,7 +455,7 @@ tiltseries:
       total_flux: 120
     sources:
       - source_glob:
-          list_glob: "{mapped_run_name}_TS.mrc"
+          list_glob: '{mapped_run_name}_TS.mrc'
 
 tomograms:
   - metadata:
@@ -496,9 +496,9 @@ tomograms:
       - parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
         source_glob:
-          list_glob: "{mapped_run_name}_Vol_10A.mrc"
+          list_glob: '{mapped_run_name}_Vol_10A.mrc'
           match_regex: (.*)\.mrc
 
   - metadata:
@@ -538,9 +538,9 @@ tomograms:
       - parent_filters:
           include:
             voxel_spacing:
-              - "10.012"
+              - '10.012'
         source_glob:
-          list_glob: "{mapped_run_name}_dctf_Vol_10A.mrc"
+          list_glob: '{mapped_run_name}_dctf_Vol_10A.mrc'
           match_regex: (.*)\.mrc
 
   - metadata:
@@ -581,9 +581,9 @@ tomograms:
       - parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
         source_glob:
-          list_glob: "{mapped_run_name}_Vol.mrc"
+          list_glob: '{mapped_run_name}_Vol.mrc'
           match_regex: (.*)\.mrc
 
   - metadata:
@@ -623,9 +623,9 @@ tomograms:
       - parent_filters:
           include:
             voxel_spacing:
-              - "4.990"
+              - '4.990'
         source_glob:
-          list_glob: "{mapped_run_name}_dctf_Vol.mrc"
+          list_glob: '{mapped_run_name}_dctf_Vol.mrc'
           match_regex: (.*)\.mrc
 
 version: 1.1.0

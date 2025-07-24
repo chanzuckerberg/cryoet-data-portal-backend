@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10094
       dataset_title: "L. pneumophila Lp02 \u2206lspDE"
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "4 grids were frozen for this strain at OD= 3 Vitrobot (MK iv)\
         \ settings: 100% humidity, 4\xB5l sample, Blot force 6, blot time 3 sec. Wait\
@@ -46,7 +46,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10094"
+            - '10094'
 depositions:
   - metadata:
       authors: *id001
@@ -79,11 +79,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (dga2017-03-02-40|dga2017-03-02-41|dga2017-03-02-42|dga2017-03-02-43|dga2017-03-02-44|dga2017-03-02-45|dga2017-03-02-46|dga2017-03-02-47|dga2017-03-02-48|dga2017-03-02-49|dga2017-03-02-50|dga2017-03-02-51|dga2017-03-02-52|dga2017-03-02-53|dga2017-03-02-54|dga2017-03-02-55|dga2017-03-02-57|dga2017-03-02-58|dga2017-03-02-59|dga2017-03-02-61|dga2017-03-02-62|dga2017-03-02-63|dga2017-03-02-64|dga2017-03-02-68|dga2017-03-02-69|dga2017-03-02-70|dga2017-03-02-71)$
           name_regex: (.*)
 standardization_config:
@@ -103,7 +103,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -112,7 +112,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 4.036
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 80.0
       tilt_range:
         max: 60.0
@@ -123,7 +123,7 @@ tiltseries:
       total_flux: 100.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -144,7 +144,7 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
@@ -155,14 +155,14 @@ tomograms:
         y: 0
         z: 0
       processing: raw
-      processing_software: "{tomo-processing_software}"
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      processing_software: '{tomo-processing_software}'
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: 16.145
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

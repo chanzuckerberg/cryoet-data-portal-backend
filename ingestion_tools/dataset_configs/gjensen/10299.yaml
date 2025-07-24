@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -27,9 +27,9 @@ datasets:
       dataset_identifier: 10299
       dataset_title: M. pneumoniae MP wt 27.5KX
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: QF grid, 10nm gold, 100% humidity...
       organism:
         name: Mycoplasma pneumoniae
@@ -39,7 +39,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10299"
+            - '10299'
 depositions:
   - metadata:
       authors: *id001
@@ -69,11 +69,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (jsa2010-02-21-1|jsa2010-02-21-2|jsa2010-02-21-3|jsa2010-02-21-4|jsa2010-02-21-5|jsa2010-02-21-6|jsa2010-02-21-7|jsa2010-02-21-8|jsa2010-02-21-9|jsa2010-02-21-10|jsa2010-02-21-11|jsa2010-02-21-12|jsa2010-02-21-13|jsa2010-02-21-14|jsa2010-02-21-15|jsa2010-02-21-16|jsa2010-02-21-17|jsa2010-02-21-18|jsa2010-02-21-19|jsa2010-02-21-20)$
           name_regex: (.*)
 standardization_config:
@@ -92,7 +92,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -112,7 +112,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -151,7 +151,7 @@ tomograms:
       voxel_spacing: 15.64
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

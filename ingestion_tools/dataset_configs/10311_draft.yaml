@@ -1,7 +1,7 @@
 datasets:
   - sources:
       - destination_glob:
-          list_glob: "{output_path}/*"
+          list_glob: '{output_path}/*'
           match_regex: '/\d*$'
           name_regex: (.*)
 depositions:
@@ -12,9 +12,9 @@ depositions:
           name: Utz Heinrich Ermel
           primary_author_status: true
       dates: &id002
-        deposition_date: "2024-10-15"
-        last_modified_date: "2024-10-15"
-        release_date: "2024-10-15"
+        deposition_date: '2024-10-15'
+        last_modified_date: '2024-10-15'
+        release_date: '2024-10-15'
       deposition_description: Standardized tomograms.
       deposition_identifier: 10311
       deposition_title: Standardized tomograms
@@ -27,7 +27,7 @@ depositions:
 runs:
   - sources:
       - destination_glob:
-          list_glob: "{dataset_output_path}/*"
+          list_glob: '{dataset_output_path}/*'
           match_regex: .*
           name_regex: (.*)
         exclude:
@@ -40,7 +40,7 @@ version: 1.1.0
 voxel_spacings:
   - sources:
       - source_glob:
-          list_glob: "{dataset_name}_{run_name}/*"
+          list_glob: '{dataset_name}_{run_name}/*'
           match_regex: '[\d\.]{5,7}$'
           name_regex: '([\d\.]{5,7})$'
         exclude:
@@ -59,7 +59,7 @@ alignments:
       tilt_offset: 0
     sources:
       - source_glob:
-          list_glob: "{dataset_name}_{run_name}/*/outputs/aretomo/reconstruct_only/{run_name}.aln"
+          list_glob: '{dataset_name}_{run_name}/*/outputs/aretomo/reconstruct_only/{run_name}.aln'
 tomograms:
   - metadata:
       align_software: ARETOMO3
@@ -81,7 +81,7 @@ tomograms:
       dates: *id002
     sources:
       - source_glob:
-          list_glob: "{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_Vol.zarr"
+          list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_Vol.zarr'
   - metadata:
       align_software: ARETOMO3
       authors: *id001
@@ -102,7 +102,7 @@ tomograms:
       dates: *id002
     sources:
       - source_glob:
-          list_glob: "{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_2ND_Vol.zarr"
+          list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_2ND_Vol.zarr'
           match_regex: .*
   - metadata:
       align_software: ARETOMO3
@@ -124,5 +124,5 @@ tomograms:
       dates: *id002
     sources:
       - source_glob:
-          list_glob: "{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_3RD_Vol.zarr"
+          list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_3RD_Vol.zarr'
           match_regex: .*

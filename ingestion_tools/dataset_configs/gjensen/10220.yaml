@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -35,9 +35,9 @@ datasets:
         Medium magnification tomograms of whole FlgP mutant Campylobacter
         cells
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Campylobacter jejuni
@@ -49,7 +49,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10220"
+            - '10220'
 depositions:
   - metadata:
       authors: *id001
@@ -82,11 +82,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2010-09-09-1|mba2010-09-09-2|mba2010-09-09-3|mba2010-09-09-4|mba2010-09-09-5|mba2010-09-09-6|mba2010-09-09-7)$
           name_regex: (.*)
 standardization_config:
@@ -104,7 +104,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -124,7 +124,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -163,7 +163,7 @@ tomograms:
       voxel_spacing: 19.24
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

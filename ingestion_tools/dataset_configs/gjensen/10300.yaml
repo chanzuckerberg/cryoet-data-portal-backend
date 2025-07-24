@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10300
       dataset_title: C. crescentus Calubactor EB session22 27.5KX
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: QF grid, 10nm gold, 100% humidity...
       organism:
         name: Caulobacter crescentus
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10300"
+            - '10300'
 depositions:
   - metadata:
       authors: *id001
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (jsa2009-08-07-1|jsa2009-08-07-2|jsa2009-08-07-3|jsa2009-08-07-4|jsa2009-08-07-5|jsa2009-08-07-6|jsa2009-08-07-7|jsa2009-08-07-8|jsa2009-08-07-9|jsa2009-08-07-10|jsa2009-08-07-11|jsa2009-08-07-12|jsa2009-08-07-13|jsa2009-08-07-14|jsa2009-08-07-15|jsa2009-08-07-16|jsa2009-08-07-17|jsa2009-08-07-18|jsa2009-08-07-19|jsa2009-08-07-20|jsa2009-08-07-21|jsa2009-08-07-22|jsa2009-08-07-23|jsa2009-08-07-24|jsa2009-08-07-25|jsa2009-08-07-26|jsa2009-08-07-27|jsa2009-08-07-28|jsa2009-08-07-29|jsa2009-08-07-30|jsa2009-08-07-31|jsa2009-08-07-32|jsa2009-08-07-33|jsa2009-08-07-34|jsa2009-08-07-35|jsa2009-08-07-36|jsa2009-08-07-37|jsa2009-08-07-38|jsa2009-08-07-39|jsa2009-08-07-40|jsa2009-08-07-41|jsa2009-08-07-42|jsa2009-08-07-43)$
           name_regex: (.*)
 standardization_config:
@@ -92,7 +92,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -112,7 +112,7 @@ tiltseries:
       total_flux: 180.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -151,7 +151,7 @@ tomograms:
       voxel_spacing: 15.64
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

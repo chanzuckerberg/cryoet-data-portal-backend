@@ -72,9 +72,9 @@ datasets:
         - funding_agency_name: Not funded
           grant_id: null
       grid_preparation:
-        "model: Quantifoil R2/2, material: GOLD, mesh: 200, support_film_film_type_id:
+        'model: Quantifoil R2/2, material: GOLD, mesh: 200, support_film_film_type_id:
         1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
-        support_film, pretreatment_type_: GLOW DISCHARGE"
+        support_film, pretreatment_type_: GLOW DISCHARGE'
       organism:
         name: Rattus norvegicus
       sample_preparation:
@@ -92,7 +92,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10011"
+            - '10011'
 frames:
   - sources:
       - source_glob:

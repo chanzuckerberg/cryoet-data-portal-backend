@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -31,9 +31,9 @@ datasets:
       dataset_identifier: 10059
       dataset_title: L. pneumophila CR2715_Janelia
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Legionella pneumophila
@@ -43,7 +43,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10059"
+            - '10059'
 depositions:
   - metadata:
       authors: *id001
@@ -76,11 +76,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (dga2018-08-27-518|dga2018-08-27-519|dga2018-08-27-520|dga2018-08-27-521|dga2018-08-27-527|dga2018-08-27-541|dga2018-08-27-558|dga2018-08-27-564|dga2018-08-27-565|dga2018-08-27-567|dga2018-08-27-572|dga2018-08-27-576|dga2018-08-27-579|dga2018-08-27-581|dga2018-08-27-585|dga2018-08-27-588|dga2018-08-27-589|dga2018-08-27-600|dga2018-08-27-602|dga2018-08-27-606|dga2018-08-27-607|dga2018-08-27-608|dga2018-08-27-609|dga2018-08-27-610|dga2018-08-27-612|dga2018-08-27-613|dga2018-08-27-614|dga2018-08-27-615|dga2018-08-27-617|dga2018-08-27-618|dga2018-08-27-619|dga2018-08-27-620|dga2018-08-27-621|dga2018-08-27-623|dga2018-08-27-624|dga2018-08-27-626|dga2018-08-27-627|dga2018-08-27-629|dga2018-08-27-638|dga2018-08-27-640|dga2018-08-27-641|dga2018-08-27-642|dga2018-08-27-655|dga2018-08-27-657|dga2018-08-27-660|dga2018-08-27-664|dga2018-08-27-668|dga2018-08-27-671|dga2018-08-27-673|dga2018-08-27-676|dga2018-08-27-679|dga2018-08-27-681|dga2018-08-27-687|dga2018-08-27-690|dga2018-08-27-691|dga2018-08-27-697|dga2018-08-27-699|dga2018-08-27-700|dga2018-08-27-701|dga2018-08-27-702|dga2018-08-27-703|dga2018-08-27-705|dga2018-08-27-707|dga2018-08-27-708|dga2018-08-27-709|dga2018-08-27-710|dga2018-08-27-712|dga2018-08-27-713|dga2018-08-27-714|dga2018-08-27-715|dga2018-08-27-717|dga2018-08-27-718|dga2018-08-27-719|dga2018-08-27-720|dga2018-08-27-721)$
           name_regex: (.*)
 standardization_config:
@@ -97,7 +97,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
@@ -117,7 +117,7 @@ tiltseries:
       total_flux: 100.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -156,7 +156,7 @@ tomograms:
       voxel_spacing: 16.8
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

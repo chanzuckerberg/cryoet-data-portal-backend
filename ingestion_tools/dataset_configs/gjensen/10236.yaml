@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -29,9 +29,9 @@ datasets:
       dataset_identifier: 10236
       dataset_title: Test run of Salmonella rabbit ears
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Salmonella typhimurium
@@ -41,7 +41,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10236"
+            - '10236'
 depositions:
   - metadata:
       authors: *id001
@@ -71,11 +71,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2010-02-26-1|mba2010-02-26-2|mba2010-02-26-3|mba2010-02-26-4|mba2010-02-26-5|mba2010-02-26-6|mba2010-02-26-7|mba2010-02-26-8|mba2010-02-26-9|mba2010-02-26-10|mba2010-02-26-11|mba2010-02-26-12|mba2010-02-26-13|mba2010-02-26-14)$
           name_regex: (.*)
 standardization_config:
@@ -93,7 +93,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -102,7 +102,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: float {ts-pixel_spacing}
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 11.5
       tilt_range:
         max: 58.5
@@ -113,7 +113,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -134,7 +134,7 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
@@ -152,7 +152,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

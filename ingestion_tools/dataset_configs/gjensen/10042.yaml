@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -27,14 +27,14 @@ datasets:
       dataset_identifier: 10042
       dataset_title: Pseudomonas_aeruginosa_DfliP
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
-        "Different plunge-freezing parameters: 1) blot force 6, blot
+        'Different plunge-freezing parameters: 1) blot force 6, blot
         time 3s, drain time 1s. 2) blot force 3, . blot time 2s, drain time 1s. 3) blot
         force -5, blot time 4s, drain time 1s. 4) blot force -3, blot time . 2s, drain
-        time 1s. All conditions were at room temperature with 100 % humidity."
+        time 1s. All conditions were at room temperature with 100 % humidity.'
       organism:
         name: Pseudomonas aeruginosa
         taxonomy_id: 287
@@ -48,7 +48,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10042"
+            - '10042'
 depositions:
   - metadata:
       authors: *id001
@@ -57,7 +57,7 @@ depositions:
         5 sets of data studying Pseudomonas aeruginosa collected
         by Mohammed Kaplan and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10023
-      deposition_title: "Pseudomonas aeruginosa (tax_id=287) strain: by Mohammed Kaplan"
+      deposition_title: 'Pseudomonas aeruginosa (tax_id=287) strain: by Mohammed Kaplan'
       deposition_types:
         - dataset
     sources:
@@ -76,11 +76,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mka2019-05-25-3|mka2019-05-25-4|mka2019-05-25-5|mka2019-05-25-6|mka2019-05-25-7|mka2019-05-25-9|mka2019-05-25-10|mka2019-05-25-11|mka2019-05-25-13|mka2019-05-25-14|mka2019-05-25-15|mka2019-05-25-17|mka2019-05-25-18|mka2019-05-25-19|mka2019-05-25-21|mka2019-05-25-22|mka2019-05-25-23|mka2019-05-25-24|mka2019-05-25-26|mka2019-05-25-27|mka2019-05-25-28|mka2019-05-25-29|mka2019-05-25-30|mka2019-05-25-31|mka2019-05-25-32|mka2019-05-25-33|mka2019-05-25-34|mka2019-05-25-35|mka2019-05-25-36|mka2019-05-25-37|mka2019-05-25-38|mka2019-05-25-39|mka2019-05-25-40|mka2019-05-25-41|mka2019-05-25-43|mka2019-05-25-44|mka2019-05-25-45|mka2019-05-25-46)$
           name_regex: (.*)
 standardization_config:
@@ -98,7 +98,7 @@ tiltseries:
       data_acquisition_software: Serial EM
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
@@ -107,7 +107,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 4.494
       spherical_aberration_constant: 2.7
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 84.1
       tilt_range:
         max: float {ts-tilt_range-max}
@@ -118,7 +118,7 @@ tiltseries:
       total_flux: 120.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -139,25 +139,25 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
         y: 0
         z: 0
       processing: raw
-      processing_software: "{tomo-processing_software}"
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      processing_software: '{tomo-processing_software}'
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

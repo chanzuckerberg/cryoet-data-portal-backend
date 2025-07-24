@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -25,9 +25,9 @@ datasets:
       dataset_identifier: 10103
       dataset_title: MLV 17.5
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: MLV
@@ -37,7 +37,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10103"
+            - '10103'
 depositions:
   - metadata:
       authors: *id001
@@ -46,7 +46,7 @@ depositions:
         2 sets of data studying MLV collected by Luiza Mendonca
         and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10051
-      deposition_title: "MLV (tax_id=0) strain: by Luiza Mendonca"
+      deposition_title: 'MLV (tax_id=0) strain: by Luiza Mendonca'
       deposition_types:
         - dataset
     sources:
@@ -65,11 +65,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (lmm2013-11-19-2|lmm2013-11-19-3|lmm2013-11-19-4|lmm2014-01-16-10|lmm2014-01-16-11|lmm2014-01-16-12|lmm2014-01-16-13|lmm2014-01-16-14|lmm2014-01-16-15|lmm2014-01-16-16|lmm2014-01-16-17|lmm2014-01-16-18|lmm2014-01-16-19|lmm2014-01-16-20|lmm2014-01-16-21|lmm2014-01-16-22|lmm2014-01-16-23|lmm2014-01-16-24|lmm2014-01-16-25|lmm2014-04-08-2|lmm2014-04-08-3|lmm2014-04-08-5|lmm2014-04-08-6|lmm2014-04-08-7|lmm2014-04-08-8|lmm2014-04-08-9|lmm2014-04-08-10|lmm2014-04-08-11|lmm2014-04-08-13|lmm2014-04-08-14|lmm2014-04-08-15|lmm2014-04-08-16|lmm2014-04-08-17|lmm2014-04-08-18|lmm2014-04-08-19|lmm2014-04-08-20|lmm2014-04-08-21|lmm2014-04-08-30|lmm2014-04-08-31|lmm2014-04-08-32)$
           name_regex: (.*)
 standardization_config:
@@ -87,7 +87,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -107,7 +107,7 @@ tiltseries:
       total_flux: float {ts-total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -146,7 +146,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

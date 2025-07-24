@@ -16,9 +16,9 @@ depositions:
       cross_references:
         publications: 10.7554/eLife.98552.3, 10.1101/2025.01.16.633326
       dates: &id002
-        deposition_date: "2025-01-01"
-        last_modified_date: "2025-01-09"
-        release_date: "2025-01-09"
+        deposition_date: '2025-01-01'
+        last_modified_date: '2025-01-09'
+        release_date: '2025-01-09'
       deposition_description:
         These segmentations of 23 different organelles and macromolecular structures across the
         1829 volumes in the C. reinhardtii dataset were generated as a part of a project that explored the scaling of data
@@ -43,12 +43,12 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10314_thumbnail.png'
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 annotations:
@@ -87,7 +87,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Ribosome.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Ribosome.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 128
@@ -100,7 +100,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Membrane.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Membrane.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 128
@@ -113,7 +113,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__TRiC.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__TRiC.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 128
@@ -126,7 +126,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Proteasome.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Proteasome.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 128
@@ -139,7 +139,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__ATP synthase.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__ATP synthase.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 128
@@ -152,7 +152,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__RuBisCo.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__RuBisCo.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 128
@@ -165,7 +165,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Cytoplasm.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Cytoplasm.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -178,7 +178,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Mitochondrion.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Mitochondrion.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -191,7 +191,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Nuclear envelope.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Nuclear envelope.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -204,7 +204,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Nucleoplasm.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Nucleoplasm.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -217,7 +217,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Pyrenoid tube.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Pyrenoid tube.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -230,7 +230,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Thylakoid.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Thylakoid.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -243,7 +243,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Pyrenoid.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Pyrenoid.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -256,7 +256,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Stroma.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Stroma.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -269,7 +269,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Lipid droplet.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Lipid droplet.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -294,7 +294,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Endoplasmic reticulum.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Endoplasmic reticulum.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -307,7 +307,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__NPC.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__NPC.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -320,7 +320,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Golgi.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Golgi.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -333,7 +333,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Vesicle.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Vesicle.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -346,7 +346,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Cell wall.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Cell wall.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -359,7 +359,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Cilium.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Cilium.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -372,7 +372,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Starch granule.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Starch granule.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -385,7 +385,7 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: mrc
-          glob_string: "{dataset_name}/{run_name}_bin2__Chloroplast membrane.mrc"
+          glob_string: '{dataset_name}/{run_name}_bin2__Chloroplast membrane.mrc'
           is_visualization_default: true
           rescale: true
           threshold: 0.5
@@ -393,25 +393,25 @@ annotations:
 datasets:
   - sources:
       - source_glob:
-          list_glob: "1030?"
-          match_regex: ".*"
-          name_regex: "(.*)"
+          list_glob: '1030?'
+          match_regex: '.*'
+          name_regex: '(.*)'
 
 runs:
   - sources:
       - source_glob:
-          list_glob: "{dataset_name}/*.mrc"
-          match_regex: ".*"
-          name_regex: "(.*?)_bin2__.*.mrc"
+          list_glob: '{dataset_name}/*.mrc'
+          match_regex: '.*'
+          name_regex: '(.*?)_bin2__.*.mrc'
 
 standardization_config:
   deposition_id: 10314
-  source_prefix: "mart_last_11_2024/"
+  source_prefix: 'mart_last_11_2024/'
 
-version: "1.1.0"
+version: '1.1.0'
 voxel_spacings:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Reconstructions/VoxelSpacing*"
-          match_regex: ".*"
-          name_regex: "VoxelSpacing(.*)"
+          list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+          match_regex: '.*'
+          name_regex: 'VoxelSpacing(.*)'

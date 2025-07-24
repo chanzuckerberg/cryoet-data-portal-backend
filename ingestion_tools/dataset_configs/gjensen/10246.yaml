@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10246
       dataset_title: Bsubtilis_ponA_sacculi
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: quantifoil grid R2/2, 20nm gold, 100% humidity
       organism:
         name: Bacillus subtilis
@@ -42,7 +42,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10246"
+            - '10246'
 depositions:
   - metadata:
       authors: *id001
@@ -74,11 +74,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (etl2012-09-02-21|etl2012-09-02-22|etl2012-09-02-23|etl2012-09-02-24|etl2012-09-02-25|etl2012-09-02-26|etl2012-09-02-27|etl2012-09-02-28|etl2012-09-02-29)$
           name_regex: (.*)
 standardization_config:
@@ -98,7 +98,7 @@ tiltseries:
       data_acquisition_software: UCSF tomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -118,7 +118,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -157,7 +157,7 @@ tomograms:
       voxel_spacing: 19.733
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

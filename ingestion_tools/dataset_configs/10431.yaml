@@ -54,9 +54,9 @@ datasets:
       dataset_identifier: 10431
       dataset_title: Plasma membranes isolated by unroofing - Grid 06
       dates: &id002
-        deposition_date: "2024-07-01"
-        last_modified_date: "2025-01-08"
-        release_date: "2025-01-08"
+        deposition_date: '2024-07-01'
+        last_modified_date: '2025-01-08'
+        release_date: '2025-01-08'
       funding:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: 2021-234544
@@ -79,7 +79,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10431"
+            - '10431'
 depositions:
   - sources:
       - literal:

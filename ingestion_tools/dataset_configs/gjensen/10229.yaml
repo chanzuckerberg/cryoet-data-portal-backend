@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10229
       dataset_title: Salmonella fliL minicells with T3SS
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Salmonella typhimurium
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10229"
+            - '10229'
 depositions:
   - metadata:
       authors: *id001
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2012-09-19-1|mba2012-09-19-2|mba2012-09-19-3|mba2012-09-19-4|mba2012-09-19-5|mba2012-09-19-6|mba2012-09-19-7|mba2012-09-19-8|mba2012-09-19-9|mba2012-09-19-10|mba2012-09-19-11|mba2012-09-19-12|mba2012-09-19-13|mba2012-09-19-14|mba2012-09-19-15|mba2012-09-19-16|mba2012-09-19-17|mba2012-09-19-18|mba2012-09-19-19|mba2012-09-19-20|mba2012-09-19-21|mba2012-09-19-22|mba2012-09-19-23|mba2012-09-19-24|mba2012-09-26-1|mba2012-09-26-2|mba2012-09-26-3|mba2012-09-26-4|mba2012-09-26-5|mba2012-09-26-6|mba2012-09-26-7|mba2012-09-26-8|mba2012-09-26-9)$
           name_regex: (.*)
 standardization_config:
@@ -91,7 +91,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -111,7 +111,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -150,7 +150,7 @@ tomograms:
       voxel_spacing: 11.2
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

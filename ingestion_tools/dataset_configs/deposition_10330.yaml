@@ -1,7 +1,7 @@
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 
@@ -23,9 +23,9 @@ annotations:
           primary_author_status: false
           ORCID: 0000-0001-6562-7187
       dates:
-        deposition_date: "2025-02-19"
-        last_modified_date: "2025-02-19"
-        release_date: "2025-02-19"
+        deposition_date: '2025-02-19'
+        last_modified_date: '2025-02-19'
+        release_date: '2025-02-19'
       ground_truth_status: false
       is_curator_recommended: true
       method_links:
@@ -37,13 +37,13 @@ annotations:
     sources:
       - SemanticSegmentationMask:
           file_format: zarr
-          glob_string: "{dataset_name}/{run_name}.zarr"
+          glob_string: '{dataset_name}/{run_name}.zarr'
           is_visualization_default: true
           threshold: 0.5
       - InstanceSegmentation:
           binning: 4.99
           file_format: copick
-          glob_string: "{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/cryoSAM2_1_vesicles.json"
+          glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/cryoSAM2_1_vesicles.json'
           is_visualization_default: true
           order: xyz
 
@@ -66,16 +66,16 @@ depositions:
           primary_author_status: false
           ORCID: 0000-0001-6562-7187
       dates:
-        deposition_date: "2025-02-19"
-        last_modified_date: "2025-02-19"
-        release_date: "2025-02-19"
+        deposition_date: '2025-02-19'
+        last_modified_date: '2025-02-19'
+        release_date: '2025-02-19'
       deposition_description:
-        "This deposition contains segmentations of synaptic vesicles in cryo ET data of
+        'This deposition contains segmentations of synaptic vesicles in cryo ET data of
         synaptosomes. The segmentations were produced with SynapseNet by re-training its vesicle segmentation network on
         ca. 50 synaptosome tomograms via unsupervised domain adaptation. TThe vesicles are segmented as instances: each
         vesicle is assigned a unique id per tomogram by SynapseNet (however, represented as binary masks on the cryoET
         data portal), each vesicle is also assigned its centroid calculated using the SynapseNet instances. For more
-        details on SynapseNet check out the GitHub repository and the preprint linked below."
+        details on SynapseNet check out the GitHub repository and the preprint linked below.'
       deposition_identifier: 10330
       deposition_title: Automated Synaptic Vesicle Segmentation in Synaptosomes
       cross_references:
@@ -91,13 +91,13 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10330_thumbnail.png'
 
 runs:
   - sources:
       - source_glob:
-          list_glob: "{dataset_name}/*"
+          list_glob: '{dataset_name}/*'
           match_regex: '.*\.zarr'
           name_regex: '(.*)\.zarr'
 
@@ -109,6 +109,6 @@ version: 1.1.0
 voxel_spacings:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Reconstructions/VoxelSpacing*"
+          list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
           match_regex: .*
           name_regex: VoxelSpacing(.*)

@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -32,9 +32,9 @@ datasets:
       dataset_identifier: 10169
       dataset_title: Cryo-sectioned Jurkat
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: cryo-sectioned by Mark Ladinsky
       organism:
         name: Homo sapiens
@@ -44,7 +44,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10169"
+            - '10169'
 depositions:
   - metadata:
       authors: *id001
@@ -72,11 +72,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (cwl2011-10-23-1|cwl2011-10-23-2|cwl2011-10-23-3|cwl2011-10-23-4|cwl2011-10-23-5|cwl2011-10-24-1|cwl2011-10-24-2|cwl2011-10-24-3|cwl2011-10-31-1|cwl2011-10-31-2|cwl2011-10-31-3|cwl2011-10-31-4|cwl2011-10-31-5|cwl2011-10-31-6|cwl2012-03-29-1|cwl2012-03-29-2|cwl2012-03-29-3|cwl2012-03-29-4|cwl2012-03-29-5|cwl2012-03-29-6|cwl2012-03-29-7|cwl2012-03-29-8|cwl2012-03-29-9|cwl2012-03-29-10|cwl2012-03-29-11|cwl2012-03-29-12)$
           name_regex: (.*)
 standardization_config:
@@ -91,10 +91,10 @@ tiltseries:
         acquire_mode: null
         manufacturer: Gatan
         model: UltraCam
-      data_acquisition_software: "{ts-data_acquisition_software}"
+      data_acquisition_software: '{ts-data_acquisition_software}'
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -114,7 +114,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -153,7 +153,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

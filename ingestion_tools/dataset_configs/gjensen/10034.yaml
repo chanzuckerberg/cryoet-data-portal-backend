@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10034
       dataset_title: G. hansenii gh9-1
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         +13min post-prep' - 30C, 100% humManual backblot 5sFM layed
         on grid prior and backblotted to dry excess liquid.
@@ -46,7 +46,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10034"
+            - '10034'
 depositions:
   - metadata:
       authors: *id001
@@ -78,11 +78,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (wnj2018-10-04-1|wnj2018-10-04-2|wnj2018-10-04-5|wnj2018-10-04-7|wnj2018-10-04-8|wnj2018-10-04-9)$
           name_regex: (.*)
 standardization_config:
@@ -100,7 +100,7 @@ tiltseries:
       data_acquisition_software: Undefined
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -120,7 +120,7 @@ tiltseries:
       total_flux: 151.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -159,7 +159,7 @@ tomograms:
       voxel_spacing: 9.138
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

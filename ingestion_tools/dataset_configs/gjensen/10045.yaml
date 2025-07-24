@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -21,7 +21,7 @@ datasets:
           primary_author_status: false
       cell_strain:
         id: null
-        name: "26695"
+        name: '26695'
       dataset_description:
         This is 3rd of 10 sets of data studying Helicobacter pylori
         collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb. These
@@ -31,13 +31,13 @@ datasets:
       dataset_identifier: 10045
       dataset_title: Helicobacter_pylori_dFlgs
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
-        "The samples were prepared with Vitrobot IV. Blotting conditions
+        'The samples were prepared with Vitrobot IV. Blotting conditions
         were either: blot force 6, blot . time 3, drain time 1 OR blot force -3, blot
-        time 4, drain time 1. 100% humidity. Cu grids. 10 nm . gold."
+        time 4, drain time 1. 100% humidity. Cu grids. 10 nm . gold.'
       organism:
         name: Helicobacter pylori
         taxonomy_id: 85962
@@ -50,7 +50,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10045"
+            - '10045'
 depositions:
   - metadata:
       authors: *id001
@@ -80,11 +80,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mka2019-09-22-1|mka2019-09-22-2|mka2019-09-22-3|mka2019-09-22-4|mka2019-09-22-5|mka2019-09-22-6|mka2019-09-22-7|mka2019-09-22-8|mka2019-09-22-9|mka2019-09-22-10|mka2019-09-22-11|mka2019-09-22-12|mka2019-09-22-13|mka2019-09-22-14|mka2019-09-22-15|mka2019-09-22-16|mka2019-09-22-18|mka2019-09-22-19|mka2019-09-22-20|mka2019-09-22-21|mka2019-09-22-22|mka2019-09-22-23|mka2019-09-22-24|mka2019-09-22-25|mka2019-09-22-26|mka2019-09-22-27|mka2019-09-22-28|mka2019-09-22-29|mka2019-09-22-30|mka2019-09-22-31|mka2019-09-22-32|mka2019-09-22-33|mka2019-09-22-34|mka2019-09-22-35|mka2019-09-22-36|mka2019-09-22-37|mka2019-09-22-38|mka2019-09-22-39|mka2019-09-22-40|mka2019-09-22-41|mka2019-09-22-42|mka2019-09-22-43|mka2019-09-22-44|mka2019-09-22-45|mka2019-09-22-46|mka2019-09-22-47|mka2019-09-22-48|mka2019-09-22-49|mka2019-09-22-50|mka2019-09-22-51|mka2019-09-22-52|mka2019-09-22-53|mka2019-09-22-54|mka2019-09-22-55|mka2019-09-22-56|mka2019-09-22-57|mka2019-09-22-58|mka2019-09-22-59|mka2019-09-22-60|mka2019-09-22-61|mka2019-09-22-62|mka2019-09-22-63|mka2019-09-22-64|mka2019-09-22-65|mka2019-09-22-66|mka2019-09-22-67|mka2019-09-22-68|mka2019-09-22-69|mka2019-09-22-70|mka2019-09-22-71|mka2019-09-22-72|mka2019-09-22-73|mka2019-09-22-74|mka2019-09-22-75|mka2019-09-22-76|mka2019-09-22-77|mka2019-09-22-78|mka2019-09-22-79|mka2019-09-22-80|mka2019-09-22-81|mka2019-09-22-82|mka2019-09-22-83|mka2019-09-22-84|mka2019-09-22-85|mka2019-09-22-86|mka2019-09-22-87|mka2019-09-22-88|mka2019-09-22-89|mka2019-09-22-90|mka2019-09-22-91|mka2019-09-22-92|mka2019-09-22-93|mka2019-09-22-94|mka2019-09-22-95|mka2019-09-22-96|mka2019-09-22-97|mka2019-09-22-98|mka2019-09-22-99|mka2019-09-22-100|mka2019-09-22-101|mka2019-09-22-102|mka2019-09-22-103|mka2019-09-22-104|mka2019-09-22-105|mka2019-09-22-106|mka2019-09-22-107|mka2019-09-22-108|mka2019-09-22-109)$
           name_regex: (.*)
 standardization_config:
@@ -102,7 +102,7 @@ tiltseries:
       data_acquisition_software: Serial EM
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
@@ -111,7 +111,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 4.494
       spherical_aberration_constant: 2.7
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 84.1
       tilt_range:
         max: float {ts-tilt_range-max}
@@ -122,7 +122,7 @@ tiltseries:
       total_flux: 130.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -143,25 +143,25 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
         y: 0
         z: 0
       processing: raw
-      processing_software: "{tomo-processing_software}"
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      processing_software: '{tomo-processing_software}'
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

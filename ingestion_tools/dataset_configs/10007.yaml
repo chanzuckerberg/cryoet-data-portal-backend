@@ -5,8 +5,8 @@ alignments:
     sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/AreTomo/*_dose-filt.xf"
-            - "{run_name}/AreTomo/*_dose-filt.tlt"
+            - '{run_name}/AreTomo/*_dose-filt.xf'
+            - '{run_name}/AreTomo/*_dose-filt.tlt'
 annotations:
   - metadata:
       annotation_method: crYOLO picking
@@ -34,9 +34,9 @@ annotations:
           corresponding_author_status: true
           name: Ellen D. Zhong
       dates: &id001
-        deposition_date: "2023-09-01"
-        last_modified_date: "2023-11-15"
-        release_date: "2023-11-30"
+        deposition_date: '2023-09-01'
+        last_modified_date: '2023-11-15'
+        release_date: '2023-11-30'
       ground_truth_status: false
       is_curator_recommended: true
       method_type: automated
@@ -45,13 +45,13 @@ annotations:
       - OrientedPoint:
           binning: 4
           file_format: tomoman_relion_star
-          glob_string: "{run_name}/metadata/particles/*.star"
+          glob_string: '{run_name}/metadata/particles/*.star'
           is_visualization_default: true
           order: xyz
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: "{run_name}/{run_name}_vali.mdoc"
+          list_glob: '{run_name}/{run_name}_vali.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -98,13 +98,13 @@ datasets:
       organism:
         name: Saccharomyces cerevisiae
       sample_preparation:
-        "buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
-        subtomogram_averaging_preparation"
+        'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
+        subtomogram_averaging_preparation'
       sample_type: organism
     sources:
       - literal:
           value:
-            - "10007"
+            - '10007'
 deposition_keyphotos:
   - sources:
       - literal:
@@ -136,15 +136,15 @@ frames:
       is_gain_corrected: false
     sources:
       - source_glob:
-          list_glob: "{run_name}/frames/*.eer"
+          list_glob: '{run_name}/frames/*.eer'
 gains:
   - sources:
       - source_glob:
-          list_glob: "{run_name}/*.gain"
+          list_glob: '{run_name}/*.gain'
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: "{run_name}/*_dose-filt.rawtlt"
+          list_glob: '{run_name}/*_dose-filt.rawtlt'
         parent_filters:
           exclude:
             run:
@@ -156,7 +156,7 @@ rawtilts:
               - ^ay18112021_gridX_lamella1_pos5$
               - ^ay18112021_gridX_lamella8_pos6$
       - source_glob:
-          list_glob: "{run_name}/*.rawtlt"
+          list_glob: '{run_name}/*.rawtlt'
         parent_filters:
           include:
             run:
@@ -170,7 +170,7 @@ rawtilts:
 runs:
   - sources:
       - source_glob:
-          list_glob: "*_pos*"
+          list_glob: '*_pos*'
           match_regex: .*
           name_regex: (.*)
 standardization_config:
@@ -214,7 +214,7 @@ tiltseries:
               - ^ay18112021_gridX_lamella1_pos5$
               - ^ay18112021_gridX_lamella8_pos6$
         source_glob: &id008
-          list_glob: "{run_name}/*.st"
+          list_glob: '{run_name}/*.st'
           name_regex: (.*)
   - metadata:
       acceleration_voltage: 300000

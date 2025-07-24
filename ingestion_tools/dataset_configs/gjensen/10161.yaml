@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -29,12 +29,12 @@ datasets:
       dataset_identifier: 10161
       dataset_title: Hylemonella gracilis
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
-        "Vitrobot setting: 100% humidity, 4 ul sample, 10 nm BSA treated
-        gold, -3 offset, 4 s blot time, no drain, ethane/propane mix"
+        'Vitrobot setting: 100% humidity, 4 ul sample, 10 nm BSA treated
+        gold, -3 offset, 4 s blot time, no drain, ethane/propane mix'
       organism:
         name: Hylemonella gracilis
         taxonomy_id: 887062
@@ -46,7 +46,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10161"
+            - '10161'
 depositions:
   - metadata:
       authors: *id001
@@ -76,11 +76,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (ycw2012-09-23-13|ycw2012-09-23-17|ycw2012-09-23-18|ycw2012-09-23-20|ycw2012-09-23-21|ycw2012-09-23-22|ycw2012-09-23-23|ycw2012-09-23-24|ycw2012-09-23-25|ycw2012-09-23-26|ycw2012-09-23-27|ycw2012-09-23-28|ycw2012-09-23-29|ycw2012-09-23-30|ycw2012-09-23-31|ycw2012-09-23-32|ycw2012-09-23-33|ycw2012-09-23-34|ycw2012-09-23-35|ycw2012-09-23-36|ycw2012-09-23-37|ycw2012-09-23-38|ycw2012-09-23-39|ycw2012-09-23-41|ycw2012-09-23-42|ycw2012-09-23-43|ycw2012-09-23-44|ycw2012-09-23-45|ycw2012-09-23-46|ycw2012-09-23-48|ycw2012-09-23-49|ycw2012-09-23-50|ycw2012-09-23-51|ycw2012-09-23-52|ycw2012-09-23-53|ycw2012-09-23-54|ycw2012-09-23-55|ycw2012-09-23-56|ycw2012-09-23-57|ycw2012-09-23-60|ycw2012-09-23-63|ycw2012-09-23-65|ycw2012-09-23-66|ycw2012-09-23-67|ycw2012-09-23-68|ycw2012-09-23-69|ycw2012-09-23-70|ycw2012-09-23-71|ycw2012-09-23-72|ycw2012-09-23-74)$
           name_regex: (.*)
 standardization_config:
@@ -95,10 +95,10 @@ tiltseries:
         acquire_mode: counting
         manufacturer: Gatan
         model: K2
-      data_acquisition_software: "{ts-data_acquisition_software}"
+      data_acquisition_software: '{ts-data_acquisition_software}'
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -118,7 +118,7 @@ tiltseries:
       total_flux: float {ts-total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -157,7 +157,7 @@ tomograms:
       voxel_spacing: 19.733
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

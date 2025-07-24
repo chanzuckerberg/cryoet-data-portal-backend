@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -25,9 +25,9 @@ datasets:
       dataset_identifier: 10099
       dataset_title: Halobacterium salinarum
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "Vitrobot (MK iv) settings: 100% humidity, 4\xB5l sample, Blot\
         \ force 6, blot time 3.5 sec. Wait time 8 sec. Drain time 1 sec. Ethane/propane\
@@ -41,16 +41,16 @@ datasets:
     sources:
       - literal:
           value:
-            - "10099"
+            - '10099'
 depositions:
   - metadata:
       authors: *id001
       dates: *id002
       deposition_description:
-        "Single set of data studying Halobacterium salinarum (tax_id=64091)
-        strain: by Debnath Ghosal and is a part of Caltech Jensen lab etdb."
+        'Single set of data studying Halobacterium salinarum (tax_id=64091)
+        strain: by Debnath Ghosal and is a part of Caltech Jensen lab etdb.'
       deposition_identifier: 10052
-      deposition_title: "Halobacterium salinarum (tax_id=64091) strain: by Debnath Ghosal"
+      deposition_title: 'Halobacterium salinarum (tax_id=64091) strain: by Debnath Ghosal'
       deposition_types:
         - dataset
     sources:
@@ -69,11 +69,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (dga2016-12-16-2|dga2016-12-16-3|dga2016-12-16-6|dga2016-12-16-7|dga2016-12-16-8|dga2016-12-16-9|dga2016-12-16-10|dga2016-12-16-11|dga2016-12-16-12|dga2016-12-16-14|dga2016-12-16-15|dga2016-12-16-16|dga2016-12-16-18|dga2016-12-16-19|dga2016-12-16-20|dga2016-12-16-21|dga2016-12-16-22|dga2016-12-16-23|dga2017-05-26-2|dga2017-05-26-3|dga2017-05-26-4|dga2017-05-26-5|dga2017-05-26-6|dga2017-05-26-7|dga2017-05-26-8|dga2017-05-26-9|dga2017-05-26-10|dga2017-05-26-11|dga2017-05-26-12|dga2017-05-26-13|dga2017-05-26-14|dga2017-05-26-15|dga2017-05-26-16)$
           name_regex: (.*)
 standardization_config:
@@ -91,7 +91,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -100,7 +100,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 4.036
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 80.0
       tilt_range:
         max: float {ts-tilt_range-max}
@@ -111,7 +111,7 @@ tiltseries:
       total_flux: float {ts-total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -132,11 +132,11 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
@@ -144,13 +144,13 @@ tomograms:
         z: 0
       processing: raw
       processing_software: null
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

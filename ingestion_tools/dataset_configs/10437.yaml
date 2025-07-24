@@ -41,9 +41,9 @@ annotations:
           corresponding_author_status: true
           name: Gira Bhabha
       dates: &id002
-        deposition_date: "2024-07-09"
-        last_modified_date: "2024-07-24"
-        release_date: "2024-07-29"
+        deposition_date: '2024-07-09'
+        last_modified_date: '2024-07-24'
+        release_date: '2024-07-29'
       ground_truth_status: false
       is_curator_recommended: true
       method_type: hybrid
@@ -462,7 +462,7 @@ annotations:
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: "Data_Set_3/{run_name}/mdocs/{run_name}_vali.mdoc"
+          list_glob: 'Data_Set_3/{run_name}/mdocs/{run_name}_vali.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -509,7 +509,7 @@ datasets:
       dates: *id002
       funding:
         - funding_agency_name: American Heart Association
-          grant_id: "915749"
+          grant_id: '915749'
         - funding_agency_name: Searle Scholars Program
           grant_id: SSP-2018-2737
         - funding_agency_name: NIH/NIAID
@@ -534,14 +534,14 @@ datasets:
         taxonomy_id: 58839
       other_setup: Cryo-FIB milling
       sample_preparation:
-        "E. intestinalis spores were purified from infected vero cells.
+        'E. intestinalis spores were purified from infected vero cells.
         (For method details see: Cryo-ET reveals the in situ architecture of the polar
-        tube invasion apparatus from microsporidian parasites)"
+        tube invasion apparatus from microsporidian parasites)'
       sample_type: cell
     sources:
       - literal:
           value:
-            - "10437"
+            - '10437'
 depositions:
   - sources:
       - literal:
@@ -557,7 +557,7 @@ frames:
 gains:
   - sources:
       - source_glob:
-          list_glob: "{gain_ref}"
+          list_glob: '{gain_ref}'
 rawtilts:
   - sources:
       - source_glob:
@@ -636,9 +636,9 @@ tomograms:
           name: Gira Bhabha
       ctf_corrected: false
       dates:
-        deposition_date: "2024-07-09"
-        last_modified_date: "2024-07-24"
-        release_date: "2024-07-29"
+        deposition_date: '2024-07-09'
+        last_modified_date: '2024-07-24'
+        release_date: '2024-07-29'
       fiducial_alignment_status: NON_FIDUCIAL
       is_visualization_default: true
       offset:

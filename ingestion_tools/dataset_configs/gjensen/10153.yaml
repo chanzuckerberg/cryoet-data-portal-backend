@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -21,16 +21,16 @@ datasets:
           primary_author_status: false
       cell_strain:
         id: null
-        name: "26695"
+        name: '26695'
       dataset_description:
         This is 16th of 17 sets of data studying Helicobacter pylori
         collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
       dataset_identifier: 10153
       dataset_title: H.pylori with treatment A
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Helicobacter pylori
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10153"
+            - '10153'
 depositions:
   - metadata:
       authors: *id001
@@ -68,11 +68,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (ycw2018-03-14-2|ycw2018-03-14-6|ycw2018-03-14-7|ycw2018-03-14-8|ycw2018-03-14-9|ycw2018-03-14-10|ycw2018-03-14-11|ycw2018-03-14-12|ycw2018-03-14-13|ycw2018-03-14-14|ycw2018-03-14-16|ycw2018-03-14-17|ycw2018-03-14-19|ycw2018-03-14-21|ycw2018-03-14-22|ycw2018-03-14-23|ycw2018-03-14-25|ycw2018-03-14-29|ycw2018-03-14-30|ycw2018-03-14-31|ycw2018-03-14-32|ycw2018-03-14-33|ycw2018-03-14-34|ycw2018-03-14-35|ycw2018-03-14-36|ycw2018-03-14-37|ycw2018-03-14-38|ycw2018-03-14-39|ycw2018-03-14-40|ycw2018-03-14-41|ycw2018-03-14-43|ycw2018-03-14-44|ycw2018-03-14-45)$
           name_regex: (.*)
 standardization_config:
@@ -90,7 +90,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -110,7 +110,7 @@ tiltseries:
       total_flux: float {ts-total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -149,7 +149,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

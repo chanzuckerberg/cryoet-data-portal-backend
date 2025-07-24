@@ -2,7 +2,7 @@ depositions:
   - metadata:
       authors: &deposition_authors
         - name: Yusuke Uchida
-          ORCID: "0000-0002-6932-1465"
+          ORCID: '0000-0002-6932-1465'
           primary_author_status: true
           corresponding_author_status: true
           kaggle_id: yu4u
@@ -11,9 +11,9 @@ depositions:
           corresponding_author_status: true
           kaggle_id: tattaka
       dates: &dates
-        deposition_date: "2025-02-25"
-        last_modified_date: "2025-02-25"
-        release_date: "2025-02-25"
+        deposition_date: '2025-02-25'
+        last_modified_date: '2025-02-25'
+        release_date: '2025-02-25'
       deposition_description:
         The 4th place solution employs heatmap-based particle detection using both 2.5D UNet-like models with 2D
         image-based backbones and 3D outputs. The solution utilizes weighted mean squared error loss with a balance
@@ -35,13 +35,13 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10322_snapshot.png"
-            thumbnail: "cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10322_thumbnail.png"
+            snapshot: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10322_snapshot.png'
+            thumbnail: 'cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10322_thumbnail.png'
 
 alignments:
   - sources:
       - destination_glob:
-          list_glob: "{run_output_path}/Alignments/100/alignment_metadata.json"
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
           match_regex: .*
           name_regex: (.*)
 
@@ -77,24 +77,24 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_apo-ferritin.json"
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_apo-ferritin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10445"
+              - '10445'
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_apo-ferritin.json"
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_apo-ferritin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10446"
+              - '10446'
 
   - metadata:
       annotation_method: *method
@@ -115,24 +115,24 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_beta-galactosidase.json"
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_beta-galactosidase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10445"
+              - '10445'
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_beta-galactosidase.json"
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_beta-galactosidase.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10446"
+              - '10446'
 
   - metadata:
       annotation_method: *method
@@ -152,24 +152,24 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_ribosome.json"
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_ribosome.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10445"
+              - '10445'
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_ribosome.json"
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_ribosome.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10446"
+              - '10446'
 
   - metadata:
       annotation_method: *method
@@ -190,24 +190,24 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_thyroglobulin.json"
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_thyroglobulin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10445"
+              - '10445'
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_thyroglobulin.json"
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_thyroglobulin.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10446"
+              - '10446'
 
   - metadata:
       annotation_method: *method
@@ -228,50 +228,50 @@ annotations:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_virus-like-particle.json"
+            - 'Public/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_virus-like-particle.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10445"
+              - '10445'
       - Point:
           binning: 4.990
           file_format: copick
           glob_strings:
-            - "Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_virus-like-particle.json"
+            - 'Private/copick/ExperimentRuns/{run_name}/Picks/yu4utattaka_0_virus-like-particle.json'
           is_visualization_default: false
           columns: xyz
         parent_filters:
           include:
             dataset:
-              - "10446"
+              - '10446'
 
 datasets:
   - sources:
       - literal:
           value:
-            - "10445"
-            - "10446"
+            - '10445'
+            - '10446'
 
 runs:
   - sources:
       - source_glob:
-          list_glob: "Public/copick/ExperimentRuns/*"
-          match_regex: ".*"
-          name_regex: "(.*)"
+          list_glob: 'Public/copick/ExperimentRuns/*'
+          match_regex: '.*'
+          name_regex: '(.*)'
         parent_filters:
           include:
             dataset:
-              - "10445"
+              - '10445'
       - source_glob:
-          list_glob: "Private/copick/ExperimentRuns/*"
-          match_regex: ".*"
-          name_regex: "(.*)"
+          list_glob: 'Private/copick/ExperimentRuns/*'
+          match_regex: '.*'
+          name_regex: '(.*)'
         parent_filters:
           include:
             dataset:
-              - "10446"
+              - '10446'
 
 standardization_config:
   deposition_id: 10322

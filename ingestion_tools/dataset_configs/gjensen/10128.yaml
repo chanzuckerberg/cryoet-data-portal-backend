@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -31,19 +31,19 @@ datasets:
       dataset_identifier: 10128
       dataset_title: M. magneticum magnetosome induced t0.5
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
-        name: "Magnetospirillum magneticum "
+        name: 'Magnetospirillum magneticum '
         taxonomy_id: 342108
       sample_preparation: null
       sample_type: organism
     sources:
       - literal:
           value:
-            - "10128"
+            - '10128'
 depositions:
   - metadata:
       authors: *id001
@@ -75,11 +75,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (psa2014-06-19-26|psa2014-06-19-27|psa2014-06-19-28|psa2014-06-19-29|psa2014-06-19-30|psa2014-06-19-31|psa2014-06-19-32|psa2014-06-19-33|psa2014-06-19-34|psa2014-06-19-35|psa2014-06-19-36|psa2014-06-19-37|psa2014-06-19-38|psa2014-06-19-39|psa2014-06-19-40|psa2014-06-19-41|psa2014-06-19-42|psa2014-06-19-43|psa2014-06-19-44|psa2014-06-19-45|psa2014-06-19-46|psa2014-06-19-47|psa2014-06-19-48|psa2014-06-19-49|psa2014-06-19-50|psa2014-06-19-51)$
           name_regex: (.*)
 standardization_config:
@@ -96,7 +96,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -116,7 +116,7 @@ tiltseries:
       total_flux: 100.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -155,7 +155,7 @@ tomograms:
       voxel_spacing: 24.667
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

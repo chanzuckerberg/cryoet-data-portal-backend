@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -26,9 +26,9 @@ datasets:
       dataset_identifier: 10261
       dataset_title: Vibrio harveyi
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Vibrio harveyi
@@ -38,7 +38,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10261"
+            - '10261'
 depositions:
   - metadata:
       authors: *id001
@@ -47,7 +47,7 @@ depositions:
         2 sets of data studying Vibrio harveyi collected by Ariane
         Briegel and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10044
-      deposition_title: "Vibrio harveyi (tax_id=669) strain: by Ariane Briegel"
+      deposition_title: 'Vibrio harveyi (tax_id=669) strain: by Ariane Briegel'
       deposition_types:
         - dataset
     sources:
@@ -66,11 +66,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (aba2013-12-24-1|aba2013-12-24-2|aba2013-12-24-4|aba2013-12-24-5|aba2013-12-24-6|aba2013-12-24-7|aba2013-12-24-8|aba2013-12-24-10|aba2013-12-24-11|aba2013-12-24-12|aba2013-12-24-13|aba2013-12-24-14|aba2013-12-24-15|aba2013-12-24-16|aba2013-12-24-17|aba2013-12-24-18|aba2013-12-24-19|aba2013-12-24-20|aba2013-12-24-21|aba2013-12-25-1|aba2013-12-25-2|aba2013-12-25-3|aba2013-12-25-4|aba2013-12-25-5|aba2013-12-25-6|aba2013-12-25-7|aba2013-12-25-8|aba2013-12-25-9|aba2013-12-25-10|aba2013-12-25-11|aba2013-12-25-12|aba2013-12-25-13|aba2013-12-25-14|aba2013-12-25-15|aba2013-12-25-16|aba2013-12-25-17|aba2013-12-25-18|aba2013-12-25-19|aba2013-12-25-20|aba2013-12-25-21|aba2013-12-25-22|aba2013-12-25-23|aba2013-12-25-24|aba2013-12-25-25|aba2013-12-25-26)$
           name_regex: (.*)
 standardization_config:
@@ -90,7 +90,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -99,7 +99,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 4.036
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 80.0
       tilt_range:
         max: 60.0
@@ -110,7 +110,7 @@ tiltseries:
       total_flux: 160.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -131,11 +131,11 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
@@ -143,13 +143,13 @@ tomograms:
         z: 0
       processing: raw
       processing_software: null
-      reconstruction_method: "{tomo-reconstruction_method}"
+      reconstruction_method: '{tomo-reconstruction_method}'
       reconstruction_software: IMOD
       tomogram_version: 1
       voxel_spacing: 16.145
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

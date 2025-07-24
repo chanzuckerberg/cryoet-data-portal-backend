@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -29,9 +29,9 @@ datasets:
       dataset_identifier: 10271
       dataset_title: Vibrio cholerae PM18
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Vibrio cholerae
@@ -41,7 +41,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10271"
+            - '10271'
 depositions:
   - metadata:
       authors: *id001
@@ -71,11 +71,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (aba2015-07-15-1|aba2015-07-15-3|aba2015-07-15-4|aba2015-07-15-5|aba2015-07-15-6|aba2015-07-15-7|aba2015-07-15-8|aba2015-07-15-9|aba2015-07-15-10|aba2015-07-15-13|aba2015-07-15-14|aba2015-07-15-15|aba2015-07-15-16|aba2015-07-15-17|aba2015-07-15-18|aba2015-07-15-19|aba2015-07-15-20|aba2015-07-15-22|aba2015-07-15-23|aba2015-07-15-24|aba2015-07-15-25|aba2015-07-15-26|aba2015-07-15-27|aba2015-07-15-29|aba2015-07-15-30|aba2015-07-15-31|aba2015-07-15-32|aba2015-07-15-33|aba2015-07-15-34|aba2015-07-15-35)$
           name_regex: (.*)
 standardization_config:
@@ -92,7 +92,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -112,7 +112,7 @@ tiltseries:
       total_flux: 160.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -151,7 +151,7 @@ tomograms:
       voxel_spacing: 13.059
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

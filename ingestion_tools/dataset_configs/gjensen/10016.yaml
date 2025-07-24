@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -32,9 +32,9 @@ datasets:
       dataset_identifier: 10016
       dataset_title: D. flos-aquae AnaGV (wt)
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "A freshly purified GV sample was diluted to OD500 = ~20 and\
         \ mixed with 10 nm BSA-coated gold beads. A 3 \xB5L volume of sample was applied\
@@ -52,7 +52,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10016"
+            - '10016'
 depositions:
   - metadata:
       authors: *id001
@@ -85,11 +85,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (pda2022-03-28-2|pda2022-03-28-3|pda2022-03-28-4|pda2022-03-28-5|pda2022-03-28-6|pda2022-03-28-7|pda2022-03-28-8|pda2022-03-28-9|pda2022-03-28-10|pda2022-03-28-11|pda2022-03-28-12|pda2022-03-28-13|pda2022-03-28-14|pda2022-03-28-15|pda2022-03-28-16|pda2022-03-28-17|pda2022-03-28-18|pda2022-03-28-19|pda2022-03-28-20|pda2022-03-28-21|pda2022-03-28-22|pda2022-03-28-23|pda2022-03-28-24|pda2022-03-28-25|pda2022-03-28-26|pda2022-03-28-27|pda2022-03-28-28|pda2022-03-28-29|pda2022-03-28-30|pda2022-03-28-31|pda2022-03-28-32|pda2022-03-28-33|pda2022-03-28-34|pda2022-03-28-35|pda2022-03-28-37|pda2022-03-28-38|pda2022-03-28-39|pda2022-03-28-40|pda2022-03-28-41|pda2022-03-28-42|pda2022-03-28-43|pda2022-03-28-44|pda2022-03-28-45|pda2022-03-28-46|pda2022-03-28-47|pda2022-03-28-48|pda2022-03-28-49|pda2022-03-28-50|pda2022-03-28-51|pda2022-03-28-52|pda2022-03-28-53|pda2022-03-28-54|pda2022-03-28-55|pda2022-03-28-56|pda2022-03-28-57|pda2022-03-28-58|pda2022-03-28-59|pda2022-03-28-60|pda2022-03-28-61|pda2022-03-28-62|pda2022-03-28-63|pda2022-03-28-64|pda2022-03-28-65|pda2022-03-28-66|pda2022-03-28-67|pda2022-03-28-68|pda2022-03-28-69|pda2022-03-28-70|pda2022-03-28-71|pda2022-03-28-72|pda2022-03-28-73|pda2022-03-28-74|pda2022-03-28-75|pda2022-03-28-76|pda2022-03-28-77|pda2022-03-28-78|pda2022-03-28-79|pda2022-03-28-80|pda2022-03-28-81|pda2022-03-28-83|pda2022-03-28-84|pda2022-03-28-85|pda2022-03-28-86|pda2022-03-28-87|pda2022-03-28-88|pda2022-03-28-89|pda2022-03-28-90|pda2022-03-28-91|pda2022-03-28-92|pda2022-03-28-93|pda2022-03-28-94|pda2022-03-28-95|pda2022-03-28-96|pda2022-03-28-97|pda2022-03-28-98|pda2022-03-28-99|pda2022-03-28-100|pda2022-03-28-101|pda2022-03-28-102|pda2022-03-28-103|pda2022-03-28-104|pda2022-03-28-105|pda2022-03-28-106|pda2022-03-28-107|pda2022-03-28-108|pda2022-03-28-109|pda2022-03-28-110|pda2022-03-28-111|pda2022-03-28-112|pda2022-03-28-113|pda2022-03-28-114|pda2022-03-28-115|pda2022-03-28-116|pda2022-03-28-117|pda2022-03-28-118|pda2022-03-28-119|pda2022-03-28-120|pda2022-03-28-121|pda2022-03-28-122|pda2022-03-28-123|pda2022-03-28-124|pda2022-03-28-125|pda2022-03-28-126|pda2022-03-28-127|pda2022-03-28-128|pda2022-03-28-129|pda2022-03-28-130|pda2022-03-28-131|pda2022-03-28-132|pda2022-03-28-133|pda2022-03-28-134|pda2022-03-28-135|pda2022-03-28-136|pda2022-03-28-137|pda2022-03-28-138|pda2022-03-28-139|pda2022-03-28-140|pda2022-03-28-141|pda2022-03-28-142|pda2022-03-28-143|pda2022-03-28-145|pda2022-03-28-146|pda2022-03-28-147|pda2022-03-28-148|pda2022-03-28-149|pda2022-03-28-150|pda2022-03-28-151|pda2022-03-28-152|pda2022-03-28-153|pda2022-03-28-154|pda2022-03-28-155|pda2022-03-28-156|pda2022-03-28-157|pda2022-03-28-158|pda2022-03-28-159|pda2022-03-28-160|pda2022-03-28-161|pda2022-03-28-162|pda2022-03-28-163|pda2022-03-28-164|pda2022-03-28-165|pda2022-03-28-166|pda2022-03-28-167|pda2022-03-28-168|pda2022-03-28-169)$
           name_regex: (.*)
 standardization_config:
@@ -107,7 +107,7 @@ tiltseries:
       data_acquisition_software: Serial EM
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
@@ -127,7 +127,7 @@ tiltseries:
       total_flux: 50.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -166,7 +166,7 @@ tomograms:
       voxel_spacing: 10.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

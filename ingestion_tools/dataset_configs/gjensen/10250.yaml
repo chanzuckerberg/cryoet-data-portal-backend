@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -29,9 +29,9 @@ datasets:
       dataset_identifier: 10250
       dataset_title: T. primitia lysozyme
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: Vitrobot
       organism:
         name: Treponema primitia
@@ -41,7 +41,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10250"
+            - '10250'
 depositions:
   - metadata:
       authors: *id001
@@ -69,11 +69,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (etl2012-04-26-17|etl2012-04-26-19|etl2012-04-26-20|etl2012-04-26-21|etl2012-04-26-22|etl2012-04-26-23|etl2012-04-26-24|etl2012-04-26-25|etl2012-04-26-26|etl2012-04-26-27|etl2012-04-26-28|etl2012-04-26-29|etl2012-04-26-30|etl2012-05-13-20|etl2012-05-13-21|etl2012-05-13-22|etl2012-05-13-23|etl2012-05-13-24|etl2012-05-13-25|etl2012-05-13-26|etl2012-05-13-27|etl2012-05-14-1|etl2012-05-14-2|etl2012-05-14-3|etl2012-05-14-4|etl2012-05-14-6|etl2012-05-14-7|etl2012-05-14-8|etl2012-05-14-9|etl2012-05-14-10|etl2012-05-14-11)$
           name_regex: (.*)
 standardization_config:
@@ -93,7 +93,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -102,7 +102,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 9.46
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 80.0
       tilt_range:
         max: float {ts-tilt_range-max}
@@ -113,7 +113,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -134,11 +134,11 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
@@ -146,13 +146,13 @@ tomograms:
         z: 0
       processing: raw
       processing_software: null
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

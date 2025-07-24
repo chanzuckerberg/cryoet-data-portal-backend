@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -33,9 +33,9 @@ datasets:
       dataset_identifier: 10171
       dataset_title: Cryo-sectioned synchronized Jurkat
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: cryo-sectioned by Mark Ladinsky
       organism:
         name: Homo sapiens
@@ -45,7 +45,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10171"
+            - '10171'
 depositions:
   - metadata:
       authors: *id001
@@ -73,11 +73,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (cwl2012-08-16-1|cwl2012-08-16-2|cwl2012-08-16-3|cwl2012-08-16-4|cwl2012-08-16-5|cwl2012-08-16-6|cwl2012-08-16-7|cwl2012-08-16-8|cwl2012-08-16-9|cwl2012-08-16-10|cwl2012-08-16-11|cwl2012-08-16-12|cwl2012-08-16-13|cwl2012-08-16-14)$
           name_regex: (.*)
 standardization_config:
@@ -97,7 +97,7 @@ tiltseries:
       data_acquisition_software: UCSF tomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -117,7 +117,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -156,7 +156,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

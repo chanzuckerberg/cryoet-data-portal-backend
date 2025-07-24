@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10182
       dataset_title: HUVECs infx pNLBg1I
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: manual blotting
       organism:
         name: Homo sapiens
@@ -44,7 +44,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10182"
+            - '10182'
 depositions:
   - metadata:
       authors: *id001
@@ -55,7 +55,7 @@ depositions:
         17 sets of data studying HUVECs collected by Cora Woodward
         and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10025
-      deposition_title: "HUVECs (tax_id=9606) strain: by Cora Woodward"
+      deposition_title: 'HUVECs (tax_id=9606) strain: by Cora Woodward'
       deposition_types:
         - dataset
     sources:
@@ -74,11 +74,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (cwl2013-10-18-1|cwl2013-10-18-2|cwl2013-10-18-3|cwl2013-10-18-4|cwl2013-10-18-5|cwl2013-10-18-6|cwl2013-10-18-7|cwl2013-10-18-8|cwl2013-10-18-9|cwl2013-10-18-10|cwl2013-10-18-11|cwl2013-10-18-12|cwl2013-10-18-14|cwl2013-10-18-15|cwl2013-10-19-1|cwl2013-10-19-3|cwl2013-10-19-4|cwl2013-10-19-5|cwl2013-10-19-6|cwl2013-10-19-7|cwl2013-10-19-8|cwl2013-10-19-9|cwl2013-10-19-10|cwl2013-10-19-11|cwl2013-10-19-12|cwl2013-10-19-13|cwl2013-10-19-14|cwl2013-10-19-16|cwl2013-10-19-17|cwl2013-10-19-18|cwl2013-10-19-19|cwl2013-10-19-20|cwl2013-10-19-21|cwl2013-10-19-22|cwl2013-10-19-23|cwl2013-10-19-24|cwl2013-10-19-25|cwl2013-10-19-26|cwl2013-10-19-27|cwl2013-10-19-28|cwl2013-10-19-29|cwl2013-10-19-30|cwl2013-10-19-31|cwl2013-10-19-32|cwl2013-10-19-33|cwl2013-10-19-34|cwl2013-10-19-35)$
           name_regex: (.*)
 standardization_config:
@@ -96,7 +96,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -116,7 +116,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -155,7 +155,7 @@ tomograms:
       voxel_spacing: 19.733
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

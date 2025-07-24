@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10208
       dataset_title: Campy flhAc
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Campylobacter jejuni
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10208"
+            - '10208'
 depositions:
   - metadata:
       authors: *id001
@@ -73,11 +73,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2012-01-11-1|mba2012-01-11-2|mba2012-01-11-3|mba2012-01-11-4|mba2012-01-11-5|mba2012-01-11-6|mba2012-01-11-7|mba2011-12-17-1|mba2011-12-17-2|mba2011-12-17-3|mba2011-12-17-4|mba2011-12-17-5|mba2011-12-17-6|mba2011-12-17-7|mba2011-12-17-8|mba2011-12-17-9|mba2011-12-17-10|mba2011-12-17-11|mba2011-12-17-12|mba2011-12-17-13|mba2011-12-17-14|mba2011-12-17-15|mba2011-12-17-16|mba2011-12-17-17|mba2011-12-27-1|mba2011-12-27-2|mba2011-12-27-3|mba2011-12-27-4|mba2011-12-27-5|mba2011-12-27-6|mba2011-12-27-7|mba2011-12-27-8|mba2011-12-27-9)$
           name_regex: (.*)
 standardization_config:
@@ -95,7 +95,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -115,7 +115,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -154,7 +154,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

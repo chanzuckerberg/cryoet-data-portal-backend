@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10202
       dataset_title: Auto-reconstruct 0
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Campylobacter jejuni
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10202"
+            - '10202'
 depositions:
   - metadata:
       authors: *id001
@@ -73,11 +73,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2012-04-21-1|mba2012-04-21-2|mba2012-04-21-3|mba2012-04-21-4|mba2012-04-23-1|mba2012-04-23-2|mba2012-04-23-3|mba2012-04-23-4|mba2012-04-23-5|mba2012-04-23-6|mba2012-04-23-7|mba2012-04-23-8|mba2012-04-22-1|mba2012-04-22-2|mba2012-04-22-3|mba2012-04-22-4|mba2012-04-22-5|mba2012-04-22-6|mba2012-04-22-7|mba2012-04-22-8|mba2012-04-22-9|mba2012-04-22-10|mba2012-04-23-9|mba2012-04-23-10|mba2012-04-23-11|mba2012-04-23-12|mba2012-04-23-13|mba2012-04-23-14|mba2012-04-23-15|mba2012-04-23-16|mba2012-04-24-1|mba2012-04-24-2|mba2012-04-24-3|mba2012-04-24-4|mba2012-04-24-5|mba2012-04-24-6|mba2012-04-24-7|mba2012-04-24-8|mba2012-04-24-9|mba2012-04-24-10|mba2012-04-24-11|mba2012-04-24-12|mba2012-04-24-13|mba2012-04-24-14|mba2012-04-24-15|mba2012-04-24-16|mba2012-04-24-17|mba2012-04-24-18|mba2012-04-24-19|mba2012-04-24-20|mba2012-04-24-21|mba2012-04-24-22|mba2012-04-20-10|mba2012-04-20-11)$
           name_regex: (.*)
 standardization_config:
@@ -95,7 +95,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -115,7 +115,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -154,7 +154,7 @@ tomograms:
       voxel_spacing: 15.6
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

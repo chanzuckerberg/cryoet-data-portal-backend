@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -21,16 +21,16 @@ datasets:
           primary_author_status: false
       cell_strain:
         id: null
-        name: "26695"
+        name: '26695'
       dataset_description:
         This is 11th of 17 sets of data studying Helicobacter pylori
         collected by Yi-Wei Chang and is a part of Caltech Jensen  lab etdb.
       dataset_identifier: 10148
       dataset_title: H.pylori 26695 delta-PAI
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Helicobacter pylori
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10148"
+            - '10148'
 depositions:
   - metadata:
       authors: *id001
@@ -68,11 +68,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (ycw2017-07-10-1|ycw2017-07-10-2|ycw2017-07-10-3|ycw2017-07-10-4|ycw2017-07-10-5|ycw2017-07-10-6|ycw2017-07-10-7|ycw2017-07-10-8|ycw2017-07-10-9|ycw2017-07-10-10|ycw2017-07-10-11|ycw2017-07-10-12|ycw2017-07-10-13|ycw2017-07-10-14|ycw2017-07-10-15|ycw2017-07-10-16|ycw2017-07-10-17|ycw2017-07-10-18|ycw2017-07-10-19|ycw2017-07-10-20|ycw2017-07-10-21|ycw2017-07-10-22|ycw2017-07-10-23|ycw2017-07-10-24|ycw2017-07-10-25|ycw2017-07-10-26|ycw2017-07-10-27|ycw2017-07-10-28|ycw2017-07-10-29|ycw2017-07-10-30|ycw2017-07-10-31|ycw2017-07-10-32|ycw2017-07-10-33|ycw2017-07-10-34|ycw2017-07-10-35|ycw2017-07-10-36|ycw2017-07-10-37|ycw2017-07-10-38|ycw2017-07-10-39|ycw2017-07-10-40|ycw2017-07-10-41|ycw2017-07-10-42|ycw2017-07-10-43|ycw2017-07-10-44|ycw2017-07-10-45|ycw2017-07-10-46|ycw2017-07-10-47|ycw2017-07-10-48|ycw2017-07-10-49|ycw2017-07-10-50|ycw2017-07-10-51|ycw2017-07-10-52|ycw2017-07-10-53|ycw2017-07-10-54|ycw2017-07-10-55|ycw2017-07-10-56|ycw2017-07-10-57|ycw2017-07-10-58|ycw2017-07-10-59|ycw2017-07-10-60|ycw2017-07-10-61)$
           name_regex: (.*)
 standardization_config:
@@ -89,7 +89,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -109,7 +109,7 @@ tiltseries:
       total_flux: 160.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -148,7 +148,7 @@ tomograms:
       voxel_spacing: 16.145
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

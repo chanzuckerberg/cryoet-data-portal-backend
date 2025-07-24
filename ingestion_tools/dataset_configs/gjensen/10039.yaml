@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -27,9 +27,9 @@ datasets:
       dataset_identifier: 10039
       dataset_title: Paeruginosa_dfliG
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Pseudomonas aeruginosa
@@ -42,7 +42,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10039"
+            - '10039'
 depositions:
   - metadata:
       authors: *id001
@@ -51,7 +51,7 @@ depositions:
         5 sets of data studying Pseudomonas aeruginosa collected
         by Mohammed Kaplan and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10023
-      deposition_title: "Pseudomonas aeruginosa (tax_id=287) strain: by Mohammed Kaplan"
+      deposition_title: 'Pseudomonas aeruginosa (tax_id=287) strain: by Mohammed Kaplan'
       deposition_types:
         - dataset
     sources:
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mka2019-06-23-45|mka2019-06-23-46|mka2019-06-23-47|mka2019-06-23-48|mka2019-06-23-49|mka2019-06-23-50|mka2019-06-23-52|mka2019-06-23-53|mka2019-06-23-54|mka2019-06-23-55|mka2019-06-23-56|mka2019-06-23-57|mka2019-06-23-58|mka2019-06-23-59|mka2019-06-23-60|mka2019-06-23-61|mka2019-06-23-62|mka2019-06-23-63|mka2019-06-23-64|mka2019-06-23-65|mka2019-06-23-66|mka2019-06-23-67|mka2019-06-23-68)$
           name_regex: (.*)
 standardization_config:
@@ -91,7 +91,7 @@ tiltseries:
       data_acquisition_software: Serial EM
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: Krios
       microscope_optical_setup:
@@ -111,7 +111,7 @@ tiltseries:
       total_flux: 110.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -150,7 +150,7 @@ tomograms:
       voxel_spacing: 13.44
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

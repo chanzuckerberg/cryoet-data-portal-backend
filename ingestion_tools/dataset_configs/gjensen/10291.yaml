@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10291
       dataset_title: M. pneumoniae MP II3 27.5KX
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: QF grid, 10nm gold, 100% humidity...
       organism:
         name: Mycoplasma pneumoniae
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10291"
+            - '10291'
 depositions:
   - metadata:
       authors: *id001
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (jsa2009-10-15-1|jsa2009-10-15-2|jsa2009-10-15-3|jsa2009-10-15-4|jsa2009-10-15-5|jsa2009-10-15-6|jsa2009-10-15-7|jsa2009-10-15-8|jsa2009-10-15-9|jsa2009-10-15-10|jsa2009-10-15-11|jsa2009-10-15-12|jsa2009-10-15-13|jsa2009-10-15-14|jsa2009-10-15-15|jsa2009-10-15-16|jsa2009-10-15-17|jsa2009-10-15-18|jsa2009-10-15-19|jsa2009-10-15-20|jsa2009-10-15-21|jsa2009-10-15-22|jsa2009-10-15-23|jsa2009-10-15-24|jsa2009-10-15-25|jsa2009-10-15-26|jsa2009-10-15-27|jsa2009-10-15-28|jsa2009-10-15-29|jsa2009-10-15-30|jsa2009-10-15-31|jsa2009-10-15-32|jsa2009-10-15-33)$
           name_regex: (.*)
 standardization_config:
@@ -93,7 +93,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -113,7 +113,7 @@ tiltseries:
       total_flux: 180.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -152,7 +152,7 @@ tomograms:
       voxel_spacing: 15.64
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

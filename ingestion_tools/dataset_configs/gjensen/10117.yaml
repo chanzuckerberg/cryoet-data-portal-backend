@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -26,9 +26,9 @@ datasets:
       dataset_identifier: 10117
       dataset_title: N. maritimus ESCRt-related cellular components
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Nitrosopumilus maritimus
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10117"
+            - '10117'
 depositions:
   - metadata:
       authors: *id001
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (rra2014-10-17-5|rra2014-10-17-10|rra2014-10-17-23|rra2014-10-17-24|rra2014-10-17-32|rra2014-10-17-33|rra2014-10-17-34|rra2014-10-17-35|rra2014-11-26-1|rra2014-11-26-2|rra2014-11-26-3|rra2014-11-26-4|rra2014-11-26-5|rra2014-11-26-6|rra2014-11-26-8|rra2014-11-26-50|rra2014-11-26-51|rra2014-11-26-52|rra2014-11-26-54)$
           name_regex: (.*)
 standardization_config:
@@ -92,9 +92,9 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
-        manufacturer: "{ts-microscope-manufacturer}"
-        model: "{ts-microscope-model}"
+        additional_info: ''
+        manufacturer: '{ts-microscope-manufacturer}'
+        model: '{ts-microscope-model}'
       microscope_optical_setup:
         energy_filter: GIF
         image_corrector: null
@@ -112,7 +112,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -151,7 +151,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

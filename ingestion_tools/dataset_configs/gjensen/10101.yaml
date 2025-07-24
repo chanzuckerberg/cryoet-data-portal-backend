@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,12 +30,12 @@ datasets:
       dataset_identifier: 10101
       dataset_title: P. mirabilis Planktonic cell of Proteus
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
-        "single tilt. constant angular increment, step: 1.0. tilt range:
-        (-60, 60). dosage: 195/A2. defocus: -10um. magnification: 22500."
+        'single tilt. constant angular increment, step: 1.0. tilt range:
+        (-60, 60). dosage: 195/A2. defocus: -10um. magnification: 22500.'
       organism:
         name: Proteus mirabilis
         taxonomy_id: 584
@@ -46,7 +46,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10101"
+            - '10101'
 depositions:
   - metadata:
       authors: *id001
@@ -76,11 +76,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (qya2015-12-07-1|qya2015-12-07-2|qya2015-12-07-3|qya2015-12-07-8|qya2015-12-07-28|qya2015-12-24-2|qya2015-12-24-11|qya2015-12-24-22|qya2015-12-24-23|qya2015-12-24-26|qya2015-12-24-33|qya2015-12-24-41|qya2015-12-24-42|qya2015-12-26-1|qya2015-12-26-2|qya2015-12-25-9|qya2015-12-26-3|qya2015-12-26-4|qya2015-12-25-11|qya2015-12-26-5|qya2015-12-26-6|qya2015-12-26-7|qya2015-12-26-8|qya2015-12-26-9|qya2015-12-26-11|qya2015-12-26-12|qya2015-12-26-14|qya2015-12-26-15|qya2015-12-26-17|qya2015-12-26-22|qya2015-12-26-24|qya2015-12-26-30|qya2015-12-26-34|qya2015-12-26-35|qya2015-12-26-37|qya2015-12-26-38|qya2015-12-26-41|qya2015-12-26-42|qya2015-12-26-43|qya2015-12-26-48|qya2015-12-26-49|qya2015-12-26-52|qya2015-12-26-53|qya2015-12-26-54|qya2016-06-11-1|qya2016-06-11-4|qya2016-06-18-1|qya2016-06-11-5|qya2016-06-11-9|qya2016-06-11-10|qya2016-06-11-11|qya2016-06-11-12|qya2016-06-11-13|qya2016-06-18-9|qya2016-06-18-10|qya2016-06-18-12|qya2016-06-18-13|qya2016-06-18-14|qya2016-06-18-16|qya2016-06-18-17|qya2016-06-18-18|qya2016-06-18-19|qya2016-06-18-20|qya2016-06-18-21|qya2016-06-18-23|qya2016-06-18-27|qya2016-06-18-31|qya2016-06-22-10|qya2016-06-22-11|qya2016-06-22-12|qya2016-06-22-14|qya2016-06-22-15|qya2016-06-22-18|qya2016-06-22-20|qya2016-06-22-21|qya2016-06-22-23|qya2016-06-22-24|qya2016-06-22-25|qya2016-06-22-27|qya2016-06-22-29|qya2016-06-22-30|qya2016-06-22-33|qya2016-06-22-35|qya2016-06-22-36|qya2016-06-22-38|qya2016-06-22-39|qya2016-06-22-41|qya2016-06-22-42|qya2016-06-22-43|qya2016-07-01-1|qya2016-07-01-2)$
           name_regex: (.*)
 standardization_config:
@@ -97,10 +97,10 @@ tiltseries:
         acquire_mode: counting
         manufacturer: Gatan
         model: K2
-      data_acquisition_software: "{ts-data_acquisition_software}"
+      data_acquisition_software: '{ts-data_acquisition_software}'
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -109,7 +109,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: float {ts-pixel_spacing}
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 80.0
       tilt_range:
         max: float {ts-tilt_range-max}
@@ -120,7 +120,7 @@ tiltseries:
       total_flux: float {ts-total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -141,11 +141,11 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
@@ -153,13 +153,13 @@ tomograms:
         z: 0
       processing: raw
       processing_software: null
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

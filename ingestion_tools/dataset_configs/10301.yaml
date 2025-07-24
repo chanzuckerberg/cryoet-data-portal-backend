@@ -5,8 +5,8 @@ alignments:
     sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/AreTomo/{run_name}_dose-filt.tlt"
-            - "{run_name}/AreTomo/{run_name}_dose-filt.xf"
+            - '{run_name}/AreTomo/{run_name}_dose-filt.tlt'
+            - '{run_name}/AreTomo/{run_name}_dose-filt.xf'
 annotations:
   - metadata:
       annotation_method: Template matching + manual filtering + 3D classification filtering
@@ -51,9 +51,9 @@ annotations:
         - corresponding_author_status: true
           name: Abhay Kotecha
       dates: &id002
-        deposition_date: "2024-04-09"
-        last_modified_date: "2024-04-09"
-        release_date: "2024-04-09"
+        deposition_date: '2024-04-09'
+        last_modified_date: '2024-04-09'
+        release_date: '2024-04-09'
       ground_truth_status: true
       is_curator_recommended: true
       method_links: &id003
@@ -69,8 +69,8 @@ annotations:
       - OrientedPoint:
           binning: 4
           file_format: stopgap_star
-          filter_value: "{annotation_micrograph_name}"
-          glob_string: "{run_name}/metadata/particles/f1atpase_bin*.star"
+          filter_value: '{annotation_micrograph_name}'
+          glob_string: '{run_name}/metadata/particles/f1atpase_bin*.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -92,8 +92,8 @@ annotations:
       - OrientedPoint:
           binning: 4
           file_format: stopgap_star
-          filter_value: "{annotation_micrograph_name}"
-          glob_string: "{run_name}/metadata/particles/f1atpase_mito_*.star"
+          filter_value: '{annotation_micrograph_name}'
+          glob_string: '{run_name}/metadata/particles/f1atpase_mito_*.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -115,8 +115,8 @@ annotations:
       - OrientedPoint:
           binning: 4
           file_format: stopgap_star
-          filter_value: "{annotation_micrograph_name}"
-          glob_string: "{run_name}/metadata/particles/ribosome_*.star"
+          filter_value: '{annotation_micrograph_name}'
+          glob_string: '{run_name}/metadata/particles/ribosome_*.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -137,8 +137,8 @@ annotations:
       - OrientedPoint:
           binning: 4
           file_format: stopgap_star
-          filter_value: "{annotation_micrograph_name}"
-          glob_string: "{run_name}/metadata/particles/nucleosome_*.star"
+          filter_value: '{annotation_micrograph_name}'
+          glob_string: '{run_name}/metadata/particles/nucleosome_*.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -160,8 +160,8 @@ annotations:
       - OrientedPoint:
           binning: 4
           file_format: stopgap_star
-          filter_value: "{annotation_micrograph_name}"
-          glob_string: "{run_name}/metadata/particles/rubisco_*.star"
+          filter_value: '{annotation_micrograph_name}'
+          glob_string: '{run_name}/metadata/particles/rubisco_*.star'
           is_visualization_default: true
           order: xyz
   - metadata:
@@ -182,14 +182,14 @@ annotations:
       - OrientedPoint:
           binning: 4
           file_format: stopgap_star
-          filter_value: "{annotation_micrograph_name}"
-          glob_string: "{run_name}/metadata/particles/microtubule_*.star"
+          filter_value: '{annotation_micrograph_name}'
+          glob_string: '{run_name}/metadata/particles/microtubule_*.star'
           is_visualization_default: true
           order: xyz
 collection_metadata:
   - sources:
       - source_glob:
-          list_glob: "{run_name}/{run_name}_vali.mdoc"
+          list_glob: '{run_name}/{run_name}_vali.mdoc'
 #ctfs:
 #  - metadata:
 #      format: 'CTFFIND'
@@ -274,7 +274,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10301"
+            - '10301'
 deposition_keyphotos:
   - sources:
       - literal:
@@ -308,25 +308,25 @@ frames:
       is_gain_corrected: false
     sources:
       - source_glob:
-          list_glob: "{run_name}/frames/*.eer"
+          list_glob: '{run_name}/frames/*.eer'
 gains:
   - sources:
       - source_glob:
-          list_glob: "{run_name}/*.gain"
+          list_glob: '{run_name}/*.gain'
 identified_objects:
   - metadata:
-      filter_value: "{run_name}"
+      filter_value: '{run_name}'
     sources:
       - source_glob:
-          list_glob: "identified_objects.csv"
+          list_glob: 'identified_objects.csv'
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: "{run_name}/{run_name}.rawtlt"
+          list_glob: '{run_name}/{run_name}.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*_BrnoKrios_*"
+          list_glob: '*_BrnoKrios_*'
           match_regex: /.*_BrnoKrios_.*$
           name_regex: (.*)
 standardization_config:
@@ -360,7 +360,7 @@ tiltseries:
       total_flux: float {tilt_series_total_flux}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{run_name}.st"
+          list_glob: '{run_name}/{run_name}.st'
           match_regex: (.*)
 tomograms:
   - metadata:

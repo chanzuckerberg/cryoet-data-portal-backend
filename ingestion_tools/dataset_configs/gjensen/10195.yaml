@@ -26,9 +26,9 @@ datasets:
       dataset_identifier: 10195
       dataset_title: Vibrio cholerae (No IPTG)
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: No induction of GFP-MreB
       organism:
         name: Vibrio cholerae
@@ -38,7 +38,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10195"
+            - '10195'
 depositions:
   - metadata:
       authors: *id001
@@ -60,11 +60,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mst2010-12-10-1|mst2010-12-10-2|mst2010-12-10-3|mst2010-12-10-4|mst2010-12-10-5|mst2010-12-10-7|mst2010-12-10-8|mst2010-12-10-9|mst2010-12-11-1|mst2010-12-11-2|mst2010-12-11-3|mst2010-12-11-4|mst2010-12-11-5|mst2010-12-11-6|mst2010-12-11-7|mst2010-12-11-8|mst2010-12-11-9|mst2010-12-11-10|mst2010-12-11-11|mst2010-12-11-12)$
           name_regex: (.*)
 standardization_config:
@@ -107,7 +107,7 @@ tomograms:
       voxel_spacing: 19.24
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

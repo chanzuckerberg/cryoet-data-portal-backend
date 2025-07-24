@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -26,21 +26,21 @@ datasets:
       dataset_identifier: 10116
       dataset_title: N. maritimus CDV-related cellular components
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Nitrosopumilus maritimus
         taxonomy_id: 338192
       sample_preparation:
-        "Nmar cells grown to mid log phase. Not concentrated, looking
-        for cell division related CDV proteins.(Pipeline:  autoprocref_1396627728)"
+        'Nmar cells grown to mid log phase. Not concentrated, looking
+        for cell division related CDV proteins.(Pipeline:  autoprocref_1396627728)'
       sample_type: organism
     sources:
       - literal:
           value:
-            - "10116"
+            - '10116'
 depositions:
   - metadata:
       authors: *id001
@@ -70,11 +70,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (rra2014-04-02-7|rra2014-04-02-8|rra2014-04-02-9|rra2014-04-02-10|rra2014-04-02-12|rra2014-04-02-16|rra2014-04-02-17|rra2014-04-02-18|rra2014-04-02-19|rra2014-04-17-25|rra2014-04-18-1|rra2014-04-18-2|rra2014-04-18-3|rra2014-04-18-15|rra2014-04-18-19|rra2014-05-10-3|rra2014-05-10-7|rra2014-05-10-8|rra2014-05-10-9|rra2014-05-10-10|rra2014-05-10-11|rra2014-05-10-12|rra2014-05-10-13|rra2014-05-10-14|rra2014-05-10-15)$
           name_regex: (.*)
 standardization_config:
@@ -92,7 +92,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -112,7 +112,7 @@ tiltseries:
       total_flux: 180.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -151,7 +151,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

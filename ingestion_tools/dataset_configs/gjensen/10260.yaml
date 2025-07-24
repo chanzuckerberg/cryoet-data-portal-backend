@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -26,9 +26,9 @@ datasets:
       dataset_identifier: 10260
       dataset_title: V. harveyi LuxQ OE
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Vibrio harveyi
@@ -38,7 +38,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10260"
+            - '10260'
 depositions:
   - metadata:
       authors: *id001
@@ -47,7 +47,7 @@ depositions:
         2 sets of data studying Vibrio harveyi collected by Ariane
         Briegel and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10044
-      deposition_title: "Vibrio harveyi (tax_id=669) strain: by Ariane Briegel"
+      deposition_title: 'Vibrio harveyi (tax_id=669) strain: by Ariane Briegel'
       deposition_types:
         - dataset
     sources:
@@ -66,11 +66,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (aba2014-04-11-1|aba2014-04-11-2|aba2014-04-11-3|aba2014-04-11-4|aba2014-04-11-5|aba2014-04-11-6|aba2014-04-11-7|aba2014-04-11-8|aba2014-04-11-9|aba2014-04-11-10|aba2014-04-11-11|aba2014-04-11-12|aba2014-04-11-13|aba2014-04-11-14|aba2014-04-11-15|aba2014-04-11-16|aba2014-04-11-17|aba2014-04-11-18|aba2014-04-11-19|aba2014-04-11-20|aba2014-04-11-21|aba2014-04-11-22|aba2014-04-11-23|aba2014-04-11-24|aba2014-04-11-25|aba2014-04-11-26|aba2014-04-11-27|aba2014-04-11-28|aba2014-04-11-29|aba2014-04-11-30|aba2014-04-11-31|aba2014-04-11-32|aba2014-04-11-33|aba2014-04-11-34|aba2014-04-11-35)$
           name_regex: (.*)
 standardization_config:
@@ -88,7 +88,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -97,7 +97,7 @@ tiltseries:
         phase_plate: null
       pixel_spacing: 3.265
       spherical_aberration_constant: 2.0
-      tilt_alignment_software: "{ts-tilt_alignment_software}"
+      tilt_alignment_software: '{ts-tilt_alignment_software}'
       tilt_axis: 79.3
       tilt_range:
         max: 60.0
@@ -108,7 +108,7 @@ tiltseries:
       total_flux: 160.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -129,11 +129,11 @@ tomograms:
           - 0
           - 0
           - 1
-      align_software: "{tomo-align_software}"
+      align_software: '{tomo-align_software}'
       authors: *id001
       ctf_corrected: null
       dates: *id002
-      fiducial_alignment_status: "{tomo-fiducial_alignment_status}"
+      fiducial_alignment_status: '{tomo-fiducial_alignment_status}'
       is_visualization_default: true
       offset:
         x: 0
@@ -141,13 +141,13 @@ tomograms:
         z: 0
       processing: raw
       processing_software: null
-      reconstruction_method: "{tomo-reconstruction_method}"
-      reconstruction_software: "{tomo-reconstruction_software}"
+      reconstruction_method: '{tomo-reconstruction_method}'
+      reconstruction_software: '{tomo-reconstruction_software}'
       tomogram_version: 1
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

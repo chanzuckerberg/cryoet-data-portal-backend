@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -33,9 +33,9 @@ datasets:
       dataset_identifier: 10170
       dataset_title: Cryo-sectioned Jurkat VSVG-pNL4GFP
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: cryo-sectioned by Mark Ladinsky
       organism:
         name: Homo sapiens
@@ -45,7 +45,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10170"
+            - '10170'
 depositions:
   - metadata:
       authors: *id001
@@ -73,11 +73,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (cwl2011-12-12-1|cwl2011-12-12-2|cwl2011-12-12-3|cwl2011-12-12-4|cwl2011-12-12-5|cwl2011-12-12-6|cwl2011-12-12-7|cwl2011-12-12-8|cwl2011-12-12-9|cwl2011-12-12-10|cwl2011-12-12-11|cwl2011-12-12-12|cwl2011-12-12-13|cwl2011-12-12-14|cwl2011-12-12-15|cwl2011-12-12-16|cwl2011-12-12-17|cwl2011-12-12-18|cwl2011-12-12-19|cwl2011-12-12-20|cwl2011-12-12-21|cwl2011-12-12-22|cwl2011-12-12-23|cwl2011-12-12-24|cwl2011-12-12-25|cwl2011-12-12-26|cwl2011-12-12-27|cwl2011-12-12-28|cwl2011-12-12-29|cwl2011-12-15-1|cwl2011-12-15-2|cwl2011-12-15-3|cwl2011-12-15-4|cwl2011-12-25-10|cwl2011-12-25-11|cwl2011-12-25-12)$
           name_regex: (.*)
 standardization_config:
@@ -95,7 +95,7 @@ tiltseries:
       data_acquisition_software: UCSF tomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -115,7 +115,7 @@ tiltseries:
       total_flux: 150.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -154,7 +154,7 @@ tomograms:
       voxel_spacing: 18.92
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

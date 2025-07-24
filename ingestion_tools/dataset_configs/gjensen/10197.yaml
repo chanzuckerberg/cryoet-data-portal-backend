@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -28,9 +28,9 @@ datasets:
       dataset_identifier: 10197
       dataset_title: V. cholerae
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Vibrio cholerae
@@ -40,7 +40,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10197"
+            - '10197'
 depositions:
   - metadata:
       authors: *id001
@@ -68,11 +68,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mpa2011-04-05-1|mpa2011-04-05-2|mpa2011-04-05-3|mpa2011-04-05-4|mpa2011-04-05-5|mpa2011-04-05-6|mpa2011-04-05-7|mpa2011-04-05-8|mpa2011-04-05-9|mpa2011-04-04-1|mpa2011-04-04-2|mpa2011-04-04-3|mpa2011-04-04-4|mpa2011-04-05-10|mpa2011-04-05-11|mpa2011-04-05-12|mpa2011-04-05-13|mpa2011-04-05-14|mpa2011-04-05-15|mpa2011-04-05-16|mpa2011-04-05-17|mpa2011-04-05-18|mpa2011-04-04-7|mpa2011-04-04-8|mpa2011-04-04-9|mpa2011-04-04-10|mpa2011-04-05-19|mpa2011-04-05-20|mpa2011-04-05-21|mpa2011-04-05-22|mpa2011-04-05-23|mpa2011-04-05-24|mpa2011-04-05-25|mpa2011-04-05-26|mpa2011-04-05-27|mpa2011-04-05-28|mpa2011-04-04-12|mpa2011-04-04-13|mpa2011-04-05-29|mpa2011-04-05-30|mpa2011-04-16-1|mpa2011-04-16-3|mpa2011-04-16-4|mpa2011-04-16-5|mpa2011-04-16-6|mpa2011-04-16-7|mpa2011-04-16-8|mpa2011-04-16-9|mpa2011-04-16-10|mpa2011-04-16-11|mpa2011-04-16-12|mpa2011-04-16-13|mpa2011-04-16-14|mpa2011-04-16-15|mpa2011-04-16-16|mpa2011-04-16-17|mpa2011-04-16-18|mpa2011-04-16-19|mpa2011-04-16-20|mpa2011-04-16-21|mpa2011-04-16-22|mpa2011-04-16-23|mpa2011-04-16-24|mpa2011-04-16-25|mpa2011-04-16-26|mpa2011-04-16-27|mpa2011-04-16-28|mpa2011-05-24-1|mpa2011-05-24-2|mpa2011-05-24-3|mpa2011-05-24-4|mpa2011-05-24-5|mpa2011-05-24-6|mpa2011-05-24-7|mpa2011-05-24-8|mpa2011-05-24-9|mpa2011-05-24-10|mpa2011-05-24-11|mpa2011-05-24-12|mpa2011-05-24-13|mpa2011-05-24-14|mpa2011-05-24-15|mpa2011-05-24-16|mpa2011-05-24-17|mpa2011-05-24-18|mpa2011-05-24-19|mpa2011-05-24-20|mpa2011-05-24-21)$
           name_regex: (.*)
 standardization_config:
@@ -90,7 +90,7 @@ tiltseries:
       data_acquisition_software: UCSF Tomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -110,7 +110,7 @@ tiltseries:
       total_flux: 120.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -149,7 +149,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

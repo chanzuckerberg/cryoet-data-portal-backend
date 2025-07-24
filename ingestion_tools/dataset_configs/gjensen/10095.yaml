@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -30,9 +30,9 @@ datasets:
       dataset_identifier: 10095
       dataset_title: "L. pneumophila Lp02 \u2206pilQ"
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "4 grids were frozen for Lp02 at OD= 2.8 Vitrobot (MK iv) settings:\
         \ 100% humidity, 4\xB5l sample, Blot force 6, blot time 3 sec. Wait time 0 sec.\
@@ -46,7 +46,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10095"
+            - '10095'
 depositions:
   - metadata:
       authors: *id001
@@ -79,11 +79,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (dga2017-03-02-1|dga2017-03-02-2|dga2017-03-02-3|dga2017-03-02-4|dga2017-03-02-5|dga2017-03-02-6|dga2017-03-02-7|dga2017-03-02-8|dga2017-03-02-9|dga2017-03-02-10|dga2017-03-02-11|dga2017-03-02-12|dga2017-03-02-13|dga2017-03-02-14|dga2017-03-02-15|dga2017-03-02-16|dga2017-03-02-17|dga2017-03-02-18|dga2017-03-02-19|dga2017-03-02-20|dga2017-03-02-21|dga2017-03-02-22|dga2017-03-02-23|dga2017-03-02-24|dga2017-03-02-25|dga2017-03-02-26|dga2017-03-02-27|dga2017-03-02-28|dga2017-03-02-37|dga2017-03-02-38)$
           name_regex: (.*)
 standardization_config:
@@ -101,7 +101,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: TFS
         model: F30
       microscope_optical_setup:
@@ -121,7 +121,7 @@ tiltseries:
       total_flux: 100.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -160,7 +160,7 @@ tomograms:
       voxel_spacing: 16.145
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

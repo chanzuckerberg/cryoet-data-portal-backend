@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -31,9 +31,9 @@ datasets:
       dataset_identifier: 10163
       dataset_title: Hyphomonas 'AR37'
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation:
         "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
         \ treated gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix."
@@ -48,7 +48,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10163"
+            - '10163'
 depositions:
   - metadata:
       authors: *id001
@@ -80,11 +80,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (ycw2012-03-03-1|ycw2012-03-03-2|ycw2012-03-03-3|ycw2012-03-03-4|ycw2012-03-03-5|ycw2012-03-03-6|ycw2012-03-03-8|ycw2012-03-03-9|ycw2012-03-03-10|ycw2012-03-03-11|ycw2012-03-03-13|ycw2012-03-03-14|ycw2012-03-03-17|ycw2012-03-03-21|ycw2012-03-03-24|ycw2012-03-03-27|ycw2012-03-12-2|ycw2012-03-12-4|ycw2012-03-12-5|ycw2012-03-12-6|ycw2012-03-12-7|ycw2012-03-12-10|ycw2012-03-12-11|ycw2012-03-12-12|ycw2012-03-12-13|ycw2012-03-12-15|ycw2012-03-12-16|ycw2012-03-12-18|ycw2012-03-12-19|ycw2012-03-12-20)$
           name_regex: (.*)
 standardization_config:
@@ -101,7 +101,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -121,7 +121,7 @@ tiltseries:
       total_flux: 120.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -160,7 +160,7 @@ tomograms:
       voxel_spacing: 15.48
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

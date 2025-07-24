@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -33,9 +33,9 @@ datasets:
         High magnification tomograms of whole FlgQ mutant Campylobacter
         cells
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: null
       organism:
         name: Campylobacter jejuni
@@ -47,7 +47,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10216"
+            - '10216'
 depositions:
   - metadata:
       authors: *id001
@@ -80,11 +80,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mba2010-08-30-3|mba2010-08-30-4|mba2010-08-30-5|mba2010-08-30-6|mba2010-08-30-7|mba2010-08-30-8|mba2010-08-30-9|mba2010-08-30-10|mba2010-08-26-6|mba2010-08-26-7|mba2010-08-26-8|mba2010-08-26-9|mba2010-08-26-10|mba2010-08-26-11|mba2010-08-26-12|mba2010-08-26-13|mba2010-08-26-14|mba2010-08-26-15|mba2010-08-26-16|mba2010-08-26-17|mba2010-08-26-18|mba2010-08-26-19|mba2010-08-26-20|mba2010-08-26-21)$
           name_regex: (.*)
 standardization_config:
@@ -102,7 +102,7 @@ tiltseries:
       data_acquisition_software: Leginon
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -122,7 +122,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -161,7 +161,7 @@ tomograms:
       voxel_spacing: 10.24
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

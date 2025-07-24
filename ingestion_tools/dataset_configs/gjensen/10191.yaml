@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -29,9 +29,9 @@ datasets:
       dataset_identifier: 10191
       dataset_title: E. coli (pLE7, 20 uM IPTG)
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: Vitrobot plunge freezing
       organism:
         name: Escherichia coli
@@ -43,7 +43,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10191"
+            - '10191'
 depositions:
   - metadata:
       authors: *id001
@@ -54,7 +54,7 @@ depositions:
         5 sets of data studying Escherichia coli collected by
         Matt Swulius and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10057
-      deposition_title: "Escherichia coli (tax_id=562) strain: by Matt Swulius"
+      deposition_title: 'Escherichia coli (tax_id=562) strain: by Matt Swulius'
       deposition_types:
         - dataset
     sources:
@@ -73,11 +73,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (mst2011-11-05-13|mst2011-11-05-14|mst2011-11-05-15|mst2011-11-05-16|mst2011-11-05-17|mst2011-11-05-18|mst2011-11-05-19|mst2011-11-05-20|mst2011-11-05-21|mst2011-11-05-22|mst2011-06-02-1|mst2011-06-02-2|mst2011-06-02-3|mst2011-06-02-4|mst2011-06-02-5|mst2011-06-02-6|mst2011-06-02-7|mst2011-06-02-8|mst2011-06-02-9|mst2011-06-02-10|mst2011-06-02-11|mst2011-06-02-12|mst2011-06-02-14|mst2011-06-02-15|mst2011-06-02-16|mst2011-06-02-17|mst2011-06-02-18|mst2011-06-02-19|mst2011-06-02-20|mst2011-06-02-21|mst2011-06-02-22|mst2011-06-02-23|mst2011-06-02-24|mst2011-06-02-26|mst2011-06-02-27|mst2011-06-02-28|mst2011-06-02-29|mst2011-06-02-30)$
           name_regex: (.*)
 standardization_config:
@@ -95,7 +95,7 @@ tiltseries:
       data_acquisition_software: UCSFTomo
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -115,7 +115,7 @@ tiltseries:
       total_flux: 200.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -154,7 +154,7 @@ tomograms:
       voxel_spacing: 18.92
     sources:
       - source_glob:
-          list_glob: "{run_name}/3dimage_*/*"
+          list_glob: '{run_name}/3dimage_*/*'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:

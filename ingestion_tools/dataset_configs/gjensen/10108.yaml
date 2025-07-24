@@ -3,7 +3,7 @@ collection_metadata:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.mdoc"
+            - '{run_name}/generated/*.mdoc'
 dataset_keyphotos:
   - sources:
       - literal:
@@ -34,9 +34,9 @@ datasets:
       dataset_identifier: 10108
       dataset_title: cryo-FIB INS-1E
       dates: &id002
-        deposition_date: "2023-10-01"
-        last_modified_date: "2023-12-01"
-        release_date: "2023-12-01"
+        deposition_date: '2023-10-01'
+        last_modified_date: '2023-12-01'
+        release_date: '2023-12-01'
       grid_preparation: Manual Blotting
       organism:
         name: Rattus norvegicus
@@ -46,7 +46,7 @@ datasets:
     sources:
       - literal:
           value:
-            - "10108"
+            - '10108'
 depositions:
   - metadata:
       authors: *id001
@@ -58,8 +58,8 @@ depositions:
         collected by Stephen Carter and is a part of Caltech Jensen lab etdb.
       deposition_identifier: 10036
       deposition_title:
-        "Rat INS-1E pancreatic beta cells (tax_id=10116) strain: by
-        Stephen Carter"
+        'Rat INS-1E pancreatic beta cells (tax_id=10116) strain: by
+        Stephen Carter'
       deposition_types:
         - dataset
     sources:
@@ -78,11 +78,11 @@ rawtilts:
   - sources:
       - source_multi_glob:
           list_globs:
-            - "{run_name}/generated/*.rawtlt"
+            - '{run_name}/generated/*.rawtlt'
 runs:
   - sources:
       - source_glob:
-          list_glob: "*"
+          list_glob: '*'
           match_regex: (scd2017-01-16-1|scd2017-01-16-2|scd2017-01-16-3|scd2017-01-16-5|scd2017-01-16-6|scd2017-01-16-7|scd2017-01-16-8|scd2017-01-16-9|scd2017-01-16-10|scd2017-01-16-13)$
           name_regex: (.*)
 standardization_config:
@@ -102,7 +102,7 @@ tiltseries:
       data_acquisition_software: SerialEM
       is_aligned: false
       microscope:
-        additional_info: ""
+        additional_info: ''
         manufacturer: FEI
         model: Polara
       microscope_optical_setup:
@@ -122,7 +122,7 @@ tiltseries:
       total_flux: 120.0
     sources:
       - source_glob:
-          list_glob: "{run_name}/rawdata/*"
+          list_glob: '{run_name}/rawdata/*'
           match_regex: .*/rawdata/[^\._].*\.(mrc|st|ali)$
 tomograms:
   - metadata:
@@ -161,7 +161,7 @@ tomograms:
       voxel_spacing: float {tomo-voxel_spacing}
     sources:
       - source_glob:
-          list_glob: "{run_name}/{mapped_tomo_name}"
+          list_glob: '{run_name}/{mapped_tomo_name}'
           match_regex: .*\.(mrc|rec)$
 version: 1.1.0
 voxel_spacings:
