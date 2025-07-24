@@ -60,13 +60,16 @@ class deposition_types_enum(enum.StrEnum):
 @strawberry.enum
 class sample_type_enum(enum.StrEnum):
     cell = "cell"
-    tissue = "tissue"
-    organism = "organism"
-    organelle = "organelle"
-    virus = "virus"
-    in_vitro = "in_vitro"
+    cell_line = "cell_line"
     in_silico = "in_silico"
+    in_vitro = "in_vitro"
+    organelle = "organelle"
+    organism = "organism"
+    organoid = "organoid"
     other = "other"
+    primary_cell_culture = "primary_cell_culture"
+    tissue = "tissue"
+    virus = "virus"
 
 
 @strawberry.enum

@@ -55,9 +55,21 @@
     "release_date": "2023-06-02",
     "last_modified_date": "2023-08-05"
   },
+  "assay": {
+      "id": "EFO:0001234",
+      "name": "microscopy assay"
+  },
+  "development_stage": {
+      "id": "HsapDv:0005678",
+      "name": "adult stage"
+  },
+  "disease": {
+      "id": "MONDO:0001234",
+      "name": "test-disease"
+  },
   "cell_component": {
-    "id": "GO:123435",
-    "name": "tail"
+      "id": "GO:123435",
+      "name": "tail"
   },
   "cell_strain": {
     "id": 999999,
