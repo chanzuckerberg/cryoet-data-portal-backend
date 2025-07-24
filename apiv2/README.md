@@ -83,6 +83,7 @@ ensure that the new table is included in the ER diagram.
 3. Once the new image build is complete, _another_ action ensures that ArgoCD was able to successfully update staging.
 4. Merging the release PR means that the image SHA's in `.infra/prod` are updated in the main branch. ArgoCD will update prod to reflect the latest build.
 
+
 ## Debugging
 
 ### Using VSCode debugger
