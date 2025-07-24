@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/scy2015-04-18-2/keyimg_scy2015-04-18-2_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Songye Chen
@@ -19,6 +22,9 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     cross_references:
       publications: 10.1111/mmi.13937
     dataset_description: This is 5th of 7 sets of data studying Mycoplasma pneumoniae
@@ -29,12 +35,21 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: null
     organism:
       name: Mycoplasma pneumoniae
       taxonomy_id: 2104
     sample_preparation: null
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

@@ -7,6 +7,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mba2009-08-27-1/keyimg_mba2009-08-27-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Morgan Beeby
@@ -14,6 +17,9 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: This is a single dataset studying Spiroplasma melliferum
       collected by Morgan Beeby and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10242
@@ -22,13 +28,22 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: 4-minute glow discharge on Harrick glow discharger, Quantifoil
       R2/2 grids, 10 nm gold fiducials, 'MORGAN5' Vitrobot settings
     organism:
       name: Spiroplasma melliferum
       taxonomy_id: 2134
     sample_preparation: grown in modified spiroplasma media with penicillin
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:
