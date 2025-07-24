@@ -51,7 +51,19 @@ class DatasetFactory(CommonFactory):
     cell_strain_name = fuzzy.FuzzyText()
     cell_strain_id = fuzzy.FuzzyText()
     sample_type = fuzzy.FuzzyChoice(
-        ["cell", "tissue", "organism", "organelle", "virus", "in_vitro", "in_silico", "other"],
+        [
+            "cell",
+            "cell_line",
+            "in_silico",
+            "in_vitro",
+            "organelle",
+            "organism",
+            "organoid",
+            "other",
+            "primary_cell_culture",
+            "tissue",
+            "virus",
+        ],
     )
     sample_preparation = fuzzy.FuzzyText()
     grid_preparation = fuzzy.FuzzyText()

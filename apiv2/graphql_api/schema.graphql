@@ -6940,13 +6940,16 @@ enum orderBy {
 
 enum sample_type_enum {
   cell
-  tissue
-  organism
-  organelle
-  virus
-  in_vitro
+  cell_line
   in_silico
+  in_vitro
+  organelle
+  organism
+  organoid
   other
+  primary_cell_culture
+  tissue
+  virus
 }
 
 enum tiltseries_microscope_manufacturer_enum {

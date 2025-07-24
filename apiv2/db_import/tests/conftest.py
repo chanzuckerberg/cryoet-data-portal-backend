@@ -117,7 +117,7 @@ def expected_dataset(http_prefix: str) -> dict[str, Any]:
         "assay_ontology_id": "EFO:0001234",
         "development_stage_name": "adult stage",
         "development_stage_ontology_id": "HsapDv:0005678",
-        "disease_name":"test-disease",
+        "disease_name": "test-disease",
         "disease_ontology_id": "MONDO:0001234",
         "cell_component_id": "GO:123435",
         "cell_component_name": "tail",

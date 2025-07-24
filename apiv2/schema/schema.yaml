@@ -328,29 +328,36 @@ enums:
       cell:
         text: cell
         description: Tomographic data of whole cells or cell sections.
-      tissue:
-        text: tissue
-        description: Tomographic data of tissue sections.
-      organism:
-        text: organism
-        description: Tomographic data of sections through multicellular organisms.
-      organelle:
-        text: organelle
-        description: Tomographic data of purified organelles.
-      virus:
-        text: virus
-        description: Tomographic data of purified viruses or VLPs.
-      in_vitro:
-        text: in_vitro
-        description:
-          Tomographic data of in vitro reconstituted systems or mixtures
-          of proteins.
+      cell_line:
+        text: cell_line
+        description: Tomographic data of immortalized cells or immortalized cell sections
       in_silico:
         text: in_silico
         description: Simulated tomographic data.
+      in_vitro:
+        text: in_vitro
+        description: Tomographic data of in vitro reconstituted systems or mixtures of proteins.
+      organelle:
+        text: organelle
+        description: Tomographic data of purified organelles.
+      organism:
+        text: organism
+        description: Tomographic data of sections through multicellular organisms.
+      organoid:
+        text: organoid
+        description: Tomographic data of organoid-derived samples.
       other:
         text: other
         description: Other type of sample.
+      primary_cell_culture:
+        text: primary_cell_culture
+        description: Tomographic data of whole primary cells or primary cell sections.
+      tissue:
+        text: tissue
+        description: Tomographic data of tissue sections.
+      virus:
+        text: virus
+        description: Tomographic data of purified viruses or VLPs.
   tiltseries_camera_acquire_mode_enum:
     name: tiltseries_camera_acquire_mode_enum
     description: Camera acquisition mode

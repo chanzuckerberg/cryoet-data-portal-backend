@@ -10676,25 +10676,34 @@
               "name": "cell"
             },
             {
-              "name": "tissue"
-            },
-            {
-              "name": "organism"
-            },
-            {
-              "name": "organelle"
-            },
-            {
-              "name": "virus"
-            },
-            {
-              "name": "in_vitro"
+              "name": "cell_line"
             },
             {
               "name": "in_silico"
             },
             {
+              "name": "in_vitro"
+            },
+            {
+              "name": "organelle"
+            },
+            {
+              "name": "organism"
+            },
+            {
+              "name": "organoid"
+            },
+            {
               "name": "other"
+            },
+            {
+              "name": "primary_cell_culture"
+            },
+            {
+              "name": "tissue"
+            },
+            {
+              "name": "virus"
             }
           ],
           "fields": null,
