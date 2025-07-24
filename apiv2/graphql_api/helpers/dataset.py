@@ -47,6 +47,12 @@ class DatasetGroupByOptions:
     runs: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
     title: Optional[str] = None
     description: Optional[str] = None
+    assay_label: Optional[str] = None
+    assay_ontology_id: Optional[str] = None
+    development_stage_name: Optional[str] = None
+    development_stage_ontology_id: Optional[str] = None
+    disease_name: Optional[str] = None
+    disease_ontology_id: Optional[str] = None
     organism_name: Optional[str] = None
     organism_taxid: Optional[int] = None
     tissue_name: Optional[str] = None

@@ -32,6 +32,42 @@ class DatasetCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    assay_label: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    assay_ontology_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    development_stage_name: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    development_stage_ontology_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    disease_name: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    disease_ontology_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
     organism_name: Annotated[
         str | None,
         StringConstraints(
@@ -171,6 +207,42 @@ class DatasetUpdateInputValidator(BaseModel):
         ),
     ]
     description: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    assay_label: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    assay_ontology_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    development_stage_name: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    development_stage_ontology_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    disease_name: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+        ),
+    ]
+    disease_ontology_id: Annotated[
         str | None,
         StringConstraints(
             strip_whitespace=True,
