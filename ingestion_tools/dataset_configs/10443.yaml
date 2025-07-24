@@ -70,7 +70,7 @@ datasets:
       on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed using AreTomo3 v2.0.4.
     dataset_identifier: 10443
     dataset_title: Synaptosomes from rat hippocampi (200 mg, no centrifugation, Cu grid, low tilt range, 1:100)
-    dates: &deposition_dates
+    dates: &dataset_dates
       deposition_date: '2024-11-26'
       last_modified_date: '2024-11-26'
       release_date: '2024-11-26'
@@ -136,7 +136,7 @@ annotations:
       primary_author_status: true
       corresponding_author_status: true
       ORCID: 0000-0002-5940-3897
-    dates: *deposition_dates
+    dates: *dataset_dates
     ground_truth_status: false
     is_curator_recommended: true
     method_type: automated
@@ -251,7 +251,7 @@ tomograms:
       corresponding_author_status: true
       ORCID: 0000-0001-9517-3075
     ctf_corrected: true
-    dates: *deposition_dates
+    dates: *dataset_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: true
     offset:
@@ -288,7 +288,7 @@ tomograms:
       - 1
     authors: *tomogram_authors
     ctf_corrected: true
-    dates: *deposition_dates
+    dates: *dataset_dates
     fiducial_alignment_status: NON_FIDUCIAL
     is_visualization_default: false
     offset:
