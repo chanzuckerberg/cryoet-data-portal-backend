@@ -38,28 +38,27 @@ def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) 
     assert metadata["cell_type"]["name"] == "not_reported"
 
     # Check that missing keys are created with defaults
-    for key in ["cell_component", "development_stage", "disease", "tissue"]:
+    for key in ["cell_component", "disease", "tissue"]:
         assert metadata[key]["name"] == "not_reported"
         assert metadata[key]["id"] == "not_reported"
-
+    assert metadata["development_stage"]["name"] == "unknown"
+    assert metadata["development_stage"]["id"] == "unknown"
 
 def test_dataset_format_data_empty_input() -> None:
     """Test format_data with empty input dict."""
-    data = {}
-    result = DatasetImporter.format_data(data)
-
-    expected_keys = [
-        "assay", "cell_component", "cell_strain", "cell_type",
-        "development_stage", "disease", "organism", "tissue",
-    ]
-
-    for key in expected_keys:
-        assert key in result
-        assert result[key]["name"] == "not_reported"
-        if key == "organism":
-            assert result[key]["taxonomy_id"] is None
-        else:
-            assert result[key]["id"] == "not_reported"
+    result = DatasetImporter.format_data({})
+    expected = {
+        "assay": {"name": "not_reported", "id": "not_reported"},
+        "cell_component": {"name": "not_reported", "id": "not_reported"},
+        "cell_strain": {"name": "not_reported", "id": "not_reported"},
+        "cell_type": {"name": "not_reported", "id": "not_reported"},
+        "development_stage": {"name": "unknown", "id": "unknown"},
+        "disease": {"name": "not_reported", "id": "not_reported"},
+        "organism": {"name": "not_reported", "taxonomy_id": None},
+        "tissue": {"name": "not_reported", "id": "not_reported"},
+    }
+    # All data should be filled with defaults
+    assert result == expected
 
 
 def test_dataset_format_data_complete_data() -> None:

@@ -60,11 +60,14 @@ class DatasetImporter(BaseImporter):
             if key not in data:
                 data[key] = {}
             if not data[key].get("name"):
-                data[key]["name"] = "not_reported"
+                data[key]["name"] = "unknown" if key == "development_stage" else "not_reported"
             if key == "organism":
                 if not data[key].get("taxonomy_id"):
                     data[key]["taxonomy_id"] = None
             elif not data[key].get("id"):
-                data[key]["id"] = "not_reported"
+                if key == "development_stage":
+                    data[key]["id"] = "unknown"
+                else:
+                    data[key]["id"] = "not_reported"
 
         return data
