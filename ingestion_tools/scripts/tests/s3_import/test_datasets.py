@@ -34,7 +34,7 @@ def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) 
     assert metadata["cell_type"]["id"] == "CL:0000000"
 
     # Check that missing fields are filled with defaults
-    assert metadata["organism"]["taxonomy_id"] == "not_reported"
+    assert metadata["organism"]["taxonomy_id"] is None
     assert metadata["cell_type"]["name"] == "not_reported"
 
     # Check that missing keys are created with defaults
@@ -57,7 +57,7 @@ def test_dataset_format_data_empty_input() -> None:
         assert key in result
         assert result[key]["name"] == "not_reported"
         if key == "organism":
-            assert result[key]["taxonomy_id"] == "not_reported"
+            assert result[key]["taxonomy_id"] is None
         else:
             assert result[key]["id"] == "not_reported"
 

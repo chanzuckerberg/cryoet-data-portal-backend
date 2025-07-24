@@ -63,7 +63,7 @@ class DatasetImporter(BaseImporter):
                 data[key]["name"] = "not_reported"
             if key == "organism":
                 if not data[key].get("taxonomy_id"):
-                    data[key]["taxonomy_id"] = "not_reported"
+                    data[key]["taxonomy_id"] = None
             elif not data[key].get("id"):
                 data[key]["id"] = "not_reported"
 
