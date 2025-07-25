@@ -100,10 +100,11 @@ datasets:
       name: prokaryotic cell
       id: CL:0000520
     dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced genome
-      cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were prepared
-      by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4 using a Falcon 4i detector and SelctrisX
-      energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23. The deposition also includes locations of cytosolic
-      ribosomes identified using slabpick and membrane segmenations created using membrain-seg.
+      cells acquired with the Volta phase plate. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma
+      Mycoides Capri GM12). Samples were prepared by plunge-freezing via Leica GP2. Contained data was collected on a
+      Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed using AreTomo3
+      v1.0.23. The deposition also includes locations of cytosolic ribosomes identified using slabpick and membrane
+      segmenations created using membrain-seg.
     dataset_identifier: 10452
     dataset_title: CryoET (with Volta phase plate) of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the
       development of subtomogram averaging pipelines
@@ -166,7 +167,7 @@ runs:
       name_regex: (.*)\.aln$
 standardization_config:
   deposition_id: 10312
-  run_data_map_file: run_to_data_map.tsv
+  run_data_map_file: run_to_data_map_updated_quality_updated.tsv
   source_prefix: CZII/20250724_minicell2/
 tiltseries:
 - metadata:
@@ -185,7 +186,7 @@ tiltseries:
       phase_plate: Volta phase plate
     pixel_spacing: 1.54
     spherical_aberration_constant: 2.7
-    tilt_axis: 80
+    tilt_axis: -96
     tilt_range:
       max: float {tilt_series_max_tilt}
       min: float {tilt_series_min_tilt}

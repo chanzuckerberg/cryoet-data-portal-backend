@@ -195,7 +195,10 @@ depositions:
     authors: *id002
     cross_references:
       publications: doi:10.7554/eLife.36842
-    dates: *id001
+    dates:
+      deposition_date: '2024-10-15'
+      last_modified_date: '2025-07-25'
+      release_date: '2025-07-25'
     deposition_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced
       genome cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were
       prepared by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4 using a Falcon 4i detector and
