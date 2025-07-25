@@ -47,6 +47,7 @@ annotations:
       - '{run_name}_Vol_Segment_mask.mrc'
       is_visualization_default: true
       mask_label: 1
+      rescale: true
 collection_metadata:
 - sources:
   - source_glob:
