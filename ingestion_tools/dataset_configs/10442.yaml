@@ -148,7 +148,7 @@ datasets:
     dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced genome
       cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were prepared
       by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4 using a Falcon 4i detector and SelctrisX
-      energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23. The deposition also includes locations of cytosolic
+      energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23. The dataset also includes locations of cytosolic
       ribosomes identified using slabpick and membrane segmenations created using membrain-seg.
     dataset_identifier: 10442
     dataset_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram averaging
@@ -200,10 +200,11 @@ depositions:
       last_modified_date: '2025-07-25'
       release_date: '2025-07-25'
     deposition_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced
-      genome cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were
-      prepared by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4 using a Falcon 4i detector and
-      SelctrisX energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23. The deposition also includes locations
-      of cytosolic ribosomes identified using slabpick and membrane segmenations created using membrain-seg.
+      genome cells acquired with and without the Volta phase plate. JCVI-Syn3A has 493 genes (about half of the genes of
+      the WT Mycoplasma Mycoides Capri GM12). Samples were prepared by plunge-freezing via Leica GP2. Contained data was
+      collected on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed using
+      AreTomo3 v1.0.23 or Aretomo3 v2.2.2 (VPP data). The deposition also includes locations of cytosolic ribosomes
+      identified using slabpick (non-VPP data) and membrane segmentations created using membrain-seg.
     deposition_identifier: 10312
     deposition_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram averaging
       pipelines

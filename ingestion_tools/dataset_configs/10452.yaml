@@ -103,9 +103,8 @@ datasets:
     dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced genome
       cells acquired with the Volta phase plate. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma
       Mycoides Capri GM12). Samples were prepared by plunge-freezing via Leica GP2. Contained data was collected on a
-      Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed using AreTomo3
-      v1.0.23. The deposition also includes locations of cytosolic ribosomes identified using slabpick and membrane
-      segmenations created using membrain-seg.
+      Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed using Aretomo3 v2.2.2.
+      The dataset also includes membrane segmentations created using membrain-seg.
     dataset_identifier: 10452
     dataset_title: CryoET (with Volta phase plate) of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the
       development of subtomogram averaging pipelines
@@ -147,7 +146,7 @@ depositions:
       - 10312
 frames:
 - metadata:
-    dose_rate: 6.912
+    dose_rate: 3.870
     is_gain_corrected: false
   sources:
   - source_glob:
@@ -249,7 +248,7 @@ tomograms:
       z: 0
     processing: denoised
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 v1.0.23
+    reconstruction_software: Aretomo3 v2.2.2
     tomogram_version: 1
     voxel_spacing: 5.006
   sources:
@@ -285,7 +284,7 @@ tomograms:
       z: 0
     processing: filtered
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 v1.0.23
+    reconstruction_software: Aretomo3 v2.2.2
     tomogram_version: 1
     voxel_spacing: 5.006
   sources:
