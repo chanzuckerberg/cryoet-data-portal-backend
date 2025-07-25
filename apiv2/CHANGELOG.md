@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.12.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.11.0...apiv2-v1.12.0) (2025-07-24)
+
+
+### Features
+
+* Empty commit ([#525](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/525)) ([159b642](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/159b64215058e1f348ad700de09c14cfe78809fe))
+
+
+### Bug Fixes
+
+* Add better handling for value error exceptions from pagination. ([#475](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/475)) ([a46df89](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a46df8985fe081147484fdf2310d3efe0aca88c9))
+* adding back schema diagram ([#473](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/473)) ([725f037](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/725f0376aaa73a5f96d56bc6cfb0ced11f503383))
+* Update APIv2 runner to privileged ([#507](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/507)) ([6a6b7ed](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/6a6b7edaead52be21179b9830f549133a0ebbbca))
+
 ## [1.11.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.10.0...apiv2-v1.11.0) (2025-03-20)
 
 
