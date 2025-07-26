@@ -196,7 +196,7 @@ depositions:
     cross_references:
       publications: doi:10.7554/eLife.36842
     dates:
-      deposition_date: '2024-10-15'
+      deposition_date: '2025-07-25'
       last_modified_date: '2025-07-25'
       release_date: '2025-07-25'
     deposition_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced
