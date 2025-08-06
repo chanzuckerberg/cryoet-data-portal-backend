@@ -1,360 +1,361 @@
 alignments:
-  - metadata:
-      alignment_type: LOCAL
-      format: ARETOMO3
-      is_portal_standard: true
-      method_type: projection_matching
-    sources:
-      - source_multi_glob:
-          list_globs:
-            - '{run_name}.aln'
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}.aln'
 annotations:
-  - metadata:
-      annotation_method: Prediction using membrain-seg without rescaling and weights
-        MemBrain_seg_v10_alpha.ckpt
-      annotation_object:
-        id: GO:0016020
-        name: membrane
-      annotation_publications: 10.1101/2024.01.05.574336
-      annotation_software: membrain-seg 0.0.1
-      authors:
-        - ORCID: 0000-0002-8063-6951
-          corresponding_author_status: true
-          name: Jonathan Schwartz
-          primary_author_status: true
-        - ORCID: 0000-0002-3248-9678
-          corresponding_author_status: true
-          name: Yue Yu
-          primary_author_status: true
-      dates: &id001
-        deposition_date: '2024-10-15'
-        last_modified_date: '2024-10-15'
-        release_date: '2024-10-15'
-      ground_truth_status: false
-      is_curator_recommended: true
-      method_links:
-        - custom_name: membrain-seg on GitHub
-          link: https://github.com/teamtomo/membrain-seg
-          link_type: source_code
-        - custom_name: membrain-seg on PyPI
-          link: https://pypi.org/project/membrain-seg/
-          link_type: other
-      method_type: automated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings:
-            - '{run_name}_Vol_Segment_mask.mrc'
-          is_visualization_default: true
-          mask_label: 1
-  - metadata:
-      annotation_method: 2D-slab-based template picking + 2D class average
-      annotation_object:
-        id: GO:0022626
-        name: cytosolic ribosome
-      annotation_software: slabpick 0.1.0 + cryosparc 4.4.1
-      authors:
-        - ORCID: 0000-0002-5940-3897
-          corresponding_author_status: true
-          name: Ariana Peck
-          primary_author_status: true
-        - ORCID: 0000-0002-3248-9678
-          corresponding_author_status: true
-          name: Yue Yu
-          primary_author_status: true
-        - ORCID: 0000-0002-8402-0134
-          corresponding_author_status: true
-          name: Mohammadreza Paraan
-          primary_author_status: true
-        - ORCID: 0000-0002-8063-6951
-          corresponding_author_status: true
-          name: Jonathan Schwartz
-          primary_author_status: true
-      dates:
-        deposition_date: '2024-10-15'
-        last_modified_date: '2024-10-15'
-        release_date: '2024-10-15'
-      ground_truth_status: false
-      is_curator_recommended: true
-      method_links:
-        - custom_name: slabpick on GitHub
-          link: https://github.com/apeck12/slabpick
-          link_type: source_code
-        - custom_name: cryosparc homepage
-          link: https://cryosparc.com/
-          link_type: website
-      method_type: automated
-      version: 1.0
-    sources:
-      - Point:
-          binning: 5
-          columns: xyz
-          file_format: relion3_star
-          filter_value: '{run_name}'
-          glob_string: combined.star
-          is_visualization_default: true
+- metadata:
+    annotation_method: Prediction using membrain-seg without rescaling and weights MemBrain_seg_v10_alpha.ckpt
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1101/2024.01.05.574336
+    annotation_software: membrain-seg 0.0.1
+    authors:
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: true
+      name: Jonathan Schwartz
+      primary_author_status: true
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: true
+      name: Yue Yu
+      primary_author_status: true
+    dates: &id001
+      deposition_date: '2024-10-15'
+      last_modified_date: '2024-10-15'
+      release_date: '2024-10-15'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - '{run_name}_Vol_Segment_mask.mrc'
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: 2D-slab-based template picking + 2D class average
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_software: slabpick 0.1.0 + cryosparc 4.4.1
+    authors:
+    - ORCID: 0000-0002-5940-3897
+      corresponding_author_status: true
+      name: Ariana Peck
+      primary_author_status: true
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: true
+      name: Yue Yu
+      primary_author_status: true
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: true
+      name: Mohammadreza Paraan
+      primary_author_status: true
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: true
+      name: Jonathan Schwartz
+      primary_author_status: true
+    dates:
+      deposition_date: '2024-10-15'
+      last_modified_date: '2024-10-15'
+      release_date: '2024-10-15'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: slabpick on GitHub
+      link: https://github.com/apeck12/slabpick
+      link_type: source_code
+    - custom_name: cryosparc homepage
+      link: https://cryosparc.com/
+      link_type: website
+    method_type: automated
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5
+      columns: xyz
+      file_format: relion3_star
+      filter_value: '{run_name}'
+      glob_string: combined.star
+      is_visualization_default: true
 collection_metadata:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}.mdoc'
+- sources:
+  - source_glob:
+      list_glob: '{run_name}.mdoc'
 dataset_keyphotos:
-  - sources:
-      - literal:
-          value:
-            snapshot: null
-            thumbnail: null
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
 datasets:
-  - metadata:
-      authors: &id002
-        - ORCID: 0009-0007-8169-0996
-          corresponding_author_status: false
-          name: Mallak Ali
-          primary_author_status: true
-        - ORCID: 0000-0002-5940-3897
-          corresponding_author_status: false
-          name: Ariana Peck
-          primary_author_status: true
-        - ORCID: 0000-0002-3248-9678
-          corresponding_author_status: false
-          name: Yue Yu
-          primary_author_status: true
-        - ORCID: 0000-0002-8063-6951
-          corresponding_author_status: false
-          name: Jonathan Schwartz
-          primary_author_status: true
-        - ORCID: 0000-0002-3784-5301
-          corresponding_author_status: false
-          email: jglass@jcvi.org
-          name: John Glass
-          primary_author_status: false
-        - ORCID: 0000-0001-9517-3075
-          corresponding_author_status: false
-          name: Shawn Zheng
-          primary_author_status: false
-        - ORCID: 0000-0002-8402-0134
-          corresponding_author_status: true
-          email: reza.paraan@czii.org
-          name: Mohammadreza Paraan
-          primary_author_status: false
-      cell_strain:
-        name: JCVI-syn3A
-      cell_type:
-        id: CL:0000520
-        name: prokaryotic cell
-      dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron
-        tomograms of synthetically reduced genome cells. JCVI-Syn3A has 493 genes (about
-        half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were prepared
-        by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4
-        using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
-        using AreTomo3 v1.0.23. The deposition also includes locations of cytosolic
-        ribosomes identified using slabpick and membrane segmenations created using
-        membrain-seg.
-      dataset_identifier: 10442
-      dataset_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for
-        the development of subtomogram averaging pipelines
-      dates: *id001
-      funding:
-        - funding_agency_name: Chan Zuckerberg Initiative
-          grant_id: "CZII-2023\u2013327779"
-      grid_preparation: Glow discharge Quantifoil Cu 200 mesh 2/1 + apply 4ul of pellet
-        to grid + blot for 6 seconds + plunge-freeze
-      organism:
-        name: Mycoplasma mycoides subsp. capri str. GM12
-        taxonomy_id: 436113
-      sample_preparation: If in liquid culture, breifly centrifuge tube at low speed
-        to mix liquid; if frozen, dethaw cells at -80C (or on dry ice) & gently mix
-        until ready to transfer to culture + Set up culture tubes with 1mL SP4 media
-        each + In hood, transfer ~10uL of liquid (or scrape a small amount of the frozen
-        culture) and add to culture tube + Set aside culture tube of media only to assist
-        in monitoring pH (color should change in ~1-3 days) + For scaling up, cultures
-        can be scaled by 1:100 dilution into fresh prewarmed media for overnight culturing
-        + For long-term storage, cultures can be aliquoted and frozen in -80C (stable
-        for several months); best to freeze cultures right after media turns orange.
-      sample_type: cell
-    sources:
-      - literal:
-          value:
-            - '10442'
+- metadata:
+    authors: &id002
+    - ORCID: 0009-0007-8169-0996
+      corresponding_author_status: false
+      name: Mallak Ali
+      primary_author_status: true
+    - ORCID: 0000-0002-5940-3897
+      corresponding_author_status: false
+      name: Ariana Peck
+      primary_author_status: true
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: false
+      name: Yue Yu
+      primary_author_status: true
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: false
+      name: Jonathan Schwartz
+      primary_author_status: true
+    - ORCID: 0000-0002-3784-5301
+      corresponding_author_status: false
+      email: jglass@jcvi.org
+      name: John Glass
+      primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: false
+      name: Shawn Zheng
+      primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: true
+      email: reza.paraan@czii.org
+      name: Mohammadreza Paraan
+      primary_author_status: false
+    cell_strain:
+      name: JCVI-syn3A
+    cell_type:
+      name: prokaryotic cell
+      id: CL:0000520
+    dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced genome
+      cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were prepared
+      by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4 using a Falcon 4i detector and SelctrisX
+      energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23. The deposition also includes locations of cytosolic
+      ribosomes identified using slabpick and membrane segmenations created using membrain-seg.
+    dataset_identifier: 10442
+    dataset_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram averaging
+      pipelines
+    dates: *id001
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: "CZII-2023\u2013327779"
+    grid_preparation: Glow discharge Quantifoil Cu 200 mesh 2/1 + apply 4ul of pellet to grid + blot for 6 seconds + plunge-freeze
+    organism:
+      name: Mycoplasma mycoides subsp. capri str. GM12
+      taxonomy_id: 436113
+    sample_preparation: If in liquid culture, breifly centrifuge tube at low speed to mix liquid; if frozen, dethaw cells
+      at -80C (or on dry ice) & gently mix until ready to transfer to culture + Set up culture tubes with 1mL SP4 media each
+      + In hood, transfer ~10uL of liquid (or scrape a small amount of the frozen culture) and add to culture tube + Set aside
+      culture tube of media only to assist in monitoring pH (color should change in ~1-3 days) + For scaling up, cultures
+      can be scaled by 1:100 dilution into fresh prewarmed media for overnight culturing + For long-term storage, cultures
+      can be aliquoted and frozen in -80C (stable for several months); best to freeze cultures right after media turns orange.
+    sample_type: primary_cell_culture
+    tissue:
+      name: prokaryotic cell
+      id: CL:0000520
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: normal
+      id: PATO:0000461
+  sources:
+  - literal:
+      value:
+      - '10442'
 deposition_keyphotos:
-  - sources:
-      - literal:
-          value:
-            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10312_snapshot.png
-            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10312_thumbnail.png
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10312_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10312_thumbnail.png
 depositions:
-  - metadata:
-      authors: *id002
-      cross_references:
-        publications: doi:10.7554/eLife.36842
-      dates: *id001
-      deposition_description: Raw movie stacks, tilt series, alignments and cryo-eletron
-        tomograms of synthetically reduced genome cells. JCVI-Syn3A has 493 genes (about
-        half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were prepared
-        by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4
-        using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
-        using AreTomo3 v1.0.23. The deposition also includes locations of cytosolic
-        ribosomes identified using slabpick and membrane segmenations created using
-        membrain-seg.
-      deposition_identifier: 10312
-      deposition_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A
-        for the development of subtomogram averaging pipelines
-      deposition_types:
-        - dataset
-        - annotation
-    sources:
-      - literal:
-          value:
-            - 10312
+- metadata:
+    authors: *id002
+    cross_references:
+      publications: doi:10.7554/eLife.36842
+    dates: *id001
+    deposition_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced
+      genome cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were
+      prepared by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4 using a Falcon 4i detector and
+      SelctrisX energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23. The deposition also includes locations
+      of cytosolic ribosomes identified using slabpick and membrane segmenations created using membrain-seg.
+    deposition_identifier: 10312
+    deposition_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram averaging
+      pipelines
+    deposition_types:
+    - dataset
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10312
 frames:
-  - metadata:
-      dose_rate: 6.912
-      is_gain_corrected: false
-    sources:
-      - source_glob:
-          list_glob: '{run_name}/*.eer'
+- metadata:
+    dose_rate: 6.912
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/*.eer'
 gains:
-  - sources:
-      - source_glob:
-          list_glob: '{gain_file}'
+- sources:
+  - source_glob:
+      list_glob: '{gain_file}'
 rawtilts:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}_st.rawtlt'
+- sources:
+  - source_glob:
+      list_glob: '{run_name}_st.rawtlt'
 runs:
-  - sources:
-      - source_glob:
-          list_glob: '*.aln'
-          match_regex: .*\.aln$
-          name_regex: (.*)\.aln$
+- sources:
+  - source_glob:
+      list_glob: '*.aln'
+      match_regex: .*\.aln$
+      name_regex: (.*)\.aln$
 standardization_config:
   deposition_id: 10312
   run_data_map_file: run_to_data_map.tsv
   source_prefix: CZII/20241015_minicell/
 tiltseries:
-  - metadata:
-      acceleration_voltage: 300000
-      binning_from_frames: 1
-      camera:
-        manufacturer: TFS
-        model: FALCON 4i
-      data_acquisition_software: Tomo5
-      is_aligned: false
-      microscope:
-        manufacturer: TFS
-        model: TITAN KRIOS G4
-      microscope_optical_setup:
-        energy_filter: Selectris X
-      pixel_spacing: 1.54
-      spherical_aberration_constant: 2.7
-      tilt_axis: 80
-      tilt_range:
-        max: float {tilt_series_max_tilt}
-        min: float {tilt_series_min_tilt}
-      tilt_series_quality: int {tilt_series_quality}
-      tilt_step: 3.0
-      tilting_scheme: dose-symmetric
-      total_flux: float {tilt_series_total_flux}
-    sources:
-      - source_glob:
-          list_glob: '{run_name}_TS.mrc'
-          match_regex: .*\.mrc$
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i
+    data_acquisition_software: Tomo5
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: TITAN KRIOS G4
+    microscope_optical_setup:
+      energy_filter: Selectris X
+    pixel_spacing: 1.54
+    spherical_aberration_constant: 2.7
+    tilt_axis: 80
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_TS.mrc'
+      match_regex: .*\.mrc$
 tomograms:
-  - metadata:
-      affine_transformation_matrix:
-        - - 1
-          - 0
-          - 0
-          - 0
-        - - 0
-          - 1
-          - 0
-          - 0
-        - - 0
-          - 0
-          - 1
-          - 0
-        - - 0
-          - 0
-          - 0
-          - 1
-      authors: &id003
-        - ORCID: 0000-0002-8402-0134
-          corresponding_author_status: false
-          name: Mohammadreza Paraan
-          primary_author_status: true
-        - ORCID: 0000-0002-5940-3897
-          corresponding_author_status: false
-          name: Ariana Peck
-          primary_author_status: true
-        - ORCID: 0009-0007-8169-0996
-          corresponding_author_status: false
-          name: Mallak Ali
-          primary_author_status: false
-        - ORCID: 0000-0002-3248-9678
-          corresponding_author_status: false
-          name: Yue Yu
-          primary_author_status: true
-        - ORCID: 0000-0001-9517-3075
-          corresponding_author_status: true
-          name: Shawn Zheng
-          primary_author_status: false
-      ctf_corrected: true
-      dates: *id001
-      fiducial_alignment_status: NON_FIDUCIAL
-      is_visualization_default: true
-      offset:
-        x: 0
-        y: 0
-        z: 0
-      processing: denoised
-      reconstruction_method: WBP
-      reconstruction_software: AreTomo3 v1.0.23
-      tomogram_version: 1
-      voxel_spacing: 5.006
-    sources:
-      - source_glob:
-          list_glob: '{run_name}_Vol.mrc'
-          match_regex: (.*)\.mrc
-  - metadata:
-      affine_transformation_matrix:
-        - - 1
-          - 0
-          - 0
-          - 0
-        - - 0
-          - 1
-          - 0
-          - 0
-        - - 0
-          - 0
-          - 1
-          - 0
-        - - 0
-          - 0
-          - 0
-          - 1
-      authors: *id003
-      ctf_corrected: true
-      dates: *id001
-      fiducial_alignment_status: NON_FIDUCIAL
-      is_visualization_default: false
-      offset:
-        x: 0
-        y: 0
-        z: 0
-      processing: filtered
-      reconstruction_method: WBP
-      reconstruction_software: AreTomo3 v1.0.23
-      tomogram_version: 1
-      voxel_spacing: 5.006
-    sources:
-      - source_glob:
-          list_glob: '{run_name}_dctf_Vol.mrc'
-          match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: &id003
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: false
+      name: Mohammadreza Paraan
+      primary_author_status: true
+    - ORCID: 0000-0002-5940-3897
+      corresponding_author_status: false
+      name: Ariana Peck
+      primary_author_status: true
+    - ORCID: 0009-0007-8169-0996
+      corresponding_author_status: false
+      name: Mallak Ali
+      primary_author_status: false
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: false
+      name: Yue Yu
+      primary_author_status: true
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: true
+      name: Shawn Zheng
+      primary_author_status: false
+    ctf_corrected: true
+    dates: *id001
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v1.0.23
+    tomogram_version: 1
+    voxel_spacing: 5.006
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_Vol.mrc'
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id003
+    ctf_corrected: true
+    dates: *id001
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v1.0.23
+    tomogram_version: 1
+    voxel_spacing: 5.006
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_dctf_Vol.mrc'
+      match_regex: (.*)\.mrc
 version: 1.1.0
 voxel_spacings:
-  - sources:
-      - literal:
-          value:
-            - 5.006
+- sources:
+  - literal:
+      value:
+      - 5.006

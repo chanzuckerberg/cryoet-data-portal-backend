@@ -8,7 +8,12 @@
       "bump-patch-for-minor-pre-major": false,
       "draft": false,
       "prerelease": false,
-      "pull-request-footer": "Merging this PR will deploy these APIv2 changes to production. [See the docs](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/apiv2/README.md#updating-stagingprod) for more information"
+      "pull-request-footer": "Merging this PR will deploy these APIv2 changes to production. [See the docs](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/apiv2/README.md#updating-stagingprod) for more information",
+      "changelog-sections": [
+        {"type": "feat", "section": "Features"},
+        {"type": "fix", "section": "Bug Fixes"},
+        {"type": "chore", "section": "Miscellaneous Chores"}
+      ]
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"

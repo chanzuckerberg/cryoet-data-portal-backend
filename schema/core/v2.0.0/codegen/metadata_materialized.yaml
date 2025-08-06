@@ -300,30 +300,78 @@ types:
     from_schema: metadata
     base: str
     pattern: ^BTO:[0-9]{7}$
+  UBERON_ID:
+    name: UBERON_ID
+    description: An UBERON identifier
+    from_schema: metadata
+    base: str
+    pattern: ^UBERON:[0-9]{7}$
   CL_ID:
     name: CL_ID
     description: A Cell Ontology identifier
     from_schema: metadata
     base: str
     pattern: ^CL:[0-9]{7}$
+  CVCL_ID:
+    name: CVCL_ID
+    description: A Cellosaurus identifier
+    from_schema: metadata
+    base: str
+    pattern: ^CVCL_[A-Z0-9]{4,}$
+  CC_ID:
+    name: CC_ID
+    description: A Cell Culture Collection identifier
+    from_schema: metadata
+    base: str
+    pattern: ^CC-[0-9]{4}$
   GO_ID:
     name: GO_ID
     description: A Gene Ontology identifier
     from_schema: metadata
     base: str
     pattern: ^GO:[0-9]{7}$
+  EFO_ID:
+    name: EFO_ID
+    description: An Experimental Factor Ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ^EFO:[0-9]{7}$
   UNIPROT_ID:
     name: UNIPROT_ID
     description: A UniProt identifier
     from_schema: metadata
     base: str
     pattern: ^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$
-  WORMBASE_ID:
-    name: WORMBASE_ID
-    description: A WormBase identifier
+  NCBI_TAXON_ID:
+    name: NCBI_TAXON_ID
+    description: A NCBI Taxonomy identifier
+    from_schema: metadata
+    base: str
+    pattern: ^NCBITaxon:[0-9]+$
+  WORMBASE_STRAIN_ID:
+    name: WORMBASE_STRAIN_ID
+    description: A WormBase strain identifier
     from_schema: metadata
     base: str
     pattern: WBStrain[0-9]{8}$
+  WORMBASE_TISSUE_ID:
+    name: WORMBASE_TISSUE_ID
+    description: A WormBase tissue identifier
+    from_schema: metadata
+    base: str
+    pattern: WBbt:[0-9]{7}$
+  WORMBASE_DEVELOPMENT_ID:
+    name: WORMBASE_DEVELOPMENT_ID
+    description: A WormBase identifier
+    from_schema: metadata
+    base: str
+    pattern: WBls:[0-9]{7}$
+  HSAPDV_ID:
+    name: HSAPDV_ID
+    description: A Human Developmental Phenotype Ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: HsapDv:[0-9]{7}$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
@@ -372,6 +420,24 @@ types:
     from_schema: metadata
     base: str
     pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$
+  MONDO_ID:
+    name: MONDO_ID
+    description: An identifier of type MONDO
+    from_schema: metadata
+    base: str
+    pattern: ^MONDO:[0-9]{7}$
+  PATO_ID:
+    name: PATO_ID
+    description: An identifier of type PATO
+    from_schema: metadata
+    base: str
+    pattern: ^PATO:[0-9]{7}$
+  UNKNOWN_LITERAL:
+    name: UNKNOWN_LITERAL
+    description: A placeholder for an unknown value.
+    from_schema: metadata
+    base: str
+    pattern: ^unknown$
 enums:
   alignment_type_enum:
     name: alignment_type_enum
@@ -462,6 +528,23 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+  annotation_file_format_enum:
+    name: annotation_file_format_enum
+    description: Describes the format of the annotation file
+    from_schema: metadata
+    permissible_values:
+      mrc:
+        text: mrc
+        description: MRC format
+      zarr:
+        text: zarr
+        description: OMEZARR format
+      ndjson:
+        text: ndjson
+        description: NDJSON format
+      glb:
+        text: glb
+        description: GLB format
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -511,31 +594,37 @@ enums:
     description: Type of sample imaged in a CryoET study.
     from_schema: metadata
     permissible_values:
-      cell:
-        text: cell
-        description: Tomographic data of whole cells or cell sections.
-      tissue:
-        text: tissue
-        description: Tomographic data of tissue sections.
-      organism:
-        text: organism
-        description: Tomographic data of sections through multicellular organisms.
-      organelle:
-        text: organelle
-        description: Tomographic data of purified organelles.
-      virus:
-        text: virus
-        description: Tomographic data of purified viruses or VLPs.
+      cell_line:
+        text: cell_line
+        description: Tomographic data of immortalized cells or immortalized cell sections
+      in_silico:
+        text: in_silico
+        description: Simulated tomographic data.
       in_vitro:
         text: in_vitro
         description: Tomographic data of in vitro reconstituted systems or mixtures
           of proteins.
-      in_silico:
-        text: in_silico
-        description: Simulated tomographic data.
+      organelle:
+        text: organelle
+        description: Tomographic data of purified organelles.
+      organism:
+        text: organism
+        description: Tomographic data of sections through multicellular organisms.
+      organoid:
+        text: organoid
+        description: Tomographic data of organoid-derived samples.
       other:
         text: other
         description: Other type of sample.
+      primary_cell_culture:
+        text: primary_cell_culture
+        description: Tomographic data of whole primary cells or primary cell sections.
+      tissue:
+        text: tissue
+        description: Tomographic data of tissue sections.
+      virus:
+        text: virus
+        description: Tomographic data of purified viruses or VLPs.
   tiltseries_camera_acquire_mode_enum:
     name: tiltseries_camera_acquire_mode_enum
     description: Camera acquisition mode
@@ -660,6 +749,7 @@ classes:
         owner: PicturePath
         domain_of:
         - PicturePath
+        - MetadataPicturePath
         range: URLorS3URI
         recommended: true
         inlined: true
@@ -676,11 +766,50 @@ classes:
         owner: PicturePath
         domain_of:
         - PicturePath
+        - MetadataPicturePath
         range: URLorS3URI
         recommended: true
         inlined: true
         inlined_as_list: true
         pattern: ^(((https?|s3)://)|cryoetportal-rawdatasets-dev).*$
+  MetadataPicturePath:
+    name: MetadataPicturePath
+    description: A set of paths to representative images of a piece of data for metadata
+      files.
+    from_schema: metadata
+    attributes:
+      snapshot:
+        name: snapshot
+        description: Relative path (non-URL/URI) to the dataset preview image relative
+          to the dataset directory root.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:metadata_snapshot
+        alias: snapshot
+        owner: MetadataPicturePath
+        domain_of:
+        - PicturePath
+        - MetadataPicturePath
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      thumbnail:
+        name: thumbnail
+        description: Relative path (non-URL/URI) to the thumbnail of preview image
+          relative to the dataset directory root.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:metadata_thumbnail
+        alias: thumbnail
+        owner: MetadataPicturePath
+        domain_of:
+        - PicturePath
+        - MetadataPicturePath
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
   Author:
     name: Author
     description: Author of a scientific data entity.
@@ -728,6 +857,9 @@ classes:
         owner: Author
         domain_of:
         - AuthorMixin
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -1052,10 +1184,193 @@ classes:
         owner: PicturedEntity
         domain_of:
         - PicturedEntity
+        - PicturedMetadataEntity
         range: PicturePath
         required: true
         inlined: true
         inlined_as_list: true
+  PicturedMetadataEntity:
+    name: PicturedMetadataEntity
+    description: An entity with associated preview images for metadata files.
+    from_schema: metadata
+    attributes:
+      key_photos:
+        name: key_photos
+        description: A set of paths to representative images of a piece of data for
+          metadata files.
+        from_schema: metadata
+        alias: key_photos
+        owner: PicturedMetadataEntity
+        domain_of:
+        - PicturedEntity
+        - PicturedMetadataEntity
+        range: MetadataPicturePath
+        required: true
+        inlined: true
+        inlined_as_list: true
+  Assay:
+    name: Assay
+    description: The assay that was used to create the dataset.
+    from_schema: metadata
+    attributes:
+      name:
+        name: name
+        description: Name of the assay component.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:assay_name
+        alias: name
+        owner: Assay
+        domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
+        - AuthorMixin
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        description: The EFO identifier for the cellular component.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:assay_id
+        alias: id
+        owner: Assay
+        domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: EFO_ID
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: ^EFO:[0-9]{7}$
+  DevelopmentStageDetails:
+    name: DevelopmentStageDetails
+    description: The development stage of the patients or organisms from which assayed
+      biosamples were derived.
+    from_schema: metadata
+    attributes:
+      name:
+        name: name
+        description: Name of the developmental stage component.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:development_stage_name
+        alias: name
+        owner: DevelopmentStageDetails
+        domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
+        - AuthorMixin
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:development_stage_id
+        alias: id
+        owner: DevelopmentStageDetails
+        domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: Any
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)
+        any_of:
+        - range: UNKNOWN_LITERAL
+        - range: WORMBASE_DEVELOPMENT_ID
+        - range: UBERON_ID
+        - range: HSAPDV_ID
+  Disease:
+    name: Disease
+    description: The disease or condition of the patients from which assayed biosamples
+      were derived.
+    from_schema: metadata
+    attributes:
+      name:
+        name: name
+        description: Name of the disease.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:disease_name
+        alias: name
+        owner: Disease
+        domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
+        - OrganismDetails
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        - AnnotationTriangularMeshGroupFile
+        - AuthorMixin
+        range: string
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+      id:
+        name: id
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:disease_id
+        alias: id
+        owner: Disease
+        domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
+        - TissueDetails
+        - CellType
+        - CellStrain
+        - CellComponent
+        - AnnotationObject
+        range: Any
+        recommended: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^MONDO:[0-9]{7}$)|(^PATO:[0-9]{7}$)
+        any_of:
+        - range: MONDO_ID
+        - range: PATO_ID
   OrganismDetails:
     name: OrganismDetails
     description: The species from which the sample was derived.
@@ -1071,6 +1386,9 @@ classes:
         alias: name
         owner: OrganismDetails
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -1113,6 +1431,9 @@ classes:
         alias: name
         owner: TissueDetails
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -1127,23 +1448,30 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: The UBERON identifier for the tissue.
+        description: A placeholder for any type of data.
         from_schema: metadata
         exact_mappings:
         - cdp-common:tissue_id
         alias: id
         owner: TissueDetails
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
-        range: BTO_ID
+        range: Any
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: ^BTO:[0-9]{7}$
+        pattern: (^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(^UBERON:[0-9]{7}$)
+        any_of:
+        - range: CL_ID
+        - range: WORMBASE_TISSUE_ID
+        - range: UBERON_ID
   CellType:
     name: CellType
     description: The cell type from which the sample was derived.
@@ -1159,6 +1487,9 @@ classes:
         alias: name
         owner: CellType
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -1173,23 +1504,29 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: Cell Ontology identifier for the cell type
+        description: A placeholder for any type of data.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_type_id
         alias: id
         owner: CellType
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - TissueDetails
         - CellType
         - CellStrain
         - CellComponent
         - AnnotationObject
-        range: CL_ID
+        range: Any
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: ^CL:[0-9]{7}$
+        pattern: (^CL:[0-9]{7}$)|(^UBERON:[0-9]{7}$)
+        any_of:
+        - range: CL_ID
+        - range: UBERON_ID
   CellStrain:
     name: CellStrain
     description: The strain or cell line from which the sample was derived.
@@ -1204,6 +1541,9 @@ classes:
         alias: name
         owner: CellStrain
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -1225,6 +1565,9 @@ classes:
         alias: id
         owner: CellStrain
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - TissueDetails
         - CellType
         - CellStrain
@@ -1234,10 +1577,12 @@ classes:
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: (WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)
+        pattern: (WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)
         any_of:
-        - range: WORMBASE_ID
-        - range: ONTOLOGY_ID
+        - range: WORMBASE_STRAIN_ID
+        - range: NCBI_TAXON_ID
+        - range: CVCL_ID
+        - range: CC_ID
   CellComponent:
     name: CellComponent
     description: The cellular component from which the sample was derived.
@@ -1252,6 +1597,9 @@ classes:
         alias: name
         owner: CellComponent
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -1273,6 +1621,9 @@ classes:
         alias: id
         owner: CellComponent
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - TissueDetails
         - CellType
         - CellStrain
@@ -1303,7 +1654,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)
+        pattern: (^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)
       sample_preparation:
         name: sample_preparation
         description: Describes how the sample was prepared.
@@ -1400,6 +1751,44 @@ classes:
         domain_of:
         - ExperimentMetadata
         range: CellComponent
+        inlined: true
+        inlined_as_list: true
+      assay:
+        name: assay
+        description: The assay that was used to create the dataset.
+        from_schema: metadata
+        alias: assay
+        owner: ExperimentMetadata
+        domain_of:
+        - ExperimentMetadata
+        range: Assay
+        required: true
+        inlined: true
+        inlined_as_list: true
+      development_stage:
+        name: development_stage
+        description: The development stage of the patients or organisms from which
+          assayed biosamples were derived.
+        from_schema: metadata
+        alias: development_stage
+        owner: ExperimentMetadata
+        domain_of:
+        - ExperimentMetadata
+        range: DevelopmentStageDetails
+        required: true
+        inlined: true
+        inlined_as_list: true
+      disease:
+        name: disease
+        description: The disease or condition of the patients from which assayed biosamples
+          were derived.
+        from_schema: metadata
+        alias: disease
+        owner: ExperimentMetadata
+        domain_of:
+        - ExperimentMetadata
+        range: Disease
+        required: true
         inlined: true
         inlined_as_list: true
   Dataset:
@@ -1527,7 +1916,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)
+        pattern: (^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)
       sample_preparation:
         name: sample_preparation
         description: Describes how the sample was prepared.
@@ -1624,6 +2013,44 @@ classes:
         domain_of:
         - ExperimentMetadata
         range: CellComponent
+        inlined: true
+        inlined_as_list: true
+      assay:
+        name: assay
+        description: The assay that was used to create the dataset.
+        from_schema: metadata
+        alias: assay
+        owner: Dataset
+        domain_of:
+        - ExperimentMetadata
+        range: Assay
+        required: true
+        inlined: true
+        inlined_as_list: true
+      development_stage:
+        name: development_stage
+        description: The development stage of the patients or organisms from which
+          assayed biosamples were derived.
+        from_schema: metadata
+        alias: development_stage
+        owner: Dataset
+        domain_of:
+        - ExperimentMetadata
+        range: DevelopmentStageDetails
+        required: true
+        inlined: true
+        inlined_as_list: true
+      disease:
+        name: disease
+        description: The disease or condition of the patients from which assayed biosamples
+          were derived.
+        from_schema: metadata
+        alias: disease
+        owner: Dataset
+        domain_of:
+        - ExperimentMetadata
+        range: Disease
+        required: true
         inlined: true
         inlined_as_list: true
   Deposition:
@@ -1969,6 +2396,218 @@ classes:
             symbol: °
             descriptive_name: degrees
         - range: FloatFormattedString
+  PerSectionParameter:
+    name: PerSectionParameter
+    description: Parameters for a section of a tilt series.
+    from_schema: metadata
+    attributes:
+      z_index:
+        name: z_index
+        description: z-index of the frame in the tiltseries
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_z_index
+        alias: z_index
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        - PerSectionAlignmentParameters
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      frame_acquisition_order:
+        name: frame_acquisition_order
+        description: The 0-based index of this movie stack in the order of acquisition.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:frames_acquisition_order
+        alias: frame_acquisition_order
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+      raw_angle:
+        name: raw_angle
+        description: Nominal angle of the tilt series section.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_nominal_tilt_angle
+        alias: raw_angle
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: -90
+        maximum_value: 90
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      astigmatic_angle:
+        name: astigmatic_angle
+        description: Angle of astigmatism.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_astigmatic_angle
+        alias: astigmatic_angle
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        minimum_value: -180
+        maximum_value: 180
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      minor_defocus:
+        name: minor_defocus
+        description: Minor axis defocus amount, underfocus is positive.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_minor_defocus
+        alias: minor_defocus
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: angstrom
+      major_defocus:
+        name: major_defocus
+        description: Major axis defocus amount, underfocus is positive.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_major_defocus
+        alias: major_defocus
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: angstrom
+      max_resolution:
+        name: max_resolution
+        description: Maximum resolution of the CTF fit for this section.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_max_resolution
+        alias: max_resolution
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: angstrom
+      phase_shift:
+        name: phase_shift
+        description: Phase shift measured for this section.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_phase_shift
+        alias: phase_shift
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: rad
+          descriptive_name: radians
+      cross_correlation:
+        name: cross_correlation
+        description: CTF fit cross correlation value for this section.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_cross_correlation
+        alias: cross_correlation
+        owner: PerSectionParameter
+        domain_of:
+        - PerSectionParameter
+        range: float
+        inlined: true
+        inlined_as_list: true
+  TiltSeriesSize:
+    name: TiltSeriesSize
+    description: The size of a tiltseries in sctions/pixels in each dimension.
+    from_schema: metadata
+    attributes:
+      x:
+        name: x
+        description: Number of pixels in the 2D data fast axis
+        from_schema: metadata
+        alias: x
+        owner: TiltSeriesSize
+        domain_of:
+        - TiltSeriesSize
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+        unit:
+          symbol: px
+          descriptive_name: pixels
+      y:
+        name: y
+        description: Number of pixels in the 2D data medium axis
+        from_schema: metadata
+        alias: y
+        owner: TiltSeriesSize
+        domain_of:
+        - TiltSeriesSize
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+        unit:
+          symbol: px
+          descriptive_name: pixels
+      z:
+        name: z
+        description: Number of sections in the 2D stack.
+        from_schema: metadata
+        alias: z
+        owner: TiltSeriesSize
+        domain_of:
+        - TiltSeriesSize
+        - TomogramSize
+        - TomogramOffset
+        - AlignmentSize
+        - AlignmentOffset
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+        unit:
+          descriptive_name: sections
   TiltSeries:
     name: TiltSeries
     description: Metadata describing a tilt series.
@@ -2348,6 +2987,7 @@ classes:
         alias: x
         owner: TomogramSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2367,6 +3007,7 @@ classes:
         alias: y
         owner: TomogramSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2387,6 +3028,7 @@ classes:
         alias: z
         owner: TomogramSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2412,6 +3054,7 @@ classes:
         alias: x
         owner: TomogramOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2430,6 +3073,7 @@ classes:
         alias: y
         owner: TomogramOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2448,6 +3092,7 @@ classes:
         alias: z
         owner: TomogramOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -2658,7 +3303,6 @@ classes:
         owner: Tomogram
         domain_of:
         - Tomogram
-        - Alignment
         range: TomogramOffset
         required: true
         inlined: true
@@ -2789,6 +3433,9 @@ classes:
         alias: id
         owner: AnnotationObject
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - TissueDetails
         - CellType
         - CellStrain
@@ -2812,6 +3459,9 @@ classes:
         alias: name
         owner: AnnotationObject
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -3021,6 +3671,7 @@ classes:
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
+        - IdentifiedObjectList
         range: string
         inlined: true
         inlined_as_list: true
@@ -3167,6 +3818,7 @@ classes:
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
+        - IdentifiedObjectList
         range: string
         inlined: true
         inlined_as_list: true
@@ -3341,6 +3993,7 @@ classes:
         domain_of:
         - AnnotationOrientedPointFile
         - AnnotationPointFile
+        - IdentifiedObjectList
         range: string
         inlined: true
         inlined_as_list: true
@@ -3766,6 +4419,9 @@ classes:
         alias: name
         owner: AnnotationTriangularMeshGroupFile
         domain_of:
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType
@@ -3851,6 +4507,93 @@ classes:
         - Alignment
         range: boolean
         required: false
+        inlined: true
+        inlined_as_list: true
+  IdentifiedObject:
+    name: IdentifiedObject
+    description: Metadata describing an identified object.
+    from_schema: metadata
+    attributes:
+      object_id:
+        name: object_id
+        description: A placeholder for any type of data.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:identified_object_id
+        alias: object_id
+        owner: IdentifiedObject
+        domain_of:
+        - IdentifiedObject
+        range: Any
+        required: true
+        inlined: true
+        inlined_as_list: true
+        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)
+        any_of:
+        - range: GO_ID
+        - range: UNIPROT_ID
+      object_name:
+        name: object_name
+        description: Name of the object that was identified (e.g. ribosome, nuclear
+          pore complex, actin filament, membrane)
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:identified_object_name
+        alias: object_name
+        owner: IdentifiedObject
+        domain_of:
+        - IdentifiedObject
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
+      object_description:
+        name: object_description
+        description: A textual description of the identified object, can be a longer
+          description to include additional information not covered by the identified
+          object name and state.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:identified_object_description
+        alias: object_description
+        owner: IdentifiedObject
+        domain_of:
+        - IdentifiedObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+      object_state:
+        name: object_state
+        description: Molecule state identified (e.g. open, closed)
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:identified_object_state
+        alias: object_state
+        owner: IdentifiedObject
+        domain_of:
+        - IdentifiedObject
+        range: string
+        inlined: true
+        inlined_as_list: true
+  IdentifiedObjectList:
+    name: IdentifiedObjectList
+    description: Metadata for a list of identified objects.
+    from_schema: metadata
+    attributes:
+      filter_value:
+        name: filter_value
+        description: Filter value for the identified object, used to filter the list
+          of identified objects by run name.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:identified_object_filter_value
+        alias: filter_value
+        owner: IdentifiedObjectList
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationPointFile
+        - IdentifiedObjectList
+        range: string
         inlined: true
         inlined_as_list: true
   Annotation:
@@ -4069,6 +4812,7 @@ classes:
         alias: x
         owner: AlignmentSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4091,6 +4835,7 @@ classes:
         alias: y
         owner: AlignmentSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4113,6 +4858,7 @@ classes:
         alias: z
         owner: AlignmentSize
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4142,6 +4888,7 @@ classes:
         alias: x
         owner: AlignmentOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4165,6 +4912,7 @@ classes:
         alias: y
         owner: AlignmentOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4188,6 +4936,7 @@ classes:
         alias: z
         owner: AlignmentOffset
         domain_of:
+        - TiltSeriesSize
         - TomogramSize
         - TomogramOffset
         - AlignmentSize
@@ -4203,6 +4952,123 @@ classes:
         any_of:
         - range: float
         - range: FloatFormattedString
+  PerSectionAlignmentParameters:
+    name: PerSectionAlignmentParameters
+    description: Alignment parameters for one section of a tilt series.
+    from_schema: metadata
+    attributes:
+      z_index:
+        name: z_index
+        description: z-index of the frame in the tiltseries
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_z_index
+        alias: z_index
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionParameter
+        - PerSectionAlignmentParameters
+        range: integer
+        required: true
+        inlined: true
+        inlined_as_list: true
+        minimum_value: 0
+      tilt_angle:
+        name: tilt_angle
+        description: Tilt angle of the projection in degrees
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_alignment_tilt_angle
+        alias: tilt_angle
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      volume_x_rotation:
+        name: volume_x_rotation
+        description: Additional X rotation of the reconstruction volume in degrees
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:alignment_volume_x_rotation
+        alias: volume_x_rotation
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
+      in_plane_rotation:
+        name: in_plane_rotation
+        description: In-plane rotation of the projection as a rotation matrix.
+        from_schema: metadata
+        array:
+          exact_number_dimensions: 2
+          dimensions:
+          - exact_cardinality: 2
+          - exact_cardinality: 2
+        alias: in_plane_rotation
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+      x_offset:
+        name: x_offset
+        description: In-plane X-shift of the projection in angstrom
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_alignment_x_offset
+        alias: x_offset
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      y_offset:
+        name: y_offset
+        description: In-plane Y-shift of the projection in angstrom
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_alignment_y_offset
+        alias: y_offset
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: Å
+          descriptive_name: Angstrom
+      beam_tilt:
+        name: beam_tilt
+        description: Beam tilt during projection in degrees
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:per_section_alignment_beam_tilt
+        alias: beam_tilt
+        owner: PerSectionAlignmentParameters
+        domain_of:
+        - PerSectionAlignmentParameters
+        range: float
+        inlined: true
+        inlined_as_list: true
+        unit:
+          symbol: °
+          descriptive_name: degrees
   Alignment:
     name: Alignment
     from_schema: metadata
@@ -4219,24 +5085,23 @@ classes:
         inlined: true
         inlined_as_list: true
         pattern: (^LOCAL$)|(^GLOBAL$)
-      offset:
-        name: offset
+      volume_offset:
+        name: volume_offset
         description: The offset of a alignment in voxels in each dimension relative
           to the canonical tomogram.
         from_schema: metadata
-        alias: offset
+        alias: volume_offset
         owner: Alignment
         domain_of:
-        - Tomogram
         - Alignment
         range: AlignmentOffset
         inlined: true
         inlined_as_list: true
-      volume_dimesion:
-        name: volume_dimesion
+      volume_dimension:
+        name: volume_dimension
         description: The size of an alignment in voxels in each dimension.
         from_schema: metadata
-        alias: volume_dimesion
+        alias: volume_dimension
         owner: Alignment
         domain_of:
         - Alignment
@@ -4508,6 +5373,9 @@ classes:
         owner: AuthorMixin
         domain_of:
         - AuthorMixin
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType

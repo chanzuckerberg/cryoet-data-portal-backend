@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/ycw2012-09-07-1/keyimg_ycw2012-09-07-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Yi-Wei Chang
@@ -20,8 +23,10 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: null
       name: ATCC 15444
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     cross_references:
       publications: 10.1111/mmi.13593
     dataset_description: This is 5th of 5 sets of data studying Hyphomonas neptunium
@@ -33,6 +38,12 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: "Vitrobot settings: 100% humidity, 3\xB5l sample, 10 nm BSA\
       \ treated gold. -3 offset, 4 sec blot time, no drain. Ethane/propane mix."
     organism:
@@ -40,7 +51,10 @@ datasets:
       taxonomy_id: 228405
     sample_preparation: Cells grown overnight in Marine Broth (MB) medium at 30 degrees
       without antibiotics. OD600=0.6
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

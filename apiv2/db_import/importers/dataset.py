@@ -36,6 +36,12 @@ class DatasetDBImporter(BaseDBImporter):
     @classmethod
     def get_direct_mapped_fields(cls) -> dict[str, Any]:
         return {
+            "assay_label": ["assay", "name"],
+            "assay_ontology_id": ["assay", "id"],
+            "development_stage_name": ["development_stage", "name"],
+            "development_stage_ontology_id": ["development_stage", "id"],
+            "disease_name": ["disease", "name"],
+            "disease_ontology_id": ["disease", "id"],
             "cell_component_id": ["cell_component", "id"],
             "cell_component_name": ["cell_component", "name"],
             "cell_name": ["cell_type", "name"],

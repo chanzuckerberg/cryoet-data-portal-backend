@@ -1793,6 +1793,34 @@ type Dataset implements EntityInterface & Node {
   description: String!
 
   """
+  Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography
+  """
+  assayLabel: String
+
+  """
+  Ontology identifier for the type of assay performed in a CryoET dataset
+  """
+  assayOntologyId: String
+
+  """
+  Development stage of the organism from which a biological sample used the study is derived.
+  """
+  developmentStageName: String
+
+  """Ontology identifier for the development stage"""
+  developmentStageOntologyId: String
+
+  """
+  Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
+  """
+  diseaseName: String
+
+  """
+  Ontology identifier for the disease associated with the biological sample used in a CryoET study
+  """
+  diseaseOntologyId: String
+
+  """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
   """
   organismName: String
@@ -2173,6 +2201,12 @@ type DatasetConnection {
 enum DatasetCountColumns {
   title
   description
+  assayLabel
+  assayOntologyId
+  developmentStageName
+  developmentStageOntologyId
+  diseaseName
+  diseaseOntologyId
   organismName
   organismTaxid
   tissueName
@@ -2211,6 +2245,34 @@ input DatasetCreateInput {
   A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.
   """
   description: String!
+
+  """
+  Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography
+  """
+  assayLabel: String = null
+
+  """
+  Ontology identifier for the type of assay performed in a CryoET dataset
+  """
+  assayOntologyId: String = null
+
+  """
+  Development stage of the organism from which a biological sample used the study is derived.
+  """
+  developmentStageName: String = null
+
+  """Ontology identifier for the development stage"""
+  developmentStageOntologyId: String = null
+
+  """
+  Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
+  """
+  diseaseName: String = null
+
+  """
+  Ontology identifier for the disease associated with the biological sample used in a CryoET study
+  """
+  diseaseOntologyId: String = null
 
   """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
@@ -2453,6 +2515,12 @@ type DatasetGroupByOptions {
   runs: RunGroupByOptions
   title: String
   description: String
+  assayLabel: String
+  assayOntologyId: String
+  developmentStageName: String
+  developmentStageOntologyId: String
+  diseaseName: String
+  diseaseOntologyId: String
   organismName: String
   organismTaxid: Int
   tissueName: String
@@ -2483,6 +2551,12 @@ type DatasetGroupByOptions {
 type DatasetMinMaxColumns {
   title: String
   description: String
+  assayLabel: String
+  assayOntologyId: String
+  developmentStageName: String
+  developmentStageOntologyId: String
+  diseaseName: String
+  diseaseOntologyId: String
   organismName: String
   organismTaxid: Int
   tissueName: String
@@ -2519,6 +2593,12 @@ input DatasetOrderByClause {
   deposition: DepositionOrderByClause
   title: orderBy
   description: orderBy
+  assayLabel: orderBy
+  assayOntologyId: orderBy
+  developmentStageName: orderBy
+  developmentStageOntologyId: orderBy
+  diseaseName: orderBy
+  diseaseOntologyId: orderBy
   organismName: orderBy
   organismTaxid: orderBy
   tissueName: orderBy
@@ -2557,6 +2637,34 @@ input DatasetUpdateInput {
   A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.
   """
   description: String
+
+  """
+  Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography
+  """
+  assayLabel: String = null
+
+  """
+  Ontology identifier for the type of assay performed in a CryoET dataset
+  """
+  assayOntologyId: String = null
+
+  """
+  Development stage of the organism from which a biological sample used the study is derived.
+  """
+  developmentStageName: String = null
+
+  """Ontology identifier for the development stage"""
+  developmentStageOntologyId: String = null
+
+  """
+  Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
+  """
+  diseaseName: String = null
+
+  """
+  Ontology identifier for the disease associated with the biological sample used in a CryoET study
+  """
+  diseaseOntologyId: String = null
 
   """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
@@ -2663,6 +2771,12 @@ input DatasetWhereClause {
   runsAggregate: RunAggregateWhereClause
   title: StrComparators
   description: StrComparators
+  assayLabel: StrComparators
+  assayOntologyId: StrComparators
+  developmentStageName: StrComparators
+  developmentStageOntologyId: StrComparators
+  diseaseName: StrComparators
+  diseaseOntologyId: StrComparators
   organismName: StrComparators
   organismTaxid: IntComparators
   tissueName: StrComparators
@@ -6826,13 +6940,16 @@ enum orderBy {
 
 enum sample_type_enum {
   cell
-  tissue
-  organism
-  organelle
-  virus
-  in_vitro
+  cell_line
   in_silico
+  in_vitro
+  organelle
+  organism
+  organoid
   other
+  primary_cell_culture
+  tissue
+  virus
 }
 
 enum tiltseries_microscope_manufacturer_enum {

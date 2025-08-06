@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/mka2018-09-29-3/keyimg_mka2018-09-29-3_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Mohammed Kaplan
@@ -19,6 +22,9 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: This is 1st of 5 sets of data studying Pseudomonas aeruginosa
       collected by Mohammed Kaplan and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10038
@@ -27,6 +33,12 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: Added 3 ul on to thick carbon R2 grids and blotted them and
       plunge froze them (force either 6 or 3, time either 3 or 2 seconds respectively,
       drain time 1 second).
@@ -36,7 +48,10 @@ datasets:
     sample_preparation: I inoculated one colony from an LB agar plate and grew the
       cells overnight in LB with 100 ug/ml of Gentamycin. Then I concentrated the
       cells three times and mixed them with gold nanoparticles
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:
