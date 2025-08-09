@@ -172,6 +172,10 @@ DepositionAuthor {
     boolean corresponding_author_status
     boolean primary_author_status
 }
+DepositionType {
+    deposition_types_enum type
+    integer id
+}
 Dataset {
     string title
     string description
@@ -333,6 +337,7 @@ Deposition ||--}o Tiltseries : "tiltseries"
 Deposition ||--}o Tomogram : "tomograms"
 Deposition ||--}o DepositionType : "deposition_types"
 DepositionAuthor ||--|| Deposition : "deposition"
+DepositionType ||--|| Deposition : "deposition"
 Dataset ||--|| Deposition : "deposition"
 Dataset ||--}o DatasetFunding : "funding_sources"
 Dataset ||--}o DatasetAuthor : "authors"

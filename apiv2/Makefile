@@ -38,11 +38,12 @@ build: ## Build docker containers
 update-schema: codegen alembic-autogenerate alembic-upgrade-head
 	# $(docker_compose_run) $(CONTAINER) ruff check --fix .
 	$(docker_compose_run) $(APP_CONTAINER) sh -c 'strawberry export-schema main:schema > /app/graphql_api/schema.graphql'
-	linkml generate erdiagram --structural --classes Alignment --classes AnnotationAuthor --classes AnnotationFile --classes AnnotationShape --classes Annotation --classes DatasetAuthor --classes DatasetFunding --classes Dataset --classes DepositionAuthor --classes Deposition --classes Frame --classes PerSectionAlignmentParameters --classes AnnotationMethodLink --classes GainFile --classes FrameAcquisitionFile --classes Run --classes Tiltseries --classes PerSectionParameters --classes TomogramAuthor --classes TomogramVoxelSpacing --classes Tomogram schema/schema.yaml> schema/README.md
+	$(docker_compose_run) $(APP_CONTAINER) linkml generate erdiagram --structural --classes Alignment --classes AnnotationAuthor --classes AnnotationFile --classes AnnotationShape --classes Annotation --classes DatasetAuthor --classes DatasetFunding --classes Dataset --classes DepositionType --classes DepositionAuthor --classes Deposition --classes Frame --classes PerSectionAlignmentParameters --classes AnnotationMethodLink --classes GainFile --classes FrameAcquisitionFile --classes Run --classes Tiltseries --classes PerSectionParameters --classes TomogramAuthor --classes TomogramVoxelSpacing --classes Tomogram schema/schema.yaml> schema/README.md
 	docker compose up -d
 	sleep 5 # wait for the app to reload after having files updated.
 	docker compose exec $(APP_CONTAINER) python3 -m sgqlc.introspection --exclude-deprecated --exclude-description http://localhost:9009/graphql graphql_api/schema.json
-	pre-commit run
+	# I don't know why pre-commit behaves differently when run in different contexts, but it does.
+	cd ../ && pre-commit run --all-files
 
 .PHONY: seed-moto
 seed-moto: ## Seed the moto db by running the ./bin/seed_moto.sh script
@@ -60,7 +61,7 @@ start: ## Start the local dev environment.
 .PHONY: codegen
 codegen: ## Run codegen to convert the LinkML schema to a GQL API
 	$(docker_compose_run) $(APP_CONTAINER) python3 -m platformics.cli.main api generate --template-override-paths ./template_overrides --schemafile ./schema/schema.yaml --skip-render-files --output-prefix .
-	$(docker_compose_run) $(APP_CONTAINER) black .
+	cd ../ && pre-commit run --all-files
 
 .PHONY: test
 test: ## Run tests
