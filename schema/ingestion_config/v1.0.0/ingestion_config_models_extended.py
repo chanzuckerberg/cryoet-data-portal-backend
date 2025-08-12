@@ -22,6 +22,7 @@ from codegen.ingestion_config_models import (
     AnnotationSource,
     IdentifiedObject,
     Assay,
+    IdentifiedObject,
     Author,
     CameraDetails,
     CellComponent,
