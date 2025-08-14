@@ -71,9 +71,11 @@ depositions:
   - metadata:
       authors: *authors
       dates: *dates
-      deposition_description: Resulting training annotations from the "BYU - Locating Bacterial Flagellar Motors" Kaggle competition. This training set of annotations is a collection from three organizations, the hosts, and two competitors. More information on how the annotations were made is availible in the accompanying paper.
+      deposition_description: Resulting training annotations from the "BYU - Locating Bacterial Flagellar Motors" Kaggle competition. This training set of annotations is a collection from three organizations, the hosts, and two competitors. More information on how the annotations were made is available in the accompanying paper.
       deposition_identifier: 10332
       deposition_title: BYU - Locating Bacterial Flagellar Motors Challenge Train Annotations
+      cross_references:
+        publications: 10.1101/2025.04.23.650258
       deposition_types:
         - annotation
     sources:
@@ -85,7 +87,7 @@ runs:
   - sources:
       - source_glob:
           list_glob: '{dataset_name}/*'
-          match_regex: .*
+          match_regex: .*_flagellar_motor\.csv
           name_regex: (.*?)_flagellar_motor\.csv
 
 standardization_config:
