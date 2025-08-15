@@ -13,6 +13,9 @@ annotations:
         name: bacterial-type flagellum motor
       annotation_software: Napari + custom UNet ensemble
       authors: &authors
+        - name: C. Braxton Owens
+          email: cbraxtonowens@gmail.com
+          primary_author_status: true
         - name: Mohammed Kaplan
           email: mohammedk@uchicago.edu
           primary_author_status: true
