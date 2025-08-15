@@ -676,6 +676,74 @@
             "title": "AnnotationInstanceSegmentationFile",
             "type": "object"
         },
+        "AnnotationInstanceSegmentationMaskFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks.",
+            "properties": {
+                "binning": {
+                    "description": "The binning factor for a point / oriented point / instance segmentation annotation file.",
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "file_format": {
+                    "description": "File format for this file",
+                    "type": "string"
+                },
+                "filter_value": {
+                    "description": "The filter value for an oriented point / instance segmentation annotation file.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "order": {
+                    "description": "The order of axes for an oriented point / instance segmentation annotation file.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "file_format"
+            ],
+            "title": "AnnotationInstanceSegmentationMaskFile",
+            "type": "object"
+        },
         "AnnotationMethodLinkTypeEnum": {
             "description": "Describes the type of link associated to the annotation method.",
             "enum": [
@@ -1120,6 +1188,17 @@
                         }
                     ],
                     "description": "File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes."
+                },
+                "InstanceSegmentationMask": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AnnotationInstanceSegmentationMaskFile"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks."
                 },
                 "OrientedPoint": {
                     "anyOf": [
