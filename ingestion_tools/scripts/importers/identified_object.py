@@ -81,9 +81,16 @@ class IdentifiedObjectImporter(BaseFileImporter):
         except Exception as e:
             print(f"Error reading CSV {self.path}: {e}")
             return
+        # Filter by run name and exclude run_name column
+        run_name = self.parents["run"].name
+        if 'run_name' in df.columns:
+            df_filtered = df[df['run_name'] == run_name].drop(columns=['run_name'])
+        else:
+            df_filtered = df
+        
         output_file = f"{dest_path}/identified_objects.json"
         with self.config.fs.open(output_file, "w") as f:
-            df.to_json(f, orient='records', indent=4)
+            df_filtered.to_json(f, orient='records', indent=4)
 
     def import_metadata(self) -> None:
         if not self.is_import_allowed():
