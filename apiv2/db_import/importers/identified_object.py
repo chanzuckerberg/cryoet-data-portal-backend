@@ -36,6 +36,7 @@ class IdentifiedObjectItem(ItemDBImporter):
     def load(self, session):
         return super().load(session)
 
+
 class IdentifiedObjectImporter(IntegratedDBImporter):
     finder = JsonDataFinder
     row_importer = IdentifiedObjectItem
@@ -55,9 +56,9 @@ class IdentifiedObjectImporter(IntegratedDBImporter):
 
     def get_finder_args(self) -> dict[str, Any]:
 
-        if hasattr(self.run, 's3_prefix'):
+        if hasattr(self.run, "s3_prefix"):
             s3_prefix = self.run.s3_prefix
-        elif hasattr(self.run, 'dir_prefix'):
+        elif hasattr(self.run, "dir_prefix"):
             s3_prefix = self.run.get_s3_url(self.run.dir_prefix)
         else:
             raise AttributeError(f"Run object {type(self.run)} has neither s3_prefix nor dir_prefix")
