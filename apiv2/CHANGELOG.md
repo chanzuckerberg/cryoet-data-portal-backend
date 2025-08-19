@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.12.0...apiv2-v1.13.0) (2025-08-19)
+
+
+### Features
+
+* Add IdentifiedObject data model ([#510](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/510)) ([4a025d9](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/4a025d9df87832a74ac65a31f6613f9a127e02a2))
+
 ## [1.12.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.11.0...apiv2-v1.12.0) (2025-07-24)
 
 
