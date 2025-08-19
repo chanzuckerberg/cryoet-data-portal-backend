@@ -70,7 +70,7 @@ class IdentifiedObjectImporter(IntegratedDBImporter):
 
         path = f"{self.config.bucket_name}/{s3_prefix.rstrip('/')}/IdentifiedObjects/identified_objects.json"
 
-        run_identifier = self.run.metadata.get("run_name")
+        run_identifier = self.run.name
 
         return {
             "path": path,

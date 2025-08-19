@@ -13,7 +13,7 @@ from importers.base_importer import BaseFileImporter
 class IdentifiedObjectIdentifierHelper(IdentifierHelper):
     @classmethod
     def _get_container_key(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
-        return "-".join(["identified_object", parents["run"].get_output_path()])
+        return "-".join([parents["run"].get_output_path(), "identified_object"])
 
     @classmethod
     def _get_metadata_glob(cls, config, parents, *args, **kwargs) -> str:
@@ -34,11 +34,7 @@ class IdentifiedObjectIdentifierHelper(IdentifierHelper):
             [
                 container_key,
                 str(metadata.get("deposition_id", int(parents["deposition"].name))),
-                str(metadata.get("run_id", parents["run"].name)),
-                str(metadata.get("identified_object_id", "unknown")),
-                str(metadata.get("identified_object_name", "unknown")),
-                str(metadata.get("identified_object_state", "unknown")),
-                str(metadata.get("identified_object_description", "unknown")),
+                str(metadata.get("run_name", parents["run"].name)),
             ],
         )
 
@@ -78,7 +74,6 @@ class IdentifiedObjectImporter(BaseFileImporter):
             return
 
         dest_path = self.get_output_path()
-        self.config.fs.makedirs(dest_path)
         try:
             with self.config.fs.open(self.path, "r") as f:
                 df = pd.read_csv(f)
