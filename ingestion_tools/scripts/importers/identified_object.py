@@ -1,4 +1,5 @@
 
+import json
 from typing import Any
 
 import pandas as pd
@@ -89,19 +90,21 @@ class IdentifiedObjectImporter(BaseFileImporter):
             print(f"Skipping import of {self.name} metadata")
             return
 
+        dest_path = self.get_output_path()
+        json_file = f"{dest_path}/identified_objects.json"
         try:
-            with self.config.fs.open(self.path, "r") as f:
-                df = pd.read_csv(f)
+            with self.config.fs.open(json_file, "r") as f:
+                data = json.load(f)
         except Exception as e:
-            print(f"Error reading CSV {self.path}: {e}")
+            print(f"Error reading JSON {json_file}: {e}")
             return
 
         extra_data = {
-            "object_count": len(df),
-            "columns": list(df.columns),
-            "file_format": "csv",
+            "object_count": len(data),
+            "columns": list(data[0].keys()) if data else [],
+            "file_format": "json",
             "source_file": self.path,
-            "identifier": self.identifier,
+            "identifier": self.path,
         }
 
         metadata = IdentifiedObjectMetadata(
