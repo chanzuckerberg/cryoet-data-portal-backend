@@ -4,6 +4,7 @@ import sqlalchemy as sa
 from database import models
 from db_import.common.finders import JsonDataFinder
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
+from db_import.importers.base_importer import StaleParentDeletionDBImporter
 
 
 class IdentifiedObjectItem(ItemDBImporter):
@@ -77,3 +78,10 @@ class IdentifiedObjectImporter(IntegratedDBImporter):
             "match_key": "run_identifier",
             "match_value": run_identifier,
         }
+
+
+class StaleIdentifiedObjectDeletionDBImporter(StaleParentDeletionDBImporter):
+    ref_klass = IdentifiedObjectImporter
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"run_id": self.parent_id}

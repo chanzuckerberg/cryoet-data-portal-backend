@@ -23,7 +23,7 @@ def upgrade() -> None:
     sa.Column('object_state', sa.String(), nullable=True),
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.ForeignKeyConstraint(['run_id'], ['run.id'], name=op.f('fk_identified_object_run_id_run')),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_identified_object'))
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_identified_object')),
     )
     op.create_index(op.f('ix_identified_object_id'), 'identified_object', ['id'], unique=False)
     op.create_index(op.f('ix_identified_object_run_id'), 'identified_object', ['run_id'], unique=False)
