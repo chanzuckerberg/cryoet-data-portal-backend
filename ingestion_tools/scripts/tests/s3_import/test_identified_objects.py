@@ -80,6 +80,6 @@ def test_identified_object_files(
         elif file_type == "metadata":
             for key in expected_structure["required_keys"]:
                 assert key in data
-            assert data["file_format"] == "csv"
+            assert data["file_format"] == "json"
             assert isinstance(data["columns"], list)
             assert data["object_count"] > 0
