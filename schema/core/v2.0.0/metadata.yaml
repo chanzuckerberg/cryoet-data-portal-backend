@@ -767,6 +767,9 @@ classes:
       order:
         exact_mappings:
           - cdp-common:annotation_source_file_order
+      mesh_source_path:
+        exact_mappings:
+          - cdp-common:annotation_source_file_mesh_source_path
 
   AnnotationInstanceSegmentationFile:
     is_a: AnnotationOrientedPointFile

@@ -3690,6 +3690,20 @@ classes:
         range: string
         inlined: true
         inlined_as_list: true
+      mesh_source_path:
+        name: mesh_source_path
+        description: The path to the mesh source file associated with an oriented
+          point file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_mesh_source_path
+        alias: mesh_source_path
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
       file_format:
         name: file_format
         description: File format for this file
@@ -3817,6 +3831,20 @@ classes:
         - cdp-common:annotation_source_file_order
         ifabsent: string(xyz)
         alias: order
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      mesh_source_path:
+        name: mesh_source_path
+        description: The path to the mesh source file associated with an oriented
+          point file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_mesh_source_path
+        alias: mesh_source_path
         owner: AnnotationInstanceSegmentationFile
         domain_of:
         - AnnotationOrientedPointFile
