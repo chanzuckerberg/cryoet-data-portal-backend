@@ -52,6 +52,12 @@ collection_metadata:
 - sources:
   - source_glob:
       list_glob: '{run_name}.mdoc'
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_CTFFIND_format_CTF.txt'
 dataset_keyphotos:
 - sources:
   - literal:
