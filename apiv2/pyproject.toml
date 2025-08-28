@@ -10,7 +10,7 @@ packages = [{include = "platformics"}]
 [tool.poetry.scripts]
 platformics = 'platformics.cli.main:cli'
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 black = "^24.4.0"
 uvicorn = "^0.23.1"
 gunicorn = "^23.0.0"
