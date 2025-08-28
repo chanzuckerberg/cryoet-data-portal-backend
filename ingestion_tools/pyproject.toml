@@ -65,7 +65,6 @@ pytest-xdist = "^3.6.1"
 h5py = "^3.11.0"
 allure-pytest = "^2.13.5"
 cryoet-alignment = "0.0.10"
-protobuf = "5.29.5"
 
 [tool.black]
 line-length = 120
