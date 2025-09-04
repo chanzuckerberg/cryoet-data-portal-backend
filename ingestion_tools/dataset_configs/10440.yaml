@@ -398,7 +398,7 @@ dataset_keyphotos:
         thumbnail: null
 frames:
 - metadata:
-    dose_rate: 5.955
+    dose_rate: 3.123
     is_gain_corrected: false
   sources:
   - source_glob:
@@ -444,7 +444,7 @@ tiltseries:
     tilt_series_quality: int {tilt_series_quality}
     tilt_step: 3.0
     tilting_scheme: dose-symmetric
-    total_flux: 120
+    total_flux: 62.93
   sources:
   - source_glob:
       list_glob: '{mapped_run_name}_TS.mrc'
