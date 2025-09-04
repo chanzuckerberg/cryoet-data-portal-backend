@@ -210,6 +210,10 @@ annotations:
       glob_strings: *id004
       is_visualization_default: true
       mask_label: 7
+  - InstanceSegmentationMask:
+      file_format: mrc
+      glob_strings: *id004
+      is_visualization_default: true
   - OrientedPoint:
       binning: 10
       file_format: relion3_star

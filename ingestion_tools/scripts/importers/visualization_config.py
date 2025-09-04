@@ -162,6 +162,7 @@ class VisualizationConfigImporter(BaseImporter):
                     "Point",
                     "OrientedPoint",
                     "InstanceSegmentation",
+                    "InstanceSegmentationMask",
                     "TriangularMesh",
                     "TriangularMeshGroup",
                 }:

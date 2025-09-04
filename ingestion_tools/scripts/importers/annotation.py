@@ -104,6 +104,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = PointAnnotation(**instance_args)
         if shape == "InstanceSegmentation":
             anno = InstanceSegmentationAnnotation(**instance_args)
+        if shape == "InstanceSegmentationMask":
+            anno = InstanceSegmentationMaskAnnotation(**instance_args)
         if shape == "TriangularMesh":
             anno = TriangularMeshAnnotation(**instance_args)
         if shape == "TriangularMeshGroup":
@@ -311,6 +313,11 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
             scale_0_dims=output_dims,
             threshold=self.threshold,
         )
+
+
+class InstanceSegmentationMaskAnnotation(SegmentationMaskAnnotation):
+    shape = "InstanceSegmentationMask"
+
 
 
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):

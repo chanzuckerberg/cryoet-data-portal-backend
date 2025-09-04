@@ -279,6 +279,9 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      InstanceSegmentationMask:
+        text: InstanceSegmentationMask
+        description: A mask with labels for multiple instances
       Mesh:
         text: Mesh
         description: A surface mesh volumes
