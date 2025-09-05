@@ -1,12 +1,11 @@
 alignments:
 - metadata:
-    format: IMOD
+    format: ARETOMO3
     method_type: fiducial_based
   sources:
   - source_multi_glob:
       list_globs:
-      - alignmentfiles/{run_name}_binalign8_fid.tlt
-      - alignmentfiles/{run_name}_binalign8_fid.xf
+        - 'reprocessed/{run_name}/ts/{run_name}_ts.aln'
 annotations: []
 collection_metadata:
 - sources:
