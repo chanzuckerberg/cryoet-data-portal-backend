@@ -2,10 +2,10 @@ alignments:
 - metadata:
     format: ARETOMO3
     method_type: fiducial_based
+    is_portal_standard: true
   sources:
-  - source_multi_glob:
-      list_globs:
-        - 'reprocessed/{run_name}/ts/{run_name}_ts.aln'
+  - source_glob:
+      list_glob: 'reprocessed/{run_name}/ts/{run_name}_ts.aln'
 annotations: []
 collection_metadata:
 - sources:
