@@ -124,6 +124,10 @@ depositions:
   - literal:
       value:
       - '10301'
+identified_objects:
+- sources:
+  - source_glob:
+      list_glob: "identified_objects/identified_objects.csv"
 deposition_keyphotos:
 - sources:
   - literal:

@@ -20,6 +20,7 @@ if TYPE_CHECKING:
     from database.models.frame import Frame
     from database.models.frame_acquisition_file import FrameAcquisitionFile
     from database.models.gain_file import GainFile
+    from database.models.identified_object import IdentifiedObject
     from database.models.per_section_parameters import PerSectionParameters
     from database.models.tiltseries import Tiltseries
     from database.models.tomogram import Tomogram
@@ -35,6 +36,7 @@ else:
     Dataset = "Dataset"
     Frame = "Frame"
     GainFile = "GainFile"
+    IdentifiedObject = "IdentifiedObject"
     FrameAcquisitionFile = "FrameAcquisitionFile"
     PerSectionParameters = "PerSectionParameters"
     Tiltseries = "Tiltseries"
@@ -64,6 +66,13 @@ class Run(Base):
     )
     gain_files: Mapped[list[GainFile]] = relationship(
         "GainFile", back_populates="run", uselist=True, foreign_keys="GainFile.run_id", cascade="all, delete-orphan",
+    )
+    identified_objects: Mapped[list[IdentifiedObject]] = relationship(
+        "IdentifiedObject",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="IdentifiedObject.run_id",
+        cascade="all, delete-orphan",
     )
     frame_acquisition_files: Mapped[list[FrameAcquisitionFile]] = relationship(
         "FrameAcquisitionFile",

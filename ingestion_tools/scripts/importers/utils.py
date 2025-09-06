@@ -8,6 +8,7 @@ from importers.deposition import DepositionImporter
 from importers.deposition_key_photo import DepositionKeyPhotoImporter
 from importers.frame import FrameImporter
 from importers.gain import GainImporter
+from importers.identified_object import IdentifiedObjectImporter
 from importers.key_image import KeyImageImporter
 from importers.rawtilt import RawTiltImporter
 from importers.run import RunImporter
@@ -29,6 +30,7 @@ IMPORTERS = [
     DepositionKeyPhotoImporter,
     FrameImporter,
     GainImporter,
+    IdentifiedObjectImporter,
     KeyImageImporter,
     RawTiltImporter,
     RunImporter,
@@ -52,6 +54,7 @@ IMPORTER_DEP_TREE = {
                     RawTiltImporter: {},
                 },
                 AlignmentImporter: {},
+                IdentifiedObjectImporter: {},
                 VoxelSpacingImporter: {
                     AnnotationImporter: {
                         AnnotationVisualizationImporter: {},
