@@ -254,7 +254,7 @@ class VisualizationConfigImporter(BaseImporter):
                     if has_mesh:
                         layers.append(self._to_mesh_layer(**args))
                         print(
-                            f"Oriented point {args['name_prefix']} has an oriented mesh -> hiding oriented point layer",
+                            f"{shape} {args['name_prefix']} has meshes -> hiding raw {shape} layer in neuroglancer in favor of mesh layer",
                         )
                         args = {**args, "visible": False}
                 layers.append(self._to_point_layer(**args))
