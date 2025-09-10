@@ -114,10 +114,16 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
         # Build the oriented points
         super().neuroglancer_precompute(output_prefix, voxel_spacing)
 
+        # Convert meshes for oriented point to a precomputed format if a mesh file exists
+        mesh_path = cast(OrientedPointAnnotation, self.annotation).mesh_source_path
+        if not mesh_path:
+            print(
+                f"No mesh folder found, skipping mesh generation for {self.annotation.metadata["annotation_object"]["name"]}",
+            )
+            return
+
         fs = self.config.fs
         annotation_path = self.annotation.get_output_path()
-
-        metadata = self.annotation.metadata
 
         # Importing this at runtime instead of compile time since zfpy (a dependency of this
         # module) cannot be imported successfully on darwin/ARM machines.
@@ -128,14 +134,6 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
         from cryoet_data_portal_neuroglancer.precompute.mesh import (
             generate_mesh_from_lods,
         )
-
-        # Convert the mesh to a precomputed format oriented mesh if a mesh file exists
-        obj_name = metadata["annotation_object"]["name"]
-
-        mesh_path = cast(OrientedPointAnnotation, self.annotation).mesh_source_path
-        if not mesh_path:
-            print(f"No mesh folder found, skipping mesh generation for {obj_name}")
-            return
 
         mesh_path = PurePath(self.config.input_path) / mesh_path
         local_mesh_file = fs.localreadable(f"{mesh_path}")
