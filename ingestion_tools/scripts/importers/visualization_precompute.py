@@ -154,7 +154,7 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
             # Dump the precomputed version on the output folder
             precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
             tmp_path = fs.localwritable(precompute_path)
-            oriented_mesh_path = tmp_path.replace("_orientedpoint", "_orientedmesh")
+            oriented_mesh_path = OrientedPointAnnotation.convert_oriented_point_path_to_mesh_path(tmp_path)
             print(f"Generating oriented mesh for oriented point in {oriented_mesh_path}")
             generate_mesh_from_lods(
                 oriented_mesh_at_each_lod,

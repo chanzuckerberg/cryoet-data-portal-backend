@@ -11,6 +11,7 @@ from common.colors import generate_hash, to_base_hash_input
 from common.finders import DefaultImporterFactory
 from common.image import VolumeInfo
 from common.metadata import NeuroglancerMetadata
+from importers.annotation import OrientedPointAnnotation
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
@@ -212,7 +213,7 @@ class VisualizationConfigImporter(BaseImporter):
     ):
         return state_generator.generate_oriented_point_mesh_layer(
             name=f"{name_prefix} orientedmesh",
-            source=source_path.replace("_orientedpoint", "_orientedmesh"),
+            source=OrientedPointAnnotation.convert_oriented_point_path_to_mesh_path(source_path),
             url=self.config.https_prefix,
             color=color,
             scale=resolution,
@@ -221,9 +222,9 @@ class VisualizationConfigImporter(BaseImporter):
 
     def _has_oriented_mesh(self, path: str):
         fs = self.config.fs
-        path = f"{'_'.join(path.split('_')[:-1])}_orientedmesh"
-        mesh_folder_path = Path(self.config.output_prefix) / path
-        return fs.exists(f"{mesh_folder_path}")
+        oriented_mesh_filename = OrientedPointAnnotation.convert_oriented_point_path_to_mesh_path(path)
+        mesh_folder_path = os.path.join(self.config.output_prefix, oriented_mesh_filename)
+        return fs.exists(mesh_folder_path)
 
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
