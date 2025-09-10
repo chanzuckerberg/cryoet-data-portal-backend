@@ -519,6 +519,7 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
     @staticmethod
     def convert_oriented_point_path_to_mesh_path(source_path: str) -> str:
         """Remove oriented point suffix if present, add oriented mesh suffix"""
+        source_path = source_path.rstrip(os.sep)
         if source_path.endswith(ORIENTED_POINT_SUFFIX):
             source_path = source_path[: -len(ORIENTED_POINT_SUFFIX)]
         return f"{source_path}{ORIENTED_POINT_MESH_SUFFIX}"
