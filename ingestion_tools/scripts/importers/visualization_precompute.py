@@ -118,7 +118,7 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
         mesh_filename = cast(OrientedPointAnnotation, self.annotation).mesh_source_path
         if not mesh_filename:
             print(
-                f"No mesh folder found, skipping mesh generation for {self.annotation.metadata["annotation_object"]["name"]}",
+                f"No mesh folder found, skipping mesh generation for {self.annotation.metadata['annotation_object']['name']}",
             )
             return
 
@@ -139,7 +139,9 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
         local_mesh_file = fs.localreadable(mesh_path)
 
         if not os.path.exists(local_mesh_file):
-            print(f"Warning: Oreiented mesh file {local_mesh_file} does not exist despite configuration specifying a mesh path.")
+            print(
+                f"Warning: Oreiented mesh file {local_mesh_file} does not exist despite configuration specifying a mesh path.",
+            )
             return
 
         # Generates the precomputed version of the mesh in memory
