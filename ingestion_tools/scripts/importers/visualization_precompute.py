@@ -1,5 +1,5 @@
 import os
-from pathlib import Path, PurePath
+from pathlib import Path
 from typing import Any, cast
 
 from common import colors
@@ -115,8 +115,8 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
         super().neuroglancer_precompute(output_prefix, voxel_spacing)
 
         # Convert meshes for oriented point to a precomputed format if a mesh file exists
-        mesh_path = cast(OrientedPointAnnotation, self.annotation).mesh_source_path
-        if not mesh_path:
+        mesh_filename = cast(OrientedPointAnnotation, self.annotation).mesh_source_path
+        if not mesh_filename:
             print(
                 f"No mesh folder found, skipping mesh generation for {self.annotation.metadata["annotation_object"]["name"]}",
             )
@@ -135,10 +135,10 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
             generate_mesh_from_lods,
         )
 
-        mesh_path = PurePath(self.config.input_path) / mesh_path
-        local_mesh_file = fs.localreadable(f"{mesh_path}")
+        mesh_path = os.path.join(self.config.input_path, mesh_filename)
+        local_mesh_file = fs.localreadable(mesh_path)
 
-        if fs.exists(local_mesh_file):
+        if os.path.exists(local_mesh_file):
             # Generates the precomputed version of the mesh in memory
             scene = io.load_glb_file(Path(local_mesh_file))
             oriented_mesh_at_each_lod = encode_oriented_mesh(
@@ -151,12 +151,12 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
 
             # Dump the precomputed version on the output folder
             precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
-            tmp_path = fs.localwritable(precompute_path)
-            oriented_mesh_path = OrientedPointAnnotation.convert_oriented_point_path_to_mesh_path(tmp_path)
+            oriented_mesh_path = OrientedPointAnnotation.convert_oriented_point_path_to_mesh_path(precompute_path)
+            oriented_mesh_path = fs.localwritable(oriented_mesh_path)
             print(f"Generating oriented mesh for oriented point in {oriented_mesh_path}")
             generate_mesh_from_lods(
                 oriented_mesh_at_each_lod,
-                Path(oriented_mesh_path),
+                oriented_mesh_path,
                 min_mesh_chunk_dim=2,
             )
             fs.push(oriented_mesh_path)
