@@ -26,9 +26,9 @@ annotations:
       name: Yue Yu
       primary_author_status: true
     dates: &id001
-      deposition_date: '2024-10-15'
-      last_modified_date: '2024-10-15'
-      release_date: '2024-10-15'
+      deposition_date: '2025-07-25'
+      last_modified_date: '2025-07-25'
+      release_date: '2025-07-25'
     ground_truth_status: false
     is_curator_recommended: true
     method_links:
@@ -47,56 +47,17 @@ annotations:
       - '{run_name}_Vol_Segment_mask.mrc'
       is_visualization_default: true
       mask_label: 1
-- metadata:
-    annotation_method: 2D-slab-based template picking + 2D class average
-    annotation_object:
-      id: GO:0022626
-      name: cytosolic ribosome
-    annotation_software: slabpick 0.1.0 + cryosparc 4.4.1
-    authors:
-    - ORCID: 0000-0002-5940-3897
-      corresponding_author_status: true
-      name: Ariana Peck
-      primary_author_status: true
-    - ORCID: 0000-0002-3248-9678
-      corresponding_author_status: true
-      name: Yue Yu
-      primary_author_status: true
-    - ORCID: 0000-0002-8402-0134
-      corresponding_author_status: true
-      name: Mohammadreza Paraan
-      primary_author_status: true
-    - ORCID: 0000-0002-8063-6951
-      corresponding_author_status: true
-      name: Jonathan Schwartz
-      primary_author_status: true
-    dates:
-      deposition_date: '2024-10-15'
-      last_modified_date: '2024-10-15'
-      release_date: '2024-10-15'
-    ground_truth_status: false
-    is_curator_recommended: true
-    method_links:
-    - custom_name: slabpick on GitHub
-      link: https://github.com/apeck12/slabpick
-      link_type: source_code
-    - custom_name: cryosparc homepage
-      link: https://cryosparc.com/
-      link_type: website
-    method_type: automated
-    version: 1.0
-  sources:
-  - Point:
-      binning: 5
-      columns: xyz
-      file_format: relion3_star
-      filter_value: '{run_name}'
-      glob_string: combined.star
-      is_visualization_default: true
+      rescale: true
 collection_metadata:
 - sources:
   - source_glob:
       list_glob: '{run_name}.mdoc'
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_CTFFIND_format_CTF.txt'
 dataset_keyphotos:
 - sources:
   - literal:
@@ -146,13 +107,13 @@ datasets:
       name: prokaryotic cell
       id: CL:0000520
     dataset_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced genome
-      cells. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma Mycoides Capri GM12). Samples were prepared
-      by plunge-freezing via Leica GP2. Contained data was collected on a Krios G4 using a Falcon 4i detector and SelctrisX
-      energy filter. Tomograms were reconstructed using AreTomo3 v1.0.23. The dataset also includes locations of cytosolic
-      ribosomes identified using slabpick and membrane segmenations created using membrain-seg.
-    dataset_identifier: 10442
-    dataset_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram averaging
-      pipelines
+      cells acquired with the Volta phase plate. JCVI-Syn3A has 493 genes (about half of the genes of the WT Mycoplasma
+      Mycoides Capri GM12). Samples were prepared by plunge-freezing via Leica GP2. Contained data was collected on a
+      Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed using Aretomo3 v2.2.2.
+      The dataset also includes membrane segmentations created using membrain-seg.
+    dataset_identifier: 10452
+    dataset_title: CryoET (with Volta phase plate) of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the
+      development of subtomogram averaging pipelines
     dates: *id001
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
@@ -183,41 +144,15 @@ datasets:
   sources:
   - literal:
       value:
-      - '10442'
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10312_snapshot.png
-        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10312_thumbnail.png
+      - '10452'
 depositions:
-- metadata:
-    authors: *id002
-    cross_references:
-      publications: doi:10.7554/eLife.36842
-    dates:
-      deposition_date: '2025-07-25'
-      last_modified_date: '2025-07-25'
-      release_date: '2025-07-25'
-    deposition_description: Raw movie stacks, tilt series, alignments and cryo-eletron tomograms of synthetically reduced
-      genome cells acquired with and without the Volta phase plate. JCVI-Syn3A has 493 genes (about half of the genes of
-      the WT Mycoplasma Mycoides Capri GM12). Samples were prepared by plunge-freezing via Leica GP2. Contained data was
-      collected on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed using
-      AreTomo3 v1.0.23 or Aretomo3 v2.2.2 (VPP data). The deposition also includes locations of cytosolic ribosomes
-      identified using slabpick (non-VPP data) and membrane segmentations created using membrain-seg.
-    deposition_identifier: 10312
-    deposition_title: CryoET of near-minimal cells Mycoplasma mycoides JCVI-Syn3A for the development of subtomogram averaging
-      pipelines
-    deposition_types:
-    - dataset
-    - annotation
-  sources:
+- sources:
   - literal:
       value:
       - 10312
 frames:
 - metadata:
-    dose_rate: 6.912
+    dose_rate: 5.0933
     is_gain_corrected: false
   sources:
   - source_glob:
@@ -238,8 +173,8 @@ runs:
       name_regex: (.*)\.aln$
 standardization_config:
   deposition_id: 10312
-  run_data_map_file: run_to_data_map.tsv
-  source_prefix: CZII/20241015_minicell/
+  run_data_map_file: run_to_data_map_updated_quality_updated.tsv
+  source_prefix: CZII/20250724_minicell2/
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
@@ -254,9 +189,10 @@ tiltseries:
       model: TITAN KRIOS G4
     microscope_optical_setup:
       energy_filter: Selectris X
+      phase_plate: Volta phase plate
     pixel_spacing: 1.54
     spherical_aberration_constant: 2.7
-    tilt_axis: 80
+    tilt_axis: -96
     tilt_range:
       max: float {tilt_series_max_tilt}
       min: float {tilt_series_min_tilt}
@@ -304,10 +240,6 @@ tomograms:
       corresponding_author_status: false
       name: Yue Yu
       primary_author_status: true
-    - name: Elizabeth Montabana
-      primary_author_status: false
-      corresponding_author_status: false
-      ORCID: 0000-0002-6731-5854
     - ORCID: 0000-0001-9517-3075
       corresponding_author_status: true
       name: Shawn Zheng
@@ -322,7 +254,7 @@ tomograms:
       z: 0
     processing: denoised
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 v1.0.23
+    reconstruction_software: Aretomo3 v2.2.2
     tomogram_version: 1
     voxel_spacing: 5.006
   sources:
@@ -358,7 +290,7 @@ tomograms:
       z: 0
     processing: filtered
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 v1.0.23
+    reconstruction_software: Aretomo3 v2.2.2
     tomogram_version: 1
     voxel_spacing: 5.006
   sources:
