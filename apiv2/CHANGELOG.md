@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.13.0...apiv2-v1.13.1) (2025-09-11)
+
+
+### Bug Fixes
+
+* address High priority alerts ([#533](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/533)) ([9259803](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/925980386de17ee426959dcf24bf54304e4e48ed))
+* Critical dependabot alert for h11 ([#530](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/530)) ([046f462](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/046f462b13b5494ea00008085c5597484428b790))
+
 ## [1.13.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.12.0...apiv2-v1.13.0) (2025-08-19)
 
 
