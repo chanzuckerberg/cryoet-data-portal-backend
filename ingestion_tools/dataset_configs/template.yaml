@@ -98,6 +98,9 @@ annotations: OPTIONAL
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
+      scale_factor: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
+      mask_label: OPTIONAL, INTEGER (DEFAULT 1)
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
   - SegmentationMask:

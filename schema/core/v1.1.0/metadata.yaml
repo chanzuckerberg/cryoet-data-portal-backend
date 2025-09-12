@@ -629,13 +629,6 @@ classes:
     description: File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes.
     attributes: # no extended attributes
 
-  AnnotationInstanceSegmentationMaskFile:
-    is_a: AnnotationOrientedPointFile
-    aliases:
-      - InstanceSegmentationMask
-    description: File and sourcing data for an instance segmentation mask annotation. Annotation that identifies individual instances of object shape masks.
-    attributes: # no extended attributes
-
   AnnotationPointFile:
     is_a: AnnotationSourceFile
     aliases:

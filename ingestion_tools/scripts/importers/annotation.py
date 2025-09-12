@@ -315,9 +315,24 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
         )
 
 
-class InstanceSegmentationMaskAnnotation(SegmentationMaskAnnotation):
+class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "InstanceSegmentationMask"
+    mask_label: int
+    scale_factor: float
+    is_portal_standard: bool
 
+    def __init__(
+        self,
+        mask_label: int | None = None,
+        scale_factor: float = 1.0,
+        is_portal_standard: bool = False,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.mask_label = mask_label if mask_label else 1
+        self.scale_factor = scale_factor
+        self.is_portal_standard = is_portal_standard
 
 
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
