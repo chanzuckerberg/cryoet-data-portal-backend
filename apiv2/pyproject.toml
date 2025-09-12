@@ -10,7 +10,7 @@ packages = [{include = "platformics"}]
 [tool.poetry.scripts]
 platformics = 'platformics.cli.main:cli'
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 black = "^24.4.0"
 uvicorn = "^0.23.1"
 gunicorn = "^23.0.0"
@@ -24,7 +24,7 @@ ruff = "^0.6.8"
 isort = "^5.12.0"
 faker-enum = "^0.0.2"
 faker-biology = "^0.6.0"
-httpx = "^0.24.1"
+httpx = "^0.27.0"
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -52,6 +52,7 @@ strawberry-graphql = "0.257.0"
 typer = "^0.12.3"
 libcst = "^1.4.0"
 s3fs = "^2024.9.0"
+h11 = "^0.16.0"
 
 [build-system]
 requires = ["poetry-core"]
