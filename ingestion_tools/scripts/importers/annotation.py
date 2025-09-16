@@ -16,6 +16,9 @@ from common.metadata import AnnotationMetadata
 from importers.alignment import AlignmentImporter
 from importers.base_importer import BaseImporter
 
+ORIENTED_POINT_SUFFIX = "_orientedpoint"
+ORIENTED_POINT_MESH_SUFFIX = "_orientedmesh"
+
 
 class AnnotationIdentifierHelper(IdentifierHelper):
     @classmethod
@@ -486,11 +489,13 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
     binning: int
     order: str | None
     filter_value: str | None
+    mesh_source_path: str | None
 
     def __init__(
         self,
         filter_value: str | None = None,
         order: str | None = None,
+        mesh_source_path: str | None = None,
         *args,
         **kwargs,
     ) -> None:
@@ -500,12 +505,24 @@ class OrientedPointAnnotation(AbstractPointAnnotation):
         if filter_value:
             self.filter_value = filter_value.format(**self.get_glob_vars())
 
+        self.mesh_source_path = None
+        if mesh_source_path:
+            self.mesh_source_path = mesh_source_path.format(**self.get_glob_vars())
+
     def get_converter_args(self):
         return {
             "binning": self.binning,
             "order": self.order,
             "filter_value": self.filter_value,
         }
+
+    @staticmethod
+    def convert_oriented_point_path_to_mesh_path(source_path: str) -> str:
+        """Remove oriented point suffix if present, add oriented mesh suffix"""
+        source_path = source_path.rstrip(os.sep)
+        if source_path.endswith(ORIENTED_POINT_SUFFIX):
+            source_path = source_path[: -len(ORIENTED_POINT_SUFFIX)]
+        return f"{source_path}{ORIENTED_POINT_MESH_SUFFIX}"
 
 
 class InstanceSegmentationAnnotation(OrientedPointAnnotation):

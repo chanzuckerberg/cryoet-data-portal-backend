@@ -148,6 +148,7 @@ def test_no_viz_config_for_is_visualization_default_false(
     params=[
         ("Point", "ndjson"),
         ("OrientedPoint", "ndjson"),
+        ("OrientedPointMesh", "ndjson"),
         ("InstanceSegmentation", "ndjson"),
         ("SegmentationMask", "zarr"),
         ("SegmentationMask", "mrc"),
@@ -168,6 +169,10 @@ def annotation_usecases(
     shape_and_format: tuple[str, str], is_visualization_default: bool, expected_url: str,
 ) -> dict[str, Any]:
     shape, format = shape_and_format
+    has_mesh = False
+    if shape == "OrientedPointMesh":
+        has_mesh = True
+        shape = "OrientedPoint"
     annotation_files = {
         "shape": shape,
         "format": format,
@@ -196,13 +201,16 @@ def annotation_usecases(
         input_args["name"] += "segmentation"
         return_value = {"key": generator_method, "random": "value"}
 
-    return {
+    args = {
         "shape": shape,
         "annotation_files": [annotation_files],
         "generator_method": generator_method,
         "generator_args": input_args,
         "generator_return_value": return_value,
     }
+    if has_mesh:
+        args["mesh_source_path"] = "output/dummy_mesh.glb"
+    return args
 
 
 def put_annotation_metadata_file(
@@ -222,6 +230,17 @@ def put_annotation_metadata_file(
     annotation_metadata_path = os.path.join(
         get_vs_path(parents), "Annotations", "100", "fatty_acid_synthase_complex-1.0.json",
     )
+    if annotation_usecases.get("mesh_source_path"):
+        annotation_mesh_path = os.path.join(
+            get_vs_path(parents),
+            "NeuroglancerPrecompute",
+            "100-fatty_acid_synthase_complex-1.0_orientedmesh",
+        )
+        s3_client.put_object(
+            Bucket=test_output_bucket,
+            Key=annotation_mesh_path,
+            Body=b"",
+        )
     s3_client.put_object(Bucket=test_output_bucket, Key=annotation_metadata_path, Body=json.dumps(annotation_metadata))
 
 
@@ -243,6 +262,22 @@ def test_viz_config_with_tomogram_and_annotation(
         mock_state_generator.__getattr__(method).return_value = annotation_usecases["generator_return_value"]
         anno_layers.append(annotation_usecases["generator_return_value"])
 
+    # Oriented point mesh layers are currently a little special as they
+    # generate two output layers for one single input shape + annotation combo
+    # as opposed to the other annotation shapes which only generate one layer.
+    # Instead of fully refactoring the test code to handle this right now
+    # across all annotation types we check for this special case
+    # and then do some extra steps and adjustments
+    oriented_point_mesh = False
+    if annotation_usecases["shape"] == "OrientedPoint" and annotation_usecases.get("mesh_source_path"):
+        oriented_point_mesh = True
+        mock_state_generator.generate_oriented_point_mesh_layer.return_value = {
+            "key": "generate_oriented_point_mesh_layer",
+            "random": "value",
+        }
+        anno_layers.append(mock_state_generator.generate_oriented_point_mesh_layer.return_value)
+        anno_layers[0], anno_layers[1] = anno_layers[1], anno_layers[0]  # Ensure mesh layer is first
+
     viz_config = list(VisualizationConfigImporter.finder(config, **parents))
     for item in viz_config:
         item.import_item()
@@ -260,5 +295,19 @@ def test_viz_config_with_tomogram_and_annotation(
             "source": os.path.relpath(precompute_path, "output"),
             "scale": (parents["voxel_spacing"].as_float() * 1e-10,) * 3,
         }
+        if oriented_point_mesh:
+            args["is_visible"] = False
 
         mock_state_generator.__getattr__(method_name).assert_called_once_with(**args)
+
+    if oriented_point_mesh:
+        shape = "orientedmesh"
+        precompute_path = f"{vs_path}/NeuroglancerPrecompute/100-fatty_acid_synthase_complex-1.0_{shape}"
+        args = {
+            **annotation_usecases["generator_args"],
+            "source": os.path.relpath(precompute_path, "output"),
+            "scale": (parents["voxel_spacing"].as_float() * 1e-10,) * 3,
+        }
+        args["name"] = args["name"].replace("orientedpoint", shape)
+        args.pop("is_instance_segmentation", None)
+        mock_state_generator.generate_oriented_point_mesh_layer.assert_called_once_with(**args)
