@@ -67,7 +67,7 @@ class VisualizationConfigImporter(BaseImporter):
             scale=resolution,
             output_scale=output_resolution,
             url=self.config.https_prefix,
-            size=volume_info.get_dimensions(),
+            size={k: float(v) for k, v in volume_info.get_dimensions().items()},
             name=self.get_run().name,
             mean=volume_info.dmean,
             rms=volume_info.rms,
@@ -132,8 +132,10 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
+        output_resolution: tuple[float, float, float] | None = None,
         **kwargs,
     ) -> dict[str, Any]:
+        output_resolution = output_resolution or resolution
         return state_generator.generate_mesh_layer(
             source=source_path,
             name=f"{name_prefix} mesh",
@@ -141,6 +143,7 @@ class VisualizationConfigImporter(BaseImporter):
             color=color,
             scale=resolution,
             is_visible=file_metadata.get("is_visualization_default"),
+            output_scale=output_resolution,
         )
 
     def _find_annotation_metadata(self, precomputed_output_path: str, shape: str) -> tuple[str, float, float] | None:
@@ -215,9 +218,7 @@ class VisualizationConfigImporter(BaseImporter):
                 metadata_file_name = Path(output_annotation_path).stem
                 name_prefix = self._get_annotation_name_prefix(metadata, metadata_file_name)
 
-                # Skip mrc files as we will only generate layers for zarr volumes and ndjson files
-                # TODO does this also need to have the other mesh formats listed here?
-                # Not entirely sure how the conversion to glb is handled
+                # Skip certain files as we will only generate layers for zarr volumes and ndjson files and glb files
                 if file.get("format") not in {"zarr", "ndjson", "glb"}:
                     print(f"Skipping file with unsupported format {file.get('format')}")
                     continue
@@ -259,14 +260,17 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
+        output_resolution: tuple[float, float, float] | None = None,
         **_,
     ):
+        output_resolution = output_resolution or resolution
         return state_generator.generate_oriented_point_mesh_layer(
             name=f"{name_prefix} orientedmesh",
             source=OrientedPointAnnotation.convert_oriented_point_path_to_mesh_path(source_path),
             url=self.config.https_prefix,
             color=color,
             scale=resolution,
+            output_scale=output_resolution,
             is_visible=cast(bool, file_metadata.get("is_visualization_default")),
         )
 
@@ -280,7 +284,7 @@ class VisualizationConfigImporter(BaseImporter):
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
         voxel_size = round(volume_info.voxel_size, 3)
-        resolution = (voxel_size * 1e-10,) * 3
+        resolution = cast(tuple[float, float, float], (voxel_size * 1e-10,) * 3)
         # we display information about when the contrast limit computation starts and finishes
         # to give feedback to the user why the script is hanging as the computation limit might
         # take time depending on use pyramid level as well as the used computation method.

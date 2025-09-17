@@ -339,10 +339,12 @@ def test_viz_config_with_tomogram_and_annotation(
     if oriented_point_mesh:
         shape = "orientedmesh"
         precompute_path = f"{vs_path}/NeuroglancerPrecompute/100-fatty_acid_synthase_complex-1.0_{shape}"
+        scale = (parents["voxel_spacing"].as_float() * 1e-10,) * 3
         args = {
             **annotation_usecases["generator_args"],
             "source": os.path.relpath(precompute_path, "output"),
-            "scale": (parents["voxel_spacing"].as_float() * 1e-10,) * 3,
+            "scale": scale,
+            "output_scale": scale,
         }
         args["name"] = args["name"].replace("orientedpoint", shape)
         args.pop("is_instance_segmentation", None)
