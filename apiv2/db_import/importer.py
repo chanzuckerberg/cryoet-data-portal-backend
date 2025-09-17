@@ -19,6 +19,7 @@ from db_import.importers.deposition import DepositionAuthorDBImporter, Depositio
 from db_import.importers.frame import FrameImporter
 from db_import.importers.frame_acquisition_file import FrameAcquisitionFileImporter
 from db_import.importers.gain import GainImporter
+from db_import.importers.identified_object import IdentifiedObjectImporter
 from db_import.importers.run import RunDBImporter, StaleRunDeletionDBImporter
 from db_import.importers.tiltseries import (
     PerSectionParametersImporter,
@@ -51,6 +52,7 @@ def db_import_options(func):
     options.append(click.option("--import-runs", is_flag=True, default=False))
     options.append(click.option("--import-alignments", is_flag=True, default=False))
     options.append(click.option("--import-gains", is_flag=True, default=False))
+    options.append(click.option("--import-identified-objects", is_flag=True, default=False))
     options.append(click.option("--import-frames", is_flag=True, default=False))
     options.append(click.option("--import-frame-acquisition-files", is_flag=True, default=False))
     options.append(click.option("--import-tiltseries", is_flag=True, default=False))
@@ -99,6 +101,7 @@ def load(
     import_runs: bool,
     import_alignments: bool,
     import_gains: bool,
+    import_identified_objects: bool,
     import_frames: bool,
     import_frame_acquisition_files: bool,
     import_tiltseries: bool,
@@ -126,6 +129,7 @@ def load(
         import_runs,
         import_alignments,
         import_gains,
+        import_identified_objects,
         import_frames,
         import_frame_acquisition_files,
         import_tiltseries,
@@ -154,6 +158,7 @@ def load_func(
     import_runs: bool = False,
     import_alignments: bool = False,
     import_gains: bool = False,
+    import_identified_objects: bool = False,
     import_frames: bool = False,
     import_frame_acquisition_files: bool = False,
     import_tiltseries: bool = False,
@@ -179,6 +184,7 @@ def load_func(
         import_runs = True
         import_alignments = True
         import_gains = True
+        import_identified_objects = True
         import_frame_acquisition_files = True
         import_frames = True
         import_tiltseries = True
@@ -208,6 +214,7 @@ def load_func(
     if import_depositions and deposition_id:
         for dep_id in deposition_id:
             for deposition_importer in DepositionDBImporter.get_items(config, dep_id):
+                logger.info("Processing Deposition with prefix %s", deposition_importer.dir_prefix)
                 deposition_obj = deposition_importer.import_to_db()
                 deposition_authors = DepositionAuthorDBImporter.get_item(deposition_obj.id, deposition_importer, config)
                 deposition_authors.import_to_db()
@@ -221,6 +228,7 @@ def load_func(
             logger.info("Skipping %s...", dataset.dir_prefix)
             continue
 
+        logger.info("Processing Dataset with prefix %s", dataset.dir_prefix)
         dataset_obj = dataset.import_to_db()
         dataset_id = dataset_obj.id
 
@@ -236,6 +244,7 @@ def load_func(
             continue
 
         run_cleaner = StaleRunDeletionDBImporter(dataset_id, config)
+
         for run in RunDBImporter.get_item(dataset_id, dataset, config):
             logger.info("Processing Run with prefix %s", run.dir_prefix)
             run_obj = run.import_to_db()
@@ -278,6 +287,10 @@ def load_func(
                         **parents,
                     )
                     per_section_alignment_parameters_importer.import_items()
+
+            if import_identified_objects:
+                identified_object_importer = IdentifiedObjectImporter(config, **parents)
+                identified_object_importer.import_items()
 
             if not import_tomogram_voxel_spacing:
                 continue

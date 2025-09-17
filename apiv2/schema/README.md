@@ -136,6 +136,13 @@ PerSectionAlignmentParameters {
     float tilt_angle
     integer id
 }
+IdentifiedObject {
+    string object_id
+    string object_name
+    string object_description
+    string object_state
+    integer id
+}
 Frame {
     integer acquisition_order
     float accumulated_dose
@@ -175,6 +182,12 @@ DepositionAuthor {
 Dataset {
     string title
     string description
+    string assay_label
+    string assay_ontology_id
+    string development_stage_name
+    string development_stage_ontology_id
+    string disease_name
+    string disease_ontology_id
     string organism_name
     integer organism_taxid
     string tissue_name
@@ -306,6 +319,7 @@ Run ||--}o Annotation : "annotations"
 Run ||--|| Dataset : "dataset"
 Run ||--}o Frame : "frames"
 Run ||--}o GainFile : "gain_files"
+Run ||--}o IdentifiedObject : "identified_objects"
 Run ||--}o FrameAcquisitionFile : "frame_acquisition_files"
 Run ||--}o PerSectionParameters : "per_section_parameters"
 Run ||--}o Tiltseries : "tiltseries"
@@ -315,6 +329,7 @@ FrameAcquisitionFile ||--|o Run : "run"
 GainFile ||--|| Run : "run"
 AnnotationMethodLink ||--|o Annotation : "annotation"
 PerSectionAlignmentParameters ||--|| Alignment : "alignment"
+IdentifiedObject ||--|o Run : "run"
 Frame ||--|| Deposition : "deposition"
 Frame ||--|| Run : "run"
 Frame ||--}o PerSectionParameters : "per_section_parameters"

@@ -284,30 +284,78 @@ types:
     from_schema: cdp-ingestion-config
     base: str
     pattern: ^BTO:[0-9]{7}$
+  UBERON_ID:
+    name: UBERON_ID
+    description: An UBERON identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^UBERON:[0-9]{7}$
   CL_ID:
     name: CL_ID
     description: A Cell Ontology identifier
     from_schema: cdp-ingestion-config
     base: str
     pattern: ^CL:[0-9]{7}$
+  CVCL_ID:
+    name: CVCL_ID
+    description: A Cellosaurus identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^CVCL_[A-Z0-9]{4,}$
+  CC_ID:
+    name: CC_ID
+    description: A Cell Culture Collection identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^CC-[0-9]{4}$
   GO_ID:
     name: GO_ID
     description: A Gene Ontology identifier
     from_schema: cdp-ingestion-config
     base: str
     pattern: ^GO:[0-9]{7}$
+  EFO_ID:
+    name: EFO_ID
+    description: An Experimental Factor Ontology identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^EFO:[0-9]{7}$
   UNIPROT_ID:
     name: UNIPROT_ID
     description: A UniProt identifier
     from_schema: cdp-ingestion-config
     base: str
     pattern: ^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$
-  WORMBASE_ID:
-    name: WORMBASE_ID
-    description: A WormBase identifier
+  NCBI_TAXON_ID:
+    name: NCBI_TAXON_ID
+    description: A NCBI Taxonomy identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^NCBITaxon:[0-9]+$
+  WORMBASE_STRAIN_ID:
+    name: WORMBASE_STRAIN_ID
+    description: A WormBase strain identifier
     from_schema: cdp-ingestion-config
     base: str
     pattern: WBStrain[0-9]{8}$
+  WORMBASE_TISSUE_ID:
+    name: WORMBASE_TISSUE_ID
+    description: A WormBase tissue identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: WBbt:[0-9]{7}$
+  WORMBASE_DEVELOPMENT_ID:
+    name: WORMBASE_DEVELOPMENT_ID
+    description: A WormBase identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: WBls:[0-9]{7}$
+  HSAPDV_ID:
+    name: HSAPDV_ID
+    description: A Human Developmental Phenotype Ontology identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: HsapDv:[0-9]{7}$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
@@ -356,6 +404,24 @@ types:
     from_schema: cdp-ingestion-config
     base: str
     pattern: ^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$
+  MONDO_ID:
+    name: MONDO_ID
+    description: An identifier of type MONDO
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^MONDO:[0-9]{7}$
+  PATO_ID:
+    name: PATO_ID
+    description: An identifier of type PATO
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^PATO:[0-9]{7}$
+  UNKNOWN_LITERAL:
+    name: UNKNOWN_LITERAL
+    description: A placeholder for an unknown value.
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^unknown$
 enums:
   alignment_type_enum:
     name: alignment_type_enum
@@ -446,6 +512,23 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+  annotation_file_format_enum:
+    name: annotation_file_format_enum
+    description: Describes the format of the annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      mrc:
+        text: mrc
+        description: MRC format
+      zarr:
+        text: zarr
+        description: OMEZARR format
+      ndjson:
+        text: ndjson
+        description: NDJSON format
+      glb:
+        text: glb
+        description: GLB format
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -495,31 +578,37 @@ enums:
     description: Type of sample imaged in a CryoET study.
     from_schema: cdp-ingestion-config
     permissible_values:
-      cell:
-        text: cell
-        description: Tomographic data of whole cells or cell sections.
-      tissue:
-        text: tissue
-        description: Tomographic data of tissue sections.
-      organism:
-        text: organism
-        description: Tomographic data of sections through multicellular organisms.
-      organelle:
-        text: organelle
-        description: Tomographic data of purified organelles.
-      virus:
-        text: virus
-        description: Tomographic data of purified viruses or VLPs.
+      cell_line:
+        text: cell_line
+        description: Tomographic data of immortalized cells or immortalized cell sections
+      in_silico:
+        text: in_silico
+        description: Simulated tomographic data.
       in_vitro:
         text: in_vitro
         description: Tomographic data of in vitro reconstituted systems or mixtures
           of proteins.
-      in_silico:
-        text: in_silico
-        description: Simulated tomographic data.
+      organelle:
+        text: organelle
+        description: Tomographic data of purified organelles.
+      organism:
+        text: organism
+        description: Tomographic data of sections through multicellular organisms.
+      organoid:
+        text: organoid
+        description: Tomographic data of organoid-derived samples.
       other:
         text: other
         description: Other type of sample.
+      primary_cell_culture:
+        text: primary_cell_culture
+        description: Tomographic data of whole primary cells or primary cell sections.
+      tissue:
+        text: tissue
+        description: Tomographic data of tissue sections.
+      virus:
+        text: virus
+        description: Tomographic data of purified viruses or VLPs.
   tiltseries_camera_acquire_mode_enum:
     name: tiltseries_camera_acquire_mode_enum
     description: Camera acquisition mode
@@ -839,6 +928,18 @@ classes:
         domain_of:
         - Container
         range: GainEntity
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      identified_objects:
+        name: identified_objects
+        description: An identified object entity.
+        from_schema: cdp-ingestion-config
+        alias: identified_objects
+        owner: Container
+        domain_of:
+        - Container
+        range: IdentifiedObjectEntity
         multivalued: true
         inlined: true
         inlined_as_list: true
@@ -1420,6 +1521,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Alignment
@@ -1442,6 +1544,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -1719,6 +1822,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Annotation
@@ -1742,6 +1846,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -2075,6 +2180,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -2355,6 +2461,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Ctf
@@ -2377,6 +2484,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -2654,6 +2762,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Dataset
@@ -2676,6 +2785,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -2912,6 +3022,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -3144,6 +3255,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Deposition
@@ -3166,6 +3278,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -3283,6 +3396,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -3519,6 +3633,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -3542,6 +3657,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Frame
@@ -3816,6 +3932,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -4075,6 +4192,62 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+  IdentifiedObjectEntity:
+    name: IdentifiedObjectEntity
+    description: An identified object entity.
+    from_schema: cdp-ingestion-config
+    attributes:
+      metadata:
+        name: metadata
+        description: Metadata for a list of identified objects.
+        from_schema: cdp-ingestion-config
+        alias: metadata
+        owner: IdentifiedObjectEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - CtfEntity
+        - DatasetEntity
+        - DepositionEntity
+        - FrameEntity
+        - IdentifiedObjectEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: IdentifiedObjectList
+        required: false
+        inlined: true
+        inlined_as_list: true
+      sources:
+        name: sources
+        description: A generalized source class with glob finders. Inherited by a
+          majority of source classes.
+        from_schema: cdp-ingestion-config
+        alias: sources
+        owner: IdentifiedObjectEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - CollectionMetadataEntity
+        - CtfEntity
+        - DatasetEntity
+        - DatasetKeyPhotoEntity
+        - DepositionEntity
+        - DepositionKeyPhotoEntity
+        - FrameEntity
+        - GainEntity
+        - IdentifiedObjectEntity
+        - KeyImageEntity
+        - RawTiltEntity
+        - RunEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        - VoxelSpacingEntity
+        range: StandardSource
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        minimum_cardinality: 1
   KeyImageEntity:
     name: KeyImageEntity
     description: A key image entity.
@@ -4097,6 +4270,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -4409,6 +4583,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -4692,6 +4867,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -5019,6 +5195,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: TiltSeries
@@ -5041,6 +5218,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -5332,6 +5510,7 @@ classes:
         - DatasetEntity
         - DepositionEntity
         - FrameEntity
+        - IdentifiedObjectEntity
         - TiltSeriesEntity
         - TomogramEntity
         range: Tomogram
@@ -5354,6 +5533,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -5665,6 +5845,7 @@ classes:
         - DepositionKeyPhotoEntity
         - FrameEntity
         - GainEntity
+        - IdentifiedObjectEntity
         - KeyImageEntity
         - RawTiltEntity
         - RunEntity
@@ -6124,6 +6305,9 @@ classes:
         domain_of:
         - AuthorMixin
         - Author
+        - Assay
+        - DevelopmentStageDetails
+        - Disease
         - OrganismDetails
         - TissueDetails
         - CellType

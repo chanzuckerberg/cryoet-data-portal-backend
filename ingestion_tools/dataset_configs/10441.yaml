@@ -1,353 +1,360 @@
 depositions:
-  - sources:
-      - literal:
-          value:
-            - 10310
-
+- sources:
+  - literal:
+      value:
+      - 10310
 alignments:
-  - metadata:
-      format: IMOD
-      method_type: undefined
-      alignment_type: GLOBAL
-      is_portal_standard: true
-    sources:
-      - source_multi_glob:
-          list_globs:
-            - '{run_name}/TiltSeries/*.tlt'
-            - '{run_name}/TiltSeries/*.xf'
-
+- metadata:
+    format: IMOD
+    method_type: undefined
+    alignment_type: GLOBAL
+    is_portal_standard: true
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}/TiltSeries/*.tlt'
+      - '{run_name}/TiltSeries/*.xf'
 annotations:
-  - metadata:
-      annotation_method: polnet-simulated ground truth
-      annotation_object:
-        id: GO:0016020
-        name: membrane
-      annotation_publications: 10.1109/TMI.2024.3398401
-      annotation_software: polnet
-      authors: &id001
-        - ORCID: 0000-0002-8063-6951
-          name: Jonathan Schwartz
-          primary_author_status: true
-        - name: Kyle I. S. Harrington
-          primary_author_status: false
-          corresponding_author_status: true
-          ORCID: 0000-0002-7237-1973
-        - name: Mohammadreza Paraan
-          primary_author_status: false
-          corresponding_author_status: true
-          ORCID: 0000-0002-8402-0134
-      dates: &id002
-        deposition_date: '2024-10-30'
-        last_modified_date: '2024-10-30'
-        release_date: '2024-10-30'
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: &id003
-        - custom_name: polnet on GitHub
-          link: https://github.com/anmartinezs/polnet
-          link_type: source_code
-      method_type: simulated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings: &id004
-            - '{run_name}/Segmentations/ground_truth.mrc'
-          is_visualization_default: true
-          mask_label: 1
-
-  - metadata:
-      annotation_method: polnet-simulated ground truth
-      annotation_object:
-        state: apo
-        id: GO:0070288
-        name: ferritin complex
-      annotation_publications: 10.1109/TMI.2024.3398401, EMD-41923
-      annotation_software: polnet
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: simulated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings: *id004
-          is_visualization_default: true
-          mask_label: 2
-      - OrientedPoint:
-          binning: 10
-          file_format: relion3_star
-          glob_strings:
-            - '{run_name}/Picks/apo-ferritin.star'
-          is_visualization_default: true
-          order: xyz
-
-  - metadata:
-      annotation_method: polnet-simulated ground truth
-      annotation_object:
-        id: UniProtKB:P10537
-        name: Beta-amylase
-      annotation_publications: 10.1109/TMI.2024.3398401, EMD-30405
-      annotation_software: polnet
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: simulated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings: *id004
-          is_visualization_default: true
-          mask_label: 3
-      - OrientedPoint:
-          binning: 10
-          file_format: relion3_star
-          glob_strings:
-            - '{run_name}/Picks/beta-amylase.star'
-          is_visualization_default: true
-          order: xyz
-
-  - metadata:
-      annotation_method: polnet-simulated ground truth
-      annotation_object:
-        id: UniProtKB:P00722
-        name: Beta-galactosidase
-      annotation_publications: 10.1109/TMI.2024.3398401, EMD-0153
-      annotation_software: polnet
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: simulated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings: *id004
-          is_visualization_default: true
-          mask_label: 4
-      - OrientedPoint:
-          binning: 10
-          file_format: relion3_star
-          glob_strings:
-            - '{run_name}/Picks/beta-galactoside.star'
-          is_visualization_default: true
-          order: xyz
-
-  - metadata:
-      annotation_method: polnet-simulated ground truth
-      annotation_object:
-        id: GO:0022626
-        name: cytosolic ribosome
-      annotation_publications: 10.1109/TMI.2024.3398401, EMD-3883
-      annotation_software: polnet
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: simulated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings: *id004
-          is_visualization_default: true
-          mask_label: 5
-      - OrientedPoint:
-          binning: 10
-          file_format: relion3_star
-          glob_strings:
-            - '{run_name}/Picks/ribosome.star'
-          is_visualization_default: true
-          order: xyz
-
-  - metadata:
-      annotation_method: polnet-simulated ground truth
-      annotation_object:
-        id: UniProtKB:P01267
-        name: Thyroglobulin
-      annotation_publications: 10.1109/TMI.2024.3398401, EMD-24181
-      annotation_software: polnet
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: simulated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings: *id004
-          is_visualization_default: true
-          mask_label: 6
-      - OrientedPoint:
-          binning: 10
-          file_format: relion3_star
-          glob_strings:
-            - '{run_name}/Picks/thyroglobulin.star'
-          is_visualization_default: true
-          order: xyz
-
-  - metadata:
-      annotation_method: polnet-simulated ground truth
-      annotation_object:
-        description: PP7 VLP
-        id: GO:0170047
-        name: virus-like capsid
-      annotation_publications: 10.1109/TMI.2024.3398401, EMD-41917
-      annotation_software: polnet
-      authors: *id001
-      dates: *id002
-      ground_truth_status: true
-      is_curator_recommended: true
-      method_links: *id003
-      method_type: simulated
-      version: 1.0
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_strings: *id004
-          is_visualization_default: true
-          mask_label: 7
-      - OrientedPoint:
-          binning: 10
-          file_format: relion3_star
-          glob_strings:
-            - '{run_name}/Picks/virus-like-particle.star'
-          is_visualization_default: true
-          order: xyz
+- metadata:
+    annotation_method: polnet-simulated ground truth
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1109/TMI.2024.3398401
+    annotation_software: polnet
+    authors: &id001
+    - ORCID: 0000-0002-8063-6951
+      name: Jonathan Schwartz
+      primary_author_status: true
+    - name: Kyle I. S. Harrington
+      primary_author_status: false
+      corresponding_author_status: true
+      ORCID: 0000-0002-7237-1973
+    - name: Mohammadreza Paraan
+      primary_author_status: false
+      corresponding_author_status: true
+      ORCID: 0000-0002-8402-0134
+    dates: &id002
+      deposition_date: '2024-10-30'
+      last_modified_date: '2024-10-30'
+      release_date: '2024-10-30'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: &id003
+    - custom_name: polnet on GitHub
+      link: https://github.com/anmartinezs/polnet
+      link_type: source_code
+    method_type: simulated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings: &id004
+      - '{run_name}/Segmentations/ground_truth.mrc'
+      is_visualization_default: true
+      mask_label: 1
+- metadata:
+    annotation_method: polnet-simulated ground truth
+    annotation_object:
+      state: apo
+      id: GO:0070288
+      name: ferritin complex
+    annotation_publications: 10.1109/TMI.2024.3398401, EMD-41923
+    annotation_software: polnet
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: simulated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings: *id004
+      is_visualization_default: true
+      mask_label: 2
+  - OrientedPoint:
+      binning: 10
+      file_format: relion3_star
+      glob_strings:
+      - '{run_name}/Picks/apo-ferritin.star'
+      is_visualization_default: true
+      order: xyz
+      mesh_source_path: 'mesh_source/ferritin_complex.glb'
+- metadata:
+    annotation_method: polnet-simulated ground truth
+    annotation_object:
+      id: UniProtKB:P10537
+      name: Beta-amylase
+    annotation_publications: 10.1109/TMI.2024.3398401, EMD-30405
+    annotation_software: polnet
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: simulated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings: *id004
+      is_visualization_default: true
+      mask_label: 3
+  - OrientedPoint:
+      binning: 10
+      file_format: relion3_star
+      glob_strings:
+      - '{run_name}/Picks/beta-amylase.star'
+      is_visualization_default: true
+      order: xyz
+      mesh_source_path: 'mesh_source/beta-amylase.glb'
+- metadata:
+    annotation_method: polnet-simulated ground truth
+    annotation_object:
+      id: UniProtKB:P00722
+      name: Beta-galactosidase
+    annotation_publications: 10.1109/TMI.2024.3398401, EMD-0153
+    annotation_software: polnet
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: simulated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings: *id004
+      is_visualization_default: true
+      mask_label: 4
+  - OrientedPoint:
+      binning: 10
+      file_format: relion3_star
+      glob_strings:
+      - '{run_name}/Picks/beta-galactoside.star'
+      is_visualization_default: true
+      order: xyz
+      mesh_source_path: 'mesh_source/beta-galactosidase.glb'
+- metadata:
+    annotation_method: polnet-simulated ground truth
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_publications: 10.1109/TMI.2024.3398401, EMD-3883
+    annotation_software: polnet
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: simulated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings: *id004
+      is_visualization_default: true
+      mask_label: 5
+  - OrientedPoint:
+      binning: 10
+      file_format: relion3_star
+      glob_strings:
+      - '{run_name}/Picks/ribosome.star'
+      is_visualization_default: true
+      order: xyz
+      mesh_source_path: 'mesh_source/ribosome.glb'
+- metadata:
+    annotation_method: polnet-simulated ground truth
+    annotation_object:
+      id: UniProtKB:P01267
+      name: Thyroglobulin
+    annotation_publications: 10.1109/TMI.2024.3398401, EMD-24181
+    annotation_software: polnet
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: simulated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings: *id004
+      is_visualization_default: true
+      mask_label: 6
+  - OrientedPoint:
+      binning: 10
+      file_format: relion3_star
+      glob_strings:
+      - '{run_name}/Picks/thyroglobulin.star'
+      is_visualization_default: true
+      order: xyz
+      mesh_source_path: 'mesh_source/thyroglobulin.glb'
+- metadata:
+    annotation_method: polnet-simulated ground truth
+    annotation_object:
+      description: PP7 VLP
+      id: GO:0170047
+      name: virus-like capsid
+    annotation_publications: 10.1109/TMI.2024.3398401, EMD-41917
+    annotation_software: polnet
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: simulated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings: *id004
+      is_visualization_default: true
+      mask_label: 7
+  - OrientedPoint:
+      binning: 10
+      file_format: relion3_star
+      glob_strings:
+      - '{run_name}/Picks/virus-like-particle.star'
+      is_visualization_default: true
+      order: xyz
+      mesh_source_path: 'mesh_source/virus_like_capsid.glb'
 collection_metadata:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}/mdocs/{run_name}_vali.mdoc'
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/mdocs/{run_name}_vali.mdoc'
 datasets:
-  - metadata:
-      authors: *id001
-      cross_references: &id005
-        publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
-        related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
-      dataset_description: This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for
-        the purpose of training object identification algorithms in the context of the CryoET Object Identification
-        Challenge. The data was simulated using polnet, and contains point labels and semantic masks for all 6 protein
-        complexes included in the challenge dataset (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes,
-        thyroglobulin and VLP), as well as membranes.
-      dataset_identifier: 10441
-      dataset_title: CZII - CryoET Object Identification Challenge - Simulated Training Data
-      dates: *id002
-      funding:
-        - funding_agency_name: Chan Zuckerberg Initiative
-          grant_id: "CZII-2023\u2013327779"
-      grid_preparation: ''
-      sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's
-        xyzproj + addition of noise + reconstruction with IMOD's tilt
-      sample_type: in_silico
-    sources:
-      - literal:
-          value:
-            - '10441'
+- metadata:
+    authors: *id001
+    cross_references:
+      publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
+      related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
+    dataset_description: This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for the
+      purpose of training object identification algorithms in the context of the CryoET Object Identification Challenge. The
+      data was simulated using polnet, and contains point labels and semantic masks for all 6 protein complexes included in
+      the challenge dataset (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP),
+      as well as membranes.
+    dataset_identifier: 10441
+    dataset_title: CZII - CryoET Object Identification Challenge - Simulated Training Data
+    dates: *id002
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: "CZII-2023\u2013327779"
+    grid_preparation: ''
+    sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's xyzproj + addition of noise + reconstruction
+      with IMOD's tilt
+    sample_type: in_silico
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: normal
+      id: PATO:0000461
+  sources:
+  - literal:
+      value:
+      - '10441'
 frames:
-  - metadata:
-      is_gain_corrected: true
-      dose_rate: 3.226
-    sources:
-      - literal:
-          value:
-            - 'default'
+- metadata:
+    is_gain_corrected: true
+    dose_rate: 3.226
+  sources:
+  - literal:
+      value:
+      - default
 dataset_keyphotos:
-  - sources:
-      - literal:
-          value:
-            snapshot: null
-            thumbnail: null
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
 rawtilts:
-  - sources:
-      - source_glob:
-          list_glob: '{run_name}/TiltSeries/*.rawtlt'
+- sources:
+  - source_glob:
+      list_glob: '{run_name}/TiltSeries/*.rawtlt'
 runs:
-  - sources:
-      - source_glob:
-          list_glob: TS_*
-          match_regex: TS_\d{1,2}$
-          name_regex: (TS_\d{1,2})$
+- sources:
+  - source_glob:
+      list_glob: TS_*
+      match_regex: TS_\d{1,2}$
+      name_regex: (TS_\d{1,2})$
 standardization_config:
   deposition_id: 10310
   source_prefix: CZII/202410_simulated_2
 tiltseries:
-  - metadata:
-      acceleration_voltage: 300000
-      aligned_tiltseries_binning: 1
-      binning_from_frames: 1
-      camera:
-        manufacturer: simulated
-        model: simulated
-      data_acquisition_software: polnet
-      is_aligned: true
-      microscope:
-        manufacturer: SIMULATED
-        model: simulated
-      microscope_optical_setup:
-        energy_filter: None
-      pixel_spacing: 10.0
-      spherical_aberration_constant: 2.7
-      tilt_axis: 0.0
-      tilt_range:
-        max: 45
-        min: -45
-      tilt_series_quality: 5
-      tilt_step: 3.0
-      tilting_scheme: simulated
-      total_flux: 100
-    sources:
-      - source_glob:
-          list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
+- metadata:
+    acceleration_voltage: 300000
+    aligned_tiltseries_binning: 1
+    binning_from_frames: 1
+    camera:
+      manufacturer: simulated
+      model: simulated
+    data_acquisition_software: polnet
+    is_aligned: true
+    microscope:
+      manufacturer: SIMULATED
+      model: simulated
+    microscope_optical_setup:
+      energy_filter: None
+    pixel_spacing: 10.0
+    spherical_aberration_constant: 2.7
+    tilt_axis: 0.0
+    tilt_range:
+      max: 45
+      min: -45
+    tilt_series_quality: 5
+    tilt_step: 3.0
+    tilting_scheme: simulated
+    total_flux: 100
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/TiltSeries/tilt_series.mrc'
 tomograms:
-  - metadata:
-      affine_transformation_matrix:
-        - - 1
-          - 0
-          - 0
-          - 0
-        - - 0
-          - 1
-          - 0
-          - 0
-        - - 0
-          - 0
-          - 1
-          - 0
-        - - 0
-          - 0
-          - 0
-          - 1
-      authors: *id001
-      ctf_corrected: true
-      dates: *id002
-      fiducial_alignment_status: NON_FIDUCIAL
-      is_visualization_default: true
-      offset:
-        x: 0
-        y: 0
-        z: 0
-      processing: raw
-      reconstruction_method: WBP
-      reconstruction_software: IMOD
-      tomogram_version: 1
-      voxel_spacing: 10.0
-    sources:
-      - source_glob:
-          list_glob: '{run_name}/VoxelSpacing10.000/wbp.mrc'
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id001
+    ctf_corrected: true
+    dates: *id002
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
+    tomogram_version: 1
+    voxel_spacing: 10.0
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/VoxelSpacing10.000/wbp.mrc'
 version: 1.1.0
 voxel_spacings:
-  - sources:
-      - literal:
-          value:
-            - 10.0
+- sources:
+  - literal:
+      value:
+      - 10.0

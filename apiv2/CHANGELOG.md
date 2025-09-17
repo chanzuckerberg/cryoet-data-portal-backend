@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.13.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.13.0...apiv2-v1.13.1) (2025-09-11)
+
+
+### Bug Fixes
+
+* address High priority alerts ([#533](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/533)) ([9259803](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/925980386de17ee426959dcf24bf54304e4e48ed))
+* Critical dependabot alert for h11 ([#530](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/530)) ([046f462](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/046f462b13b5494ea00008085c5597484428b790))
+
+## [1.13.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.12.0...apiv2-v1.13.0) (2025-08-19)
+
+
+### Features
+
+* Add IdentifiedObject data model ([#510](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/510)) ([4a025d9](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/4a025d9df87832a74ac65a31f6613f9a127e02a2))
+
+## [1.12.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.11.0...apiv2-v1.12.0) (2025-07-24)
+
+
+### Features
+
+* Empty commit ([#525](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/525)) ([159b642](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/159b64215058e1f348ad700de09c14cfe78809fe))
+
+
+### Bug Fixes
+
+* Add better handling for value error exceptions from pagination. ([#475](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/475)) ([a46df89](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a46df8985fe081147484fdf2310d3efe0aca88c9))
+* adding back schema diagram ([#473](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/473)) ([725f037](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/725f0376aaa73a5f96d56bc6cfb0ced11f503383))
+* Update APIv2 runner to privileged ([#507](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/507)) ([6a6b7ed](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/6a6b7edaead52be21179b9830f549133a0ebbbca))
+
 ## [1.11.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.10.0...apiv2-v1.11.0) (2025-03-20)
 
 

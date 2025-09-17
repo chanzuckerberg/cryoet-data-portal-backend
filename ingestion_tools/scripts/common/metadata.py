@@ -56,6 +56,10 @@ class FrameMetadata(MergedMetadata):
     pass
 
 
+class IdentifiedObjectMetadata(MergedMetadata):
+    pass
+
+
 class RunMetadata(MergedMetadata):
     pass
 

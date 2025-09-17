@@ -1793,6 +1793,34 @@ type Dataset implements EntityInterface & Node {
   description: String!
 
   """
+  Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography
+  """
+  assayLabel: String
+
+  """
+  Ontology identifier for the type of assay performed in a CryoET dataset
+  """
+  assayOntologyId: String
+
+  """
+  Development stage of the organism from which a biological sample used the study is derived.
+  """
+  developmentStageName: String
+
+  """Ontology identifier for the development stage"""
+  developmentStageOntologyId: String
+
+  """
+  Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
+  """
+  diseaseName: String
+
+  """
+  Ontology identifier for the disease associated with the biological sample used in a CryoET study
+  """
+  diseaseOntologyId: String
+
+  """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
   """
   organismName: String
@@ -2173,6 +2201,12 @@ type DatasetConnection {
 enum DatasetCountColumns {
   title
   description
+  assayLabel
+  assayOntologyId
+  developmentStageName
+  developmentStageOntologyId
+  diseaseName
+  diseaseOntologyId
   organismName
   organismTaxid
   tissueName
@@ -2211,6 +2245,34 @@ input DatasetCreateInput {
   A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.
   """
   description: String!
+
+  """
+  Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography
+  """
+  assayLabel: String = null
+
+  """
+  Ontology identifier for the type of assay performed in a CryoET dataset
+  """
+  assayOntologyId: String = null
+
+  """
+  Development stage of the organism from which a biological sample used the study is derived.
+  """
+  developmentStageName: String = null
+
+  """Ontology identifier for the development stage"""
+  developmentStageOntologyId: String = null
+
+  """
+  Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
+  """
+  diseaseName: String = null
+
+  """
+  Ontology identifier for the disease associated with the biological sample used in a CryoET study
+  """
+  diseaseOntologyId: String = null
 
   """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
@@ -2453,6 +2515,12 @@ type DatasetGroupByOptions {
   runs: RunGroupByOptions
   title: String
   description: String
+  assayLabel: String
+  assayOntologyId: String
+  developmentStageName: String
+  developmentStageOntologyId: String
+  diseaseName: String
+  diseaseOntologyId: String
   organismName: String
   organismTaxid: Int
   tissueName: String
@@ -2483,6 +2551,12 @@ type DatasetGroupByOptions {
 type DatasetMinMaxColumns {
   title: String
   description: String
+  assayLabel: String
+  assayOntologyId: String
+  developmentStageName: String
+  developmentStageOntologyId: String
+  diseaseName: String
+  diseaseOntologyId: String
   organismName: String
   organismTaxid: Int
   tissueName: String
@@ -2519,6 +2593,12 @@ input DatasetOrderByClause {
   deposition: DepositionOrderByClause
   title: orderBy
   description: orderBy
+  assayLabel: orderBy
+  assayOntologyId: orderBy
+  developmentStageName: orderBy
+  developmentStageOntologyId: orderBy
+  diseaseName: orderBy
+  diseaseOntologyId: orderBy
   organismName: orderBy
   organismTaxid: orderBy
   tissueName: orderBy
@@ -2557,6 +2637,34 @@ input DatasetUpdateInput {
   A short description of a CryoET dataset, similar to an abstract for a journal article or dataset.
   """
   description: String
+
+  """
+  Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography
+  """
+  assayLabel: String = null
+
+  """
+  Ontology identifier for the type of assay performed in a CryoET dataset
+  """
+  assayOntologyId: String = null
+
+  """
+  Development stage of the organism from which a biological sample used the study is derived.
+  """
+  developmentStageName: String = null
+
+  """Ontology identifier for the development stage"""
+  developmentStageOntologyId: String = null
+
+  """
+  Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
+  """
+  diseaseName: String = null
+
+  """
+  Ontology identifier for the disease associated with the biological sample used in a CryoET study
+  """
+  diseaseOntologyId: String = null
 
   """
   Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
@@ -2663,6 +2771,12 @@ input DatasetWhereClause {
   runsAggregate: RunAggregateWhereClause
   title: StrComparators
   description: StrComparators
+  assayLabel: StrComparators
+  assayOntologyId: StrComparators
+  developmentStageName: StrComparators
+  developmentStageOntologyId: StrComparators
+  diseaseName: StrComparators
+  diseaseOntologyId: StrComparators
   organismName: StrComparators
   organismTaxid: IntComparators
   tissueName: StrComparators
@@ -3971,6 +4085,185 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 """
 scalar GlobalID @specifiedBy(url: "https://relay.dev/graphql/objectidentification.htm")
 
+"""
+An ontology term/ID or accession code, state and description associated with a Run, describing cellular components that were visually identified, but not labeled, in a tomogram associated with the Run
+"""
+type IdentifiedObject implements EntityInterface & Node {
+  """The Globally Unique ID of this object"""
+  _id: GlobalID!
+
+  """Numeric identifier (May change!)"""
+  id: Int!
+  run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
+  runId: Int
+
+  """
+  Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.
+  """
+  objectId: String!
+
+  """
+  Name of the identified object (e.g. ribosome, nuclear pore complex, actin filament, membrane)
+  """
+  objectName: String!
+
+  """
+  A textual description of the identified object, can be a longer description to include additional information not covered by the IdentifiedObject object name and state.
+  """
+  objectDescription: String
+
+  """Molecule state of the identified object (e.g. open, closed)"""
+  objectState: String
+}
+
+type IdentifiedObjectAggregate {
+  aggregate: [IdentifiedObjectAggregateFunctions!]
+}
+
+type IdentifiedObjectAggregateFunctions {
+  sum: IdentifiedObjectNumericalColumns
+  avg: IdentifiedObjectNumericalColumns
+  stddev: IdentifiedObjectNumericalColumns
+  variance: IdentifiedObjectNumericalColumns
+  min: IdentifiedObjectMinMaxColumns
+  max: IdentifiedObjectMinMaxColumns
+  groupBy: IdentifiedObjectGroupByOptions
+  count(distinct: Boolean = false, columns: IdentifiedObjectCountColumns = null): Int
+}
+
+input IdentifiedObjectAggregateWhereClause {
+  count: IdentifiedObjectAggregateWhereClauseCount!
+}
+
+input IdentifiedObjectAggregateWhereClauseCount {
+  arguments: IdentifiedObjectCountColumns
+  distinct: Boolean
+  filter: IdentifiedObjectWhereClause
+  predicate: IntComparators
+}
+
+"""A connection to a list of items."""
+type IdentifiedObjectConnection {
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection"""
+  edges: [IdentifiedObjectEdge!]!
+}
+
+enum IdentifiedObjectCountColumns {
+  objectId
+  objectName
+  objectDescription
+  objectState
+  id
+}
+
+input IdentifiedObjectCreateInput {
+  """Run that this identified object is a part of"""
+  runId: ID = null
+
+  """
+  Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.
+  """
+  objectId: String!
+
+  """
+  Name of the identified object (e.g. ribosome, nuclear pore complex, actin filament, membrane)
+  """
+  objectName: String!
+
+  """
+  A textual description of the identified object, can be a longer description to include additional information not covered by the IdentifiedObject object name and state.
+  """
+  objectDescription: String = null
+
+  """Molecule state of the identified object (e.g. open, closed)"""
+  objectState: String = null
+
+  """Numeric identifier (May change!)"""
+  id: Int!
+}
+
+"""An edge in a connection."""
+type IdentifiedObjectEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: IdentifiedObject!
+}
+
+type IdentifiedObjectGroupByOptions {
+  run: RunGroupByOptions
+  objectId: String
+  objectName: String
+  objectDescription: String
+  objectState: String
+  id: Int
+}
+
+type IdentifiedObjectMinMaxColumns {
+  objectId: String
+  objectName: String
+  objectDescription: String
+  objectState: String
+  id: Int
+}
+
+type IdentifiedObjectNumericalColumns {
+  id: Int
+}
+
+input IdentifiedObjectOrderByClause {
+  run: RunOrderByClause
+  objectId: orderBy
+  objectName: orderBy
+  objectDescription: orderBy
+  objectState: orderBy
+  id: orderBy
+}
+
+input IdentifiedObjectUpdateInput {
+  """Run that this identified object is a part of"""
+  runId: ID = null
+
+  """
+  Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.
+  """
+  objectId: String
+
+  """
+  Name of the identified object (e.g. ribosome, nuclear pore complex, actin filament, membrane)
+  """
+  objectName: String
+
+  """
+  A textual description of the identified object, can be a longer description to include additional information not covered by the IdentifiedObject object name and state.
+  """
+  objectDescription: String = null
+
+  """Molecule state of the identified object (e.g. open, closed)"""
+  objectState: String = null
+
+  """Numeric identifier (May change!)"""
+  id: Int
+}
+
+input IdentifiedObjectWhereClause {
+  run: RunWhereClause
+  runId: IntComparators
+  objectId: StrComparators
+  objectName: StrComparators
+  objectDescription: StrComparators
+  objectState: StrComparators
+  id: IntComparators
+}
+
+input IdentifiedObjectWhereClauseMutations {
+  id: IntComparators
+}
+
 input IntComparators {
   _eq: Int
   _neq: Int
@@ -4031,6 +4324,9 @@ type Mutation {
   createFrame(input: FrameCreateInput!): Frame!
   updateFrame(input: FrameUpdateInput!, where: FrameWhereClauseMutations!): [Frame!]!
   deleteFrame(where: FrameWhereClauseMutations!): [Frame!]!
+  createIdentifiedObject(input: IdentifiedObjectCreateInput!): IdentifiedObject!
+  updateIdentifiedObject(input: IdentifiedObjectUpdateInput!, where: IdentifiedObjectWhereClauseMutations!): [IdentifiedObject!]!
+  deleteIdentifiedObject(where: IdentifiedObjectWhereClauseMutations!): [IdentifiedObject!]!
   createPerSectionAlignmentParameters(input: PerSectionAlignmentParametersCreateInput!): PerSectionAlignmentParameters!
   updatePerSectionAlignmentParameters(input: PerSectionAlignmentParametersUpdateInput!, where: PerSectionAlignmentParametersWhereClauseMutations!): [PerSectionAlignmentParameters!]!
   deletePerSectionAlignmentParameters(where: PerSectionAlignmentParametersWhereClauseMutations!): [PerSectionAlignmentParameters!]!
@@ -4533,6 +4829,7 @@ type Query {
   depositions(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Deposition!]!
   depositionTypes(where: DepositionTypeWhereClause = null, orderBy: [DepositionTypeOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [DepositionType!]!
   frames(where: FrameWhereClause = null, orderBy: [FrameOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Frame!]!
+  identifiedObjects(where: IdentifiedObjectWhereClause = null, orderBy: [IdentifiedObjectOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [IdentifiedObject!]!
   perSectionAlignmentParameters(where: PerSectionAlignmentParametersWhereClause = null, orderBy: [PerSectionAlignmentParametersOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [PerSectionAlignmentParameters!]!
   perSectionParameters(where: PerSectionParametersWhereClause = null, orderBy: [PerSectionParametersOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [PerSectionParameters!]!
   runs(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = [], limitOffset: LimitOffsetClause = null): [Run!]!
@@ -4555,6 +4852,7 @@ type Query {
   depositionsAggregate(where: DepositionWhereClause = null): DepositionAggregate!
   depositionTypesAggregate(where: DepositionTypeWhereClause = null): DepositionTypeAggregate!
   framesAggregate(where: FrameWhereClause = null): FrameAggregate!
+  identifiedObjectsAggregate(where: IdentifiedObjectWhereClause = null): IdentifiedObjectAggregate!
   perSectionAlignmentParametersAggregate(where: PerSectionAlignmentParametersWhereClause = null): PerSectionAlignmentParametersAggregate!
   perSectionParametersAggregate(where: PerSectionParametersWhereClause = null): PerSectionParametersAggregate!
   runsAggregate(where: RunWhereClause = null): RunAggregate!
@@ -4641,6 +4939,23 @@ type Run implements EntityInterface & Node {
     last: Int = null
   ): GainFileConnection!
   gainFilesAggregate(where: GainFileWhereClause = null): GainFileAggregate
+  identifiedObjects(
+    where: IdentifiedObjectWhereClause = null
+    orderBy: [IdentifiedObjectOrderByClause!] = []
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): IdentifiedObjectConnection!
+  identifiedObjectsAggregate(where: IdentifiedObjectWhereClause = null): IdentifiedObjectAggregate
   frameAcquisitionFiles(
     where: FrameAcquisitionFileWhereClause = null
     orderBy: [FrameAcquisitionFileOrderByClause!] = []
@@ -4811,6 +5126,7 @@ type RunGroupByOptions {
   dataset: DatasetGroupByOptions
   frames: FrameGroupByOptions
   gainFiles: GainFileGroupByOptions
+  identifiedObjects: IdentifiedObjectGroupByOptions
   frameAcquisitionFiles: FrameAcquisitionFileGroupByOptions
   perSectionParameters: PerSectionParametersGroupByOptions
   tiltseries: TiltseriesGroupByOptions
@@ -4869,6 +5185,8 @@ input RunWhereClause {
   framesAggregate: FrameAggregateWhereClause
   gainFiles: GainFileWhereClause
   gainFilesAggregate: GainFileAggregateWhereClause
+  identifiedObjects: IdentifiedObjectWhereClause
+  identifiedObjectsAggregate: IdentifiedObjectAggregateWhereClause
   frameAcquisitionFiles: FrameAcquisitionFileWhereClause
   frameAcquisitionFilesAggregate: FrameAcquisitionFileAggregateWhereClause
   perSectionParameters: PerSectionParametersWhereClause
@@ -6826,13 +7144,16 @@ enum orderBy {
 
 enum sample_type_enum {
   cell
-  tissue
-  organism
-  organelle
-  virus
-  in_vitro
+  cell_line
   in_silico
+  in_vitro
+  organelle
+  organism
+  organoid
   other
+  primary_cell_culture
+  tissue
+  virus
 }
 
 enum tiltseries_microscope_manufacturer_enum {

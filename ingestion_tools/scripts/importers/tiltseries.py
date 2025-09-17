@@ -121,6 +121,7 @@ class TiltSeriesImporter(VolumeImporter):
         complete_path = os.path.join(os.path.dirname(path), filename)
         return filename, complete_path, {filename: complete_path}
 
+
 class PerSectionParameter:
 
     def __init__(self, index: int, mdoc_entry: MdocSectionData, ctf_entry: CTFInfo):
@@ -138,7 +139,10 @@ class PerSectionParameter:
     def to_json(self) -> dict[str, Any]:
         return self.__dict__
 
+
 class PerSectionParameterGenerator:
+    TILT_ANGLE_DECIMAL_PLACES = 2
+
     def __init__(self, config: DepositionImportConfig, parents: dict[str, Any]):
         self.config = config
         self.parents = parents
@@ -151,8 +155,8 @@ class PerSectionParameterGenerator:
         mdoc_data = self._get_mdoc_data()
         ctf_data = self._get_ctf_data()
         for index, raw_angle in rawtlt["raw_tlt_angle"].items():
-            mdoc_entry = self._get_mdoc_entry(round(raw_angle), mdoc_data)
-            ctf_entry = self._get_ctf_entry(mdoc_entry.ZValue, ctf_data)
+            mdoc_entry = self._get_mdoc_entry(round(raw_angle, self.TILT_ANGLE_DECIMAL_PLACES), mdoc_data)
+            ctf_entry = self._get_ctf_entry(index, ctf_data)
             psp_section = PerSectionParameter(index, mdoc_entry, ctf_entry)
             psp.append(psp_section.to_json())
 
@@ -202,6 +206,6 @@ class PerSectionParameterGenerator:
     @classmethod
     def _get_mdoc_entry(cls, tilt_angle: float, mdoc_data: list[MdocSectionData]) -> MdocSectionData:
         for entry in mdoc_data:
-            if round(entry.TiltAngle) == tilt_angle:
+            if round(entry.TiltAngle, cls.TILT_ANGLE_DECIMAL_PLACES) == tilt_angle:
                 return entry
         raise KeyError(f"No match for tiltangle {tilt_angle} in mdoc_data")

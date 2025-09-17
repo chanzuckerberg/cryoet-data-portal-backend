@@ -89,7 +89,7 @@ datasets:
       id: null
       name: null
     cell_strain:
-      id: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=88888
+      id: CVCL_88888
       name: Strain 1
     cross_references: &id003
       publications: doi:10.1101/2022.01.01.00001
@@ -104,7 +104,8 @@ datasets:
     grid_preparation: 'material: COPPER,'
     organism:
       name: Organism 1
-      taxonomy_id: 9999
+    cell_type:
+      id: CL:0000000
     sample_preparation: 'buffer_ph: 7.0'
     sample_type: organism
   sources:
@@ -123,6 +124,10 @@ depositions:
   - literal:
       value:
       - '10301'
+identified_objects:
+- sources:
+  - source_glob:
+      list_glob: "identified_objects/identified_objects.csv"
 deposition_keyphotos:
 - sources:
   - literal:

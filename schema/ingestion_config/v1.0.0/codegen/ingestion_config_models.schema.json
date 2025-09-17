@@ -43,17 +43,6 @@
                     "description": "The alignment method type.",
                     "pattern": "(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)"
                 },
-                "offset": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/AlignmentOffset"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram."
-                },
                 "tilt_offset": {
                     "description": "The tilt offset relative to the tomogram.",
                     "type": [
@@ -61,7 +50,7 @@
                         "null"
                     ]
                 },
-                "volume_dimesion": {
+                "volume_dimension": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/AlignmentSize"
@@ -71,6 +60,17 @@
                         }
                     ],
                     "description": "The size of an alignment in voxels in each dimension."
+                },
+                "volume_offset": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AlignmentOffset"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The offset of a alignment in voxels in each dimension relative to the canonical tomogram."
                 },
                 "x_rotation_offset": {
                     "anyOf": [
@@ -576,6 +576,17 @@
             "title": "AnnotationEntity",
             "type": "object"
         },
+        "AnnotationFileFormatEnum": {
+            "description": "Describes the format of the annotation file",
+            "enum": [
+                "mrc",
+                "zarr",
+                "ndjson",
+                "glb"
+            ],
+            "title": "AnnotationFileFormatEnum",
+            "type": "string"
+        },
         "AnnotationFileShapeTypeEnum": {
             "description": "Describes the shape of the annotation",
             "enum": [
@@ -648,6 +659,13 @@
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
                         "boolean",
+                        "null"
+                    ]
+                },
+                "mesh_source_path": {
+                    "description": "The path to the mesh source file associated with an oriented point file.",
+                    "type": [
+                        "string",
                         "null"
                     ]
                 },
@@ -812,6 +830,13 @@
                     "description": "This annotation will be rendered in neuroglancer by default.",
                     "type": [
                         "boolean",
+                        "null"
+                    ]
+                },
+                "mesh_source_path": {
+                    "description": "The path to the mesh source file associated with an oriented point file.",
+                    "type": [
+                        "string",
                         "null"
                     ]
                 },
@@ -1374,6 +1399,29 @@
                 "string"
             ]
         },
+        "Assay": {
+            "additionalProperties": false,
+            "description": "The assay that was used to create the dataset.",
+            "properties": {
+                "id": {
+                    "description": "The EFO identifier for the cellular component.",
+                    "pattern": "^EFO:[0-9]{7}$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "Name of the assay component.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "Assay",
+            "type": "object"
+        },
         "Author": {
             "additionalProperties": false,
             "description": "Author of a scientific data entity.",
@@ -1536,7 +1584,15 @@
                             "type": "string"
                         },
                         {
-                            "pattern": "^[a-zA-Z]+:[0-9]+$",
+                            "pattern": "^NCBITaxon:[0-9]+$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^CVCL_[A-Z0-9]{4,}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^CC-[0-9]{4}$",
                             "type": "string"
                         },
                         {
@@ -1544,7 +1600,7 @@
                         }
                     ],
                     "description": "A placeholder for any type of data.",
-                    "pattern": "(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)"
+                    "pattern": "(WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)"
                 },
                 "name": {
                     "description": "Cell line or strain for the sample.",
@@ -1562,12 +1618,21 @@
             "description": "The cell type from which the sample was derived.",
             "properties": {
                 "id": {
-                    "description": "Cell Ontology identifier for the cell type",
-                    "pattern": "^CL:[0-9]{7}$",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "pattern": "^CL:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UBERON:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^CL:[0-9]{7}$)|(^UBERON:[0-9]{7}$)"
                 },
                 "name": {
                     "description": "Name of the cell type from which a biological sample used in a CryoET study is derived from.",
@@ -1834,6 +1899,16 @@
                     "description": "A gain entity.",
                     "items": {
                         "$ref": "#/$defs/GainEntity"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "identified_objects": {
+                    "description": "An identified object entity.",
+                    "items": {
+                        "$ref": "#/$defs/IdentifiedObjectEntity"
                     },
                     "type": [
                         "array",
@@ -2153,6 +2228,10 @@
             "additionalProperties": false,
             "description": "High-level description of a cryoET dataset.",
             "properties": {
+                "assay": {
+                    "$ref": "#/$defs/Assay",
+                    "description": "The assay that was used to create the dataset."
+                },
                 "authors": {
                     "description": "Author of a scientific data entity.",
                     "items": {
@@ -2221,6 +2300,14 @@
                     "$ref": "#/$defs/DateStamp",
                     "description": "A set of dates at which a data item was deposited, published and last modified."
                 },
+                "development_stage": {
+                    "$ref": "#/$defs/DevelopmentStageDetails",
+                    "description": "The development stage of the patients or organisms from which assayed biosamples were derived."
+                },
+                "disease": {
+                    "$ref": "#/$defs/Disease",
+                    "description": "The disease or condition of the patients from which assayed biosamples were derived."
+                },
                 "funding": {
                     "description": "A funding source for a scientific data entity (base for JSON and DB representation).",
                     "items": {
@@ -2266,7 +2353,7 @@
                 "sample_type": {
                     "$ref": "#/$defs/SampleTypeEnum",
                     "description": "Type of sample imaged in a CryoET study.",
-                    "pattern": "(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+                    "pattern": "(^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)"
                 },
                 "tissue": {
                     "anyOf": [
@@ -2286,7 +2373,10 @@
                 "dataset_description",
                 "dates",
                 "authors",
-                "sample_type"
+                "sample_type",
+                "assay",
+                "development_stage",
+                "disease"
             ],
             "title": "Dataset",
             "type": "object"
@@ -3024,10 +3114,86 @@
             "title": "DestinationMetadataFilterKeyPair",
             "type": "object"
         },
+        "DevelopmentStageDetails": {
+            "additionalProperties": false,
+            "description": "The development stage of the patients or organisms from which assayed biosamples were derived.",
+            "properties": {
+                "id": {
+                    "anyOf": [
+                        {
+                            "pattern": "^unknown$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "WBls:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UBERON:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "HsapDv:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)"
+                },
+                "name": {
+                    "description": "Name of the developmental stage component.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DevelopmentStageDetails",
+            "type": "object"
+        },
+        "Disease": {
+            "additionalProperties": false,
+            "description": "The disease or condition of the patients from which assayed biosamples were derived.",
+            "properties": {
+                "id": {
+                    "anyOf": [
+                        {
+                            "pattern": "^MONDO:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^PATO:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^MONDO:[0-9]{7}$)|(^PATO:[0-9]{7}$)"
+                },
+                "name": {
+                    "description": "Name of the disease.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Disease",
+            "type": "object"
+        },
         "ExperimentMetadata": {
             "additionalProperties": false,
             "description": "Metadata describing sample and sample preparation methods used in a cryoET dataset.",
             "properties": {
+                "assay": {
+                    "$ref": "#/$defs/Assay",
+                    "description": "The assay that was used to create the dataset."
+                },
                 "cell_component": {
                     "anyOf": [
                         {
@@ -3060,6 +3226,14 @@
                         }
                     ],
                     "description": "The cell type from which the sample was derived."
+                },
+                "development_stage": {
+                    "$ref": "#/$defs/DevelopmentStageDetails",
+                    "description": "The development stage of the patients or organisms from which assayed biosamples were derived."
+                },
+                "disease": {
+                    "$ref": "#/$defs/Disease",
+                    "description": "The disease or condition of the patients from which assayed biosamples were derived."
                 },
                 "grid_preparation": {
                     "description": "Describes Cryo-ET grid preparation.",
@@ -3096,7 +3270,7 @@
                 "sample_type": {
                     "$ref": "#/$defs/SampleTypeEnum",
                     "description": "Type of sample imaged in a CryoET study.",
-                    "pattern": "(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+                    "pattern": "(^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)"
                 },
                 "tissue": {
                     "anyOf": [
@@ -3111,7 +3285,10 @@
                 }
             },
             "required": [
-                "sample_type"
+                "sample_type",
+                "assay",
+                "development_stage",
+                "disease"
             ],
             "title": "ExperimentMetadata",
             "type": "object"
@@ -3527,6 +3704,96 @@
             "title": "GainSource",
             "type": "object"
         },
+        "IdentifiedObject": {
+            "additionalProperties": false,
+            "description": "Metadata describing an identified object.",
+            "properties": {
+                "object_description": {
+                    "description": "A textual description of the identified object, can be a longer description to include additional information not covered by the identified object name and state.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "object_id": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "pattern": "^GO:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$",
+                            "type": "string"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+                },
+                "object_name": {
+                    "description": "Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
+                    "type": "string"
+                },
+                "object_state": {
+                    "description": "Molecule state identified (e.g. open, closed)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "object_id",
+                "object_name"
+            ],
+            "title": "IdentifiedObject",
+            "type": "object"
+        },
+        "IdentifiedObjectEntity": {
+            "additionalProperties": false,
+            "description": "An identified object entity.",
+            "properties": {
+                "metadata": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/IdentifiedObjectList"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Metadata for a list of identified objects."
+                },
+                "sources": {
+                    "description": "A generalized source class with glob finders. Inherited by a majority of source classes.",
+                    "items": {
+                        "$ref": "#/$defs/StandardSource"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            },
+            "required": [
+                "sources"
+            ],
+            "title": "IdentifiedObjectEntity",
+            "type": "object"
+        },
+        "IdentifiedObjectList": {
+            "additionalProperties": false,
+            "description": "Metadata for a list of identified objects.",
+            "properties": {
+                "filter_value": {
+                    "description": "Filter value for the identified object, used to filter the list of identified objects by run name.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "IdentifiedObjectList",
+            "type": "object"
+        },
         "KeyImageEntity": {
             "additionalProperties": false,
             "description": "A key image entity.",
@@ -3722,6 +3989,28 @@
             "title": "KeyPhotoLiteral",
             "type": "object"
         },
+        "MetadataPicturePath": {
+            "additionalProperties": false,
+            "description": "A set of paths to representative images of a piece of data for metadata files.",
+            "properties": {
+                "snapshot": {
+                    "description": "Relative path (non-URL/URI) to the dataset preview image relative to the dataset directory root.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "thumbnail": {
+                    "description": "Relative path (non-URL/URI) to the thumbnail of preview image relative to the dataset directory root.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "MetadataPicturePath",
+            "type": "object"
+        },
         "MicroscopeDetails": {
             "additionalProperties": false,
             "description": "The microscope used to collect the tilt series.",
@@ -3812,6 +4101,148 @@
             "title": "OrganismDetails",
             "type": "object"
         },
+        "PerSectionAlignmentParameters": {
+            "additionalProperties": false,
+            "description": "Alignment parameters for one section of a tilt series.",
+            "properties": {
+                "beam_tilt": {
+                    "description": "Beam tilt during projection in degrees",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "in_plane_rotation": {
+                    "items": {
+                        "additionalProperties": true,
+                        "type": [
+                            "null",
+                            "boolean",
+                            "object",
+                            "number",
+                            "string",
+                            "array"
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "tilt_angle": {
+                    "description": "Tilt angle of the projection in degrees",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "volume_x_rotation": {
+                    "description": "Additional X rotation of the reconstruction volume in degrees",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_offset": {
+                    "description": "In-plane X-shift of the projection in angstrom",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_offset": {
+                    "description": "In-plane Y-shift of the projection in angstrom",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_index": {
+                    "description": "z-index of the frame in the tiltseries",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "z_index"
+            ],
+            "title": "PerSectionAlignmentParameters",
+            "type": "object"
+        },
+        "PerSectionParameter": {
+            "additionalProperties": false,
+            "description": "Parameters for a section of a tilt series.",
+            "properties": {
+                "astigmatic_angle": {
+                    "description": "Angle of astigmatism.",
+                    "maximum": 180,
+                    "minimum": -180,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "cross_correlation": {
+                    "description": "CTF fit cross correlation value for this section.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "frame_acquisition_order": {
+                    "description": "The 0-based index of this movie stack in the order of acquisition.",
+                    "type": "integer"
+                },
+                "major_defocus": {
+                    "description": "Major axis defocus amount, underfocus is positive.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "max_resolution": {
+                    "description": "Maximum resolution of the CTF fit for this section.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "minor_defocus": {
+                    "description": "Minor axis defocus amount, underfocus is positive.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "phase_shift": {
+                    "description": "Phase shift measured for this section.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "raw_angle": {
+                    "description": "Nominal angle of the tilt series section.",
+                    "maximum": 90,
+                    "minimum": -90,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_index": {
+                    "description": "z-index of the frame in the tiltseries",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "z_index",
+                "frame_acquisition_order"
+            ],
+            "title": "PerSectionParameter",
+            "type": "object"
+        },
         "PicturePath": {
             "additionalProperties": false,
             "description": "A set of paths to representative images of a piece of data.",
@@ -3849,6 +4280,21 @@
                 "key_photos"
             ],
             "title": "PicturedEntity",
+            "type": "object"
+        },
+        "PicturedMetadataEntity": {
+            "additionalProperties": false,
+            "description": "An entity with associated preview images for metadata files.",
+            "properties": {
+                "key_photos": {
+                    "$ref": "#/$defs/MetadataPicturePath",
+                    "description": "A set of paths to representative images of a piece of data for metadata files."
+                }
+            },
+            "required": [
+                "key_photos"
+            ],
+            "title": "PicturedMetadataEntity",
             "type": "object"
         },
         "RawTiltEntity": {
@@ -4237,14 +4683,16 @@
         "SampleTypeEnum": {
             "description": "Type of sample imaged in a CryoET study.",
             "enum": [
-                "cell",
-                "tissue",
-                "organism",
-                "organelle",
-                "virus",
-                "in_vitro",
+                "cell_line",
                 "in_silico",
-                "other"
+                "in_vitro",
+                "organelle",
+                "organism",
+                "organoid",
+                "other",
+                "primary_cell_culture",
+                "tissue",
+                "virus"
             ],
             "title": "SampleTypeEnum",
             "type": "string"
@@ -4799,6 +5247,34 @@
             "title": "TiltSeriesParentFilters",
             "type": "object"
         },
+        "TiltSeriesSize": {
+            "additionalProperties": false,
+            "description": "The size of a tiltseries in sctions/pixels in each dimension.",
+            "properties": {
+                "x": {
+                    "description": "Number of pixels in the 2D data fast axis",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "y": {
+                    "description": "Number of pixels in the 2D data medium axis",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "z": {
+                    "description": "Number of sections in the 2D stack.",
+                    "minimum": 0,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "TiltSeriesSize",
+            "type": "object"
+        },
         "TiltSeriesSource": {
             "additionalProperties": false,
             "description": "A tilt series source.",
@@ -4921,12 +5397,25 @@
             "description": "The type of tissue from which the sample was derived.",
             "properties": {
                 "id": {
-                    "description": "The UBERON identifier for the tissue.",
-                    "pattern": "^BTO:[0-9]{7}$",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "pattern": "^CL:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "WBbt:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UBERON:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A placeholder for any type of data.",
+                    "pattern": "(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(^UBERON:[0-9]{7}$)"
                 },
                 "name": {
                     "description": "Name of the tissue from which a biological sample used in a CryoET study is derived from.",
@@ -5681,6 +6170,16 @@
             "description": "A gain entity.",
             "items": {
                 "$ref": "#/$defs/GainEntity"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "identified_objects": {
+            "description": "An identified object entity.",
+            "items": {
+                "$ref": "#/$defs/IdentifiedObjectEntity"
             },
             "type": [
                 "array",

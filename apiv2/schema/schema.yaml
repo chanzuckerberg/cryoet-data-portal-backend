@@ -328,29 +328,36 @@ enums:
       cell:
         text: cell
         description: Tomographic data of whole cells or cell sections.
-      tissue:
-        text: tissue
-        description: Tomographic data of tissue sections.
-      organism:
-        text: organism
-        description: Tomographic data of sections through multicellular organisms.
-      organelle:
-        text: organelle
-        description: Tomographic data of purified organelles.
-      virus:
-        text: virus
-        description: Tomographic data of purified viruses or VLPs.
-      in_vitro:
-        text: in_vitro
-        description:
-          Tomographic data of in vitro reconstituted systems or mixtures
-          of proteins.
+      cell_line:
+        text: cell_line
+        description: Tomographic data of immortalized cells or immortalized cell sections
       in_silico:
         text: in_silico
         description: Simulated tomographic data.
+      in_vitro:
+        text: in_vitro
+        description: Tomographic data of in vitro reconstituted systems or mixtures of proteins.
+      organelle:
+        text: organelle
+        description: Tomographic data of purified organelles.
+      organism:
+        text: organism
+        description: Tomographic data of sections through multicellular organisms.
+      organoid:
+        text: organoid
+        description: Tomographic data of organoid-derived samples.
       other:
         text: other
         description: Other type of sample.
+      primary_cell_culture:
+        text: primary_cell_culture
+        description: Tomographic data of whole primary cells or primary cell sections.
+      tissue:
+        text: tissue
+        description: Tomographic data of tissue sections.
+      virus:
+        text: virus
+        description: Tomographic data of purified viruses or VLPs.
   tiltseries_camera_acquire_mode_enum:
     name: tiltseries_camera_acquire_mode_enum
     description: Camera acquisition mode
@@ -1259,6 +1266,30 @@ classes:
           - dataset_description
         range: string
         required: true
+      assay_label:
+        name: assay_label
+        description: Label for the type of assay performed in a CryoET dataset, e.g. cryo-electron tomography
+        range: string
+      assay_ontology_id:
+        name: assay_ontology_id
+        description: Ontology identifier for the type of assay performed in a CryoET dataset
+        range: string
+      development_stage_name:
+        name: development_stage_name
+        description: Development stage of the organism from which a biological sample used the study is derived.
+        range: string
+      development_stage_ontology_id:
+        name: development_stage_ontology_id
+        description: Ontology identifier for the development stage
+        range: string
+      disease_name:
+        name: disease_name
+        description: Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
+        range: string
+      disease_ontology_id:
+        name: disease_ontology_id
+        description: Ontology identifier for the disease associated with the biological sample used in a CryoET study
+        range: string
       organism_name:
         name: organism_name
         description: Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
@@ -1720,6 +1751,54 @@ classes:
         unit:
           symbol: B
           descriptive_name: bytes
+  IdentifiedObject:
+    name: IdentifiedObject
+    annotations:
+      plural:
+        tag: plural
+        value: IdentifiedObjects
+    description: An ontology term/ID or accession code, state and description associated with a Run, describing cellular components that were visually identified, but not labeled, in a tomogram associated with the Run
+    from_schema: cdp-dataset-config
+    mixins:
+      - IDMixin
+    attributes:
+      run:
+        name: run
+        description: Run that this identified object is a part of
+        from_schema: cdp-dataset-config
+        inverse: Run.identified_objects
+        range: Run
+      object_id:
+        name: object_id
+        description: Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - identified_object_id
+        range: string
+        required: true
+        pattern: ^GO:[0-9]{7}$
+      object_name:
+        name: object_name
+        description: Name of the identified object (e.g. ribosome, nuclear pore complex, actin filament, membrane)
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - identified_object_name
+        range: string
+        required: true
+      object_description:
+        name: object_description
+        description: A textual description of the identified object, can be a longer description to include additional information not covered by the IdentifiedObject object name and state.
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - identified_object_description
+        range: string
+      object_state:
+        name: object_state
+        description: Molecule state of the identified object (e.g. open, closed)
+        from_schema: cdp-dataset-config
+        exact_mappings:
+          - identified_object_state
+        range: string
   PerSectionAlignmentParameters:
     name: PerSectionAlignmentParameters
     annotations:
@@ -1931,6 +2010,15 @@ classes:
         multivalued: true
         inverse: GainFile.run
         range: GainFile
+        annotations:
+          cascade_delete: true
+      identified_objects:
+        name: identified_objects
+        description: Identified objects in a run
+        from_schema: cdp-dataset-config
+        multivalued: true
+        inverse: IdentifiedObject.run
+        range: IdentifiedObject
         annotations:
           cascade_delete: true
       frame_acquisition_files:

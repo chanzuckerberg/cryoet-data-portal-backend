@@ -12,6 +12,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/GJensen_full/aba2015-02-23-1/keyimg_aba2015-02-23-1_s.jpg
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id001
     - corresponding_author_status: false
       name: Ariane Briegel
@@ -19,6 +22,9 @@ datasets:
     - corresponding_author_status: true
       name: Grant Jensen
       primary_author_status: false
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
     dataset_description: This is 4th of 9 sets of data studying Pseudomonas aeruginosa
       collected by Ariane Briegel and is a part of Caltech Jensen  lab etdb.
     dataset_identifier: 10281
@@ -27,13 +33,22 @@ datasets:
       deposition_date: '2023-10-01'
       last_modified_date: '2023-12-01'
       release_date: '2023-12-01'
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     grid_preparation: null
     organism:
       name: Pseudomonas aeruginosa
       taxonomy_id: 287
     sample_preparation: Pseudomonas aeruginosa strain PW 1305. Acquired from the Transposon
       mutant collection. (F7 CheW PW1305 phoAwp03q4D05).
-    sample_type: organism
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
   sources:
   - literal:
       value:

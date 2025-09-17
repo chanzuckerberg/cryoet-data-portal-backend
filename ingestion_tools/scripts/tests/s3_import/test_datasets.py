@@ -12,6 +12,7 @@ from tests.s3_import.util import list_dir
 
 
 def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
+    """Test format_data with partially filled data."""
     config_file = "tests/fixtures/dataset1.yaml"
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
@@ -25,6 +26,60 @@ def test_import_dataset_metadata(s3_fs: FileSystemApi, test_output_bucket: str) 
     metadata = json.loads(output)
     assert metadata["dataset_title"] == "Dataset 1"
     assert metadata["deposition_id"] == "10301"
+
+    # Check that existing data is preserved
+    assert metadata["cell_strain"]["name"] == "Strain 1"
+    assert metadata["cell_strain"]["id"] == "CVCL_88888"
+    assert metadata["organism"]["name"] == "Organism 1"
+    assert metadata["cell_type"]["id"] == "CL:0000000"
+
+    # Check that missing fields are filled with defaults
+    assert metadata["organism"]["taxonomy_id"] is None
+    assert metadata["cell_type"]["name"] == "not_reported"
+
+    # Check that missing keys are created with defaults
+    for key in ["cell_component", "disease", "tissue"]:
+        assert metadata[key]["name"] == "not_reported"
+        assert metadata[key]["id"] == "not_reported"
+    assert metadata["development_stage"]["name"] == "unknown"
+    assert metadata["development_stage"]["id"] == "unknown"
+
+def test_dataset_format_data_empty_input() -> None:
+    """Test format_data with empty input dict."""
+    result = DatasetImporter.format_data({})
+    expected = {
+        "assay": {"name": "not_reported", "id": "not_reported"},
+        "cell_component": {"name": "not_reported", "id": "not_reported"},
+        "cell_strain": {"name": "not_reported", "id": "not_reported"},
+        "cell_type": {"name": "not_reported", "id": "not_reported"},
+        "development_stage": {"name": "unknown", "id": "unknown"},
+        "disease": {"name": "not_reported", "id": "not_reported"},
+        "organism": {"name": "not_reported", "taxonomy_id": None},
+        "tissue": {"name": "not_reported", "id": "not_reported"},
+    }
+    # All data should be filled with defaults
+    assert result == expected
+
+
+def test_dataset_format_data_complete_data() -> None:
+    """Test format_data with a complete input dict.
+        Verifies that all input data is preserved when the input dictionary
+        contains complete information for all expected keys.
+    """
+    data = {
+        "assay": {"name": "assay_name", "id": "assay_id"},
+        "cell_component": {"name": "component_name", "id": "component_id"},
+        "cell_strain": {"name": "strain_name", "id": "strain_id"},
+        "cell_type": {"name": "type_name", "id": "type_id"},
+        "development_stage": {"name": "stage_name", "id": "stage_id"},
+        "disease": {"name": "disease_name", "id": "disease_id"},
+        "organism": {"name": "organism_name", "taxonomy_id": "12345"},
+        "tissue": {"name": "tissue_name", "id": "tissue_id"},
+    }
+    result = DatasetImporter.format_data(data)
+
+    # All original data should be preserved
+    assert result == data
 
 
 def test_no_import_dataset_metadata_and_key_photo(

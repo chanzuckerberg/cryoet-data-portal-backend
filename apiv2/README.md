@@ -71,7 +71,7 @@ ensure that the new table is included in the ER diagram.
 
 ## RELEASES - Updating staging/prod
 
-**TL;DR:**
+**TL;DR**
 
 - Merging to main will deploy changes to staging
 - Merging a release-please pull request will deploy changes to production
