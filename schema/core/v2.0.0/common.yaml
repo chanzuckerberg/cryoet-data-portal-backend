@@ -825,6 +825,9 @@ slots:
   annotation_source_file_filter_value:
     range: string
     description: The filter value for an oriented point / instance segmentation annotation file.
+  annotation_source_file_mesh_source_path:
+    range: string
+    description: The path to the mesh source file associated with an oriented point file.
   annotation_source_file_order:
     range: string
     description: The order of axes for an oriented point / instance segmentation annotation file.

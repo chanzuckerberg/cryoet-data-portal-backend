@@ -2,7 +2,7 @@ import json
 import os.path
 from pathlib import Path
 from time import time
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import cryoet_data_portal_neuroglancer.state_generator as state_generator
 
@@ -11,6 +11,7 @@ from common.colors import generate_hash, to_base_hash_input
 from common.finders import DefaultImporterFactory
 from common.image import VolumeInfo
 from common.metadata import NeuroglancerMetadata
+from importers.annotation import OrientedPointAnnotation
 from importers.base_importer import BaseImporter
 
 if TYPE_CHECKING:
@@ -94,6 +95,7 @@ class VisualizationConfigImporter(BaseImporter):
         color: str,
         resolution: tuple[float, float, float],
         shape: str,
+        visible: bool | None = None,
         **kwargs,
     ) -> dict[str, Any]:
         is_instance_segmentation = shape == "InstanceSegmentation"
@@ -102,7 +104,7 @@ class VisualizationConfigImporter(BaseImporter):
             "url": self.config.https_prefix,
             "color": color,
             "scale": resolution,
-            "is_visible": file_metadata.get("is_visualization_default"),
+            "is_visible": file_metadata.get("is_visualization_default") if visible is None else visible,
             "is_instance_segmentation": is_instance_segmentation,
         }
         if shape == "OrientedPoint":
@@ -201,6 +203,30 @@ class VisualizationConfigImporter(BaseImporter):
 
         return annotation_layer_info
 
+    def _to_mesh_layer(
+        self,
+        source_path: str,
+        file_metadata: dict[str, Any],
+        name_prefix: str,
+        color: str,
+        resolution: tuple[float, float, float],
+        **_,
+    ):
+        return state_generator.generate_oriented_point_mesh_layer(
+            name=f"{name_prefix} orientedmesh",
+            source=OrientedPointAnnotation.convert_oriented_point_path_to_mesh_path(source_path),
+            url=self.config.https_prefix,
+            color=color,
+            scale=resolution,
+            is_visible=cast(bool, file_metadata.get("is_visualization_default")),
+        )
+
+    def _has_oriented_mesh(self, path: str):
+        fs = self.config.fs
+        oriented_mesh_filename = OrientedPointAnnotation.convert_oriented_point_path_to_mesh_path(path)
+        mesh_folder_path = os.path.join(self.config.output_prefix, oriented_mesh_filename)
+        return fs.exists(mesh_folder_path)
+
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
@@ -219,10 +245,19 @@ class VisualizationConfigImporter(BaseImporter):
 
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "resolution": resolution}
-
-            if info["shape"] == "SegmentationMask":
+            shape = info["shape"]
+            if shape == "SegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
-            elif info["shape"] in {"Point", "OrientedPoint", "InstanceSegmentation"}:
+            elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
+                if shape == "OrientedPoint":
+                    # Check if oriented point has produced meshes
+                    has_mesh = self._has_oriented_mesh(args["source_path"])
+                    if has_mesh:
+                        layers.append(self._to_mesh_layer(**args))
+                        print(
+                            f"{shape} {args['name_prefix']} has meshes -> hiding raw {shape} layer in neuroglancer in favor of mesh layer",
+                        )
+                        args = {**args, "visible": False}
                 layers.append(self._to_point_layer(**args))
             elif info["shape"] in {"TriangularMesh", "TriangularMeshGroup"}:
                 layers.append(self._to_triangular_mesh_layer(**args))
