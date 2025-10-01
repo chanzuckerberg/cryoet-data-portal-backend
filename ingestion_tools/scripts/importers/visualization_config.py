@@ -245,12 +245,7 @@ class VisualizationConfigImporter(BaseImporter):
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "resolution": resolution}
             shape = info["shape"]
-            if shape == "SegmentationMask" and shape == "InstanceSegmentationMask":
-                if shape == "InstanceSegmentationMask":
-                    print("\nInstanceSegmentationMask!\n")
-                else:
-                    print("\nSegmentation mask", info)
-                    print()
+            if shape == "SegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 if shape == "OrientedPoint":
