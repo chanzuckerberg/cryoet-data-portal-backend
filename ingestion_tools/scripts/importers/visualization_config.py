@@ -164,7 +164,6 @@ class VisualizationConfigImporter(BaseImporter):
                     "Point",
                     "OrientedPoint",
                     "InstanceSegmentation",
-                    "InstanceSegmentationMask",
                     "TriangularMesh",
                     "TriangularMeshGroup",
                 }:
@@ -246,7 +245,12 @@ class VisualizationConfigImporter(BaseImporter):
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "resolution": resolution}
             shape = info["shape"]
-            if shape == "SegmentationMask":
+            if shape == "SegmentationMask" and shape == "InstanceSegmentationMask":
+                if shape == "InstanceSegmentationMask":
+                    print("\nInstanceSegmentationMask!\n")
+                else:
+                    print("\nSegmentation mask", info)
+                    print()
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 if shape == "OrientedPoint":

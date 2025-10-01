@@ -319,7 +319,7 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
 
 
 class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
-    shape = "InstanceSegmentationMask"
+    shape = "SegmentationMask"
     mask_label: int
     scale_factor: float
     is_portal_standard: bool
@@ -336,6 +336,21 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
         self.mask_label = mask_label if mask_label else 1
         self.scale_factor = scale_factor
         self.is_portal_standard = is_portal_standard
+
+    def convert(self, output_prefix: str):
+        # output_dims = self.get_output_dim() if self.rescale else None
+        output_dims = None
+
+        return make_pyramids(
+            self.config.fs,
+            self.get_output_filename(output_prefix),
+            self.path,
+            label=self.mask_label,
+            write_mrc=self.config.write_mrc,
+            write_zarr=self.config.write_zarr,
+            voxel_spacing=self.get_voxel_spacing().as_float(),
+            scale_0_dims=output_dims,
+        )
 
 
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
