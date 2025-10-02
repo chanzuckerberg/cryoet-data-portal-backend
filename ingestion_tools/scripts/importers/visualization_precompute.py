@@ -220,7 +220,7 @@ class InstanceSegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
     annotation: InstanceSegmentationMaskAnnotation
 
     def _get_shape(self) -> str:
-        return "SegmentationMask"
+        return "InstanceSegmentationMask"
 
     def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
         fs = self.config.fs

@@ -319,7 +319,7 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
 
 
 class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
-    shape = "SegmentationMask"
+    shape = "InstanceSegmentationMask"
     mask_label: int
     scale_factor: float
     is_portal_standard: bool

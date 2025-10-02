@@ -166,6 +166,7 @@ class VisualizationConfigImporter(BaseImporter):
                     "InstanceSegmentation",
                     "TriangularMesh",
                     "TriangularMeshGroup",
+                    "InstanceSegmentationMask",
                 }:
                     print(f"Skipping file with unknown shape {shape}")
                     continue
@@ -247,6 +248,8 @@ class VisualizationConfigImporter(BaseImporter):
             shape = info["shape"]
             if shape == "SegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
+            elif shape == "InstanceSegmentationMask":
+                print("\nGENERATE DEDICATED CONFIG LAYER HERE\n")
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 if shape == "OrientedPoint":
                     # Check if oriented point has produced meshes
