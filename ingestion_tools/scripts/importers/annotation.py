@@ -345,7 +345,6 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
             self.config.fs,
             self.get_output_filename(output_prefix),
             self.path,
-            label=self.mask_label,
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
