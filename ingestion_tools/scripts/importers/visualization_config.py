@@ -76,6 +76,7 @@ class VisualizationConfigImporter(BaseImporter):
         name_prefix: str,
         color: str,
         resolution: tuple[float, float, float],
+        visible_segments: tuple[int, ...] = (1,),
         **kwargs,
     ) -> dict[str, Any]:
         return state_generator.generate_segmentation_mask_layer(
@@ -85,6 +86,7 @@ class VisualizationConfigImporter(BaseImporter):
             color=color,
             scale=resolution,
             is_visible=file_metadata.get("is_visualization_default"),
+            visible_segments=visible_segments,
         )
 
     def _to_point_layer(
@@ -249,7 +251,13 @@ class VisualizationConfigImporter(BaseImporter):
             if shape == "SegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif shape == "InstanceSegmentationMask":
-                print("\nGENERATE DEDICATED CONFIG LAYER HERE\n")
+                # We have to load the ome zarr file and get the
+                # unique non zero labels and then set of those as visible
+                # zarr_path = args["source_path"]
+                # Unsure how to get the base dir of the above zarr path?
+                # Hard coding for the segments to show
+                visible_segments = (1, 2)
+                layers.append(self._to_segmentation_mask_layer(visible_segments=visible_segments, **args))
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 if shape == "OrientedPoint":
                     # Check if oriented point has produced meshes
