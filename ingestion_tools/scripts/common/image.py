@@ -1,6 +1,7 @@
 import json
 import os
 import os.path
+import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
@@ -446,6 +447,50 @@ class MaskConverter(TomoConverter):
             return bool(np.any(self.volume_reader.get_pyramid_base_data() == self.label))
 
 
+class MultiLabelMaskConverter(TomoConverter):
+    def __init__(
+        self,
+        fs: FileSystemApi,
+        filename: str,
+        header_only: bool = False,
+        scale_0_dims: tuple[int, int, int] | None = None,
+    ):
+        super().__init__(fs=fs, filename=filename, header_only=header_only, scale_0_dims=scale_0_dims)
+
+    def get_pyramid_base_data(self) -> np.ndarray:
+        data = self.volume_reader.get_pyramid_base_data()
+
+        if not self.scale_0_dims:
+            return self.scaled_data_transformation(data)
+
+        t = time.perf_counter()
+        from scipy.ndimage import zoom
+
+        x, y, z = data.shape
+        nx, ny, nz = self.scale_0_dims
+        zoom_factor = (nx / x, ny / y, nz / z)
+
+        # rescaled = rescale(
+        #     data,
+        #     scale=zoom_factor,
+        #     order=0,
+        #     preserve_range=True,
+        #     anti_aliasing=False,
+        # )
+
+        rescaled = zoom(data, zoom=zoom_factor, order=0)
+        print(f"Rescaled in {time.perf_counter() - t:.3f}")
+
+        return self.scaled_data_transformation(rescaled)
+
+    @classmethod
+    def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
+        # For instance segmentation masks we have multiple labels, so we want an uint 32 output.
+        # downscale_local_mean will return float array even for bool input with non-binary values
+        # return data.astype(np.uint32)
+        return data
+
+
 def get_volume_metadata(config: DepositionImportConfig, output_prefix: str) -> dict[str, Any]:
     # Generates metadata related to volume files.
     scales = []
@@ -494,7 +539,10 @@ def get_converter(
     label: int | None = None,
     scale_0_dims: tuple[int, int, int] | None = None,
     threshold: float | None = None,
+    multilabels: bool = False,
 ) -> TomoConverter | MaskConverter:
+    if multilabels:
+        return MultiLabelMaskConverter(fs, tomo_filename, scale_0_dims=scale_0_dims)
     if label is not None:
         return MaskConverter(fs, tomo_filename, label, scale_0_dims=scale_0_dims, threshold=threshold)
     return TomoConverter(fs, tomo_filename, scale_0_dims=scale_0_dims)
@@ -512,8 +560,9 @@ def make_pyramids(
     label: int = None,
     scale_0_dims=None,
     threshold: float | None = None,
+    multilabels: bool = False,
 ):
-    tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold)
+    tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold, multilabels=multilabels)
     pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
     _ = tc.pyramid_to_omezarr(
         fs,

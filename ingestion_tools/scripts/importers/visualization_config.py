@@ -9,7 +9,7 @@ import cryoet_data_portal_neuroglancer.state_generator as state_generator
 from common import colors
 from common.colors import generate_hash, to_base_hash_input
 from common.finders import DefaultImporterFactory
-from common.image import VolumeInfo
+from common.image import VolumeInfo, ZarrReader
 from common.metadata import NeuroglancerMetadata
 from importers.annotation import OrientedPointAnnotation
 from importers.base_importer import BaseImporter
@@ -74,7 +74,7 @@ class VisualizationConfigImporter(BaseImporter):
         source_path: str,
         file_metadata: dict[str, Any],
         name_prefix: str,
-        color: str,
+        color: str | dict[int, str],
         resolution: tuple[float, float, float],
         visible_segments: tuple[int, ...] = (1,),
         **kwargs,
@@ -180,25 +180,35 @@ class VisualizationConfigImporter(BaseImporter):
                     print(f"Skipping file with unsupported format {file.get('format')}")
                     continue
 
+                nb_colors = 1
+                visible_segments = None
+                if shape == "InstanceSegmentationMask":
+                    # We load the ome zarr file and get the unique non zero labels and then set of those as visible
+                    visible_segments = self._get_labels(file.get("path"))
+                    nb_colors = len(visible_segments)
+
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
-                hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
+                hex_colors, float_colors = colors.get_hex_colors(nb_colors, exclude=colors_used, seed=color_seed)
 
                 path = self.config.to_formatted_path(
                     os.path.join(precompute_path, f"{metadata_file_name}_{shape.lower()}"),
                 )
 
-                is_instance_seg = shape == "InstanceSegmentation"
+                is_instance_seg = shape == "InstanceSegmentation" or shape == "InstanceSegmentationMask"
 
-                annotation_layer_info[file.get("path")] = {
+                args = {
+                    "source_path": path,
+                    "file_metadata": file,
+                    "name_prefix": name_prefix,
+                    "color": hex_colors[0],
                     "shape": shape,
-                    "args": {
-                        "source_path": path,
-                        "file_metadata": file,
-                        "name_prefix": name_prefix,
-                        "color": hex_colors[0],
-                        "shape": shape,
-                    },
                 }
+
+                if shape == "InstanceSegmentationMask":
+                    args["visible_segments"] = visible_segments
+                    args["color"] = dict(zip(visible_segments, hex_colors))
+
+                annotation_layer_info[file.get("path")] = {"shape": shape, "args": args}
 
                 if not is_instance_seg:
                     colors_used.append(float_colors[0])
@@ -229,6 +239,18 @@ class VisualizationConfigImporter(BaseImporter):
         mesh_folder_path = os.path.join(self.config.output_prefix, oriented_mesh_filename)
         return fs.exists(mesh_folder_path)
 
+    def _get_labels(self, path: str):
+        segmentation_filename = os.path.join(self.config.output_prefix, path)
+
+        # Get labels iterating by chunks over the tab
+        # We lazy import dask and numpy
+        import dask.array as da
+        import numpy as np
+
+        reader = ZarrReader(self.config.fs, segmentation_filename)
+        arr = reader.get_data()
+        return tuple(set(da.unique(arr[arr > 0]).compute().astype(np.integer)))
+
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
@@ -240,6 +262,7 @@ class VisualizationConfigImporter(BaseImporter):
         t = time()
         print("Start contrast limit computation for", tomogram)
         contrast_limits = tomogram.get_contrast_limits()
+
         print(f"Computed contrast limit {contrast_limits} in  {(time() - t):.2f}s")
         layers = [self._to_tomogram_layer(tomogram, volume_info, resolution, contrast_limits)]
 
@@ -248,16 +271,8 @@ class VisualizationConfigImporter(BaseImporter):
         for _, info in annotation_layer_info.items():
             args = {**info["args"], "resolution": resolution}
             shape = info["shape"]
-            if shape == "SegmentationMask":
+            if shape == "SegmentationMask" or shape == "InstanceSegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
-            elif shape == "InstanceSegmentationMask":
-                # We have to load the ome zarr file and get the
-                # unique non zero labels and then set of those as visible
-                # zarr_path = args["source_path"]
-                # Unsure how to get the base dir of the above zarr path?
-                # Hard coding for the segments to show
-                visible_segments = (1, 2)
-                layers.append(self._to_segmentation_mask_layer(visible_segments=visible_segments, **args))
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 if shape == "OrientedPoint":
                     # Check if oriented point has produced meshes

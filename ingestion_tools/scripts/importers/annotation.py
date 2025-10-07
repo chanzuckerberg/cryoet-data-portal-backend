@@ -339,16 +339,18 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
 
     def convert(self, output_prefix: str):
         # output_dims = self.get_output_dim() if self.rescale else None
-        output_dims = None
+        output_dims = self.get_output_dim()
+        # output_dims = None
 
         return make_pyramids(
             self.config.fs,
             self.get_output_filename(output_prefix),
             self.path,
-            write_mrc=self.config.write_mrc,
+            write_mrc=False,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
             scale_0_dims=output_dims,
+            multilabels=True,
         )
 
 
