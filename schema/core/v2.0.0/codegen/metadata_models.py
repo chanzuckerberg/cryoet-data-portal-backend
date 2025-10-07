@@ -3549,7 +3549,11 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "mesh_source_path",
-                "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationInstanceSegmentationMaskFile",
+                ],
                 "exact_mappings": ["cdp-common:annotation_source_file_mesh_source_path"],
             }
         },
@@ -3729,7 +3733,11 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "mesh_source_path",
-                "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationInstanceSegmentationMaskFile",
+                ],
                 "exact_mappings": ["cdp-common:annotation_source_file_mesh_source_path"],
             }
         },
@@ -3900,6 +3908,21 @@ class AnnotationInstanceSegmentationMaskFile(AnnotationOrientedPointFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_order"],
                 "ifabsent": "string(xyz)",
+            }
+        },
+    )
+    mesh_source_path: Optional[str] = Field(
+        None,
+        description="""The path to the mesh source file associated with an oriented point file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "mesh_source_path",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationInstanceSegmentationMaskFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_mesh_source_path"],
             }
         },
     )

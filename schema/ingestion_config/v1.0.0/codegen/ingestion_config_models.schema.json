@@ -737,6 +737,13 @@
                         "null"
                     ]
                 },
+                "mesh_source_path": {
+                    "description": "The path to the mesh source file associated with an oriented point file.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "order": {
                     "description": "The order of axes for an oriented point / instance segmentation annotation file.",
                     "type": [
