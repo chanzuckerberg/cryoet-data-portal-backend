@@ -1,7 +1,6 @@
 import json
 import os
 import os.path
-import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
@@ -54,11 +53,23 @@ class ZarrReader:
     def __init__(self, fs, zarrdir):
         self.fs = fs
         self.zarrdir = zarrdir
+        self._loc = None
 
     def get_data(self):
-        loc = ome_zarr.io.ZarrLocation(self.fs.destformat(self.zarrdir))
+        loc = self._load_zarr_loc()
         data = loc.load("0")
         return data
+
+    @property
+    def attrs(self):
+        loc = self._load_zarr_loc()
+        group = zarr.group(loc.store)
+        return group.attrs
+
+    def _load_zarr_loc(self):
+        if self._loc is None:
+            self._loc = ome_zarr.io.ZarrLocation(self.fs.destformat(self.zarrdir))
+        return self._loc
 
 
 class ZarrWriter:
@@ -98,6 +109,7 @@ class ZarrWriter:
         voxel_spacing: List[Tuple[float, float, float]],
         chunk_size: Tuple[int, int, int] = (256, 256, 256),
         scale_z_axis: bool = True,
+        store_labels_metadata: bool = False,
     ):
         pyramid = []
         scales = []
@@ -110,6 +122,36 @@ class ZarrWriter:
         for d, vs in zip(data, voxel_spacing):
             pyramid.append(d)
             scales.append(self.ome_zarr_transforms(vs))
+
+        # Store the labels contained in the data if the flag is activated
+        if store_labels_metadata:
+
+            arr = data[0]
+
+            # t = time.perf_counter()
+            labels = [int(label) for label in np.unique(arr[arr > 0])]
+            # print(f"Time full image {time.perf_counter() - t:.3f}s {labels}")
+
+            # t = time.perf_counter()
+            # sub = arr[::10, :, :]
+            # labels = set(int(label) for label in np.unique(sub[sub > 0]))
+            # sub = arr[:, ::10, :]
+            # labels.update(int(label) for label in np.unique(sub[sub > 0]))
+            # sub = arr[:, :, :10]
+            # labels.update(int(label) for label in np.unique(sub[sub > 0]))
+            # print(f"Time 10th slices {time.perf_counter() - t:.3f}s {list(labels)}")
+
+            # t = time.perf_counter()
+            # sub = arr[::50, :, :]
+            # labels = set(int(label) for label in np.unique(sub[sub > 0]))
+            # sub = arr[:, ::50, :]
+            # labels.update(int(label) for label in np.unique(sub[sub > 0]))
+            # sub = arr[:, :, :50]
+            # labels.update(int(label) for label in np.unique(sub[sub > 0]))
+            # print(f"Time 50th slices {time.perf_counter() - t:.3f}s {list(labels)}")
+
+            label_values = [{"id": label, "label": f"{label}"} for label in labels]
+            self.root_group.attrs["labels_metadata"] = {"version": "1.0", "labels": label_values}
 
         # Write the pyramid to the zarr store
         return ome_zarr.writer.write_multiscale(
@@ -345,12 +387,18 @@ class TomoConverter:
         zarrdir: str,
         write: bool = True,
         pyramid_voxel_spacing: List[Tuple[float, float, float]] = None,
+        store_labels_metadata: bool = False,
     ) -> str:
         destination_zarrdir = fs.destformat(zarrdir)
         # Write zarr data as 256^3 voxel chunks
         if write:
             writer = ZarrWriter(fs, destination_zarrdir)
-            writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=(256, 256, 256))
+            writer.write_data(
+                pyramid,
+                voxel_spacing=pyramid_voxel_spacing,
+                chunk_size=(256, 256, 256),
+                store_labels_metadata=store_labels_metadata,
+            )
         else:
             print(f"skipping remote push for {destination_zarrdir}")
         return os.path.basename(zarrdir)
@@ -463,7 +511,6 @@ class MultiLabelMaskConverter(TomoConverter):
         if not self.scale_0_dims:
             return self.scaled_data_transformation(data)
 
-        t = time.perf_counter()
         from scipy.ndimage import zoom
 
         x, y, z = data.shape
@@ -479,7 +526,6 @@ class MultiLabelMaskConverter(TomoConverter):
         # )
 
         rescaled = zoom(data, zoom=zoom_factor, order=0)
-        print(f"Rescaled in {time.perf_counter() - t:.3f}")
 
         return self.scaled_data_transformation(rescaled)
 
@@ -570,6 +616,7 @@ def make_pyramids(
         f"{output_prefix}.zarr",
         write_zarr,
         pyramid_voxel_spacing=pyramid_voxel_spacing,
+        store_labels_metadata=multilabels,
     )
     _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
 

@@ -242,14 +242,19 @@ class VisualizationConfigImporter(BaseImporter):
     def _get_labels(self, path: str):
         segmentation_filename = os.path.join(self.config.output_prefix, path)
 
-        # Get labels iterating by chunks over the tab
-        # We lazy import dask and numpy
-        import dask.array as da
-        import numpy as np
-
         reader = ZarrReader(self.config.fs, segmentation_filename)
-        arr = reader.get_data()
-        return tuple(set(da.unique(arr[arr > 0]).compute().astype(np.integer)))
+        try:
+            labels_info = reader.attrs.get("labels_metadata", {})["labels"]
+            labels = [label["id"] for label in labels_info]
+        except Exception:
+            # Get labels iterating by chunks over the tab
+            # We lazy import dask and numpy
+            import dask.array as da
+            import numpy as np
+
+            arr = reader.get_data()
+            labels = set(da.unique(arr[arr > 0]).compute().astype(np.integer))
+        return tuple(labels)
 
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
