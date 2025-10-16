@@ -1,0 +1,302 @@
+alignments:
+  - metadata:
+      alignment_type: GLOBAL
+      format: IMOD
+      is_portal_standard: true
+      method_type: fiducial_based
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - Stacks/tlt_files/{run_name}.tlt
+            - Stacks/xf_files/{run_name}.xf
+annotations:
+  - metadata:
+      annotation_method: Manual particle picking on 16x binned tomograms; 60x60x60 voxels
+      annotation_object:
+        id: GO:0033176
+        name: proton-transporting V-type ATPase complex
+      annotation_software: manual picking
+      authors: &id001
+        - name: Uljana Kravčenko
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0009-0004-7176-8444
+        - name: Max Ruwolt
+          primary_author_status: false
+          corresponding_author_status: false
+        - name: Jana Kroll
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0003-4243-4088
+        - name: Artsemi Yushkevich
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-8729-9281
+        - name: Martina Zenkner
+          primary_author_status: false
+          corresponding_author_status: false
+        - name: Julia Ruta
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0009-0007-0524-6885
+        - name: Rowaa Lotfy
+          primary_author_status: false
+          corresponding_author_status: false
+        - name: Erich E. Wanker
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0001-8072-1630
+        - name: Christian Rosenmund
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-3905-2444
+        - name: Fan Liu
+          primary_author_status: false
+          corresponding_author_status: false
+        - name: Mikhail Kudryashev
+          primary_author_status: false
+          corresponding_author_status: true
+          ORCID: 0000-0003-3550-6274
+          email: mikhail.kudryashev@mdc-berlin.de
+      dates: &id002
+        deposition_date: "2025-01-27"
+        last_modified_date: "2025-07-25"
+        release_date: "2025-07-25"
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: &id003
+        - custom_name: Dynamo
+          link: https://dynamo-em.org/
+          link_type: website
+        - custom_name: RELION 4
+          link: https://relion.readthedocs.io/
+          link_type: documentation
+      method_type: manual
+      version: 1.0
+    sources:
+      - Point:
+          binning: 16
+          columns: xyz
+          file_format: relion4_star
+          glob_string: particle_tables/V_ATPases_dataset_1_relion_3D_refine_superres.star
+          is_visualization_default: true
+  - metadata:
+      annotation_method: Manual particle picking on 16x binned tomograms; 116x116x116 voxels
+      annotation_object:
+        id: GO:0030118
+        name: clathrin coat
+      annotation_software: manual picking
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: manual
+      version: 1.0
+    sources:
+      - Point:
+          binning: 16
+          columns: xyz
+          file_format: relion4_star
+          glob_string: particle_tables/CCVs_fragment_relion_dataset_1.star
+          is_visualization_default: true
+ctfs:
+  - metadata:
+      format: Gctf # TODO: do we have to convert this?
+    sources:
+      - source_glob:
+          list_glob: "Stacks/defocus_files/{run_name}_defocus.txt"
+dataset_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
+collection_metadata:
+  - sources:
+      - source_glob:
+          list_glob: combined_mdocs/{mapped_tilt_series_name}.mdoc
+datasets:
+  - metadata:
+      assay:
+        name: microscopy assay
+        id: EFO:0002909
+      authors: *id001
+      cell_component:
+        name: synaptic vesicle
+        id: GO:0008021
+      cross_references: &id004
+        publications: 10.1073/pnas.2407375121
+        related_database_entries: EMPIAR-12794, EMD-18578, EMD-18568, EMD-18557, EMD-18572, EMD-18556
+      dataset_description: >
+        CryoET data of synaptic vesicles (SVs) isolated from mouse brain. Includes raw tilt-series movies, alignment, defocusm and tilt angle metadata, and reconstructed tomograms capturing vesicle ultrastructure and surrounding molecular features.
+        Samples were plunge-frozen and imaged on a Titan Krios microscope equipped with a Falcon 4 detector and energy filter. Data processing was performed using TomoBEAR for workflow management.
+        Aligned frames were motion-corrected with MotionCor2, and tilt-series alignment was carried out using DynamoTSA with manual refinement in IMOD based on 10-nm or 5-nm gold fiducial markers.
+        Defocus values were estimated using Gctf, and CTF correction was applied with ctfphaseflip from IMOD. Final reconstructions were generated by weighted backprojection in IMOD.
+      dataset_identifier: 10453
+      dataset_title: CryoET of isolated synaptic vesicles from mouse brain
+      dates: *id002
+      development_stage:
+        name: 5-week-old stage
+        id: MmusDv:0000150
+      disease:
+        name: normal
+        id: PATO:0000461
+      funding:
+        - funding_agency_name: German Research Foundation (DFG)
+          grant_id: INST 335/588-1 FUGG
+        - funding_agency_name: German Research Foundation (DFG)
+          grant_id: KU3222/3-1
+        - funding_agency_name: German Research Foundation (DFG)
+          grant_id: "458275811"
+        - funding_agency_name: German Research Foundation (DFG)
+          grant_id: "399894546"
+        - funding_agency_name: German Research Foundation (DFG)
+          grant_id: "436260754"
+        - funding_agency_name: European Research Council (ERC)
+          grant_id: ERC-STG 949184
+        - funding_agency_name: Leibniz Association
+          grant_id: P70/2018
+        - funding_agency_name: Helmholtz Society
+          grant_id: null
+        - funding_agency_name: Chemical Industry Fund of the German Chemical Industry Association (Kekulé Fellowship)
+          grant_id: null
+        - funding_agency_name: DiGiTal program (Berliner Chancengleichheitsprogramm, BCP)
+          grant_id: null
+      grid_preparation: >
+        Glow-discharged UltrAuFoil R1.2/1.3 or Quantifoil R2/1 Cu/Au grids were coated with collagen/poly-D-lysine.
+        For vesicle samples, 4 µL of vesicle-gold fiducial mixture (10 nm or 5 nm gold, 1:10) was applied, blotted 3 s at 4 °C / 98% RH,
+        and plunge-frozen in liquid ethane (Vitrobot). For neuronal grids, 4 µL freezing buffer with 10 nm BSA-gold fiducials was added
+        before backside blotting (16 s, 37 °C, 80% RH) and plunge-freezing.
+      organism:
+        name: Mus musculus
+        taxonomy_id: 10090
+      sample_preparation: >
+        Synaptic vesicles were isolated from hippocampus, cortex, and cerebellum of 40-day-old mice via differential
+        centrifugation (LP2 fraction) in HEPES-sucrose buffer. Three vesicle conditions were prepared: untreated, ATP-treated
+        (4.5 µM ATP, 5 µM MgCl₂), and bafilomycin A1-treated (90 nM). For neuron-on-grid samples, cells expressing
+        ChR2(E123T/T159C) were briefly optogenetically stimulated prior to freezing.
+      sample_type: organelle
+      tissue:
+        name: brain
+        id: UBERON:0000955
+    sources:
+      - literal:
+          value:
+            - 10453
+depositions:
+  - metadata:
+      authors: *id001
+      cross_references: *id004
+      dates: *id002
+      deposition_description: >
+        Cryo-electron tomography data of synaptic vesicles isolated from mouse brain tissue. The deposition includes raw
+        tilt-series movies, alignment transforms, defocus/tilt metadata, aligned stacks, and CTF-corrected tomograms.
+        Samples were plunge-frozen and imaged on a 300 kV Titan Krios with a Falcon 4 detector and energy filter. Processing
+        used TomoBEAR, with MotionCor2 for frame alignment, DynamoTSA/IMOD for tilt-series alignment, Gctf and IMOD
+        ctfphaseflip for CTF handling, and weighted back-projection in IMOD for reconstruction.
+      deposition_identifier: 10453
+      deposition_title: CryoET of isolated synaptic vesicles from mouse brain
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10453
+frames:
+  - metadata:
+      dose_rate: float {tilt_series_dose_rate}
+      is_gain_corrected: false
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - frames_1/{mapped_tilt_series_name}*.tif
+            - frames_2/{mapped_tilt_series_name}*.tif
+gains:
+  - sources:
+      - source_glob:
+          list_glob: "{gain_file}"
+runs:
+  - sources:
+      - source_glob:
+          list_glob: Stacks/st_files/*.st
+          match_regex: .*
+          name_regex: (.*)\.st$
+        exclude: # missing frames. TODO: do we want to still include these but just have no corresponding frames?
+          - tomogram_002
+          - tomogram_012
+          - tomogram_023
+          - tomogram_043
+standardization_config:
+  deposition_id: 10453
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: EMPIAR/12794/data/
+tiltseries:
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: Gatan
+        model: K3
+      data_acquisition_software: SerialEM
+      is_aligned: false
+      microscope:
+        manufacturer: TFS
+        model: TITAN KRIOS G3i
+      microscope_optical_setup:
+        energy_filter: Gatan Bioquantum
+      pixel_spacing: 0.84
+      spherical_aberration_constant: 2.7
+      tilt_axis: float {tilt_axis}
+      tilt_range:
+        max: float {tilt_series_max_tilt}
+        min: float {tilt_series_min_tilt}
+      tilt_series_quality: int {tilt_series_quality}
+      tilt_step: 3.0
+      tilting_scheme: dose-symmetric
+      total_flux: float {tilt_series_total_flux}
+    sources:
+      - source_glob:
+          list_glob: Stacks/st_files/{run_name}.st
+tomograms:
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *id001
+      ctf_corrected: true
+      dates: *id002
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 13.440
+    sources:
+      - source_glob:
+          list_glob: tomograms/{run_name}_bin_16.rec
+version: 1.0.0
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 13.440
