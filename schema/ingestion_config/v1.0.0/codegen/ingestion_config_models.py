@@ -1,29 +1,12 @@
-from __future__ import annotations 
-from datetime import (
-    datetime,
-    date
-)
-from decimal import Decimal 
-from enum import Enum 
+from __future__ import annotations
+
 import re
-import sys
-from typing import (
-    Any,
-    ClassVar,
-    List,
-    Literal,
-    Dict,
-    Optional,
-    Union
-)
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    RootModel,
-    field_validator,
-    conlist
-)
+from datetime import date
+from enum import Enum
+from typing import Any, ClassVar, Dict, List, Optional, Union
+
+from pydantic import BaseModel, ConfigDict, Field, RootModel, conlist, field_validator
+
 metamodel_version = "None"
 version = "1.1.0"
 
@@ -8068,4 +8051,3 @@ VoxelSpacingParentFilters.model_rebuild()
 VoxelSpacingParent.model_rebuild()
 VoxelSpacingLiteral.model_rebuild()
 TomogramHeader.model_rebuild()
-
