@@ -112,7 +112,7 @@ class GctfCTF(BaseCTFConverter):
 
 def ctf_converter_factory(metadata: dict, config: DepositionImportConfig, path: str) -> BaseCTFConverter:
     ctf_format = (metadata.get("format") or "").upper()
-    if ctf_format == "Gctf":
+    if ctf_format == "GCTF":
         return GctfCTF(config, path)
     if ctf_format == "CTFFIND":
         return AreTomo3CTF(config, path)
