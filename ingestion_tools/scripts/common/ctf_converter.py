@@ -12,8 +12,16 @@ class CTFInfo:
         cross_correlation (float): Cross correlation value.
         max_resolution (float): Maximum resolution (A).
     """
+
     def __init__(
-            self, section: int, defocus_1: float, defocus_2: float, azimuth: float, phase_shift: float, cross_correlation: float, max_resolution: float,
+        self,
+        section: int,
+        defocus_1: float,
+        defocus_2: float,
+        azimuth: float,
+        phase_shift: float,
+        cross_correlation: float,
+        max_resolution: float,
     ):
         self.section = section
         self.defocus_1 = defocus_1
@@ -35,7 +43,6 @@ class BaseCTFConverter:
 
 
 class AreTomo3CTF(BaseCTFConverter):
-
     def get_ctf_info(self) -> list[CTFInfo]:
         local_path = self.config.fs.localreadable(self.path)
         with open(local_path, "r") as f:
@@ -57,8 +64,56 @@ class AreTomo3CTF(BaseCTFConverter):
             max_resolution=float(parts[6]),
         )
 
+
+class GctfCTF(BaseCTFConverter):
+    def get_ctf_info(self) -> list[CTFInfo]:
+        local_path = self.config.fs.localreadable(self.path)
+        infos: list[CTFInfo] = []
+        with open(local_path, "r") as f:
+            for raw in f:
+                line = raw.strip()
+                if not line or line.startswith(("#", ";", "%")):
+                    continue
+                infos.append(self.from_str(line))
+        return infos
+
+    @classmethod
+    def from_str(cls, line: str) -> CTFInfo:
+        parts = line.split()
+        if len(parts) not in (6, 7):
+            raise ValueError(f"Gctf summary row must have 6 or 7 columns (got {len(parts)}): {line}")
+
+        section = int(round(float(parts[0])))
+        defocus_1 = float(parts[1])
+        defocus_2 = float(parts[2])
+        azimuth = float(parts[3])
+
+        if len(parts) == 7:
+            # 7-col: idx, defU, defV, angle, phaseShift, CC, resolution
+            phase_shift = float(parts[4])
+            cross_correlation = float(parts[5])
+            max_resolution = float(parts[6])
+        else:
+            # 6-col: idx, defU, defV, angle, CC, resolution (no phase shift provided)
+            phase_shift = 0.0
+            cross_correlation = float(parts[4])
+            max_resolution = float(parts[5])
+
+        return CTFInfo(
+            section=section,
+            defocus_1=defocus_1,
+            defocus_2=defocus_2,
+            azimuth=azimuth,
+            phase_shift=phase_shift,
+            cross_correlation=cross_correlation,
+            max_resolution=max_resolution,
+        )
+
+
 def ctf_converter_factory(metadata: dict, config: DepositionImportConfig, path: str) -> BaseCTFConverter:
-    ctf_format = metadata.get("format")
+    ctf_format = (metadata.get("format") or "").upper()
+    if ctf_format == "GCTF":
+        return GctfCTF(config, path)
     if ctf_format == "CTFFIND":
         return AreTomo3CTF(config, path)
     return BaseCTFConverter(config, path)

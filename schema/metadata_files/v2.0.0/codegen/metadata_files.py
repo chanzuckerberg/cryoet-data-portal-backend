@@ -84,11 +84,21 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                           'from_schema': 'metadata',
                           'name': 'BTO_ID',
                           'pattern': '^BTO:[0-9]{7}$'},
+               'CC_ID': {'base': 'str',
+                         'description': 'A Cell Culture Collection identifier',
+                         'from_schema': 'metadata',
+                         'name': 'CC_ID',
+                         'pattern': '^CC-[0-9]{4}$'},
                'CL_ID': {'base': 'str',
                          'description': 'A Cell Ontology identifier',
                          'from_schema': 'metadata',
                          'name': 'CL_ID',
                          'pattern': '^CL:[0-9]{7}$'},
+               'CVCL_ID': {'base': 'str',
+                           'description': 'A Cellosaurus identifier',
+                           'from_schema': 'metadata',
+                           'name': 'CVCL_ID',
+                           'pattern': '^CVCL_[A-Z0-9]{4,}$'},
                'DOI': {'base': 'str',
                        'description': 'A Digital Object Identifier',
                        'from_schema': 'metadata',
@@ -99,6 +109,12 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                             'from_schema': 'metadata',
                             'name': 'DOI_LIST',
                             'pattern': '^(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\\s*,\\s*(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$'},
+               'EFO_ID': {'base': 'str',
+                          'description': 'An Experimental Factor Ontology '
+                                         'identifier',
+                          'from_schema': 'metadata',
+                          'name': 'EFO_ID',
+                          'pattern': '^EFO:[0-9]{7}$'},
                'EMDB_ID': {'base': 'str',
                            'description': 'An Electron Microscopy Data Bank '
                                           'identifier',
@@ -124,6 +140,18 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                              'from_schema': 'metadata',
                              'name': 'EMPIAR_ID',
                              'pattern': '^EMPIAR-[0-9]+$'},
+               'FBBT_ID': {'base': 'str',
+                           'description': 'A drosophila anatomy ontology '
+                                          'identifier',
+                           'from_schema': 'metadata',
+                           'name': 'FBBT_ID',
+                           'pattern': 'FBbt:[0-9]{8}$'},
+               'FBDV_ID': {'base': 'str',
+                           'description': 'A drosophila developmental stage '
+                                          'ontology identifier',
+                           'from_schema': 'metadata',
+                           'name': 'FBDV_ID',
+                           'pattern': 'FBdv:[0-9]{8}$'},
                'FloatFormattedString': {'base': 'str',
                                         'description': 'A formatted string that '
                                                        'represents a floating '
@@ -137,6 +165,12 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                          'from_schema': 'metadata',
                          'name': 'GO_ID',
                          'pattern': '^GO:[0-9]{7}$'},
+               'HSAPDV_ID': {'base': 'str',
+                             'description': 'A human developmental phenotype '
+                                            'ontology identifier',
+                             'from_schema': 'metadata',
+                             'name': 'HSAPDV_ID',
+                             'pattern': 'HsapDv:[0-9]{7}$'},
                'IntegerFormattedString': {'base': 'str',
                                           'description': 'A formatted string that '
                                                          'represents an integer.',
@@ -144,6 +178,22 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                                           'name': 'IntegerFormattedString',
                                           'pattern': '^int[ '
                                                      ']*\\{[a-zA-Z0-9_-]+\\}[ ]*$'},
+               'MMUSDV_ID': {'base': 'str',
+                             'description': 'A mouse developmental stage ontology '
+                                            'identifier',
+                             'from_schema': 'metadata',
+                             'name': 'MMUSDV_ID',
+                             'pattern': 'MmusDv:[0-9]{7}$'},
+               'MONDO_ID': {'base': 'str',
+                            'description': 'An identifier of type MONDO',
+                            'from_schema': 'metadata',
+                            'name': 'MONDO_ID',
+                            'pattern': '^MONDO:[0-9]{7}$'},
+               'NCBI_TAXON_ID': {'base': 'str',
+                                 'description': 'A NCBI Taxonomy identifier',
+                                 'from_schema': 'metadata',
+                                 'name': 'NCBI_TAXON_ID',
+                                 'pattern': '^NCBITaxon:[0-9]+$'},
                'ONTOLOGY_ID': {'base': 'str',
                                'description': 'An ontology identifier',
                                'from_schema': 'metadata',
@@ -155,6 +205,11 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                          'from_schema': 'metadata',
                          'name': 'ORCID',
                          'pattern': '[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$'},
+               'PATO_ID': {'base': 'str',
+                           'description': 'An identifier of type PATO',
+                           'from_schema': 'metadata',
+                           'name': 'PATO_ID',
+                           'pattern': '^PATO:[0-9]{7}$'},
                'PDB_ID': {'base': 'str',
                           'description': 'A Protein Data Bank identifier',
                           'from_schema': 'metadata',
@@ -168,11 +223,22 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                                          'name': 'StringFormattedString',
                                          'pattern': '^[ ]*\\{[a-zA-Z0-9_-]+\\}[ '
                                                     ']*$'},
+               'UBERON_ID': {'base': 'str',
+                             'description': 'An UBERON identifier',
+                             'from_schema': 'metadata',
+                             'name': 'UBERON_ID',
+                             'pattern': '^UBERON:[0-9]{7}$'},
                'UNIPROT_ID': {'base': 'str',
                               'description': 'A UniProt identifier',
                               'from_schema': 'metadata',
                               'name': 'UNIPROT_ID',
                               'pattern': '^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$'},
+               'UNKNOWN_LITERAL': {'base': 'str',
+                                   'description': 'A placeholder for an unknown '
+                                                  'value.',
+                                   'from_schema': 'metadata',
+                                   'name': 'UNKNOWN_LITERAL',
+                                   'pattern': '^unknown$'},
                'URLorS3URI': {'base': 'str',
                               'description': 'A URL or S3 URI',
                               'from_schema': 'metadata',
@@ -184,11 +250,34 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                                  'from_schema': 'metadata',
                                  'minimum_value': 0,
                                  'name': 'VersionString'},
-               'WORMBASE_ID': {'base': 'str',
-                               'description': 'A WormBase identifier',
-                               'from_schema': 'metadata',
-                               'name': 'WORMBASE_ID',
-                               'pattern': 'WBStrain[0-9]{8}$'},
+               'WBBT_ID': {'base': 'str',
+                           'description': 'A WormBase anatomy ontology identifier',
+                           'from_schema': 'metadata',
+                           'name': 'WBBT_ID',
+                           'pattern': 'WBbt:[0-9]{7}$'},
+               'WORMBASE_DEVELOPMENT_ID': {'base': 'str',
+                                           'description': 'A WormBase '
+                                                          'developmental stage '
+                                                          'identifier',
+                                           'from_schema': 'metadata',
+                                           'name': 'WORMBASE_DEVELOPMENT_ID',
+                                           'pattern': 'WBls:[0-9]{7}$'},
+               'WORMBASE_STRAIN_ID': {'base': 'str',
+                                      'description': 'A WormBase strain identifier',
+                                      'from_schema': 'metadata',
+                                      'name': 'WORMBASE_STRAIN_ID',
+                                      'pattern': 'WBStrain[0-9]{8}$'},
+               'ZFA_ID': {'base': 'str',
+                          'description': 'A zebrafish anatomy ontology identifier',
+                          'from_schema': 'metadata',
+                          'name': 'ZFA_ID',
+                          'pattern': 'ZFA:[0-9]{7}$'},
+               'ZFS_ID': {'base': 'str',
+                          'description': 'A zebrafish developmental stage ontology '
+                                         'identifier',
+                          'from_schema': 'metadata',
+                          'name': 'ZFS_ID',
+                          'pattern': 'ZFS:[0-9]{7}$'},
                'boolean': {'base': 'Bool',
                            'description': 'A binary (true or false) value',
                            'exact_mappings': ['schema:Boolean'],
@@ -523,6 +612,8 @@ class CtfFormatEnum(str, Enum):
     """
     # The file has ctffind schema
     CTFFIND = "CTFFIND"
+    # The file has Gctf schema
+    Gctf = "Gctf"
 
 
 class DepositionTypesEnum(str, Enum):
@@ -541,22 +632,26 @@ class SampleTypeEnum(str, Enum):
     """
     Type of sample imaged in a CryoET study.
     """
-    # Tomographic data of whole cells or cell sections.
-    cell = "cell"
-    # Tomographic data of tissue sections.
-    tissue = "tissue"
-    # Tomographic data of sections through multicellular organisms.
-    organism = "organism"
-    # Tomographic data of purified organelles.
-    organelle = "organelle"
-    # Tomographic data of purified viruses or VLPs.
-    virus = "virus"
-    # Tomographic data of in vitro reconstituted systems or mixtures of proteins.
-    in_vitro = "in_vitro"
+    # Tomographic data of immortalized cells or immortalized cell sections
+    cell_line = "cell_line"
     # Simulated tomographic data.
     in_silico = "in_silico"
+    # Tomographic data of in vitro reconstituted systems or mixtures of proteins.
+    in_vitro = "in_vitro"
+    # Tomographic data of purified organelles.
+    organelle = "organelle"
+    # Tomographic data of sections through multicellular organisms.
+    organism = "organism"
+    # Tomographic data of organoid-derived samples.
+    organoid = "organoid"
     # Other type of sample.
     other = "other"
+    # Tomographic data of whole primary cells or primary cell sections.
+    primary_cell_culture = "primary_cell_culture"
+    # Tomographic data of tissue sections.
+    tissue = "tissue"
+    # Tomographic data of purified viruses or VLPs.
+    virus = "virus"
 
 
 class TiltseriesCameraAcquireModeEnum(str, Enum):
@@ -813,6 +908,151 @@ class PicturedMetadataEntity(ConfiguredBaseModel):
                        'DepositionMetadata']} })
 
 
+class Assay(ConfiguredBaseModel):
+    """
+    The assay that was used to create the dataset.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: str = Field(..., description="""Name of the assay component.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
+                       'TissueDetails',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject',
+                       'AnnotationTriangularMeshGroupFile',
+                       'AuthorMixin',
+                       'Author'],
+         'exact_mappings': ['cdp-common:assay_name']} })
+    id: Optional[str] = Field(None, description="""The EFO identifier for the cellular component.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'TissueDetails',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:assay_id'],
+         'recommended': True} })
+
+    @field_validator('id')
+    def pattern_id(cls, v):
+        pattern=re.compile(r"^EFO:[0-9]{7}$")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid id format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid id format: {v}")
+        return v
+
+
+class DevelopmentStageDetails(ConfiguredBaseModel):
+    """
+    The development stage of the patients or organisms from which assayed biosamples were derived.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: Optional[str] = Field(None, description="""Name of the developmental stage component.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
+                       'TissueDetails',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject',
+                       'AnnotationTriangularMeshGroupFile',
+                       'AuthorMixin',
+                       'Author'],
+         'exact_mappings': ['cdp-common:development_stage_name'],
+         'recommended': True} })
+    id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'any_of': [{'range': 'UNKNOWN_LITERAL'},
+                    {'range': 'WORMBASE_DEVELOPMENT_ID'},
+                    {'range': 'UBERON_ID'},
+                    {'range': 'HSAPDV_ID'},
+                    {'range': 'MMUSDV_ID'},
+                    {'range': 'ZFS_ID'},
+                    {'range': 'FBDV_ID'}],
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'TissueDetails',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:development_stage_id'],
+         'recommended': True} })
+
+    @field_validator('id')
+    def pattern_id(cls, v):
+        pattern=re.compile(r"(^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)|(MmusDv:[0-9]{7}$)|(ZFS:[0-9]{7}$)|(FBdv:[0-9]{8}$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid id format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid id format: {v}")
+        return v
+
+
+class Disease(ConfiguredBaseModel):
+    """
+    The disease or condition of the patients from which assayed biosamples were derived.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
+
+    name: Optional[str] = Field(None, description="""Name of the disease.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
+                       'TissueDetails',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject',
+                       'AnnotationTriangularMeshGroupFile',
+                       'AuthorMixin',
+                       'Author'],
+         'exact_mappings': ['cdp-common:disease_name'],
+         'recommended': True} })
+    id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'any_of': [{'range': 'MONDO_ID'}, {'range': 'PATO_ID'}],
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'TissueDetails',
+                       'CellType',
+                       'CellStrain',
+                       'CellComponent',
+                       'AnnotationObject'],
+         'exact_mappings': ['cdp-common:disease_id'],
+         'recommended': True} })
+
+    @field_validator('id')
+    def pattern_id(cls, v):
+        pattern=re.compile(r"(^MONDO:[0-9]{7}$)|(^PATO:[0-9]{7}$)")
+        if isinstance(v,list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid id format: {element}")
+        elif isinstance(v,str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid id format: {v}")
+        return v
+
+
 class OrganismDetails(ConfiguredBaseModel):
     """
     The species from which the sample was derived.
@@ -820,7 +1060,10 @@ class OrganismDetails(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     name: str = Field(..., description="""Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
-         'domain_of': ['OrganismDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
                        'TissueDetails',
                        'CellType',
                        'CellStrain',
@@ -843,7 +1086,10 @@ class TissueDetails(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     name: str = Field(..., description="""Name of the tissue from which a biological sample used in a CryoET study is derived from.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
-         'domain_of': ['OrganismDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
                        'TissueDetails',
                        'CellType',
                        'CellStrain',
@@ -853,8 +1099,16 @@ class TissueDetails(ConfiguredBaseModel):
                        'AuthorMixin',
                        'Author'],
          'exact_mappings': ['cdp-common:tissue_name']} })
-    id: Optional[str] = Field(None, description="""The UBERON identifier for the tissue.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
-         'domain_of': ['TissueDetails',
+    id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'any_of': [{'range': 'CL_ID'},
+                    {'range': 'WBBT_ID'},
+                    {'range': 'ZFA_ID'},
+                    {'range': 'FBBT_ID'},
+                    {'range': 'UBERON_ID'}],
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'TissueDetails',
                        'CellType',
                        'CellStrain',
                        'CellComponent',
@@ -864,7 +1118,7 @@ class TissueDetails(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"^BTO:[0-9]{7}$")
+        pattern=re.compile(r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -882,7 +1136,10 @@ class CellType(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     name: str = Field(..., description="""Name of the cell type from which a biological sample used in a CryoET study is derived from.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
-         'domain_of': ['OrganismDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
                        'TissueDetails',
                        'CellType',
                        'CellStrain',
@@ -892,8 +1149,16 @@ class CellType(ConfiguredBaseModel):
                        'AuthorMixin',
                        'Author'],
          'exact_mappings': ['cdp-common:cell_name']} })
-    id: Optional[str] = Field(None, description="""Cell Ontology identifier for the cell type""", json_schema_extra = { "linkml_meta": {'alias': 'id',
-         'domain_of': ['TissueDetails',
+    id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
+         'any_of': [{'range': 'CL_ID'},
+                    {'range': 'WBBT_ID'},
+                    {'range': 'ZFA_ID'},
+                    {'range': 'FBBT_ID'},
+                    {'range': 'UBERON_ID'}],
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'TissueDetails',
                        'CellType',
                        'CellStrain',
                        'CellComponent',
@@ -903,7 +1168,7 @@ class CellType(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"^CL:[0-9]{7}$")
+        pattern=re.compile(r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -921,7 +1186,10 @@ class CellStrain(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     name: str = Field(..., description="""Cell line or strain for the sample.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
-         'domain_of': ['OrganismDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
                        'TissueDetails',
                        'CellType',
                        'CellStrain',
@@ -932,8 +1200,14 @@ class CellStrain(ConfiguredBaseModel):
                        'Author'],
          'exact_mappings': ['cdp-common:cell_strain_name']} })
     id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
-         'any_of': [{'range': 'WORMBASE_ID'}, {'range': 'ONTOLOGY_ID'}],
-         'domain_of': ['TissueDetails',
+         'any_of': [{'range': 'WORMBASE_STRAIN_ID'},
+                    {'range': 'NCBI_TAXON_ID'},
+                    {'range': 'CVCL_ID'},
+                    {'range': 'CC_ID'}],
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'TissueDetails',
                        'CellType',
                        'CellStrain',
                        'CellComponent',
@@ -943,7 +1217,7 @@ class CellStrain(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)")
+        pattern=re.compile(r"(WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -961,7 +1235,10 @@ class CellComponent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
     name: str = Field(..., description="""Name of the cellular component.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
-         'domain_of': ['OrganismDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
                        'TissueDetails',
                        'CellType',
                        'CellStrain',
@@ -972,7 +1249,10 @@ class CellComponent(ConfiguredBaseModel):
                        'Author'],
          'exact_mappings': ['cdp-common:cell_component_name']} })
     id: Optional[str] = Field(None, description="""The GO identifier for the cellular component.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
-         'domain_of': ['TissueDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'TissueDetails',
                        'CellType',
                        'CellStrain',
                        'CellComponent',
@@ -1024,10 +1304,16 @@ class ExperimentMetadata(ConfiguredBaseModel):
          'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
     cell_component: Optional[CellComponent] = Field(None, description="""The cellular component from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_component',
          'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    assay: Assay = Field(..., description="""The assay that was used to create the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'assay',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    development_stage: DevelopmentStageDetails = Field(..., description="""The development stage of the patients or organisms from which assayed biosamples were derived.""", json_schema_extra = { "linkml_meta": {'alias': 'development_stage',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    disease: Disease = Field(..., description="""The disease or condition of the patients from which assayed biosamples were derived.""", json_schema_extra = { "linkml_meta": {'alias': 'disease',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
 
     @field_validator('sample_type')
     def pattern_sample_type(cls, v):
-        pattern=re.compile(r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)")
+        pattern=re.compile(r"(^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -1116,10 +1402,16 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
          'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
     cell_component: Optional[CellComponent] = Field(None, description="""The cellular component from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_component',
          'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    assay: Assay = Field(..., description="""The assay that was used to create the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'assay',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    development_stage: DevelopmentStageDetails = Field(..., description="""The development stage of the patients or organisms from which assayed biosamples were derived.""", json_schema_extra = { "linkml_meta": {'alias': 'development_stage',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    disease: Disease = Field(..., description="""The disease or condition of the patients from which assayed biosamples were derived.""", json_schema_extra = { "linkml_meta": {'alias': 'disease',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
 
     @field_validator('sample_type')
     def pattern_sample_type(cls, v):
-        pattern=re.compile(r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)")
+        pattern=re.compile(r"(^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -1879,14 +2171,20 @@ class AnnotationObject(ConfiguredBaseModel):
 
     id: str = Field(..., description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
          'any_of': [{'range': 'GO_ID'}, {'range': 'UNIPROT_ID'}],
-         'domain_of': ['TissueDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'TissueDetails',
                        'CellType',
                        'CellStrain',
                        'CellComponent',
                        'AnnotationObject'],
          'exact_mappings': ['cdp-common:annotation_object_id']} })
     name: str = Field(..., description="""Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)""", json_schema_extra = { "linkml_meta": {'alias': 'name',
-         'domain_of': ['OrganismDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
                        'TissueDetails',
                        'CellType',
                        'CellStrain',
@@ -2034,6 +2332,10 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_order'],
          'ifabsent': 'string(xyz)'} })
+    mesh_source_path: Optional[str] = Field(None, description="""The path to the mesh source file associated with an oriented point file.""", json_schema_extra = { "linkml_meta": {'alias': 'mesh_source_path',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_mesh_source_path']} })
     file_format: str = Field(..., description="""File format for this file""", json_schema_extra = { "linkml_meta": {'alias': 'file_format',
          'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2116,6 +2418,10 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationInstanceSegmentationFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_order'],
          'ifabsent': 'string(xyz)'} })
+    mesh_source_path: Optional[str] = Field(None, description="""The path to the mesh source file associated with an oriented point file.""", json_schema_extra = { "linkml_meta": {'alias': 'mesh_source_path',
+         'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_mesh_source_path']} })
     file_format: str = Field(..., description="""File format for this file""", json_schema_extra = { "linkml_meta": {'alias': 'file_format',
          'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2483,7 +2789,10 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
          'exact_mappings': ['cdp-common:annotation_source_file_scale_factor'],
          'ifabsent': 'float(1)'} })
     name: Optional[str] = Field(None, description="""The name that identifies to a single annotation mesh among multiple meshes.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
-         'domain_of': ['OrganismDetails',
+         'domain_of': ['Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
+                       'OrganismDetails',
                        'TissueDetails',
                        'CellType',
                        'CellStrain',
@@ -2995,7 +3304,7 @@ class Ctf(ConfiguredBaseModel):
 
     @field_validator('format')
     def pattern_format(cls, v):
-        pattern=re.compile(r"^CTFFIND$")
+        pattern=re.compile(r"(^CTFFIND$)|(^Gctf$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -3133,6 +3442,9 @@ class AuthorMixin(ConfiguredBaseModel):
     name: str = Field(..., description="""The full name of the author.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
          'domain_of': ['AuthorMixin',
                        'Author',
+                       'Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
                        'OrganismDetails',
                        'TissueDetails',
                        'CellType',
@@ -3182,6 +3494,9 @@ class Author(AuthorMixin):
          'exact_mappings': ['cdp-common:kaggle_id']} })
     name: str = Field(..., description="""The full name of the author.""", json_schema_extra = { "linkml_meta": {'alias': 'name',
          'domain_of': ['AuthorMixin',
+                       'Assay',
+                       'DevelopmentStageDetails',
+                       'Disease',
                        'OrganismDetails',
                        'TissueDetails',
                        'CellType',
@@ -3728,10 +4043,16 @@ class DatasetMetadata(DefaultMetadata, Dataset, PicturedMetadataEntity):
          'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
     cell_component: Optional[CellComponent] = Field(None, description="""The cellular component from which the sample was derived.""", json_schema_extra = { "linkml_meta": {'alias': 'cell_component',
          'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    assay: Assay = Field(..., description="""The assay that was used to create the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'assay',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    development_stage: DevelopmentStageDetails = Field(..., description="""The development stage of the patients or organisms from which assayed biosamples were derived.""", json_schema_extra = { "linkml_meta": {'alias': 'development_stage',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
+    disease: Disease = Field(..., description="""The disease or condition of the patients from which assayed biosamples were derived.""", json_schema_extra = { "linkml_meta": {'alias': 'disease',
+         'domain_of': ['ExperimentMetadata', 'Dataset', 'DatasetMetadata']} })
 
     @field_validator('sample_type')
     def pattern_sample_type(cls, v):
-        pattern=re.compile(r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)")
+        pattern=re.compile(r"(^cell_line$)|(^in_silico$)|(^in_vitro$)|(^organelle$)|(^organism$)|(^organoid$)|(^other$)|(^primary_cell_culture$)|(^tissue$)|(^virus$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -4319,6 +4640,9 @@ FundedEntity.model_rebuild()
 CrossReferencedEntity.model_rebuild()
 PicturedEntity.model_rebuild()
 PicturedMetadataEntity.model_rebuild()
+Assay.model_rebuild()
+DevelopmentStageDetails.model_rebuild()
+Disease.model_rebuild()
 OrganismDetails.model_rebuild()
 TissueDetails.model_rebuild()
 CellType.model_rebuild()
