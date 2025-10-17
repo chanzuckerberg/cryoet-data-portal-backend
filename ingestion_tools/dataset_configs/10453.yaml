@@ -102,7 +102,7 @@ annotations:
           is_visualization_default: true
 ctfs:
   - metadata:
-      format: Gctf # TODO: do we have to convert this?
+      format: Gctf
     sources:
       - source_glob:
           list_glob: "Stacks/defocus_files/{run_name}_defocus.txt"
