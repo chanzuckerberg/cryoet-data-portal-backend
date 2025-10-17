@@ -1,12 +1,29 @@
 from __future__ import annotations
-
-import re
-from datetime import date
+from datetime import (
+    datetime,
+    date
+)
+from decimal import Decimal
 from enum import Enum
-from typing import Any, ClassVar, Dict, List, Optional, Union
-
-from pydantic import BaseModel, ConfigDict, Field, RootModel, conlist, field_validator
-
+import re
+import sys
+from typing import (
+    Any,
+    ClassVar,
+    List,
+    Literal,
+    Dict,
+    Optional,
+    Union
+)
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    RootModel,
+    field_validator,
+    conlist
+)
 metamodel_version = "None"
 version = "2.0.0"
 
@@ -595,6 +612,8 @@ class CtfFormatEnum(str, Enum):
     """
     # The file has ctffind schema
     CTFFIND = "CTFFIND"
+    # The file has Gctf schema
+    Gctf = "Gctf"
 
 
 class DepositionTypesEnum(str, Enum):
@@ -3285,7 +3304,7 @@ class Ctf(ConfiguredBaseModel):
 
     @field_validator('format')
     def pattern_format(cls, v):
-        pattern=re.compile(r"^CTFFIND$")
+        pattern=re.compile(r"(^CTFFIND$)|(^Gctf$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):

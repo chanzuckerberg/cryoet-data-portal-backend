@@ -1332,6 +1332,8 @@ enums:
     permissible_values:
       CTFFIND:
         description: The file has ctffind schema
+      Gctf:
+        description: The file has Gctf schema
 
   deposition_types_enum:
     description: Types of data a deposition has

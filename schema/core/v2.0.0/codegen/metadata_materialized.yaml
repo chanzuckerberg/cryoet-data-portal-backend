@@ -605,6 +605,9 @@ enums:
       CTFFIND:
         text: CTFFIND
         description: The file has ctffind schema
+      Gctf:
+        text: Gctf
+        description: The file has Gctf schema
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has
@@ -5284,7 +5287,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: ^CTFFIND$
+        pattern: (^CTFFIND$)|(^Gctf$)
   Any:
     name: Any
     description: A placeholder for any type of data.
