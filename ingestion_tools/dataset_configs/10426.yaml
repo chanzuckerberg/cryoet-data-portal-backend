@@ -1,17 +1,22 @@
 alignments:
 - metadata:
-    format: IMOD
+    format: ARETOMO3
     method_type: fiducial_based
+    is_portal_standard: true
   sources:
-  - source_multi_glob:
-      list_globs:
-      - alignmentfiles/{run_name}_binalign8_fid.tlt
-      - alignmentfiles/{run_name}_binalign8_fid.xf
+  - source_glob:
+      list_glob: 'reprocessed/{run_name}/ts/{run_name}_ts.aln'
 annotations: []
 collection_metadata:
 - sources:
   - source_glob:
       list_glob: mdocs/{mdoc_name}
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: 'reprocessed/{run_name}/rec/{run_name}_ts_CTF.txt'
 datasets:
 - metadata:
     authors: &id001
@@ -129,7 +134,7 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    binning_from_frames: 8
+    binning_from_frames: 2
     camera:
       manufacturer: Gatan
       model: K3
@@ -140,7 +145,7 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Gatan Bioquantum
-    pixel_spacing: 8.66
+    pixel_spacing: 2.165
     spherical_aberration_constant: 2.7
     tilt_axis: 177.0
     tilt_range:
@@ -152,8 +157,8 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: tilt_series/{run_name}_binalign8.st
-      match_regex: ^.*\.st$
+      list_glob: reprocessed/{run_name}/ts/{run_name}_ts.mrc
+      match_regex: ^.*\.mrc$
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -173,8 +178,15 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
-    ctf_corrected: false
+    authors:
+      - name: Daniel Ji
+        ORCID: 0009-0003-2008-9583
+        primary_author_status: true
+      - name: Utz Heinrich Ermel
+        ORCID: 0000-0003-4685-037X
+        primary_author_status: true
+        corresponding_author_status: true
+    ctf_corrected: true
     dates: *id003
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
@@ -182,15 +194,101 @@ tomograms:
       x: 0
       y: 0
       z: 0
-    processing: raw
-    reconstruction_method: SIRT
-    reconstruction_software: IMOD
+    processing: filtered
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.1.10
     tomogram_version: 1
     voxel_spacing: 8.66
   sources:
   - source_glob:
-      list_glob: tomograms_bin8/{run_name}_binalign8.rec
-      match_regex: (.*)\.rec
+      list_glob: 'reprocessed/{run_name}/rec/{run_name}_ts_Vol.mrc'
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors:
+      - name: Daniel Ji
+        ORCID: 0009-0003-2008-9583
+        primary_author_status: true
+      - name: Utz Heinrich Ermel
+        ORCID: 0000-0003-4685-037X
+        primary_author_status: true
+        corresponding_author_status: true
+    ctf_corrected: false
+    dates: *id003
+    fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.1.10
+    tomogram_version: 1
+    voxel_spacing: 8.66
+  sources:
+  - source_glob:
+      list_glob: 'reprocessed/{run_name}/rec/{run_name}_ts_2ND_Vol.mrc'
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors:
+      - name: Daniel Ji
+        ORCID: 0009-0003-2008-9583
+        primary_author_status: true
+      - name: Utz Heinrich Ermel
+        ORCID: 0000-0003-4685-037X
+        primary_author_status: true
+        corresponding_author_status: true
+    ctf_corrected: false
+    dates: *id003
+    fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: SART
+    reconstruction_software: AreTomo3 v2.1.10
+    tomogram_version: 1
+    voxel_spacing: 8.66
+  sources:
+  - source_glob:
+      list_glob: 'reprocessed/{run_name}/rec/{run_name}_ts_3RD_Vol.mrc'
+      match_regex: (.*)\.mrc
 version: 1.1.0
 voxel_spacings:
 - sources:
