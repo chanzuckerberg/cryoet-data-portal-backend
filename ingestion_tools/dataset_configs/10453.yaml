@@ -183,7 +183,7 @@ datasets:
     sources:
       - literal:
           value:
-            - 10453
+            - '10453'
 depositions:
   - metadata:
       authors: *id001
@@ -195,14 +195,14 @@ depositions:
         Samples were plunge-frozen and imaged on a 300 kV Titan Krios with a Falcon 4 detector and energy filter. Processing
         used TomoBEAR, with MotionCor2 for frame alignment, DynamoTSA/IMOD for tilt-series alignment, Gctf and IMOD
         ctfphaseflip for CTF handling, and weighted back-projection in IMOD for reconstruction.
-      deposition_identifier: 10453
+      deposition_identifier: 10334
       deposition_title: CryoET of isolated synaptic vesicles from mouse brain
       deposition_types:
         - dataset
     sources:
       - literal:
           value:
-            - 10453
+            - 10334
 frames:
   - metadata:
       dose_rate: float {tilt_series_dose_rate}
