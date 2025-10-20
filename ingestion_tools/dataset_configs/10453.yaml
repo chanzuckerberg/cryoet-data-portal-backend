@@ -228,7 +228,7 @@ runs:
           - tomogram_023
           - tomogram_043
 standardization_config:
-  deposition_id: 10453
+  deposition_id: 10334
   run_data_map_file: run_to_data_map.tsv
   source_prefix: EMPIAR/12794/data/
 tiltseries:
