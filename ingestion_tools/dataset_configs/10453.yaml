@@ -216,6 +216,10 @@ gains:
   - sources:
       - source_glob:
           list_glob: "{gain_file}"
+rawtilts:
+  - sources:
+      - source_glob:
+          list_glob: Stacks/tlt_files/{run_name}.tlt
 runs:
   - sources:
       - source_glob:
