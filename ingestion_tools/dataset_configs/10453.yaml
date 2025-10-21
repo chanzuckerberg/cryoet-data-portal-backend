@@ -219,7 +219,7 @@ gains:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: Stacks/tlt_files/{run_name}.tlt
+          list_glob: Stacks/rawtlt_files/{run_name}.rawtlt
 runs:
   - sources:
       - source_glob:
