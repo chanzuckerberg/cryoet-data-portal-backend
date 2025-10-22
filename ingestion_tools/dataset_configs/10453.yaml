@@ -7,7 +7,7 @@ alignments:
     sources:
       - source_multi_glob:
           list_globs:
-            - Stacks/tlt_files/{run_name}.tlt
+            - Stacks/tlt_files_corrected/{run_name}.tlt
             - Stacks/xf_files/{run_name}.xf
 annotations:
   - metadata:
@@ -219,7 +219,7 @@ gains:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: Stacks/rawtlt_files/{run_name}.rawtlt
+          list_glob: Stacks/rawtlt_files_corrected/{run_name}.rawtlt
 runs:
   - sources:
       - source_glob:
