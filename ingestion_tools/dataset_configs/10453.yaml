@@ -74,9 +74,8 @@ annotations:
       method_type: manual
       version: 1.0
     sources:
-      - Point:
+      - OrientedPoint:
           binning: 16
-          columns: xyz
           file_format: relion4_star
           glob_string: particle_tables/V_ATPases_dataset_1_relion_3D_refine_superres.star
           is_visualization_default: true
@@ -94,11 +93,48 @@ annotations:
       method_type: manual
       version: 1.0
     sources:
-      - Point:
+      - OrientedPoint:
           binning: 16
-          columns: xyz
           file_format: relion4_star
-          glob_string: particle_tables/CCVs_fragment_relion_dataset_1.star
+          glob_string: particle_tables/CCVs_fragment_relion_dataset_1_fixed.star
+          is_visualization_default: true
+  - metadata:
+      annotation_method: Final particle set of manually picked V-ATPases were used for a focused refinement on the Voa1 region (V0 domain).
+      annotation_object:
+        id: GO:0033179
+        name: proton-transporting V-type ATPase, V0 domain
+      annotation_software: manual picking, Dynamo, RELION 4
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 16
+          file_format: relion4_star
+          glob_string: particle_tables/V0_Syp_focused_relion_3D_refine_superres_dataset_1.star
+          is_visualization_default: true
+  - metadata:
+      annotation_method: Single clathrin triskelia were obtained by classifying CCV fragments, recentering on a clathrin hexamer with C6 symmetry, and cropping single triskelia.
+      annotation_object:
+        id: GO:0071439
+        name: clathrin complex
+      annotation_software: manual picking, Dynamo, RELION 4
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id003
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 16
+          file_format: relion4_star
+          glob_string: particle_tables/single_triskelia_dataset_1.star
           is_visualization_default: true
 ctfs:
   - metadata:
