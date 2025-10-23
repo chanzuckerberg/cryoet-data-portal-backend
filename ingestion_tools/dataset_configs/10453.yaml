@@ -76,6 +76,7 @@ annotations:
     sources:
       - OrientedPoint:
           binning: 16
+          order: xyz
           file_format: relion4_star
           glob_string: particle_tables/V_ATPases_dataset_1_relion_3D_refine_superres.star
           is_visualization_default: true
@@ -95,6 +96,7 @@ annotations:
     sources:
       - OrientedPoint:
           binning: 16
+          order: xyz
           file_format: relion4_star
           glob_string: particle_tables/CCVs_fragment_relion_dataset_1_fixed.star
           is_visualization_default: true
@@ -114,6 +116,7 @@ annotations:
     sources:
       - OrientedPoint:
           binning: 16
+          order: xyz
           file_format: relion4_star
           glob_string: particle_tables/V0_Syp_focused_relion_3D_refine_superres_dataset_1.star
           is_visualization_default: true
@@ -133,6 +136,7 @@ annotations:
     sources:
       - OrientedPoint:
           binning: 16
+          order: xyz
           file_format: relion4_star
           glob_string: particle_tables/single_triskelia_dataset_1.star
           is_visualization_default: true
