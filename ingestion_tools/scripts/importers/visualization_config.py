@@ -246,15 +246,13 @@ class VisualizationConfigImporter(BaseImporter):
                 is_instance_seg = shape == "InstanceSegmentation" or shape == "InstanceSegmentationMask"
 
                 args = {
-
-                            "source_path": path,
-                            "file_metadata": file,
-                            "name_prefix": name_prefix,
-                            "color": hex_colors[0],
-                            "shape": shape,
-                            "resolution": (voxel_spacing * 1e-10,) * 3,
-
-                    }
+                    "source_path": path,
+                    "file_metadata": file,
+                    "name_prefix": name_prefix,
+                    "color": hex_colors[0],
+                    "shape": shape,
+                    "resolution": (voxel_spacing * 1e-10,) * 3,
+                }
 
                 if shape == "InstanceSegmentationMask":
                     args["visible_segments"] = visible_segments
@@ -299,8 +297,8 @@ class VisualizationConfigImporter(BaseImporter):
 
         reader = ZarrReader(self.config.fs, segmentation_filename)
         try:
-            labels_info = reader.attrs.get("labels_metadata", {})["labels"]
-            labels = [label["id"] for label in labels_info]
+            labels_info = reader.attrs.get("image-label", {})["colors"]
+            labels = [label["label-value"] for label in labels_info]
         except Exception:
             # Get labels iterating by chunks over the tab
             # We lazy import dask and numpy
@@ -308,7 +306,7 @@ class VisualizationConfigImporter(BaseImporter):
             import numpy as np
 
             arr = reader.get_data()
-            labels = set(da.unique(arr[arr > 0]).compute().astype(np.integer))
+            labels = set(da.unique(arr).compute().astype(np.integer))
         return tuple(labels)
 
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:

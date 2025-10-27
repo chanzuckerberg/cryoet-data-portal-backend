@@ -125,34 +125,10 @@ class ZarrWriter:
 
         # Store the labels contained in the data if the flag is activated
         if store_labels_metadata:
-
             arr = data[0]
-
-            # t = time.perf_counter()
-            labels = [int(label) for label in np.unique(arr[arr > 0])]
-            # print(f"Time full image {time.perf_counter() - t:.3f}s {labels}")
-
-            # t = time.perf_counter()
-            # sub = arr[::10, :, :]
-            # labels = set(int(label) for label in np.unique(sub[sub > 0]))
-            # sub = arr[:, ::10, :]
-            # labels.update(int(label) for label in np.unique(sub[sub > 0]))
-            # sub = arr[:, :, :10]
-            # labels.update(int(label) for label in np.unique(sub[sub > 0]))
-            # print(f"Time 10th slices {time.perf_counter() - t:.3f}s {list(labels)}")
-
-            # t = time.perf_counter()
-            # sub = arr[::50, :, :]
-            # labels = set(int(label) for label in np.unique(sub[sub > 0]))
-            # sub = arr[:, ::50, :]
-            # labels.update(int(label) for label in np.unique(sub[sub > 0]))
-            # sub = arr[:, :, :50]
-            # labels.update(int(label) for label in np.unique(sub[sub > 0]))
-            # print(f"Time 50th slices {time.perf_counter() - t:.3f}s {list(labels)}")
-
-            # Move to other section
-            label_values = [{"id": label, "label": f"{label}"} for label in labels]
-            self.root_group.attrs["labels_metadata"] = {"version": "1.0", "labels": label_values}
+            labels = [int(label) for label in np.unique(arr)]
+            label_values = [{"label-value": label} for label in labels]
+            self.root_group.attrs["image-label"] = {"version": "0.4", "colors": label_values}
 
         # Write the pyramid to the zarr store
         return ome_zarr.writer.write_multiscale(
