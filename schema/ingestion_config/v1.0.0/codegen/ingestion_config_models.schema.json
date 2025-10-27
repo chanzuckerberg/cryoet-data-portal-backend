@@ -687,24 +687,9 @@
             "additionalProperties": false,
             "description": "File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks.",
             "properties": {
-                "binning": {
-                    "description": "The binning factor for a point / oriented point / instance segmentation annotation file.",
-                    "minimum": 0,
-                    "type": [
-                        "number",
-                        "null"
-                    ]
-                },
                 "file_format": {
                     "description": "File format for this file",
                     "type": "string"
-                },
-                "filter_value": {
-                    "description": "The filter value for an oriented point / instance segmentation annotation file.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
                 },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
@@ -737,17 +722,10 @@
                         "null"
                     ]
                 },
-                "mesh_source_path": {
-                    "description": "The path to the mesh source file associated with an oriented point file.",
+                "rescale": {
+                    "description": "Whether the annotation file needs to be rescaled.",
                     "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "order": {
-                    "description": "The order of axes for an oriented point / instance segmentation annotation file.",
-                    "type": [
-                        "string",
+                        "boolean",
                         "null"
                     ]
                 }
