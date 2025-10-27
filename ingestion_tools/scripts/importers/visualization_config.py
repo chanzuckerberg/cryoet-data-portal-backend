@@ -89,7 +89,7 @@ class VisualizationConfigImporter(BaseImporter):
         output_resolution = output_resolution or resolution
         return state_generator.generate_segmentation_mask_layer(
             source=source_path,
-            name=f"{name_prefix} segmentation",
+            name=f"{name_prefix} {'segmentation' if len(visible_segments) == 1 else 'instancesegmentation' }",
             url=self.config.https_prefix,
             color=color,
             scale=resolution,

@@ -150,6 +150,7 @@ class ZarrWriter:
             # labels.update(int(label) for label in np.unique(sub[sub > 0]))
             # print(f"Time 50th slices {time.perf_counter() - t:.3f}s {list(labels)}")
 
+            # Move to other section
             label_values = [{"id": label, "label": f"{label}"} for label in labels]
             self.root_group.attrs["labels_metadata"] = {"version": "1.0", "labels": label_values}
 
@@ -516,6 +517,8 @@ class MultiLabelMaskConverter(TomoConverter):
         x, y, z = data.shape
         nx, ny, nz = self.scale_0_dims
         zoom_factor = (nx / x, ny / y, nz / z)
+        if zoom_factor == (1.0, 1.0, 1.0):
+            return self.scaled_data_transformation(data)
 
         # rescaled = rescale(
         #     data,
@@ -531,10 +534,10 @@ class MultiLabelMaskConverter(TomoConverter):
 
     @classmethod
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
-        # For instance segmentation masks we have multiple labels, so we want an uint 32 output.
+        # For instance segmentation masks we have multiple labels, so we want an uint 16 output.
+        # We used uint16 and not uint32 as it seems MRC format doesn't handle well int > 16.
         # downscale_local_mean will return float array even for bool input with non-binary values
-        # return data.astype(np.uint32)
-        return data
+        return data.astype(np.uint16)
 
 
 def get_volume_metadata(config: DepositionImportConfig, output_prefix: str) -> dict[str, Any]:
