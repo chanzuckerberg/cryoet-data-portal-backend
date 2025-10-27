@@ -320,27 +320,22 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
 
 class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "InstanceSegmentationMask"
-    mask_label: int
-    scale_factor: float
+    rescale: bool = False
     is_portal_standard: bool
 
     def __init__(
         self,
-        mask_label: int | None = None,
-        scale_factor: float = 1.0,
+        rescale: bool = False,
         is_portal_standard: bool = False,
         *args,
         **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)
-        self.mask_label = mask_label if mask_label else 1
-        self.scale_factor = scale_factor
+        self.rescale = rescale
         self.is_portal_standard = is_portal_standard
 
     def convert(self, output_prefix: str):
-        # output_dims = self.get_output_dim() if self.rescale else None
-        output_dims = self.get_output_dim()
-        # output_dims = None
+        output_dims = self.get_output_dim() if self.rescale else None
 
         return make_pyramids(
             self.config.fs,
