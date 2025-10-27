@@ -7098,6 +7098,7 @@ enum annotation_file_shape_type_enum {
   OrientedPoint
   Point
   InstanceSegmentation
+  InstanceSegmentationMask
   Mesh
 }
 

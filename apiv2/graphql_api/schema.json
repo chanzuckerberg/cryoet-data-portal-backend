@@ -12322,6 +12322,9 @@
               "name": "InstanceSegmentation"
             },
             {
+              "name": "InstanceSegmentationMask"
+            },
+            {
               "name": "Mesh"
             }
           ],
