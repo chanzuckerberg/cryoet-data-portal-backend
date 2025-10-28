@@ -303,10 +303,10 @@ class VisualizationConfigImporter(BaseImporter):
             # Get labels iterating by chunks over the tab
             # We lazy import dask and numpy
             import dask.array as da
-            import numpy as np
 
             arr = reader.get_data()
-            labels = set(da.unique(arr).compute().astype(np.integer))
+            labels = da.unique(arr).compute()
+            labels = labels[labels > 0].astype(int)
         return tuple(labels)
 
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:

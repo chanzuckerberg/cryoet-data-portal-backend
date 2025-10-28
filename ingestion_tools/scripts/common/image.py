@@ -15,7 +15,8 @@ import zarr
 from mrcfile.mrcfile import MrcFile
 from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
-from skimage.transform import downscale_local_mean, resize_local_mean
+from skimage.measure import block_reduce
+from skimage.transform import resize_local_mean
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi, S3Filesystem
@@ -126,7 +127,7 @@ class ZarrWriter:
         # Store the labels contained in the data if the flag is activated
         if store_labels_metadata:
             arr = data[0]
-            labels = [int(label) for label in np.unique(arr)]
+            labels = [int(label) for label in np.unique(arr) if label > 0]
             label_values = [{"label-value": label} for label in labels]
             self.root_group.attrs["image-label"] = {"version": "0.4", "colors": label_values}
 
@@ -299,12 +300,15 @@ class TomoConverter:
 
         return compute_contrast_limits(self.volume_reader.data, method=method)
 
+    def get_downscale_interpolation_func(self):
+        return np.mean
+
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
         self,
         max_layers: int = 2,
         scale_z_axis: bool = True,
-        voxel_spacing: float = None,
+        voxel_spacing: float | None = None,
     ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
         # Voxel size for unbinned
         if not voxel_spacing:
@@ -317,8 +321,11 @@ class TomoConverter:
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
         z_scale = 2 if scale_z_axis else 1
         # Then make a pyramid of 100/50/25 percent scale volumes
+        downscale_method = self.get_downscale_interpolation_func()
         for i in range(max_layers):
-            downscaled_data = self.scaled_data_transformation(downscale_local_mean(pyramid[i], (z_scale, 2, 2)))
+            downscaled_data = self.scaled_data_transformation(
+                block_reduce(pyramid[i], block_size=(z_scale, 2, 2), func=downscale_method),
+            )
             pyramid.append(downscaled_data)
             pyramid_voxel_spacing.append(
                 (
@@ -514,6 +521,9 @@ class MultiLabelMaskConverter(TomoConverter):
         # We used uint16 and not uint32 as it seems MRC format doesn't handle well int > 16.
         # downscale_local_mean will return float array even for bool input with non-binary values
         return data.astype(np.uint16)
+
+    def get_downscale_interpolation_func(self):
+        return np.max
 
 
 def get_volume_metadata(config: DepositionImportConfig, output_prefix: str) -> dict[str, Any]:
