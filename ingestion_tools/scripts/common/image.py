@@ -503,14 +503,6 @@ class MultiLabelMaskConverter(TomoConverter):
         if zoom_factor == (1.0, 1.0, 1.0):
             return self.scaled_data_transformation(data)
 
-        # rescaled = rescale(
-        #     data,
-        #     scale=zoom_factor,
-        #     order=0,
-        #     preserve_range=True,
-        #     anti_aliasing=False,
-        # )
-
         rescaled = zoom(data, zoom=zoom_factor, order=0)
 
         return self.scaled_data_transformation(rescaled)
@@ -519,7 +511,7 @@ class MultiLabelMaskConverter(TomoConverter):
     def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
         # For instance segmentation masks we have multiple labels, so we want an uint 16 output.
         # We used uint16 and not uint32 as it seems MRC format doesn't handle well int > 16.
-        # downscale_local_mean will return float array even for bool input with non-binary values
+        # zoom will return float array even for bool input with non-binary values
         return data.astype(np.uint16)
 
     def get_downscale_interpolation_func(self):
