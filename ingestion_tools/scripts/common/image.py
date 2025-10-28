@@ -125,21 +125,25 @@ class ZarrWriter:
             scales.append(self.ome_zarr_transforms(vs))
 
         # Store the labels contained in the data if the flag is activated
+        metadata = {}
         if store_labels_metadata:
             arr = data[0]
             labels = [int(label) for label in np.unique(arr) if label > 0]
             label_values = [{"label-value": label} for label in labels]
-            self.root_group.attrs["image-label"] = {"version": "0.4", "colors": label_values}
+            metadata["image-label"] = {"version": "0.4", "colors": label_values}
 
         # Write the pyramid to the zarr store
-        return ome_zarr.writer.write_multiscale(
+        delayed_values = ome_zarr.writer.write_multiscale(
             pyramid,
             group=self.root_group,
             axes=self.ome_zarr_axes(),
             coordinate_transformations=scales,
             storage_options=dict(chunks=chunk_size, overwrite=True),
             compute=True,
+            metadata=metadata,
         )
+
+        return delayed_values
 
 
 class VolumeReader(ABC):

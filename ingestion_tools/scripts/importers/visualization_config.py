@@ -297,7 +297,7 @@ class VisualizationConfigImporter(BaseImporter):
 
         reader = ZarrReader(self.config.fs, segmentation_filename)
         try:
-            labels_info = reader.attrs.get("image-label", {})["colors"]
+            labels_info = reader.attrs["multiscales"][0]["metadata"]["image-label"]["colors"]
             labels = [label["label-value"] for label in labels_info]
         except Exception:
             # Get labels iterating by chunks over the tab
