@@ -197,7 +197,7 @@ class AnnotationShape(EntityInterface):
         Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
     ] = load_annotation_file_aggregate_rows  # type:ignore
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
-        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
+        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)",
         default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -312,7 +312,7 @@ class AnnotationShapeCreateInput:
         description="Metadata about an shapes for an annotation", default=None,
     )
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
-        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
+        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)",
         default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -324,7 +324,7 @@ class AnnotationShapeUpdateInput:
         description="Metadata about an shapes for an annotation", default=None,
     )
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
-        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)",
+        description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)",
         default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
