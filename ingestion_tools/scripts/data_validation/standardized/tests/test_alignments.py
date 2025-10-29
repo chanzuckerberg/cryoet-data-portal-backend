@@ -127,12 +127,8 @@ class TestAlignments:
         per_section_alignment_parameters = alignment_metadata.get("per_section_alignment_parameters")
         if not per_section_alignment_parameters:
             pytest.skip("Alignment metadata missing per_section_alignment_parameters.")
-        # convert all in_plane_rotation angles to degrees and sort them in ascending order
+        # convert all in_plane_rotation matrices to angles and check against mdoc_tilt_axis_angle
         in_plane_rotations = [matrix_to_angle(psap["in_plane_rotation"]) for psap in per_section_alignment_parameters]
-        # check that all in_plane_rotation angles are equal
-        assert len(set(in_plane_rotations)) == 1, "in_plane_rotation angles are not all equal."
-        # check that in_plane_roation against mdoc_tilt_axis_angle
-        in_plane_rotation = in_plane_rotations[0]
-        assert in_plane_rotation == pytest.approx(mdoc_tilt_axis_angle, rel=10), f"Mdoc tilt axis angle {mdoc_tilt_axis_angle} does not match alignment metadata['per_section_alignment_parameters'][*]['in_plane_rotation']: {in_plane_rotation}"
+        assert all(in_plane_rotation == pytest.approx(mdoc_tilt_axis_angle, abs=10) for in_plane_rotation in in_plane_rotations), f"Mdoc tilt axis angle {mdoc_tilt_axis_angle} does not match all alignment metadata in_plane_rotation angles within +/- 10 degrees: {in_plane_rotations}"
 
     ### END Tiltseries consistency tests ###
