@@ -1188,17 +1188,6 @@
                     ],
                     "description": "File and sourcing data for an instance segmentation annotation. Annotation that identifies individual instances of object shapes."
                 },
-                "InstanceSegmentationMask": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/AnnotationInstanceSegmentationMaskFile"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks."
-                },
                 "OrientedPoint": {
                     "anyOf": [
                         {

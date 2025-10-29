@@ -987,10 +987,10 @@ classes:
         - Alignment
         - AnnotationOrientedPointFile
         - AnnotationInstanceSegmentationFile
-        - AnnotationInstanceSegmentationMaskFile
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: boolean
@@ -1082,10 +1082,10 @@ classes:
         - AnnotationSourceFile
         - AnnotationOrientedPointFile
         - AnnotationInstanceSegmentationFile
-        - AnnotationInstanceSegmentationMaskFile
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationFileMetadata
@@ -2924,10 +2924,10 @@ classes:
         - AnnotationSourceFile
         - AnnotationOrientedPointFile
         - AnnotationInstanceSegmentationFile
-        - AnnotationInstanceSegmentationMaskFile
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationFileMetadata

@@ -302,9 +302,6 @@ classes:
       InstanceSegmentation:
         description: The instance segmentation annotation source.
         range: AnnotationInstanceSegmentationFile
-      InstanceSegmentationMask:
-        description: The instance segmentation mask annotation source.
-        range: AnnotationInstanceSegmentationMaskFile
       OrientedPoint:
         description: The oriented point annotation source.
         range: AnnotationOrientedPointFile
