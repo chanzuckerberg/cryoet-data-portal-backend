@@ -31,7 +31,7 @@ class FrameItem(ItemDBImporter):
         file_path = self.input_data["path"]
         self.model_args["s3_frame_path"] = self.get_s3_url(file_path) if file_path else None
         self.model_args["https_frame_path"] = self.get_https_url(file_path) if file_path else None
-        self.model_args["file_size"] = self.get_file_size(self.input_data["file"]) if file_path else "0"
+        self.model_args["file_size"] = self.get_file_size(file_path) if file_path else None
 
         self.model_args["run_id"] = self.input_data["run"].id
         self.model_args["deposition_id"] = self.input_data["deposition"].id
