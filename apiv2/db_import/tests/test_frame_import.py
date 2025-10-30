@@ -19,7 +19,7 @@ def expected_frames(http_prefix: str) -> list[dict[str, Any]]:
             "is_gain_corrected": True,
             "s3_frame_path": "s3://test-public-bucket/30001/RUN1/Frames/frame1",
             "https_frame_path": "https://foo.com/30001/RUN1/Frames/frame1",
-            "file_size": 0,
+            "file_size": 11.0,
         },
         {
             "acquisition_order": 1,
@@ -28,7 +28,7 @@ def expected_frames(http_prefix: str) -> list[dict[str, Any]]:
             "is_gain_corrected": True,
             "s3_frame_path": "s3://test-public-bucket/30001/RUN1/Frames/frame2",
             "https_frame_path": "https://foo.com/30001/RUN1/Frames/frame2",
-            "file_size": 0,
+            "file_size": 11.0,
         },
         {
             "acquisition_order": 2,
@@ -37,7 +37,7 @@ def expected_frames(http_prefix: str) -> list[dict[str, Any]]:
             "is_gain_corrected": True,
             "s3_frame_path": None,
             "https_frame_path": None,
-            "file_size": 0,
+            "file_size": None,
         },
     ]
 
