@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.2](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.13.1...apiv2-v1.13.2) (2025-10-30)
+
+
+### Bug Fixes
+
+* Populate frame file_size field correctly during import ([#539](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/539)) ([dc7abf7](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/dc7abf7fc42ecb9228f5350f9a04bb0170261aa3))
+
 ## [1.13.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.13.0...apiv2-v1.13.1) (2025-09-11)
 
 
