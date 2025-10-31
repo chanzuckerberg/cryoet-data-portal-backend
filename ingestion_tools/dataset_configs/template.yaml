@@ -93,6 +93,15 @@ annotations: OPTIONAL
       delimiter: OPTIONAL, STRING (DEFAULT ',')
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
+  - InstanceSegmentationMask:
+      file_format: see InstanceSegmentation.file_format
+      glob_string: see InstanceSegmentation.glob_string
+      glob_strings: see InstanceSegmentation.glob_strings
+      is_visualization_default: see InstanceSegmentation.is_visualization_default
+      is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
+      rescale: OPTIONAL, BOOLEAN (DEFAULT FALSE)
+    parent_filters: see InstanceSegmentation.parent_filters
+    exclude: SEE InstanceSegmentation.exclude
   - SegmentationMask:
       file_format: see InstanceSegmentation.file_format
       glob_string: see InstanceSegmentation.glob_string

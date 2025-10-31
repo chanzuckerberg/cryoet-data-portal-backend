@@ -54,6 +54,24 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
     path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/"
     return [
         {
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
+            "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_instancesegmask.mrc",
+            "https_path": f"{http_prefix}/{path}100-foo-1.0_instancesegmask.mrc",
+            "source": "community",
+            "format": "mrc",
+            "is_visualization_default": False,
+            "file_size": 0,
+        },
+        {
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
+            "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_instancesegmask.zarr",
+            "https_path": f"{http_prefix}/{path}100-foo-1.0_instancesegmask.zarr",
+            "source": "community",
+            "format": "zarr",
+            "is_visualization_default": False,
+            "file_size": 0,
+        },
+        {
             "id": ANNOTATION_FILE_ID,
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_point.ndjson",
