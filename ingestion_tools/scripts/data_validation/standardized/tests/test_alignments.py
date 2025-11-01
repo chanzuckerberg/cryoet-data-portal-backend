@@ -1,3 +1,4 @@
+import re
 from typing import Dict, List
 
 import allure
@@ -5,6 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
+from data_validation.shared.helper.tiltseries_helper import TILT_AXIS_ANGLE_REGEX
 
 
 def matrix_to_angle(matrix: list[list[float]]) -> float:
@@ -58,6 +60,15 @@ class TestAlignments:
             alignment_tiltseries_metadata["tilt_step"],
         ).tolist()
 
+    @pytest.fixture
+    def mdoc_tilt_axis_angle(self, mdoc_data: pd.DataFrame) -> float:
+        # To convert the data from the mdoc into a data frame, all the global records are added to each section's data
+        titles = mdoc_data["titles"][0]
+        for title in titles:
+            if result := re.match(TILT_AXIS_ANGLE_REGEX, title.lower()):
+                return float(result[1])
+        pytest.fail("No Tilt axis angle found")
+
     ### BEGIN Tilt .tlt tests ###
     @allure.title("Alignment: angles exist.")
     def test_tilt_count(self, alignment_tilt: pd.DataFrame):
@@ -109,23 +120,15 @@ class TestAlignments:
             "tilt file",
             "tiltseries metadata tilt_range",
         )
-        assert len(errors) == 0, (
-            "\n".join(errors)
-            + f"\nRange: {alignment_tiltseries_metadata['tilt_range']['min']} to {alignment_tiltseries_metadata['tilt_range']['max']}, with step {alignment_tiltseries_metadata['tilt_step']}"
-        )
+        assert len(errors) == 0, "\n".join(errors) + f"\nRange: {alignment_tiltseries_metadata['tilt_range']['min']} to {alignment_tiltseries_metadata['tilt_range']['max']}, with step {alignment_tiltseries_metadata['tilt_step']}"
 
     @allure.title("Alignment: tilt angle in mdoc file matches that in the alignment metadata [per_section_alignment_parameters.in_plane_rotation] (+/- 10 deg)")
     def test_mdoc_tilt_axis_angle_in_alignment_per_section_alignment_parameters(self, mdoc_tilt_axis_angle: float, alignment_metadata: dict[str, dict]):
         per_section_alignment_parameters = alignment_metadata.get("per_section_alignment_parameters")
         if not per_section_alignment_parameters:
             pytest.skip("Alignment metadata missing per_section_alignment_parameters.")
-        # convert all in_plane_rotation angles to degrees and sort them in ascending order
+        # convert all in_plane_rotation matrices to angles and check against mdoc_tilt_axis_angle
         in_plane_rotations = [matrix_to_angle(psap["in_plane_rotation"]) for psap in per_section_alignment_parameters]
-        # check that all in_plane_rotation angles are equal
-        assert len(set(in_plane_rotations)) == 1, "in_plane_rotation angles are not all equal."
-        # check that in_plane_roation against mdoc_tilt_axis_angle
-        in_plane_rotation = in_plane_rotations[0]
-        assert in_plane_rotation == pytest.approx(mdoc_tilt_axis_angle, rel=10), f"Mdoc tilt axis angle {mdoc_tilt_axis_angle} does not match alignment metadata['per_section_alignment_parameters'][*]['in_plane_rotation']: {in_plane_rotation}"
-
+        assert all(in_plane_rotation == pytest.approx(mdoc_tilt_axis_angle, abs=10) for in_plane_rotation in in_plane_rotations), f"Mdoc tilt axis angle {mdoc_tilt_axis_angle} does not match all alignment metadata in_plane_rotation angles within +/- 10 degrees: {in_plane_rotations}"
 
     ### END Tiltseries consistency tests ###
