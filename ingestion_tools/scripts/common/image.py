@@ -144,11 +144,11 @@ class ZarrWriter:
                 {
                     "path": path,
                     "coordinateTransformations": self.ome_zarr_transforms(vs),
-                }
+                },
             )
 
         ome_zarr.writer.write_multiscales_metadata(
-            group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/"
+            group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/",
         )
 
 
