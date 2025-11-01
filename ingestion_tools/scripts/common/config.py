@@ -28,7 +28,7 @@ class RunOverride:
 
 
 class DepositionImportConfig:
-    https_prefix = os.getenv("DOMAIN_NAME", "https://files.cryoetdataportal.cziscience.com")
+    https_prefix: str
     # Core metadata
     source_prefix: str
 
@@ -60,8 +60,10 @@ class DepositionImportConfig:
         output_prefix: str,
         input_bucket: str,
         object_classes: list[BaseImporter],
+        https_prefix: str | None = None,
     ):
         self.output_prefix = output_prefix
+        self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
         self.fs = fs
         self.run_to_tomo_map = {}
         self.run_data_map = {}

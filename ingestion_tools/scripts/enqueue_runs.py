@@ -131,6 +131,12 @@ def run_job(
         input=json.dumps(sfn_input_json),
     )
 
+def get_default_https_prefix(environment):
+    https_prefix = "https://files.cryoet.staging.si.czi.technology"
+    if environment == "prod":
+        https_prefix = "https://files.cryoetdataportal.cziscience.com"
+    return https_prefix
+
 
 def get_aws_env(environment):
     # Learn more about our AWS environment
@@ -267,9 +273,7 @@ def db_import(
         if env == "prod":
             s3_bucket = "cryoet-data-portal-public"
     if not https_prefix:
-        https_prefix = "https://files.cryoet.staging.si.czi.technology"
-        if env == "prod":
-            https_prefix = "https://files.cryoetdataportal.cziscience.com"
+        https_prefix = get_default_https_prefix(env)
 
     # Default to using a lot less memory than the ingestion job.
     if not ctx.obj.get("memory"):
@@ -331,6 +335,7 @@ def db_import(
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
+@click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
 @click.option("--import-everything", is_flag=True, default=False)
 @click.option(
     "--write-mrc/--no-write-mrc",
@@ -365,6 +370,7 @@ def queue(
     config_file: str,
     input_bucket: str,
     output_path: str,
+    https_prefix: str,
     import_everything: bool,
     write_mrc: bool,
     write_zarr: bool,
@@ -377,7 +383,9 @@ def queue(
     fs_mode = "s3"
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
-    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS)
+    if not https_prefix:
+        https_prefix = get_default_https_prefix(ctx.obj["environment"])
+    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS, https_prefix=https_prefix)
     config.write_mrc = write_mrc
     config.write_zarr = write_zarr
     config.load_map_files()
