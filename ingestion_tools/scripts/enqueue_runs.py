@@ -439,6 +439,7 @@ def queue(
                             break
                         per_run_args[k] = v
                     new_args = to_args(
+                        https_prefix=https_prefix,
                         import_everything=import_everything,
                         write_mrc=write_mrc,
                         write_zarr=write_zarr,
