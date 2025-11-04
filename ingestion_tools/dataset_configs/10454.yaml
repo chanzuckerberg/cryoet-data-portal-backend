@@ -62,2860 +62,2790 @@ deposition_keyphotos:
         snapshot: null #cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_snapshot.png
         thumbnail: null #cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_thumbnail.png
 annotations:
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-1G3I | UniProtKB:P43772, UniProtKB:P43773
-      id: GO:0101031
-      name: protein folding chaperone complex
-    annotation_publications: PDB-1G3I
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1g3i.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/1g3i.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-1N9G | UniProtKB:Q8WZM3, UniProtKB:Q8WZM4
-      id: UniProtKB:Q8WZM3
-      name: Enoyl-[acyl-carrier-protein] reductase 1, mitochondrial
-    annotation_publications: PDB-1N9G
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1n9g.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/1n9g.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-1SS8
-      id: UniProtKB:P0A6F5
-      name: Chaperonin GroEL
-    annotation_publications: PDB-1SS8
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1ss8.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/1ss8.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-1UL1 | UniProtKB:P12004, UniProtKB:P39748
-      id: GO:0043626
-      name: PCNA complex
-    annotation_publications: PDB-1UL1
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1ul1.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/1ul1.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-2DFS | UniProtKB:Q02440, UniProtKB:P0DP26
-      id: GO:0042641
-      name: actomyosin
-    annotation_publications: PDB-2DFS
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2dfs.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/2dfs.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-2R9R
-      id: UniProtKB:P62483
-      name: Voltage-gated potassium channel subunit beta-2
-    annotation_publications: PDB-2R9R
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2r9r.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/2r9r.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-2RHS | UniProtKB:Q4L5E4, UniProtKB:Q4L5E3
-      id: UniProtKB:Q4L5E4
-      name: Phenylalanine--tRNA ligase beta subunit
-    annotation_publications: PDB-2RHS
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2rhs.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/2rhs.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-2VZ9
-      id: UniProtKB:A5YV76
-      name: Fatty acid synthase
-    annotation_publications: PDB-2VZ9
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2vz9.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/2vz9.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-2WW2
-      id: UniProtKB:Q8A5N9
-      name: Alpha-1,2-mannosidase
-    annotation_publications: PDB-2WW2
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2ww2.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/2ww2.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-2XNX | UniProtKB:P02671, UniProtKB:P02675, UniProtKB:P02679
-      id: GO:0005577
-      name: fibrinogen complex
-    annotation_publications: PDB-2XNX
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2xnx.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/2xnx.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-3LUE | UniProtKB:P60709, UniProtKB:Q08043
-      id: GO:0031941
-      name: filamentous actin
-    annotation_publications: PDB-3LUE
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3lue.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/3lue.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-3MKQ | UniProtKB:P53622, UniProtKB:A6ZU46
-      id: GO:0030126
-      name: COPI vesicle coat
-    annotation_publications: PDB-3MKQ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3mkq.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/3mkq.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-3ULV
-      id: UniProtKB:O15455
-      name: Toll-like receptor 3
-    annotation_publications: PDB-3ULV
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3ulv.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/3ulv.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-4UIC
-      id: UniProtKB:O68840
-      name: Surface layer protein
-    annotation_publications: PDB-4UIC
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4uic.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/4uic.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-4WRM | UniProtKB:P09603, UniProtKB:P07333
-      id: UniProtKB:P09603
-      name: Macrophage colony-stimulating factor 1
-    annotation_publications: PDB-4WRM
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4wrm.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/4wrm.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-4XK8 | UniProtKB:P12355, UniProtKB:Q9SQL2, UniProtKB:P05310,
-        UniProtKB:P05311, UniProtKB:P17227, UniProtKB:P12357, UniProtKB:E1C9L3, UniProtKB:A4GGC6,
-        UniProtKB:E1C9K6, UniProtKB:Q01667, UniProtKB:A5Z2K3, UniProtKB:Q32904, UniProtKB:E1C9L1,
-        UniProtKB:Q41038, UniProtKB:C6T221, UniProtKB:P10793
-      id: GO:0009518
-      name: PSI associated light-harvesting complex I
-    annotation_publications: PDB-4XK8
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4xk8.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/4xk8.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5A20 | UniProtKB:O48446, UniProtKB:P54309, UniProtKB:O48449,
-        UniProtKB:O48448, UniProtKB:Q38584
-      id: UniProtKB:O48446
-      name: Head completion protein gp16
-    annotation_publications: PDB-5A20
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5a20.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5a20.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5CSA
-      id: UniProtKB:Q00955
-      name: Acetyl-CoA carboxylase
-    annotation_publications: PDB-5CSA
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5csa.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5csa.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5G04 | UniProtKB:Q9UM13, UniProtKB:Q8NHZ8, UniProtKB:Q9UJX2,
-        UniProtKB:Q9UJX3, UniProtKB:Q9UJX6, UniProtKB:Q9UJX5, UniProtKB:P30260, UniProtKB:Q9UJX4,
-        UniProtKB:Q9H1A4, UniProtKB:P60006, UniProtKB:Q13042, UniProtKB:Q9BS18, UniProtKB:Q96DE5,
-        UniProtKB:P34244, UniProtKB:Q12834, UniProtKB:Q9NYG5
-      id: GO:0005680
-      name: anaphase-promoting complex
-    annotation_publications: PDB-5G04
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5g04.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5g04.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5H0S
-      id: UniProtKB:Q6TS43
-      name: Inner capsid protein VP1
-    annotation_publications: PDB-5H0S
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5h0s.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5h0s.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5JH9
-      id: UniProtKB:P14904
-      name: Vacuolar aminopeptidase 1
-    annotation_publications: PDB-5JH9
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5jh9.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5jh9.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5LJO | UniProtKB:P0A903, UniProtKB:P0A937, UniProtKB:P77774,
-        UniProtKB:P0AC02, UniProtKB:P0A940
-      id: UniProtKB:P0A903
-      name: Outer membrane protein assembly factor BamC
-    annotation_publications: PDB-5LJO
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5ljo.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5ljo.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5O32 | UniProtKB:P08603, UniProtKB:P01024, UniProtKB:P05156
-      id: GO:0005579
-      name: membrane attack complex
-    annotation_publications: PDB-5O32
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5o32.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5o32.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5OOL | UniProtKB:O75394, UniProtKB:Q9H9J2, UniProtKB:Q9BYC9,
-        UniProtKB:Q9NQ50, UniProtKB:Q9BQ48, UniProtKB:Q9Y3B7, UniProtKB:Q9H2W6, UniProtKB:Q6P161,
-        UniProtKB:Q9NVS2, UniProtKB:Q9BYD3, UniProtKB:Q9Y6G3, UniProtKB:Q8N5N7, UniProtKB:Q8N983,
-        UniProtKB:Q96EL3, UniProtKB:L0R8F8, UniProtKB:Q9BZE1, UniProtKB:Q9BYD1, UniProtKB:Q13405,
-        UniProtKB:Q8IXM3, UniProtKB:O14561, UniProtKB:Q7Z7F7, UniProtKB:Q9P0J6, UniProtKB:Q9P015,
-        UniProtKB:Q8TCC3, UniProtKB:Q6P1L8, UniProtKB:Q96EH3, UniProtKB:Q13084, UniProtKB:Q9NP92,
-        UniProtKB:Q5T653, UniProtKB:Q9NRX2, UniProtKB:Q9NWU5, UniProtKB:Q16540, UniProtKB:Q9H0U6,
-        UniProtKB:P49406, UniProtKB:Q9BRJ2, UniProtKB:Q14197, UniProtKB:Q96A35, UniProtKB:Q9BQC6,
-        UniProtKB:Q86TS9, UniProtKB:Q96DV4, UniProtKB:Q96GC5, UniProtKB:Q8TAE8, UniProtKB:Q9NX20,
-        UniProtKB:Q9HD33, UniProtKB:Q4U2R6, UniProtKB:P09001, UniProtKB:Q9NYK5, UniProtKB:Q9BYC8,
-        UniProtKB:Q9P0M9, UniProtKB:Q7Z2W9, UniProtKB:Q9NZE8, UniProtKB:Q7Z7H8, UniProtKB:Q9BYD2
-      id: GO:0005761
-      name: mitochondrial ribosome
-    annotation_publications: PDB-5OOL
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5ool.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5ool.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-5VKQ
-      id: UniProtKB:E0A9E1
-      name: No mechanoreceptor potential C isoform L
-    annotation_publications: PDB-5VKQ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5vkq.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/5vkq.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6AHU | UniProtKB:O75818, UniProtKB:Q9BUL9, UniProtKB:O75817,
-        UniProtKB:O95059, UniProtKB:O95707, UniProtKB:Q969H6, UniProtKB:P78346, UniProtKB:Q99575,
-        UniProtKB:P78345, UniProtKB:Q9H633
-      id: UniProtKB:O75818
-      name: Ribonuclease P protein subunit p40
-    annotation_publications: PDB-6AHU
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ahu.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6ahu.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6BQ1 | UniProtKB:Q9BYI3, UniProtKB:Q86TV6, UniProtKB:P42356
-      id: GO:0005942
-      name: phosphatidylinositol 3-kinase complex
-    annotation_publications: PDB-6BQ1
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6bq1.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6bq1.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6CES | UniProtKB:Q7L523, UniProtKB:Q9HB90, UniProtKB:Q12980,
-        UniProtKB:Q8WTW4, UniProtKB:O75140
-      id: UniProtKB:Q7L523
-      name: Ras-related GTP-binding protein A
-    annotation_publications: PDB-6CES
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ces.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6ces.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6CNJ | UniProtKB:P17787, UniProtKB:P43681
-      id: GO:0005892
-      name: acetylcholine-gated channel complex
-    annotation_publications: PDB-6CNJ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6cnj.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6cnj.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6DUZ | UniProtKB:P41786, UniProtKB:P41783
-      id: UniProtKB:P41786
-      name: Lipoprotein PrgK
-    annotation_publications: PDB-6DUZ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6duz.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6duz.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6EMK | UniProtKB:P41318, UniProtKB:Q04749, UniProtKB:Q08236,
-        UniProtKB:P32600
-      id: GO:0031932
-      name: TORC2 complex
-    annotation_publications: PDB-6EMK
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6emk.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6emk.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6F8L
-      id: UniProtKB:Q5SLC9
-      name: Type IV pilus assembly ATPase PilB
-    annotation_publications: PDB-6F8L
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6f8l.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6f8l.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6GY6 | UniProtKB:D3VB22, UniProtKB:D3VB23
-      id: GO:0046930
-      name: pore complex
-    annotation_publications: PDB-6GY6
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6gy6.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6gy6.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6GYM | UniProtKB:P16370, UniProtKB:Q12004, UniProtKB:P32776,
-        UniProtKB:P20435, UniProtKB:P22139, UniProtKB:Q03290, UniProtKB:P20434, UniProtKB:Q00578,
-        UniProtKB:P29055, UniProtKB:P20433, UniProtKB:P20436, UniProtKB:P41896, UniProtKB:P36145,
-        UniProtKB:P41895, UniProtKB:P13393, UniProtKB:Q02939, UniProtKB:P08518, UniProtKB:Q04673,
-        UniProtKB:P32773, UniProtKB:P32774, UniProtKB:P34087, UniProtKB:P36100, UniProtKB:P27999,
-        UniProtKB:P38902, UniProtKB:Q3E7C1, UniProtKB:P40422, UniProtKB:P06839, UniProtKB:P04050
-      id: UniProtKB:P16370
-      name: DNA-directed RNA polymerase II subunit RPB3
-    annotation_publications: PDB-6GYM
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6gym.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6gym.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6I0D | UniProtKB:Q56225, UniProtKB:Q56220, UniProtKB:Q56221,
-        UniProtKB:Q56227, UniProtKB:Q56229, UniProtKB:Q56226, UniProtKB:Q56219, UniProtKB:Q56218,
-        UniProtKB:Q5SKZ7, UniProtKB:Q56223, UniProtKB:Q56224, UniProtKB:Q5SI52, UniProtKB:Q60019,
-        UniProtKB:Q56228, UniProtKB:Q56217, UniProtKB:Q56222
-      id: UniProtKB:Q56225
-      name: NADH-quinone oxidoreductase subunit 10
-    annotation_publications: PDB-6I0D
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6i0d.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6i0d.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6ID1 | UniProtKB:P62306, UniProtKB:P09661, UniProtKB:O60508,
-        UniProtKB:Q9Y3C6, UniProtKB:P08579, UniProtKB:O75934, UniProtKB:P62316, UniProtKB:Q15029,
-        UniProtKB:O95926, UniProtKB:Q99459, UniProtKB:P62308, UniProtKB:P62318, UniProtKB:Q2TBE0,
-        UniProtKB:Q9BZJ0, UniProtKB:O43660, UniProtKB:P62304, UniProtKB:Q6P2Q9, UniProtKB:Q9HCS7,
-        UniProtKB:P62314, UniProtKB:Q9NW64, UniProtKB:P41223, UniProtKB:P14678, UniProtKB:O43143,
-        UniProtKB:Q9UMS4, UniProtKB:Q96DI7, UniProtKB:Q9UNP9, UniProtKB:O60306, UniProtKB:Q9P013,
-        UniProtKB:Q13573
-      id: GO:0005681
-      name: spliceosomal complex
-    annotation_publications: PDB-6ID1
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6id1.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6id1.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6JY0
-      id: UniProtKB:Q549S3
-      name: Flagellin
-    annotation_publications: PDB-6JY0
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6jy0.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6jy0.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6KLH
-      id: UniProtKB:Q6IVU0
-      name: RNA-directed RNA polymerase L
-    annotation_publications: PDB-6KLH
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6klh.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6klh.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6KRK
-      id: UniProtKB:Q9Y9L0
-      name: Peroxiredoxin
-    annotation_publications: PDB-6KRK
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6krk.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6krk.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6KSP
-      id: UniProtKB:Q62640
-      name: Glutamate receptor ionotropic, delta-1
-    annotation_publications: PDB-6KSP
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ksp.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6ksp.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6LMT
-      id: UniProtKB:H2MCM1
-      name: Calcium homeostasis modulator 1
-    annotation_publications: PDB-6LMT
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lmt.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6lmt.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6LX3 | UniProtKB:P01833, UniProtKB:P01876, UniProtKB:P01591,
-        UniProtKB:P60568
-      id: GO:0019814
-      name: immunoglobulin complex
-    annotation_publications: PDB-6LX3
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lx3.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6lx3.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6LXK
-      id: UniProtKB:A0A5P1N996
-      name: Neuraminidase
-    annotation_publications: PDB-6LXK
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lxk.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6lxk.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6LXV
-      id: UniProtKB:D6D942
-      name: Phosphoketolase
-    annotation_publications: PDB-6LXV
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lxv.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6lxv.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6M04
-      id: UniProtKB:Q7L1W4
-      name: Volume-regulated anion channel subunit LRRC8D
-    annotation_publications: PDB-6M04
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6m04.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6m04.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6MRC | UniProtKB:P10809, UniProtKB:P61604
-      id: UniProtKB:P10809
-      name: 60 kDa heat shock protein, mitochondrial
-    annotation_publications: PDB-6MRC
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6mrc.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6mrc.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6PIF | UniProtKB:A0A5S8WF81, UniProtKB:A0A5S8WF90, UniProtKB:A0A5S8WF79,
-        UniProtKB:A0A5S8WF77, UniProtKB:A0A5S8WF78
-      id: UniProtKB:A0A5S8WF81
-      name: TniQ monomer 2
-    annotation_publications: PDB-6PIF
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6pif.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6pif.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6TA5 | UniProtKB:P52002, UniProtKB:Q51487, UniProtKB:P52477
-      id: GO:1990281
-      name: efflux pump complex
-    annotation_publications: PDB-6TA5
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ta5.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6ta5.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6TAV
-      id: UniProtKB:P01023
-      name: Alpha-2-macroglobulin
-    annotation_publications: PDB-6TAV
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6tav.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6tav.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6TPS | UniProtKB:P36070, UniProtKB:P20434, UniProtKB:P22138,
-        UniProtKB:P20435, UniProtKB:P10964, UniProtKB:P47006, UniProtKB:Q04712, UniProtKB:P32529,
-        UniProtKB:P40992, UniProtKB:P22139, UniProtKB:Q01080, UniProtKB:P20436, UniProtKB:P28000,
-        UniProtKB:P50106, UniProtKB:P32786, UniProtKB:P07703, UniProtKB:P40422, UniProtKB:P46669
-      id: GO:0000120
-      name: RNA polymerase I transcription regulator complex
-    annotation_publications: PDB-6TPS
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6tps.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6tps.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6U8Q
-      id: UniProtKB:P12497
-      name: Gag-Pol polyprotein
-    annotation_publications: PDB-6U8Q
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6u8q.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6u8q.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6UP6
-      id: UniProtKB:Q9Y371
-      name: Endophilin-B1
-    annotation_publications: PDB-6UP6
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6up6.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6up6.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6VGR
-      id: UniProtKB:Q9H4B8
-      name: Dipeptidase 3
-    annotation_publications: PDB-6VGR
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vgr.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6vgr.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6VN1
-      id: UniProtKB:P09257
-      name: Envelope glycoprotein B
-    annotation_publications: PDB-6VN1
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vn1.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6vn1.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6VZ8 | UniProtKB:P17597, UniProtKB:Q93YZ7
-      id: GO:0005948
-      name: acetolactate synthase complex
-    annotation_publications: PDB-6VZ8
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vz8.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6vz8.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6W6M
-      id: UniProtKB:Q9KNV0
-      name: Fimbrial assembly protein
-    annotation_publications: PDB-6W6M
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6w6m.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6w6m.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6WZT
-      id: UniProtKB:A0A075EV12
-      name: Hemagglutinin
-    annotation_publications: PDB-6WZT
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6wzt.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6wzt.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6X5Z | UniProtKB:Q9BE39, UniProtKB:P68139, UniProtKB:P09493
-      id: UniProtKB:Q9BE39
-      name: Myosin-7
-    annotation_publications: PDB-6X5Z
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6x5z.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6x5z.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6XF8 | UniProtKB:P07939, UniProtKB:Q91RA5, UniProtKB:P11077,
-        UniProtKB:Q9WAB2, UniProtKB:P11314
-      id: UniProtKB:P07939
-      name: Outer capsid protein sigma-3
-    annotation_publications: PDB-6XF8
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6xf8.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6xf8.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6YT5 | UniProtKB:P03725, UniProtKB:P03726
-      id: UniProtKB:P03725
-      name: Internal virion protein gp15
-    annotation_publications: PDB-6YT5
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6yt5.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6yt5.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6Z3A | UniProtKB:Q04377, UniProtKB:P38111
-      id: UniProtKB:Q04377
-      name: DNA damage checkpoint protein LCD1
-    annotation_publications: PDB-6Z3A
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z3a.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6z3a.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6Z6O | UniProtKB:P53973, UniProtKB:Q06629, UniProtKB:Q06623
-      id: GO:0000118
-      name: histone deacetylase complex
-    annotation_publications: PDB-6Z6O
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z6o.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6z6o.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6Z80 | UniProtKB:P30793, UniProtKB:P30047
-      id: GO:0034615
-      name: GCH1 complex
-    annotation_publications: PDB-6Z80
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z80.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6z80.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6ZIU | UniProtKB:P13619, UniProtKB:P00847, UniProtKB:P03929,
-        UniProtKB:P02721, UniProtKB:Q28851, UniProtKB:P14790, UniProtKB:Q28852, UniProtKB:P19483,
-        UniProtKB:Q00361, UniProtKB:P13620, UniProtKB:P13621
-      id: UniProtKB:P13619
-      name: ATP synthase peripheral stalk subunit b, mitochondrial
-    annotation_publications: PDB-6ZIU
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ziu.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6ziu.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-6ZQJ
-      id: GO:0044423
-      name: virion component
-    annotation_publications: PDB-6ZQJ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6zqj.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/6zqj.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7AMV | UniProtKB:Q49PH2, UniProtKB:Q1PIU7, UniProtKB:Q49QE8,
-        UniProtKB:Q49PL6, UniProtKB:Q1PIV1, UniProtKB:Q49QC6, UniProtKB:Q49QI2, UniProtKB:H2DZ00,
-        UniProtKB:A4GDF1, UniProtKB:Q49PG1, UniProtKB:Q49QC8
-      id: GO:0097550
-      name: transcription preinitiation complex
-    annotation_publications: PDB-7AMV
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7amv.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7amv.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7B5S | UniProtKB:Q9Y4X5, UniProtKB:P62877, UniProtKB:Q13616
-      id: GO:0019005
-      name: SCF ubiquitin ligase complex
-    annotation_publications: PDB-7B5S
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7b5s.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7b5s.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7B7U | UniProtKB:I3LSI7, UniProtKB:P60899, UniProtKB:A0A4X1TRS6,
-        UniProtKB:I3LGP4, UniProtKB:F1RKE4, UniProtKB:A0A4X1VEK9, UniProtKB:I3LCB2,
-        UniProtKB:I3LCH3, UniProtKB:Q8IXW5, UniProtKB:A0A4X1VYD0, UniProtKB:I3LJR4
-      id: UniProtKB:I3LSI7
-      name: DNA-directed RNA polymerases I, II, and III subunit RPABC1
-    annotation_publications: PDB-7B7U
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7b7u.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7b7u.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7BKC | UniProtKB:Q2FRL8, UniProtKB:Q2FRK1, UniProtKB:Q2FRM0,
-        UniProtKB:Q2FRF6, UniProtKB:Q2FKZ4, UniProtKB:Q2FKZ2, UniProtKB:Q2FRL9, UniProtKB:Q2FKZ1,
-        UniProtKB:Q2FKZ3, UniProtKB:Q2FME3, UniProtKB:Q2FKZ0, UniProtKB:Q2FKZ5
-      id: UniProtKB:Q2FRL8
-      name: formylmethanofuran dehydrogenase
-    annotation_publications: PDB-7BKC
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7bkc.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7bkc.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7BLQ | UniProtKB:G0S0E6, UniProtKB:P49281, UniProtKB:G0S709,
-        UniProtKB:G0S0X3
-      id: GO:0030906
-      name: retromer, cargo-selective complex
-    annotation_publications: PDB-7BLQ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7blq.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7blq.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7BLR | UniProtKB:G0RZB5, UniProtKB:G0S709
-      id: GO:0030906
-      name: retromer, cargo-selective complex
-    annotation_publications: PDB-7BLR
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7blr.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7blr.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7DD9 | UniProtKB:Q9P792, UniProtKB:Q9UT61, UniProtKB:P0AEX9
-      id: UniProtKB:Q9P792
-      name: Autophagy receptor Nbr1
-    annotation_publications: PDB-7DD9
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7dd9.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7dd9.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7E1Y
-      id: UniProtKB:A3DPD7
-      name: Glycoside hydrolase, family 57
-    annotation_publications: PDB-7E1Y
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e1y.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7e1y.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7E6G | UniProtKB:A0A072ZHB4, UniProtKB:A0A069QEY1
-      id: UniProtKB:A0A072ZHB4
-      name: Biofilm formation regulator SiaD modulator protein
-    annotation_publications: PDB-7E6G
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e6g.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7e6g.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7E8H | UniProtKB:Q9NZI2, UniProtKB:Q9NZV8, UniProtKB:P42658
-      id: GO:0034705
-      name: potassium channel complex
-    annotation_publications: PDB-7E8H
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e8h.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7e8h.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7EEP
-      id: GO:0046798
-      name: viral portal complex
-    annotation_publications: PDB-7EEP
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7eep.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7eep.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7EGD | UniProtKB:P21675, UniProtKB:Q7Z7C8, UniProtKB:Q15542,
-        UniProtKB:P52655, UniProtKB:P49848, UniProtKB:Q16514, UniProtKB:Q5VWG9, UniProtKB:Q12962,
-        UniProtKB:O00268, UniProtKB:Q16594, UniProtKB:Q15545, UniProtKB:P52657, UniProtKB:Q6P1X5,
-        UniProtKB:P20226, UniProtKB:Q15543, UniProtKB:Q15544
-      id: GO:0005667
-      name: transcription regulator complex
-    annotation_publications: PDB-7EGD
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7egd.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7egd.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7EGE | UniProtKB:P21675, UniProtKB:Q7Z7C8, UniProtKB:Q15542,
-        UniProtKB:P49848, UniProtKB:Q16514, UniProtKB:Q5VWG9, UniProtKB:Q12962, UniProtKB:O00268,
-        UniProtKB:Q16594, UniProtKB:Q15545, UniProtKB:Q6P1X5, UniProtKB:P20226, UniProtKB:Q15543,
-        UniProtKB:Q15544
-      id: GO:0005667
-      name: transcription regulator complex
-    annotation_publications: PDB-7EGE
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7ege.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7ege.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7EGQ
-      id: UniProtKB:P0DTD1
-      name: Replicase polyprotein 1ab
-    annotation_publications: PDB-7EGQ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7egq.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7egq.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7ETM
-      id: UniProtKB:P16735
-      name: Portal protein
-    annotation_publications: PDB-7ETM
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7etm.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7etm.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7EY7 | UniProtKB:P03746, UniProtKB:P03747, UniProtKB:P03724,
-        UniProtKB:P03748
-      id: UniProtKB:P03746
-      name: Tail tubular protein gp11
-    annotation_publications: PDB-7EY7
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7ey7.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7ey7.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7JSN | UniProtKB:P11541, UniProtKB:P04972, UniProtKB:P23439,
-        UniProtKB:P04695
-      id: UniProtKB:P11541
-      name: Rod cGMP-specific 3',5'-cyclic phosphodiesterase subunit alpha
-    annotation_publications: PDB-7JSN
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7jsn.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7jsn.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7K5X | UniProtKB:P07305, UniProtKB:P06899, UniProtKB:P04908,
-        UniProtKB:P68431, UniProtKB:P62805
-      id: GO:0000786
-      name: nucleosome
-    annotation_publications: PDB-7K5X
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7k5x.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7k5x.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7KDV | UniProtKB:P23780, UniProtKB:P16675
-      id: GO:0070559
-      name: lysosomal multienzyme complex
-    annotation_publications: PDB-7KDV
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kdv.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7kdv.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7KFE
-      id: UniProtKB:B8XCN0
-      name: Envelope glycoprotein
-    annotation_publications: PDB-7KFE
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kfe.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7kfe.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7KJ2 | UniProtKB:Q9BYF1, UniProtKB:P0DTC2
-      id: UniProtKB:Q9BYF1
-      name: Angiotensin-converting enzyme 2
-    annotation_publications: PDB-7KJ2
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kj2.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7kj2.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7MEI | UniProtKB:P20434, UniProtKB:P41895, UniProtKB:P16370,
-        UniProtKB:P20435, UniProtKB:P27999, UniProtKB:P38902, UniProtKB:P22139, UniProtKB:P20433,
-        UniProtKB:P20436, UniProtKB:P08518, UniProtKB:P40422, UniProtKB:P41896, UniProtKB:P04050,
-        UniProtKB:P34087
-      id: UniProtKB:P20434
-      name: DNA-directed RNA polymerases I, II, and III subunit RPABC1
-    annotation_publications: PDB-7MEI
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7mei.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7mei.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7NHS
-      id: UniProtKB:Q9X4B9
-      name: Putative transmembrane protein Wzc
-    annotation_publications: PDB-7NHS
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7nhs.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7nhs.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7NIU
-      id: UniProtKB:P21439
-      name: Phosphatidylcholine translocator ABCB4
-    annotation_publications: PDB-7NIU
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7niu.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7niu.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7NYZ | UniProtKB:A0A0F7LRY2, UniProtKB:A0A0F7LUV5, UniProtKB:P0A6A8,
-        UniProtKB:A0A0F7LPV6, UniProtKB:A0A0F7LMQ4
-      id: UniProtKB:A0A0F7LRY2
-      name: Chromosome partition protein MukB
-    annotation_publications: PDB-7NYZ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7nyz.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7nyz.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7O01 | UniProtKB:A8IFG7, UniProtKB:Q75VY7, UniProtKB:Q75VY8,
-        UniProtKB:P14224, UniProtKB:A8IKC8, UniProtKB:Q05093, UniProtKB:Q75VZ0, UniProtKB:A8ITV3,
-        UniProtKB:Q75VY6, UniProtKB:Q00914, UniProtKB:P12352, UniProtKB:P14225, UniProtKB:Q75VY9,
-        UniProtKB:P12356, UniProtKB:P12154, UniProtKB:P09144, UniProtKB:Q84Y02, UniProtKB:A8IL32,
-        UniProtKB:P59777, UniProtKB:Q39615
-      id: GO:0009521
-      name: photosystem
-    annotation_publications: PDB-7O01
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7o01.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7o01.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7Q21 | UniProtKB:Q8NSJ8, UniProtKB:Q79VD7, UniProtKB:Q8NNK5,
-        UniProtKB:Q8NNK2, UniProtKB:Q9AEL8, UniProtKB:Q8NNK3, UniProtKB:Q79VE8, UniProtKB:Q8NMB4,
-        UniProtKB:Q79VE9, UniProtKB:Q8NP09, UniProtKB:Q8NS61
-      id: GO:0045275
-      name: respiratory chain complex III
-    annotation_publications: PDB-7Q21
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7q21.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7q21.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7QJ0 | UniProtKB:Q96CW5, UniProtKB:Q08AG7, UniProtKB:Q96RT8,
-        UniProtKB:P23258, UniProtKB:Q9UGJ1, UniProtKB:Q9BSJ2, UniProtKB:Q96RT7
-      id: GO:0000931
-      name: gamma-tubulin ring complex
-    annotation_publications: PDB-7QJ0
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7qj0.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7qj0.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7R04
-      id: UniProtKB:P21359
-      name: Neurofibromin
-    annotation_publications: PDB-7R04
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7r04.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7r04.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7S7K
-      id: UniProtKB:P54763
-      name: Ephrin type-B receptor 2
-    annotation_publications: PDB-7S7K
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7s7k.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7s7k.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7SFW
-      id: UniProtKB:P05674
-      name: Structural polyprotein
-    annotation_publications: PDB-7SFW
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sfw.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7sfw.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7SGM
-      id: UniProtKB:P29965
-      name: CD40 ligand
-    annotation_publications: PDB-7SGM
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sgm.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7sgm.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7SHK | UniProtKB:A4QNS4, UniProtKB:Q6PCF2, UniProtKB:Q6PHW7,
-        UniProtKB:Q6PHL7, UniProtKB:A0A1L8GNJ6
-      id: GO:0031461
-      name: cullin-RING ubiquitin ligase complex
-    annotation_publications: PDB-7SHK
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7shk.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7shk.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7SN7
-      id: UniProtKB:B7USU2
-      name: Flagellin
-    annotation_publications: PDB-7SN7
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sn7.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7sn7.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7T3U
-      id: UniProtKB:Q14573
-      name: Inositol 1,4,5-trisphosphate-gated calcium channel ITPR3
-    annotation_publications: PDB-7T3U
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7t3u.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7t3u.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7VTQ
-      id: UniProtKB:Q8R4B8
-      name: NACHT, LRR and PYD domains-containing protein 3
-    annotation_publications: PDB-7VTQ
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7vtq.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7vtq.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7WBT
-      id: UniProtKB:Q288C4
-      name: NACHT, LRR and PYD domains-containing protein 9
-    annotation_publications: PDB-7WBT
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7wbt.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7wbt.glb
-        order: xyz
-- metadata:
-    annotation_method: polnet-simulated ground truth
-    annotation_object:
-      description: PDB-7WOO | UniProtKB:P14907, UniProtKB:P38181, UniProtKB:P52593,
-        UniProtKB:P40064, UniProtKB:P47054, UniProtKB:P34077, UniProtKB:P48837, UniProtKB:Q02199
-      id: GO:0005643
-      name: nuclear pore
-    annotation_publications: PDB-7WOO
-    annotation_software: polnet
-    authors: *id001
-    dates: *id002
-    ground_truth_status: true
-    is_curator_recommended: true
-    method_links:
-      - custom_name: polnet on GitHub
-        link: https://github.com/anmartinezs/polnet
-        link_type: source_code
-    method_type: simulated
-    version: 1.0
-  sources:
-    - OrientedPoint:
-        binning: 10.0
-        file_format: copick
-        glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7woo.json
-        is_portal_standard: true
-        is_visualization_default: true
-        mesh_source_path: Maps/7woo.glb
-        order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-1G3I
+        id: GO:0101031
+        name: protein folding chaperone complex
+      annotation_publications: PDB-1G3I
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1g3i.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/1g3i.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-1N9G
+        id: UniProtKB:Q8WZM3
+        name: Enoyl-[acyl-carrier-protein] reductase 1, mitochondrial
+      annotation_publications: PDB-1N9G
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1n9g.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/1n9g.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-1SS8
+        id: UniProtKB:P0A6F5
+        name: Chaperonin GroEL
+      annotation_publications: PDB-1SS8
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1ss8.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/1ss8.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-1UL1
+        id: GO:0043626
+        name: PCNA complex
+      annotation_publications: PDB-1UL1
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1ul1.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/1ul1.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-2DFS
+        id: GO:0042641
+        name: actomyosin
+      annotation_publications: PDB-2DFS
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2dfs.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/2dfs.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-2R9R
+        id: UniProtKB:P62483
+        name: Voltage-gated potassium channel subunit beta-2
+      annotation_publications: PDB-2R9R
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+        - custom_name: copick on GitHub
+          link: https://github.com/copick/copick
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2r9r.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/2r9r.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-2RHS
+        id: UniProtKB:Q4L5E4
+        name: Phenylalanine--tRNA ligase beta subunit
+      annotation_publications: PDB-2RHS
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2rhs.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/2rhs.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-2VZ9
+        id: UniProtKB:A5YV76
+        name: Fatty acid synthase
+      annotation_publications: PDB-2VZ9
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2vz9.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/2vz9.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-2WW2
+        id: UniProtKB:Q8A5N9
+        name: Alpha-1,2-mannosidase
+      annotation_publications: PDB-2WW2
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2ww2.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/2ww2.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-2XNX
+        id: GO:0005577
+        name: fibrinogen complex
+      annotation_publications: PDB-2XNX
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2xnx.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/2xnx.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-3LUE
+        id: GO:0031941
+        name: filamentous actin
+      annotation_publications: PDB-3LUE
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3lue.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/3lue.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-3MKQ
+        id: GO:0030126
+        name: COPI vesicle coat
+      annotation_publications: PDB-3MKQ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3mkq.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/3mkq.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-3ULV
+        id: UniProtKB:O15455
+        name: Toll-like receptor 3
+      annotation_publications: PDB-3ULV
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3ulv.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/3ulv.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-4UIC
+        id: UniProtKB:O68840
+        name: Surface layer protein
+      annotation_publications: PDB-4UIC
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4uic.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/4uic.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-4WRM
+        id: UniProtKB:P09603
+        name: Macrophage colony-stimulating factor 1
+      annotation_publications: PDB-4WRM
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4wrm.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/4wrm.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-4XK8
+        id: GO:0009518
+        name: PSI associated light-harvesting complex I
+      annotation_publications: PDB-4XK8
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4xk8.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/4xk8.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5A20
+        id: UniProtKB:O48446
+        name: Head completion protein gp16
+      annotation_publications: PDB-5A20
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5a20.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5a20.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5CSA
+        id: UniProtKB:Q00955
+        name: Acetyl-CoA carboxylase
+      annotation_publications: PDB-5CSA
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5csa.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5csa.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5G04
+        id: GO:0005680
+        name: anaphase-promoting complex
+      annotation_publications: PDB-5G04
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5g04.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5g04.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5H0S
+        id: UniProtKB:Q6TS43
+        name: Inner capsid protein VP1
+      annotation_publications: PDB-5H0S
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5h0s.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5h0s.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5JH9
+        id: UniProtKB:P14904
+        name: Vacuolar aminopeptidase 1
+      annotation_publications: PDB-5JH9
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5jh9.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5jh9.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5LJO
+        id: UniProtKB:P0A903
+        name: Outer membrane protein assembly factor BamC
+      annotation_publications: PDB-5LJO
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5ljo.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5ljo.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5O32
+        id: GO:0005579
+        name: membrane attack complex
+      annotation_publications: PDB-5O32
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5o32.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5o32.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5OOL
+        id: GO:0005761
+        name: mitochondrial ribosome
+      annotation_publications: PDB-5OOL
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5ool.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5ool.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-5VKQ
+        id: UniProtKB:E0A9E1
+        name: No mechanoreceptor potential C isoform L
+      annotation_publications: PDB-5VKQ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5vkq.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/5vkq.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6AHU
+        id: UniProtKB:O75818
+        name: Ribonuclease P protein subunit p40
+      annotation_publications: PDB-6AHU
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ahu.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6ahu.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6BQ1
+        id: GO:0005942
+        name: phosphatidylinositol 3-kinase complex
+      annotation_publications: PDB-6BQ1
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6bq1.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6bq1.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6CES
+        id: UniProtKB:Q7L523
+        name: Ras-related GTP-binding protein A
+      annotation_publications: PDB-6CES
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ces.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6ces.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6CNJ
+        id: GO:0005892
+        name: acetylcholine-gated channel complex
+      annotation_publications: PDB-6CNJ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6cnj.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6cnj.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6DUZ
+        id: UniProtKB:P41786
+        name: Lipoprotein PrgK
+      annotation_publications: PDB-6DUZ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6duz.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6duz.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6EMK
+        id: GO:0031932
+        name: TORC2 complex
+      annotation_publications: PDB-6EMK
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6emk.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6emk.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6F8L
+        id: UniProtKB:Q5SLC9
+        name: Type IV pilus assembly ATPase PilB
+      annotation_publications: PDB-6F8L
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6f8l.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6f8l.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6GY6
+        id: GO:0046930
+        name: pore complex
+      annotation_publications: PDB-6GY6
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6gy6.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6gy6.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6GYM
+        id: UniProtKB:P16370
+        name: DNA-directed RNA polymerase II subunit RPB3
+      annotation_publications: PDB-6GYM
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6gym.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6gym.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6I0D
+        id: UniProtKB:Q56225
+        name: NADH-quinone oxidoreductase subunit 10
+      annotation_publications: PDB-6I0D
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6i0d.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6i0d.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6ID1
+        id: GO:0005681
+        name: spliceosomal complex
+      annotation_publications: PDB-6ID1
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6id1.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6id1.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6JY0
+        id: UniProtKB:Q549S3
+        name: Flagellin
+      annotation_publications: PDB-6JY0
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6jy0.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6jy0.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6KLH
+        id: UniProtKB:Q6IVU0
+        name: RNA-directed RNA polymerase L
+      annotation_publications: PDB-6KLH
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6klh.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6klh.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6KRK
+        id: UniProtKB:Q9Y9L0
+        name: Peroxiredoxin
+      annotation_publications: PDB-6KRK
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6krk.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6krk.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6KSP
+        id: UniProtKB:Q62640
+        name: Glutamate receptor ionotropic, delta-1
+      annotation_publications: PDB-6KSP
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ksp.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6ksp.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6LMT
+        id: UniProtKB:H2MCM1
+        name: Calcium homeostasis modulator 1
+      annotation_publications: PDB-6LMT
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lmt.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6lmt.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6LX3
+        id: GO:0019814
+        name: immunoglobulin complex
+      annotation_publications: PDB-6LX3
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lx3.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6lx3.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6LXK
+        id: UniProtKB:A0A5P1N996
+        name: Neuraminidase
+      annotation_publications: PDB-6LXK
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lxk.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6lxk.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6LXV
+        id: UniProtKB:D6D942
+        name: Phosphoketolase
+      annotation_publications: PDB-6LXV
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lxv.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6lxv.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6M04
+        id: UniProtKB:Q7L1W4
+        name: Volume-regulated anion channel subunit LRRC8D
+      annotation_publications: PDB-6M04
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6m04.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6m04.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6MRC
+        id: UniProtKB:P10809
+        name: 60 kDa heat shock protein, mitochondrial
+      annotation_publications: PDB-6MRC
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6mrc.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6mrc.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6PIF
+        id: UniProtKB:A0A5S8WF81
+        name: TniQ cascade complex
+      annotation_publications: PDB-6PIF
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6pif.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6pif.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6TA5
+        id: GO:1990281
+        name: efflux pump complex
+      annotation_publications: PDB-6TA5
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ta5.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6ta5.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6TAV
+        id: UniProtKB:P01023
+        name: Alpha-2-macroglobulin
+      annotation_publications: PDB-6TAV
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6tav.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6tav.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6TPS
+        id: GO:0000120
+        name: RNA polymerase I transcription regulator complex
+      annotation_publications: PDB-6TPS
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6tps.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6tps.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6U8Q
+        id: UniProtKB:P12497
+        name: Gag-Pol polyprotein
+      annotation_publications: PDB-6U8Q
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6u8q.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6u8q.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6UP6
+        id: UniProtKB:Q9Y371
+        name: Endophilin-B1
+      annotation_publications: PDB-6UP6
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6up6.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6up6.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6VGR
+        id: UniProtKB:Q9H4B8
+        name: Dipeptidase 3
+      annotation_publications: PDB-6VGR
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vgr.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6vgr.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6VN1
+        id: UniProtKB:P09257
+        name: Envelope glycoprotein B
+      annotation_publications: PDB-6VN1
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vn1.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6vn1.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6VZ8
+        id: GO:0005948
+        name: acetolactate synthase complex
+      annotation_publications: PDB-6VZ8
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vz8.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6vz8.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6W6M
+        id: UniProtKB:Q9KNV0
+        name: Fimbrial assembly protein
+      annotation_publications: PDB-6W6M
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6w6m.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6w6m.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6WZT
+        id: UniProtKB:A0A075EV12
+        name: Hemagglutinin
+      annotation_publications: PDB-6WZT
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6wzt.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6wzt.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6X5Z
+        id: UniProtKB:Q9BE39
+        name: Myosin-7
+      annotation_publications: PDB-6X5Z
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6x5z.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6x5z.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6XF8
+        id: UniProtKB:P07939
+        name: Outer capsid protein sigma-3
+      annotation_publications: PDB-6XF8
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6xf8.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6xf8.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6YT5
+        id: UniProtKB:P03725
+        name: Internal virion protein gp15
+      annotation_publications: PDB-6YT5
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6yt5.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6yt5.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6Z3A
+        id: UniProtKB:Q04377
+        name: DNA damage checkpoint protein LCD1
+      annotation_publications: PDB-6Z3A
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z3a.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6z3a.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6Z6O
+        id: GO:0000118
+        name: histone deacetylase complex
+      annotation_publications: PDB-6Z6O
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z6o.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6z6o.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6Z80
+        id: GO:0034615
+        name: GCH1 complex
+      annotation_publications: PDB-6Z80
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z80.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6z80.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6ZIU
+        id: UniProtKB:P13619
+        name: ATP synthase peripheral stalk subunit b, mitochondrial
+      annotation_publications: PDB-6ZIU
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ziu.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6ziu.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-6ZQJ
+        id: GO:0044423
+        name: virion component
+      annotation_publications: PDB-6ZQJ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6zqj.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/6zqj.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7AMV
+        id: GO:0097550
+        name: transcription preinitiation complex
+      annotation_publications: PDB-7AMV
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7amv.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7amv.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7B5S
+        id: GO:0019005
+        name: SCF ubiquitin ligase complex
+      annotation_publications: PDB-7B5S
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7b5s.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7b5s.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7B7U
+        id: UniProtKB:I3LSI7
+        name: DNA-directed RNA polymerases I, II, and III subunit RPABC1
+      annotation_publications: PDB-7B7U
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7b7u.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7b7u.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7BKC
+        id: UniProtKB:Q2FRL8
+        name: formylmethanofuran dehydrogenase
+      annotation_publications: PDB-7BKC
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7bkc.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7bkc.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7BLQ
+        id: GO:0030906
+        name: retromer, cargo-selective complex
+      annotation_publications: PDB-7BLQ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7blq.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7blq.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7BLR
+        id: GO:0030906
+        name: retromer, cargo-selective complex
+      annotation_publications: PDB-7BLR
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7blr.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7blr.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7DD9
+        id: UniProtKB:Q9P792
+        name: Autophagy receptor Nbr1
+      annotation_publications: PDB-7DD9
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7dd9.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7dd9.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7E1Y
+        id: UniProtKB:A3DPD7
+        name: Glycoside hydrolase, family 57
+      annotation_publications: PDB-7E1Y
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e1y.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7e1y.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7E6G
+        id: UniProtKB:A0A072ZHB4
+        name: Biofilm formation regulator SiaD modulator protein
+      annotation_publications: PDB-7E6G
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e6g.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7e6g.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7E8H
+        id: GO:0034705
+        name: potassium channel complex
+      annotation_publications: PDB-7E8H
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e8h.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7e8h.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7EEP
+        id: GO:0046798
+        name: viral portal complex
+      annotation_publications: PDB-7EEP
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7eep.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7eep.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7EGD
+        id: GO:0005667
+        name: transcription regulator complex
+      annotation_publications: PDB-7EGD
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7egd.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7egd.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7EGE
+        id: GO:0005667
+        name: transcription regulator complex
+      annotation_publications: PDB-7EGE
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7ege.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7ege.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7EGQ
+        id: UniProtKB:P0DTD1
+        name: Replicase polyprotein 1ab
+      annotation_publications: PDB-7EGQ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7egq.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7egq.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7ETM
+        id: UniProtKB:P16735
+        name: Portal protein
+      annotation_publications: PDB-7ETM
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7etm.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7etm.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7EY7
+        id: UniProtKB:P03746
+        name: Tail tubular protein gp11
+      annotation_publications: PDB-7EY7
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7ey7.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7ey7.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7JSN
+        id: UniProtKB:P11541
+        name: Rod cGMP-specific 3',5'-cyclic phosphodiesterase subunit alpha
+      annotation_publications: PDB-7JSN
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7jsn.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7jsn.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7K5X
+        id: GO:0000786
+        name: nucleosome
+      annotation_publications: PDB-7K5X
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7k5x.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7k5x.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7KDV
+        id: GO:0070559
+        name: lysosomal multienzyme complex
+      annotation_publications: PDB-7KDV
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kdv.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7kdv.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7KFE
+        id: UniProtKB:B8XCN0
+        name: Envelope glycoprotein
+      annotation_publications: PDB-7KFE
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kfe.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7kfe.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7KJ2
+        id: UniProtKB:Q9BYF1
+        name: Angiotensin-converting enzyme 2
+      annotation_publications: PDB-7KJ2
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kj2.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7kj2.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7MEI
+        id: UniProtKB:P20434
+        name: DNA-directed RNA polymerases I, II, and III subunit RPABC1
+      annotation_publications: PDB-7MEI
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7mei.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7mei.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7NHS
+        id: UniProtKB:Q9X4B9
+        name: Putative transmembrane protein Wzc
+      annotation_publications: PDB-7NHS
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7nhs.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7nhs.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7NIU
+        id: UniProtKB:P21439
+        name: Phosphatidylcholine translocator ABCB4
+      annotation_publications: PDB-7NIU
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7niu.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7niu.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7NYZ
+        id: UniProtKB:A0A0F7LRY2
+        name: Chromosome partition protein MukB
+      annotation_publications: PDB-7NYZ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7nyz.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7nyz.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7O01
+        id: GO:0009521
+        name: photosystem
+      annotation_publications: PDB-7O01
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7o01.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7o01.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7Q21
+        id: GO:0045275
+        name: respiratory chain complex III
+      annotation_publications: PDB-7Q21
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7q21.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7q21.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7QJ0
+        id: GO:0000931
+        name: gamma-tubulin ring complex
+      annotation_publications: PDB-7QJ0
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7qj0.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7qj0.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7R04
+        id: UniProtKB:P21359
+        name: Neurofibromin
+      annotation_publications: PDB-7R04
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7r04.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7r04.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7S7K
+        id: UniProtKB:P54763
+        name: Ephrin type-B receptor 2
+      annotation_publications: PDB-7S7K
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7s7k.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7s7k.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7SFW
+        id: UniProtKB:P05674
+        name: Structural polyprotein
+      annotation_publications: PDB-7SFW
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sfw.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7sfw.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7SGM
+        id: UniProtKB:P29965
+        name: CD40 ligand
+      annotation_publications: PDB-7SGM
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sgm.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7sgm.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7SHK
+        id: GO:0031461
+        name: cullin-RING ubiquitin ligase complex
+      annotation_publications: PDB-7SHK
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7shk.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7shk.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7SN7
+        id: UniProtKB:B7USU2
+        name: Flagellin
+      annotation_publications: PDB-7SN7
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sn7.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7sn7.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7T3U
+        id: UniProtKB:Q14573
+        name: Inositol 1,4,5-trisphosphate-gated calcium channel ITPR3
+      annotation_publications: PDB-7T3U
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7t3u.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7t3u.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7VTQ
+        id: UniProtKB:Q8R4B8
+        name: NACHT, LRR and PYD domains-containing protein 3
+      annotation_publications: PDB-7VTQ
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7vtq.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7vtq.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7WBT
+        id: UniProtKB:Q288C4
+        name: NACHT, LRR and PYD domains-containing protein 9
+      annotation_publications: PDB-7WBT
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7wbt.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7wbt.glb
+          order: xyz
+  - metadata:
+      annotation_method: polnet-simulated ground truth
+      annotation_object:
+        description: PDB-7WOO
+        id: GO:0005643
+        name: nuclear pore
+      annotation_publications: PDB-7WOO
+      annotation_software: polnet
+      authors: *id001
+      dates: *id002
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: polnet on GitHub
+          link: https://github.com/anmartinezs/polnet
+          link_type: source_code
+      method_type: simulated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 10.0
+          file_format: copick
+          glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7woo.json
+          is_portal_standard: true
+          is_visualization_default: true
+          mesh_source_path: Maps/7woo.glb
+          order: xyz
 datasets:
 - metadata:
     authors: *id001
