@@ -110,52 +110,51 @@ class ZarrWriter:
             pyramid.append(d)
             scales.append(self.ome_zarr_transforms(vs))
 
-        # Write the pyramid to the zarr store
-        return ome_zarr.writer.write_multiscale(
-            pyramid,
-            group=self.root_group,
-            axes=self.ome_zarr_axes(),
-            coordinate_transformations=scales,
-            storage_options=dict(chunks=chunk_size, overwrite=True),
-            compute=True,
-        )
-
-        # # not using ome_zarr.writer.write_multiscale since the memory can spike to 100GB+ for large volumes (10GB+)
-        # datasets_meta = []
-
-        # for i, (arr, vs) in enumerate(zip(data, voxel_spacing)):
-        #     path = str(i)
-        #     zds = self.root_group.create_dataset(
-        #         path,
-        #         shape=arr.shape,
-        #         dtype="float32",
-        #         chunks=chunk_size,
-        #         overwrite=True,
-        #     )
-
-        #     z, y, x = map(int, arr.shape)
-        #     zc, yc, xc = map(int, chunk_size)
-
-        #     for z0 in range(0, z, zc):
-        #         z1 = min(z0 + zc, z)
-        #         for y0 in range(0, y, yc):
-        #             y1 = min(y0 + yc, y)
-        #             for x0 in range(0, x, xc):
-        #                 x1 = min(x0 + xc, x)
-        #                 chunk = np.asarray(arr[z0:z1, y0:y1, x0:x1], dtype=np.float32, order="C")
-        #                 zds[z0:z1, y0:y1, x0:x1] = chunk
-        #                 del chunk
-
-        #     datasets_meta.append(
-        #         {
-        #             "path": path,
-        #             "coordinateTransformations": self.ome_zarr_transforms(vs),
-        #         },
-        #     )
-
-        # ome_zarr.writer.write_multiscales_metadata(
-        #     group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/",
+        # TODO: Currently not being used because of memory spikes for large volumes (100GB+ memory spikes for 10GB+ data)
+        # Fixed in latest version of ome_zarr (0.12.2), but can't upgrade because Zarr V3 is required and we don't support Zarr V3 yet.
+        # # Write the pyramid to the zarr store
+        # return ome_zarr.writer.write_multiscale(
+        #     pyramid,
+        #     group=self.root_group,
+        #     axes=self.ome_zarr_axes(),
+        #     coordinate_transformations=scales,
+        #     storage_options=dict(chunks=chunk_size, overwrite=True),
+        #     compute=True,
         # )
+        # TODO: Remove this temporary workaround
+        datasets_meta = []
+
+        for i, (arr, vs) in enumerate(zip(data, voxel_spacing)):
+            path = str(i)
+            zds = self.root_group.create_dataset(
+                path,
+                shape=arr.shape,
+                dtype="float32",
+                chunks=chunk_size,
+                overwrite=True,
+            )
+
+            z, y, x = map(int, arr.shape)
+            zc, yc, xc = map(int, chunk_size)
+
+            for z0 in range(0, z, zc):
+                z1 = min(z0 + zc, z)
+                for y0 in range(0, y, yc):
+                    y1 = min(y0 + yc, y)
+                    for x0 in range(0, x, xc):
+                        x1 = min(x0 + xc, x)
+                        zds[z0:z1, y0:y1, x0:x1] = np.asarray(arr[z0:z1, y0:y1, x0:x1], dtype=np.float32, order="C")
+
+            datasets_meta.append(
+                {
+                    "path": path,
+                    "coordinateTransformations": self.ome_zarr_transforms(vs),
+                },
+            )
+
+        ome_zarr.writer.write_multiscales_metadata(
+            group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/",
+        )
 
 
 class VolumeReader(ABC):
