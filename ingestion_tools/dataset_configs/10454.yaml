@@ -46,7 +46,7 @@ depositions:
       incorporating realistic cryo-ET artifacts including noise and missing wedge effects from a tilt-series range
       of -60° to +60°. The complete dataset totals approximately 12 terabytes, making it one of the largest synthetic
       training datasets available for cryo-electron tomography.
-    deposition_identifier: 10309
+    deposition_identifier: 10335
     deposition_title: CryoLens - simulated training data
     deposition_types:
       - dataset
@@ -55,6 +55,12 @@ depositions:
   - literal:
       value:
       - 10335
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null #cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_snapshot.png
+        thumbnail: null #cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_thumbnail.png
 annotations:
 - metadata:
     annotation_method: polnet-simulated ground truth
@@ -76,7 +82,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1g3i.json
         is_portal_standard: true
@@ -103,7 +109,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1n9g.json
         is_portal_standard: true
@@ -130,7 +136,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1ss8.json
         is_portal_standard: true
@@ -157,7 +163,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_1ul1.json
         is_portal_standard: true
@@ -184,7 +190,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2dfs.json
         is_portal_standard: true
@@ -211,7 +217,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2r9r.json
         is_portal_standard: true
@@ -238,7 +244,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2rhs.json
         is_portal_standard: true
@@ -265,7 +271,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2vz9.json
         is_portal_standard: true
@@ -292,7 +298,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2ww2.json
         is_portal_standard: true
@@ -319,7 +325,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_2xnx.json
         is_portal_standard: true
@@ -346,7 +352,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3lue.json
         is_portal_standard: true
@@ -373,7 +379,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3mkq.json
         is_portal_standard: true
@@ -400,7 +406,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_3ulv.json
         is_portal_standard: true
@@ -427,7 +433,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4uic.json
         is_portal_standard: true
@@ -454,7 +460,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4wrm.json
         is_portal_standard: true
@@ -484,7 +490,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_4xk8.json
         is_portal_standard: true
@@ -512,7 +518,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5a20.json
         is_portal_standard: true
@@ -539,7 +545,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5csa.json
         is_portal_standard: true
@@ -569,7 +575,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5g04.json
         is_portal_standard: true
@@ -596,7 +602,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5h0s.json
         is_portal_standard: true
@@ -623,7 +629,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5jh9.json
         is_portal_standard: true
@@ -651,7 +657,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5ljo.json
         is_portal_standard: true
@@ -678,7 +684,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5o32.json
         is_portal_standard: true
@@ -715,7 +721,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5ool.json
         is_portal_standard: true
@@ -742,7 +748,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_5vkq.json
         is_portal_standard: true
@@ -771,7 +777,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ahu.json
         is_portal_standard: true
@@ -798,7 +804,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6bq1.json
         is_portal_standard: true
@@ -826,7 +832,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ces.json
         is_portal_standard: true
@@ -853,7 +859,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6cnj.json
         is_portal_standard: true
@@ -880,7 +886,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6duz.json
         is_portal_standard: true
@@ -908,7 +914,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6emk.json
         is_portal_standard: true
@@ -935,7 +941,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6f8l.json
         is_portal_standard: true
@@ -962,7 +968,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6gy6.json
         is_portal_standard: true
@@ -994,7 +1000,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6gym.json
         is_portal_standard: true
@@ -1024,7 +1030,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6i0d.json
         is_portal_standard: true
@@ -1057,7 +1063,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6id1.json
         is_portal_standard: true
@@ -1084,7 +1090,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6jy0.json
         is_portal_standard: true
@@ -1111,7 +1117,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6klh.json
         is_portal_standard: true
@@ -1138,7 +1144,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6krk.json
         is_portal_standard: true
@@ -1165,7 +1171,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ksp.json
         is_portal_standard: true
@@ -1192,7 +1198,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lmt.json
         is_portal_standard: true
@@ -1220,7 +1226,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lx3.json
         is_portal_standard: true
@@ -1247,7 +1253,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lxk.json
         is_portal_standard: true
@@ -1274,7 +1280,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6lxv.json
         is_portal_standard: true
@@ -1301,7 +1307,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6m04.json
         is_portal_standard: true
@@ -1328,7 +1334,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6mrc.json
         is_portal_standard: true
@@ -1356,7 +1362,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6pif.json
         is_portal_standard: true
@@ -1383,7 +1389,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ta5.json
         is_portal_standard: true
@@ -1410,7 +1416,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6tav.json
         is_portal_standard: true
@@ -1440,7 +1446,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6tps.json
         is_portal_standard: true
@@ -1467,7 +1473,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6u8q.json
         is_portal_standard: true
@@ -1494,7 +1500,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6up6.json
         is_portal_standard: true
@@ -1521,7 +1527,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vgr.json
         is_portal_standard: true
@@ -1548,7 +1554,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vn1.json
         is_portal_standard: true
@@ -1575,7 +1581,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6vz8.json
         is_portal_standard: true
@@ -1602,7 +1608,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6w6m.json
         is_portal_standard: true
@@ -1629,7 +1635,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6wzt.json
         is_portal_standard: true
@@ -1656,7 +1662,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6x5z.json
         is_portal_standard: true
@@ -1684,7 +1690,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6xf8.json
         is_portal_standard: true
@@ -1711,7 +1717,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6yt5.json
         is_portal_standard: true
@@ -1738,7 +1744,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z3a.json
         is_portal_standard: true
@@ -1765,7 +1771,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z6o.json
         is_portal_standard: true
@@ -1792,7 +1798,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6z80.json
         is_portal_standard: true
@@ -1821,7 +1827,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6ziu.json
         is_portal_standard: true
@@ -1848,7 +1854,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_6zqj.json
         is_portal_standard: true
@@ -1877,7 +1883,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7amv.json
         is_portal_standard: true
@@ -1904,7 +1910,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7b5s.json
         is_portal_standard: true
@@ -1933,7 +1939,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7b7u.json
         is_portal_standard: true
@@ -1962,7 +1968,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7bkc.json
         is_portal_standard: true
@@ -1990,7 +1996,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7blq.json
         is_portal_standard: true
@@ -2017,7 +2023,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7blr.json
         is_portal_standard: true
@@ -2044,7 +2050,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7dd9.json
         is_portal_standard: true
@@ -2071,7 +2077,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e1y.json
         is_portal_standard: true
@@ -2098,7 +2104,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e6g.json
         is_portal_standard: true
@@ -2125,7 +2131,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7e8h.json
         is_portal_standard: true
@@ -2152,7 +2158,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7eep.json
         is_portal_standard: true
@@ -2182,7 +2188,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7egd.json
         is_portal_standard: true
@@ -2212,7 +2218,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7ege.json
         is_portal_standard: true
@@ -2239,7 +2245,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7egq.json
         is_portal_standard: true
@@ -2266,7 +2272,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7etm.json
         is_portal_standard: true
@@ -2294,7 +2300,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7ey7.json
         is_portal_standard: true
@@ -2322,7 +2328,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7jsn.json
         is_portal_standard: true
@@ -2350,7 +2356,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7k5x.json
         is_portal_standard: true
@@ -2377,7 +2383,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kdv.json
         is_portal_standard: true
@@ -2404,7 +2410,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kfe.json
         is_portal_standard: true
@@ -2431,7 +2437,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7kj2.json
         is_portal_standard: true
@@ -2461,7 +2467,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7mei.json
         is_portal_standard: true
@@ -2488,7 +2494,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7nhs.json
         is_portal_standard: true
@@ -2515,7 +2521,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7niu.json
         is_portal_standard: true
@@ -2543,7 +2549,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7nyz.json
         is_portal_standard: true
@@ -2574,7 +2580,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7o01.json
         is_portal_standard: true
@@ -2603,7 +2609,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7q21.json
         is_portal_standard: true
@@ -2631,7 +2637,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7qj0.json
         is_portal_standard: true
@@ -2658,7 +2664,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7r04.json
         is_portal_standard: true
@@ -2685,7 +2691,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7s7k.json
         is_portal_standard: true
@@ -2712,7 +2718,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sfw.json
         is_portal_standard: true
@@ -2739,7 +2745,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sgm.json
         is_portal_standard: true
@@ -2767,7 +2773,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7shk.json
         is_portal_standard: true
@@ -2794,7 +2800,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7sn7.json
         is_portal_standard: true
@@ -2821,7 +2827,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7t3u.json
         is_portal_standard: true
@@ -2848,7 +2854,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7vtq.json
         is_portal_standard: true
@@ -2875,7 +2881,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7wbt.json
         is_portal_standard: true
@@ -2903,7 +2909,7 @@ annotations:
     version: 1.0
   sources:
     - OrientedPoint:
-        binning: 1.0
+        binning: 10.0
         file_format: copick
         glob_string: ExperimentRuns/tomo-0000-very-crowded-{run_name}/Picks/polnet-generator_synthetic_7woo.json
         is_portal_standard: true
@@ -2950,11 +2956,12 @@ dataset_keyphotos:
 runs:
 - sources:
   - source_glob:
-      list_glob: tomo-0000-very-crowded-*
-      name_regex: ^tomo-0000-very-crowded-(.*)$
+      list_glob: 'ExperimentRuns/tomo-0000-very-crowded-*'
+      match_regex: '.*'
+      name_regex: '^tomo-0000-very-crowded-(.*)$'
 standardization_config:
   deposition_id: 10335
-  source_prefix: CZI/20250922_cryolens_training_set
+  source_prefix: CZI/20250922_cryolens_training_set/
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -2990,7 +2997,7 @@ tomograms:
     voxel_spacing: 10.0
   sources:
   - source_glob:
-      list_glob: 'tomo-0000-very-crowded-{run_name}/VoxelSpacing10.000/denoised.zarr'
+      list_glob: 'ExperimentRuns/tomo-0000-very-crowded-{run_name}/VoxelSpacing10.000/denoised.zarr'
 version: 1.1.0
 voxel_spacings:
 - sources:
