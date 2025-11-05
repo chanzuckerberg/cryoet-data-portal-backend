@@ -59,8 +59,8 @@ deposition_keyphotos:
 - sources:
   - literal:
       value:
-        snapshot: null #cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_snapshot.png
-        thumbnail: null #cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10309_thumbnail.png
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10335_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10335_thumbnail.png
 annotations:
   - metadata:
       annotation_method: polnet-simulated ground truth
