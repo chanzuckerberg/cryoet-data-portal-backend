@@ -9,28 +9,22 @@ depositions:
         corresponding_author_status: false
         name: Utz Heinrich Ermel
         primary_author_status: false
-      - ORCID: 0000-0002-7237-1973
-        corresponding_author_status: false
+      - corresponding_author_status: false
         name: Ritvik Vasan
         primary_author_status: false
-      - ORCID: 0000-0002-7237-1973
-        corresponding_author_status: false
+      - corresponding_author_status: false
         name: Ashley Anderson
         primary_author_status: false
-      - ORCID: 0000-0002-7237-1973
-        corresponding_author_status: false
+      - corresponding_author_status: false
         name: Dan Lu
         primary_author_status: false
-      - ORCID: 0000-0002-7237-1973
-        corresponding_author_status: false
+      - corresponding_author_status: false
         name: Ryan Lim
         primary_author_status: false
-      - ORCID: 0000-0002-7237-1973
-        corresponding_author_status: false
+      - corresponding_author_status: false
         name: Mikala Caton
         primary_author_status: false
-      - ORCID: 0000-0002-7237-1973
-        corresponding_author_status: true
+      - corresponding_author_status: true
         name: Alan R. Lowe
         primary_author_status: false
     cross_references: &id003
