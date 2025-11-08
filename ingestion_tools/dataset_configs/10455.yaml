@@ -77,6 +77,13 @@ depositions:
       - literal:
           value:
             - 10336
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10333_snapshot.png"
+            thumbnail: null #"cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10333_thumbnail.png"
+
 datasets:
   - metadata:
       authors: &dataset_authors
@@ -357,7 +364,7 @@ runs:
           name_regex: (.*)\.aln$
 standardization_config:
   deposition_id: 10336
-  source_prefix: CZII/
+  source_prefix: CZII/20251107_vlp_plunge_defocus/
   run_data_map_file:
 tiltseries:
   - metadata:
