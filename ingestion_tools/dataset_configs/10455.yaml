@@ -252,6 +252,7 @@ annotations:
           glob_strings:
             - copick_output/ExperimentRuns/{run_name}/Picks/relionrefine_1_VLP.json
           is_visualization_default: false
+          mesh_source_path: maps/VLP_3_decimated.glb
   - metadata:
       annotation_method: octopi prediction + 2D classification and refinement (RELION) + max likelihood filtering
       annotation_object: *object
@@ -280,6 +281,7 @@ annotations:
           glob_strings:
             - copick_output/ExperimentRuns/{run_name}/Picks/relionrefine_2_VLP.json
           is_visualization_default: false
+          mesh_source_path: maps/VLP_3_decimated.glb
   - metadata:
       annotation_method: octopi prediction + 3D refinement (RELION) + max likelihood filtering
       annotation_object: *object
@@ -308,6 +310,7 @@ annotations:
           glob_strings:
             - copick_output/ExperimentRuns/{run_name}/Picks/relionrefine_3_VLP.json
           is_visualization_default: true
+          mesh_source_path: maps/VLP_3_decimated.glb
   - metadata:
       annotation_method: manual picking in ChimeraX-copick
       annotation_object: *object
@@ -336,7 +339,6 @@ annotations:
           glob_strings:
             - copick_output/ExperimentRuns/{run_name}/Picks/reza.paraan_1_VLP.json
           is_visualization_default: false
-
 collection_metadata:
   - sources:
       - source_glob:
