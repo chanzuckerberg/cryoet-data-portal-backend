@@ -38,7 +38,7 @@ depositions:
           corresponding_author_status: false
           ORCID: 0000-0002-8063-6951
         - name: Ariana Peck
-          primary_author_status: true
+          primary_author_status: false
           corresponding_author_status: false
           ORCID: 0000-0002-5940-3897
         - name: Elizabeth Montabana
@@ -108,7 +108,7 @@ datasets:
           corresponding_author_status: false
           ORCID: 0000-0002-8063-6951
         - name: Ariana Peck
-          primary_author_status: true
+          primary_author_status: false
           corresponding_author_status: false
           ORCID: 0000-0002-5940-3897
         - name: Elizabeth Montabana
