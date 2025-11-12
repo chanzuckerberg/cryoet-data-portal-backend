@@ -114,7 +114,7 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
     def neuroglancer_precompute_args(self, output_prefix: str, metadata: dict[str, Any]) -> dict[str, Any]:
         return {"is_oriented": True}
 
-    def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
+    def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float, glb_scale: float = 1.0) -> None:
         # Build the oriented points
         super().neuroglancer_precompute(output_prefix, voxel_spacing)
 
@@ -154,8 +154,9 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
             scene,
             self.annotation.get_output_data(annotation_path),
             max_lod=2,
-            max_faces_for_first_lod=10e6,
+            max_faces_for_first_lod=2 * 10e6,
             decimation_aggressiveness=5.5,
+            scale=glb_scale,
         )
 
         # Dump the precomputed version on the output folder
