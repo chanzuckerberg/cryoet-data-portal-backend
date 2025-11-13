@@ -156,7 +156,7 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
             max_lod=2,
             max_faces_for_first_lod=2 * 10e6,
             decimation_aggressiveness=5.5,
-            scale=voxel_spacing / 10.0,  # Convert from angstrom to nanometer
+            data_scale_in_nm=voxel_spacing * 0.1,  # Convert from angstrom
         )
 
         # Dump the precomputed version on the output folder
