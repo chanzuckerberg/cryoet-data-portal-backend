@@ -154,7 +154,7 @@ class OrientedPointAnnotationPrecompute(PointAnnotationPrecompute):
             scene,
             self.annotation.get_output_data(annotation_path),
             max_lod=2,
-            max_faces_for_first_lod=2 * 10e6,
+            max_faces_for_first_lod=10e6,
             decimation_aggressiveness=5.5,
             data_scale_in_nm=voxel_spacing * 0.1,  # Convert from angstrom
         )
