@@ -80,6 +80,7 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
+@click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
 @click.option("--import-everything", is_flag=True, default=False)
 @click.option("--write-mrc/--no-write-mrc", default=True)
 @click.option("--write-zarr/--no-write-zarr", default=True)
@@ -92,6 +93,7 @@ def convert(
     config_file: str,
     input_bucket: str,
     output_path: str,
+    https_prefix: str,
     import_everything: bool,
     write_mrc: bool,
     write_zarr: bool,
@@ -105,7 +107,7 @@ def convert(
 
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
-    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS)
+    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS, https_prefix=https_prefix)
     config.write_mrc = write_mrc
     config.write_zarr = write_zarr
     config.load_map_files()

@@ -52,9 +52,8 @@ def expected_url() -> str:
 
 @pytest.fixture
 def config(s3_fs: FileSystemApi, test_output_bucket: str, expected_url: str) -> DepositionImportConfig:
-    config = create_config(s3_fs, test_output_bucket)
+    config = create_config(s3_fs, test_output_bucket, https_prefix=expected_url)
     config.write_zarr = True
-    config.https_prefix = expected_url
     return config
 
 
