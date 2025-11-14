@@ -15,6 +15,8 @@ if TYPE_CHECKING:
 else:
     BaseImporter = "BaseImporter"
 
+STAGING_URL = "https://files.cryoet.staging.si.czi.technology"
+PROD_URL = "https://files.cryoetdataportal.cziscience.com"
 
 class RunOverride:
     run_regex: re.Pattern[str]
@@ -63,7 +65,7 @@ class DepositionImportConfig:
         https_prefix: str | None = None,
     ):
         self.output_prefix = output_prefix
-        self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
+        self.https_prefix = https_prefix if https_prefix else PROD_URL
         self.fs = fs
         self.run_to_tomo_map = {}
         self.run_data_map = {}

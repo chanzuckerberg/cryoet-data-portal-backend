@@ -1,8 +1,11 @@
+import copy
 import json
 import os
+import re
 from typing import Any
 
 from database import models
+from db_import.common.config import PROD_URL, STAGING_URL
 from db_import.common.finders import MetadataFileFinder
 from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
@@ -39,6 +42,53 @@ class TomogramItem(ItemDBImporter):
         "is_visualization_default": ["is_visualization_default"],
     }
 
+    def _replace_origin_in_ng_url(self, url: str) -> str:
+        """
+        A helper function to replace the origin (https_prefix) of the layer source URLs in the neuroglancer config with the one from the db importer config.
+        Also a bit hacky, so it may need to be revisted if the neuroglancer config changes in the future.
+        """
+        # first option: if the url already contains the https_prefix from the config, skip it
+        if self.config.https_prefix in url:
+            return url
+        # next options: if the url contains the staging url or prod url, replace it with the https_prefix from the config
+        if STAGING_URL in url:
+            return url.replace(
+                STAGING_URL,
+                self.config.https_prefix,
+            )
+        if PROD_URL in url:
+            return url.replace(
+                PROD_URL,
+                self.config.https_prefix,
+            )
+        # otherwise, try to do some parsing to replace the origin of the url with the https_prefix from the config
+        origin = re.search(r'https://[^/]+', url)
+        if not origin:
+            print(f"Warning: During neuroglancer config import, could not find an origin in the url {url}. Skipping url replacement.")
+            return url
+        origin = origin.group(0)
+        return url.replace(origin, self.config.https_prefix)
+
+
+    def _update_ng_layer_source_urls(self, ng_config: dict[str, Any]) -> dict[str, Any]:
+        """
+        Replace the origin (https_prefix) of the layer source URLs in the neuroglancer config with the one from the db importer config.
+        This is done to ensure that the URLs in the neuroglancer config are correct for the imported environment (staging, prod).
+        This function is a bit hacky, so it may need to be revisted if the neuroglancer config changes in the future.
+        """
+        ng_config = copy.deepcopy(ng_config)
+        for layer in ng_config.get("layers", []):
+            if not layer.get("source"):
+                continue
+
+            source = layer["source"]
+            if not isinstance(source, dict):
+                print(f"Warning: During neuroglancer config import, expected source to be a dict but got {type(source)}. Skipping url replacement for this layer.")
+
+            if source.get("url"):
+                source["url"] = self._replace_origin_in_ng_url(source["url"])
+        return ng_config
+
     def normalize_to_unknown_str(self, value: str) -> str:
         return value.replace(" ", "_") if value else "Unknown"
 
@@ -47,9 +97,12 @@ class TomogramItem(ItemDBImporter):
             # Handle the case where there is no neuroglancer config file specified which is expected when
             # visualization_default is set to False.
             return None
-        config = self.config.load_key_json(path, is_file_required=False)
+        ng_config = self.config.load_key_json(path, is_file_required=False)
+        if ng_config:
+            ng_config = self._update_ng_layer_source_urls(ng_config)
+
         # TODO: Log warning
-        return json.dumps(config, separators=(",", ":")) if config else "{}"
+        return json.dumps(ng_config, separators=(",", ":")) if ng_config else "{}"
 
     def load_computed_fields(self):
         https_prefix = self.config.https_prefix

@@ -22,7 +22,7 @@ from importers.run import RunImporter
 from importers.utils import IMPORTERS
 from standardize_dirs import common_options as ingest_common_options
 
-from common.config import DepositionImportConfig
+from common.config import PROD_URL, STAGING_URL, DepositionImportConfig
 from common.fs import FileSystemApi
 
 logger = logging.getLogger("db_import")
@@ -132,9 +132,9 @@ def run_job(
     )
 
 def get_default_https_prefix(environment):
-    https_prefix = "https://files.cryoet.staging.si.czi.technology"
+    https_prefix = STAGING_URL
     if environment == "prod":
-        https_prefix = "https://files.cryoetdataportal.cziscience.com"
+        https_prefix = PROD_URL
     return https_prefix
 
 

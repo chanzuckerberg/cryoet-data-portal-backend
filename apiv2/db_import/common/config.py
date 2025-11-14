@@ -20,6 +20,9 @@ else:
 
 logger = logging.getLogger("config")
 
+STAGING_URL = "https://files.cryoet.staging.si.czi.technology"
+PROD_URL = "https://files.cryoetdataportal.cziscience.com"
+
 
 class DBImportConfig:
     s3_client: S3Client
@@ -41,7 +44,7 @@ class DBImportConfig:
         self.s3fs = s3fs
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
-        self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
+        self.https_prefix = https_prefix if https_prefix else PROD_URL
         self.session = session
         self.deposition_map: dict[int, models.Deposition] = {}
 
