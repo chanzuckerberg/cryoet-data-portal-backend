@@ -21,13 +21,13 @@ def list_dir(s3_client: S3Client, bucket: str, prefix: str, assert_non_zero_size
     return [item["Key"] for item in files["Contents"]] if "Contents" in files else []
 
 
-def create_config(s3_fs: FileSystemApi, test_output_bucket: str, config_path: str = None, https_prefix: str = None) -> DepositionImportConfig:
+def create_config(s3_fs: FileSystemApi, test_output_bucket: str, config_path: str = None) -> DepositionImportConfig:
     output_path = f"{test_output_bucket}/output"
     input_bucket = "test-public-bucket"
     if config_path is None:
         config_path = "dataset1.yaml"
     import_config = f"tests/fixtures/{config_path}"
-    return DepositionImportConfig(s3_fs, import_config, output_path, input_bucket, IMPORTERS, https_prefix=https_prefix)
+    return DepositionImportConfig(s3_fs, import_config, output_path, input_bucket, IMPORTERS)
 
 
 def get_run_and_parents(
