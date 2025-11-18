@@ -144,9 +144,7 @@ class TomogramImporter(VolumeImporter):
         return None
 
     def get_neuroglancer_config_path(self) -> str | None:
-        if self.metadata.get("is_visualization_default"):
-            return self.config.resolve_output_path("viz_config", self)
-        return None
+        return self.config.resolve_output_path("viz_config", self)
 
     @classmethod
     def get_name_and_path(cls, metadata: dict, name: str, path: str, results: dict[str, str]) -> [str, str, dict]:
