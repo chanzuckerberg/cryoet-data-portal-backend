@@ -1807,7 +1807,7 @@ tqdm = ">=4.67,<5.0"
 
 [[package]]
 name = "cryoet-data-portal-neuroglancer"
-version = "1.6.1"
+version = "1.7.1"
 description = "Utility package for working with Neuroglancer data in the CZI Cryo-ET Data Portal"
 optional = false
 python-versions = "^3.11"
@@ -1831,8 +1831,8 @@ zarr = "^2.18.2"
 [package.source]
 type = "git"
 url = "https://github.com/chanzuckerberg/cryoet-data-portal-neuroglancer.git"
-reference = "v1.6.1"
-resolved_reference = "e4cf29c84b3e8cb395fd1860894b83a6b1230e6f"
+reference = "v1.7.1"
+resolved_reference = "75b3d8c6427b6924a3e7cb96c40584eb15f36199"
 
 [[package]]
 name = "cycler"
@@ -3413,6 +3413,7 @@ files = [
     {file = "igneous_pipeline-4.30.0-py3-none-any.whl", hash = "sha256:88bd833613ef185d25e5f59366663a30373d50ede17e7aca90b42757865bfa29"},
     {file = "igneous_pipeline-4.30.0.tar.gz", hash = "sha256:1a00440c19838edf4a92aa5315d63f72d076ab70630ded2a9dafc8a558f677bd"},
 ]
+develop = false
 
 [package.dependencies]
 click = ">=6.7"
@@ -8249,4 +8250,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "b2f02857cf5111f7820579f0d89b8359402f6365b8fe0efd55f58d343d69155d"
+content-hash = "78fcf6309c1173ed9e06908fe85a26974eb689b6cdecfbf646115fcba174258f"
