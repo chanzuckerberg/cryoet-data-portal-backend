@@ -32,7 +32,9 @@ class AnnotationShapeFactory(CommonFactory):
     annotation = factory.SubFactory(
         AnnotationFactory,
     )
-    shape_type = fuzzy.FuzzyChoice(["SegmentationMask", "OrientedPoint", "Point", "InstanceSegmentation", "Mesh"])
+    shape_type = fuzzy.FuzzyChoice(
+        ["SegmentationMask", "OrientedPoint", "Point", "InstanceSegmentation", "InstanceSegmentationMask", "Mesh"],
+    )
 
     # Auto increment integer identifiers starting with 1
     id = factory.Sequence(lambda n: n + 1)

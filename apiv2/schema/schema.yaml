@@ -279,6 +279,9 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      InstanceSegmentationMask:
+        text: InstanceSegmentationMask
+        description: A mask with labels for multiple instances
       Mesh:
         text: Mesh
         description: A surface mesh volumes
@@ -922,11 +925,11 @@ classes:
         annotations:
           cascade_delete: true
       shape_type:
-        description: The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh)
+        description: The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)
         name: shape_type
         from_schema: cdp-dataset-config
         range: annotation_file_shape_type_enum
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^Mesh$)
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^Mesh$)|(^InstanceSegmentationMask$)
   Annotation:
     name: Annotation
     annotations:

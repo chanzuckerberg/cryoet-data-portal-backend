@@ -38,6 +38,7 @@ class annotation_file_shape_type_enum(enum.StrEnum):
     OrientedPoint = "OrientedPoint"
     Point = "Point"
     InstanceSegmentation = "InstanceSegmentation"
+    InstanceSegmentationMask = "InstanceSegmentationMask"
     Mesh = "Mesh"
 
 

@@ -146,6 +146,7 @@ def test_viz_config_with_only_tomogram(
         ("OrientedPointMesh", "ndjson"),
         ("InstanceSegmentation", "ndjson"),
         ("SegmentationMask", "zarr"),
+        ("InstanceSegmentationMask", "zarr"),
         ("SegmentationMask", "mrc"),
         ("Mesh", "glb"),
     ],
@@ -196,6 +197,13 @@ def annotation_usecases(
     elif shape == "SegmentationMask" and format == "zarr":
         generator_method = "generate_segmentation_mask_layer"
         input_args["name"] += "segmentation"
+        input_args["visible_segments"] = (1,)
+        return_value = {"key": generator_method, "random": "value"}
+    elif shape == "InstanceSegmentationMask" and format == "zarr":
+        generator_method = "generate_segmentation_mask_layer"
+        input_args["name"] += "instancesegmentation"
+        input_args["visible_segments"] = (1, 2, 3)
+        input_args["color"] = {1: "#51508b", 2: "#ffff00", 3: "#00ffff"}
         return_value = {"key": generator_method, "random": "value"}
 
     args = {
@@ -277,6 +285,7 @@ def test_viz_config_with_tomogram_and_annotation(
     config: DepositionImportConfig,
     validate_config: Callable[[str, dict[str, BaseImporter], list[dict]], None],
     mock_state_generator: MagicMock,
+    monkeypatch: pytest.MonkeyPatch,
     annotation_usecases: dict[str, Any],
 ) -> None:
     parents = get_parents(config)
@@ -312,6 +321,12 @@ def test_viz_config_with_tomogram_and_annotation(
         }
         anno_layers.append(mock_state_generator.generate_oriented_point_mesh_layer.return_value)
         anno_layers[0], anno_layers[1] = anno_layers[1], anno_layers[0]  # Ensure mesh layer is first
+
+    if annotation_usecases["shape"] == "InstanceSegmentationMask":
+        monkeypatch.setattr(
+            "importers.visualization_config.VisualizationConfigImporter._get_labels",
+            MagicMock(return_value=(1, 2, 3)),
+        )
 
     viz_config = list(VisualizationConfigImporter.finder(config, **parents))
     for item in viz_config:
