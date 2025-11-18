@@ -59,9 +59,9 @@ annotations:
           ORCID: 0000-0003-3550-6274
           email: mikhail.kudryashev@mdc-berlin.de
       dates: &id002
-        deposition_date: "2025-01-27"
-        last_modified_date: "2025-07-25"
-        release_date: "2025-07-25"
+        deposition_date: "2025-11-17"
+        last_modified_date: "2025-11-17"
+        release_date: "2025-11-17"
       ground_truth_status: true
       is_curator_recommended: true
       method_links: &id003
@@ -250,6 +250,12 @@ depositions:
       - literal:
           value:
             - 10334
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10334_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10334_thumbnail.png
 frames:
   - metadata:
       dose_rate: float {tilt_series_dose_rate}
