@@ -267,6 +267,7 @@ class VolumeImporter(BaseImporter):
         write_zarr: bool = True,
         write_mrc: bool = True,
         voxel_spacing: float | None = None,
+        chunk_size: tuple[int, int, int] = (256, 256, 256),
     ) -> dict[str, Any]:
         """
         Scales the MRC file into a pyramid volume and optionally writes it to MRC and Zarr formats.
@@ -277,6 +278,7 @@ class VolumeImporter(BaseImporter):
             write_zarr (bool): Whether to write the zarr file.
             write_mrc (bool): Whether to write the mrc file.
             voxel_spacing (float): The voxel spacing of the volume.
+            chunk_size (tuple[int, int, int]): The chunk size of the output volume.
         """
         output_prefix = self.get_output_path()
         return make_pyramids(
@@ -288,6 +290,7 @@ class VolumeImporter(BaseImporter):
             write_zarr=write_zarr,
             header_mapper=self.mrc_header_mapper,
             voxel_spacing=voxel_spacing,
+            chunk_size=chunk_size,
         )
 
     def get_output_path(self) -> str:
