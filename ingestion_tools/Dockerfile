@@ -13,7 +13,7 @@ RUN update-ca-certificates
 
 # IMOD helps with MRC ingestion
 # bio3d.colorado.edu isn't sending an intermediate cert, which breaks openssl (no AIA support). So we're installing it here.
-RUN wget -O- https://crt.sectigo.com/SectigoPublicServerAuthenticationCAOVR36.crt \
+RUN wget -O- https://sectigo.tbs-certificats.com/SectigoPublicServerAuthenticationCAOVR36.crt \
     | openssl x509 -inform DER -out /tmp/intermediate.pem \
     && wget --ca-certificate /tmp/intermediate.pem https://bio3d.colorado.edu/imod/AMD64-RHEL5/imod_4.11.24_RHEL7-64_CUDA10.1.sh \
     && bash imod_4.11.24_RHEL7-64_CUDA10.1.sh -yes && rm /tmp/intermediate.pem
