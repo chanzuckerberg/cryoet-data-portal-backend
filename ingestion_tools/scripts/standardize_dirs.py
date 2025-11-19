@@ -16,6 +16,8 @@ def cli(ctx):
 
 def common_options(func):
     options = []
+    options.append(click.option("--import-everything", is_flag=True, default=False))
+    options.append(click.option("--import-all-metadata", is_flag=True, default=False))
     for cls in IMPORTERS:
         plural_key = cls.plural_key.replace("_", "-")
         importer_key = cls.type_key.replace("_", "-")
@@ -81,7 +83,6 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
 @click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
-@click.option("--import-everything", is_flag=True, default=False)
 @click.option("--write-mrc/--no-write-mrc", default=True)
 @click.option("--write-zarr/--no-write-zarr", default=True)
 @click.option("--force-overwrite", is_flag=True, default=False)
@@ -95,6 +96,7 @@ def convert(
     output_path: str,
     https_prefix: str,
     import_everything: bool,
+    import_all_metadata: bool,
     write_mrc: bool,
     write_zarr: bool,
     force_overwrite: bool,
@@ -115,6 +117,10 @@ def convert(
     iteration_deps = flatten_dependency_tree(IMPORTER_DEP_TREE).items()
     if import_everything:
         to_import = set(IMPORTERS)
+        metadata_import = set(IMPORTERS)
+        to_iterate = set(IMPORTERS)
+    elif import_all_metadata:
+        to_import = set()
         metadata_import = set(IMPORTERS)
         to_iterate = set(IMPORTERS)
     else:

@@ -336,7 +336,6 @@ def db_import(
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
 @click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
-@click.option("--import-everything", is_flag=True, default=False)
 @click.option(
     "--write-mrc/--no-write-mrc",
     default=True,
@@ -372,6 +371,7 @@ def queue(
     output_path: str,
     https_prefix: str,
     import_everything: bool,
+    import_all_metadata: bool,
     write_mrc: bool,
     write_zarr: bool,
     force_overwrite: bool,
@@ -441,6 +441,7 @@ def queue(
                     new_args = to_args(
                         https_prefix=https_prefix,
                         import_everything=import_everything,
+                        import_all_metadata=import_all_metadata,
                         write_mrc=write_mrc,
                         write_zarr=write_zarr,
                         force_overwrite=force_overwrite,

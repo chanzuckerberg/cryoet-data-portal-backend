@@ -279,7 +279,7 @@ runs:
           list_glob: Stacks/st_files/*.st
           match_regex: .*
           name_regex: (.*)\.st$
-        exclude: # missing frames. TODO: do we want to still include these but just have no corresponding frames?
+        exclude: # missing frames.
           - tomogram_002
           - tomogram_012
           - tomogram_023
