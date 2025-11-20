@@ -22,7 +22,7 @@ from importers.run import RunImporter
 from importers.utils import IMPORTERS
 from standardize_dirs import common_options as ingest_common_options
 
-from common.config import PROD_URL, STAGING_URL, DepositionImportConfig
+from common.config import PROD_URL, DepositionImportConfig
 from common.fs import FileSystemApi
 
 logger = logging.getLogger("db_import")
@@ -131,11 +131,12 @@ def run_job(
         input=json.dumps(sfn_input_json),
     )
 
-def get_default_https_prefix(environment):
-    https_prefix = STAGING_URL
-    if environment == "prod":
-        https_prefix = PROD_URL
-    return https_prefix
+def get_default_https_prefix():
+    """
+    For the purposes of ingestion, we are okay with the staging environment containing production URLs,
+    since the URLs in metadata files are not expected to change between environments.
+    """
+    return PROD_URL
 
 
 def get_aws_env(environment):
@@ -273,7 +274,7 @@ def db_import(
         if env == "prod":
             s3_bucket = "cryoet-data-portal-public"
     if not https_prefix:
-        https_prefix = get_default_https_prefix(env)
+        https_prefix = get_default_https_prefix()
 
     # Default to using a lot less memory than the ingestion job.
     if not ctx.obj.get("memory"):
@@ -384,7 +385,7 @@ def queue(
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
     if not https_prefix:
-        https_prefix = get_default_https_prefix(ctx.obj["environment"])
+        https_prefix = get_default_https_prefix()
     config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS, https_prefix=https_prefix)
     config.write_mrc = write_mrc
     config.write_zarr = write_zarr

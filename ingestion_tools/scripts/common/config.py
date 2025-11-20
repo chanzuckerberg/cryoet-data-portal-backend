@@ -4,7 +4,7 @@ import os
 import os.path
 import re
 from copy import deepcopy
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Final
 
 import yaml
 
@@ -15,8 +15,8 @@ if TYPE_CHECKING:
 else:
     BaseImporter = "BaseImporter"
 
-STAGING_URL = "https://files.cryoet.staging.si.czi.technology"
-PROD_URL = "https://files.cryoetdataportal.cziscience.com"
+STAGING_URL: Final[str] = "https://files.cryoet.staging.si.czi.technology"
+PROD_URL: Final[str] = "https://files.cryoetdataportal.cziscience.com"
 
 class RunOverride:
     run_regex: re.Pattern[str]
