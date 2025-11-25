@@ -4,6 +4,9 @@ depositions:
         - name: Hannah Siems
           primary_author_status: true
           ORCID: 0009-0002-6674-7601
+        - name: Daniel Ji
+          ORCID: 0009-0003-2008-9583
+          primary_author_status: true
         - name: Utz Heinrich Ermel
           ORCID: 0000-0003-4685-037X
           primary_author_status: true
@@ -12,6 +15,9 @@ depositions:
           primary_author_status: true
         - name: Jonathan Schwartz
           ORCID: 0000-0002-8063-6951
+          primary_author_status: true
+        - name: Ariana Peck
+          ORCID: 0000-0002-5940-3897
           primary_author_status: true
         - name: Yue Yu
           ORCID: 0000-0002-3248-9678
@@ -75,6 +81,10 @@ annotations:
         - ORCID: 0000-0002-8063-6951
           corresponding_author_status: true
           name: Jonathan Schwartz
+          primary_author_status: true
+        - ORCID: 0000-0002-5940-3897
+          corresponding_author_status: true
+          name: Ariana Peck
           primary_author_status: true
         - name: Utz Heinrich Ermel
           ORCID: 0000-0003-4685-037X
