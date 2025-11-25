@@ -166,7 +166,7 @@ annotations:
       version: 1.0
     sources:
       - OrientedPoint:
-          binning: 4.995
+          binning: 14.985
           file_format: copick
           glob_strings:
             - 'project/ExperimentRuns/{run_name}/Picks/pyrelion_refine3d-job004-orientations-0-01-cutoff_ribosome.json'
@@ -207,7 +207,7 @@ annotations:
       version: 1.0
     sources:
       - OrientedPoint:
-          binning: 4.995
+          binning: 14.985
           file_format: copick
           glob_strings:
             - 'project/ExperimentRuns/{run_name}/Picks/points_combined_mt.json'
