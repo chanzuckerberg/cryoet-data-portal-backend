@@ -1,6 +1,45 @@
 depositions:
   - metadata:
       authors: &id001
+        - name: Hannah Siems
+          primary_author_status: true
+          ORCID: 0009-0002-6674-7601
+        - name: Utz Heinrich Ermel
+          ORCID: 0000-0003-4685-037X
+          primary_author_status: true
+        - name: Julia Peukes
+          ORCID: 0000-0001-8560-7407
+          primary_author_status: true
+        - name: Jonathan Schwartz
+          ORCID: 0000-0002-8063-6951
+          primary_author_status: true
+        - name: Yue Yu
+          ORCID: 0000-0002-3248-9678
+          primary_author_status: false
+        - name: Elizabeth Montabana
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-6731-5854
+        - name: Dari Kimanius
+          ORCID: 0000-0002-2662-6373
+          corresponding_author_status: false
+          primary_author_status: false
+        - name: Matthias Haury
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-1796-1479
+        - name: David Agard
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0003-3512-695X
+        - name: Bridget Carragher
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-0624-5020
+        - name: Daniel Serwas
+          primary_author_status: false
+          corresponding_author_status: true
+          ORCID: 0000-0001-9010-7298
       dates: &id002
         deposition_date: '2025-11-24'
         last_modified_date: '2025-11-24'
