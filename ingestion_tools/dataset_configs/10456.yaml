@@ -104,7 +104,7 @@ annotations:
       annotation_software: nnInteractive
       authors:
         - ORCID: 0000-0003-4685-037X
-          corresponding_author_status: false
+          corresponding_author_status: true
           name: Utz Heinrich Ermel
           primary_author_status: true
       dates:
@@ -144,7 +144,7 @@ annotations:
           primary_author_status: true
         - name: Utz Heinrich Ermel
           ORCID: 0000-0003-4685-037X
-          corresponding_author_status: false
+          corresponding_author_status: true
           primary_author_status: false
       dates:
         deposition_date: '2025-11-24'
