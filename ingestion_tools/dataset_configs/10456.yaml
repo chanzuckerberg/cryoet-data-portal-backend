@@ -379,9 +379,9 @@ rawtilts:
 runs:
   - sources:
       - source_glob:
-          list_glob: 'project/ExperimentRuns/*'
-          match_regex: '.*'
-          name_regex: '^(.*)$'
+          list_glob: '25jul29a/*.aln'
+          match_regex: .*\.aln$
+          name_regex: (.*)\.aln$
 standardization_config:
   deposition_id: 10337
   source_prefix: CZII/20251124_NPC1_example/
