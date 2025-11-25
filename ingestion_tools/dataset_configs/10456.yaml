@@ -385,7 +385,7 @@ runs:
 standardization_config:
   deposition_id: 10337
   source_prefix: CZII/20251124_NPC1_example/
-  run_data_map_file: run_to_data_map_updated_quality_updated.tsv
+  run_data_map_file: 25jul29a/run_to_data_map_updated_quality_updated.tsv
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
