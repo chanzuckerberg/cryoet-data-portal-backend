@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from functools import lru_cache
 from pathlib import PurePath
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Final
 
 import sqlalchemy as sa
 from botocore.exceptions import ClientError
@@ -19,6 +19,9 @@ else:
     S3Client = object
 
 logger = logging.getLogger("config")
+
+STAGING_URL: Final[str] = "https://files.cryoet.staging.si.czi.technology"
+PROD_URL: Final[str] = "https://files.cryoetdataportal.cziscience.com"
 
 
 class DBImportConfig:
@@ -41,7 +44,7 @@ class DBImportConfig:
         self.s3fs = s3fs
         self.bucket_name = bucket_name
         self.s3_prefix = f"s3://{bucket_name}"
-        self.https_prefix = https_prefix if https_prefix else "https://files.cryoetdataportal.cziscience.com"
+        self.https_prefix = https_prefix if https_prefix else PROD_URL
         self.session = session
         self.deposition_map: dict[int, models.Deposition] = {}
 
@@ -133,11 +136,21 @@ class DBImportConfig:
         Loads file matching the key value as json. If file does not exist, will raise error if is_file_required is True
         else it will return None.
         """
+        text = self.load_key_text(key, is_file_required)
+        if text is None:
+            return None
+        return json.loads(text)
+
+    def load_key_text(self, key: str, is_file_required: bool = True) -> str | None:
+        """
+        Loads file matching the key value as text. If file does not exist, will raise error if is_file_required is True
+        else it will return None.
+        """
         try:
             if key.startswith(self.bucket_name):
                 key = key[len(self.bucket_name) + 1 :]
             text = self.s3_client.get_object(Bucket=self.bucket_name, Key=key)
-            return json.loads(text["Body"].read())
+            return text["Body"].read().decode("utf-8")
         except ClientError as ex:
             if ex.response["Error"]["Code"] == "NoSuchKey" and not is_file_required:
                 logger.warning("NoSuchKey on bucket_name=%s key=%s", self.bucket_name, key)
