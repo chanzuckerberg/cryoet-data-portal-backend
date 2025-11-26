@@ -301,8 +301,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: #cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10335_snapshot.png
-            thumbnail: #cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10335_thumbnail.png
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10337_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10337_thumbnail.png
 datasets:
   - metadata:
       authors: *id001
