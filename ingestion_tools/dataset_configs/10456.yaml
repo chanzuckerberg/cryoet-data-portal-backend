@@ -171,7 +171,7 @@ annotations:
           glob_strings:
             - 'project/ExperimentRuns/{run_name}/Picks/pyrelion_refine3d-job004-orientations-0-01-cutoff_ribosome.json'
           is_visualization_default: true
-          mesh_source_path: 'mesh/ribosome.glb'
+          mesh_source_path: 'project/mesh/ribosome.glb'
   - metadata:
       annotation_method: nnInteractive prediction + copick-utils spline fit + 3D refinement in TOM
       annotation_object:
@@ -212,7 +212,7 @@ annotations:
           glob_strings:
             - 'project/ExperimentRuns/{run_name}/Picks/points_combined_mt.json'
           is_visualization_default: true
-          mesh_source_path: 'mesh/microtubule.glb'
+          mesh_source_path: 'project/mesh/microtubule.glb'
 collection_metadata:
 - sources:
   - source_glob:
