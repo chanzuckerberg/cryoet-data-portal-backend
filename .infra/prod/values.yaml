@@ -2,13 +2,13 @@ stack:
   services:
     apiv2:
       image:
-        tag: sha-2e0e7d0
+        tag: sha-3a64fa9
       initContainers:
         # Install cerbos policies where the cerbos sidecar can grab them.
         - name: install-cerbos-policies
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2/apiv2
-            tag: sha-2e0e7d0
+            tag: sha-3a64fa9
           command: ["cp", "-r", "./cerbos/", "/var/policies/"]
           volumeMounts:
             - mountPath: /var/policies
@@ -24,7 +24,7 @@ stack:
         - name: run-migrations
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2/apiv2
-            tag: sha-2e0e7d0
+            tag: sha-3a64fa9
           command: ["alembic", "upgrade", "head"]
           resources:
             limits:
@@ -37,7 +37,7 @@ stack:
         - name: gen-keypair
           image:
             repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2/apiv2
-            tag: sha-2e0e7d0
+            tag: sha-3a64fa9
           command: ["bash", "./etc/gen_keys.sh", "/var/keys/"]
           volumeMounts:
             - mountPath: /var/keys
