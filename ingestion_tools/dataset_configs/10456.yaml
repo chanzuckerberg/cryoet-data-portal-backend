@@ -333,6 +333,9 @@ datasets:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: "CZII-2023\u2013327779"
       sample_type: cell_line
+      organism:
+        name: Homo sapiens
+        taxonomy_id: 9606
       cell_strain:
         name: HEK293T
         id: CVCL_0063
