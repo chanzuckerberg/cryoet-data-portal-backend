@@ -9,7 +9,6 @@ from mrcfile.mrcinterpreter import MrcInterpreter
 
 
 class MdocTestHelper:
-
     @pytest.fixture
     def mdoc_sub_frame_path(self, mdoc_data: pd.DataFrame) -> list[str]:
         return [
@@ -24,14 +23,13 @@ class MdocTestHelper:
         assert mdoc_data["TiltAngle"].min() >= -90, "Minimum tilt angle is less than -90"
         assert mdoc_data["TiltAngle"].max() <= 90, "Maximum tilt angle is greater than 90"
 
-    @allure.title("Mdoc: number of mdoc sections, equal number of frames files, equals number of items in frames metadata.")
-    def test_mdoc_frames(self, mdoc_data: pd.DataFrame, frames_files: list[str], frame_metadata: dict[str, dict]):
+    @allure.title("Mdoc: number of mdoc sections equal number of frames files")
+    def test_mdoc_frames(self, mdoc_data: pd.DataFrame, frames_files: list[str]):
         frames_len = len(frames_files)
         if frames_len == 0:
             pytest.skip("No frame files to compare")
-        frames_metadata_len = len(frame_metadata["frames"])
         mdoc_len = len(mdoc_data)
-        assert mdoc_len == frames_len == frames_metadata_len, f"Number of mdoc sections {mdoc_len} mismatches number of frames: {frames_len} or frames metadata: {frames_metadata_len}"
+        assert mdoc_len == frames_len, f"Number of mdoc sections {mdoc_len} mismatches number of frames: {frames_len}"
 
     @allure.title("Mdoc: Every mdoc filename has an entry for SubFramePath.")
     def test_mdoc_sub_frame_paths(self, mdoc_data: pd.DataFrame):

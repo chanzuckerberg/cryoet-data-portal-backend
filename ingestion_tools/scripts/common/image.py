@@ -110,14 +110,50 @@ class ZarrWriter:
             pyramid.append(d)
             scales.append(self.ome_zarr_transforms(vs))
 
-        # Write the pyramid to the zarr store
-        return ome_zarr.writer.write_multiscale(
-            pyramid,
-            group=self.root_group,
-            axes=self.ome_zarr_axes(),
-            coordinate_transformations=scales,
-            storage_options=dict(chunks=chunk_size, overwrite=True),
-            compute=True,
+        # TODO: Currently not being used because of memory spikes for large volumes (100GB+ memory spikes for 10GB+ data)
+        # Fixed in latest version of ome_zarr (0.12.2), but can't upgrade because Zarr V3 is required and we don't support Zarr V3 yet.
+        # # Write the pyramid to the zarr store
+        # return ome_zarr.writer.write_multiscale(
+        #     pyramid,
+        #     group=self.root_group,
+        #     axes=self.ome_zarr_axes(),
+        #     coordinate_transformations=scales,
+        #     storage_options=dict(chunks=chunk_size, overwrite=True),
+        #     compute=True,
+        # )
+        # TODO: Remove this temporary workaround
+        datasets_meta = []
+
+        for i, (arr, vs) in enumerate(zip(data, voxel_spacing)):
+            path = str(i)
+            zds = self.root_group.create_dataset(
+                path,
+                shape=arr.shape,
+                dtype="float32",
+                chunks=chunk_size,
+                overwrite=True,
+            )
+
+            z, y, x = map(int, arr.shape)
+            zc, yc, xc = map(int, chunk_size)
+
+            for z0 in range(0, z, zc):
+                z1 = min(z0 + zc, z)
+                for y0 in range(0, y, yc):
+                    y1 = min(y0 + yc, y)
+                    for x0 in range(0, x, xc):
+                        x1 = min(x0 + xc, x)
+                        zds[z0:z1, y0:y1, x0:x1] = np.asarray(arr[z0:z1, y0:y1, x0:x1], dtype=np.float32, order="C")
+
+            datasets_meta.append(
+                {
+                    "path": path,
+                    "coordinateTransformations": self.ome_zarr_transforms(vs),
+                },
+            )
+
+        ome_zarr.writer.write_multiscales_metadata(
+            group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/",
         )
 
 
@@ -344,12 +380,13 @@ class TomoConverter:
         zarrdir: str,
         write: bool = True,
         pyramid_voxel_spacing: List[Tuple[float, float, float]] = None,
+        chunk_size: Tuple[int, int, int] = (256, 256, 256),
     ) -> str:
         destination_zarrdir = fs.destformat(zarrdir)
         # Write zarr data as 256^3 voxel chunks
         if write:
             writer = ZarrWriter(fs, destination_zarrdir)
-            writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=(256, 256, 256))
+            writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=chunk_size)
         else:
             print(f"skipping remote push for {destination_zarrdir}")
         return os.path.basename(zarrdir)
@@ -508,10 +545,11 @@ def make_pyramids(
     write_mrc: bool = True,
     write_zarr: bool = True,
     header_mapper: Callable[[np.array], None] = None,
-    voxel_spacing=None,
+    voxel_spacing: float = None,
     label: int = None,
-    scale_0_dims=None,
+    scale_0_dims = None,
     threshold: float | None = None,
+    chunk_size: Tuple[int, int, int] = (256, 256, 256),
 ):
     tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold)
     pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
@@ -521,6 +559,7 @@ def make_pyramids(
         f"{output_prefix}.zarr",
         write_zarr,
         pyramid_voxel_spacing=pyramid_voxel_spacing,
+        chunk_size=chunk_size,
     )
     _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
 
