@@ -321,10 +321,10 @@ datasets:
       grid_preparation: |
         Prior to cell seeding Quantifoil (Au 200, SiO2 R1/4) grids were glow discharged and 4 grids were placed onto a
         20 mm glass-bottom Matek dish. Cells were seeded at a density of 100,000 cells per dish. Cells were incubated
-        overnight at 37°C and 5% CO2. Prior to plunge-freezing, cells were treated with Lysotracker™ Deep Red for 15-30
+        overnight at 37°C and 5% CO2. Prior to plunge-freezing, cells were treated with LysoTracker™ Deep Red for 15-30
         mins. Prior to blotting, excess media was removed with Whatman 1 filter paper. 3 µl of PBS was added to the
         grids before blotting and plunging into liquid ethane. Leica GP2 was used for grid preparation. Thin lamella
-        were milled using LysoTrackerTM fluorescence for targeting using a Arctis CryoFib-SEM.
+        were milled using LysoTracker™ fluorescence for targeting using a Arctis CryoFib-SEM.
       sample_preparation: |
         NPC1-deletion HEK293T cells (DOI: 10.1126/science.aag1417) were grown overnight on Quantifoil (Au 200, SiO2
         R1/4) grids at 37ºC and 5% CO2. Cells were labeled with LysoTracker™ Deep Red 15-30 min before plunge freezing
