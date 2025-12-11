@@ -459,7 +459,6 @@ classes:
         unit:
           descriptive_name: sections
 
-
   TiltSeries:
     description: Metadata describing a tilt series.
 
@@ -820,6 +819,16 @@ classes:
         exact_mappings:
           - cdp-common:annotation_source_file_threshold
 
+  AnnotationInstanceSegmentationMaskFile:
+    is_a: AnnotationSourceFile
+    aliases:
+      - InstanceSegmentationMask
+    description: File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks.
+    attributes:
+      rescale:
+        exact_mappings:
+          - cdp-common:annotation_source_file_rescale
+
   AnnotationTriangularMeshFile:
     is_a: AnnotationSourceFile
     aliases:
@@ -869,7 +878,6 @@ classes:
         exact_mappings:
           - cdp-common:identified_object_filter_value
   # ============================================================================
-
 
   # ============================================================================
   # annotation_metadata.json
@@ -941,8 +949,8 @@ classes:
           symbol: Å
       y:
         any_of:
-        - range: float
-        - range: FloatFormattedString
+          - range: float
+          - range: FloatFormattedString
         required: true
         description: Y dimension of the reconstruction volume in angstrom
         unit:
@@ -950,8 +958,8 @@ classes:
           symbol: Å
       z:
         any_of:
-        - range: float
-        - range: FloatFormattedString
+          - range: float
+          - range: FloatFormattedString
         required: true
         description: Z dimension of the reconstruction volume in angstrom
         unit:
@@ -973,8 +981,8 @@ classes:
           symbol: Å
       y:
         any_of:
-        - range: float
-        - range: cdp-common:FloatFormattedString
+          - range: float
+          - range: cdp-common:FloatFormattedString
         required: true
         description: Y shift of the reconstruction volume in angstrom
         ifabsent: "float(0)"
@@ -983,8 +991,8 @@ classes:
           symbol: Å
       z:
         any_of:
-        - range: float
-        - range: cdp-common:FloatFormattedString
+          - range: float
+          - range: cdp-common:FloatFormattedString
         required: true
         description: Z shift of the reconstruction volume in angstrom
         ifabsent: "float(0)"
@@ -1051,7 +1059,7 @@ classes:
           dimensions:
             - exact_cardinality: 4
             - exact_cardinality: 4
-#        ifabsent: "np.eye(4)" # TODO: comming soon from linkml https://linkml.io/linkml/schemas/arrays#representations
+      #        ifabsent: "np.eye(4)" # TODO: comming soon from linkml https://linkml.io/linkml/schemas/arrays#representations
       is_portal_standard:
         description: Whether the alignment is standardized for the portal.
         range: boolean
@@ -1076,8 +1084,8 @@ classes:
       dose_rate:
         description: The dose exposure for a given frame.
         any_of:
-        - range: float
-        - range: FloatFormattedString
+          - range: float
+          - range: FloatFormattedString
         required: true
       is_gain_corrected:
         description: Is the frame gain corrected

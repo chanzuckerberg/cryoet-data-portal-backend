@@ -9,7 +9,7 @@ import cryoet_data_portal_neuroglancer.state_generator as state_generator
 from common import colors
 from common.colors import generate_hash, to_base_hash_input
 from common.finders import DefaultImporterFactory
-from common.image import VolumeInfo
+from common.image import VolumeInfo, ZarrReader
 from common.metadata import NeuroglancerMetadata
 from importers.annotation import OrientedPointAnnotation
 from importers.base_importer import BaseImporter
@@ -83,17 +83,19 @@ class VisualizationConfigImporter(BaseImporter):
         color: str,
         resolution: tuple[float, float, float],
         output_resolution: tuple[float, float, float] | None = None,
+        visible_segments: tuple[int, ...] = (1,),
         **kwargs,
     ) -> dict[str, Any]:
         output_resolution = output_resolution or resolution
         return state_generator.generate_segmentation_mask_layer(
             source=source_path,
-            name=f"{name_prefix} segmentation",
+            name=f"{name_prefix} {'segmentation' if len(visible_segments) == 1 else 'instancesegmentation' }",
             url=self.config.https_prefix,
             color=color,
             scale=resolution,
             output_scale=output_resolution,
             is_visible=file_metadata.get("is_visualization_default"),
+            visible_segments=visible_segments,
         )
 
     def _to_point_layer(
@@ -207,6 +209,7 @@ class VisualizationConfigImporter(BaseImporter):
                     "InstanceSegmentation",
                     "TriangularMesh",
                     "TriangularMeshGroup",
+                    "InstanceSegmentationMask",
                 }:
                     print(f"Skipping file with unknown shape {shape}")
                     continue
@@ -223,8 +226,15 @@ class VisualizationConfigImporter(BaseImporter):
                     print(f"Skipping file with unsupported format {file.get('format')}")
                     continue
 
+                nb_colors = 1
+                visible_segments = None
+                if shape == "InstanceSegmentationMask":
+                    # We load the ome zarr file and get the unique non zero labels and then set of those as visible
+                    visible_segments = self._get_labels(file.get("path"))
+                    nb_colors = len(visible_segments)
+
                 color_seed = generate_hash({**annotation_hash_input, **{"shape": shape}})
-                hex_colors, float_colors = colors.get_hex_colors(1, exclude=colors_used, seed=color_seed)
+                hex_colors, float_colors = colors.get_hex_colors(nb_colors, exclude=colors_used, seed=color_seed)
 
                 result = self._find_annotation_metadata(output_annotation_path, shape)
                 if result is None:
@@ -233,20 +243,22 @@ class VisualizationConfigImporter(BaseImporter):
                 file_path, voxel_spacing, ratio = result
                 path = self.config.to_formatted_path(file_path)
 
-                is_instance_seg = shape == "InstanceSegmentation"
+                is_instance_seg = shape == "InstanceSegmentation" or shape == "InstanceSegmentationMask"
 
-                annotation_layer_info[file.get("path")] = {
+                args = {
+                    "source_path": path,
+                    "file_metadata": file,
+                    "name_prefix": name_prefix,
+                    "color": hex_colors[0],
                     "shape": shape,
-                    "voxel_spacing_ratio": ratio,
-                    "args": {
-                        "source_path": path,
-                        "file_metadata": file,
-                        "name_prefix": name_prefix,
-                        "color": hex_colors[0],
-                        "shape": shape,
-                        "resolution": (voxel_spacing * 1e-10,) * 3,
-                    },
+                    "resolution": (voxel_spacing * 1e-10,) * 3,
                 }
+
+                if shape == "InstanceSegmentationMask":
+                    args["visible_segments"] = visible_segments
+                    args["color"] = dict(zip(visible_segments, hex_colors))
+
+                annotation_layer_info[file.get("path")] = {"shape": shape, "voxel_spacing_ratio": ratio, "args": args}
 
                 if not is_instance_seg:
                     colors_used.append(float_colors[0])
@@ -280,6 +292,23 @@ class VisualizationConfigImporter(BaseImporter):
         mesh_folder_path = os.path.join(self.config.output_prefix, oriented_mesh_filename)
         return fs.exists(mesh_folder_path)
 
+    def _get_labels(self, path: str):
+        segmentation_filename = os.path.join(self.config.output_prefix, path)
+
+        reader = ZarrReader(self.config.fs, segmentation_filename)
+        try:
+            labels_info = reader.attrs["multiscales"][0]["metadata"]["image-label"]["colors"]
+            labels = [label["label-value"] for label in labels_info]
+        except Exception:
+            # Get labels iterating by chunks over the tab
+            # We lazy import dask and numpy
+            import dask.array as da
+
+            arr = reader.get_data()
+            labels = da.unique(arr).compute()
+            labels = labels[labels > 0].astype(int)
+        return tuple(labels)
+
     def _create_config(self, alignment_metadata_path: str) -> dict[str, Any]:
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
@@ -300,7 +329,7 @@ class VisualizationConfigImporter(BaseImporter):
         for _, info in annotation_layer_info.items():
             shape = info["shape"]
             args = {**info["args"], "output_resolution": resolution}
-            if shape == "SegmentationMask":
+            if shape == "SegmentationMask" or shape == "InstanceSegmentationMask":
                 layers.append(self._to_segmentation_mask_layer(**args))
             elif shape in {"Point", "OrientedPoint", "InstanceSegmentation"}:
                 if shape == "OrientedPoint":

@@ -10,6 +10,7 @@ from importers.annotation import (
     AbstractTriangularMeshAnnotation,
     BaseAnnotationSource,
     InstanceSegmentationAnnotation,
+    InstanceSegmentationMaskAnnotation,
     OrientedPointAnnotation,
     VolumeAnnotationSource,
 )
@@ -75,8 +76,10 @@ class AnnotationPrecomputeFactory:
             return OrientedPointAnnotationPrecompute(**params)
         elif shape == "InstanceSegmentation":
             return InstanceSegmentationAnnotationPrecompute(**params)
-        elif shape == "SegmentationMask" or shape == "SemanticSegmentationMask":
+        elif shape in ["SegmentationMask", "SemanticSegmentationMask"]:
             return SegmentationMaskAnnotationPrecompute(**params)
+        elif shape == "InstanceSegmentationMask":
+            return InstanceSegmentationMaskAnnotationPrecompute(**params)
         elif shape == "TriangularMesh":
             return MeshAnnotatationPrecompute(**params)
 
@@ -196,6 +199,33 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
 
     def _get_shape(self) -> str:
         return "SegmentationMask"
+
+    def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
+        fs = self.config.fs
+        annotation_path = self.annotation.get_output_path()
+        precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
+        tmp_path = fs.localwritable(precompute_path)
+        zarr_file_path = fs.destformat(self.annotation.get_output_filename(annotation_path, "zarr"))
+        # Importing this at runtime instead of compile time since zfpy (a dependency of this
+        # module) cannot be imported successfully on darwin/ARM machines.
+        from cryoet_data_portal_neuroglancer.precompute import segmentation_mask
+
+        resolution_in_nm = voxel_spacing * 0.1  # original in angstrom
+        segmentation_mask.encode_segmentation(
+            zarr_file_path,
+            Path(tmp_path),
+            resolution=(resolution_in_nm,) * 3,
+            delete_existing=True,
+            include_mesh=True,
+        )
+        fs.push(tmp_path)
+
+
+class InstanceSegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
+    annotation: InstanceSegmentationMaskAnnotation
+
+    def _get_shape(self) -> str:
+        return "InstanceSegmentationMask"
 
     def neuroglancer_precompute(self, output_prefix: str, voxel_spacing: float) -> None:
         fs = self.config.fs

@@ -15,7 +15,8 @@ import zarr
 from mrcfile.mrcfile import MrcFile
 from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
-from skimage.transform import downscale_local_mean, resize_local_mean
+from skimage.measure import block_reduce
+from skimage.transform import resize_local_mean
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi, S3Filesystem
@@ -53,11 +54,23 @@ class ZarrReader:
     def __init__(self, fs, zarrdir):
         self.fs = fs
         self.zarrdir = zarrdir
+        self._loc = None
 
     def get_data(self):
-        loc = ome_zarr.io.ZarrLocation(self.fs.destformat(self.zarrdir))
+        loc = self._load_zarr_loc()
         data = loc.load("0")
         return data
+
+    @property
+    def attrs(self):
+        loc = self._load_zarr_loc()
+        group = zarr.group(loc.store)
+        return group.attrs
+
+    def _load_zarr_loc(self):
+        if self._loc is None:
+            self._loc = ome_zarr.io.ZarrLocation(self.fs.destformat(self.zarrdir))
+        return self._loc
 
 
 class ZarrWriter:
@@ -97,6 +110,7 @@ class ZarrWriter:
         voxel_spacing: List[Tuple[float, float, float]],
         chunk_size: Tuple[int, int, int] = (256, 256, 256),
         scale_z_axis: bool = True,
+        store_labels_metadata: bool = False,
     ):
         pyramid = []
         scales = []
@@ -110,6 +124,14 @@ class ZarrWriter:
             pyramid.append(d)
             scales.append(self.ome_zarr_transforms(vs))
 
+        # Store the labels contained in the data if the flag is activated
+        metadata = {}
+        if store_labels_metadata:
+            arr = data[0]
+            labels = [int(label) for label in np.unique(arr) if label > 0]
+            label_values = [{"label-value": label} for label in labels]
+            metadata["image-label"] = {"version": "0.4", "colors": label_values}
+
         # TODO: Currently not being used because of memory spikes for large volumes (100GB+ memory spikes for 10GB+ data)
         # Fixed in latest version of ome_zarr (0.12.2), but can't upgrade because Zarr V3 is required and we don't support Zarr V3 yet.
         # # Write the pyramid to the zarr store
@@ -120,6 +142,7 @@ class ZarrWriter:
         #     coordinate_transformations=scales,
         #     storage_options=dict(chunks=chunk_size, overwrite=True),
         #     compute=True,
+        #     metadata=metadata,
         # )
         # TODO: Remove this temporary workaround
         datasets_meta = []
@@ -153,7 +176,7 @@ class ZarrWriter:
             )
 
         ome_zarr.writer.write_multiscales_metadata(
-            group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/",
+            group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/", metadata=metadata,
         )
 
 
@@ -315,12 +338,15 @@ class TomoConverter:
 
         return compute_contrast_limits(self.volume_reader.data, method=method)
 
+    def get_downscale_interpolation_func(self):
+        return np.mean
+
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
         self,
         max_layers: int = 2,
         scale_z_axis: bool = True,
-        voxel_spacing: float = None,
+        voxel_spacing: float | None = None,
     ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
         # Voxel size for unbinned
         if not voxel_spacing:
@@ -333,8 +359,11 @@ class TomoConverter:
         pyramid_voxel_spacing = [(voxel_spacing, voxel_spacing, voxel_spacing)]
         z_scale = 2 if scale_z_axis else 1
         # Then make a pyramid of 100/50/25 percent scale volumes
+        downscale_method = self.get_downscale_interpolation_func()
         for i in range(max_layers):
-            downscaled_data = self.scaled_data_transformation(downscale_local_mean(pyramid[i], (z_scale, 2, 2)))
+            downscaled_data = self.scaled_data_transformation(
+                block_reduce(pyramid[i], block_size=(z_scale, 2, 2), func=downscale_method),
+            )
             pyramid.append(downscaled_data)
             pyramid_voxel_spacing.append(
                 (
@@ -381,12 +410,18 @@ class TomoConverter:
         write: bool = True,
         pyramid_voxel_spacing: List[Tuple[float, float, float]] = None,
         chunk_size: Tuple[int, int, int] = (256, 256, 256),
+        store_labels_metadata: bool = False,
     ) -> str:
         destination_zarrdir = fs.destformat(zarrdir)
         # Write zarr data as 256^3 voxel chunks
         if write:
             writer = ZarrWriter(fs, destination_zarrdir)
-            writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=chunk_size)
+            writer.write_data(
+                pyramid,
+                voxel_spacing=pyramid_voxel_spacing,
+                chunk_size=chunk_size,
+                store_labels_metadata=store_labels_metadata,
+            )
         else:
             print(f"skipping remote push for {destination_zarrdir}")
         return os.path.basename(zarrdir)
@@ -483,6 +518,45 @@ class MaskConverter(TomoConverter):
             return bool(np.any(self.volume_reader.get_pyramid_base_data() == self.label))
 
 
+class MultiLabelMaskConverter(TomoConverter):
+    def __init__(
+        self,
+        fs: FileSystemApi,
+        filename: str,
+        header_only: bool = False,
+        scale_0_dims: tuple[int, int, int] | None = None,
+    ):
+        super().__init__(fs=fs, filename=filename, header_only=header_only, scale_0_dims=scale_0_dims)
+
+    def get_pyramid_base_data(self) -> np.ndarray:
+        data = self.volume_reader.get_pyramid_base_data()
+
+        if not self.scale_0_dims:
+            return self.scaled_data_transformation(data)
+
+        from scipy.ndimage import zoom
+
+        x, y, z = data.shape
+        nx, ny, nz = self.scale_0_dims
+        zoom_factor = (nx / x, ny / y, nz / z)
+        if zoom_factor == (1.0, 1.0, 1.0):
+            return self.scaled_data_transformation(data)
+
+        rescaled = zoom(data, zoom=zoom_factor, order=0)
+
+        return self.scaled_data_transformation(rescaled)
+
+    @classmethod
+    def scaled_data_transformation(cls, data: np.ndarray) -> np.ndarray:
+        # For instance segmentation masks we have multiple labels, so we want an uint 16 output.
+        # We used uint16 and not uint32 as it seems MRC format doesn't handle well int > 16.
+        # zoom will return float array even for bool input with non-binary values
+        return data.astype(np.uint16)
+
+    def get_downscale_interpolation_func(self):
+        return np.max
+
+
 def get_volume_metadata(config: DepositionImportConfig, output_prefix: str) -> dict[str, Any]:
     # Generates metadata related to volume files.
     scales = []
@@ -531,7 +605,10 @@ def get_converter(
     label: int | None = None,
     scale_0_dims: tuple[int, int, int] | None = None,
     threshold: float | None = None,
+    multilabels: bool = False,
 ) -> TomoConverter | MaskConverter:
+    if multilabels:
+        return MultiLabelMaskConverter(fs, tomo_filename, scale_0_dims=scale_0_dims)
     if label is not None:
         return MaskConverter(fs, tomo_filename, label, scale_0_dims=scale_0_dims, threshold=threshold)
     return TomoConverter(fs, tomo_filename, scale_0_dims=scale_0_dims)
@@ -545,13 +622,14 @@ def make_pyramids(
     write_mrc: bool = True,
     write_zarr: bool = True,
     header_mapper: Callable[[np.array], None] = None,
-    voxel_spacing: float = None,
+    voxel_spacing: float | None = None,
     label: int = None,
     scale_0_dims = None,
     threshold: float | None = None,
     chunk_size: Tuple[int, int, int] = (256, 256, 256),
+    multilabels: bool = False,
 ):
-    tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold)
+    tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold, multilabels=multilabels)
     pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
     _ = tc.pyramid_to_omezarr(
         fs,
@@ -560,6 +638,7 @@ def make_pyramids(
         write_zarr,
         pyramid_voxel_spacing=pyramid_voxel_spacing,
         chunk_size=chunk_size,
+        store_labels_metadata=multilabels,
     )
     _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
 

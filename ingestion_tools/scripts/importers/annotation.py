@@ -107,6 +107,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = PointAnnotation(**instance_args)
         if shape == "InstanceSegmentation":
             anno = InstanceSegmentationAnnotation(**instance_args)
+        if shape == "InstanceSegmentationMask":
+            anno = InstanceSegmentationMaskAnnotation(**instance_args)
         if shape == "TriangularMesh":
             anno = TriangularMeshAnnotation(**instance_args)
         if shape == "TriangularMeshGroup":
@@ -313,6 +315,37 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
             voxel_spacing=self.get_voxel_spacing().as_float(),
             scale_0_dims=output_dims,
             threshold=self.threshold,
+        )
+
+
+class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
+    shape = "InstanceSegmentationMask"
+    rescale: bool = False
+    is_portal_standard: bool
+
+    def __init__(
+        self,
+        rescale: bool = False,
+        is_portal_standard: bool = False,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.rescale = rescale
+        self.is_portal_standard = is_portal_standard
+
+    def convert(self, output_prefix: str):
+        output_dims = self.get_output_dim() if self.rescale else None
+
+        return make_pyramids(
+            self.config.fs,
+            self.get_output_filename(output_prefix),
+            self.path,
+            write_mrc=self.config.write_mrc,
+            write_zarr=self.config.write_zarr,
+            voxel_spacing=self.get_voxel_spacing().as_float(),
+            scale_0_dims=output_dims,
+            multilabels=True,
         )
 
 
