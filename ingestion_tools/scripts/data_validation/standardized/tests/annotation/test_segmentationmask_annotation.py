@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict
 
 import allure
 import numpy as np
@@ -18,7 +18,10 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
         seg_mask_annotation_mrc_headers: Dict[str, MrcInterpreter],
         seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
         voxel_spacing: str,
+        seg_mask_annotation_files_to_metadata: Dict,
     ):
+        # unused for now, kept since this fixture determines whether these tests should be skipped or ran
+        del seg_mask_annotation_files_to_metadata
         self.spacegroup = 1  # single 3D volume
         self.mrc_headers = seg_mask_annotation_mrc_headers
         self.zarr_headers = seg_mask_annotation_zarr_headers
@@ -27,11 +30,7 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
 
     ### BEGIN Tomogram-consistency tests ###
     @allure.title("Segmentation mask: volumes are contained within the tomogram dimensions.")
-    def test_contained_in_tomo(self,
-                               seg_mask_annotation_mrc_files: List,
-                               seg_mask_annotation_files_to_metadata: Dict,
-                               all_vs_tomogram_metadata: Dict):
-
+    def test_contained_in_tomo(self, seg_mask_annotation_files_to_metadata: Dict, all_vs_tomogram_metadata: Dict):
         tomo_metadata = {}
         for filename, metadata in seg_mask_annotation_files_to_metadata.items():
             for tomo_data in all_vs_tomogram_metadata:

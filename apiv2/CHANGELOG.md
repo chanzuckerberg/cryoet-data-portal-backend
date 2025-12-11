@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.14.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.13.2...apiv2-v1.14.0) (2025-11-26)
+
+
+### Features
+
+* add ingestion config (10453) for EMPIAR 12794 - isolated synaptic vesicles from mouse brain ([#538](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/538)) ([584fc12](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/584fc123e1ecbac4557cefbc299231b6f646548b))
+
+
+### Bug Fixes
+
+* neuroglancer config ingestion & db import (fixes staging tomogram viewer)  ([#545](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/545)) ([dee5844](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/dee584432dc596e94323ea2e79f4e8b582145317))
+
 ## [1.13.2](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.13.1...apiv2-v1.13.2) (2025-10-30)
 
 

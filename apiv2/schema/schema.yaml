@@ -1926,7 +1926,7 @@ classes:
           descriptive_name: Angstrom
       phase_shift:
         name: phase_shift
-        description: Phase shift estimated for this tilt image in degrees.
+        description: Phase shift estimated for this tilt image in radians.
         exact_mappings:
           - per_section_phase_shift
         range: float

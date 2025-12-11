@@ -241,7 +241,9 @@ slots:
   tissue_id:
     any_of:
       - range: CL_ID
-      - range: WORMBASE_TISSUE_ID
+      - range: WBBT_ID
+      - range: ZFA_ID
+      - range: FBBT_ID
       - range: UBERON_ID
     recommended: true
     description: >-
@@ -256,6 +258,9 @@ slots:
   cell_type_id:
     any_of:
       - range: CL_ID
+      - range: WBBT_ID
+      - range: ZFA_ID
+      - range: FBBT_ID
       - range: UBERON_ID
     recommended: true
     description: >-
@@ -313,6 +318,9 @@ slots:
       - range: WORMBASE_DEVELOPMENT_ID
       - range: UBERON_ID
       - range: HSAPDV_ID
+      - range: MMUSDV_ID
+      - range: ZFS_ID
+      - range: FBDV_ID
     recommended: true
     description: >-
      The ontology identifier for the developmental stage component.
@@ -1324,6 +1332,8 @@ enums:
     permissible_values:
       CTFFIND:
         description: The file has ctffind schema
+      Gctf:
+        description: The file has Gctf schema
 
   deposition_types_enum:
     description: Types of data a deposition has
@@ -1517,20 +1527,45 @@ types:
     base: str
     pattern: 'WBStrain[0-9]{8}$'
 
-  WORMBASE_TISSUE_ID:
-    description: A WormBase tissue identifier
-    base: str
-    pattern: 'WBbt:[0-9]{7}$'
-
   WORMBASE_DEVELOPMENT_ID:
-    description: A WormBase identifier
+    description: A WormBase developmental stage identifier
     base: str
     pattern: 'WBls:[0-9]{7}$'
 
   HSAPDV_ID:
-    description: A Human Developmental Phenotype Ontology identifier
+    description: A human developmental phenotype ontology identifier
     base: str
     pattern: 'HsapDv:[0-9]{7}$'
+
+  MMUSDV_ID:
+    description: A mouse developmental stage ontology identifier
+    base: str
+    pattern: 'MmusDv:[0-9]{7}$'
+
+  ZFS_ID:
+    description: A zebrafish developmental stage ontology identifier
+    base: str
+    pattern: 'ZFS:[0-9]{7}$'
+
+  FBDV_ID:
+    description: A drosophila developmental stage ontology identifier
+    base: str
+    pattern: 'FBdv:[0-9]{8}$'
+
+  WBBT_ID:
+    description: A WormBase anatomy ontology identifier
+    base: str
+    pattern: 'WBbt:[0-9]{7}$'
+
+  ZFA_ID:
+    description: A zebrafish anatomy ontology identifier
+    base: str
+    pattern: 'ZFA:[0-9]{7}$'
+
+  FBBT_ID:
+    description: A drosophila anatomy ontology identifier
+    base: str
+    pattern: 'FBbt:[0-9]{8}$'
 
   ONTOLOGY_ID:
     description: An ontology identifier

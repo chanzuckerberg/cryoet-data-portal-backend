@@ -80,6 +80,8 @@ class TiltSeriesImporter(VolumeImporter):
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_pixel_spacing(),
+            # since tiltseries is 2D stack of images, set z slice chunk size to 1
+            chunk_size=(1, 1024, 1024),
         )
 
     def get_frames_count(self) -> int:

@@ -1,11 +1,11 @@
 from __future__ import annotations
-from datetime import datetime, date
-from decimal import Decimal
-from enum import Enum
+
 import re
-import sys
-from typing import Any, ClassVar, List, Literal, Dict, Optional, Union
-from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator, conlist
+from datetime import date
+from enum import Enum
+from typing import Any, ClassVar, Dict, List, Optional, Union
+
+from pydantic import BaseModel, ConfigDict, Field, RootModel, conlist, field_validator
 
 metamodel_version = "None"
 version = "1.1.0"
@@ -88,38 +88,38 @@ linkml_meta = LinkMLMeta(
             },
             "EMDB_ID": {
                 "base": "str",
-                "description": "An Electron Microscopy Data Bank " "identifier",
+                "description": "An Electron Microscopy Data Bank identifier",
                 "from_schema": "metadata",
                 "name": "EMDB_ID",
                 "pattern": "^EMD-[0-9]{4,5}$",
             },
             "EMPIAR_EMDB_DOI_PDB_LIST": {
                 "base": "str",
-                "description": "A list of EMPIAR, " "EMDB, DOI, and PDB " "identifiers",
+                "description": "A list of EMPIAR, EMDB, DOI, and PDB identifiers",
                 "from_schema": "metadata",
                 "name": "EMPIAR_EMDB_DOI_PDB_LIST",
                 "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$",
             },
             "EMPIAR_EMDB_PDB_LIST": {
                 "base": "str",
-                "description": "A list of EMPIAR, EMDB, " "and PDB identifiers",
+                "description": "A list of EMPIAR, EMDB, and PDB identifiers",
                 "from_schema": "metadata",
                 "name": "EMPIAR_EMDB_PDB_LIST",
                 "pattern": "^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\\s*,\\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$",
             },
             "EMPIAR_ID": {
                 "base": "str",
-                "description": "An Electron Microscopy Public Image " "Archive identifier",
+                "description": "An Electron Microscopy Public Image Archive identifier",
                 "from_schema": "metadata",
                 "name": "EMPIAR_ID",
                 "pattern": "^EMPIAR-[0-9]+$",
             },
             "FloatFormattedString": {
                 "base": "str",
-                "description": "A formatted string that " "represents a floating " "point number.",
+                "description": "A formatted string that represents a floating point number.",
                 "from_schema": "metadata",
                 "name": "FloatFormattedString",
-                "pattern": "^float[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
             },
             "GO_ID": {
                 "base": "str",
@@ -130,10 +130,10 @@ linkml_meta = LinkMLMeta(
             },
             "IntegerFormattedString": {
                 "base": "str",
-                "description": "A formatted string that " "represents an integer.",
+                "description": "A formatted string that represents an integer.",
                 "from_schema": "metadata",
                 "name": "IntegerFormattedString",
-                "pattern": "^int[ " "]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
             },
             "ONTOLOGY_ID": {
                 "base": "str",
@@ -144,7 +144,7 @@ linkml_meta = LinkMLMeta(
             },
             "ORCID": {
                 "base": "str",
-                "description": "A unique, persistent identifier for " "researchers, provided by ORCID.",
+                "description": "A unique, persistent identifier for researchers, provided by ORCID.",
                 "from_schema": "metadata",
                 "name": "ORCID",
                 "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$",
@@ -158,10 +158,10 @@ linkml_meta = LinkMLMeta(
             },
             "StringFormattedString": {
                 "base": "str",
-                "description": "A formatted string " "(variable) that " "represents a string.",
+                "description": "A formatted string (variable) that represents a string.",
                 "from_schema": "metadata",
                 "name": "StringFormattedString",
-                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ " "]*$",
+                "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
             },
             "UNIPROT_ID": {
                 "base": "str",
@@ -179,7 +179,7 @@ linkml_meta = LinkMLMeta(
             },
             "VersionString": {
                 "base": "float",
-                "description": "A version number (only major, " "minor versions)",
+                "description": "A version number (only major, minor versions)",
                 "from_schema": "metadata",
                 "minimum_value": 0,
                 "name": "VersionString",
@@ -200,7 +200,7 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"boolean".'
+                    '"boolean".',
                 ],
                 "repr": "bool",
                 "uri": "xsd:boolean",
@@ -208,8 +208,8 @@ linkml_meta = LinkMLMeta(
             "curie": {
                 "base": "Curie",
                 "comments": [
-                    "in RDF serializations this MUST be expanded " "to a URI",
-                    "in non-RDF serializations MAY be serialized " "as the compact representation",
+                    "in RDF serializations this MUST be expanded to a URI",
+                    "in non-RDF serializations MAY be serialized as the compact representation",
                 ],
                 "conforms_to": "https://www.w3.org/TR/curie/",
                 "description": "a compact URI",
@@ -218,19 +218,19 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"curie".'
+                    '"curie".',
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
             },
             "date": {
                 "base": "XSDDate",
-                "description": "a date (year, month and day) in an " "idealized calendar",
+                "description": "a date (year, month and day) in an idealized calendar",
                 "exact_mappings": ["schema:Date"],
                 "from_schema": "metadata",
                 "name": "date",
                 "notes": [
-                    "URI is dateTime because OWL reasoners don't " "work with straight date or time",
+                    "URI is dateTime because OWL reasoners don't work with straight date or time",
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
                     '"date".',
@@ -247,7 +247,7 @@ linkml_meta = LinkMLMeta(
                     "If you are authoring schemas in "
                     "LinkML YAML, the type is referenced "
                     "with the lower case "
-                    '"date_or_datetime".'
+                    '"date_or_datetime".',
                 ],
                 "repr": "str",
                 "uri": "linkml:DateOrDatetime",
@@ -261,7 +261,7 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the lower "
-                    'case "datetime".'
+                    'case "datetime".',
                 ],
                 "repr": "str",
                 "uri": "xsd:dateTime",
@@ -277,33 +277,33 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"decimal".'
+                    '"decimal".',
                 ],
                 "uri": "xsd:decimal",
             },
             "double": {
                 "base": "float",
                 "close_mappings": ["schema:Float"],
-                "description": "A real number that conforms to the " "xsd:double specification",
+                "description": "A real number that conforms to the xsd:double specification",
                 "from_schema": "metadata",
                 "name": "double",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"double".'
+                    '"double".',
                 ],
                 "uri": "xsd:double",
             },
             "float": {
                 "base": "float",
-                "description": "A real number that conforms to the " "xsd:float specification",
+                "description": "A real number that conforms to the xsd:float specification",
                 "exact_mappings": ["schema:Float"],
                 "from_schema": "metadata",
                 "name": "float",
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"float".'
+                    '"float".',
                 ],
                 "uri": "xsd:float",
             },
@@ -316,7 +316,7 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"integer".'
+                    '"integer".',
                 ],
                 "uri": "xsd:integer",
             },
@@ -334,7 +334,7 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the lower "
-                    'case "jsonpath".'
+                    'case "jsonpath".',
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
@@ -353,7 +353,7 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the "
-                    'lower case "jsonpointer".'
+                    'lower case "jsonpointer".',
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
@@ -366,36 +366,36 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
-                    '"ncname".'
+                    '"ncname".',
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
             },
             "nodeidentifier": {
                 "base": "NodeIdentifier",
-                "description": "A URI, CURIE or BNODE that " "represents a node in a model.",
+                "description": "A URI, CURIE or BNODE that represents a node in a model.",
                 "from_schema": "metadata",
                 "name": "nodeidentifier",
                 "notes": [
                     "If you are authoring schemas in "
                     "LinkML YAML, the type is referenced "
                     "with the lower case "
-                    '"nodeidentifier".'
+                    '"nodeidentifier".',
                 ],
                 "repr": "str",
                 "uri": "shex:nonLiteral",
             },
             "objectidentifier": {
                 "base": "ElementIdentifier",
-                "comments": ["Used for inheritance and type " "checking"],
-                "description": "A URI or CURIE that represents " "an object in the model.",
+                "comments": ["Used for inheritance and type checking"],
+                "description": "A URI or CURIE that represents an object in the model.",
                 "from_schema": "metadata",
                 "name": "objectidentifier",
                 "notes": [
                     "If you are authoring schemas in "
                     "LinkML YAML, the type is referenced "
                     "with the lower case "
-                    '"objectidentifier".'
+                    '"objectidentifier".',
                 ],
                 "repr": "str",
                 "uri": "shex:iri",
@@ -414,7 +414,7 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the "
-                    'lower case "sparqlpath".'
+                    'lower case "sparqlpath".',
                 ],
                 "repr": "str",
                 "uri": "xsd:string",
@@ -430,18 +430,18 @@ linkml_meta = LinkMLMeta(
                     "string is treated as a literal or type "
                     "xsd:string.   If you are authoring schemas in "
                     "LinkML YAML, the type is referenced with the "
-                    'lower case "string".'
+                    'lower case "string".',
                 ],
                 "uri": "xsd:string",
             },
             "time": {
                 "base": "XSDTime",
-                "description": "A time object represents a (local) time of " "day, independent of any particular day",
+                "description": "A time object represents a (local) time of day, independent of any particular day",
                 "exact_mappings": ["schema:Time"],
                 "from_schema": "metadata",
                 "name": "time",
                 "notes": [
-                    "URI is dateTime because OWL reasoners do not " "work with straight date or time",
+                    "URI is dateTime because OWL reasoners do not work with straight date or time",
                     "If you are authoring schemas in LinkML YAML, "
                     "the type is referenced with the lower case "
                     '"time".',
@@ -457,14 +457,14 @@ linkml_meta = LinkMLMeta(
                     "uri is treated as a literal or type "
                     "xsd:anyURI unless it is an identifier or a "
                     "reference to an identifier, in which case it "
-                    "is translated directly to a node"
+                    "is translated directly to a node",
                 ],
                 "conforms_to": "https://www.ietf.org/rfc/rfc3987.txt",
                 "description": "a complete URI",
                 "from_schema": "metadata",
                 "name": "uri",
                 "notes": [
-                    "If you are authoring schemas in LinkML YAML, the " 'type is referenced with the lower case "uri".'
+                    "If you are authoring schemas in LinkML YAML, the " 'type is referenced with the lower case "uri".',
                 ],
                 "repr": "str",
                 "uri": "xsd:anyURI",
@@ -477,13 +477,13 @@ linkml_meta = LinkMLMeta(
                 "notes": [
                     "If you are authoring schemas in LinkML "
                     "YAML, the type is referenced with the "
-                    'lower case "uriorcurie".'
+                    'lower case "uriorcurie".',
                 ],
                 "repr": "str",
                 "uri": "xsd:anyURI",
             },
         },
-    }
+    },
 )
 
 
@@ -722,7 +722,7 @@ class PicturePath(ConfiguredBaseModel):
                 "domain_of": ["PicturePath"],
                 "exact_mappings": ["cdp-common:snapshot"],
                 "recommended": True,
-            }
+            },
         },
     )
     thumbnail: Optional[str] = Field(
@@ -734,7 +734,7 @@ class PicturePath(ConfiguredBaseModel):
                 "domain_of": ["PicturePath"],
                 "exact_mappings": ["cdp-common:thumbnail"],
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -779,7 +779,7 @@ class FundingDetails(ConfiguredBaseModel):
                 "domain_of": ["FundingDetails"],
                 "exact_mappings": ["cdp-common:funding_agency_name"],
                 "recommended": True,
-            }
+            },
         },
     )
     grant_id: Optional[str] = Field(
@@ -791,7 +791,7 @@ class FundingDetails(ConfiguredBaseModel):
                 "domain_of": ["FundingDetails"],
                 "exact_mappings": ["cdp-common:funding_grant_id"],
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -810,7 +810,7 @@ class DateStampedEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "dates",
                 "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
-            }
+            },
         },
     )
 
@@ -831,7 +831,7 @@ class AuthoredEntity(ConfiguredBaseModel):
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-            }
+            },
         },
     )
 
@@ -852,7 +852,7 @@ class FundedEntity(ConfiguredBaseModel):
                 "domain_of": ["FundedEntity", "Dataset"],
                 "list_elements_ordered": True,
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -871,7 +871,7 @@ class CrossReferencedEntity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "cross_references",
                 "domain_of": ["CrossReferencedEntity", "Tomogram", "Dataset", "Deposition"],
-            }
+            },
         },
     )
 
@@ -915,7 +915,7 @@ class OrganismDetails(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:organism_name"],
-            }
+            },
         },
     )
     taxonomy_id: Optional[int] = Field(
@@ -928,7 +928,7 @@ class OrganismDetails(ConfiguredBaseModel):
                 "domain_of": ["OrganismDetails"],
                 "exact_mappings": ["cdp-common:organism_taxid"],
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -958,7 +958,7 @@ class TissueDetails(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:tissue_name"],
-            }
+            },
         },
     )
     id: Optional[str] = Field(
@@ -970,7 +970,7 @@ class TissueDetails(ConfiguredBaseModel):
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:tissue_id"],
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -1012,7 +1012,7 @@ class CellType(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_name"],
-            }
+            },
         },
     )
     id: Optional[str] = Field(
@@ -1024,7 +1024,7 @@ class CellType(ConfiguredBaseModel):
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_type_id"],
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -1066,7 +1066,7 @@ class CellStrain(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_strain_name"],
-            }
+            },
         },
     )
     id: Optional[str] = Field(
@@ -1079,7 +1079,7 @@ class CellStrain(ConfiguredBaseModel):
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_strain_id"],
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -1121,7 +1121,7 @@ class CellComponent(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:cell_component_name"],
-            }
+            },
         },
     )
     id: Optional[str] = Field(
@@ -1133,7 +1133,7 @@ class CellComponent(ConfiguredBaseModel):
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:cell_component_id"],
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -1165,7 +1165,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
                 "alias": "sample_type",
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_sample_type"],
-            }
+            },
         },
     )
     sample_preparation: Optional[str] = Field(
@@ -1177,7 +1177,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:sample_preparation"],
                 "recommended": True,
-            }
+            },
         },
     )
     grid_preparation: Optional[str] = Field(
@@ -1189,7 +1189,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:grid_preparation"],
                 "recommended": True,
-            }
+            },
         },
     )
     other_setup: Optional[str] = Field(
@@ -1201,7 +1201,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_other_setup"],
                 "recommended": True,
-            }
+            },
         },
     )
     organism: Optional[OrganismDetails] = Field(
@@ -1233,7 +1233,7 @@ class ExperimentMetadata(ConfiguredBaseModel):
     @field_validator("sample_type")
     def pattern_sample_type(cls, v):
         pattern = re.compile(
-            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)",
         )
         if isinstance(v, list):
             for element in v:
@@ -1260,7 +1260,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "CrossReferencedEntity",
                 "ExperimentMetadata",
             ],
-        }
+        },
     )
 
     dataset_identifier: int = Field(
@@ -1271,7 +1271,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "dataset_identifier",
                 "domain_of": ["Dataset"],
                 "exact_mappings": ["cdp-common:dataset_identifier"],
-            }
+            },
         },
     )
     dataset_title: str = Field(
@@ -1282,7 +1282,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "dataset_title",
                 "domain_of": ["Dataset"],
                 "exact_mappings": ["cdp-common:dataset_title"],
-            }
+            },
         },
     )
     dataset_description: str = Field(
@@ -1293,7 +1293,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "dataset_description",
                 "domain_of": ["Dataset"],
                 "exact_mappings": ["cdp-common:dataset_description"],
-            }
+            },
         },
     )
     dates: DateStamp = Field(
@@ -1303,7 +1303,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
             "linkml_meta": {
                 "alias": "dates",
                 "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
-            }
+            },
         },
     )
     authors: List[Author] = Field(
@@ -1315,7 +1315,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-            }
+            },
         },
     )
     funding: Optional[List[FundingDetails]] = Field(
@@ -1327,7 +1327,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["FundedEntity", "Dataset"],
                 "list_elements_ordered": True,
                 "recommended": True,
-            }
+            },
         },
     )
     cross_references: Optional[CrossReferences] = Field(
@@ -1337,7 +1337,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
             "linkml_meta": {
                 "alias": "cross_references",
                 "domain_of": ["CrossReferencedEntity", "Tomogram", "Dataset", "Deposition"],
-            }
+            },
         },
     )
     sample_type: SampleTypeEnum = Field(
@@ -1348,7 +1348,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "alias": "sample_type",
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_sample_type"],
-            }
+            },
         },
     )
     sample_preparation: Optional[str] = Field(
@@ -1360,7 +1360,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:sample_preparation"],
                 "recommended": True,
-            }
+            },
         },
     )
     grid_preparation: Optional[str] = Field(
@@ -1372,7 +1372,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:grid_preparation"],
                 "recommended": True,
-            }
+            },
         },
     )
     other_setup: Optional[str] = Field(
@@ -1384,7 +1384,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
                 "domain_of": ["ExperimentMetadata", "Dataset"],
                 "exact_mappings": ["cdp-common:preparation_other_setup"],
                 "recommended": True,
-            }
+            },
         },
     )
     organism: Optional[OrganismDetails] = Field(
@@ -1416,7 +1416,7 @@ class Dataset(ExperimentMetadata, CrossReferencedEntity, FundedEntity, AuthoredE
     @field_validator("sample_type")
     def pattern_sample_type(cls, v):
         pattern = re.compile(
-            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)"
+            r"(^cell$)|(^tissue$)|(^organism$)|(^organelle$)|(^virus$)|(^in_vitro$)|(^in_silico$)|(^other$)",
         )
         if isinstance(v, list):
             for element in v:
@@ -1434,7 +1434,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity", "CrossReferencedEntity"]}
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity", "CrossReferencedEntity"]},
     )
 
     deposition_description: str = Field(
@@ -1445,7 +1445,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "alias": "deposition_description",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_description"],
-            }
+            },
         },
     )
     deposition_identifier: int = Field(
@@ -1456,7 +1456,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "alias": "deposition_identifier",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_identifier"],
-            }
+            },
         },
     )
     deposition_title: str = Field(
@@ -1467,7 +1467,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "alias": "deposition_title",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_title"],
-            }
+            },
         },
     )
     deposition_types: List[DepositionTypesEnum] = Field(
@@ -1479,7 +1479,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "alias": "deposition_types",
                 "domain_of": ["Deposition"],
                 "exact_mappings": ["cdp-common:deposition_types"],
-            }
+            },
         },
     )
     dates: DateStamp = Field(
@@ -1489,7 +1489,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
             "linkml_meta": {
                 "alias": "dates",
                 "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
-            }
+            },
         },
     )
     authors: List[Author] = Field(
@@ -1501,7 +1501,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-            }
+            },
         },
     )
     cross_references: Optional[CrossReferences] = Field(
@@ -1511,7 +1511,7 @@ class Deposition(CrossReferencedEntity, AuthoredEntity, DateStampedEntity):
             "linkml_meta": {
                 "alias": "cross_references",
                 "domain_of": ["CrossReferencedEntity", "Tomogram", "Dataset", "Deposition"],
-            }
+            },
         },
     )
 
@@ -1544,7 +1544,7 @@ class CameraDetails(ConfiguredBaseModel):
                 "any_of": [{"range": "StringFormattedString"}, {"range": "tiltseries_camera_acquire_mode_enum"}],
                 "domain_of": ["CameraDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_acquire_mode"],
-            }
+            },
         },
     )
     manufacturer: TiltseriesCameraManufacturerEnum = Field(
@@ -1555,7 +1555,7 @@ class CameraDetails(ConfiguredBaseModel):
                 "alias": "manufacturer",
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_manufacturer"],
-            }
+            },
         },
     )
     model: str = Field(
@@ -1566,7 +1566,7 @@ class CameraDetails(ConfiguredBaseModel):
                 "alias": "model",
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_model"],
-            }
+            },
         },
     )
 
@@ -1610,7 +1610,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
                 "alias": "additional_info",
                 "domain_of": ["MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_additional_info"],
-            }
+            },
         },
     )
     manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(
@@ -1629,7 +1629,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
                     {"range": "StringFormattedString"},
                 ],
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
-            }
+            },
         },
     )
     model: str = Field(
@@ -1640,7 +1640,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
                 "alias": "model",
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_model"],
-            }
+            },
         },
     )
 
@@ -1672,7 +1672,7 @@ class MicroscopeOpticalSetup(ConfiguredBaseModel):
                 "alias": "energy_filter",
                 "domain_of": ["MicroscopeOpticalSetup"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_energy_filter"],
-            }
+            },
         },
     )
     phase_plate: Optional[str] = Field(
@@ -1683,7 +1683,7 @@ class MicroscopeOpticalSetup(ConfiguredBaseModel):
                 "alias": "phase_plate",
                 "domain_of": ["MicroscopeOpticalSetup"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_phase_plate"],
-            }
+            },
         },
     )
     image_corrector: Optional[str] = Field(
@@ -1694,7 +1694,7 @@ class MicroscopeOpticalSetup(ConfiguredBaseModel):
                 "alias": "image_corrector",
                 "domain_of": ["MicroscopeOpticalSetup"],
                 "exact_mappings": ["cdp-common:tiltseries_microscope_image_corrector"],
-            }
+            },
         },
     )
 
@@ -1728,7 +1728,7 @@ class TiltRange(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltRange"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
-            }
+            },
         },
     )
     max: Union[float, str] = Field(
@@ -1753,7 +1753,7 @@ class TiltRange(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltRange"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
-            }
+            },
         },
     )
 
@@ -1799,7 +1799,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_acceleration_voltage"],
                 "unit": {"descriptive_name": "volts", "symbol": "V"},
-            }
+            },
         },
     )
     aligned_tiltseries_binning: Optional[Union[float, str]] = Field(
@@ -1820,7 +1820,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "ifabsent": "float(1)",
-            }
+            },
         },
     )
     binning_from_frames: Optional[Union[float, str]] = Field(
@@ -1832,7 +1832,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "binning_from_frames",
                 "any_of": [
                     {
-                        "description": "Describes the binning factor from frames to tilt " "series file",
+                        "description": "Describes the binning factor from frames to tilt series file",
                         "exact_mappings": ["cdp-common:tiltseries_binning_from_frames"],
                         "minimum_value": 0,
                         "range": "float",
@@ -1841,7 +1841,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "ifabsent": "float(1)",
-            }
+            },
         },
     )
     camera: CameraDetails = Field(
@@ -1857,7 +1857,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "data_acquisition_software",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_data_acquisition_software"],
-            }
+            },
         },
     )
     frames_count: Optional[int] = Field(
@@ -1868,7 +1868,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "frames_count",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_frames_count"],
-            }
+            },
         },
     )
     is_aligned: bool = Field(
@@ -1879,7 +1879,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "is_aligned",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_is_aligned"],
-            }
+            },
         },
     )
     microscope: MicroscopeDetails = Field(
@@ -1900,7 +1900,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "related_empiar_entry",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_related_empiar_entry"],
-            }
+            },
         },
     )
     spherical_aberration_constant: Union[float, str] = Field(
@@ -1912,7 +1912,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "spherical_aberration_constant",
                 "any_of": [
                     {
-                        "description": "Spherical Aberration Constant of the objective " "lens in millimeters",
+                        "description": "Spherical Aberration Constant of the objective lens in millimeters",
                         "exact_mappings": ["cdp-common:tiltseries_spherical_aberration_constant"],
                         "minimum_value": 0,
                         "range": "float",
@@ -1923,7 +1923,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "millimeters", "symbol": "mm"},
-            }
+            },
         },
     )
     tilt_alignment_software: Optional[str] = Field(
@@ -1934,7 +1934,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "tilt_alignment_software",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_tilt_alignment_software"],
-            }
+            },
         },
     )
     tilt_axis: Union[float, str] = Field(
@@ -1959,7 +1959,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
-            }
+            },
         },
     )
     tilt_range: TiltRange = Field(
@@ -1988,7 +1988,7 @@ class TiltSeries(ConfiguredBaseModel):
                     {"range": "IntegerFormattedString"},
                 ],
                 "domain_of": ["TiltSeries"],
-            }
+            },
         },
     )
     tilt_step: Union[float, str] = Field(
@@ -2013,7 +2013,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "degrees", "symbol": "°"},
-            }
+            },
         },
     )
     tilting_scheme: str = Field(
@@ -2024,7 +2024,7 @@ class TiltSeries(ConfiguredBaseModel):
                 "alias": "tilting_scheme",
                 "domain_of": ["TiltSeries"],
                 "exact_mappings": ["cdp-common:tiltseries_tilting_scheme"],
-            }
+            },
         },
     )
     total_flux: Union[float, str] = Field(
@@ -2048,7 +2048,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "electrons per square Angstrom", "symbol": "e^-/Å^2"},
-            }
+            },
         },
     )
     pixel_spacing: Union[float, str] = Field(
@@ -2071,7 +2071,7 @@ class TiltSeries(ConfiguredBaseModel):
                 ],
                 "domain_of": ["TiltSeries"],
                 "unit": {"descriptive_name": "Angstroms per pixel", "symbol": "Å/px"},
-            }
+            },
         },
     )
 
@@ -2200,7 +2200,7 @@ class TomogramSize(ConfiguredBaseModel):
                 "alias": "x",
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
     y: int = Field(
@@ -2212,7 +2212,7 @@ class TomogramSize(ConfiguredBaseModel):
                 "alias": "y",
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
     z: int = Field(
@@ -2224,7 +2224,7 @@ class TomogramSize(ConfiguredBaseModel):
                 "alias": "z",
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
 
@@ -2245,7 +2245,7 @@ class TomogramOffset(ConfiguredBaseModel):
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
     y: Union[int, str] = Field(
@@ -2257,7 +2257,7 @@ class TomogramOffset(ConfiguredBaseModel):
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
     z: Union[int, str] = Field(
@@ -2269,7 +2269,7 @@ class TomogramOffset(ConfiguredBaseModel):
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
 
@@ -2326,7 +2326,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "voxel_spacing",
                 "any_of": [
                     {
-                        "description": "Voxel spacing equal in all three axes in " "angstroms",
+                        "description": "Voxel spacing equal in all three axes in angstroms",
                         "exact_mappings": ["cdp-common:tomogram_voxel_spacing"],
                         "minimum_value": 0.001,
                         "range": "float",
@@ -2337,7 +2337,7 @@ class Tomogram(AuthoredEntity):
                 ],
                 "domain_of": ["Tomogram"],
                 "unit": {"descriptive_name": "Angstroms per voxel", "symbol": "Å/voxel"},
-            }
+            },
         },
     )
     fiducial_alignment_status: Union[FiducialAlignmentStatusEnum, str] = Field(
@@ -2348,7 +2348,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "fiducial_alignment_status",
                 "any_of": [
                     {
-                        "description": "Whether the tomographic alignment was computed " "based on fiducial markers.",
+                        "description": "Whether the tomographic alignment was computed based on fiducial markers.",
                         "exact_mappings": ["cdp-common:tomogram_fiducial_alignment_status"],
                         "range": "fiducial_alignment_status_enum",
                         "required": True,
@@ -2356,7 +2356,7 @@ class Tomogram(AuthoredEntity):
                     {"range": "StringFormattedString"},
                 ],
                 "domain_of": ["Tomogram"],
-            }
+            },
         },
     )
     ctf_corrected: Optional[bool] = Field(
@@ -2368,7 +2368,7 @@ class Tomogram(AuthoredEntity):
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_ctf_corrected"],
                 "recommended": True,
-            }
+            },
         },
     )
     align_software: Optional[str] = Field(
@@ -2379,7 +2379,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "align_software",
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_align_software"],
-            }
+            },
         },
     )
     reconstruction_method: Union[TomogramReconstructionMethodEnum, str] = Field(
@@ -2398,7 +2398,7 @@ class Tomogram(AuthoredEntity):
                     {"range": "StringFormattedString"},
                 ],
                 "domain_of": ["Tomogram"],
-            }
+            },
         },
     )
     reconstruction_software: str = Field(
@@ -2409,7 +2409,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "reconstruction_software",
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_reconstruction_software"],
-            }
+            },
         },
     )
     processing: TomogramProcessingEnum = Field(
@@ -2420,7 +2420,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "processing",
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_processing"],
-            }
+            },
         },
     )
     processing_software: Optional[str] = Field(
@@ -2432,7 +2432,7 @@ class Tomogram(AuthoredEntity):
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_processing_software"],
                 "recommended": True,
-            }
+            },
         },
     )
     tomogram_version: float = Field(
@@ -2443,7 +2443,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "tomogram_version",
                 "domain_of": ["Tomogram"],
                 "exact_mappings": ["cdp-common:tomogram_version"],
-            }
+            },
         },
     )
     affine_transformation_matrix: Optional[
@@ -2459,7 +2459,7 @@ class Tomogram(AuthoredEntity):
                     "exact_number_dimensions": 2,
                 },
                 "domain_of": ["Tomogram", "Alignment"],
-            }
+            },
         },
     )
     size: Optional[TomogramSize] = Field(
@@ -2490,7 +2490,7 @@ class Tomogram(AuthoredEntity):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "ifabsent": "True",
-            }
+            },
         },
     )
     cross_references: Optional[CrossReferences] = Field(
@@ -2500,7 +2500,7 @@ class Tomogram(AuthoredEntity):
             "linkml_meta": {
                 "alias": "cross_references",
                 "domain_of": ["CrossReferencedEntity", "Tomogram", "Dataset", "Deposition"],
-            }
+            },
         },
     )
     dates: DateStamp = Field(
@@ -2510,7 +2510,7 @@ class Tomogram(AuthoredEntity):
             "linkml_meta": {
                 "alias": "dates",
                 "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
-            }
+            },
         },
     )
     authors: List[Author] = Field(
@@ -2522,7 +2522,7 @@ class Tomogram(AuthoredEntity):
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-            }
+            },
         },
     )
 
@@ -2593,7 +2593,7 @@ class AnnotationConfidence(ConfiguredBaseModel):
                 "domain_of": ["AnnotationConfidence"],
                 "exact_mappings": ["cdp-common:annotation_confidence_precision"],
                 "unit": {"descriptive_name": "percentage", "symbol": "%"},
-            }
+            },
         },
     )
     recall: Optional[float] = Field(
@@ -2607,7 +2607,7 @@ class AnnotationConfidence(ConfiguredBaseModel):
                 "domain_of": ["AnnotationConfidence"],
                 "exact_mappings": ["cdp-common:annotation_confidence_recall"],
                 "unit": {"descriptive_name": "percentage", "symbol": "%"},
-            }
+            },
         },
     )
     ground_truth_used: Optional[str] = Field(
@@ -2618,7 +2618,7 @@ class AnnotationConfidence(ConfiguredBaseModel):
                 "alias": "ground_truth_used",
                 "domain_of": ["AnnotationConfidence"],
                 "exact_mappings": ["cdp-common:annotation_ground_truth_used"],
-            }
+            },
         },
     )
 
@@ -2639,7 +2639,7 @@ class AnnotationObject(ConfiguredBaseModel):
                 "any_of": [{"range": "GO_ID"}, {"range": "UNIPROT_ID"}],
                 "domain_of": ["TissueDetails", "CellType", "CellStrain", "CellComponent", "AnnotationObject"],
                 "exact_mappings": ["cdp-common:annotation_object_id"],
-            }
+            },
         },
     )
     name: str = Field(
@@ -2660,7 +2660,7 @@ class AnnotationObject(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:annotation_object_name"],
-            }
+            },
         },
     )
     description: Optional[str] = Field(
@@ -2671,7 +2671,7 @@ class AnnotationObject(ConfiguredBaseModel):
                 "alias": "description",
                 "domain_of": ["AnnotationObject"],
                 "exact_mappings": ["cdp-common:annotation_object_description"],
-            }
+            },
         },
     )
     state: Optional[str] = Field(
@@ -2682,14 +2682,14 @@ class AnnotationObject(ConfiguredBaseModel):
                 "alias": "state",
                 "domain_of": ["AnnotationObject"],
                 "exact_mappings": ["cdp-common:annotation_object_state"],
-            }
+            },
         },
     )
 
     @field_validator("id")
     def pattern_id(cls, v):
         pattern = re.compile(
-            r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+            r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)",
         )
         if isinstance(v, list):
             for element in v:
@@ -2716,7 +2716,7 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
                 "alias": "link",
                 "domain_of": ["AnnotationMethodLinks"],
                 "exact_mappings": ["cdp-common:annotation_method_link"],
-            }
+            },
         },
     )
     link_type: AnnotationMethodLinkTypeEnum = Field(
@@ -2727,7 +2727,7 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
                 "alias": "link_type",
                 "domain_of": ["AnnotationMethodLinks"],
                 "exact_mappings": ["cdp-common:annotation_method_link_type"],
-            }
+            },
         },
     )
     custom_name: Optional[str] = Field(
@@ -2739,7 +2739,7 @@ class AnnotationMethodLinks(ConfiguredBaseModel):
                 "domain_of": ["AnnotationMethodLinks"],
                 "exact_mappings": ["cdp-common:annotation_method_link_custom_name"],
                 "recommended": True,
-            }
+            },
         },
     )
 
@@ -2780,7 +2780,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
+            },
         },
     )
     glob_string: Optional[str] = Field(
@@ -2800,7 +2800,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
+            },
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -2820,7 +2820,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
+            },
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -2842,7 +2842,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -2864,7 +2864,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -2890,7 +2890,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
                 "ifabsent": "float(1)",
-            }
+            },
         },
     )
     filter_value: Optional[str] = Field(
@@ -2905,7 +2905,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
-            }
+            },
         },
     )
     order: Optional[str] = Field(
@@ -2917,7 +2917,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_order"],
                 "ifabsent": "string(xyz)",
-            }
+            },
         },
     )
     file_format: str = Field(
@@ -2937,7 +2937,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
+            },
         },
     )
     glob_string: Optional[str] = Field(
@@ -2957,7 +2957,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
+            },
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -2977,7 +2977,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
+            },
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -2999,7 +2999,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -3021,7 +3021,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -3047,7 +3047,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
                 "ifabsent": "float(1)",
-            }
+            },
         },
     )
     filter_value: Optional[str] = Field(
@@ -3062,7 +3062,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
-            }
+            },
         },
     )
     order: Optional[str] = Field(
@@ -3074,7 +3074,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_order"],
                 "ifabsent": "string(xyz)",
-            }
+            },
         },
     )
     file_format: str = Field(
@@ -3094,7 +3094,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
+            },
         },
     )
     glob_string: Optional[str] = Field(
@@ -3114,7 +3114,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
+            },
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -3134,7 +3134,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
+            },
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -3156,7 +3156,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -3178,7 +3178,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -3204,7 +3204,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_binning"],
                 "ifabsent": "float(1)",
-            }
+            },
         },
     )
     columns: Optional[str] = Field(
@@ -3216,7 +3216,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationPointFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_columns"],
                 "ifabsent": "string(xyz)",
-            }
+            },
         },
     )
     delimiter: Optional[str] = Field(
@@ -3228,7 +3228,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationPointFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_delimiter"],
                 "ifabsent": "string(,)",
-            }
+            },
         },
     )
     filter_value: Optional[str] = Field(
@@ -3243,7 +3243,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationInstanceSegmentationFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_filter_value"],
-            }
+            },
         },
     )
     file_format: str = Field(
@@ -3263,7 +3263,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
+            },
         },
     )
     glob_string: Optional[str] = Field(
@@ -3283,7 +3283,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
+            },
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -3303,7 +3303,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
+            },
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -3325,7 +3325,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -3347,7 +3347,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -3376,7 +3376,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
+            },
         },
     )
     glob_string: Optional[str] = Field(
@@ -3396,7 +3396,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
+            },
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -3416,7 +3416,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
+            },
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -3438,7 +3438,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -3460,7 +3460,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -3481,7 +3481,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationSemanticSegmentationMaskFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_mask_label"],
                 "ifabsent": "int(1)",
-            }
+            },
         },
     )
     rescale: Optional[bool] = Field(
@@ -3493,7 +3493,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationSemanticSegmentationMaskFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_rescale"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     threshold: Optional[float] = Field(
@@ -3504,7 +3504,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                 "alias": "threshold",
                 "domain_of": ["AnnotationSemanticSegmentationMaskFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_threshold"],
-            }
+            },
         },
     )
     file_format: str = Field(
@@ -3524,7 +3524,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
+            },
         },
     )
     glob_string: Optional[str] = Field(
@@ -3544,7 +3544,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
+            },
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -3564,7 +3564,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
+            },
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -3586,7 +3586,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -3608,7 +3608,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -3630,7 +3630,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationTriangularMeshFile", "AnnotationTriangularMeshGroupFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_scale_factor"],
                 "ifabsent": "float(1)",
-            }
+            },
         },
     )
     file_format: str = Field(
@@ -3650,7 +3650,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
+            },
         },
     )
     glob_string: Optional[str] = Field(
@@ -3670,7 +3670,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
+            },
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -3690,7 +3690,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
+            },
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -3712,7 +3712,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -3734,7 +3734,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -3756,7 +3756,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                 "domain_of": ["AnnotationTriangularMeshFile", "AnnotationTriangularMeshGroupFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_scale_factor"],
                 "ifabsent": "float(1)",
-            }
+            },
         },
     )
     name: Optional[str] = Field(
@@ -3777,7 +3777,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_mesh_name"],
-            }
+            },
         },
     )
     file_format: str = Field(
@@ -3797,7 +3797,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
+            },
         },
     )
     glob_string: Optional[str] = Field(
@@ -3817,7 +3817,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
-            }
+            },
         },
     )
     glob_strings: Optional[List[str]] = Field(
@@ -3837,7 +3837,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
-            }
+            },
         },
     )
     is_visualization_default: Optional[bool] = Field(
@@ -3859,7 +3859,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -3881,7 +3881,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                 ],
                 "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -3892,7 +3892,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]}
+        {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]},
     )
 
     annotation_method: str = Field(
@@ -3903,7 +3903,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "annotation_method",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_method"],
-            }
+            },
         },
     )
     annotation_object: AnnotationObject = Field(
@@ -3919,7 +3919,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "annotation_publications",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_publications"],
-            }
+            },
         },
     )
     annotation_software: Optional[str] = Field(
@@ -3931,7 +3931,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_software"],
                 "recommended": True,
-            }
+            },
         },
     )
     confidence: Optional[AnnotationConfidence] = Field(
@@ -3943,7 +3943,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         None,
         description="""File and sourcing data for an annotation. Represents an entry in annotation.sources.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "files", "domain_of": ["Annotation"], "list_elements_ordered": True}
+            "linkml_meta": {"alias": "files", "domain_of": ["Annotation"], "list_elements_ordered": True},
         },
     )
     ground_truth_status: Optional[bool] = Field(
@@ -3956,7 +3956,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "exact_mappings": ["cdp-common:annotation_ground_truth_status"],
                 "ifabsent": "False",
                 "recommended": True,
-            }
+            },
         },
     )
     is_curator_recommended: Optional[bool] = Field(
@@ -3968,7 +3968,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_is_curator_recommended"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     method_type: AnnotationMethodTypeEnum = Field(
@@ -3979,7 +3979,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "method_type",
                 "domain_of": ["Annotation", "Alignment"],
                 "exact_mappings": ["cdp-common:annotation_method_type"],
-            }
+            },
         },
     )
     method_links: Optional[List[AnnotationMethodLinks]] = Field(
@@ -3995,7 +3995,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "object_count",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_object_count"],
-            }
+            },
         },
     )
     version: Optional[float] = Field(
@@ -4006,7 +4006,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "version",
                 "domain_of": ["Annotation"],
                 "exact_mappings": ["cdp-common:annotation_version"],
-            }
+            },
         },
     )
     dates: DateStamp = Field(
@@ -4016,7 +4016,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
             "linkml_meta": {
                 "alias": "dates",
                 "domain_of": ["DateStampedEntity", "Tomogram", "Dataset", "Deposition", "Annotation"],
-            }
+            },
         },
     )
     authors: List[Author] = Field(
@@ -4028,14 +4028,14 @@ class Annotation(AuthoredEntity, DateStampedEntity):
                 "alias": "authors",
                 "domain_of": ["AuthoredEntity", "Dataset", "Deposition", "Tomogram", "Annotation"],
                 "list_elements_ordered": True,
-            }
+            },
         },
     )
 
     @field_validator("annotation_publications")
     def pattern_annotation_publications(cls, v):
         pattern = re.compile(
-            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$"
+            r"^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+|PDB-[0-9a-zA-Z]{4,8}))*$",
         )
         if isinstance(v, list):
             for element in v:
@@ -4075,7 +4075,7 @@ class AlignmentSize(ConfiguredBaseModel):
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
     y: Union[int, str] = Field(
@@ -4087,7 +4087,7 @@ class AlignmentSize(ConfiguredBaseModel):
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
     z: Union[int, str] = Field(
@@ -4099,7 +4099,7 @@ class AlignmentSize(ConfiguredBaseModel):
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
 
@@ -4157,7 +4157,7 @@ class AlignmentOffset(ConfiguredBaseModel):
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "int(0)",
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
     y: Union[int, str] = Field(
@@ -4170,7 +4170,7 @@ class AlignmentOffset(ConfiguredBaseModel):
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "int(0)",
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
     z: Union[int, str] = Field(
@@ -4183,7 +4183,7 @@ class AlignmentOffset(ConfiguredBaseModel):
                 "domain_of": ["TomogramSize", "TomogramOffset", "AlignmentSize", "AlignmentOffset"],
                 "ifabsent": "int(0)",
                 "unit": {"descriptive_name": "pixels", "symbol": "px"},
-            }
+            },
         },
     )
 
@@ -4251,14 +4251,14 @@ class Alignment(ConfiguredBaseModel):
                 "any_of": [{"range": "integer"}, {"range": "IntegerFormattedString"}],
                 "domain_of": ["Alignment"],
                 "ifabsent": "int(0)",
-            }
+            },
         },
     )
     tilt_offset: Optional[float] = Field(
         0.0,
         description="""The tilt offset relative to the tomogram.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "tilt_offset", "domain_of": ["Alignment"], "ifabsent": "float(0.0)"}
+            "linkml_meta": {"alias": "tilt_offset", "domain_of": ["Alignment"], "ifabsent": "float(0.0)"},
         },
     )
     affine_transformation_matrix: Optional[
@@ -4274,7 +4274,7 @@ class Alignment(ConfiguredBaseModel):
                     "exact_number_dimensions": 2,
                 },
                 "domain_of": ["Tomogram", "Alignment"],
-            }
+            },
         },
     )
     is_portal_standard: Optional[bool] = Field(
@@ -4295,7 +4295,7 @@ class Alignment(ConfiguredBaseModel):
                     "AnnotationTriangularMeshGroupFile",
                 ],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     format: AlignmentFormatEnum = Field(
@@ -4366,7 +4366,7 @@ class Frame(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
     dose: float = Field(
-        ..., description="""The dose.""", json_schema_extra={"linkml_meta": {"alias": "dose", "domain_of": ["Frame"]}}
+        ..., description="""The dose.""", json_schema_extra={"linkml_meta": {"alias": "dose", "domain_of": ["Frame"]}},
     )
     defocus: float = Field(
         ...,
@@ -4400,7 +4400,7 @@ class DateStampedEntityMixin(ConfiguredBaseModel):
                 "alias": "deposition_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:deposition_date"],
-            }
+            },
         },
     )
     release_date: date = Field(
@@ -4411,7 +4411,7 @@ class DateStampedEntityMixin(ConfiguredBaseModel):
                 "alias": "release_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:release_date"],
-            }
+            },
         },
     )
     last_modified_date: date = Field(
@@ -4422,7 +4422,7 @@ class DateStampedEntityMixin(ConfiguredBaseModel):
                 "alias": "last_modified_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:last_modified_date"],
-            }
+            },
         },
     )
 
@@ -4442,7 +4442,7 @@ class DateStamp(DateStampedEntityMixin):
                 "alias": "deposition_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:deposition_date"],
-            }
+            },
         },
     )
     release_date: date = Field(
@@ -4453,7 +4453,7 @@ class DateStamp(DateStampedEntityMixin):
                 "alias": "release_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:release_date"],
-            }
+            },
         },
     )
     last_modified_date: date = Field(
@@ -4464,7 +4464,7 @@ class DateStamp(DateStampedEntityMixin):
                 "alias": "last_modified_date",
                 "domain_of": ["DateStampedEntityMixin", "DateStamp"],
                 "exact_mappings": ["cdp-common:last_modified_date"],
-            }
+            },
         },
     )
 
@@ -4484,7 +4484,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
                 "alias": "publications",
                 "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
-            }
+            },
         },
     )
     related_database_entries: Optional[str] = Field(
@@ -4495,28 +4495,28 @@ class CrossReferencesMixin(ConfiguredBaseModel):
                 "alias": "related_database_entries",
                 "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
-            }
+            },
         },
     )
     related_database_links: Optional[str] = Field(
         None,
         description="""Comma-separated list of related database links for the dataset.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
+            "linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferencesMixin", "CrossReferences"]},
         },
     )
     dataset_citations: Optional[str] = Field(
         None,
         description="""Comma-separated list of DOIs for publications citing the dataset.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
+            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]},
         },
     )
 
     @field_validator("publications")
     def pattern_publications(cls, v):
         pattern = re.compile(
-            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
+            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
         )
         if isinstance(v, list):
             for element in v:
@@ -4530,7 +4530,7 @@ class CrossReferencesMixin(ConfiguredBaseModel):
     @field_validator("related_database_entries")
     def pattern_related_database_entries(cls, v):
         pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)"
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)",
         )
         if isinstance(v, list):
             for element in v:
@@ -4557,7 +4557,7 @@ class CrossReferences(CrossReferencesMixin):
                 "alias": "publications",
                 "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
-            }
+            },
         },
     )
     related_database_entries: Optional[str] = Field(
@@ -4568,28 +4568,28 @@ class CrossReferences(CrossReferencesMixin):
                 "alias": "related_database_entries",
                 "domain_of": ["CrossReferencesMixin", "CrossReferences"],
                 "recommended": True,
-            }
+            },
         },
     )
     related_database_links: Optional[str] = Field(
         None,
         description="""Comma-separated list of related database links for the dataset.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
+            "linkml_meta": {"alias": "related_database_links", "domain_of": ["CrossReferencesMixin", "CrossReferences"]},
         },
     )
     dataset_citations: Optional[str] = Field(
         None,
         description="""Comma-separated list of DOIs for publications citing the dataset.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]}
+            "linkml_meta": {"alias": "dataset_citations", "domain_of": ["CrossReferencesMixin", "CrossReferences"]},
         },
     )
 
     @field_validator("publications")
     def pattern_publications(cls, v):
         pattern = re.compile(
-            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)"
+            r"(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)|(^(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+(\s*,\s*(doi:)?10\.[0-9]{4,9}/[-._;()/:a-zA-Z0-9]+)*$)",
         )
         if isinstance(v, list):
             for element in v:
@@ -4603,7 +4603,7 @@ class CrossReferences(CrossReferencesMixin):
     @field_validator("related_database_entries")
     def pattern_related_database_entries(cls, v):
         pattern = re.compile(
-            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)"
+            r"(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)|(^(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8})(\s*,\s*(EMPIAR-[0-9]{5}|EMD-[0-9]{4,5}|PDB-[0-9a-zA-Z]{4,8}))*$)",
         )
         if isinstance(v, list):
             for element in v:
@@ -4640,7 +4640,7 @@ class AuthorMixin(ConfiguredBaseModel):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
-            }
+            },
         },
     )
     email: Optional[str] = Field(
@@ -4651,7 +4651,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "alias": "email",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_email"],
-            }
+            },
         },
     )
     affiliation_name: Optional[str] = Field(
@@ -4662,7 +4662,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "alias": "affiliation_name",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_name"],
-            }
+            },
         },
     )
     affiliation_address: Optional[str] = Field(
@@ -4673,7 +4673,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "alias": "affiliation_address",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_address"],
-            }
+            },
         },
     )
     affiliation_identifier: Optional[str] = Field(
@@ -4685,7 +4685,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_identifier"],
                 "recommended": True,
-            }
+            },
         },
     )
     corresponding_author_status: Optional[bool] = Field(
@@ -4697,7 +4697,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_corresponding_author_status"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     primary_author_status: Optional[bool] = Field(
@@ -4709,7 +4709,7 @@ class AuthorMixin(ConfiguredBaseModel):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_primary_author_status"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 
@@ -4730,7 +4730,7 @@ class Author(AuthorMixin):
                 "domain_of": ["Author"],
                 "exact_mappings": ["cdp-common:author_orcid"],
                 "recommended": True,
-            }
+            },
         },
     )
     name: str = Field(
@@ -4751,7 +4751,7 @@ class Author(AuthorMixin):
                     "Author",
                 ],
                 "exact_mappings": ["cdp-common:author_name"],
-            }
+            },
         },
     )
     email: Optional[str] = Field(
@@ -4762,7 +4762,7 @@ class Author(AuthorMixin):
                 "alias": "email",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_email"],
-            }
+            },
         },
     )
     affiliation_name: Optional[str] = Field(
@@ -4773,7 +4773,7 @@ class Author(AuthorMixin):
                 "alias": "affiliation_name",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_name"],
-            }
+            },
         },
     )
     affiliation_address: Optional[str] = Field(
@@ -4784,7 +4784,7 @@ class Author(AuthorMixin):
                 "alias": "affiliation_address",
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_address"],
-            }
+            },
         },
     )
     affiliation_identifier: Optional[str] = Field(
@@ -4796,7 +4796,7 @@ class Author(AuthorMixin):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_affiliation_identifier"],
                 "recommended": True,
-            }
+            },
         },
     )
     corresponding_author_status: Optional[bool] = Field(
@@ -4808,7 +4808,7 @@ class Author(AuthorMixin):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_corresponding_author_status"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
     primary_author_status: Optional[bool] = Field(
@@ -4820,7 +4820,7 @@ class Author(AuthorMixin):
                 "domain_of": ["AuthorMixin", "Author"],
                 "exact_mappings": ["cdp-common:author_primary_author_status"],
                 "ifabsent": "False",
-            }
+            },
         },
     )
 

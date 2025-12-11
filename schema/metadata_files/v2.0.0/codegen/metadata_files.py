@@ -140,6 +140,18 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                              'from_schema': 'metadata',
                              'name': 'EMPIAR_ID',
                              'pattern': '^EMPIAR-[0-9]+$'},
+               'FBBT_ID': {'base': 'str',
+                           'description': 'A drosophila anatomy ontology '
+                                          'identifier',
+                           'from_schema': 'metadata',
+                           'name': 'FBBT_ID',
+                           'pattern': 'FBbt:[0-9]{8}$'},
+               'FBDV_ID': {'base': 'str',
+                           'description': 'A drosophila developmental stage '
+                                          'ontology identifier',
+                           'from_schema': 'metadata',
+                           'name': 'FBDV_ID',
+                           'pattern': 'FBdv:[0-9]{8}$'},
                'FloatFormattedString': {'base': 'str',
                                         'description': 'A formatted string that '
                                                        'represents a floating '
@@ -154,8 +166,8 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                          'name': 'GO_ID',
                          'pattern': '^GO:[0-9]{7}$'},
                'HSAPDV_ID': {'base': 'str',
-                             'description': 'A Human Developmental Phenotype '
-                                            'Ontology identifier',
+                             'description': 'A human developmental phenotype '
+                                            'ontology identifier',
                              'from_schema': 'metadata',
                              'name': 'HSAPDV_ID',
                              'pattern': 'HsapDv:[0-9]{7}$'},
@@ -166,6 +178,12 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                                           'name': 'IntegerFormattedString',
                                           'pattern': '^int[ '
                                                      ']*\\{[a-zA-Z0-9_-]+\\}[ ]*$'},
+               'MMUSDV_ID': {'base': 'str',
+                             'description': 'A mouse developmental stage ontology '
+                                            'identifier',
+                             'from_schema': 'metadata',
+                             'name': 'MMUSDV_ID',
+                             'pattern': 'MmusDv:[0-9]{7}$'},
                'MONDO_ID': {'base': 'str',
                             'description': 'An identifier of type MONDO',
                             'from_schema': 'metadata',
@@ -232,8 +250,15 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                                  'from_schema': 'metadata',
                                  'minimum_value': 0,
                                  'name': 'VersionString'},
+               'WBBT_ID': {'base': 'str',
+                           'description': 'A WormBase anatomy ontology identifier',
+                           'from_schema': 'metadata',
+                           'name': 'WBBT_ID',
+                           'pattern': 'WBbt:[0-9]{7}$'},
                'WORMBASE_DEVELOPMENT_ID': {'base': 'str',
-                                           'description': 'A WormBase identifier',
+                                           'description': 'A WormBase '
+                                                          'developmental stage '
+                                                          'identifier',
                                            'from_schema': 'metadata',
                                            'name': 'WORMBASE_DEVELOPMENT_ID',
                                            'pattern': 'WBls:[0-9]{7}$'},
@@ -242,11 +267,17 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                                       'from_schema': 'metadata',
                                       'name': 'WORMBASE_STRAIN_ID',
                                       'pattern': 'WBStrain[0-9]{8}$'},
-               'WORMBASE_TISSUE_ID': {'base': 'str',
-                                      'description': 'A WormBase tissue identifier',
-                                      'from_schema': 'metadata',
-                                      'name': 'WORMBASE_TISSUE_ID',
-                                      'pattern': 'WBbt:[0-9]{7}$'},
+               'ZFA_ID': {'base': 'str',
+                          'description': 'A zebrafish anatomy ontology identifier',
+                          'from_schema': 'metadata',
+                          'name': 'ZFA_ID',
+                          'pattern': 'ZFA:[0-9]{7}$'},
+               'ZFS_ID': {'base': 'str',
+                          'description': 'A zebrafish developmental stage ontology '
+                                         'identifier',
+                          'from_schema': 'metadata',
+                          'name': 'ZFS_ID',
+                          'pattern': 'ZFS:[0-9]{7}$'},
                'boolean': {'base': 'Bool',
                            'description': 'A binary (true or false) value',
                            'exact_mappings': ['schema:Boolean'],
@@ -581,6 +612,8 @@ class CtfFormatEnum(str, Enum):
     """
     # The file has ctffind schema
     CTFFIND = "CTFFIND"
+    # The file has Gctf schema
+    Gctf = "Gctf"
 
 
 class DepositionTypesEnum(str, Enum):
@@ -945,7 +978,10 @@ class DevelopmentStageDetails(ConfiguredBaseModel):
          'any_of': [{'range': 'UNKNOWN_LITERAL'},
                     {'range': 'WORMBASE_DEVELOPMENT_ID'},
                     {'range': 'UBERON_ID'},
-                    {'range': 'HSAPDV_ID'}],
+                    {'range': 'HSAPDV_ID'},
+                    {'range': 'MMUSDV_ID'},
+                    {'range': 'ZFS_ID'},
+                    {'range': 'FBDV_ID'}],
          'domain_of': ['Assay',
                        'DevelopmentStageDetails',
                        'Disease',
@@ -959,7 +995,7 @@ class DevelopmentStageDetails(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"(^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)")
+        pattern=re.compile(r"(^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)|(MmusDv:[0-9]{7}$)|(ZFS:[0-9]{7}$)|(FBdv:[0-9]{8}$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -1065,7 +1101,9 @@ class TissueDetails(ConfiguredBaseModel):
          'exact_mappings': ['cdp-common:tissue_name']} })
     id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
          'any_of': [{'range': 'CL_ID'},
-                    {'range': 'WORMBASE_TISSUE_ID'},
+                    {'range': 'WBBT_ID'},
+                    {'range': 'ZFA_ID'},
+                    {'range': 'FBBT_ID'},
                     {'range': 'UBERON_ID'}],
          'domain_of': ['Assay',
                        'DevelopmentStageDetails',
@@ -1080,7 +1118,7 @@ class TissueDetails(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(^UBERON:[0-9]{7}$)")
+        pattern=re.compile(r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -1112,7 +1150,11 @@ class CellType(ConfiguredBaseModel):
                        'Author'],
          'exact_mappings': ['cdp-common:cell_name']} })
     id: Optional[str] = Field(None, description="""A placeholder for any type of data.""", json_schema_extra = { "linkml_meta": {'alias': 'id',
-         'any_of': [{'range': 'CL_ID'}, {'range': 'UBERON_ID'}],
+         'any_of': [{'range': 'CL_ID'},
+                    {'range': 'WBBT_ID'},
+                    {'range': 'ZFA_ID'},
+                    {'range': 'FBBT_ID'},
+                    {'range': 'UBERON_ID'}],
          'domain_of': ['Assay',
                        'DevelopmentStageDetails',
                        'Disease',
@@ -1126,7 +1168,7 @@ class CellType(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"(^CL:[0-9]{7}$)|(^UBERON:[0-9]{7}$)")
+        pattern=re.compile(r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):
@@ -3380,7 +3422,7 @@ class Ctf(ConfiguredBaseModel):
 
     @field_validator('format')
     def pattern_format(cls, v):
-        pattern=re.compile(r"^CTFFIND$")
+        pattern=re.compile(r"(^CTFFIND$)|(^Gctf$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):

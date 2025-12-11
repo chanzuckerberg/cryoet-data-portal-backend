@@ -22,7 +22,7 @@ from importers.run import RunImporter
 from importers.utils import IMPORTERS
 from standardize_dirs import common_options as ingest_common_options
 
-from common.config import DepositionImportConfig
+from common.config import PROD_URL, DepositionImportConfig
 from common.fs import FileSystemApi
 
 logger = logging.getLogger("db_import")
@@ -130,6 +130,13 @@ def run_job(
         name=execution_name,
         input=json.dumps(sfn_input_json),
     )
+
+def get_default_https_prefix():
+    """
+    For the purposes of ingestion, we are okay with the staging environment containing production URLs,
+    since the URLs in metadata files are not expected to change between environments.
+    """
+    return PROD_URL
 
 
 def get_aws_env(environment):
@@ -267,9 +274,7 @@ def db_import(
         if env == "prod":
             s3_bucket = "cryoet-data-portal-public"
     if not https_prefix:
-        https_prefix = "https://files.cryoet.staging.si.czi.technology"
-        if env == "prod":
-            https_prefix = "https://files.cryoetdataportal.cziscience.com"
+        https_prefix = get_default_https_prefix()
 
     # Default to using a lot less memory than the ingestion job.
     if not ctx.obj.get("memory"):
@@ -331,7 +336,7 @@ def db_import(
 @click.argument("config_file", required=True, type=str)
 @click.argument("input_bucket", required=True, type=str)
 @click.argument("output_path", required=True, type=str)
-@click.option("--import-everything", is_flag=True, default=False)
+@click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
 @click.option(
     "--write-mrc/--no-write-mrc",
     default=True,
@@ -365,7 +370,9 @@ def queue(
     config_file: str,
     input_bucket: str,
     output_path: str,
+    https_prefix: str,
     import_everything: bool,
+    import_all_metadata: bool,
     write_mrc: bool,
     write_zarr: bool,
     force_overwrite: bool,
@@ -377,7 +384,9 @@ def queue(
     fs_mode = "s3"
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
 
-    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS)
+    if not https_prefix:
+        https_prefix = get_default_https_prefix()
+    config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS, https_prefix=https_prefix)
     config.write_mrc = write_mrc
     config.write_zarr = write_zarr
     config.load_map_files()
@@ -431,7 +440,9 @@ def queue(
                             break
                         per_run_args[k] = v
                     new_args = to_args(
+                        https_prefix=https_prefix,
                         import_everything=import_everything,
+                        import_all_metadata=import_all_metadata,
                         write_mrc=write_mrc,
                         write_zarr=write_zarr,
                         force_overwrite=force_overwrite,

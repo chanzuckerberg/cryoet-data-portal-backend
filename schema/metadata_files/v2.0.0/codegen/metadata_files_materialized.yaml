@@ -353,24 +353,54 @@ types:
     from_schema: metadata
     base: str
     pattern: WBStrain[0-9]{8}$
-  WORMBASE_TISSUE_ID:
-    name: WORMBASE_TISSUE_ID
-    description: A WormBase tissue identifier
-    from_schema: metadata
-    base: str
-    pattern: WBbt:[0-9]{7}$
   WORMBASE_DEVELOPMENT_ID:
     name: WORMBASE_DEVELOPMENT_ID
-    description: A WormBase identifier
+    description: A WormBase developmental stage identifier
     from_schema: metadata
     base: str
     pattern: WBls:[0-9]{7}$
   HSAPDV_ID:
     name: HSAPDV_ID
-    description: A Human Developmental Phenotype Ontology identifier
+    description: A human developmental phenotype ontology identifier
     from_schema: metadata
     base: str
     pattern: HsapDv:[0-9]{7}$
+  MMUSDV_ID:
+    name: MMUSDV_ID
+    description: A mouse developmental stage ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: MmusDv:[0-9]{7}$
+  ZFS_ID:
+    name: ZFS_ID
+    description: A zebrafish developmental stage ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ZFS:[0-9]{7}$
+  FBDV_ID:
+    name: FBDV_ID
+    description: A drosophila developmental stage ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: FBdv:[0-9]{8}$
+  WBBT_ID:
+    name: WBBT_ID
+    description: A WormBase anatomy ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: WBbt:[0-9]{7}$
+  ZFA_ID:
+    name: ZFA_ID
+    description: A zebrafish anatomy ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ZFA:[0-9]{7}$
+  FBBT_ID:
+    name: FBBT_ID
+    description: A drosophila anatomy ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: FBbt:[0-9]{8}$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
@@ -574,6 +604,9 @@ enums:
       CTFFIND:
         text: CTFFIND
         description: The file has ctffind schema
+      Gctf:
+        text: Gctf
+        description: The file has Gctf schema
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has

@@ -11,11 +11,11 @@ If new `helper_*` files are added, make sure to update the `__init__.py` file an
 To run (from this directory):
 
 ```
-pytest --input-bucket [BUCKET_NAME] --ingestion-config [CONFIG_FILE] --run-filter-name [regex value] --frame-filter-name [regex-value]
+pytest --input-bucket [BUCKET_NAME] --ingestion-config [CONFIG_FILE] --filter-run-name [regex value]
 
 input-bucket: The S3 bucket where the data is stored. No default value available.
 ingestion-config: The path to the ingestion config file
-run-filter-name: Similar to the ingestion, the tests can be filtered by any entities name.
+filter-run-name: Similar to the ingestion, the tests can be filtered by any entities name.
 ```
 
 Custom Marks:

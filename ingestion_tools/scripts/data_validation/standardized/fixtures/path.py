@@ -414,6 +414,7 @@ def get_annotation_files_to_metadata_files(
     """[Dataset]/[ExperimentRun]/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].*
     Helper function for retrieving annotation files and their corresponding metadata files.
     Fails the test if the annotation file is not found for a given metadata file OR if there are any remaining annotation files.
+    Skips the test if no annotation files are found.
     Returns a dictionary of annotation files, annotation_filename -> metadata_filename.
     """
 

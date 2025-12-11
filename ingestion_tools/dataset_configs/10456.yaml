@@ -1,0 +1,499 @@
+alignments:
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '25jul29a/{run_name}.aln'
+annotations:
+  - metadata:
+      annotation_method: Prediction using membrain-seg without rescaling and weights MemBrain_seg_v10_alpha.ckpt
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+      annotation_publications: 10.1101/2024.01.05.574336
+      annotation_software: membrain-seg 0.0.1
+      authors:
+        - ORCID: 0000-0002-8063-6951
+          corresponding_author_status: true
+          name: Jonathan Schwartz
+          primary_author_status: true
+        - ORCID: 0000-0002-5940-3897
+          corresponding_author_status: true
+          name: Ariana Peck
+          primary_author_status: true
+        - name: Utz Heinrich Ermel
+          ORCID: 0000-0003-4685-037X
+          corresponding_author_status: true
+          primary_author_status: true
+        - ORCID: 0000-0002-3248-9678
+          corresponding_author_status: true
+          name: Yue Yu
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-11-24'
+        last_modified_date: '2025-11-24'
+        release_date: '2025-11-24'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_links:
+        - custom_name: membrain-seg on GitHub
+          link: https://github.com/teamtomo/membrain-seg
+          link_type: source_code
+        - custom_name: membrain-seg on PyPI
+          link: https://pypi.org/project/membrain-seg/
+          link_type: other
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings:
+            - 'project/ExperimentRuns/{run_name}/Segmentations/9.990_membrain-seg_final_membrane.zarr'
+          is_visualization_default: true
+          mask_label: 1
+          rescale: true
+          threshold: 0.5
+  - metadata:
+      annotation_method: SABER prediction
+      annotation_object:
+        id: GO:0005764
+        name: lysosome
+      annotation_software: SABER
+      authors:
+        - ORCID: 0000-0002-8063-6951
+          corresponding_author_status: false
+          name: Jonathan Schwartz
+          primary_author_status: true
+        - name: Dari Kimanius
+          ORCID: 0000-0002-2662-6373
+          corresponding_author_status: true
+          primary_author_status: false
+      dates:
+        deposition_date: '2025-11-24'
+        last_modified_date: '2025-11-24'
+        release_date: '2025-11-24'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_links:
+        - custom_name: SABER on GitHub
+          link: https://github.com/chanzuckerberg/saber
+          link_type: source_code
+        - custom_name: SABER Documentation
+          link: https://chanzuckerberg.github.io/saber/
+          link_type: documentation
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings:
+            - 'project/ExperimentRuns/{run_name}/Segmentations/9.990_saber-refined_final_lysosome.zarr'
+          is_visualization_default: true
+          mask_label: 1
+          rescale: true
+          threshold: 0.5
+  - metadata:
+      annotation_method: nnInteractive prediction + mcm-cryoET smoothing
+      annotation_object:
+        id: GO:0005739
+        name: mitochondrion
+      annotation_software: nnInteractive
+      authors:
+        - ORCID: 0000-0003-4685-037X
+          corresponding_author_status: true
+          name: Utz Heinrich Ermel
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-11-24'
+        last_modified_date: '2025-11-24'
+        release_date: '2025-11-24'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_links:
+        - custom_name: nnInteractive on GitHub
+          link: https://github.com/MIC-DKFZ/nnInteractive
+          link_type: source_code
+        - custom_name: mcm-cryoET on GitHub
+          link: https://github.com/FrangakisLab/mcm-cryoet
+          link_type: source_code
+      method_type: automated
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_strings:
+            - 'project/ExperimentRuns/{run_name}/Segmentations/14.985_nninteractive_final_mitochondrion.zarr'
+          is_visualization_default: true
+          mask_label: 1
+          rescale: true
+          threshold: 0.5
+  - metadata:
+      annotation_method: octopi prediction + 2D/3D refinement in RELION 5 + 3D classification in RELION 5
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_software: octopi 1.2.0
+      authors:
+        - ORCID: 0009-0003-2008-9583
+          corresponding_author_status: false
+          name: Daniel Ji
+          primary_author_status: true
+        - name: Utz Heinrich Ermel
+          ORCID: 0000-0003-4685-037X
+          corresponding_author_status: true
+          primary_author_status: false
+      dates:
+        deposition_date: '2025-11-24'
+        last_modified_date: '2025-11-24'
+        release_date: '2025-11-24'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Octopi on GitHub
+          link: https://github.com/chanzuckerberg/octopi
+          link_type: source_code
+        - custom_name: Octopi documentation
+          link: https://chanzuckerberg.github.io/octopi/
+          link_type: documentation
+        - custom_name: RELION on GitHub
+          link: https://github.com/3dem/relion
+          link_type: source_code
+      method_type: automated
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 14.985
+          file_format: copick
+          glob_strings:
+            - 'project/ExperimentRuns/{run_name}/Picks/pyrelion_refine3d-job004-orientations-0-01-cutoff_ribosome.json'
+          is_visualization_default: true
+          mesh_source_path: 'project/mesh/ribosome.glb'
+  - metadata:
+      annotation_method: nnInteractive prediction + copick-utils spline fit + 3D refinement in TOM
+      annotation_object:
+        id: GO:0005874
+        name: microtubule
+      annotation_software: nnInteractive
+      authors:
+        - ORCID: 0000-0001-8560-7407
+          corresponding_author_status: true
+          name: Julia Peukes
+          primary_author_status: true
+        - name: Utz Heinrich Ermel
+          ORCID: 0000-0003-4685-037X
+          corresponding_author_status: true
+          primary_author_status: true
+      dates:
+        deposition_date: '2025-11-24'
+        last_modified_date: '2025-11-24'
+        release_date: '2025-11-24'
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_links:
+        - custom_name: nnInteractive on GitHub
+          link: https://github.com/MIC-DKFZ/nnInteractive
+          link_type: source_code
+        - custom_name: copick-utils on GitHub
+          link: https://github.com/copick/copick-utils/
+          link_type: source_code
+        - custom_name: TOM toolbox
+          link: https://www.biochem.mpg.de/6348566/tom_e
+          link_type: website
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 14.985
+          file_format: copick
+          glob_strings:
+            - 'project/ExperimentRuns/{run_name}/Picks/points_combined_mt.json'
+          is_visualization_default: true
+          mesh_source_path: 'project/mesh/microtubule.glb'
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: '25jul29a/{run_name}.mdoc'
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '25jul29a/{run_name}_CTFFIND_format_CTF.txt'
+depositions:
+  - metadata:
+      authors: &id001
+        - name: Hannah Siems
+          primary_author_status: true
+          ORCID: 0009-0002-6674-7601
+        - name: Garrett Greenan
+          primary_author_status: true
+          ORCID: 0000-0002-9045-7666
+        - name: Nikki Jean
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0009-0007-9777-9856
+        - name: Daniel Ji
+          ORCID: 0009-0003-2008-9583
+          primary_author_status: false
+        - name: Utz Heinrich Ermel
+          ORCID: 0000-0003-4685-037X
+          primary_author_status: false
+        - name: Julia Peukes
+          ORCID: 0000-0001-8560-7407
+          primary_author_status: false
+        - name: Jonathan Schwartz
+          ORCID: 0000-0002-8063-6951
+          primary_author_status: false
+        - name: Ariana Peck
+          ORCID: 0000-0002-5940-3897
+          primary_author_status: false
+        - name: Yue Yu
+          ORCID: 0000-0002-3248-9678
+          primary_author_status: false
+        - name: Elizabeth Montabana
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-6731-5854
+        - name: Dari Kimanius
+          ORCID: 0000-0002-2662-6373
+          corresponding_author_status: false
+          primary_author_status: false
+        - name: Matthias Haury
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-1796-1479
+        - name: David Agard
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0003-3512-695X
+        - name: Bridget Carragher
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0002-0624-5020
+        - name: Daniel Serwas
+          primary_author_status: false
+          corresponding_author_status: true
+          ORCID: 0000-0001-9010-7298
+      dates: &id002
+        deposition_date: '2025-11-24'
+        last_modified_date: '2025-11-24'
+        release_date: '2025-11-24'
+      deposition_description:
+        Human HEK293T cells lacking the lysosomal protein NPC1, which normally facilitates cholesterol transport from
+        the lysosome lumen to other cell compartments. Loss of NPC1 causes Niemann-Pick Type C, an ultra-rare and fatal
+        disease with no current treatment. These datasets capture organelle interactions and membrane dynamics in
+        disease-relevant cellular environments, providing a resource for studying lysosomal storage disorders at
+        nanometer resolution.
+      deposition_identifier: 10337
+      deposition_title: CryoET of NPC1-Deficient Human HEK293T Cells
+      deposition_types:
+        - dataset
+        - annotation
+    sources:
+      - literal:
+          value:
+            - 10337
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10337_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10337_thumbnail.png
+datasets:
+  - metadata:
+      authors: *id001
+      dataset_description:
+        Human HEK293T cells lacking the lysosomal cholesterol transporter NPC1 were cultured and plunge-frozen. This
+        dataset contains tomograms with comprehensive annotations of cellular features including lysosome clusters
+        within larger membrane compartments, abnormal mitochondrial morphology, microtubules, and ribosomes throughout
+        the cytoplasm. Membranes are annotated to reveal the complex architecture of lysosomal compartments and their
+        spatial relationships with other organelles.
+      dataset_identifier: 10456
+      dataset_title: CryoET of NPC1-Deficient Human HEK293T Cells with Annotations for Multiple Cellular Features
+      dates:
+        deposition_date: '2025-11-24'
+        last_modified_date: '2025-11-24'
+        release_date: '2025-11-24'
+      grid_preparation: |
+        Prior to cell seeding Quantifoil (Au 200, SiO2 R1/4) grids were glow discharged and 4 grids were placed onto a
+        20 mm glass-bottom Matek dish. Cells were seeded at a density of 100,000 cells per dish. Cells were incubated
+        overnight at 37°C and 5% CO2. Prior to plunge-freezing, cells were treated with LysoTracker™ Deep Red for 15-30
+        mins. Prior to blotting, excess media was removed with Whatman 1 filter paper. 3 µl of PBS was added to the
+        grids before blotting and plunging into liquid ethane. Leica GP2 was used for grid preparation. Thin lamella
+        were milled using LysoTracker™ fluorescence for targeting using a Arctis CryoFib-SEM.
+      sample_preparation: |
+        NPC1-deletion HEK293T cells (DOI: 10.1126/science.aag1417) were grown overnight on Quantifoil (Au 200, SiO2
+        R1/4) grids at 37ºC and 5% CO2. Cells were labeled with LysoTracker™ Deep Red 15-30 min before plunge freezing
+        to facilitate targeted lamella preparation.
+      funding:
+        - funding_agency_name: Chan Zuckerberg Initiative
+          grant_id: "CZII-2023\u2013327779"
+      sample_type: cell_line
+      organism:
+        name: Homo sapiens
+        taxonomy_id: 9606
+      cell_strain:
+        name: HEK293T
+        id: CVCL_0063
+      cell_type:
+        name: "kidney epithelial cell"
+        id: CL:0002518
+      tissue:
+        name: "kidney epithelial cell"
+        id: CL:0002518
+      assay:
+        name: "microscopy assay"
+        id: EFO:0002909
+      development_stage:
+        name: unknown
+        id: unknown
+      disease:
+        name: "Niemann-Pick disease, type C1"
+        id: MONDO:0009757
+    sources:
+      - literal:
+          value:
+            - '10456'
+dataset_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
+frames:
+- metadata:
+    dose_rate: 0.7704
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: '25jul29a/{run_name}/*.eer'
+gains:
+- sources:
+  - source_glob:
+      list_glob: '25jul29a/{gain_file}'
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: '25jul29a/{run_name}_st.rawtlt'
+runs:
+  - sources:
+      - source_glob:
+          list_glob: '25jul29a/*.aln'
+          match_regex: .*\.aln$
+          name_regex: (.*)\.aln$
+standardization_config:
+  deposition_id: 10337
+  source_prefix: CZII/20251124_NPC1_example/
+  run_data_map_file: 25jul29a/run_to_data_map_updated_quality_updated.tsv
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i
+    data_acquisition_software: Tomo5
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: TITAN KRIOS G4
+    microscope_optical_setup:
+      energy_filter: Selectris X
+      phase_plate: Volta phase plate
+    pixel_spacing: 3.7
+    spherical_aberration_constant: 2.7
+    tilt_axis: -96
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: '25jul29a/{run_name}_TS.mrc'
+      match_regex: .*\.mrc$
+tomograms:
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *id001
+      ctf_corrected: true
+      dates: *id002
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: filtered
+      processing_software: Aretomo3 v2.2.2
+      reconstruction_method: WBP
+      reconstruction_software: Aretomo3 v2.2.2
+      tomogram_version: 1
+      voxel_spacing: 14.985
+    sources:
+      - source_glob:
+          list_glob: '25jul29a/{run_name}_dctf_Vol.mrc'
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      authors: *id001
+      ctf_corrected: true
+      dates: *id002
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: denoised
+      processing_software: denoisET
+      reconstruction_method: WBP
+      reconstruction_software: Aretomo3 v2.2.2
+      tomogram_version: 1
+      voxel_spacing: 14.985
+    sources:
+      - source_glob:
+          list_glob: '25jul29a/{run_name}_Vol.mrc'
+version: 1.1.0
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 14.985

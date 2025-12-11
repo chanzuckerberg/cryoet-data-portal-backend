@@ -4592,7 +4592,7 @@ type PerSectionParameters implements EntityInterface & Node {
   """
   minorDefocus: Float
 
-  """Phase shift estimated for this tilt image in degrees."""
+  """Phase shift estimated for this tilt image in radians."""
   phaseShift: Float
 
   """Nominal tilt angle for this tilt image reported by the microscope."""
@@ -4674,7 +4674,7 @@ input PerSectionParametersCreateInput {
   """
   minorDefocus: Float = null
 
-  """Phase shift estimated for this tilt image in degrees."""
+  """Phase shift estimated for this tilt image in radians."""
   phaseShift: Float = null
 
   """Nominal tilt angle for this tilt image reported by the microscope."""
@@ -4774,7 +4774,7 @@ input PerSectionParametersUpdateInput {
   """
   minorDefocus: Float = null
 
-  """Phase shift estimated for this tilt image in degrees."""
+  """Phase shift estimated for this tilt image in radians."""
   phaseShift: Float = null
 
   """Nominal tilt angle for this tilt image reported by the microscope."""

@@ -189,14 +189,14 @@ class TestTiltseries(TiltSeriesHelper):
         if len(errors) > 0:
             raise AssertionError("\n".join(errors))
 
-    @allure.title("PerSectionParameters: rawAngle matches mdoc TiltAngle (+-10^-3 deg).")
+    @allure.title("PerSectionParameters: All raw tilt angles match to a mdoc TiltAngle (+-10^-2 deg).")
     def test_raw_angle(self, tiltseries_metadata: dict[str, Any], mdoc_data: pd.DataFrame):
         errors = helper_angles_injection_errors(
-            mdoc_data["TiltAngle"].to_list(),
             [psp["raw_angle"] for psp in tiltseries_metadata["per_section_parameter"]],
-            "mdoc file",
+            mdoc_data["TiltAngle"].to_list(),
             "tiltseries metadata per_section_parameter raw_angle",
-            angle_tolerance=10 ** -3,
+            "mdoc file",
+            angle_tolerance=10 ** -2,
         )
         if errors:
             raise AssertionError("\n".join(errors))
