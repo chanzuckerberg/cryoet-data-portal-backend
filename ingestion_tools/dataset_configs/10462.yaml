@@ -193,7 +193,7 @@ annotations:
 collection_metadata:
 - sources:
   - source_glob:
-      list_glob: '{run_name}.mdoc'
+      list_glob: '{run_name}.fixed.mdoc'
 ctfs:
 - metadata:
     format: CTFFIND
