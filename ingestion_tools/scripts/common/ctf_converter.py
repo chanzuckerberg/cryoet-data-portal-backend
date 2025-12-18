@@ -117,8 +117,6 @@ class IMODCTF(BaseCTFConverter):
         with open(local_path, "r") as f:
             for raw in f:
                 line = raw.strip()
-                if not line or line.startswith(("#", ";", "%")):
-                    continue
                 parts = line.split()
                 # Header/flag line typically has fewer than 7 columns
                 if len(parts) < 7:
