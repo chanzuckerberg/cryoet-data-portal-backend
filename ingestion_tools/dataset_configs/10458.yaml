@@ -300,7 +300,7 @@ datasets:
     organism:
       name: Homo sapiens
       taxonomy_id: 9606
-    other_setup: null
+    other_setup: 'Cell strain: czML0879_LAMP1-C-mGFP-Spytag003'
     sample_preparation: Affinity-grids were prepared by covering holey carbon grids with a thin layer of graphene oxide +
       GFP-nanobodies were then immobilized onto the graphene oxide surface using a PEG-linker + For cell processing, cells
       expressing LAMP1-GFP were first washed and detached using ice-cold PBS + They were then transferred to a chilled 15
