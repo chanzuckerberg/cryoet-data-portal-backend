@@ -1,0 +1,431 @@
+alignments:
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}.aln'
+annotations:
+- metadata:
+    annotation_method: Prediction using membrain-seg without rescaling and weights MemBrain_seg_v10_alpha.ckpt
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1101/2024.01.05.574336
+    annotation_software: membrain-seg 0.0.1
+    authors:
+      - name: Rahel Woldeyes
+        ORCID: 0000-0003-0737-8383
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Jonathan Schwartz
+        ORCID: 0000-0002-3248-9678
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Hannah Siems
+        ORCID: 0009-0002-6674-7601
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Bisco Hill
+        ORCID: 0000-0002-4719-2893
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Ariana Peck
+        ORCID: 0000-0002-5940-3897
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Yue Yu
+        ORCID: 0000-0002-8063-6951
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Elizabeth Montabana
+        ORCID: 0000-0002-6731-5854
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Mohammadreza Paraan
+        ORCID: 0000-0002-8402-0134
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Daniel Serwas
+        ORCID: 0000-0001-9010-7298
+        primary_author_status: false
+        corresponding_author_status: true
+    dates: &id001
+      deposition_date: '2024-11-26'
+      last_modified_date: '2024-11-26'
+      release_date: '2024-11-26'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - '{run_name}_Vol_Segment_mask.mrc'
+      is_visualization_default: true
+      mask_label: 1
+      rescale: true
+- metadata:
+    annotation_method: Prediction using SABER
+    annotation_object:
+      id: GO:0031982
+      name: vesicle
+    annotation_software: SABER 0.9.0
+    authors:
+      - name: Rahel Woldeyes
+        ORCID: 0000-0003-0737-8383
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Jonathan Schwartz
+        ORCID: 0000-0002-3248-9678
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Hannah Siems
+        ORCID: 0009-0002-6674-7601
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Bisco Hill
+        ORCID: 0000-0002-4719-2893
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Ariana Peck
+        ORCID: 0000-0002-5940-3897
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Yue Yu
+        ORCID: 0000-0002-8063-6951
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Elizabeth Montabana
+        ORCID: 0000-0002-6731-5854
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Mohammadreza Paraan
+        ORCID: 0000-0002-8402-0134
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Daniel Serwas
+        ORCID: 0000-0001-9010-7298
+        primary_author_status: false
+        corresponding_author_status: true
+    dates: &id001
+      deposition_date: '2025-12-16'
+      last_modified_date: '2025-12-16'
+      release_date: '2025-12-16'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+      - custom_name: SABER on GitHub
+        link: https://github.com/chanzuckerberg/saber
+        link_type: source_code
+      - custom_name: SABER on PyPI
+        link: https://pypi.org/project/saber-em/
+        link_type: other
+      - custom_name: SABER documentation
+        link: https://chanzuckerberg.github.io/saber/
+        link_type: documentation
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - '{run_name}_Vol_saber_Segment_mask.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}.mdoc'
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_CTFFIND_format_CTF.txt'
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+datasets:
+- metadata:
+    authors: &id002
+      - name: Rahel Woldeyes
+        ORCID: 0000-0003-0737-8383
+        email: rahel.woldeyes@biohub.org
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Hannah Siems
+        ORCID: 0009-0002-6674-7601
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Bisco Hill
+        ORCID: 0000-0002-4719-2893
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Jonathan Schwartz
+        ORCID: 0000-0002-3248-9678
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Ariana Peck
+        ORCID: 0000-0002-5940-3897
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Yue Yu
+        ORCID: 0000-0002-8063-6951
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Elizabeth Montabana
+        ORCID: 0000-0002-6731-5854
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Mohammadreza Paraan
+        ORCID: 0000-0002-8402-0134
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Daniel Serwas
+        ORCID: 0000-0001-9010-7298
+        email: daniel.serwas@biohub.org
+        primary_author_status: false
+        corresponding_author_status: true
+    cell_component:
+      id: GO:0031982
+      name: vesicle
+    cell_strain:
+      name: HEK293T
+      id: CVCL_0063
+    cell_type:
+      name: kidney epithelial cell
+      id: CL:0002518
+    dataset_description: This large-scale cryo-electron tomography (cryo-ET) dataset contains tilt series from
+      affinity-captured organelles derived from HEK293T lysates. The experimental design utilizes electron microscopy
+      grids functionalized with anti-GFP nanobodies to capture organelles tagged with GFP-TMEM192 from cells subject to
+      amino acid starvation for 3 hours. To map the V-ATPase complex, organelles were labeled with 2.2 nm gold
+      nanoparticles targeting the V1A subunit via the SidK probe (dilutions ranging 1:10 to 1:500). The complete dataset
+      includes raw frames, alignments, tomograms, and annotations. All data were processed using the automated AreTomo3
+      pipeline, with semantic segmentations generated by both SABER and Membrain-Seg.
+    dataset_identifier: 10460
+    dataset_title:
+      Large-scale cryo-ET dataset of affinity-captured organelles (TMEM192 + Starvation + V1A SidK-Gold) HEK293T cells
+    dates: *id001
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: "CZII-2023\u2013327779"
+    grid_preparation:
+    organism:
+      name: Homo sapiens
+      taxonomy_id: 9606
+    other_setup:
+    sample_preparation:
+    sample_type: organelle
+    tissue:
+      name: kidney epithelial cell
+      id: CL:0002518
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: normal
+      id: PATO:0000461
+  sources:
+  - literal:
+      value:
+        - '10460'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+depositions:
+- sources:
+  - literal:
+      value:
+      - 10318
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/*.eer'
+gains:
+- sources:
+  - source_glob:
+      list_glob: '{gain_file}'
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}_st.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*.aln'
+      match_regex: .*\.aln$
+      name_regex: (.*)\.aln$
+standardization_config:
+  deposition_id: 10318
+  run_data_map_file: run_to_data_map_combined.tsv
+  source_prefix: CZII/20251216_lysosomes/10460/
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i
+    data_acquisition_software: Tomo5
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: TITAN KRIOS G4
+    microscope_optical_setup:
+      energy_filter: Selectris X
+    pixel_spacing: 1.54
+    spherical_aberration_constant: 2.7
+    tilt_axis: -96
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_TS.mrc'
+      match_regex: .*\.mrc$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: &tomogram_authors
+      - name: Rahel Woldeyes
+        ORCID: 0000-0003-0737-8383
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Hannah Siems
+        ORCID: 0009-0002-6674-7601
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Bisco Hill
+        ORCID: 0000-0002-4719-2893
+        primary_author_status: true
+        corresponding_author_status: false
+      - name: Jonathan Schwartz
+        ORCID: 0000-0002-3248-9678
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Ariana Peck
+        ORCID: 0000-0002-5940-3897
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Yue Yu
+        ORCID: 0000-0002-8063-6951
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Elizabeth Montabana
+        ORCID: 0000-0002-6731-5854
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Mohammadreza Paraan
+        ORCID: 0000-0002-8402-0134
+        primary_author_status: false
+        corresponding_author_status: false
+      - name: Daniel Serwas
+        ORCID: 0000-0001-9010-7298
+        primary_author_status: false
+        corresponding_author_status: true
+    ctf_corrected: true
+    dates: *id001
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    processing_software: DenoisET
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.2.2
+    tomogram_version: 1
+    voxel_spacing: 5.006
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_Vol.mrc'
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *tomogram_authors
+    ctf_corrected: true
+    dates: *id001
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    processing_software: AreTomo3 v2.2.2
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.2.2
+    tomogram_version: 1
+    voxel_spacing: 5.006
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_dctf_Vol.mrc'
+      match_regex: (.*)\.mrc
+version: 1.1.0
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 5.006
