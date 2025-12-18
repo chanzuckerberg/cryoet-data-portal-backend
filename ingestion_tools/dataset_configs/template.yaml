@@ -310,7 +310,7 @@ voxel_spacings: REQUIRED
   - destination_glob: see datasets.sources.destination_glob and runs.sources.parent_filters
   - source_glob: SEE datasets.sources.source_glob and runs.sources.parent_filters
   - literal: SEE datasets.sources.literal and runs.sources.parent_filters
-  - tomogram_header: SEE runs.sources.parent_filters
+  - tomogram_header: SEE runs.sources.parent_filters # Try to use a literal source if possible, mrc headers may be bad
       list_glob: REQUIRED, STRING (REGEX)
       match_regex: OPTIONAL, STRING (REGEX) (DEFAULT '.*')
       header_key: OPTIONAL, STRING (REGEX) (DEFAULT 'voxel_size')

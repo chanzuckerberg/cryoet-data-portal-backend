@@ -110,10 +110,48 @@ class GctfCTF(BaseCTFConverter):
         )
 
 
+class IMODCTF(BaseCTFConverter):
+    def get_ctf_info(self) -> list[CTFInfo]:
+        local_path = self.config.fs.localreadable(self.path)
+        infos: list[CTFInfo] = []
+        with open(local_path, "r") as f:
+            for raw in f:
+                line = raw.strip()
+                if not line or line.startswith(("#", ";", "%")):
+                    continue
+                parts = line.split()
+                # Header/flag line typically has fewer than 7 columns
+                if len(parts) < 7:
+                    continue
+                infos.append(self.from_str(line))
+        return infos
+
+    @classmethod
+    def from_str(cls, line: str) -> CTFInfo:
+        parts = line.split()
+        # IMOD defocus file: startView endView startTilt endTilt defU[nm] defV[nm] azimuth[deg] ...
+        section = int(parts[0])
+        defocus_1_nm = float(parts[4])
+        defocus_2_nm = float(parts[5])
+        azimuth = float(parts[6])
+
+        return CTFInfo(
+            section=section,
+            defocus_1=defocus_1_nm * 10.0,  # nm → A
+            defocus_2=defocus_2_nm * 10.0,
+            azimuth=azimuth,
+            phase_shift=0.0,
+            cross_correlation=0.0,
+            max_resolution=0.0,
+        )
+
+
 def ctf_converter_factory(metadata: dict, config: DepositionImportConfig, path: str) -> BaseCTFConverter:
     ctf_format = (metadata.get("format") or "").upper()
     if ctf_format == "GCTF":
         return GctfCTF(config, path)
     if ctf_format == "CTFFIND":
         return AreTomo3CTF(config, path)
+    if ctf_format == "IMOD":
+        return IMODCTF(config, path)
     return BaseCTFConverter(config, path)

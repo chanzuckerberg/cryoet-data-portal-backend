@@ -604,6 +604,8 @@ class CtfFormatEnum(str, Enum):
     CTFFIND = "CTFFIND"
     # The file has Gctf schema
     Gctf = "Gctf"
+    # The file has IMOD schema
+    IMOD = "IMOD"
 
 
 class DepositionTypesEnum(str, Enum):
@@ -3155,7 +3157,7 @@ class Ctf(ConfiguredBaseModel):
 
     @field_validator('format')
     def pattern_format(cls, v):
-        pattern=re.compile(r"(^CTFFIND$)|(^Gctf$)")
+        pattern=re.compile(r"(^CTFFIND$)|(^Gctf$)|(^IMOD$)")
         if isinstance(v,list):
             for element in v:
                 if not pattern.match(element):

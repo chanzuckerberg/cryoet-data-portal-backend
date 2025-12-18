@@ -608,6 +608,9 @@ enums:
       Gctf:
         text: Gctf
         description: The file has Gctf schema
+      IMOD:
+        text: IMOD
+        description: The file has IMOD schema
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has
@@ -5287,7 +5290,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^CTFFIND$)|(^Gctf$)
+        pattern: (^CTFFIND$)|(^Gctf$)|(^IMOD$)
   Any:
     name: Any
     description: A placeholder for any type of data.

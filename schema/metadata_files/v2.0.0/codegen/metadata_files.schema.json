@@ -1640,7 +1640,7 @@
                 "format": {
                     "$ref": "#/$defs/CtfFormatEnum",
                     "description": "The format of the ctf file.",
-                    "pattern": "(^CTFFIND$)|(^Gctf$)"
+                    "pattern": "(^CTFFIND$)|(^Gctf$)|(^IMOD$)"
                 }
             },
             "required": [
@@ -1653,7 +1653,8 @@
             "description": "Used to determine what ctf parser to use.",
             "enum": [
                 "CTFFIND",
-                "Gctf"
+                "Gctf",
+                "IMOD"
             ],
             "title": "CtfFormatEnum",
             "type": "string"
