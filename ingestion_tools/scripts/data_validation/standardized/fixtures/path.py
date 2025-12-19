@@ -252,8 +252,6 @@ def alignment_tiltseries_rawtilt_file(alignment_tiltseries_metadata_file: Dict, 
     return files[0]
 
 @pytest.fixture(scope="session")
-
-@pytest.fixture(scope="session")
 def alignment_metadata_file(alignment_dir: str, filesystem: FileSystemApi) -> str:
     """[Dataset]/[ExperimentRun]/Alignments/[alignment_dir]/alignment_metadata.json"""
     metadata_file = filesystem.glob(f"{alignment_dir}/alignment_metadata.json")
