@@ -129,7 +129,7 @@ class ZarrWriter:
             zds = self.root_group.create_dataset(
                 path,
                 shape=arr.shape,
-                dtype="float32",
+                dtype=arr.dtype,
                 chunks=chunk_size,
                 overwrite=True,
             )
@@ -143,7 +143,7 @@ class ZarrWriter:
                     y1 = min(y0 + yc, y)
                     for x0 in range(0, x, xc):
                         x1 = min(x0 + xc, x)
-                        zds[z0:z1, y0:y1, x0:x1] = np.asarray(arr[z0:z1, y0:y1, x0:x1], dtype=np.float32, order="C")
+                        zds[z0:z1, y0:y1, x0:x1] = np.asarray(arr[z0:z1, y0:y1, x0:x1], dtype=arr.dtype, order="C")
 
             datasets_meta.append(
                 {
@@ -321,6 +321,7 @@ class TomoConverter:
         max_layers: int = 2,
         scale_z_axis: bool = True,
         voxel_spacing: float = None,
+        dtype: str = None,
     ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
         # Voxel size for unbinned
         if not voxel_spacing:
@@ -335,7 +336,7 @@ class TomoConverter:
         # Then make a pyramid of 100/50/25 percent scale volumes
         for i in range(max_layers):
             downscaled_data = self.scaled_data_transformation(downscale_local_mean(pyramid[i], (z_scale, 2, 2)))
-            pyramid.append(downscaled_data)
+            pyramid.append(downscaled_data.astype(dtype) if dtype else downscaled_data)
             pyramid_voxel_spacing.append(
                 (
                     pyramid_voxel_spacing[i][0] * z_scale,
@@ -550,9 +551,10 @@ def make_pyramids(
     scale_0_dims = None,
     threshold: float | None = None,
     chunk_size: Tuple[int, int, int] = (256, 256, 256),
+    dtype: str = None,
 ):
     tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold)
-    pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
+    pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing, dtype=dtype)
     _ = tc.pyramid_to_omezarr(
         fs,
         pyramid,

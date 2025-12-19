@@ -313,6 +313,7 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
             voxel_spacing=self.get_voxel_spacing().as_float(),
             scale_0_dims=output_dims,
             threshold=self.threshold,
+            dtype="uint8",
         )
 
 
@@ -352,6 +353,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             voxel_spacing=self.get_voxel_spacing().as_float(),
             scale_0_dims=output_dims,
             threshold=self.threshold,
+            dtype="uint8",
         )
 
     def is_valid(self) -> bool:
