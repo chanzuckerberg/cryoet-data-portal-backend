@@ -71,7 +71,7 @@ class GainTestHelper(TwoDeeFileTestHelper):
     @pytest.fixture(autouse=True)
     def set_entity_variables(self, gain_headers: dict[str, MrcInterpreter]):
         self.entity_type = "gain"
-        self.mrc_headers = gain_headers
+        self.mrc_headers = {k: v for k, v in gain_headers.items() if isinstance(v, MrcInterpreter)}
         if not self.mrc_headers:
             self.error_on_no_mrc_header = False
 
