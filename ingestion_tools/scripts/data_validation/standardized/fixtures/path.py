@@ -241,7 +241,7 @@ def alignment_tiltseries_metadata_file(alignment_metadata: Dict, bucket: str) ->
 
 
 @pytest.fixture(scope="session")
-def alignment_tiltseries_rawtilt_file(alignment_tiltseries_metadata_file: Dict, filesystem: FileSystemApi) -> str:
+def alignment_tiltseries_rawtilt_file(alignment_tiltseries_metadata_file: str, filesystem: FileSystemApi) -> str:
     """Return the path to the raw tilt file for this alignment's tiltseries. [Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/*.rawtlt"""
     ts_dir = os.path.dirname(alignment_tiltseries_metadata_file)
     files = filesystem.glob(f"{ts_dir}/*.rawtlt")
@@ -401,6 +401,7 @@ def annotation_files(
         + oriented_point_annotation_files
         + instance_seg_annotation_files
         + seg_mask_annotation_mrc_files
+        + seg_mask_annotation_zarr_files
     )
     assert len(all_files) > 0, "No annotation files found, but folder exists."
     return all_files
@@ -581,7 +582,8 @@ def seg_mask_annotation_zarr_files(annotations_dir: str, filesystem: FileSystemA
 @pytest.fixture(scope="session")
 def seg_mask_annotation_zarr_files_to_metadata_files(
     bucket: str,
+    seg_mask_annotation_zarr_files: List[str],
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "zarr")
+    return get_annotation_files_to_metadata_files(bucket, seg_mask_annotation_zarr_files, annotation_metadata, filesystem, "SegmentationMask", "zarr")
