@@ -779,10 +779,6 @@ slots:
   # Annotation Source File slots
   # ============================================================================
   #id (int): Numeric identifier (May change!)
-  annotation_source_file_format:
-    range: string
-    required: true
-    description: File format for this file
   annotation_source_file_https_path:
     range: string
     description: HTTPS url for the annotation file
@@ -817,7 +813,6 @@ slots:
     range: string
     description: Path to the alignment metadata file for the tomograms this annotation applies to.
 
-  #Annotation (Annotation): The annotation this file is a part of
   # ============================================================================
   # Annotation Source File shape-specific slots
   # ============================================================================
@@ -863,6 +858,24 @@ slots:
   annotation_source_file_mesh_name:
     range: string
     description: The name that identifies to a single annotation mesh among multiple meshes.
+  point_annotation_file_format:
+    range: point_annotation_file_format_enum
+    description: The format of the point annotation file.
+  oriented_point_annotation_file_format:
+    range: oriented_point_annotation_file_format_enum
+    description: The format of the oriented point annotation file.
+  instance_segmentation_annotation_file_format:
+    range: instance_segmentation_annotation_file_format_enum
+    description: The format of the instance segmentation annotation file.
+  volume_annotation_file_format:
+    range: volume_annotation_file_format_enum
+    description: The format of the volume annotation file.
+  triangular_mesh_annotation_file_format:
+    range: triangular_mesh_annotation_file_format_enum
+    description: The format of the triangular mesh annotation file.
+  triangular_mesh_annotation_group_file_format:
+    range: triangular_mesh_annotation_group_file_format_enum
+    description: The format of the triangular mesh annotation group file.
 
   # ============================================================================
   # Identified Objects fields
@@ -1306,17 +1319,52 @@ enums:
       InstanceSegmentation:
         description: A volume with labels for multiple instances
 
-  annotation_file_format_enum:
-    description: Describes the format of the annotation file
+  point_annotation_file_format_enum:
+    description: Describes the format of the point annotation file
+    permissible_values:
+      csv:
+      csv_with_header:
+      tsv:
+      mod:
+      relion3_star:
+      relion4_star:
+      tomoman_relion_star:
+      copick:
+
+  oriented_point_annotation_file_format_enum:
+    description: Describes the format of the oriented point annotation file
+    permissible_values:
+      mod:
+      relion3_star:
+      relion4_star:
+      tomoman_relion_star:
+      copick:
+      stopgap_star:
+
+  instance_segmentation_annotation_file_format_enum:
+    description: Describes the format of an instance segmentation annotation file
+    permissible_values:
+      tardis:
+      copick:
+
+  volume_annotation_file_format_enum:
+    description: Describes the format of a volume (semantic / semantic segmentation) annotation file
     permissible_values:
       mrc:
-        description: MRC format
       zarr:
-        description: OMEZARR format
-      ndjson:
-        description: NDJSON format
+
+  triangular_mesh_annotation_file_format_enum:
+    description: Describes the format of a triangular mesh annotation file
+    permissible_values:
+      obj:
+      stl:
+      vtk:
       glb:
-        description: GLB format
+
+  triangular_mesh_annotation_group_file_format_enum:
+    description: Describes the format of a triangular mesh group annotation file
+    permissible_values:
+      hff:
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.
@@ -1661,7 +1709,6 @@ types:
 classes:
   Any:
     class_uri: linkml:Any
-    description: A placeholder for any type of data.
 
   # ============================================================================
   # Mixins

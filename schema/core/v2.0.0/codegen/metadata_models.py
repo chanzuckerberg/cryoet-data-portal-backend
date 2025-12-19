@@ -679,19 +679,69 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     InstanceSegmentation = "InstanceSegmentation"
 
 
-class AnnotationFileFormatEnum(str, Enum):
+class PointAnnotationFileFormatEnum(str, Enum):
     """
-    Describes the format of the annotation file
+    Describes the format of the point annotation file
     """
 
-    # MRC format
+    csv = "csv"
+    csv_with_header = "csv_with_header"
+    tsv = "tsv"
+    mod = "mod"
+    relion3_star = "relion3_star"
+    relion4_star = "relion4_star"
+    tomoman_relion_star = "tomoman_relion_star"
+    copick = "copick"
+
+
+class OrientedPointAnnotationFileFormatEnum(str, Enum):
+    """
+    Describes the format of the oriented point annotation file
+    """
+
+    mod = "mod"
+    relion3_star = "relion3_star"
+    relion4_star = "relion4_star"
+    tomoman_relion_star = "tomoman_relion_star"
+    copick = "copick"
+    stopgap_star = "stopgap_star"
+
+
+class InstanceSegmentationAnnotationFileFormatEnum(str, Enum):
+    """
+    Describes the format of an instance segmentation annotation file
+    """
+
+    tardis = "tardis"
+    copick = "copick"
+
+
+class VolumeAnnotationFileFormatEnum(str, Enum):
+    """
+    Describes the format of a volume (semantic / semantic segmentation) annotation file
+    """
+
     mrc = "mrc"
-    # OMEZARR format
     zarr = "zarr"
-    # NDJSON format
-    ndjson = "ndjson"
-    # GLB format
+
+
+class TriangularMeshAnnotationFileFormatEnum(str, Enum):
+    """
+    Describes the format of a triangular mesh annotation file
+    """
+
+    obj = "obj"
+    stl = "stl"
+    vtk = "vtk"
     glb = "glb"
+
+
+class TriangularMeshAnnotationGroupFileFormatEnum(str, Enum):
+    """
+    Describes the format of a triangular mesh group annotation file
+    """
+
+    hff = "hff"
 
 
 class AnnotationMethodLinkTypeEnum(str, Enum):
@@ -791,6 +841,45 @@ class TiltseriesCameraManufacturerEnum(str, Enum):
     # Thermo Fisher Scientific
     TFS = "TFS"
     # Simulated data
+    simulated = "simulated"
+
+
+class TiltseriesCameraModelFeiTfsEnum(str, Enum):
+    """
+    Camera model for FEI / TFS cameras
+    """
+
+    # FALCON IV
+    FALCON_IV = "FALCON IV"
+    # FALCON 4i
+    FALCON_4i = "FALCON 4i"
+
+
+class TiltseriesCameraModelGatanEnum(str, Enum):
+    """
+    Camera model for Gatan cameras
+    """
+
+    # K2
+    K2 = "K2"
+    # K2 SUMMIT
+    K2_SUMMIT = "K2 SUMMIT"
+    # K3
+    K3 = "K3"
+    # K3 BIOQUANTUM
+    K3_BIOQUANTUM = "K3 BIOQUANTUM"
+    # UltraCam
+    UltraCam = "UltraCam"
+    # UltraScan
+    UltraScan = "UltraScan"
+
+
+class TiltseriesCameraModelSimulatedEnum(str, Enum):
+    """
+    Camera model for simulated cameras
+    """
+
+    # Simulated camera model
     simulated = "simulated"
 
 
@@ -1196,7 +1285,7 @@ class DevelopmentStageDetails(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         None,
-        description="""A placeholder for any type of data.""",
+        description="""The ontology identifier for the developmental stage component.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
@@ -1274,7 +1363,7 @@ class Disease(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         None,
-        description="""A placeholder for any type of data.""",
+        description="""The ontology identifier for the disease component.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
@@ -1387,7 +1476,7 @@ class TissueDetails(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         None,
-        description="""A placeholder for any type of data.""",
+        description="""The UBERON identifier for the tissue.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
@@ -1460,7 +1549,7 @@ class CellType(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         None,
-        description="""A placeholder for any type of data.""",
+        description="""Cell Ontology identifier for the cell type""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
@@ -1533,7 +1622,7 @@ class CellStrain(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         None,
-        description="""A placeholder for any type of data.""",
+        description="""Link to more information about the cell strain.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
@@ -2066,7 +2155,7 @@ class CameraDetails(ConfiguredBaseModel):
 
     acquire_mode: Optional[Union[TiltseriesCameraAcquireModeEnum, str]] = Field(
         None,
-        description="""A placeholder for any type of data.""",
+        description="""Camera acquisition mode""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "acquire_mode",
@@ -2087,12 +2176,20 @@ class CameraDetails(ConfiguredBaseModel):
             }
         },
     )
-    model: str = Field(
+    model: Union[
+        TiltseriesCameraModelFeiTfsEnum, TiltseriesCameraModelGatanEnum, TiltseriesCameraModelSimulatedEnum, str
+    ] = Field(
         ...,
         description="""Camera model name""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "model",
+                "any_of": [
+                    {"range": "StringFormattedString"},
+                    {"range": "tiltseries_camera_model_fei_tfs_enum"},
+                    {"range": "tiltseries_camera_model_gatan_enum"},
+                    {"range": "tiltseries_camera_model_simulated_enum"},
+                ],
                 "domain_of": ["CameraDetails", "MicroscopeDetails"],
                 "exact_mappings": ["cdp-common:tiltseries_camera_model"],
             }
@@ -2123,6 +2220,20 @@ class CameraDetails(ConfiguredBaseModel):
                 raise ValueError(f"Invalid manufacturer format: {v}")
         return v
 
+    @field_validator("model")
+    def pattern_model(cls, v):
+        pattern = re.compile(
+            r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|((^FALCON IV$)|(^FALCON 4i$))|((^K2$)|(^K2 SUMMIT$)|(^K3$)|(^K3 BIOQUANTUM$)|(^UltraCam$)|(^UltraScan$))|(^simulated$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid model format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid model format: {v}")
+        return v
+
 
 class MicroscopeDetails(ConfiguredBaseModel):
     """
@@ -2144,7 +2255,7 @@ class MicroscopeDetails(ConfiguredBaseModel):
     )
     manufacturer: Union[TiltseriesMicroscopeManufacturerEnum, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Name of the microscope manufacturer""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "manufacturer",
@@ -2237,7 +2348,7 @@ class TiltRange(ConfiguredBaseModel):
 
     min: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Minimal tilt angle in degrees""",
         ge=-90,
         le=90,
         json_schema_extra={
@@ -2262,7 +2373,7 @@ class TiltRange(ConfiguredBaseModel):
     )
     max: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Maximal tilt angle in degrees""",
         ge=-90,
         le=90,
         json_schema_extra={
@@ -2497,7 +2608,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     aligned_tiltseries_binning: Optional[Union[float, str]] = Field(
         1.0,
-        description="""A placeholder for any type of data.""",
+        description="""Binning factor of the aligned tilt series""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
@@ -2518,7 +2629,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     binning_from_frames: Optional[Union[float, str]] = Field(
         1.0,
-        description="""A placeholder for any type of data.""",
+        description="""Describes the binning factor from frames to tilt series file""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
@@ -2598,7 +2709,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     spherical_aberration_constant: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Spherical Aberration Constant of the objective lens in millimeters""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
@@ -2632,7 +2743,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     tilt_axis: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Rotation angle in degrees""",
         ge=-360,
         le=360,
         json_schema_extra={
@@ -2662,7 +2773,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     tilt_series_quality: Union[int, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Author assessment of tilt series quality within the dataset (1-5, 5 is best)""",
         ge=1,
         le=5,
         json_schema_extra={
@@ -2686,7 +2797,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     tilt_step: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Tilt step in degrees""",
         ge=0,
         le=90,
         json_schema_extra={
@@ -2722,7 +2833,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     total_flux: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series""",
         ge=0,
         json_schema_extra={
             "linkml_meta": {
@@ -2746,7 +2857,7 @@ class TiltSeries(ConfiguredBaseModel):
     )
     pixel_spacing: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Pixel spacing for the tilt series""",
         ge=0.001,
         json_schema_extra={
             "linkml_meta": {
@@ -2973,7 +3084,7 @@ class Tomogram(AuthoredEntity):
 
     voxel_spacing: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Voxel spacing equal in all three axes in angstroms""",
         ge=0.001,
         json_schema_extra={
             "linkml_meta": {
@@ -2996,7 +3107,7 @@ class Tomogram(AuthoredEntity):
     )
     fiducial_alignment_status: Union[FiducialAlignmentStatusEnum, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Whether the tomographic alignment was computed based on fiducial markers.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "fiducial_alignment_status",
@@ -3038,7 +3149,7 @@ class Tomogram(AuthoredEntity):
     )
     reconstruction_method: Union[TomogramReconstructionMethodEnum, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Describe reconstruction method (WBP, SART, SIRT)""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "reconstruction_method",
@@ -3286,7 +3397,7 @@ class AnnotationObject(ConfiguredBaseModel):
 
     id: str = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "id",
@@ -3429,26 +3540,6 @@ class AnnotationSourceFile(ConfiguredBaseModel):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"from_schema": "metadata"})
 
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "file_format",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
-        },
-    )
     glob_string: Optional[str] = Field(
         None,
         description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
@@ -3542,6 +3633,25 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["OrientedPoint"], "from_schema": "metadata"})
 
+    file_format: Optional[OrientedPointAnnotationFileFormatEnum] = Field(
+        None,
+        description="""The format of the oriented point annotation file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "file_format",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:oriented_point_annotation_file_format"],
+            }
+        },
+    )
     binning: Optional[float] = Field(
         1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
@@ -3595,26 +3705,6 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                 "alias": "mesh_source_path",
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_mesh_source_path"],
-            }
-        },
-    )
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "file_format",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
         },
     )
@@ -3702,6 +3792,20 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
             }
         },
     )
+
+    @field_validator("file_format")
+    def pattern_file_format(cls, v):
+        pattern = re.compile(
+            r"(^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)|(^stopgap_star$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid file_format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid file_format format: {v}")
+        return v
 
 
 class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
@@ -3711,6 +3815,25 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["InstanceSegmentation"], "from_schema": "metadata"})
 
+    file_format: Optional[InstanceSegmentationAnnotationFileFormatEnum] = Field(
+        None,
+        description="""The format of the instance segmentation annotation file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "file_format",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:instance_segmentation_annotation_file_format"],
+            }
+        },
+    )
     binning: Optional[float] = Field(
         1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
@@ -3764,26 +3887,6 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                 "alias": "mesh_source_path",
                 "domain_of": ["AnnotationOrientedPointFile", "AnnotationInstanceSegmentationFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_mesh_source_path"],
-            }
-        },
-    )
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "file_format",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
             }
         },
     )
@@ -3872,6 +3975,18 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
         },
     )
 
+    @field_validator("file_format")
+    def pattern_file_format(cls, v):
+        pattern = re.compile(r"(^tardis$)|(^copick$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid file_format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid file_format format: {v}")
+        return v
+
 
 class AnnotationPointFile(AnnotationSourceFile):
     """
@@ -3880,6 +3995,25 @@ class AnnotationPointFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["Point"], "from_schema": "metadata"})
 
+    file_format: Optional[PointAnnotationFileFormatEnum] = Field(
+        None,
+        description="""The format of the point annotation file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "file_format",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:point_annotation_file_format"],
+            }
+        },
+    )
     binning: Optional[float] = Field(
         1.0,
         description="""The binning factor for a point / oriented point / instance segmentation annotation file.""",
@@ -3937,26 +4071,6 @@ class AnnotationPointFile(AnnotationSourceFile):
             }
         },
     )
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "file_format",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
-        },
-    )
     glob_string: Optional[str] = Field(
         None,
         description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
@@ -4041,6 +4155,20 @@ class AnnotationPointFile(AnnotationSourceFile):
             }
         },
     )
+
+    @field_validator("file_format")
+    def pattern_file_format(cls, v):
+        pattern = re.compile(
+            r"(^csv$)|(^csv_with_header$)|(^tsv$)|(^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)"
+        )
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid file_format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid file_format format: {v}")
+        return v
 
 
 class AnnotationSegmentationMaskFile(AnnotationSourceFile):
@@ -4050,14 +4178,13 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["SegmentationMask"], "from_schema": "metadata"})
 
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
+    file_format: Optional[VolumeAnnotationFileFormatEnum] = Field(
+        None,
+        description="""The format of the volume annotation file.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "file_format",
                 "domain_of": [
-                    "AnnotationSourceFile",
                     "AnnotationOrientedPointFile",
                     "AnnotationInstanceSegmentationFile",
                     "AnnotationPointFile",
@@ -4066,7 +4193,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                 ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
+                "exact_mappings": ["cdp-common:volume_annotation_file_format"],
             }
         },
     )
@@ -4155,6 +4282,18 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
         },
     )
 
+    @field_validator("file_format")
+    def pattern_file_format(cls, v):
+        pattern = re.compile(r"(^mrc$)|(^zarr$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid file_format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid file_format format: {v}")
+        return v
+
 
 class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
     """
@@ -4163,6 +4302,25 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["SemanticSegmentationMask"], "from_schema": "metadata"})
 
+    file_format: Optional[VolumeAnnotationFileFormatEnum] = Field(
+        None,
+        description="""The format of the volume annotation file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "file_format",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:volume_annotation_file_format"],
+            }
+        },
+    )
     mask_label: Optional[int] = Field(
         1,
         description="""The mask label for a semantic segmentation mask annotation file.""",
@@ -4198,26 +4356,6 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
             }
         },
     )
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "file_format",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
-        },
-    )
     glob_string: Optional[str] = Field(
         None,
         description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
@@ -4303,6 +4441,18 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
         },
     )
 
+    @field_validator("file_format")
+    def pattern_file_format(cls, v):
+        pattern = re.compile(r"(^mrc$)|(^zarr$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid file_format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid file_format format: {v}")
+        return v
+
 
 class AnnotationTriangularMeshFile(AnnotationSourceFile):
     """
@@ -4311,6 +4461,25 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["TriangularMesh"], "from_schema": "metadata"})
 
+    file_format: Optional[TriangularMeshAnnotationFileFormatEnum] = Field(
+        None,
+        description="""The format of the triangular mesh annotation file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "file_format",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:triangular_mesh_annotation_file_format"],
+            }
+        },
+    )
     scale_factor: Optional[float] = Field(
         1.0,
         description="""The scale factor for a mesh annotation file.""",
@@ -4324,26 +4493,6 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
             }
         },
     )
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "file_format",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
-        },
-    )
     glob_string: Optional[str] = Field(
         None,
         description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
@@ -4429,6 +4578,18 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
         },
     )
 
+    @field_validator("file_format")
+    def pattern_file_format(cls, v):
+        pattern = re.compile(r"(^obj$)|(^stl$)|(^vtk$)|(^glb$)")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid file_format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid file_format format: {v}")
+        return v
+
 
 class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
     """
@@ -4437,6 +4598,25 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["TriangularMeshGroup"], "from_schema": "metadata"})
 
+    file_format: Optional[TriangularMeshAnnotationGroupFileFormatEnum] = Field(
+        None,
+        description="""The format of the triangular mesh annotation group file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "file_format",
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:triangular_mesh_annotation_group_file_format"],
+            }
+        },
+    )
     scale_factor: Optional[float] = Field(
         1.0,
         description="""The scale factor for a mesh annotation file.""",
@@ -4474,26 +4654,6 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
             }
         },
     )
-    file_format: str = Field(
-        ...,
-        description="""File format for this file""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "file_format",
-                "domain_of": [
-                    "AnnotationSourceFile",
-                    "AnnotationOrientedPointFile",
-                    "AnnotationInstanceSegmentationFile",
-                    "AnnotationPointFile",
-                    "AnnotationSegmentationMaskFile",
-                    "AnnotationSemanticSegmentationMaskFile",
-                    "AnnotationTriangularMeshFile",
-                    "AnnotationTriangularMeshGroupFile",
-                ],
-                "exact_mappings": ["cdp-common:annotation_source_file_format"],
-            }
-        },
-    )
     glob_string: Optional[str] = Field(
         None,
         description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
@@ -4579,6 +4739,18 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
         },
     )
 
+    @field_validator("file_format")
+    def pattern_file_format(cls, v):
+        pattern = re.compile(r"^hff$")
+        if isinstance(v, list):
+            for element in v:
+                if not pattern.match(element):
+                    raise ValueError(f"Invalid file_format format: {element}")
+        elif isinstance(v, str):
+            if not pattern.match(v):
+                raise ValueError(f"Invalid file_format format: {v}")
+        return v
+
 
 class IdentifiedObject(ConfiguredBaseModel):
     """
@@ -4589,7 +4761,7 @@ class IdentifiedObject(ConfiguredBaseModel):
 
     object_id: str = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "object_id",
@@ -4855,7 +5027,7 @@ class AlignmentSize(ConfiguredBaseModel):
 
     x: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""X dimension of the reconstruction volume in angstrom""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
@@ -4867,7 +5039,7 @@ class AlignmentSize(ConfiguredBaseModel):
     )
     y: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Y dimension of the reconstruction volume in angstrom""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
@@ -4879,7 +5051,7 @@ class AlignmentSize(ConfiguredBaseModel):
     )
     z: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""Z dimension of the reconstruction volume in angstrom""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
@@ -4936,7 +5108,7 @@ class AlignmentOffset(ConfiguredBaseModel):
 
     x: Union[float, str] = Field(
         0.0,
-        description="""A placeholder for any type of data.""",
+        description="""X shift of the reconstruction volume in angstrom""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x",
@@ -4949,7 +5121,7 @@ class AlignmentOffset(ConfiguredBaseModel):
     )
     y: Union[float, str] = Field(
         0.0,
-        description="""A placeholder for any type of data.""",
+        description="""Y shift of the reconstruction volume in angstrom""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "y",
@@ -4962,7 +5134,7 @@ class AlignmentOffset(ConfiguredBaseModel):
     )
     z: Union[float, str] = Field(
         0.0,
-        description="""A placeholder for any type of data.""",
+        description="""Z shift of the reconstruction volume in angstrom""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "z",
@@ -5128,7 +5300,7 @@ class Alignment(ConfiguredBaseModel):
     )
     x_rotation_offset: Optional[Union[int, str]] = Field(
         0,
-        description="""A placeholder for any type of data.""",
+        description="""The x rotation offset relative to the tomogram.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "x_rotation_offset",
@@ -5251,7 +5423,7 @@ class Frame(ConfiguredBaseModel):
 
     dose_rate: Union[float, str] = Field(
         ...,
-        description="""A placeholder for any type of data.""",
+        description="""The dose exposure for a given frame.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "dose_rate",

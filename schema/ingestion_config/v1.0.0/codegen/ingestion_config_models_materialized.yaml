@@ -542,23 +542,83 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
-  annotation_file_format_enum:
-    name: annotation_file_format_enum
-    description: Describes the format of the annotation file
+  point_annotation_file_format_enum:
+    name: point_annotation_file_format_enum
+    description: Describes the format of the point annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      csv:
+        text: csv
+      csv_with_header:
+        text: csv_with_header
+      tsv:
+        text: tsv
+      mod:
+        text: mod
+      relion3_star:
+        text: relion3_star
+      relion4_star:
+        text: relion4_star
+      tomoman_relion_star:
+        text: tomoman_relion_star
+      copick:
+        text: copick
+  oriented_point_annotation_file_format_enum:
+    name: oriented_point_annotation_file_format_enum
+    description: Describes the format of the oriented point annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      mod:
+        text: mod
+      relion3_star:
+        text: relion3_star
+      relion4_star:
+        text: relion4_star
+      tomoman_relion_star:
+        text: tomoman_relion_star
+      copick:
+        text: copick
+      stopgap_star:
+        text: stopgap_star
+  instance_segmentation_annotation_file_format_enum:
+    name: instance_segmentation_annotation_file_format_enum
+    description: Describes the format of an instance segmentation annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      tardis:
+        text: tardis
+      copick:
+        text: copick
+  volume_annotation_file_format_enum:
+    name: volume_annotation_file_format_enum
+    description: Describes the format of a volume (semantic / semantic segmentation)
+      annotation file
     from_schema: cdp-ingestion-config
     permissible_values:
       mrc:
         text: mrc
-        description: MRC format
       zarr:
         text: zarr
-        description: OMEZARR format
-      ndjson:
-        text: ndjson
-        description: NDJSON format
+  triangular_mesh_annotation_file_format_enum:
+    name: triangular_mesh_annotation_file_format_enum
+    description: Describes the format of a triangular mesh annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      obj:
+        text: obj
+      stl:
+        text: stl
+      vtk:
+        text: vtk
       glb:
         text: glb
-        description: GLB format
+  triangular_mesh_annotation_group_file_format_enum:
+    name: triangular_mesh_annotation_group_file_format_enum
+    description: Describes the format of a triangular mesh group annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      hff:
+        text: hff
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -679,6 +739,48 @@ enums:
       simulated:
         text: simulated
         description: Simulated data
+  tiltseries_camera_model_fei_tfs_enum:
+    name: tiltseries_camera_model_fei_tfs_enum
+    description: Camera model for FEI / TFS cameras
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      FALCON IV:
+        text: FALCON IV
+        description: FALCON IV
+      FALCON 4i:
+        text: FALCON 4i
+        description: FALCON 4i
+  tiltseries_camera_model_gatan_enum:
+    name: tiltseries_camera_model_gatan_enum
+    description: Camera model for Gatan cameras
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      K2:
+        text: K2
+        description: K2
+      K2 SUMMIT:
+        text: K2 SUMMIT
+        description: K2 SUMMIT
+      K3:
+        text: K3
+        description: K3
+      K3 BIOQUANTUM:
+        text: K3 BIOQUANTUM
+        description: K3 BIOQUANTUM
+      UltraCam:
+        text: UltraCam
+        description: UltraCam
+      UltraScan:
+        text: UltraScan
+        description: UltraScan
+  tiltseries_camera_model_simulated_enum:
+    name: tiltseries_camera_model_simulated_enum
+    description: Camera model for simulated cameras
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      simulated:
+        text: simulated
+        description: Simulated camera model
   tiltseries_microscope_manufacturer_enum:
     name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
@@ -1356,7 +1458,7 @@ classes:
     attributes:
       value:
         name: value
-        description: A placeholder for any type of data.
+        description: The value for the literal.
         from_schema: cdp-ingestion-config
         alias: value
         owner: StandardLiteral
@@ -1412,7 +1514,7 @@ classes:
         minimum_cardinality: 1
       value:
         name: value
-        description: A placeholder for any type of data.
+        description: The value for the filter.
         from_schema: cdp-ingestion-config
         alias: value
         owner: DestinationMetadataFilterKeyPair
@@ -6209,7 +6311,6 @@ classes:
         inlined_as_list: true
   Any:
     name: Any
-    description: A placeholder for any type of data.
     from_schema: cdp-ingestion-config
     class_uri: linkml:Any
   DateStampedEntityMixin:
