@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import random
 import re
 import urllib
 from typing import List, Optional, Set, Tuple, Union
@@ -463,19 +462,15 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 # ==============================================================================
 # Publication Validation
 # ==============================================================================
-@alru_cache
-async def lookup_doi(doi: str, retries: int = 3) -> Tuple[str, bool]:
-    if retries <= 0:
-        return doi, False
+doi_cache = {}
 
+@alru_cache
+async def lookup_doi(doi: str) -> Tuple[str, bool]:
     doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         logger.debug("Checking DOI %s at %s, status %s", doi, url, response.status)
-        if response.status == 429 or response.status == 503:
-            logger.debug("Rate limited when checking DOI %s, sleeping and retrying", doi)
-            await asyncio.sleep(random.uniform(1, 5))
-            return await lookup_doi(doi, retries=retries-1)
+        doi_cache[(doi,)] = response.status == 200
         return doi, response.status == 200
 
 
@@ -511,18 +506,67 @@ PUBLICATION_REGEXES_AND_FUNCTIONS = {
     "pdb": (r"^PDB-[0-9a-zA-Z]{4,8}$", lookup_pdb),
 }
 
+class RateLimitedQueue:
+    def __init__(self, interval: float, cache: dict = None):
+        self.interval = interval
+        self.queue = asyncio.Queue()
+        self.last_executed = 0.0
+        self.cache = cache if cache is not None else {}
+        self.worker_task = None
+
+    def start(self):
+        if self.worker_task is None:
+            self.worker_task = asyncio.create_task(self._worker())
+
+    async def stop(self):
+        await self.queue.join()
+
+        if self.worker_task:
+            self.worker_task.cancel()
+            self.worker_task = None
+
+    async def _worker(self):
+        while True:
+            if self.queue.empty():
+                await asyncio.sleep(0.25)
+                continue
+
+            func, args, future = await self.queue.get()
+            now = asyncio.get_event_loop().time()
+            wait_time = self.interval - (now - self.last_executed)
+            if wait_time > 0 and args not in self.cache:
+                await asyncio.sleep(wait_time)
+            try:
+                result = await func(*args)
+                future.set_result(result)
+            except Exception as e:
+                future.set_exception(e)
+            self.last_executed = asyncio.get_event_loop().time()
+            self.queue.task_done()
+
+    async def enqueue(self, func, *args):
+        future = asyncio.get_event_loop().create_future()
+        await self.queue.put((func, args, future))
+        return await future
+
 
 async def validate_publication_lists(publication_list: List[str]) -> List[str]:
     tasks = []
+    lookup_doi_queue = RateLimitedQueue(interval=1.0, cache=doi_cache) # have to rate limit DOIs to prevent 429s
 
     for publication in publication_list:
         for _, (regex, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
             if not re.match(regex, publication):
                 continue
-            tasks.append(validate_function(publication))
+            if validate_function == lookup_doi:
+                tasks.append(lookup_doi_queue.enqueue(validate_function, publication))
+            else:
+                tasks.append(validate_function(publication))
             break
 
+    lookup_doi_queue.start()
     results = await asyncio.gather(*tasks)
+    await lookup_doi_queue.stop()
     return [publication for publication, valid in results if not valid]
 
 
