@@ -82,9 +82,9 @@ GO_ID_REGEX = r"^GO:[0-9]{7}$"
 UNIPROT_ID_REGEX = r"^UniProtKB:[A-Z0-9]+$"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
-# Note that model namees should all be uppercase or pascal case
+# Note that model names should all be uppercase or pascal case
 CAMERA_MANUFACTURER_TO_MODEL = {
-    ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
+    ("FEI", "TFS"): ["FALCON IV", "FALCON 4i"],
     ("Gatan"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
     ("simulated"): ["simulated"],
 }

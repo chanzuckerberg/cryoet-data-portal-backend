@@ -411,7 +411,11 @@ slots:
     required: true
     description: Name of the camera manufacturer
   tiltseries_camera_model:
-    range: string
+    any_of:
+      - range: StringFormattedString
+      - range: tiltseries_camera_model_fei_tfs_enum
+      - range: tiltseries_camera_model_gatan_enum
+      - range: tiltseries_camera_model_simulated_enum
     required: true
     description: Camera model name
   tiltseries_data_acquisition_software:
@@ -1394,6 +1398,36 @@ enums:
         description: Thermo Fisher Scientific
       simulated:
         description: Simulated data
+
+  tiltseries_camera_model_fei_tfs_enum:
+    description: Camera model for FEI / TFS cameras
+    permissible_values:
+      "FALCON IV":
+        description: FALCON IV
+      "FALCON 4i":
+        description: FALCON 4i
+
+  tiltseries_camera_model_gatan_enum:
+    description: Camera model for Gatan cameras
+    permissible_values:
+      K2:
+        description: K2
+      "K2 SUMMIT":
+        description: K2 SUMMIT
+      K3:
+        description: K3
+      "K3 BIOQUANTUM":
+        description: K3 BIOQUANTUM
+      UltraCam:
+        description: UltraCam
+      UltraScan:
+        description: UltraScan
+
+  tiltseries_camera_model_simulated_enum:
+    description: Camera model for simulated cameras
+    permissible_values:
+      simulated:
+        description: Simulated camera model
 
   tiltseries_microscope_manufacturer_enum:
     description: Microscope manufacturer
