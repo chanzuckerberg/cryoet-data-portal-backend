@@ -13,7 +13,7 @@ class CtfImporter(BaseFileImporter):
     dir_path = "{dataset_name}/{run_name}/TiltSeries/{tiltseries_id}"
 
     def get_destination_path(self) -> str:
-        filename = f"{self.parents['tiltseries'].name}_{self.metadata.get('format', 'unknown')}_ctf.txt"
+        filename = f"{self.parents['run'].name}_{self.metadata.get('format', 'unknown')}_ctf.txt"
         return os.path.join(self.get_output_path(), filename)
 
     def get_output_data(self) -> list[CTFInfo]:

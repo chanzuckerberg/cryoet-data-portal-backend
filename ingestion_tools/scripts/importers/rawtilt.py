@@ -12,5 +12,5 @@ class RawTiltImporter(BaseFileImporter):
     dir_path = "{dataset_name}/{run_name}/TiltSeries/{tiltseries_id}"
 
     def get_destination_path(self) -> str:
-        filename = f"{self.parents['tiltseries'].name}.rawtlt"
+        filename = f"{self.parents['run'].name}.rawtlt"
         return os.path.join(self.get_output_path(), filename)
