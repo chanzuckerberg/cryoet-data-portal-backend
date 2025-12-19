@@ -371,7 +371,7 @@ tiltseries:
     binning_from_frames: 1
     camera:
       manufacturer: TFS
-      model: Falcon4i
+      model: FALCON 4i
     data_acquisition_software: Tomo5
     is_aligned: false
     microscope:
