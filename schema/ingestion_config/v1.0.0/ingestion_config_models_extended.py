@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import random
 import re
 import urllib
 from typing import List, Optional, Set, Tuple, Union
@@ -149,6 +150,7 @@ async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
     """
     url = f"https://pub.orcid.org/v3.0/{orcid_id}"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking ORCID %s at %s, status %s", orcid_id, url, response.status)
         return orcid_id, response.status == 200
 
 
@@ -232,9 +234,8 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
     # OLS API URL
     url = f"https://www.ebi.ac.uk/ols/api/terms?iri={encoded_iri}"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -261,9 +262,8 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
     ontology = id_ancestor.split(":")[0]
     url = f"https://www.ebi.ac.uk/ols4/api/ontologies/{ontology}/terms/{encoded_iri}/ancestors"
 
-    logger.debug("Getting ancestors for ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ancestors for ID %s at %s, status %s", id, url, response.status)
         ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]]
         return response.status == 200 and id_ancestor in ancestor_ids
 
@@ -276,10 +276,9 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
 
     url = f"http://rest.wormbase.org/rest/field/strain/{id}/name"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     names = []
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -289,6 +288,7 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
 
     async with aiohttp.ClientSession() as session, session.get(names_url) as response:
+        logger.debug("Getting other names for ID %s at %s, status %s", id, names_url, response.status)
         if response.status >= 400:
             return [], True
         data = await response.json()
@@ -305,9 +305,8 @@ async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
     """
     url = f"https://api.cellosaurus.org/cell-line/{id}?format=json&fld=id&fld=sy"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -330,9 +329,8 @@ async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
     id = id.replace("UniProtKB:", "")
     url = f"https://rest.uniprot.org/uniprotkb/{id}"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -466,27 +464,34 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 # Publication Validation
 # ==============================================================================
 @alru_cache
-async def lookup_doi(doi: str) -> Tuple[str, bool]:
+async def lookup_doi(doi: str, retries: int = 3) -> Tuple[str, bool]:
+    if retries <= 0:
+        return doi, False
+
     doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}"
-    logger.debug("Checking DOI %s at %s", doi, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking DOI %s at %s, status %s", doi, url, response.status)
+        if response.status == 429 or response.status == 503:
+            logger.debug("Rate limited when checking DOI %s, sleeping and retrying", doi)
+            await asyncio.sleep(random.uniform(1, 5))
+            return await lookup_doi(doi, retries=retries-1)
         return doi, response.status == 200
 
 
 @alru_cache
 async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
-    logger.debug("Checking EMPIAR ID %s at %s", empiar_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking EMPIAR ID %s at %s, status %s", empiar_id, url, response.status)
         return empiar_id, response.status == 200
 
 
 @alru_cache
 async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
-    logger.debug("Checking EMDB ID %s at %s", emdb_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking EMDB ID %s at %s, status %s", emdb_id, url, response.status)
         return emdb_id, response.status == 200
 
 
@@ -494,8 +499,8 @@ async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
 async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
     pdb_id = pdb_id.replace("PDB-", "")
     url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
-    logger.debug("Checking PDB ID %s at %s", pdb_id, url)
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Checking PDB ID %s at %s, status %s", pdb_id, url, response.status)
         return pdb_id, response.status == 200
 
 
