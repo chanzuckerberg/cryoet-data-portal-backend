@@ -82,7 +82,7 @@ def test_tiltseries_import(
     "config_path, expected_pixel_spacing, expected_frames_count, expected_ctf_path, expected_psp",
     [
         # pixel_spacing is present in metadata
-        ("dataset1.yaml", 3.3702, 5, "10001/TS_run1/TiltSeries/100/TS_run1_ctffind4.txt", expected_psp_output(True)),
+        ("dataset1.yaml", 3.3702, 5, "10001/TS_run1/TiltSeries/100/TS_run1_CTFFIND_ctf.txt", expected_psp_output(True)),
         # pixel_spacing is fetched from the mrc file
         ("tiltseries/test1.yaml", 5.678, 0, None, expected_psp_output(False)),
     ],

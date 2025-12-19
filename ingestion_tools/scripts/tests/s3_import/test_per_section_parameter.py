@@ -60,7 +60,7 @@ def test_psp_success(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S
     ds_name = parents["dataset"].name
     run_name = parents["run"].name
     assert f"{ds_name}/{run_name}/TiltSeries/100/TS_run1.rawtlt" == psp_generator.get_raw_tlt_path()
-    assert f"{ds_name}/{run_name}/TiltSeries/100/TS_run1_ctffind4.txt" == psp_generator.get_ctf_path()
+    assert f"{ds_name}/{run_name}/TiltSeries/100/TS_run1_CTFFIND_ctf.txt" == psp_generator.get_ctf_path()
     actual = psp_generator.get_data()
     expected_output = expected_psp_output(True)
     assert len(actual) == len(expected_output)
