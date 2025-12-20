@@ -47,15 +47,11 @@ class BaseAlignmentConverter:
         """
         return []
 
-    def _get_files_with_suffix(self, valid_suffix: list[str]) -> str | None:
-        for path in self.paths:
-            if path.endswith(tuple(valid_suffix)):
-                file_name = os.path.basename(path)
-                dest_filepath = os.path.join(self.output_prefix, file_name)
-                if self.config.fs.exists(dest_filepath):
-                    return dest_filepath
-        return None
-
+    def _get_files_with_suffix(self, valid_suffixes: list[str]) -> str | None:
+        for suffix in valid_suffixes:
+            paths = self.config.fs.glob(os.path.join(self.output_prefix, f"*{suffix}"))
+            if paths:
+                return paths[0]
 
 class IMODAlignmentConverter(BaseAlignmentConverter):
     def get_alignment_path(self) -> str | None:

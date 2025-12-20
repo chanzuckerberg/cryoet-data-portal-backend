@@ -101,7 +101,7 @@ class TestAlignments:
             raise AssertionError("\n".join(errors))
 
     @allure.title(
-        "Raw tilt: number of raw tilt angles are must be equal to tiltseries size['z'] (implied to be the number of frames files).",
+        "Alignment: number of tilt angles is less than or equal to the number of tiltseries metadata size['z'].",
     )
     def test_tilt_tiltseries_metadata(self, alignment_tilt: pd.DataFrame, alignment_tiltseries_metadata: Dict):
         assert len(alignment_tilt) <= alignment_tiltseries_metadata["size"]["z"]
