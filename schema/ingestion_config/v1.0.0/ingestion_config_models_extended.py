@@ -82,9 +82,9 @@ GO_ID_REGEX = r"^GO:[0-9]{7}$"
 UNIPROT_ID_REGEX = r"^UniProtKB:[A-Z0-9]+$"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
-# Note that model namees should all be uppercase or pascal case
+# Note that model names should all be uppercase or pascal case
 CAMERA_MANUFACTURER_TO_MODEL = {
-    ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
+    ("FEI", "TFS"): ["FALCON IV", "FALCON 4i"],
     ("Gatan"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
     ("simulated"): ["simulated"],
 }
@@ -149,6 +149,7 @@ async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
     """
     url = f"https://pub.orcid.org/v3.0/{orcid_id}"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking ORCID %s at %s, status %s", orcid_id, url, response.status)
         return orcid_id, response.status == 200
 
 
@@ -232,9 +233,8 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
     # OLS API URL
     url = f"https://www.ebi.ac.uk/ols/api/terms?iri={encoded_iri}"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -261,9 +261,8 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
     ontology = id_ancestor.split(":")[0]
     url = f"https://www.ebi.ac.uk/ols4/api/ontologies/{ontology}/terms/{encoded_iri}/ancestors"
 
-    logger.debug("Getting ancestors for ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ancestors for ID %s at %s, status %s", id, url, response.status)
         ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]]
         return response.status == 200 and id_ancestor in ancestor_ids
 
@@ -276,10 +275,9 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
 
     url = f"http://rest.wormbase.org/rest/field/strain/{id}/name"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     names = []
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -289,6 +287,7 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
 
     async with aiohttp.ClientSession() as session, session.get(names_url) as response:
+        logger.debug("Getting other names for ID %s at %s, status %s", id, names_url, response.status)
         if response.status >= 400:
             return [], True
         data = await response.json()
@@ -305,9 +304,8 @@ async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
     """
     url = f"https://api.cellosaurus.org/cell-line/{id}?format=json&fld=id&fld=sy"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -330,9 +328,8 @@ async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
     id = id.replace("UniProtKB:", "")
     url = f"https://rest.uniprot.org/uniprotkb/{id}"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -465,28 +462,31 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 # ==============================================================================
 # Publication Validation
 # ==============================================================================
+doi_cache = {}
+
 @alru_cache
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
     doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}"
-    logger.debug("Checking DOI %s at %s", doi, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking DOI %s at %s, status %s", doi, url, response.status)
+        doi_cache[(doi,)] = response.status == 200
         return doi, response.status == 200
 
 
 @alru_cache
 async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
-    logger.debug("Checking EMPIAR ID %s at %s", empiar_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking EMPIAR ID %s at %s, status %s", empiar_id, url, response.status)
         return empiar_id, response.status == 200
 
 
 @alru_cache
 async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
-    logger.debug("Checking EMDB ID %s at %s", emdb_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking EMDB ID %s at %s, status %s", emdb_id, url, response.status)
         return emdb_id, response.status == 200
 
 
@@ -494,8 +494,8 @@ async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
 async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
     pdb_id = pdb_id.replace("PDB-", "")
     url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
-    logger.debug("Checking PDB ID %s at %s", pdb_id, url)
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Checking PDB ID %s at %s, status %s", pdb_id, url, response.status)
         return pdb_id, response.status == 200
 
 
@@ -506,18 +506,67 @@ PUBLICATION_REGEXES_AND_FUNCTIONS = {
     "pdb": (r"^PDB-[0-9a-zA-Z]{4,8}$", lookup_pdb),
 }
 
+class RateLimitedQueue:
+    def __init__(self, interval: float, cache: dict = None):
+        self.interval = interval
+        self.queue = asyncio.Queue()
+        self.last_executed = 0.0
+        self.cache = cache if cache is not None else {}
+        self.worker_task = None
+
+    def start(self):
+        if self.worker_task is None:
+            self.worker_task = asyncio.create_task(self._worker())
+
+    async def stop(self):
+        await self.queue.join()
+
+        if self.worker_task:
+            self.worker_task.cancel()
+            self.worker_task = None
+
+    async def _worker(self):
+        while True:
+            if self.queue.empty():
+                await asyncio.sleep(0.25)
+                continue
+
+            func, args, future = await self.queue.get()
+            now = asyncio.get_event_loop().time()
+            wait_time = self.interval - (now - self.last_executed)
+            if wait_time > 0 and args not in self.cache:
+                await asyncio.sleep(wait_time)
+            try:
+                result = await func(*args)
+                future.set_result(result)
+            except Exception as e:
+                future.set_exception(e)
+            self.last_executed = asyncio.get_event_loop().time()
+            self.queue.task_done()
+
+    async def enqueue(self, func, *args):
+        future = asyncio.get_event_loop().create_future()
+        await self.queue.put((func, args, future))
+        return await future
+
 
 async def validate_publication_lists(publication_list: List[str]) -> List[str]:
     tasks = []
+    lookup_doi_queue = RateLimitedQueue(interval=1.0, cache=doi_cache) # have to rate limit DOIs to prevent 429s
 
     for publication in publication_list:
         for _, (regex, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
             if not re.match(regex, publication):
                 continue
-            tasks.append(validate_function(publication))
+            if validate_function == lookup_doi:
+                tasks.append(lookup_doi_queue.enqueue(validate_function, publication))
+            else:
+                tasks.append(validate_function(publication))
             break
 
+    lookup_doi_queue.start()
     results = await asyncio.gather(*tasks)
+    await lookup_doi_queue.stop()
     return [publication for publication, valid in results if not valid]
 
 
