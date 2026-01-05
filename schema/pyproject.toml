@@ -18,7 +18,7 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
-aiohttp = "^3.10.11"
+aiohttp = "^3.13.3"
 async-lru = "^2.0.4"
 click = "^8.1.7"
 linkml = "1.8.2"
