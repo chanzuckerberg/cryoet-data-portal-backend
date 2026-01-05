@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 import os.path
 from abc import ABC, abstractmethod
@@ -17,25 +16,9 @@ from mrcfile.mrcfile import MrcFile
 from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
 from skimage.transform import downscale_local_mean, resize_local_mean
-from tenacity import (
-    before_sleep_log,
-    retry,
-    retry_if_exception,
-    stop_after_attempt,
-    wait_exponential_jitter,
-)
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi, S3Filesystem
-
-# Retry configuration for S3 operations
-RETRY_MAX_ATTEMPTS = 5
-RETRY_INITIAL_WAIT_SECONDS = 30.0
-RETRY_MAX_WAIT_SECONDS = 300.0
-RETRY_JITTER_SECONDS = 15.0
-
-# Logger for retry operations
-logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -77,29 +60,8 @@ class ZarrReader:
         return data
 
 
-def is_s3_throttling(exception: BaseException) -> bool:
-    """Check if exception is an S3 throttling/SlowDown error."""
-    error_str = str(exception).lower()
-    throttle_indicators = ("slowdown", "503", "service unavailable", "throttl")
-    return any(indicator in error_str for indicator in throttle_indicators)
-
-
 class ZarrWriter:
     def __init__(self, fs: FileSystemApi, zarrdir: str):
-        self._init_zarr_store(fs, zarrdir)
-
-    @retry(
-        stop=stop_after_attempt(RETRY_MAX_ATTEMPTS),
-        wait=wait_exponential_jitter(
-            initial=RETRY_INITIAL_WAIT_SECONDS,
-            max=RETRY_MAX_WAIT_SECONDS,
-            jitter=RETRY_JITTER_SECONDS,
-        ),
-        retry=retry_if_exception(is_s3_throttling),
-        before_sleep=before_sleep_log(logger, logging.WARNING),
-        reraise=True,
-    )
-    def _init_zarr_store(self, fs: FileSystemApi, zarrdir: str):
         if isinstance(fs, S3Filesystem):
             fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs, dimension_separator="/")
             self.loc = ZarrLocation(fsstore)
@@ -129,17 +91,6 @@ class ZarrWriter:
     def ome_zarr_transforms(self, voxel_size: Tuple[float, float, float]) -> List[Dict[str, Any]]:
         return [{"scale": [voxel_size[0], voxel_size[1], voxel_size[2]], "type": "scale"}]
 
-    @retry(
-        stop=stop_after_attempt(RETRY_MAX_ATTEMPTS),
-        wait=wait_exponential_jitter(
-            initial=RETRY_INITIAL_WAIT_SECONDS,
-            max=RETRY_MAX_WAIT_SECONDS,
-            jitter=RETRY_JITTER_SECONDS,
-        ),
-        retry=retry_if_exception(is_s3_throttling),
-        before_sleep=before_sleep_log(logger, logging.WARNING),
-        reraise=True,
-    )
     def write_data(
         self,
         data: List[np.ndarray],
@@ -202,10 +153,7 @@ class ZarrWriter:
             )
 
         ome_zarr.writer.write_multiscales_metadata(
-            group=self.root_group,
-            axes=self.ome_zarr_axes(),
-            datasets=datasets_meta,
-            name="/",
+            group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/",
         )
 
 
@@ -600,17 +548,13 @@ def make_pyramids(
     header_mapper: Callable[[np.array], None] = None,
     voxel_spacing: float = None,
     label: int = None,
-    scale_0_dims=None,
+    scale_0_dims = None,
     threshold: float | None = None,
     chunk_size: Tuple[int, int, int] = (256, 256, 256),
     dtype: str = None,
 ):
     tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold)
-    pyramid, pyramid_voxel_spacing = tc.make_pyramid(
-        scale_z_axis=scale_z_axis,
-        voxel_spacing=voxel_spacing,
-        dtype=dtype,
-    )
+    pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing, dtype=dtype)
     _ = tc.pyramid_to_omezarr(
         fs,
         pyramid,
