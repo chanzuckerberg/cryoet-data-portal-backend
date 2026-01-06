@@ -11,9 +11,9 @@ from tenacity import stop_after_attempt, wait_none
 from common.fs import FileSystemApi
 from common.image import (
     ZarrWriter,
-    is_s3_throttling,
     make_pyramids,
 )
+from common.retry import is_s3_throttling
 
 # Test retry constants (shorter times for fast test execution)
 TEST_RETRY_MAX_ATTEMPTS = 3
@@ -167,6 +167,8 @@ def test_is_s3_throttling() -> None:
     # Test case-insensitivity
     assert is_s3_throttling(Exception("SLOWDOWN"))
     assert is_s3_throttling(Exception("service UNAVAILABLE"))
+    # Test OSError with Service Unavailable (as seen in production)
+    assert is_s3_throttling(OSError("[Errno 16] Service Unavailable"))
 
     # Test negative cases - should return False for non-throttling errors
     assert not is_s3_throttling(Exception("File not found"))

@@ -27,15 +27,14 @@ from tenacity import (
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi, S3Filesystem
-
-# Retry configuration for S3 operations
-RETRY_MAX_ATTEMPTS = 5
-RETRY_INITIAL_WAIT_SECONDS = 30.0
-RETRY_MAX_WAIT_SECONDS = 300.0
-RETRY_JITTER_SECONDS = 15.0
-
-# Logger for retry operations
-logger = logging.getLogger(__name__)
+from common.retry import (
+    RETRY_INITIAL_WAIT_SECONDS,
+    RETRY_JITTER_SECONDS,
+    RETRY_MAX_ATTEMPTS,
+    RETRY_MAX_WAIT_SECONDS,
+    is_s3_throttling,
+    logger,
+)
 
 
 @dataclass
@@ -75,19 +74,6 @@ class ZarrReader:
         loc = ome_zarr.io.ZarrLocation(self.fs.destformat(self.zarrdir))
         data = loc.load("0")
         return data
-
-
-def is_s3_throttling(exception: BaseException) -> bool:
-    """Check if exception is an S3 throttling/SlowDown error."""
-    error_str = str(exception).lower()
-    throttle_indicators = (
-        "slowdown",
-        "503",
-        "service unavailable",
-        "throttl",
-        "reduce your request rate",  # s3fs converts SlowDown to OSError with this message
-    )
-    return any(indicator in error_str for indicator in throttle_indicators)
 
 
 class ZarrWriter:
