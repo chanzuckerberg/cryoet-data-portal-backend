@@ -419,12 +419,12 @@ tomograms:
       corresponding_author_status: false
     - name: Hannah Siems
       ORCID: 0009-0002-6674-7601
-      primary_author_status: false
-      corresponding_author_status: true
+      primary_author_status: true
+      corresponding_author_status: false
     - name: Bisco Hill
       ORCID: 0000-0002-4719-2893
-      primary_author_status: false
-      corresponding_author_status: true
+      primary_author_status: true
+      corresponding_author_status: false
     - name: Jonathan Schwartz
       ORCID: 0000-0002-3248-9678
       primary_author_status: false
