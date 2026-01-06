@@ -80,7 +80,13 @@ class ZarrReader:
 def is_s3_throttling(exception: BaseException) -> bool:
     """Check if exception is an S3 throttling/SlowDown error."""
     error_str = str(exception).lower()
-    throttle_indicators = ("slowdown", "503", "service unavailable", "throttl")
+    throttle_indicators = (
+        "slowdown",
+        "503",
+        "service unavailable",
+        "throttl",
+        "reduce your request rate",  # s3fs converts SlowDown to OSError with this message
+    )
     return any(indicator in error_str for indicator in throttle_indicators)
 
 
