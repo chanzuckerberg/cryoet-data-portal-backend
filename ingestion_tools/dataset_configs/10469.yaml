@@ -179,7 +179,7 @@ annotations:
           binning: 5.005
           file_format: copick
           glob_strings:
-            - 'ExperimentRuns/{run_name}_Vol/Picks/2daverage_1_VLP.json'
+            - 'ExperimentRuns/{run_name}_Vol/Picks/2daverage_2_ribosome.json'
           is_visualization_default: true
           mesh_source_path: 'mesh/25jul16a_VLP_mesh.glb'
 
@@ -360,7 +360,7 @@ runs:
 standardization_config:
   deposition_id: 10341
   run_data_map_file: run_to_data_map_combined.tsv
-  source_prefix: CZII/20260109_2protein_1.0/3protein_phantom/
+  source_prefix: CZII/20260109_2protein_1.0/vpp_3protein_phantom/
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
