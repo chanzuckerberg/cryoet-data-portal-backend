@@ -280,7 +280,7 @@ annotations:
           glob_strings:
             - 'ExperimentRuns/{run_name}_Vol/Picks/2daverage_2_ribosome.json'
           is_visualization_default: true
-          mesh_source_path: '/mesh/25jul16a_ribosome_80s_mesh.glb'
+          mesh_source_path: 'mesh/25jul16a_ribosome_80s_mesh.glb'
 
 collection_metadata:
 - sources:
