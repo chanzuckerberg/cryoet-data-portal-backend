@@ -375,7 +375,7 @@ tiltseries:
       model: TITAN KRIOS G4
     microscope_optical_setup:
       energy_filter: Selectris X
-    pixel_spacing: 1.54
+    pixel_spacing: 1.529
     spherical_aberration_constant: 2.7
     tilt_axis: -96
     tilt_range:
