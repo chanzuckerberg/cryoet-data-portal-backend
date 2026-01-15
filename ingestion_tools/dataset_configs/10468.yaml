@@ -175,11 +175,52 @@ annotations:
       method_type: hybrid
       version: 1.0
     sources:
-      - OrientedPoint:
+      - Point:
           binning: 5.006
           file_format: copick
           glob_strings:
             - 'ExperimentRuns/{run_name}_Vol/Picks/2daverage_1_VLP.json'
+          is_visualization_default: false
+          columns: xyz
+
+  # VLP octopi, slabpick, py2rely
+  - metadata:
+      annotation_method: octopi prediction + slabpick + py2rely 2D classification + manual class selection
+        + py2rely 3D refinement
+      annotation_object:
+        description: PP7 VLP
+        id: GO:0170047
+        name: virus-like capsid
+      annotation_publications:
+      annotation_software: octopi 1.2.0 + slabpick 0.1.0 + py2rely 0.1.0
+      authors: *authors
+      dates: *id001
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_links:
+        - custom_name: slabpick on GitHub
+          link: https://github.com/apeck12/slabpick
+          link_type: source_code
+        - custom_name: py2rely on GitHub
+          link: https://github.com/chanzuckerberg/py2rely
+          link_type: source_code
+        - custom_name: py2rely documentation
+          link: https://chanzuckerberg.github.io/py2rely/
+          link_type: documentation
+        - custom_name: Octopi on GitHub
+          link: https://github.com/chanzuckerberg/octopi
+          link_type: source_code
+        - custom_name: Octopi documentation
+          link: https://chanzuckerberg.github.io/octopi/
+          link_type: documentation
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - OrientedPoint:
+          binning: 5.006
+          file_format: copick
+          glob_strings:
+            - 'ExperimentRuns/{run_name}_Vol/Picks/3daverage_1_VLP.json'
           is_visualization_default: true
           mesh_source_path: 'mesh/25jul02a_VLP_mesh.glb'
 
@@ -274,11 +315,51 @@ annotations:
       method_type: hybrid
       version: 1.0
     sources:
+      - Point:
+          binning: 5.006
+          file_format: copick
+          glob_strings:
+            - 'ExperimentRuns/{run_name}_Vol/Picks/2daverage_2_ribosome.json'
+          is_visualization_default: true
+          columns: xyz
+
+  # ribosome octopi, slabpick, py2rely
+  - metadata:
+      annotation_method: octopi prediction + slabpick + py2rely 2D classification + manual class selection
+        + py2rely 3D refinement
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications:
+      annotation_software: octopi 1.2.0 + slabpick 0.1.0 + py2rely 0.1.0
+      authors: *authors
+      dates: *id001
+      ground_truth_status: false
+      is_curator_recommended: true
+      method_links:
+        - custom_name: slabpick on GitHub
+          link: https://github.com/apeck12/slabpick
+          link_type: source_code
+        - custom_name: py2rely on GitHub
+          link: https://github.com/chanzuckerberg/py2rely
+          link_type: source_code
+        - custom_name: py2rely documentation
+          link: https://chanzuckerberg.github.io/py2rely/
+          link_type: documentation
+        - custom_name: Octopi on GitHub
+          link: https://github.com/chanzuckerberg/octopi
+          link_type: source_code
+        - custom_name: Octopi documentation
+          link: https://chanzuckerberg.github.io/octopi/
+          link_type: documentation
+      method_type: hybrid
+      version: 1.0
+    sources:
       - OrientedPoint:
           binning: 5.006
           file_format: copick
           glob_strings:
-            - 'ExperimentRuns/{run_name}_Vol/Picks/2daverage_1_VLP.json'
+            - 'ExperimentRuns/{run_name}_Vol/Picks/3daverage_2_ribosome.json'
           is_visualization_default: true
           mesh_source_path: 'mesh/25jul02a_ribosome_80s_mesh.glb'
 
