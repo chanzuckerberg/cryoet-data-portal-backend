@@ -3271,7 +3271,7 @@ class Tomogram(AuthoredEntity):
         json_schema_extra={"linkml_meta": {"domain_of": ["Tomogram"]}},
     )
     is_visualization_default: bool = Field(
-        default=...,
+        default=True,
         description="""Whether the tomogram is the default for visualization.""",
         json_schema_extra={
             "linkml_meta": {
@@ -3285,7 +3285,8 @@ class Tomogram(AuthoredEntity):
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
-                ]
+                ],
+                "ifabsent": "True",
             }
         },
     )
@@ -5232,9 +5233,9 @@ class Alignment(ConfiguredBaseModel):
         },
     )
     tilt_offset: Optional[float] = Field(
-        default=None,
+        default=0.0,
         description="""The tilt offset relative to the tomogram.""",
-        json_schema_extra={"linkml_meta": {"domain_of": ["Alignment"]}},
+        json_schema_extra={"linkml_meta": {"domain_of": ["Alignment"], "ifabsent": "float(0.0)"}},
     )
     affine_transformation_matrix: Optional[
         conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))
@@ -5252,7 +5253,7 @@ class Alignment(ConfiguredBaseModel):
         },
     )
     is_portal_standard: Optional[bool] = Field(
-        default=None,
+        default=False,
         description="""Whether the alignment is standardized for the portal.""",
         json_schema_extra={
             "linkml_meta": {
@@ -5266,7 +5267,8 @@ class Alignment(ConfiguredBaseModel):
                     "AnnotationSemanticSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
-                ]
+                ],
+                "ifabsent": "False",
             }
         },
     )
