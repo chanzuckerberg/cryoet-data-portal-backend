@@ -258,7 +258,7 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-meta-files',
                               'description': 'A UniProt identifier',
                               'from_schema': 'metadata',
                               'name': 'UNIPROT_ID',
-                              'pattern': '^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$'},
+                              'pattern': '^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$'},
                'UNKNOWN_LITERAL': {'base': 'str',
                                    'description': 'A placeholder for an unknown '
                                                   'value.',
@@ -2373,7 +2373,7 @@ class AnnotationObject(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)")
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -3065,7 +3065,7 @@ class IdentifiedObject(ConfiguredBaseModel):
 
     @field_validator('object_id')
     def pattern_object_id(cls, v):
-        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)")
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
