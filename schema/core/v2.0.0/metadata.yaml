@@ -679,7 +679,7 @@ classes:
         description: Whether the tomogram is the default for visualization.
         range: boolean
         required: true
-        # ifabsent: true
+        ifabsent: true
       cross_references:
         description: Cross-references for the tomogram.
         range: CrossReferences
@@ -1068,7 +1068,7 @@ classes:
       tilt_offset:
         description: The tilt offset relative to the tomogram.
         range: float
-        # ifabsent: "float(0.0)"
+        ifabsent: "float(0.0)"
       affine_transformation_matrix:
         description: The flip or rotation transformation of this author submitted tomogram is indicated here. The default value if not present, is an identity matrix.
         range: float
@@ -1081,7 +1081,7 @@ classes:
       is_portal_standard:
         description: Whether the alignment is standardized for the portal.
         range: boolean
-        # ifabsent: false
+        ifabsent: false
       format:
         description: The format of the alignment.
         range: alignment_format_enum

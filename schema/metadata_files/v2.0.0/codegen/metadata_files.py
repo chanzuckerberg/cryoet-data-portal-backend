@@ -2226,7 +2226,7 @@ class Tomogram(AuthoredEntity):
                        'TomogramMetadata']} })
     size: Optional[TomogramSize] = Field(default=None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram', 'TiltSeriesMetadata', 'TomogramMetadata']} })
     offset: TomogramOffset = Field(default=..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram', 'TomogramMetadata']} })
-    is_visualization_default: bool = Field(default=..., description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
+    is_visualization_default: bool = Field(default=True, description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
@@ -2236,7 +2236,8 @@ class Tomogram(AuthoredEntity):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile',
                        'AnnotationFileMetadata',
-                       'TomogramMetadata']} })
+                       'TomogramMetadata'],
+         'ifabsent': 'True'} })
     cross_references: Optional[CrossReferences] = Field(default=None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CrossReferencedEntity',
                        'Tomogram',
                        'Dataset',
@@ -3342,14 +3343,14 @@ class Alignment(ConfiguredBaseModel):
     volume_dimension: Optional[AlignmentSize] = Field(default=None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment', 'AlignmentMetadata']} })
     x_rotation_offset: Optional[Union[int, str]] = Field(default=None, description="""The x rotation offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['Alignment', 'AlignmentMetadata']} })
-    tilt_offset: Optional[float] = Field(default=None, description="""The tilt offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment', 'AlignmentMetadata']} })
+    tilt_offset: Optional[float] = Field(default=0.0, description="""The tilt offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment', 'AlignmentMetadata'], 'ifabsent': 'float(0.0)'} })
     affine_transformation_matrix: Optional[conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))] = Field(default=None, description="""The flip or rotation transformation of this author submitted tomogram is indicated here. The default value if not present, is an identity matrix.""", json_schema_extra = { "linkml_meta": {'array': {'dimensions': [{'exact_cardinality': 4}, {'exact_cardinality': 4}],
                    'exact_number_dimensions': 2},
          'domain_of': ['Tomogram',
                        'Alignment',
                        'AlignmentMetadata',
                        'TomogramMetadata']} })
-    is_portal_standard: Optional[bool] = Field(default=None, description="""Whether the alignment is standardized for the portal.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
+    is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the alignment is standardized for the portal.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
@@ -3358,7 +3359,8 @@ class Alignment(ConfiguredBaseModel):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile',
-                       'AlignmentMetadata']} })
+                       'AlignmentMetadata'],
+         'ifabsent': 'False'} })
     format: AlignmentFormatEnum = Field(default=..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment',
                        'Ctf',
                        'AlignmentMetadata',
@@ -3736,14 +3738,14 @@ class AlignmentMetadata(DefaultMetadata, Alignment):
     volume_dimension: Optional[AlignmentSize] = Field(default=None, description="""The size of an alignment in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment', 'AlignmentMetadata']} })
     x_rotation_offset: Optional[Union[int, str]] = Field(default=None, description="""The x rotation offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'integer'}, {'range': 'IntegerFormattedString'}],
          'domain_of': ['Alignment', 'AlignmentMetadata']} })
-    tilt_offset: Optional[float] = Field(default=None, description="""The tilt offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment', 'AlignmentMetadata']} })
+    tilt_offset: Optional[float] = Field(default=0.0, description="""The tilt offset relative to the tomogram.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment', 'AlignmentMetadata'], 'ifabsent': 'float(0.0)'} })
     affine_transformation_matrix: Optional[conlist(min_length=4, max_length=4, item_type=conlist(min_length=4, max_length=4, item_type=float))] = Field(default=None, description="""The flip or rotation transformation of this author submitted tomogram is indicated here. The default value if not present, is an identity matrix.""", json_schema_extra = { "linkml_meta": {'array': {'dimensions': [{'exact_cardinality': 4}, {'exact_cardinality': 4}],
                    'exact_number_dimensions': 2},
          'domain_of': ['Tomogram',
                        'Alignment',
                        'AlignmentMetadata',
                        'TomogramMetadata']} })
-    is_portal_standard: Optional[bool] = Field(default=None, description="""Whether the alignment is standardized for the portal.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
+    is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the alignment is standardized for the portal.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'Alignment',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
@@ -3752,7 +3754,8 @@ class AlignmentMetadata(DefaultMetadata, Alignment):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile',
-                       'AlignmentMetadata']} })
+                       'AlignmentMetadata'],
+         'ifabsent': 'False'} })
     format: Optional[AlignmentFormatEnum] = Field(default=None, description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment',
                        'Ctf',
                        'AnnotationFileMetadata',
@@ -4558,7 +4561,7 @@ class TomogramMetadata(DefaultMetadata, Tomogram):
                        'TomogramMetadata']} })
     size: Optional[TomogramSize] = Field(default=None, description="""The size of a tomogram in voxels in each dimension.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram', 'TiltSeriesMetadata', 'TomogramMetadata']} })
     offset: TomogramOffset = Field(default=..., description="""The offset of a tomogram in voxels in each dimension relative to the canonical tomogram.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram', 'TomogramMetadata']} })
-    is_visualization_default: bool = Field(default=..., description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
+    is_visualization_default: bool = Field(default=True, description="""Whether the tomogram is the default for visualization.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
                        'AnnotationInstanceSegmentationFile',
@@ -4568,7 +4571,8 @@ class TomogramMetadata(DefaultMetadata, Tomogram):
                        'AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile',
                        'AnnotationFileMetadata',
-                       'TomogramMetadata']} })
+                       'TomogramMetadata'],
+         'ifabsent': 'True'} })
     cross_references: Optional[CrossReferences] = Field(default=None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CrossReferencedEntity',
                        'Tomogram',
                        'Dataset',

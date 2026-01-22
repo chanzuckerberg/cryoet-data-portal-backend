@@ -1091,6 +1091,7 @@ classes:
         name: tilt_offset
         description: The tilt offset relative to the tomogram.
         from_schema: metadata
+        ifabsent: float(0.0)
         alias: tilt_offset
         owner: AlignmentMetadata
         domain_of:
@@ -1121,6 +1122,7 @@ classes:
         name: is_portal_standard
         description: Whether the alignment is standardized for the portal.
         from_schema: metadata
+        ifabsent: 'False'
         alias: is_portal_standard
         owner: AlignmentMetadata
         domain_of:
@@ -3063,6 +3065,7 @@ classes:
         name: is_visualization_default
         description: Whether the tomogram is the default for visualization.
         from_schema: metadata
+        ifabsent: 'True'
         alias: is_visualization_default
         owner: TomogramMetadata
         domain_of:
