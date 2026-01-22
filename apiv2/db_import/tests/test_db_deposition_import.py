@@ -46,7 +46,7 @@ def expected_dep1_authors() -> list[dict[str, Any]]:
             "orcid": "0000-0000-0000-0001",
             "name": "Author 1",
             "primary_author_status": True,
-            "corresponding_author_status": False,
+            # "corresponding_author_status": False, # not expected to be the default value, will be None instead, because this will be modified in an UPDATE test
             "author_list_order": 1,
         },
         {
