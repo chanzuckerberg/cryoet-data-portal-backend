@@ -99,6 +99,13 @@ linkml_meta = LinkMLMeta(
                 "name": "CC_ID",
                 "pattern": "^CC-[0-9]{4}$",
             },
+            "CHEBI_ID": {
+                "base": "str",
+                "description": "A Chemical Entities of Biological " "Interest ontology identifier",
+                "from_schema": "metadata",
+                "name": "CHEBI_ID",
+                "pattern": "^CHEBI:[0-9]+$",
+            },
             "CL_ID": {
                 "base": "str",
                 "description": "A Cell Ontology identifier",
@@ -1374,7 +1381,7 @@ class Assay(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         default=None,
-        description="""The EFO identifier for the cellular component.""",
+        description="""EFO ontology identifier for the type of assay performed in a CryoET dataset""",
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": [
@@ -1627,10 +1634,11 @@ class TissueDetails(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         default=None,
-        description="""The UBERON identifier for the tissue.""",
+        description="""The ontology identifier for the tissue.""",
         json_schema_extra={
             "linkml_meta": {
                 "any_of": [
+                    {"range": "BTO_ID"},
                     {"range": "CL_ID"},
                     {"range": "WBBT_ID"},
                     {"range": "ZFA_ID"},
@@ -1655,7 +1663,9 @@ class TissueDetails(ConfiguredBaseModel):
 
     @field_validator("id")
     def pattern_id(cls, v):
-        pattern = re.compile(r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)")
+        pattern = re.compile(
+            r"(^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)"
+        )
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -1699,7 +1709,7 @@ class CellType(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         default=None,
-        description="""Cell Ontology identifier for the cell type""",
+        description="""The ontology identifier for the cell type.""",
         json_schema_extra={
             "linkml_meta": {
                 "any_of": [
@@ -1771,7 +1781,7 @@ class CellStrain(ConfiguredBaseModel):
     )
     id: Optional[str] = Field(
         default=None,
-        description="""Link to more information about the cell strain.""",
+        description="""The ontology identifier for the cell strain.""",
         json_schema_extra={
             "linkml_meta": {
                 "any_of": [
@@ -3422,10 +3432,10 @@ class AnnotationObject(ConfiguredBaseModel):
 
     id: str = Field(
         default=...,
-        description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.""",
+        description="""Ontology identifier for the annotation object.""",
         json_schema_extra={
             "linkml_meta": {
-                "any_of": [{"range": "GO_ID"}, {"range": "UNIPROT_ID"}],
+                "any_of": [{"range": "GO_ID"}, {"range": "UNIPROT_ID"}, {"range": "UBERON_ID"}, {"range": "CHEBI_ID"}],
                 "domain_of": [
                     "Assay",
                     "DevelopmentStageDetails",
@@ -3484,7 +3494,7 @@ class AnnotationObject(ConfiguredBaseModel):
     @field_validator("id")
     def pattern_id(cls, v):
         pattern = re.compile(
-            r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+            r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)"
         )
         if isinstance(v, list):
             for element in v:

@@ -853,7 +853,6 @@ classes:
         description: The value for the voxel spacing literal.
         multivalued: true
         required: true
-        range: float
         any_of:
           - range: float
             # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521

@@ -401,6 +401,12 @@ types:
     from_schema: metadata
     base: str
     pattern: FBbt:[0-9]{8}$
+  CHEBI_ID:
+    name: CHEBI_ID
+    description: A Chemical Entities of Biological Interest ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ^CHEBI:[0-9]+$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
