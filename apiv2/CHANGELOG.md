@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.14.0...apiv2-v1.14.1) (2026-01-23)
+
+
+### Bug Fixes
+
+* update linkml package version, bugfix api codegen, bugfix ingestion validation ([#585](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/585)) ([c972d59](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/c972d596c10bfa430e820008372b59598a339e3c))
+
 ## [1.14.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.13.2...apiv2-v1.14.0) (2025-11-26)
 
 
