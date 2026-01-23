@@ -747,12 +747,20 @@
                             "type": "string"
                         },
                         {
-                            "pattern": "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$",
+                            "pattern": "^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UBERON:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^CHEBI:[0-9]+$",
                             "type": "string"
                         }
                     ],
-                    "description": "Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.",
-                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+                    "description": "Ontology identifier for the annotation object.",
+                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)"
                 },
                 "name": {
                     "description": "Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
@@ -1379,7 +1387,7 @@
             "description": "The assay that was used to create the dataset.",
             "properties": {
                 "id": {
-                    "description": "The EFO identifier for the cellular component.",
+                    "description": "EFO ontology identifier for the type of assay performed in a CryoET dataset",
                     "pattern": "^EFO:[0-9]{7}$",
                     "type": [
                         "string",
@@ -1590,7 +1598,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "Link to more information about the cell strain.",
+                    "description": "The ontology identifier for the cell strain.",
                     "pattern": "(WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)"
                 },
                 "name": {
@@ -1634,7 +1642,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "Cell Ontology identifier for the cell type",
+                    "description": "The ontology identifier for the cell type.",
                     "pattern": "(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)"
                 },
                 "name": {
@@ -3740,12 +3748,12 @@
                             "type": "string"
                         },
                         {
-                            "pattern": "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$",
+                            "pattern": "^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$",
                             "type": "string"
                         }
                     ],
                     "description": "Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.",
-                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)"
                 },
                 "object_name": {
                     "description": "Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
@@ -5483,6 +5491,10 @@
                 "id": {
                     "anyOf": [
                         {
+                            "pattern": "^BTO:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
                             "pattern": "^CL:[0-9]{7}$",
                             "type": "string"
                         },
@@ -5506,8 +5518,8 @@
                             "type": "null"
                         }
                     ],
-                    "description": "The UBERON identifier for the tissue.",
-                    "pattern": "(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)"
+                    "description": "The ontology identifier for the tissue.",
+                    "pattern": "(^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)"
                 },
                 "name": {
                     "description": "Name of the tissue from which a biological sample used in a CryoET study is derived from.",
@@ -6049,8 +6061,7 @@
                                 "type": "string"
                             }
                         ],
-                        "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
-                        "type": "number"
+                        "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                     },
                     "minItems": 1,
                     "type": "array"

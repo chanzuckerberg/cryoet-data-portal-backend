@@ -1021,13 +1021,13 @@ classes:
         recommended: true
       object_id:
         name: object_id
-        description: Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
+        description: Ontology identifier for the annotation object.
         from_schema: cdp-dataset-config
         exact_mappings:
           - annotation_object_id
         range: string
         required: true
-        pattern: ^GO:[0-9]{7}$
+        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)
       object_name:
         name: object_name
         description:
@@ -1272,8 +1272,9 @@ classes:
         range: string
       assay_ontology_id:
         name: assay_ontology_id
-        description: Ontology identifier for the type of assay performed in a CryoET dataset
+        description: EFO ontology identifier for the type of assay performed in a CryoET dataset
         range: string
+        pattern: ^EFO:[0-9]{7}$
       development_stage_name:
         name: development_stage_name
         description: Development stage of the organism from which a biological sample used the study is derived.
@@ -1282,6 +1283,7 @@ classes:
         name: development_stage_ontology_id
         description: Ontology identifier for the development stage
         range: string
+        pattern: (^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)|(MmusDv:[0-9]{7}$)|(ZFS:[0-9]{7}$)|(FBdv:[0-9]{8}$)
       disease_name:
         name: disease_name
         description: Name of the disease associated with the biological sample used in a CryoET study, e.g. Alzheimer’s disease
@@ -1290,6 +1292,7 @@ classes:
         name: disease_ontology_id
         description: Ontology identifier for the disease associated with the biological sample used in a CryoET study
         range: string
+        pattern: (^MONDO:[0-9]{7}$)|(^PATO:[0-9]{7}$)
       organism_name:
         name: organism_name
         description: Name of the organism from which a biological sample used in a CryoET study is derived from, e.g. homo sapiens
@@ -1317,13 +1320,13 @@ classes:
         required: false
       tissue_id:
         name: tissue_id
-        description: UBERON identifier for the tissue
+        description: The ontology identifier for the tissue.
         from_schema: cdp-dataset-config
         exact_mappings:
           - tissue_id
         range: string
         recommended: true
-        pattern: ^BTO:[0-9]{7}$
+        pattern: (^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)
       cell_name:
         name: cell_name
         description: Name of the cell from which a biological sample used in a CryoET study is derived from.
@@ -1332,13 +1335,13 @@ classes:
         required: false
       cell_type_id:
         name: cell_type_id
-        description: Cell Ontology identifier for the cell type
+        description: The ontology identifier for the cell type.
         from_schema: cdp-dataset-config
         exact_mappings:
           - cell_type_id
         range: string
         recommended: true
-        pattern: ^CL:[0-9]{7}$
+        pattern: (^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)
       cell_strain_name:
         description: Cell line or strain for the sample.
         range: string
@@ -1351,7 +1354,7 @@ classes:
         exact_mappings:
           - cell_strain_id
         recommended: true
-        pattern: (WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)
+        pattern: (WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)
         range: string
       sample_type:
         name: sample_type
@@ -1776,7 +1779,7 @@ classes:
           - identified_object_id
         range: string
         required: true
-        pattern: ^GO:[0-9]{7}$
+        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)
       object_name:
         name: object_name
         description: Name of the identified object (e.g. ribosome, nuclear pore complex, actin filament, membrane)

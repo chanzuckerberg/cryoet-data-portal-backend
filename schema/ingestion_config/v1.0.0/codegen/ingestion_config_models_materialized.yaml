@@ -325,7 +325,7 @@ types:
     description: A UniProt identifier
     from_schema: cdp-ingestion-config
     base: str
-    pattern: ^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$
+    pattern: ^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$
   NCBI_TAXON_ID:
     name: NCBI_TAXON_ID
     description: A NCBI Taxonomy identifier
@@ -386,6 +386,12 @@ types:
     from_schema: cdp-ingestion-config
     base: str
     pattern: FBbt:[0-9]{8}$
+  CHEBI_ID:
+    name: CHEBI_ID
+    description: A Chemical Entities of Biological Interest ontology identifier
+    from_schema: cdp-ingestion-config
+    base: str
+    pattern: ^CHEBI:[0-9]+$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
@@ -6260,7 +6266,6 @@ classes:
         - KeyPhotoLiteral
         - DestinationMetadataFilterKeyPair
         - VoxelSpacingLiteral
-        range: float
         required: true
         multivalued: true
         inlined: true
