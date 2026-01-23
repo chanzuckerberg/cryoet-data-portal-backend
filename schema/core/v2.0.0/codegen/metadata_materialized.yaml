@@ -4790,6 +4790,18 @@ classes:
     - DateStampedEntity
     - AuthoredEntity
     attributes:
+      annotation_ingest_id:
+        name: annotation_ingest_id
+        description: A unique identifier for grouping annotation sources during ingestion.
+        from_schema: metadata
+        alias: annotation_ingest_id
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: string
+        required: false
+        inlined: true
+        inlined_as_list: true
       annotation_method:
         name: annotation_method
         description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive

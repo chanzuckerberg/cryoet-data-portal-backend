@@ -37,11 +37,7 @@ class AnnotationIdentifierHelper(IdentifierHelper):
             [
                 container_key,
                 str(metadata.get("deposition_id", int(parents["deposition"].name))),
-                metadata["annotation_object"].get("description") or "",
-                metadata["annotation_object"]["name"],
-                metadata["annotation_method"],
-                metadata["annotation_object"].get("state") or "",
-                metadata.get("alignment_metadata_path", kwargs.get("alignment_metadata_path")),
+                str(metadata.get("annotation_ingest_id", "")),
             ],
         )
 

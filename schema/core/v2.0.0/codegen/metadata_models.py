@@ -4854,6 +4854,11 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]}
     )
 
+    annotation_ingest_id: Optional[str] = Field(
+        None,
+        description="""A unique identifier for grouping annotation sources during ingestion.""",
+        json_schema_extra={"linkml_meta": {"alias": "annotation_ingest_id", "domain_of": ["Annotation"]}},
+    )
     annotation_method: str = Field(
         ...,
         description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""",
