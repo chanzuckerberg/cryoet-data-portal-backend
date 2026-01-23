@@ -412,9 +412,7 @@ class Annotation(EntityInterface):
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
     )
-    object_id: str = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.",
-    )
+    object_id: str = strawberry.field(description="Ontology identifier for the annotation object.")
     object_name: str = strawberry.field(
         description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
     )
@@ -615,9 +613,7 @@ class AnnotationCreateInput:
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
     )
-    object_id: str = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.",
-    )
+    object_id: str = strawberry.field(description="Ontology identifier for the annotation object.")
     object_name: str = strawberry.field(
         description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
     )
@@ -682,9 +678,7 @@ class AnnotationUpdateInput:
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
     )
-    object_id: Optional[str] = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.",
-    )
+    object_id: Optional[str] = strawberry.field(description="Ontology identifier for the annotation object.")
     object_name: Optional[str] = strawberry.field(
         description="Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
     )

@@ -42,6 +42,7 @@ class DatasetCreateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
+            pattern=r"^EFO:[0-9]{7}$",
         ),
     ]
     development_stage_name: Annotated[
@@ -54,6 +55,7 @@ class DatasetCreateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
+            pattern=r"(^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)|(MmusDv:[0-9]{7}$)|(ZFS:[0-9]{7}$)|(FBdv:[0-9]{8}$)",
         ),
     ]
     disease_name: Annotated[
@@ -66,6 +68,7 @@ class DatasetCreateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
+            pattern=r"(^MONDO:[0-9]{7}$)|(^PATO:[0-9]{7}$)",
         ),
     ]
     organism_name: Annotated[
@@ -90,7 +93,7 @@ class DatasetCreateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
-            pattern=r"^BTO:[0-9]{7}$",
+            pattern=r"(^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)",
         ),
     ]
     cell_name: Annotated[
@@ -103,7 +106,7 @@ class DatasetCreateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
-            pattern=r"^CL:[0-9]{7}$",
+            pattern=r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)",
         ),
     ]
     cell_strain_name: Annotated[
@@ -116,7 +119,7 @@ class DatasetCreateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
-            pattern=r"(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)",
+            pattern=r"(WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)",
         ),
     ]
     sample_type: Annotated[sample_type_enum | None, Field()]
@@ -222,6 +225,7 @@ class DatasetUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
+            pattern=r"^EFO:[0-9]{7}$",
         ),
     ]
     development_stage_name: Annotated[
@@ -234,6 +238,7 @@ class DatasetUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
+            pattern=r"(^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)|(MmusDv:[0-9]{7}$)|(ZFS:[0-9]{7}$)|(FBdv:[0-9]{8}$)",
         ),
     ]
     disease_name: Annotated[
@@ -246,6 +251,7 @@ class DatasetUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
+            pattern=r"(^MONDO:[0-9]{7}$)|(^PATO:[0-9]{7}$)",
         ),
     ]
     organism_name: Annotated[
@@ -270,7 +276,7 @@ class DatasetUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
-            pattern=r"^BTO:[0-9]{7}$",
+            pattern=r"(^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)",
         ),
     ]
     cell_name: Annotated[
@@ -283,7 +289,7 @@ class DatasetUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
-            pattern=r"^CL:[0-9]{7}$",
+            pattern=r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)",
         ),
     ]
     cell_strain_name: Annotated[
@@ -296,7 +302,7 @@ class DatasetUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
-            pattern=r"(WBStrain[0-9]{8}$)|(^[a-zA-Z]+:[0-9]+$)",
+            pattern=r"(WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)",
         ),
     ]
     sample_type: Annotated[sample_type_enum | None, Field()]
