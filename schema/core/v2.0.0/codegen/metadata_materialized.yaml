@@ -341,7 +341,7 @@ types:
     description: A UniProt identifier
     from_schema: metadata
     base: str
-    pattern: ^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$
+    pattern: ^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$
   NCBI_TAXON_ID:
     name: NCBI_TAXON_ID
     description: A NCBI Taxonomy identifier
@@ -402,6 +402,12 @@ types:
     from_schema: metadata
     base: str
     pattern: FBbt:[0-9]{8}$
+  CHEBI_ID:
+    name: CHEBI_ID
+    description: A Chemical Entities of Biological Interest ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ^CHEBI:[0-9]+$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
@@ -1377,7 +1383,8 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: The EFO identifier for the cellular component.
+        description: EFO ontology identifier for the type of assay performed in a
+          CryoET dataset
         from_schema: metadata
         exact_mappings:
         - cdp-common:assay_id
@@ -1589,7 +1596,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: The UBERON identifier for the tissue.
+        description: The ontology identifier for the tissue.
         from_schema: metadata
         exact_mappings:
         - cdp-common:tissue_id
@@ -1608,8 +1615,9 @@ classes:
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: (^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)
+        pattern: (^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)
         any_of:
+        - range: BTO_ID
         - range: CL_ID
         - range: WBBT_ID
         - range: ZFA_ID
@@ -1647,7 +1655,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: Cell Ontology identifier for the cell type
+        description: The ontology identifier for the cell type.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_type_id
@@ -1704,7 +1712,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: Link to more information about the cell strain.
+        description: The ontology identifier for the cell strain.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_strain_id
@@ -2788,7 +2796,6 @@ classes:
         name: aligned_tiltseries_binning
         description: Binning factor of the aligned tilt series
         from_schema: metadata
-        ifabsent: float(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeries
         domain_of:
@@ -2809,7 +2816,6 @@ classes:
         name: binning_from_frames
         description: Describes the binning factor from frames to tilt series file
         from_schema: metadata
-        ifabsent: float(1)
         alias: binning_from_frames
         owner: TiltSeries
         domain_of:
@@ -3582,8 +3588,7 @@ classes:
     attributes:
       id:
         name: id
-        description: Gene Ontology Cellular Component identifier or UniProtKB accession
-          for the annotation object.
+        description: Ontology identifier for the annotation object.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_id
@@ -3602,10 +3607,12 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)
+        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)
         any_of:
         - range: GO_ID
         - range: UNIPROT_ID
+        - range: UBERON_ID
+        - range: CHEBI_ID
       name:
         name: name
         description: Name of the object being annotated (e.g. ribosome, nuclear pore
@@ -4714,7 +4721,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)
+        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)
         any_of:
         - range: GO_ID
         - range: UNIPROT_ID
@@ -5070,7 +5077,6 @@ classes:
         name: x
         description: X shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: x
         owner: AlignmentOffset
         domain_of:
@@ -5094,7 +5100,6 @@ classes:
         name: y
         description: Y shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: y
         owner: AlignmentOffset
         domain_of:
@@ -5118,7 +5123,6 @@ classes:
         name: z
         description: Z shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: z
         owner: AlignmentOffset
         domain_of:
@@ -5298,7 +5302,6 @@ classes:
         name: x_rotation_offset
         description: The x rotation offset relative to the tomogram.
         from_schema: metadata
-        ifabsent: int(0)
         alias: x_rotation_offset
         owner: Alignment
         domain_of:

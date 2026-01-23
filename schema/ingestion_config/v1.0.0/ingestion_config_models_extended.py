@@ -141,6 +141,7 @@ def validate_authors_status(authors: List[Author]) -> List[ValueError]:
 
     return errors
 
+orcid_cache = {}
 
 @alru_cache
 async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
@@ -150,6 +151,7 @@ async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
     url = f"https://pub.orcid.org/v3.0/{orcid_id}"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         logger.debug("Checking ORCID %s at %s, status %s", orcid_id, url, response.status)
+        orcid_cache[(orcid_id,)] = response.status == 200
         return orcid_id, response.status == 200
 
 
@@ -158,9 +160,12 @@ async def validate_orcids(orcid_list: Set[str]) -> Set[str]:
     Returns a list of invalid ORCIDs, from the provided list
     """
     invalid_orcids: Set[str] = []
+    lookup_orcid_queue = RateLimitedQueue(interval=0.2, cache=orcid_cache)  # limit to 5/sec, ORCID rate limit is 12/sec
 
-    tasks = [lookup_orcid(orcid) for orcid in orcid_list]
+    tasks = [lookup_orcid_queue.enqueue(lookup_orcid, orcid) for orcid in orcid_list]
+    lookup_orcid_queue.start()
     results = await asyncio.gather(*tasks)
+    await lookup_orcid_queue.stop()
     invalid_orcids += {orcid for orcid, valid in results if not valid}
     return invalid_orcids
 
@@ -775,12 +780,12 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
             has_parent_filters = source_element.parent_filters is not None
 
             # Get the actual shapes in the source entry
-            shapes = source_element.model_fields.copy()
+            shapes = source_element.__class__.model_fields.copy()
             if has_parent_filters:
                 shapes.pop("parent_filters")
 
             # Only one of these should be present (tested above)
-            shapes = [shape for shape in shapes if getattr(source_element, shape) is not None]
+            shapes = [shape for shape in shapes if getattr(source_element, shape)]
             shape = shapes[0] if shapes else None
 
             # If the shape is already used in another source entry, add the shape to the error set

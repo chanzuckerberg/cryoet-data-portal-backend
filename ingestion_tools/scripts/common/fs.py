@@ -11,6 +11,8 @@ from typing import Any
 import boto3
 from s3fs import S3FileSystem
 
+from common.retry import s3_retry_decorator
+
 
 class FileSystemApi(ABC):
     force_overwrite: bool = False
@@ -86,12 +88,15 @@ class S3Filesystem(FileSystemApi):
                 md5_digests.append(md5(chunk).digest())
         return md5(b"".join(md5_digests)).hexdigest() + "-" + str(len(md5_digests))
 
+    @s3_retry_decorator
     def glob(self, *args: list[str]) -> list[str]:
         return self.s3fs.glob(*args)
 
+    @s3_retry_decorator
     def open(self, path: str, mode: str, **kwargs) -> TextIOBase:
         return self.s3fs.open(path, mode, **kwargs)
 
+    @s3_retry_decorator
     def localreadable(self, path: str) -> str:
         local_dest_file = os.path.join(self.tmpdir, path)
         # Don't re-download it if it's already available.
@@ -112,6 +117,7 @@ class S3Filesystem(FileSystemApi):
     def destformat(self, path: str) -> str:
         return f"s3://{path}"
 
+    @s3_retry_decorator
     def push(self, path: str) -> None:
         remote_file = os.path.relpath(path, self.tmpdir)
         if os.path.isfile(path):
@@ -129,10 +135,12 @@ class S3Filesystem(FileSystemApi):
         print(f"Pushing {path} to {remote_file}")
         self.s3fs.put(path, remote_file, recursive=True)
 
+    @s3_retry_decorator
     def exists(self, path: str) -> bool:
         return self.s3fs.exists(path)
 
     # Copy from one s3 location to another
+    @s3_retry_decorator
     def copy(self, src_path: str, dest_path: str) -> None:
         # Don't re-copy it if it's already available.
         if self.exists(dest_path):
@@ -152,6 +160,7 @@ class S3Filesystem(FileSystemApi):
         # square brackets [] in them, and that breaks its copy method.
         # self.s3fs.copy(src_path, dest_path, expand=False)
 
+    @s3_retry_decorator
     def read_block(self, path: str, start: int | None = None, end: int | None = None) -> str:
         if start is None:
             start = 0
@@ -173,6 +182,7 @@ class S3Filesystem(FileSystemApi):
 
         return local_dest_file
 
+    @s3_retry_decorator
     def move(self, src_path: str, dest_path: str, **kwargs) -> None:
         self.s3fs.mv(src_path, dest_path, **kwargs)
 
