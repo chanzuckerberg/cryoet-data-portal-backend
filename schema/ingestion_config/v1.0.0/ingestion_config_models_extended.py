@@ -158,8 +158,9 @@ async def validate_orcids(orcid_list: Set[str]) -> Set[str]:
     Returns a list of invalid ORCIDs, from the provided list
     """
     invalid_orcids: Set[str] = []
+    lookup_orcid_queue = RateLimitedQueue(interval=0.2)  # limit to 5/sec, ORCID rate limit is 12/sec
 
-    tasks = [lookup_orcid(orcid) for orcid in orcid_list]
+    tasks = [lookup_orcid_queue.enqueue(lookup_orcid, orcid) for orcid in orcid_list]
     results = await asyncio.gather(*tasks)
     invalid_orcids += {orcid for orcid, valid in results if not valid}
     return invalid_orcids
