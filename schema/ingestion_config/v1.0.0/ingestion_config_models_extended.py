@@ -141,6 +141,7 @@ def validate_authors_status(authors: List[Author]) -> List[ValueError]:
 
     return errors
 
+orcid_cache = {}
 
 @alru_cache
 async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
@@ -150,6 +151,7 @@ async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
     url = f"https://pub.orcid.org/v3.0/{orcid_id}"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
         logger.debug("Checking ORCID %s at %s, status %s", orcid_id, url, response.status)
+        orcid_cache[(orcid_id,)] = response.status == 200
         return orcid_id, response.status == 200
 
 
@@ -158,10 +160,12 @@ async def validate_orcids(orcid_list: Set[str]) -> Set[str]:
     Returns a list of invalid ORCIDs, from the provided list
     """
     invalid_orcids: Set[str] = []
-    lookup_orcid_queue = RateLimitedQueue(interval=0.2)  # limit to 5/sec, ORCID rate limit is 12/sec
+    lookup_orcid_queue = RateLimitedQueue(interval=0.2, cache=orcid_cache)  # limit to 5/sec, ORCID rate limit is 12/sec
 
     tasks = [lookup_orcid_queue.enqueue(lookup_orcid, orcid) for orcid in orcid_list]
+    lookup_orcid_queue.start()
     results = await asyncio.gather(*tasks)
+    await lookup_orcid_queue.stop()
     invalid_orcids += {orcid for orcid, valid in results if not valid}
     return invalid_orcids
 
