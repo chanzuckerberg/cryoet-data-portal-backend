@@ -5584,9 +5584,9 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     )
 
     annotation_ingest_id: Optional[str] = Field(
-        default=None,
+        None,
         description="""A unique identifier for grouping annotation sources during ingestion.""",
-        json_schema_extra={"linkml_meta": {"domain_of": ["Annotation"]}},
+        json_schema_extra={"linkml_meta": {"alias": "annotation_ingest_id", "domain_of": ["Annotation"]}},
     )
     annotation_method: str = Field(
         default=...,
