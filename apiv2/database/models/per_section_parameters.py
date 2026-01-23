@@ -43,7 +43,7 @@ class PerSectionParameters(Base):
     major_defocus: Mapped[float] = mapped_column(Float, nullable=True)
     max_resolution: Mapped[float] = mapped_column(Float, nullable=True)
     minor_defocus: Mapped[float] = mapped_column(Float, nullable=True)
-    phase_shift: Mapped[float] = mapped_column(Float, nullable=True)
+    phase_shift: Mapped[float] = mapped_column(Float, nullable=True, server_default="0")
     raw_angle: Mapped[float] = mapped_column(Float, nullable=False)
     run_id: Mapped[int] = mapped_column(Integer, ForeignKey("run.id"), nullable=False, index=True)
     run: Mapped["Run"] = relationship(

@@ -6040,6 +6040,16 @@
                 "value": {
                     "description": "The value for the voxel spacing literal.",
                     "items": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                                "type": "string"
+                            }
+                        ],
+                        "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
                         "type": "number"
                     },
                     "minItems": 1,

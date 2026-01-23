@@ -44,5 +44,5 @@ class TomogramAuthor(Base):
     affiliation_name: Mapped[str] = mapped_column(String, nullable=True)
     affiliation_address: Mapped[str] = mapped_column(String, nullable=True)
     affiliation_identifier: Mapped[str] = mapped_column(String, nullable=True)
-    corresponding_author_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
-    primary_author_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
+    corresponding_author_status: Mapped[bool] = mapped_column(Boolean, nullable=True, server_default="False")
+    primary_author_status: Mapped[bool] = mapped_column(Boolean, nullable=True, server_default="False")

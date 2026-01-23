@@ -775,12 +775,12 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
             has_parent_filters = source_element.parent_filters is not None
 
             # Get the actual shapes in the source entry
-            shapes = source_element.model_fields.copy()
+            shapes = source_element.__class__.model_fields.copy()
             if has_parent_filters:
                 shapes.pop("parent_filters")
 
             # Only one of these should be present (tested above)
-            shapes = [shape for shape in shapes if getattr(source_element, shape) is not None]
+            shapes = [shape for shape in shapes if getattr(source_element, shape)]
             shape = shapes[0] if shapes else None
 
             # If the shape is already used in another source entry, add the shape to the error set

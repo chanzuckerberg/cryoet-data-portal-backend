@@ -2788,7 +2788,6 @@ classes:
         name: aligned_tiltseries_binning
         description: Binning factor of the aligned tilt series
         from_schema: metadata
-        ifabsent: float(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeries
         domain_of:
@@ -2809,7 +2808,6 @@ classes:
         name: binning_from_frames
         description: Describes the binning factor from frames to tilt series file
         from_schema: metadata
-        ifabsent: float(1)
         alias: binning_from_frames
         owner: TiltSeries
         domain_of:
@@ -5082,7 +5080,6 @@ classes:
         name: x
         description: X shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: x
         owner: AlignmentOffset
         domain_of:
@@ -5106,7 +5103,6 @@ classes:
         name: y
         description: Y shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: y
         owner: AlignmentOffset
         domain_of:
@@ -5130,7 +5126,6 @@ classes:
         name: z
         description: Z shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: z
         owner: AlignmentOffset
         domain_of:
@@ -5310,7 +5305,6 @@ classes:
         name: x_rotation_offset
         description: The x rotation offset relative to the tomogram.
         from_schema: metadata
-        ifabsent: int(0)
         alias: x_rotation_offset
         owner: Alignment
         domain_of:

@@ -1,3 +1,0 @@
-linkml==1.8.2 # upgrade blocked by https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/274
-linkml-runtime
-click

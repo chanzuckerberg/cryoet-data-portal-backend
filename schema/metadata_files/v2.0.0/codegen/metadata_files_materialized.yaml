@@ -1070,7 +1070,6 @@ classes:
         name: x_rotation_offset
         description: The x rotation offset relative to the tomogram.
         from_schema: metadata
-        ifabsent: int(0)
         alias: x_rotation_offset
         owner: AlignmentMetadata
         domain_of:
@@ -2395,7 +2394,6 @@ classes:
         name: aligned_tiltseries_binning
         description: Binning factor of the aligned tilt series
         from_schema: metadata
-        ifabsent: float(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeriesMetadata
         domain_of:
@@ -2416,7 +2414,6 @@ classes:
         name: binning_from_frames
         description: Describes the binning factor from frames to tilt series file
         from_schema: metadata
-        ifabsent: float(1)
         alias: binning_from_frames
         owner: TiltSeriesMetadata
         domain_of:
