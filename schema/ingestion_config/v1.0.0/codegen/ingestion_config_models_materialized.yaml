@@ -6265,7 +6265,11 @@ classes:
         multivalued: true
         inlined: true
         inlined_as_list: true
+        pattern: ^float[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$
         minimum_cardinality: 1
+        any_of:
+        - range: float
+        - range: FloatFormattedString
   TomogramHeader:
     name: TomogramHeader
     description: A tomogram header, a unique source attribute for voxel spacing.
