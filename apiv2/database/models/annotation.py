@@ -76,7 +76,7 @@ class Annotation(Base):
     https_metadata_path: Mapped[str] = mapped_column(String, nullable=False)
     annotation_publication: Mapped[str] = mapped_column(String, nullable=True)
     annotation_method: Mapped[str] = mapped_column(String, nullable=False)
-    ground_truth_status: Mapped[bool] = mapped_column(Boolean, nullable=True)
+    ground_truth_status: Mapped[bool] = mapped_column(Boolean, nullable=True, server_default="False")
     object_id: Mapped[str] = mapped_column(String, nullable=False)
     object_name: Mapped[str] = mapped_column(String, nullable=False)
     object_description: Mapped[str] = mapped_column(String, nullable=True)
@@ -86,7 +86,7 @@ class Annotation(Base):
     confidence_recall: Mapped[float] = mapped_column(Float, nullable=True)
     ground_truth_used: Mapped[str] = mapped_column(String, nullable=True)
     annotation_software: Mapped[str] = mapped_column(String, nullable=True)
-    is_curator_recommended: Mapped[bool] = mapped_column(Boolean, nullable=True)
+    is_curator_recommended: Mapped[bool] = mapped_column(Boolean, nullable=True, server_default="False")
     method_type: Mapped[annotation_method_type_enum] = mapped_column(
         Enum(annotation_method_type_enum, native_enum=False), nullable=False,
     )
