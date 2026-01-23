@@ -99,12 +99,6 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-ingestion-config/',
                          'from_schema': 'cdp-ingestion-config',
                          'name': 'CC_ID',
                          'pattern': '^CC-[0-9]{4}$'},
-               'CHEBI_ID': {'base': 'str',
-                            'description': 'A Chemical Entities of Biological '
-                                           'Interest ontology identifier',
-                            'from_schema': 'cdp-ingestion-config',
-                            'name': 'CHEBI_ID',
-                            'pattern': '^CHEBI:[0-9]+$'},
                'CL_ID': {'base': 'str',
                          'description': 'A Cell Ontology identifier',
                          'from_schema': 'cdp-ingestion-config',
@@ -248,7 +242,7 @@ linkml_meta = LinkMLMeta({'default_prefix': 'cdp-ingestion-config/',
                               'description': 'A UniProt identifier',
                               'from_schema': 'cdp-ingestion-config',
                               'name': 'UNIPROT_ID',
-                              'pattern': '^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$'},
+                              'pattern': '^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$'},
                'UNKNOWN_LITERAL': {'base': 'str',
                                    'description': 'A placeholder for an unknown '
                                                   'value.',
@@ -1142,7 +1136,7 @@ class Assay(ConfiguredBaseModel):
                        'AuthorMixin',
                        'Author'],
          'exact_mappings': ['cdp-common:assay_name']} })
-    id: Optional[str] = Field(default=None, description="""EFO ontology identifier for the type of assay performed in a CryoET dataset""", json_schema_extra = { "linkml_meta": {'domain_of': ['Assay',
+    id: Optional[str] = Field(default=None, description="""The EFO identifier for the cellular component.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Assay',
                        'DevelopmentStageDetails',
                        'Disease',
                        'TissueDetails',
@@ -1308,8 +1302,7 @@ class TissueDetails(ConfiguredBaseModel):
                        'AuthorMixin',
                        'Author'],
          'exact_mappings': ['cdp-common:tissue_name']} })
-    id: Optional[str] = Field(default=None, description="""The ontology identifier for the tissue.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'BTO_ID'},
-                    {'range': 'CL_ID'},
+    id: Optional[str] = Field(default=None, description="""The UBERON identifier for the tissue.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'CL_ID'},
                     {'range': 'WBBT_ID'},
                     {'range': 'ZFA_ID'},
                     {'range': 'FBBT_ID'},
@@ -1327,7 +1320,7 @@ class TissueDetails(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"(^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)")
+        pattern=re.compile(r"(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -1358,7 +1351,7 @@ class CellType(ConfiguredBaseModel):
                        'AuthorMixin',
                        'Author'],
          'exact_mappings': ['cdp-common:cell_name']} })
-    id: Optional[str] = Field(default=None, description="""The ontology identifier for the cell type.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'CL_ID'},
+    id: Optional[str] = Field(default=None, description="""Cell Ontology identifier for the cell type""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'CL_ID'},
                     {'range': 'WBBT_ID'},
                     {'range': 'ZFA_ID'},
                     {'range': 'FBBT_ID'},
@@ -1407,7 +1400,7 @@ class CellStrain(ConfiguredBaseModel):
                        'AuthorMixin',
                        'Author'],
          'exact_mappings': ['cdp-common:cell_strain_name']} })
-    id: Optional[str] = Field(default=None, description="""The ontology identifier for the cell strain.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'WORMBASE_STRAIN_ID'},
+    id: Optional[str] = Field(default=None, description="""Link to more information about the cell strain.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'WORMBASE_STRAIN_ID'},
                     {'range': 'NCBI_TAXON_ID'},
                     {'range': 'CVCL_ID'},
                     {'range': 'CC_ID'}],
@@ -2259,10 +2252,7 @@ class AnnotationObject(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    id: str = Field(default=..., description="""Ontology identifier for the annotation object.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'GO_ID'},
-                    {'range': 'UNIPROT_ID'},
-                    {'range': 'UBERON_ID'},
-                    {'range': 'CHEBI_ID'}],
+    id: str = Field(default=..., description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'GO_ID'}, {'range': 'UNIPROT_ID'}],
          'domain_of': ['Assay',
                        'DevelopmentStageDetails',
                        'Disease',
@@ -2292,7 +2282,7 @@ class AnnotationObject(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)")
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -2960,7 +2950,7 @@ class IdentifiedObject(ConfiguredBaseModel):
 
     @field_validator('object_id')
     def pattern_object_id(cls, v):
-        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)")
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -2991,9 +2981,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixins': ['DateStampedEntity', 'AuthoredEntity']})
 
-    annotation_ingest_id: Optional[str] = Field(None, description="""A unique identifier for grouping annotation sources during ingestion.""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_ingest_id', 'domain_of': ['Annotation']} })
-    annotation_method: str = Field(..., description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_method',
-         'domain_of': ['Annotation'],
+    annotation_method: str = Field(default=..., description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_method']} })
     annotation_object: AnnotationObject = Field(default=..., description="""Metadata describing the object being annotated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation']} })
     annotation_publications: Optional[str] = Field(default=None, description="""List of publication IDs (EMPIAR, EMDB, DOI, PDB) that describe this annotation method. Comma separated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation'],
