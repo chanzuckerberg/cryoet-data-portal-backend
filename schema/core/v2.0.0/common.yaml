@@ -240,6 +240,7 @@ slots:
       Name of the tissue from which a biological sample used in a CryoET study is derived from.
   tissue_id:
     any_of:
+      - range: BTO_ID
       - range: CL_ID
       - range: WBBT_ID
       - range: ZFA_ID
@@ -247,7 +248,7 @@ slots:
       - range: UBERON_ID
     recommended: true
     description: >-
-      The UBERON identifier for the tissue.
+      The ontology identifier for the tissue.
 
   # Cell Type
   cell_name:
@@ -264,7 +265,7 @@ slots:
       - range: UBERON_ID
     recommended: true
     description: >-
-      Cell Ontology identifier for the cell type
+      The ontology identifier for the cell type.
 
   # Cell Strain
   cell_strain_name:
@@ -280,7 +281,7 @@ slots:
       - range: CC_ID
     recommended: true
     description: >-
-      Link to more information about the cell strain.
+      The ontology identifier for the cell strain.
 
   # Cell Component
   cell_component_name:
@@ -304,7 +305,7 @@ slots:
     range: EFO_ID
     recommended: true
     description: >-
-      The EFO identifier for the cellular component.
+      EFO ontology identifier for the type of assay performed in a CryoET dataset
 
   # Development Stage Component
   development_stage_name:
@@ -750,8 +751,10 @@ slots:
     any_of:
       - range: GO_ID
       - range: UNIPROT_ID
+      - range: UBERON_ID
+      - range: CHEBI_ID
     required: true
-    description: Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
+    description: Ontology identifier for the annotation object.
   annotation_object_name:
     range: string
     required: true
@@ -1599,7 +1602,7 @@ types:
   UNIPROT_ID:
     description: A UniProt identifier
     base: str
-    pattern: '^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$'
+    pattern: '^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$'
 
   NCBI_TAXON_ID:
     description: A NCBI Taxonomy identifier
@@ -1650,6 +1653,11 @@ types:
     description: A drosophila anatomy ontology identifier
     base: str
     pattern: 'FBbt:[0-9]{8}$'
+
+  CHEBI_ID:
+    description: A Chemical Entities of Biological Interest ontology identifier
+    base: str
+    pattern: '^CHEBI:[0-9]+$'
 
   ONTOLOGY_ID:
     description: An ontology identifier

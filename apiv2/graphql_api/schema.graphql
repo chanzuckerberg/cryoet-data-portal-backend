@@ -484,9 +484,7 @@ type Annotation implements EntityInterface & Node {
   """
   groundTruthStatus: Boolean
 
-  """
-  Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
-  """
+  """Ontology identifier for the annotation object."""
   objectId: String!
 
   """
@@ -884,9 +882,7 @@ input AnnotationCreateInput {
   """
   groundTruthStatus: Boolean = null
 
-  """
-  Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
-  """
+  """Ontology identifier for the annotation object."""
   objectId: String!
 
   """
@@ -1568,9 +1564,7 @@ input AnnotationUpdateInput {
   """
   groundTruthStatus: Boolean = null
 
-  """
-  Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
-  """
+  """Ontology identifier for the annotation object."""
   objectId: String
 
   """
@@ -1798,7 +1792,7 @@ type Dataset implements EntityInterface & Node {
   assayLabel: String
 
   """
-  Ontology identifier for the type of assay performed in a CryoET dataset
+  EFO ontology identifier for the type of assay performed in a CryoET dataset
   """
   assayOntologyId: String
 
@@ -1833,7 +1827,7 @@ type Dataset implements EntityInterface & Node {
   """
   tissueName: String
 
-  """UBERON identifier for the tissue"""
+  """The ontology identifier for the tissue."""
   tissueId: String
 
   """
@@ -1841,7 +1835,7 @@ type Dataset implements EntityInterface & Node {
   """
   cellName: String
 
-  """Cell Ontology identifier for the cell type"""
+  """The ontology identifier for the cell type."""
   cellTypeId: String
 
   """Cell line or strain for the sample."""
@@ -2252,7 +2246,7 @@ input DatasetCreateInput {
   assayLabel: String = null
 
   """
-  Ontology identifier for the type of assay performed in a CryoET dataset
+  EFO ontology identifier for the type of assay performed in a CryoET dataset
   """
   assayOntologyId: String = null
 
@@ -2287,7 +2281,7 @@ input DatasetCreateInput {
   """
   tissueName: String = null
 
-  """UBERON identifier for the tissue"""
+  """The ontology identifier for the tissue."""
   tissueId: String = null
 
   """
@@ -2295,7 +2289,7 @@ input DatasetCreateInput {
   """
   cellName: String = null
 
-  """Cell Ontology identifier for the cell type"""
+  """The ontology identifier for the cell type."""
   cellTypeId: String = null
 
   """Cell line or strain for the sample."""
@@ -2644,7 +2638,7 @@ input DatasetUpdateInput {
   assayLabel: String = null
 
   """
-  Ontology identifier for the type of assay performed in a CryoET dataset
+  EFO ontology identifier for the type of assay performed in a CryoET dataset
   """
   assayOntologyId: String = null
 
@@ -2679,7 +2673,7 @@ input DatasetUpdateInput {
   """
   tissueName: String = null
 
-  """UBERON identifier for the tissue"""
+  """The ontology identifier for the tissue."""
   tissueId: String = null
 
   """
@@ -2687,7 +2681,7 @@ input DatasetUpdateInput {
   """
   cellName: String = null
 
-  """Cell Ontology identifier for the cell type"""
+  """The ontology identifier for the cell type."""
   cellTypeId: String = null
 
   """Cell line or strain for the sample."""
