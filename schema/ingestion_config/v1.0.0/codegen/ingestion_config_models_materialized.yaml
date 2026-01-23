@@ -6266,6 +6266,7 @@ classes:
         - KeyPhotoLiteral
         - DestinationMetadataFilterKeyPair
         - VoxelSpacingLiteral
+        range: float
         required: true
         multivalued: true
         inlined: true
