@@ -429,7 +429,7 @@ depositions:
       This deposition has two datasets, one acquired with the Volta phase plate at low defocus and one acquired without
       at higher defocus. The datasets are comprised of movie stacks, tiltseries, alignments, tomograms and hand-curated
       ground truth annotations of PP7 virus like particles. The data was acquired on a Krios G4 using a Falcon 4i
-      detector and SelctrisX energy filter. Tomograms were aligned using AreTomo3 2.2.2. Each run provides denoised and
+      detector and SelectrisX energy filter. Tomograms were aligned using AreTomo3 2.2.2. Each run provides denoised and
       CTF-corrected tomograms.
     deposition_identifier: 10341
     deposition_title: CZII 2-protein phantom (version 1.0)

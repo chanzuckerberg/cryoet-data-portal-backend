@@ -384,8 +384,8 @@ datasets:
     authors: *authors
     dataset_description:
       This is a large dataset (100+ tomograms) acquired with the Volta Phase Plate at a low defocus for benchmarking
-      VPP's effect in tomogram alignment and subtomogram averaging. The virus-like-partiles and the 80S-ribosomes (with
-      annotations avaliable) reached ~7Å STA resolution.
+      VPP's effect in tomogram alignment and subtomogram averaging. The virus-like-particles and the 80S-ribosomes (with
+      annotations available) reached ~7Å STA resolution.
     dataset_identifier: 10469
     dataset_title: CZII 2-protein phantom (version 1.0) with the Volta Phase Plate
     dates: *id001
