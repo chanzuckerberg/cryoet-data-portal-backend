@@ -31,4 +31,5 @@ def clean_up_standard_config(config: dict):
 def upgrade(config: dict) -> dict:
     add_frames_metadata(config)
     clean_up_standard_config(config)
+    config["version"] = "1.2.0"
     return config
