@@ -1219,6 +1219,42 @@ class ExtendedValidationVoxelSpacingEntity(VoxelSpacingEntity):
 
 
 class ExtendedValidationContainer(Container):
+    @field_validator("annotations")
+    @classmethod
+    def validate_unique_annotation_ingest_ids(
+        cls: Self,
+        annotations: Optional[List[ExtendedValidationAnnotationEntity]],
+    ) -> Optional[List[ExtendedValidationAnnotationEntity]]:
+        """Validate that annotation_ingest_id values are unique within the config."""
+        if not annotations:
+            return annotations
+
+        seen_ids = set()
+        duplicate_ids = set()
+
+        for annotation in annotations:
+            metadata = annotation.metadata
+            if metadata is None:
+                continue
+
+            # Get the annotation_ingest_id, skip if not present
+            ingest_id = getattr(metadata, "annotation_ingest_id", None)
+            if ingest_id is None:
+                continue
+
+            if ingest_id in seen_ids:
+                duplicate_ids.add(ingest_id)
+            else:
+                seen_ids.add(ingest_id)
+
+        if duplicate_ids:
+            raise ValueError(
+                f"Duplicate annotation_ingest_id values found: {sorted(duplicate_ids)}. "
+                "Each annotation must have a unique annotation_ingest_id within the config file.",
+            )
+
+        return annotations
+
     # Set global network_validation flag
     def __init__(self, **data):
         global running_network_validation
