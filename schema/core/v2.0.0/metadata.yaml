@@ -902,6 +902,10 @@ classes:
       - DateStampedEntity
       - AuthoredEntity
     attributes:
+      annotation_ingest_id:
+        range: string
+        description: A unique identifier used during ingestion to identify this annotation.
+        required: True
       annotation_method:
         exact_mappings:
           - cdp-common:annotation_method

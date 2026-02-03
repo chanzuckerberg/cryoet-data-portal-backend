@@ -1309,6 +1309,18 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
+      annotation_ingest_id:
+        name: annotation_ingest_id
+        description: A unique identifier used during ingestion to identify this annotation.
+        from_schema: metadata
+        alias: annotation_ingest_id
+        owner: AnnotationMetadata
+        domain_of:
+        - Annotation
+        range: string
+        required: false
+        inlined: true
+        inlined_as_list: true
       annotation_method:
         name: annotation_method
         description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive
