@@ -169,8 +169,8 @@ datasets: REQUIRED
       id: OPTIONAL, STRING (EFO_ID)
       name: REQUIRED, STRING
     development_stage: REQUIRED
-      id: OPTIONAL, STRING (ontology ID, e.g. UBERON / HsapDv / etc)
-      name: OPTIONAL, STRING
+      id: OPTIONAL, STRING (ontology ID, e.g. UBERON / HsapDv / etc; or unknown)
+      name: OPTIONAL, STRING (or unknown)
     disease: REQUIRED
       id: OPTIONAL, STRING (MONDO_ID / PATO_ID)
       name: OPTIONAL, STRING
