@@ -104,6 +104,11 @@ def skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = True
     global validation_exclusions
 
     for base in obj.__class__.__bases__:
+        # a class that has an add_regex_error_augmenter, so the base case is still the "Extended" class,
+        # so we need to go down one more level to get the actual base class
+        if base.__name__.startswith("Extended"):
+            base = base.__bases__[0]
+
         if base.__name__ not in validation_exclusions:
             continue
 
