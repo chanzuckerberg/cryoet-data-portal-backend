@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import os.path
 from abc import ABC, abstractmethod
@@ -17,9 +18,24 @@ from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
 from skimage.measure import block_reduce
 from skimage.transform import resize_local_mean
+from tenacity import (
+    before_sleep_log,
+    retry,
+    retry_if_exception,
+    stop_after_attempt,
+    wait_exponential_jitter,
+)
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi, S3Filesystem
+from common.retry import (
+    RETRY_INITIAL_WAIT_SECONDS,
+    RETRY_JITTER_SECONDS,
+    RETRY_MAX_ATTEMPTS,
+    RETRY_MAX_WAIT_SECONDS,
+    is_s3_throttling,
+    logger,
+)
 
 
 @dataclass
@@ -75,6 +91,20 @@ class ZarrReader:
 
 class ZarrWriter:
     def __init__(self, fs: FileSystemApi, zarrdir: str):
+        self._init_zarr_store(fs, zarrdir)
+
+    @retry(
+        stop=stop_after_attempt(RETRY_MAX_ATTEMPTS),
+        wait=wait_exponential_jitter(
+            initial=RETRY_INITIAL_WAIT_SECONDS,
+            max=RETRY_MAX_WAIT_SECONDS,
+            jitter=RETRY_JITTER_SECONDS,
+        ),
+        retry=retry_if_exception(is_s3_throttling),
+        before_sleep=before_sleep_log(logger, logging.WARNING),
+        reraise=True,
+    )
+    def _init_zarr_store(self, fs: FileSystemApi, zarrdir: str):
         if isinstance(fs, S3Filesystem):
             fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs, dimension_separator="/")
             self.loc = ZarrLocation(fsstore)
@@ -104,6 +134,17 @@ class ZarrWriter:
     def ome_zarr_transforms(self, voxel_size: Tuple[float, float, float]) -> List[Dict[str, Any]]:
         return [{"scale": [voxel_size[0], voxel_size[1], voxel_size[2]], "type": "scale"}]
 
+    @retry(
+        stop=stop_after_attempt(RETRY_MAX_ATTEMPTS),
+        wait=wait_exponential_jitter(
+            initial=RETRY_INITIAL_WAIT_SECONDS,
+            max=RETRY_MAX_WAIT_SECONDS,
+            jitter=RETRY_JITTER_SECONDS,
+        ),
+        retry=retry_if_exception(is_s3_throttling),
+        before_sleep=before_sleep_log(logger, logging.WARNING),
+        reraise=True,
+    )
     def write_data(
         self,
         data: List[np.ndarray],
@@ -152,7 +193,7 @@ class ZarrWriter:
             zds = self.root_group.create_dataset(
                 path,
                 shape=arr.shape,
-                dtype="float32",
+                dtype=arr.dtype,
                 chunks=chunk_size,
                 overwrite=True,
             )
@@ -166,7 +207,7 @@ class ZarrWriter:
                     y1 = min(y0 + yc, y)
                     for x0 in range(0, x, xc):
                         x1 = min(x0 + xc, x)
-                        zds[z0:z1, y0:y1, x0:x1] = np.asarray(arr[z0:z1, y0:y1, x0:x1], dtype=np.float32, order="C")
+                        zds[z0:z1, y0:y1, x0:x1] = np.asarray(arr[z0:z1, y0:y1, x0:x1], dtype=arr.dtype, order="C")
 
             datasets_meta.append(
                 {
@@ -346,7 +387,8 @@ class TomoConverter:
         self,
         max_layers: int = 2,
         scale_z_axis: bool = True,
-        voxel_spacing: float | None = None,
+        voxel_spacing: float = None,
+        dtype: str = None,
     ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
         # Voxel size for unbinned
         if not voxel_spacing:
@@ -364,7 +406,7 @@ class TomoConverter:
             downscaled_data = self.scaled_data_transformation(
                 block_reduce(pyramid[i], block_size=(z_scale, 2, 2), func=downscale_method),
             )
-            pyramid.append(downscaled_data)
+            pyramid.append(pyramid.append(downscaled_data.astype(dtype) if dtype else downscaled_data))
             pyramid_voxel_spacing.append(
                 (
                     pyramid_voxel_spacing[i][0] * z_scale,
@@ -624,13 +666,18 @@ def make_pyramids(
     header_mapper: Callable[[np.array], None] = None,
     voxel_spacing: float | None = None,
     label: int = None,
-    scale_0_dims = None,
+    scale_0_dims=None,
     threshold: float | None = None,
     chunk_size: Tuple[int, int, int] = (256, 256, 256),
     multilabels: bool = False,
+    dtype: str = None,
 ):
     tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold, multilabels=multilabels)
-    pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
+    pyramid, pyramid_voxel_spacing = tc.make_pyramid(
+        scale_z_axis=scale_z_axis,
+        voxel_spacing=voxel_spacing,
+        dtype=dtype,
+    )
     _ = tc.pyramid_to_omezarr(
         fs,
         pyramid,

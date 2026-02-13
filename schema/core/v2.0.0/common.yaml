@@ -240,6 +240,7 @@ slots:
       Name of the tissue from which a biological sample used in a CryoET study is derived from.
   tissue_id:
     any_of:
+      - range: BTO_ID
       - range: CL_ID
       - range: WBBT_ID
       - range: ZFA_ID
@@ -247,7 +248,7 @@ slots:
       - range: UBERON_ID
     recommended: true
     description: >-
-      The UBERON identifier for the tissue.
+      The ontology identifier for the tissue.
 
   # Cell Type
   cell_name:
@@ -264,7 +265,7 @@ slots:
       - range: UBERON_ID
     recommended: true
     description: >-
-      Cell Ontology identifier for the cell type
+      The ontology identifier for the cell type.
 
   # Cell Strain
   cell_strain_name:
@@ -280,7 +281,7 @@ slots:
       - range: CC_ID
     recommended: true
     description: >-
-      Link to more information about the cell strain.
+      The ontology identifier for the cell strain.
 
   # Cell Component
   cell_component_name:
@@ -304,7 +305,7 @@ slots:
     range: EFO_ID
     recommended: true
     description: >-
-      The EFO identifier for the cellular component.
+      EFO ontology identifier for the type of assay performed in a CryoET dataset
 
   # Development Stage Component
   development_stage_name:
@@ -411,7 +412,11 @@ slots:
     required: true
     description: Name of the camera manufacturer
   tiltseries_camera_model:
-    range: string
+    any_of:
+      - range: StringFormattedString
+      - range: tiltseries_camera_model_fei_tfs_enum
+      - range: tiltseries_camera_model_gatan_enum
+      - range: tiltseries_camera_model_simulated_enum
     required: true
     description: Camera model name
   tiltseries_data_acquisition_software:
@@ -746,8 +751,10 @@ slots:
     any_of:
       - range: GO_ID
       - range: UNIPROT_ID
+      - range: UBERON_ID
+      - range: CHEBI_ID
     required: true
-    description: Gene Ontology Cellular Component identifier or UniProtKB accession for the annotation object.
+    description: Ontology identifier for the annotation object.
   annotation_object_name:
     range: string
     required: true
@@ -775,10 +782,6 @@ slots:
   # Annotation Source File slots
   # ============================================================================
   #id (int): Numeric identifier (May change!)
-  annotation_source_file_format:
-    range: string
-    required: true
-    description: File format for this file
   annotation_source_file_https_path:
     range: string
     description: HTTPS url for the annotation file
@@ -813,7 +816,6 @@ slots:
     range: string
     description: Path to the alignment metadata file for the tomograms this annotation applies to.
 
-  #Annotation (Annotation): The annotation this file is a part of
   # ============================================================================
   # Annotation Source File shape-specific slots
   # ============================================================================
@@ -859,6 +861,24 @@ slots:
   annotation_source_file_mesh_name:
     range: string
     description: The name that identifies to a single annotation mesh among multiple meshes.
+  point_annotation_file_format:
+    range: point_annotation_file_format_enum
+    description: The format of the point annotation file.
+  oriented_point_annotation_file_format:
+    range: oriented_point_annotation_file_format_enum
+    description: The format of the oriented point annotation file.
+  instance_segmentation_annotation_file_format:
+    range: instance_segmentation_annotation_file_format_enum
+    description: The format of the instance segmentation annotation file.
+  volume_annotation_file_format:
+    range: volume_annotation_file_format_enum
+    description: The format of the volume annotation file.
+  triangular_mesh_annotation_file_format:
+    range: triangular_mesh_annotation_file_format_enum
+    description: The format of the triangular mesh annotation file.
+  triangular_mesh_annotation_group_file_format:
+    range: triangular_mesh_annotation_group_file_format_enum
+    description: The format of the triangular mesh annotation group file.
 
   # ============================================================================
   # Identified Objects fields
@@ -1302,17 +1322,52 @@ enums:
       InstanceSegmentation:
         description: A volume with labels for multiple instances
 
-  annotation_file_format_enum:
-    description: Describes the format of the annotation file
+  point_annotation_file_format_enum:
+    description: Describes the format of the point annotation file
+    permissible_values:
+      csv:
+      csv_with_header:
+      tsv:
+      mod:
+      relion3_star:
+      relion4_star:
+      tomoman_relion_star:
+      copick:
+
+  oriented_point_annotation_file_format_enum:
+    description: Describes the format of the oriented point annotation file
+    permissible_values:
+      mod:
+      relion3_star:
+      relion4_star:
+      tomoman_relion_star:
+      copick:
+      stopgap_star:
+
+  instance_segmentation_annotation_file_format_enum:
+    description: Describes the format of an instance segmentation annotation file
+    permissible_values:
+      tardis:
+      copick:
+
+  volume_annotation_file_format_enum:
+    description: Describes the format of a volume (semantic / semantic segmentation) annotation file
     permissible_values:
       mrc:
-        description: MRC format
       zarr:
-        description: OMEZARR format
-      ndjson:
-        description: NDJSON format
+
+  triangular_mesh_annotation_file_format_enum:
+    description: Describes the format of a triangular mesh annotation file
+    permissible_values:
+      obj:
+      stl:
+      vtk:
       glb:
-        description: GLB format
+
+  triangular_mesh_annotation_group_file_format_enum:
+    description: Describes the format of a triangular mesh group annotation file
+    permissible_values:
+      hff:
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.
@@ -1334,6 +1389,8 @@ enums:
         description: The file has ctffind schema
       Gctf:
         description: The file has Gctf schema
+      IMOD:
+        description: The file has IMOD schema
 
   deposition_types_enum:
     description: Types of data a deposition has
@@ -1392,6 +1449,36 @@ enums:
         description: Thermo Fisher Scientific
       simulated:
         description: Simulated data
+
+  tiltseries_camera_model_fei_tfs_enum:
+    description: Camera model for FEI / TFS cameras
+    permissible_values:
+      "FALCON IV":
+        description: FALCON IV
+      "FALCON 4i":
+        description: FALCON 4i
+
+  tiltseries_camera_model_gatan_enum:
+    description: Camera model for Gatan cameras
+    permissible_values:
+      K2:
+        description: K2
+      "K2 SUMMIT":
+        description: K2 SUMMIT
+      K3:
+        description: K3
+      "K3 BIOQUANTUM":
+        description: K3 BIOQUANTUM
+      UltraCam:
+        description: UltraCam
+      UltraScan:
+        description: UltraScan
+
+  tiltseries_camera_model_simulated_enum:
+    description: Camera model for simulated cameras
+    permissible_values:
+      simulated:
+        description: Simulated camera model
 
   tiltseries_microscope_manufacturer_enum:
     description: Microscope manufacturer
@@ -1515,7 +1602,7 @@ types:
   UNIPROT_ID:
     description: A UniProt identifier
     base: str
-    pattern: '^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$'
+    pattern: '^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$'
 
   NCBI_TAXON_ID:
     description: A NCBI Taxonomy identifier
@@ -1566,6 +1653,11 @@ types:
     description: A drosophila anatomy ontology identifier
     base: str
     pattern: 'FBbt:[0-9]{8}$'
+
+  CHEBI_ID:
+    description: A Chemical Entities of Biological Interest ontology identifier
+    base: str
+    pattern: '^CHEBI:[0-9]+$'
 
   ONTOLOGY_ID:
     description: An ontology identifier
@@ -1625,7 +1717,6 @@ types:
 classes:
   Any:
     class_uri: linkml:Any
-    description: A placeholder for any type of data.
 
   # ============================================================================
   # Mixins

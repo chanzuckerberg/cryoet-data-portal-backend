@@ -2,24 +2,24 @@
 alignments: OPTIONAL
 - metadata: OPTIONAL
     alignment_type: OPTIONAL ENUM (LOCAL, GLOBAL)
-    format: OPTIONAL ENUM (IMOD, ARETOMO)
-    method_type: OPTIONAL ENUM (fiducial_based, patch_tracking, projection_matching)
+    format: REQUIRED, ENUM (IMOD, ARETOMO3)
+    method_type: OPTIONAL ENUM (fiducial_based, patch_tracking, projection_matching, undefined)
     is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
-    offset: OPTIONAL
-      x: REQUIRED, INTEGER
-      y: REQUIRED, INTEGER
-      z: REQUIRED, INTEGER
+    volume_offset: OPTIONAL
+      x: REQUIRED, FLOAT
+      y: REQUIRED, FLOAT
+      z: REQUIRED, FLOAT
     volume_dimension: OPTIONAL
-      x: REQUIRED, INTEGER
-      y: REQUIRED, INTEGER
-      z: REQUIRED, INTEGER
-    x_rotation_offset: OPTIONAL FLOAT (DEFAULT 0)
-    tilt_offset: OPTIONAL FLOAT (DEFAULT 0.0).
-    affine_transformation_matrix:  OPTIONAL 4x4 FLOAT MATRIX (DEFAULT 4x4 identity matrix)
-        - - REQUIRED, FLOAT
-          - ... (4 ELEMENTS)
+      x: REQUIRED, FLOAT
+      y: REQUIRED, FLOAT
+      z: REQUIRED, FLOAT
+    x_rotation_offset: OPTIONAL, INTEGER (DEFAULT 0)
+    tilt_offset: OPTIONAL FLOAT (DEFAULT 0.0)
+    affine_transformation_matrix: OPTIONAL 4x4 FLOAT MATRIX (DEFAULT 4x4 identity matrix)
+      - - REQUIRED, FLOAT
         - ... (4 ELEMENTS)
-  sources: REQUIRED
+      - ... (4 ELEMENTS)
+  sources: REQUIRED, SEE datasets.sources and runs.sources.parent_filters
 annotations: OPTIONAL
 - metadata: REQUIRED
     confidence: OPTIONAL
@@ -32,7 +32,7 @@ annotations: OPTIONAL
       id: REQUIRED, STRING (GO_ID / UNIPROT_ID)
       name: REQUIRED, STRING
       state: OPTIONAL, STRING
-    annotation_publications: OPTIONAL, STRING (DOI / EMPIAR / EMDB / PDB IDs)
+    annotation_publications: OPTIONAL, STRING (comma-separated DOI / EMPIAR / EMDB / PDB IDs)
     annotation_software: RECOMMENDED, STRING
     authors: REQUIRED
     - name: REQUIRED, STRING
@@ -43,47 +43,50 @@ annotations: OPTIONAL
       corresponding_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       primary_author_status: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       ORCID: RECOMMENDED, STRING (ORCID)
+      kaggle_id: OPTIONAL, STRING
     dates: REQUIRED
       deposition_date: REQUIRED, STRING, DATE FORMAT YYYY-MM-DD
       last_modified_date: REQUIRED, STRING, DATE FORMAT YYYY-MM-DD
       release_date: REQUIRED, STRING, DATE FORMAT YYYY-MM-DD
     ground_truth_status: RECOMMENDED, BOOLEAN (DEFAULT FALSE)
     is_curator_recommended: OPTIONAL, BOOLEAN (DEFAULT FALSE)
-    method_type: REQUIRED, ENUM (manual, hybrid, automated)
+    method_type: REQUIRED, ENUM (manual, hybrid, automated, simulated)
     method_links: OPTIONAL
     - link: REQUIRED, STRING
-      link_type: REQUIRED, STRING (ENUM [documentation, model_weights, other, source_code, website])
+      link_type: REQUIRED, STRING (ENUM [documentation, models_weights, other, source_code, website])
       custom_name: OPTIONAL, STRING
     version: OPTIONAL, FLOAT (NON-NEGATIVE)
   sources: REQUIRED
   # The following are permissible source types (multiple, but different types can exist per annotation,
   # but only one of a given type can exist per annotation):
   - InstanceSegmentation:
-      file_format: REQUIRED, STRING
+      file_format: REQUIRED, ENUM [tardis, copick]
       # NOTE: glob_string and glob_strings are mutually exclusive, exactly one is REQUIRED
       glob_string: OPTIONAL, STRING (REGEX)
       glob_strings:
         - OPTIONAL, STRING (REGEX)
       is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
-      binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE)
+      binning: OPTIONAL, FLOAT (DEFAULT 1) (POSITIVE) # how much you have to bin the original data to match the voxel spacing
       filter_value: OPTIONAL, STRING
+      mesh_source_path: OPTIONAL, STRING
       order: OPTIONAL, STRING (DEFAULT xyz)
     parent_filters: SEE runs.sources.parent_filters
     exclude: SEE runs.sources.exclude
   - OrientedPoint:
-      file_format: see InstanceSegmentation.file_format
+      file_format: REQUIRED, ENUM [relion3_star, relion4_star, tomoman_relion_star, stopgap_star, mod, copick]
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       binning: see InstanceSegmentation.binning
       filter_value: see InstanceSegmentation.filter_value
+      mesh_source_path: OPTIONAL, STRING
       order: see InstanceSegmentation.order
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
   - Point:
-      file_format: see InstanceSegmentation.file_format
+      file_format: REQUIRED, ENUM [csv, csv_with_header, mod, relion3_star, relion4_star, tomoman_relion_star, copick]
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
@@ -103,7 +106,7 @@ annotations: OPTIONAL
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
   - SegmentationMask:
-      file_format: see InstanceSegmentation.file_format
+      file_format: REQUIRED, ENUM [mrc, zarr]
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
@@ -111,16 +114,18 @@ annotations: OPTIONAL
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
   - SemanticSegmentationMask:
-      file_format: see InstanceSegmentation.file_format
+      file_format: REQUIRED, ENUM [mrc, zarr]
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
       is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
       mask_label: OPTIONAL, INTEGER (DEFAULT 1)
+      rescale: OPTIONAL, BOOLEAN
+      threshold: OPTIONAL, FLOAT
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
   - TriangularMesh:
-      file_format: see InstanceSegmentation.file_format
+      file_format: REQUIRED, ENUM [obj, stl, vtk, glb]
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
@@ -129,7 +134,7 @@ annotations: OPTIONAL
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
   - TriangularMeshGroup:
-      file_format: see InstanceSegmentation.file_format
+      file_format: REQUIRED, ENUM [hff]
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
       is_visualization_default: see InstanceSegmentation.is_visualization_default
@@ -140,6 +145,10 @@ annotations: OPTIONAL
     exclude: SEE InstanceSegmentation.exclude
 collection_metadata: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
+ctfs: OPTIONAL
+- metadata: OPTIONAL
+    format: REQUIRED, ENUM [CTFFIND, Gctf, IMOD]
+  sources: SEE datasets.sources and runs.sources.parent_filters
 dataset_keyphotos: OPTIONAL
 - sources: REQUIRED
   - literal: REQUIRED
@@ -160,14 +169,25 @@ datasets: REQUIRED
       id: OPTIONAL, STRING (CL_ID)
       name: REQUIRED, STRING
     tissue: OPTIONAL
-      id: OPTIONAL, STRING (BTO_ID)
+      id: OPTIONAL, STRING (BTO/UBERON/etc ID)
       name: REQUIRED, STRING
     organism: OPTIONAL
       name: REQUIRED, STRING
       taxonomy_id: OPTIONAL, INTEGER
+    assay: REQUIRED
+      id: OPTIONAL, STRING (EFO_ID)
+      name: REQUIRED, STRING
+    development_stage: REQUIRED
+      id: OPTIONAL, STRING (ontology ID, e.g. UBERON / HsapDv / etc)
+      name: OPTIONAL, STRING
+    disease: REQUIRED
+      id: OPTIONAL, STRING (MONDO_ID / PATO_ID)
+      name: OPTIONAL, STRING
     cross_references: OPTIONAL
-      publications: RECOMMENDED, STRING (DOIs)
-      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB / PDB IDs)
+      publications: RECOMMENDED, STRING (DOIs, comma-separated)
+      related_database_entries: RECOMMENDED, STRING (EMPIAR / EMDB / PDB IDs, comma-separated)
+      dataset_citations: OPTIONAL, STRING (DOIs citing this dataset, comma-separated)
+      related_database_links: OPTIONAL, STRING (comma-separated URLs)
     dataset_description: REQUIRED, STRING
     dataset_identifier: REQUIRED, INTEGER
     dataset_title: REQUIRED, STRING
@@ -178,7 +198,7 @@ datasets: REQUIRED
     grid_preparation: RECOMMENDED, STRING
     other_setup: OPTIONAL, STRING
     sample_preparation: RECOMMENDED, STRING
-    sample_type: REQUIRED, STRING (ENUM [cell, tissue, organism, organelle, virus, in_vitro, in_silico, other])
+    sample_type: REQUIRED, STRING (ENUM [cell_line, tissue, organism, organelle, virus, in_vitro, in_silico, primary_cell_culture, organoid, other])
   sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
   # only one finder type per list item, each can have an accompanying parent_filters (SEE runs.sources.parent_filters)
   - source_glob: OPTIONAL
@@ -210,32 +230,42 @@ depositions: REQUIRED
       deposition_title: REQUIRED, STRING
       deposition_types: REQUIRED
       - STRING (ENUM [annotation, dataset, tomogram])
-    sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
+      tag: OPTIONAL, STRING
+    sources: REQUIRED, SEE datasets.sources and runs.sources.parent_filters
 frames: OPTIONAL
 - metadata: OPTIONAL
-    dose: REQUIRED, FLOAT
     defocus: REQUIRED, FLOAT
     astigmatism: REQUIRED, FLOAT
     astigmatic_angle: REQUIRED, FLOAT
+    dose_rate: OPTIONAL, FLOAT
+    is_gain_corrected: OPTIONAL, BOOLEAN
   sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
+identified_objects: OPTIONAL
+- metadata: OPTIONAL
+    filter_value: OPTIONAL, STRING
+  sources: SEE datasets.sources and runs.sources.parent_filters
 key_images: OPTIONAL
-- sources: SEE dataset.sources and runs.sources.parent_filters
+- sources: SEE datasets.sources and runs.sources.parent_filters
 rawtilts: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
 runs: REQUIRED
+# These sources matches can not only be files, but also folders (e.g., for runs, the run name can be derived from folder names)
 - sources: SEE datasets.sources (source_glob) and below
   # parent filters must be paired with a finder type (source_glob, source_multi_glob, ...) as one list entry
   # can only exclude / include parent types (see IMPORTER_DEP_TREE)
-  # in this case of being in the runs attribute, only dataset can be excluded / included
-  # in dataset level, nothing can be excluded / included
+  # in this case of being in the runs attribute, only dataset and deposition can be excluded / included (per schema)
   parent_filters: OPTIONAL
     exclude: OPTIONAL
       dataset: OPTIONAL
         - OPTIONAL, STRING (REGEX)
+      deposition: OPTIONAL
+        - OPTIONAL, STRING (REGEX)
     include: OPTIONAL
       dataset: OPTIONAL
+        - OPTIONAL, STRING (REGEX)
+      deposition: OPTIONAL
         - OPTIONAL, STRING (REGEX)
   exclude: OPTIONAL
   - OPTIONAL, STRING (REGEX)
@@ -254,13 +284,13 @@ tiltseries: OPTIONAL
     binning_from_frames: OPTIONAL, FLOAT (Default 1) (POSITIVE)
     camera: REQUIRED
       acquire_mode: OPTIONAL, STRING (ENUM [counting, superresolution, linear, cds])
-      manufacturer: REQUIRED, STRING
-      model: REQUIRED, STRING
+      manufacturer: REQUIRED, STRING (ENUM [Gatan, FEI, TFS, simulated])
+      model: REQUIRED, STRING (ENUM [FALCON IV, FALCON 4i, K2, K2 SUMMIT, K3, K3 BIOQUANTUM, UltraCam, UltraScan, simulated])
     data_acquisition_software: REQUIRED, STRING
     is_aligned: REQUIRED, BOOLEAN
     microscope: REQUIRED
       additional_info: OPTIONAL, STRING
-      manufacturer: REQUIRED, STRING (ENUM [FEI, JEOL, TFS])
+      manufacturer: REQUIRED, STRING (ENUM [FEI, JEOL, TFS, SIMULATED])
       model: REQUIRED, STRING
     microscope_optical_setup: REQUIRED
       energy_filter: REQUIRED, STRING
@@ -279,7 +309,7 @@ tiltseries: OPTIONAL
     tilting_scheme: REQUIRED, STRING
     total_flux: REQUIRED, FLOAT (POSITIVE) (e^-/Å^2)
   sources: REQUIRED
-  - source_glob: SEE dataset.sources.source_glob
+  - source_glob: SEE datasets.sources.source_glob
   - destination_filter:
       filters: REQUIRED
       - key: REQUIRED, LIST (STRING)
@@ -319,7 +349,7 @@ voxel_spacings: REQUIRED
   - destination_glob: see datasets.sources.destination_glob and runs.sources.parent_filters
   - source_glob: SEE datasets.sources.source_glob and runs.sources.parent_filters
   - literal: SEE datasets.sources.literal and runs.sources.parent_filters
-  - tomogram_header: SEE runs.sources.parent_filters
+  - tomogram_header: SEE runs.sources.parent_filters # try to use literal if possible, can have bad headers
       list_glob: REQUIRED, STRING (REGEX)
       match_regex: OPTIONAL, STRING (REGEX) (DEFAULT '.*')
-      header_key: OPTIONAL, STRING (REGEX) (DEFAULT 'voxel_size')
+      header_key: OPTIONAL, STRING (DEFAULT 'voxel_size')

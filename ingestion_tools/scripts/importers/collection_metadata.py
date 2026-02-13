@@ -1,3 +1,5 @@
+import os
+
 from mdocfile.data_models import Mdoc
 
 from common.config import DepositionImportConfig
@@ -10,6 +12,10 @@ class CollectionMetadataImporter(BaseFileImporter):
     finder_factory = DefaultImporterFactory
     has_metadata = False
     dir_path = "{dataset_name}/{run_name}/Frames"
+
+    def get_destination_path(self) -> str:
+        filename = f"{self.parents['run'].name}.mdoc"
+        return os.path.join(self.get_output_path(), filename)
 
     def get_output_data(self) -> Mdoc:
         path = self.get_destination_path()

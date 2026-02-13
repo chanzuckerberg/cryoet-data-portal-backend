@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.15.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.14.1...apiv2-v1.15.0) (2026-01-23)
+
+
+### Features
+
+* add support for uberon/chebi ontologies for annotation_object_id; update outdated ontology id fields in apiv2 schema ([#586](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/586)) ([a26a6d3](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a26a6d3d84c0f02497a8b43860424604dcc31b87))
+
+## [1.14.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.14.0...apiv2-v1.14.1) (2026-01-23)
+
+
+### Bug Fixes
+
+* update linkml package version, bugfix api codegen, bugfix ingestion validation ([#585](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/585)) ([c972d59](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/c972d596c10bfa430e820008372b59598a339e3c))
+
 ## [1.14.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.13.2...apiv2-v1.14.0) (2025-11-26)
 
 

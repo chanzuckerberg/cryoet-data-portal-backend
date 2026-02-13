@@ -3,6 +3,11 @@ RUN apt-get update && \
     apt-get install -y vim wget nginx nginx-extras procps ripgrep make gcc git && \
     apt-get clean
 
+# Ensure pip/build tooling is sane BEFORE installing poetry or running poetry install.
+# Force-reinstall so partial/corrupted installs are replaced.
+RUN python3 -m pip install --no-cache-dir --upgrade pip && \
+    python3 -m pip install --no-cache-dir --upgrade --force-reinstall setuptools wheel packaging
+
 ENV POETRY_VERSION=1.8
 # Some base python dependencies to kickstart our container build.
 RUN python3 -m pip install --no-cache-dir poetry==$POETRY_VERSION supervisor

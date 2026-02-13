@@ -85,7 +85,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "The x rotation offset relative to the tomogram.",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
@@ -142,7 +142,7 @@
                     "type": "integer"
                 },
                 "files": {
-                    "description": "A placeholder for any type of data.",
+                    "description": "List of all alignment files.",
                     "items": {
                         "$ref": "#/$defs/Any"
                     },
@@ -245,7 +245,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "The x rotation offset relative to the tomogram.",
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
@@ -282,7 +282,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "X shift of the reconstruction volume in angstrom",
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "y": {
@@ -296,7 +296,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Y shift of the reconstruction volume in angstrom",
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "z": {
@@ -310,7 +310,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Z shift of the reconstruction volume in angstrom",
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
@@ -337,7 +337,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "X dimension of the reconstruction volume in angstrom",
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "y": {
@@ -351,7 +351,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Y dimension of the reconstruction volume in angstrom",
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "z": {
@@ -365,7 +365,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Z dimension of the reconstruction volume in angstrom",
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
             },
@@ -534,25 +534,34 @@
             "title": "AnnotationConfidence",
             "type": "object"
         },
-        "AnnotationFileFormatEnum": {
-            "description": "Describes the format of the annotation file",
-            "enum": [
-                "mrc",
-                "zarr",
-                "ndjson",
-                "glb"
-            ],
-            "title": "AnnotationFileFormatEnum",
-            "type": "string"
-        },
         "AnnotationFileMetadata": {
             "additionalProperties": false,
             "description": "Metadata relating to an annotation file.",
             "properties": {
                 "format": {
-                    "$ref": "#/$defs/AnnotationFileFormatEnum",
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/PointAnnotationFileFormatEnum"
+                        },
+                        {
+                            "$ref": "#/$defs/OrientedPointAnnotationFileFormatEnum"
+                        },
+                        {
+                            "$ref": "#/$defs/InstanceSegmentationAnnotationFileFormatEnum"
+                        },
+                        {
+                            "$ref": "#/$defs/VolumeAnnotationFileFormatEnum"
+                        },
+                        {
+                            "$ref": "#/$defs/TriangularMeshAnnotationFileFormatEnum"
+                        },
+                        {
+                            "$ref": "#/$defs/TriangularMeshAnnotationGroupFileFormatEnum"
+                        }
+                    ],
                     "description": "The format of the annotation file.",
-                    "pattern": "(^mrc$)|(^zarr$)|(^ndjson$)|(^glb$)"
+                    "pattern": "(^csv$)|(^csv_with_header$)|(^tsv$)|(^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)|((^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)|(^stopgap_star$))|((^tardis$)|(^copick$))|((^mrc$)|(^zarr$))|((^obj$)|(^stl$)|(^vtk$)|(^glb$))|(^hff$)"
                 },
                 "is_visualization_default": {
                     "description": "Whether the annotation file is selected for visualization by default.",
@@ -611,8 +620,9 @@
                     ]
                 },
                 "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
+                    "$ref": "#/$defs/InstanceSegmentationAnnotationFileFormatEnum",
+                    "description": "The format of the instance segmentation annotation file.",
+                    "pattern": "(^tardis$)|(^copick$)"
                 },
                 "filter_value": {
                     "description": "The filter value for an oriented point / instance segmentation annotation file.",
@@ -667,9 +677,6 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationInstanceSegmentationFile",
             "type": "object"
         },
@@ -677,10 +684,6 @@
             "additionalProperties": false,
             "description": "File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks.",
             "properties": {
-                "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
-                },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
                     "type": [
@@ -720,9 +723,6 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationInstanceSegmentationMaskFile",
             "type": "object"
         },
@@ -928,12 +928,20 @@
                             "type": "string"
                         },
                         {
-                            "pattern": "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$",
+                            "pattern": "^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^UBERON:[0-9]{7}$",
+                            "type": "string"
+                        },
+                        {
+                            "pattern": "^CHEBI:[0-9]+$",
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
-                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+                    "description": "Ontology identifier for the annotation object.",
+                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)"
                 },
                 "name": {
                     "description": "Name of the object being annotated (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
@@ -967,8 +975,9 @@
                     ]
                 },
                 "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
+                    "$ref": "#/$defs/OrientedPointAnnotationFileFormatEnum",
+                    "description": "The format of the oriented point annotation file.",
+                    "pattern": "(^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)|(^stopgap_star$)"
                 },
                 "filter_value": {
                     "description": "The filter value for an oriented point / instance segmentation annotation file.",
@@ -1023,9 +1032,6 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationOrientedPointFile",
             "type": "object"
         },
@@ -1056,8 +1062,9 @@
                     ]
                 },
                 "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
+                    "$ref": "#/$defs/PointAnnotationFileFormatEnum",
+                    "description": "The format of the point annotation file.",
+                    "pattern": "(^csv$)|(^csv_with_header$)|(^tsv$)|(^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)"
                 },
                 "filter_value": {
                     "description": "The filter value for an oriented point / instance segmentation annotation file.",
@@ -1098,9 +1105,6 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationPointFile",
             "type": "object"
         },
@@ -1109,8 +1113,9 @@
             "description": "File and sourcing data for a segmentation mask annotation. Annotation that identifies an object.",
             "properties": {
                 "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
+                    "$ref": "#/$defs/VolumeAnnotationFileFormatEnum",
+                    "description": "The format of the volume annotation file.",
+                    "pattern": "(^mrc$)|(^zarr$)"
                 },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
@@ -1144,9 +1149,6 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationSegmentationMaskFile",
             "type": "object"
         },
@@ -1155,8 +1157,9 @@
             "description": "File and sourcing data for a semantic segmentation mask annotation. Annotation that identifies classes of objects.",
             "properties": {
                 "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
+                    "$ref": "#/$defs/VolumeAnnotationFileFormatEnum",
+                    "description": "The format of the volume annotation file.",
+                    "pattern": "(^mrc$)|(^zarr$)"
                 },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
@@ -1211,9 +1214,6 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationSemanticSegmentationMaskFile",
             "type": "object"
         },
@@ -1221,10 +1221,6 @@
             "additionalProperties": false,
             "description": "File and sourcing data for an annotation. Represents an entry in annotation.sources.",
             "properties": {
-                "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
-                },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
                     "type": [
@@ -1257,9 +1253,6 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationSourceFile",
             "type": "object"
         },
@@ -1268,8 +1261,9 @@
             "description": "File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.",
             "properties": {
                 "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
+                    "$ref": "#/$defs/TriangularMeshAnnotationFileFormatEnum",
+                    "description": "The format of the triangular mesh annotation file.",
+                    "pattern": "(^obj$)|(^stl$)|(^vtk$)|(^glb$)"
                 },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
@@ -1311,9 +1305,6 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationTriangularMeshFile",
             "type": "object"
         },
@@ -1322,8 +1313,9 @@
             "description": "File and sourcing data containing one or more triangular mesh annotations.",
             "properties": {
                 "file_format": {
-                    "description": "File format for this file",
-                    "type": "string"
+                    "$ref": "#/$defs/TriangularMeshAnnotationGroupFileFormatEnum",
+                    "description": "The format of the triangular mesh annotation group file.",
+                    "pattern": "^hff$"
                 },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
@@ -1372,15 +1364,12 @@
                     ]
                 }
             },
-            "required": [
-                "file_format"
-            ],
             "title": "AnnotationTriangularMeshGroupFile",
             "type": "object"
         },
         "Any": {
             "additionalProperties": true,
-            "description": "A placeholder for any type of data.",
+            "description": "",
             "title": "Any",
             "type": [
                 "null",
@@ -1395,7 +1384,7 @@
             "description": "The assay that was used to create the dataset.",
             "properties": {
                 "id": {
-                    "description": "The EFO identifier for the cellular component.",
+                    "description": "EFO ontology identifier for the type of assay performed in a CryoET dataset",
                     "pattern": "^EFO:[0-9]{7}$",
                     "type": [
                         "string",
@@ -1521,7 +1510,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Camera acquisition mode",
                     "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^counting$)|(^superresolution$)|(^linear$)|(^cds$))"
                 },
                 "manufacturer": {
@@ -1530,8 +1519,24 @@
                     "pattern": "(^Gatan$)|(^FEI$)|(^TFS$)|(^simulated$)"
                 },
                 "model": {
+                    "$ref": "#/$defs/Any",
+                    "anyOf": [
+                        {
+                            "pattern": "^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$",
+                            "type": "string"
+                        },
+                        {
+                            "$ref": "#/$defs/TiltseriesCameraModelFeiTfsEnum"
+                        },
+                        {
+                            "$ref": "#/$defs/TiltseriesCameraModelGatanEnum"
+                        },
+                        {
+                            "$ref": "#/$defs/TiltseriesCameraModelSimulatedEnum"
+                        }
+                    ],
                     "description": "Camera model name",
-                    "type": "string"
+                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^FALCON IV$)|(^FALCON 4i$))|((^K2$)|(^K2 SUMMIT$)|(^K3$)|(^K3 BIOQUANTUM$)|(^UltraCam$)|(^UltraScan$))|(^simulated$)"
                 }
             },
             "required": [
@@ -1590,7 +1595,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "The ontology identifier for the cell strain.",
                     "pattern": "(WBStrain[0-9]{8}$)|(^NCBITaxon:[0-9]+$)|(^CVCL_[A-Z0-9]{4,}$)|(^CC-[0-9]{4}$)"
                 },
                 "name": {
@@ -1634,7 +1639,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "The ontology identifier for the cell type.",
                     "pattern": "(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)"
                 },
                 "name": {
@@ -1693,7 +1698,7 @@
                 "format": {
                     "$ref": "#/$defs/CtfFormatEnum",
                     "description": "The format of the ctf file.",
-                    "pattern": "(^CTFFIND$)|(^Gctf$)"
+                    "pattern": "(^CTFFIND$)|(^Gctf$)|(^IMOD$)"
                 }
             },
             "required": [
@@ -1706,7 +1711,8 @@
             "description": "Used to determine what ctf parser to use.",
             "enum": [
                 "CTFFIND",
-                "Gctf"
+                "Gctf",
+                "IMOD"
             ],
             "title": "CtfFormatEnum",
             "type": "string"
@@ -2300,7 +2306,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "The ontology identifier for the developmental stage component.",
                     "pattern": "(^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)|(MmusDv:[0-9]{7}$)|(ZFS:[0-9]{7}$)|(FBdv:[0-9]{8}$)"
                 },
                 "name": {
@@ -2332,7 +2338,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "The ontology identifier for the disease component.",
                     "pattern": "(^MONDO:[0-9]{7}$)|(^PATO:[0-9]{7}$)"
                 },
                 "name": {
@@ -2477,7 +2483,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "The dose exposure for a given frame.",
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
                 "is_gain_corrected": {
@@ -2604,12 +2610,12 @@
                             "type": "string"
                         },
                         {
-                            "pattern": "^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$",
+                            "pattern": "^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$",
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
-                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)"
+                    "description": "Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.",
+                    "pattern": "(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)"
                 },
                 "object_name": {
                     "description": "Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
@@ -2644,6 +2650,15 @@
             },
             "title": "IdentifiedObjectList",
             "type": "object"
+        },
+        "InstanceSegmentationAnnotationFileFormatEnum": {
+            "description": "Describes the format of an instance segmentation annotation file",
+            "enum": [
+                "tardis",
+                "copick"
+            ],
+            "title": "InstanceSegmentationAnnotationFileFormatEnum",
+            "type": "string"
         },
         "MetadataPicturePath": {
             "additionalProperties": false,
@@ -2690,7 +2705,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Name of the microscope manufacturer",
                     "pattern": "(^FEI$)|(^TFS$)|(^JEOL$)|(^SIMULATED$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
                 },
                 "model": {
@@ -2756,6 +2771,19 @@
             ],
             "title": "OrganismDetails",
             "type": "object"
+        },
+        "OrientedPointAnnotationFileFormatEnum": {
+            "description": "Describes the format of the oriented point annotation file",
+            "enum": [
+                "mod",
+                "relion3_star",
+                "relion4_star",
+                "tomoman_relion_star",
+                "copick",
+                "stopgap_star"
+            ],
+            "title": "OrientedPointAnnotationFileFormatEnum",
+            "type": "string"
         },
         "PerFrameMetadata": {
             "additionalProperties": false,
@@ -2996,6 +3024,21 @@
             "title": "PicturedMetadataEntity",
             "type": "object"
         },
+        "PointAnnotationFileFormatEnum": {
+            "description": "Describes the format of the point annotation file",
+            "enum": [
+                "csv",
+                "csv_with_header",
+                "tsv",
+                "mod",
+                "relion3_star",
+                "relion4_star",
+                "tomoman_relion_star",
+                "copick"
+            ],
+            "title": "PointAnnotationFileFormatEnum",
+            "type": "string"
+        },
         "RunMetadata": {
             "additionalProperties": false,
             "description": "Metadata pertaining to this run.",
@@ -3056,7 +3099,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Maximal tilt angle in degrees",
                     "maximum": 90,
                     "minimum": -90,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -3075,7 +3118,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Minimal tilt angle in degrees",
                     "maximum": 90,
                     "minimum": -90,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -3112,7 +3155,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Binning factor of the aligned tilt series",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -3131,7 +3174,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Describes the binning factor from frames to tilt series file",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -3175,7 +3218,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Pixel spacing for the tilt series",
                     "minimum": 0.001,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -3200,7 +3243,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Spherical Aberration Constant of the objective lens in millimeters",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -3225,7 +3268,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Rotation angle in degrees",
                     "maximum": 360,
                     "minimum": -360,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -3248,7 +3291,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
                     "maximum": 5,
                     "minimum": 1,
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -3267,7 +3310,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Tilt step in degrees",
                     "maximum": 90,
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -3289,7 +3332,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
@@ -3337,7 +3380,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Binning factor of the aligned tilt series",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -3356,7 +3399,7 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Describes the binning factor from frames to tilt series file",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -3439,7 +3482,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Pixel spacing for the tilt series",
                     "minimum": 0.001,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -3492,7 +3535,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Spherical Aberration Constant of the objective lens in millimeters",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 },
@@ -3517,7 +3560,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Rotation angle in degrees",
                     "maximum": 360,
                     "minimum": -360,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -3540,7 +3583,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Author assessment of tilt series quality within the dataset (1-5, 5 is best)",
                     "maximum": 5,
                     "minimum": 1,
                     "pattern": "^int[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -3559,7 +3602,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Tilt step in degrees",
                     "maximum": 90,
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
@@ -3581,7 +3624,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Number of Electrons reaching the specimen in a square Angstrom area for the entire tilt series",
                     "minimum": 0,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
@@ -3658,6 +3701,36 @@
             "title": "TiltseriesCameraManufacturerEnum",
             "type": "string"
         },
+        "TiltseriesCameraModelFeiTfsEnum": {
+            "description": "Camera model for FEI / TFS cameras",
+            "enum": [
+                "FALCON IV",
+                "FALCON 4i"
+            ],
+            "title": "TiltseriesCameraModelFeiTfsEnum",
+            "type": "string"
+        },
+        "TiltseriesCameraModelGatanEnum": {
+            "description": "Camera model for Gatan cameras",
+            "enum": [
+                "K2",
+                "K2 SUMMIT",
+                "K3",
+                "K3 BIOQUANTUM",
+                "UltraCam",
+                "UltraScan"
+            ],
+            "title": "TiltseriesCameraModelGatanEnum",
+            "type": "string"
+        },
+        "TiltseriesCameraModelSimulatedEnum": {
+            "description": "Camera model for simulated cameras",
+            "enum": [
+                "simulated"
+            ],
+            "title": "TiltseriesCameraModelSimulatedEnum",
+            "type": "string"
+        },
         "TiltseriesMicroscopeManufacturerEnum": {
             "description": "Microscope manufacturer",
             "enum": [
@@ -3675,6 +3748,10 @@
             "properties": {
                 "id": {
                     "anyOf": [
+                        {
+                            "pattern": "^BTO:[0-9]{7}$",
+                            "type": "string"
+                        },
                         {
                             "pattern": "^CL:[0-9]{7}$",
                             "type": "string"
@@ -3699,8 +3776,8 @@
                             "type": "null"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
-                    "pattern": "(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)"
+                    "description": "The ontology identifier for the tissue.",
+                    "pattern": "(^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)"
                 },
                 "name": {
                     "description": "Name of the tissue from which a biological sample used in a CryoET study is derived from.",
@@ -3783,7 +3860,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Whether the tomographic alignment was computed based on fiducial markers.",
                     "pattern": "(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
                 },
                 "is_visualization_default": {
@@ -3818,7 +3895,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Describe reconstruction method (WBP, SART, SIRT)",
                     "pattern": "(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)"
                 },
                 "reconstruction_software": {
@@ -3854,7 +3931,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Voxel spacing equal in all three axes in angstroms",
                     "minimum": 0.001,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
@@ -3955,7 +4032,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Whether the tomographic alignment was computed based on fiducial markers.",
                     "pattern": "(^FIDUCIAL$)|(^NON_FIDUCIAL$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^FIDUCIAL$)|(^NON_FIDUCIAL$))"
                 },
                 "is_visualization_default": {
@@ -4026,7 +4103,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Describe reconstruction method (WBP, SART, SIRT)",
                     "pattern": "(^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$)|(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^SART$)|(^Fourier Space$)|(^SIRT$)|(^WBP$)|(^Unknown$))"
                 },
                 "reconstruction_software": {
@@ -4079,7 +4156,7 @@
                             "type": "string"
                         }
                     ],
-                    "description": "A placeholder for any type of data.",
+                    "description": "Voxel spacing equal in all three axes in angstroms",
                     "minimum": 0.001,
                     "pattern": "^float[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$"
                 }
@@ -4183,6 +4260,34 @@
                 "UNKNOWN"
             ],
             "title": "TomogramTypeEnum",
+            "type": "string"
+        },
+        "TriangularMeshAnnotationFileFormatEnum": {
+            "description": "Describes the format of a triangular mesh annotation file",
+            "enum": [
+                "obj",
+                "stl",
+                "vtk",
+                "glb"
+            ],
+            "title": "TriangularMeshAnnotationFileFormatEnum",
+            "type": "string"
+        },
+        "TriangularMeshAnnotationGroupFileFormatEnum": {
+            "description": "Describes the format of a triangular mesh group annotation file",
+            "enum": [
+                "hff"
+            ],
+            "title": "TriangularMeshAnnotationGroupFileFormatEnum",
+            "type": "string"
+        },
+        "VolumeAnnotationFileFormatEnum": {
+            "description": "Describes the format of a volume (semantic / semantic segmentation) annotation file",
+            "enum": [
+                "mrc",
+                "zarr"
+            ],
+            "title": "VolumeAnnotationFileFormatEnum",
             "type": "string"
         }
     },

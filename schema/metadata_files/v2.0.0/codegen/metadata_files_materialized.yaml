@@ -340,7 +340,7 @@ types:
     description: A UniProt identifier
     from_schema: metadata
     base: str
-    pattern: ^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$
+    pattern: ^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$
   NCBI_TAXON_ID:
     name: NCBI_TAXON_ID
     description: A NCBI Taxonomy identifier
@@ -401,6 +401,12 @@ types:
     from_schema: metadata
     base: str
     pattern: FBbt:[0-9]{8}$
+  CHEBI_ID:
+    name: CHEBI_ID
+    description: A Chemical Entities of Biological Interest ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ^CHEBI:[0-9]+$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
@@ -557,23 +563,83 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
-  annotation_file_format_enum:
-    name: annotation_file_format_enum
-    description: Describes the format of the annotation file
+  point_annotation_file_format_enum:
+    name: point_annotation_file_format_enum
+    description: Describes the format of the point annotation file
+    from_schema: metadata
+    permissible_values:
+      csv:
+        text: csv
+      csv_with_header:
+        text: csv_with_header
+      tsv:
+        text: tsv
+      mod:
+        text: mod
+      relion3_star:
+        text: relion3_star
+      relion4_star:
+        text: relion4_star
+      tomoman_relion_star:
+        text: tomoman_relion_star
+      copick:
+        text: copick
+  oriented_point_annotation_file_format_enum:
+    name: oriented_point_annotation_file_format_enum
+    description: Describes the format of the oriented point annotation file
+    from_schema: metadata
+    permissible_values:
+      mod:
+        text: mod
+      relion3_star:
+        text: relion3_star
+      relion4_star:
+        text: relion4_star
+      tomoman_relion_star:
+        text: tomoman_relion_star
+      copick:
+        text: copick
+      stopgap_star:
+        text: stopgap_star
+  instance_segmentation_annotation_file_format_enum:
+    name: instance_segmentation_annotation_file_format_enum
+    description: Describes the format of an instance segmentation annotation file
+    from_schema: metadata
+    permissible_values:
+      tardis:
+        text: tardis
+      copick:
+        text: copick
+  volume_annotation_file_format_enum:
+    name: volume_annotation_file_format_enum
+    description: Describes the format of a volume (semantic / semantic segmentation)
+      annotation file
     from_schema: metadata
     permissible_values:
       mrc:
         text: mrc
-        description: MRC format
       zarr:
         text: zarr
-        description: OMEZARR format
-      ndjson:
-        text: ndjson
-        description: NDJSON format
+  triangular_mesh_annotation_file_format_enum:
+    name: triangular_mesh_annotation_file_format_enum
+    description: Describes the format of a triangular mesh annotation file
+    from_schema: metadata
+    permissible_values:
+      obj:
+        text: obj
+      stl:
+        text: stl
+      vtk:
+        text: vtk
       glb:
         text: glb
-        description: GLB format
+  triangular_mesh_annotation_group_file_format_enum:
+    name: triangular_mesh_annotation_group_file_format_enum
+    description: Describes the format of a triangular mesh group annotation file
+    from_schema: metadata
+    permissible_values:
+      hff:
+        text: hff
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -607,6 +673,9 @@ enums:
       Gctf:
         text: Gctf
         description: The file has Gctf schema
+      IMOD:
+        text: IMOD
+        description: The file has IMOD schema
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has
@@ -691,6 +760,48 @@ enums:
       simulated:
         text: simulated
         description: Simulated data
+  tiltseries_camera_model_fei_tfs_enum:
+    name: tiltseries_camera_model_fei_tfs_enum
+    description: Camera model for FEI / TFS cameras
+    from_schema: metadata
+    permissible_values:
+      FALCON IV:
+        text: FALCON IV
+        description: FALCON IV
+      FALCON 4i:
+        text: FALCON 4i
+        description: FALCON 4i
+  tiltseries_camera_model_gatan_enum:
+    name: tiltseries_camera_model_gatan_enum
+    description: Camera model for Gatan cameras
+    from_schema: metadata
+    permissible_values:
+      K2:
+        text: K2
+        description: K2
+      K2 SUMMIT:
+        text: K2 SUMMIT
+        description: K2 SUMMIT
+      K3:
+        text: K3
+        description: K3
+      K3 BIOQUANTUM:
+        text: K3 BIOQUANTUM
+        description: K3 BIOQUANTUM
+      UltraCam:
+        text: UltraCam
+        description: UltraCam
+      UltraScan:
+        text: UltraScan
+        description: UltraScan
+  tiltseries_camera_model_simulated_enum:
+    name: tiltseries_camera_model_simulated_enum
+    description: Camera model for simulated cameras
+    from_schema: metadata
+    permissible_values:
+      simulated:
+        text: simulated
+        description: Simulated camera model
   tiltseries_microscope_manufacturer_enum:
     name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
@@ -883,7 +994,7 @@ classes:
         inlined_as_list: true
       files:
         name: files
-        description: A placeholder for any type of data.
+        description: List of all alignment files.
         from_schema: metadata
         exact_mappings:
         - cdp-common:alignment_files
@@ -963,9 +1074,8 @@ classes:
         inlined_as_list: true
       x_rotation_offset:
         name: x_rotation_offset
-        description: A placeholder for any type of data.
+        description: The x rotation offset relative to the tomogram.
         from_schema: metadata
-        ifabsent: int(0)
         alias: x_rotation_offset
         owner: AlignmentMetadata
         domain_of:
@@ -1072,11 +1182,18 @@ classes:
         - Alignment
         - Ctf
         - AnnotationFileMetadata
-        range: annotation_file_format_enum
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^mrc$)|(^zarr$)|(^ndjson$)|(^glb$)
+        pattern: (^csv$)|(^csv_with_header$)|(^tsv$)|(^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)|((^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)|(^stopgap_star$))|((^tardis$)|(^copick$))|((^mrc$)|(^zarr$))|((^obj$)|(^stl$)|(^vtk$)|(^glb$))|(^hff$)
+        any_of:
+        - range: point_annotation_file_format_enum
+        - range: oriented_point_annotation_file_format_enum
+        - range: instance_segmentation_annotation_file_format_enum
+        - range: volume_annotation_file_format_enum
+        - range: triangular_mesh_annotation_file_format_enum
+        - range: triangular_mesh_annotation_group_file_format_enum
       path:
         name: path
         description: The path to the annotation file.
@@ -2271,9 +2388,8 @@ classes:
           descriptive_name: volts
       aligned_tiltseries_binning:
         name: aligned_tiltseries_binning
-        description: A placeholder for any type of data.
+        description: Binning factor of the aligned tilt series
         from_schema: metadata
-        ifabsent: float(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeriesMetadata
         domain_of:
@@ -2292,9 +2408,8 @@ classes:
         - range: FloatFormattedString
       binning_from_frames:
         name: binning_from_frames
-        description: A placeholder for any type of data.
+        description: Describes the binning factor from frames to tilt series file
         from_schema: metadata
-        ifabsent: float(1)
         alias: binning_from_frames
         owner: TiltSeriesMetadata
         domain_of:
@@ -2406,7 +2521,7 @@ classes:
         pattern: ^EMPIAR-[0-9]+$
       spherical_aberration_constant:
         name: spherical_aberration_constant
-        description: A placeholder for any type of data.
+        description: Spherical Aberration Constant of the objective lens in millimeters
         from_schema: metadata
         alias: spherical_aberration_constant
         owner: TiltSeriesMetadata
@@ -2447,7 +2562,7 @@ classes:
         inlined_as_list: true
       tilt_axis:
         name: tilt_axis
-        description: A placeholder for any type of data.
+        description: Rotation angle in degrees
         from_schema: metadata
         alias: tilt_axis
         owner: TiltSeriesMetadata
@@ -2489,7 +2604,8 @@ classes:
         inlined_as_list: true
       tilt_series_quality:
         name: tilt_series_quality
-        description: A placeholder for any type of data.
+        description: Author assessment of tilt series quality within the dataset (1-5,
+          5 is best)
         from_schema: metadata
         alias: tilt_series_quality
         owner: TiltSeriesMetadata
@@ -2514,7 +2630,7 @@ classes:
         - range: IntegerFormattedString
       tilt_step:
         name: tilt_step
-        description: A placeholder for any type of data.
+        description: Tilt step in degrees
         from_schema: metadata
         alias: tilt_step
         owner: TiltSeriesMetadata
@@ -2558,7 +2674,8 @@ classes:
         inlined_as_list: true
       total_flux:
         name: total_flux
-        description: A placeholder for any type of data.
+        description: Number of Electrons reaching the specimen in a square Angstrom
+          area for the entire tilt series
         from_schema: metadata
         alias: total_flux
         owner: TiltSeriesMetadata
@@ -2587,7 +2704,7 @@ classes:
         - range: FloatFormattedString
       pixel_spacing:
         name: pixel_spacing
-        description: A placeholder for any type of data.
+        description: Pixel spacing for the tilt series
         from_schema: metadata
         alias: pixel_spacing
         owner: TiltSeriesMetadata
@@ -2749,7 +2866,7 @@ classes:
         inlined_as_list: true
       voxel_spacing:
         name: voxel_spacing
-        description: A placeholder for any type of data.
+        description: Voxel spacing equal in all three axes in angstroms
         from_schema: metadata
         alias: voxel_spacing
         owner: TomogramMetadata
@@ -2777,7 +2894,8 @@ classes:
         - range: FloatFormattedString
       fiducial_alignment_status:
         name: fiducial_alignment_status
-        description: A placeholder for any type of data.
+        description: Whether the tomographic alignment was computed based on fiducial
+          markers.
         from_schema: metadata
         alias: fiducial_alignment_status
         owner: TomogramMetadata
@@ -2825,7 +2943,7 @@ classes:
         inlined_as_list: true
       reconstruction_method:
         name: reconstruction_method
-        description: A placeholder for any type of data.
+        description: Describe reconstruction method (WBP, SART, SIRT)
         from_schema: metadata
         alias: reconstruction_method
         owner: TomogramMetadata
@@ -3021,7 +3139,6 @@ classes:
         minimum_cardinality: 1
   Any:
     name: Any
-    description: A placeholder for any type of data.
     from_schema: metadata
     class_uri: linkml:Any
   DateStampedEntityMixin:
