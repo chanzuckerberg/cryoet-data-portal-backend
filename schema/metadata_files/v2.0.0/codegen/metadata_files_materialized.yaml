@@ -1133,6 +1133,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: boolean
@@ -1234,6 +1235,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationFileMetadata
@@ -3076,6 +3078,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationFileMetadata
