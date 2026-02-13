@@ -406,7 +406,7 @@ class TomoConverter:
             downscaled_data = self.scaled_data_transformation(
                 block_reduce(pyramid[i], block_size=(z_scale, 2, 2), func=downscale_method),
             )
-            pyramid.append(pyramid.append(downscaled_data.astype(dtype) if dtype else downscaled_data))
+            pyramid.append(downscaled_data.astype(dtype) if dtype else downscaled_data)
             pyramid_voxel_spacing.append(
                 (
                     pyramid_voxel_spacing[i][0] * z_scale,
