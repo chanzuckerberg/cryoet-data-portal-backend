@@ -311,7 +311,7 @@ datasets:
       + The cells were subsequently mechanically lysed using a 23G blunt needle + The resulting mixture was transferred to
       and mixed with isotonic sucrose buffer + Finally, the lysates were centrifuged at 1000 x g for 10 minutes at 4°C, the
       resulting supernatant was incubated with SidK-functionalized 2.2 nm gold nanoparticles to label V1A  at 4°C for 1 hour
-      for use in grid preparation..
+      for use in grid preparation.
     sample_type: organelle
     tissue:
       name: kidney epithelial cell

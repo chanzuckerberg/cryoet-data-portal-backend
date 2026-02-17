@@ -308,8 +308,7 @@ datasets:
       PBS + They were then transferred to a chilled 15 ml Falcon tube and pelleted by centrifugation at 500 x g for 5 minutes
       at 4°C + After aspirating the PBS, the pellet was resuspended in approximately 950 µl of hypotonic homogenization buffer
       + The cells were subsequently mechanically lysed using a 23G blunt needle + The resulting mixture was transferred to
-      and mixed with isotonic sucrose buffer + Finally, the lysates were centrifuged at 1000 x g for 10 minutes at 4°C, and
-      the resulting supernatant and the resulting supernatant was incubated with SpyCatcher-functionalized 3 nm gold nanoparticles
+      and mixed with isotonic sucrose buffer + Finally, the lysates were centrifuged at 1000 x g for 10 minutes at 4°C, and the resulting supernatant was incubated with SpyCatcher-functionalized 3 nm gold nanoparticles
       (negative labeling control) at 4°C for 1 hour for use in grid preparation.
     sample_type: organelle
     tissue:
