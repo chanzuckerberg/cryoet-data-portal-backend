@@ -76,7 +76,7 @@ class AnnotationPrecomputeFactory:
             return OrientedPointAnnotationPrecompute(**params)
         elif shape == "InstanceSegmentation":
             return InstanceSegmentationAnnotationPrecompute(**params)
-        elif shape in ["SegmentationMask", "SemanticSegmentationMask"]:
+        elif shape in {"SegmentationMask", "SemanticSegmentationMask"}:
             return SegmentationMaskAnnotationPrecompute(**params)
         elif shape == "InstanceSegmentationMask":
             return InstanceSegmentationMaskAnnotationPrecompute(**params)
