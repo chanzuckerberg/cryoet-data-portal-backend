@@ -147,6 +147,7 @@ def test_viz_config_with_only_tomogram(
         ("SegmentationMask", "zarr"),
         ("InstanceSegmentationMask", "zarr"),
         ("SegmentationMask", "mrc"),
+        ("InstanceSegmentationMask", "mrc"),
         ("Mesh", "glb"),
     ],
 )
