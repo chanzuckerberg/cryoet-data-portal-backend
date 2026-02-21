@@ -80,7 +80,7 @@ class VisualizationConfigImporter(BaseImporter):
         source_path: str,
         file_metadata: dict[str, Any],
         name_prefix: str,
-        color: str,
+        color: str | dict[int, str],
         resolution: tuple[float, float, float],
         output_resolution: tuple[float, float, float] | None = None,
         visible_segments: tuple[int, ...] = (1,),

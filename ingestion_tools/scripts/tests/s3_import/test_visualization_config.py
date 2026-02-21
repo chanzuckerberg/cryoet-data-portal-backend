@@ -196,7 +196,6 @@ def annotation_usecases(
     elif shape == "SegmentationMask" and format == "zarr":
         generator_method = "generate_segmentation_mask_layer"
         input_args["name"] += "segmentation"
-        input_args["visible_segments"] = (1,)
         return_value = {"key": generator_method, "random": "value"}
     elif shape == "InstanceSegmentationMask" and format == "zarr":
         generator_method = "generate_segmentation_mask_layer"

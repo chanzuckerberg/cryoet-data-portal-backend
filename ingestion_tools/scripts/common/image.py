@@ -217,7 +217,11 @@ class ZarrWriter:
             )
 
         ome_zarr.writer.write_multiscales_metadata(
-            group=self.root_group, axes=self.ome_zarr_axes(), datasets=datasets_meta, name="/", metadata=metadata,
+            group=self.root_group,
+            axes=self.ome_zarr_axes(),
+            datasets=datasets_meta,
+            name="/",
+            metadata=metadata,
         )
 
 
@@ -380,7 +384,9 @@ class TomoConverter:
         return compute_contrast_limits(self.volume_reader.data, method=method)
 
     def get_downscale_interpolation_func(self):
-        return np.mean
+        def downscale_method(data: np.ndarray, block_size: Tuple[int, int, int]) -> np.ndarray:
+            return block_reduce(data, block_size=block_size, func=np.mean)
+        return downscale_method
 
     # Make an array of an original size image, plus `max_layers` half-scaled images
     def make_pyramid(
@@ -404,7 +410,7 @@ class TomoConverter:
         downscale_method = self.get_downscale_interpolation_func()
         for i in range(max_layers):
             downscaled_data = self.scaled_data_transformation(
-                block_reduce(pyramid[i], block_size=(z_scale, 2, 2), func=downscale_method),
+                downscale_method(data=pyramid[i], block_size=(z_scale, 2, 2)),
             )
             pyramid.append(downscaled_data.astype(dtype) if dtype else downscaled_data)
             pyramid_voxel_spacing.append(
@@ -596,7 +602,11 @@ class MultiLabelMaskConverter(TomoConverter):
         return data.astype(np.uint16)
 
     def get_downscale_interpolation_func(self):
-        return np.max
+        # nearest-neighbor interpolation
+        def downscale_method(data: np.ndarray, block_size: Tuple[int, int, int]) -> np.ndarray:
+            bz, by, bx = block_size
+            return data[::bz, ::by, ::bx]
+        return downscale_method
 
 
 def get_volume_metadata(config: DepositionImportConfig, output_prefix: str) -> dict[str, Any]:
