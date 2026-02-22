@@ -3806,6 +3806,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: oriented_point_annotation_file_format_enum
@@ -3959,6 +3960,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: instance_segmentation_annotation_file_format_enum
@@ -4112,6 +4114,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: point_annotation_file_format_enum
@@ -4264,6 +4267,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: volume_annotation_file_format_enum
@@ -4355,6 +4359,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: volume_annotation_file_format_enum
@@ -4474,6 +4479,27 @@ classes:
     - InstanceSegmentationMask
     is_a: AnnotationSourceFile
     attributes:
+      file_format:
+        name: file_format
+        description: The format of the volume annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:volume_annotation_file_format
+        alias: file_format
+        owner: AnnotationInstanceSegmentationMaskFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        range: volume_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^mrc$)|(^zarr$)
       rescale:
         name: rescale
         description: Whether the annotation file needs to be rescaled.
@@ -4574,6 +4600,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: triangular_mesh_annotation_file_format_enum
@@ -4680,6 +4707,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         range: triangular_mesh_annotation_group_file_format_enum

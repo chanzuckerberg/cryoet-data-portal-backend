@@ -840,6 +840,9 @@ classes:
       - InstanceSegmentationMask
     description: File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks.
     attributes:
+      file_format:
+        exact_mappings:
+          - cdp-common:volume_annotation_file_format
       rescale:
         exact_mappings:
           - cdp-common:annotation_source_file_rescale

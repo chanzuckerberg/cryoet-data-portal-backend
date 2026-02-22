@@ -684,6 +684,11 @@
             "additionalProperties": false,
             "description": "File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks.",
             "properties": {
+                "file_format": {
+                    "$ref": "#/$defs/VolumeAnnotationFileFormatEnum",
+                    "description": "The format of the volume annotation file.",
+                    "pattern": "(^mrc$)|(^zarr$)"
+                },
                 "glob_string": {
                     "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
                     "type": [
