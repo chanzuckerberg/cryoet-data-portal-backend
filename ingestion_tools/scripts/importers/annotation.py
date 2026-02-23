@@ -4,6 +4,7 @@ from abc import abstractmethod
 from typing import Any, Callable, Type
 
 import ndjson
+import numpy as np
 
 from common import mesh_converter as mc
 from common import point_converter as pc
@@ -348,6 +349,16 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
             scale_0_dims=output_dims,
             multilabels=True,
         )
+
+    def get_object_count(self, output_prefix: str) -> int:
+        # Count unique non-zero labels in the source mask
+        # A standalone re-read of the source data; doesn't require import_item() to have been called
+        from common.image import get_converter
+
+        tc = get_converter(self.config.fs, self.path, multilabels=True)
+        data = tc.volume_reader.get_pyramid_base_data()
+        unique_labels = np.unique(data)
+        return int(np.count_nonzero(unique_labels))
 
 
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
