@@ -879,6 +879,9 @@ slots:
   triangular_mesh_annotation_group_file_format:
     range: triangular_mesh_annotation_group_file_format_enum
     description: The format of the triangular mesh annotation group file.
+  caption_annotation_file_format:
+    range: caption_annotation_file_format_enum
+    description: The format of the caption annotation file.
 
   # ============================================================================
   # Identified Objects fields
