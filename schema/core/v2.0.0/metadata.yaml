@@ -863,6 +863,16 @@ classes:
       name:
         exact_mappings:
           - cdp-common:annotation_source_file_mesh_name
+
+  AnnotationGlobalCaptionFile:
+    is_a: AnnotationSourceFile
+    aliases:
+      - GlobalCaption
+    description: File and sourcing data for a global caption annotation. Text captions describing the entire tomogram.
+    attributes:
+      file_format:
+        exact_mappings:
+          - cdp-common:caption_annotation_file_format
   # ============================================================================
 
   # ============================================================================

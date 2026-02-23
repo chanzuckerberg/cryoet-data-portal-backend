@@ -1321,6 +1321,8 @@ enums:
         description: A series of coordinates
       InstanceSegmentation:
         description: A volume with labels for multiple instances
+      GlobalCaption:
+        description: A set of text captions describing the entire tomogram
 
   point_annotation_file_format_enum:
     description: Describes the format of the point annotation file
@@ -1368,6 +1370,11 @@ enums:
     description: Describes the format of a triangular mesh group annotation file
     permissible_values:
       hff:
+
+  caption_annotation_file_format_enum:
+    description: Describes the format of a caption annotation file
+    permissible_values:
+      json:
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.
