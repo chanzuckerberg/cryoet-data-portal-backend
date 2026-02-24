@@ -1377,7 +1377,7 @@ enums:
   caption_annotation_file_format_enum:
     description: Describes the format of a caption annotation file
     permissible_values:
-      json:
+      saber:
 
   annotation_method_link_type_enum:
     description: Describes the type of link associated to the annotation method.
