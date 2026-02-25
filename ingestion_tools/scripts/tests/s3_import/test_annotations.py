@@ -1655,7 +1655,7 @@ def test_ingest_global_caption(
                 "sources": [
                     {
                         "GlobalCaption": {
-                            "file_format": "json",
+                            "file_format": "saber",
                             "glob_string": glob_string,
                             "is_visualization_default": False,
                         },
@@ -1672,7 +1672,7 @@ def test_ingest_global_caption(
         metadata=default_anno_metadata,
         path=os.path.join(fixtures_dir, glob_string),
         parents={"voxel_spacing": voxel_spacing_importer_local, **voxel_spacing_importer_local.parents},
-        file_format="json",
+        file_format="saber",
         identifier=100,
         alignment_metadata_path="foo",
     )
