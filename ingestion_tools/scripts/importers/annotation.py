@@ -1,6 +1,7 @@
 import json
 import os
 import os.path
+import shutil
 from abc import abstractmethod
 from typing import Any, Callable, Type
 
@@ -636,20 +637,27 @@ class TriangularMeshAnnotationGroup(AbstractTriangularMeshAnnotation):
 
 
 class GlobalCaptionAnnotation(BaseAnnotationSource):
-    """Annotation source for whole-tomogram text captions (JSON format)."""
+    """Annotation source for whole-tomogram text captions."""
 
     shape = "GlobalCaption"
-    valid_file_formats = ["json"]
+    output_format: str = "json"
+    map_functions = {
+        "json": shutil.copy2,
+    }
+    valid_file_formats = list(map_functions.keys())
 
     def convert(self, output_prefix: str):
-        output_file = self.get_output_filename(output_prefix, "json")
-        self.config.fs.copy(self.path, output_file)
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        input_file = self.config.fs.localreadable(self.path)
+        output_file = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](input_file, output_file)
+        self.config.fs.push(output_file)
 
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
             {
-                "format": "json",
-                "path": self.get_output_filename(output_prefix, "json"),
+                "format": self.output_format,
+                "path": self.get_output_filename(output_prefix, self.output_format),
                 "shape": self.shape,
                 "is_visualization_default": False,
             },
@@ -657,7 +665,7 @@ class GlobalCaptionAnnotation(BaseAnnotationSource):
         return metadata
 
     def get_object_count(self, output_prefix: str) -> int:
-        output_file = self.get_output_filename(output_prefix, "json")
+        output_file = self.get_output_filename(output_prefix, self.output_format)
         with self.config.fs.open(output_file, "r") as f:
             data = json.load(f)
         return len(data.get("captions", []))
