@@ -1109,7 +1109,6 @@ slots:
   frames_is_gain_corrected:
     range: boolean
     description: Whether this movie stack has been gain corrected
-    ifabsent: false
 
   frames_acquisition_file:
     range: string
