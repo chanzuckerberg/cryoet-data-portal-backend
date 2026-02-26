@@ -5414,7 +5414,7 @@ classes:
         domain_of:
         - Frame
         range: boolean
-        required: false
+        required: true
         inlined: true
         inlined_as_list: true
   Ctf:

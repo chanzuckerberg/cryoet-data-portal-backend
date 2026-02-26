@@ -1089,12 +1089,6 @@ classes:
       method_type:
         description: The alignment method type.
         range: alignment_method_type_enum
-  # ============================================================================
-
-  # ============================================================================
-  # Frame metadata
-  # ============================================================================
-  # Add to the `classes` section in `ingestion_config_models.yaml`
 
   Frame:
     description: A frame entity.
@@ -1108,14 +1102,7 @@ classes:
       is_gain_corrected:
         description: Is the frame gain corrected
         range: boolean
-        required: false
-
-  # ============================================================================
-
-  # ============================================================================
-  # CTF metadata
-  # ============================================================================
-  # Add to the `classes` section in `ingestion_config_models.yaml`
+        required: true
 
   Ctf:
     description: A ctf entity.

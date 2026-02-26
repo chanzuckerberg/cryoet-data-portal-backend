@@ -5360,8 +5360,8 @@ class Frame(ConfiguredBaseModel):
             "linkml_meta": {"any_of": [{"range": "float"}, {"range": "FloatFormattedString"}], "domain_of": ["Frame"]}
         },
     )
-    is_gain_corrected: Optional[bool] = Field(
-        default=None,
+    is_gain_corrected: bool = Field(
+        default=...,
         description="""Is the frame gain corrected""",
         json_schema_extra={"linkml_meta": {"domain_of": ["Frame"]}},
     )

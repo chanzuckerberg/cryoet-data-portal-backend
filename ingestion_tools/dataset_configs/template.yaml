@@ -225,11 +225,8 @@ depositions: REQUIRED
     sources: REQUIRED, SEE datasets.sources and runs.sources.parent_filters
 frames: OPTIONAL
 - metadata: OPTIONAL
-    defocus: REQUIRED, FLOAT
-    astigmatism: REQUIRED, FLOAT
-    astigmatic_angle: REQUIRED, FLOAT
-    dose_rate: OPTIONAL, FLOAT
-    is_gain_corrected: OPTIONAL, BOOLEAN
+    dose_rate: REQUIRED, FLOAT
+    is_gain_corrected: REQUIRED, BOOLEAN
   sources: SEE datasets.sources and runs.sources.parent_filters
 gains: OPTIONAL
 - sources: SEE datasets.sources and runs.sources.parent_filters
@@ -329,7 +326,7 @@ tomograms: OPTIONAL
     reconstruction_method: REQUIRED, STRING (ENUM [SART, Fourier Space, SIRT, WBP, Unknown])
     reconstruction_software: REQUIRED, STRING
     tomogram_version: REQUIRED, FLOAT
-    voxel_spacing: REQUIRED, FLOAT (POSITIVE)
+    voxel_spacing: REQUIRED, FLOAT (POSITIVE, 3 DECIMALS)
     is_visualization_default: OPTIONAL, BOOLEAN (DEFAULT TRUE)
     is_portal_standard: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     cross_references: SEE datasets.cross_references
@@ -339,7 +336,7 @@ voxel_spacings: REQUIRED
 - sources: REQUIRED
   - destination_glob: see datasets.sources.destination_glob and runs.sources.parent_filters
   - source_glob: SEE datasets.sources.source_glob and runs.sources.parent_filters
-  - literal: SEE datasets.sources.literal and runs.sources.parent_filters
+  - literal: SEE datasets.sources.literal and runs.sources.parent_filters (3 DECIMALS)
   - tomogram_header: SEE runs.sources.parent_filters # try to use literal if possible, can have bad headers
       list_glob: REQUIRED, STRING (REGEX)
       match_regex: OPTIONAL, STRING (REGEX) (DEFAULT '.*')

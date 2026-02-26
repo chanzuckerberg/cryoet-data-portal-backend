@@ -3340,14 +3340,12 @@
                 },
                 "is_gain_corrected": {
                     "description": "Is the frame gain corrected",
-                    "type": [
-                        "boolean",
-                        "null"
-                    ]
+                    "type": "boolean"
                 }
             },
             "required": [
-                "dose_rate"
+                "dose_rate",
+                "is_gain_corrected"
             ],
             "title": "Frame",
             "type": "object"

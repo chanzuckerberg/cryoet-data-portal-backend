@@ -3431,7 +3431,7 @@ class Frame(ConfiguredBaseModel):
 
     dose_rate: Union[float, str] = Field(default=..., description="""The dose exposure for a given frame.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['Frame', 'FramesMetadata']} })
-    is_gain_corrected: Optional[bool] = Field(default=None, description="""Is the frame gain corrected""", json_schema_extra = { "linkml_meta": {'domain_of': ['Frame', 'PerFrameMetadata', 'FramesMetadata']} })
+    is_gain_corrected: bool = Field(default=..., description="""Is the frame gain corrected""", json_schema_extra = { "linkml_meta": {'domain_of': ['Frame', 'PerFrameMetadata', 'FramesMetadata']} })
 
     @field_validator('dose_rate')
     def pattern_dose_rate(cls, v):
@@ -3992,9 +3992,8 @@ class PerFrameMetadata(ConfiguredBaseModel):
          'exact_mappings': ['cdp-common:frames_exposure_dose'],
          'unit': {'descriptive_name': 'electrons per square angstrom',
                   'symbol': 'e-/Å2'}} })
-    is_gain_corrected: Optional[bool] = Field(default=False, description="""Whether this movie stack has been gain corrected""", json_schema_extra = { "linkml_meta": {'domain_of': ['Frame', 'PerFrameMetadata', 'FramesMetadata'],
-         'exact_mappings': ['cdp-common:frames_is_gain_corrected'],
-         'ifabsent': 'False'} })
+    is_gain_corrected: Optional[bool] = Field(default=None, description="""Whether this movie stack has been gain corrected""", json_schema_extra = { "linkml_meta": {'domain_of': ['Frame', 'PerFrameMetadata', 'FramesMetadata'],
+         'exact_mappings': ['cdp-common:frames_is_gain_corrected']} })
     path: Optional[str] = Field(default=None, description="""Path to the movie stack file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationFileMetadata', 'PerFrameMetadata'],
          'exact_mappings': ['cdp-common:frames_path']} })
 
@@ -4010,9 +4009,8 @@ class FramesMetadata(DefaultMetadata):
          'exact_mappings': ['cdp-common:frames_dose_rate'],
          'unit': {'descriptive_name': 'electrons per square angstrom per second',
                   'symbol': 'e-/(Å*Å*s)'}} })
-    is_gain_corrected: Optional[bool] = Field(default=False, description="""Whether this movie stack has been gain corrected""", json_schema_extra = { "linkml_meta": {'domain_of': ['Frame', 'PerFrameMetadata', 'FramesMetadata'],
-         'exact_mappings': ['cdp-common:frames_is_gain_corrected'],
-         'ifabsent': 'False'} })
+    is_gain_corrected: Optional[bool] = Field(default=None, description="""Whether this movie stack has been gain corrected""", json_schema_extra = { "linkml_meta": {'domain_of': ['Frame', 'PerFrameMetadata', 'FramesMetadata'],
+         'exact_mappings': ['cdp-common:frames_is_gain_corrected']} })
     frames: Optional[list[PerFrameMetadata]] = Field(default=[], description="""Per-movie stack metadata.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FramesMetadata'], 'list_elements_ordered': True} })
     frames_acquisition_file: Optional[str] = Field(default=None, description="""Path to the acquisition metadata file (MDOC) for this tilt series.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FramesMetadata'],
          'exact_mappings': ['cdp-common:frames_acquisition_file']} })
