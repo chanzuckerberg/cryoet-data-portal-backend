@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.15.0...apiv2-v1.15.1) (2026-02-26)
+
+
+### Bug Fixes
+
+* update Dockerfile and dependencies for frontend GH Action (python client tests) Docker env ([#594](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/594)) ([2ad4846](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/2ad48466785f97dd748a235f061383f33633d411))
+
 ## [1.15.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.14.1...apiv2-v1.15.0) (2026-01-23)
 
 
