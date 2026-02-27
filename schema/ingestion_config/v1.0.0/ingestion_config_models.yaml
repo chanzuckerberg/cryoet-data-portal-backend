@@ -320,6 +320,9 @@ classes:
       TriangularMeshGroup:
         description: The triangular mesh group annotation source.
         range: AnnotationTriangularMeshGroupFile
+      GlobalCaption:
+        description: The global caption annotation source.
+        range: AnnotationGlobalCaptionFile
       parent_filters:
         description: Filters for the parent of a source.
         range: AnnotationParentFilters

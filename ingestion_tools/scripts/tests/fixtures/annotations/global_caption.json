@@ -1,0 +1,16 @@
+{
+    "captions": [
+        {
+            "id": 0,
+            "text": "A caption for tomogram X."
+        },
+        {
+            "id": 1,
+            "text": "A 2nd caption for tomogram X."
+        },
+        {
+            "id": 2,
+            "text": "A 3rd caption for tomogram X."
+        }
+    ]
+}

@@ -582,7 +582,8 @@
                 "SegmentationMask",
                 "OrientedPoint",
                 "Point",
-                "InstanceSegmentation"
+                "InstanceSegmentation",
+                "GlobalCaption"
             ],
             "title": "AnnotationFileShapeTypeEnum",
             "type": "string"
@@ -596,6 +597,50 @@
             ],
             "title": "AnnotationFileSourceEnum",
             "type": "string"
+        },
+        "AnnotationGlobalCaptionFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for a global caption annotation. Text captions describing the entire tomogram.",
+            "properties": {
+                "file_format": {
+                    "$ref": "#/$defs/CaptionAnnotationFileFormatEnum",
+                    "description": "The format of the caption annotation file.",
+                    "pattern": "^saber$"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                }
+            },
+            "title": "AnnotationGlobalCaptionFile",
+            "type": "object"
         },
         "AnnotationInstanceSegmentationFile": {
             "additionalProperties": false,
@@ -1111,6 +1156,17 @@
             "additionalProperties": false,
             "description": "An annotation source.",
             "properties": {
+                "GlobalCaption": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AnnotationGlobalCaptionFile"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "File and sourcing data for a global caption annotation. Text captions describing the entire tomogram."
+                },
                 "InstanceSegmentation": {
                     "anyOf": [
                         {
@@ -1541,6 +1597,14 @@
             ],
             "title": "CameraDetails",
             "type": "object"
+        },
+        "CaptionAnnotationFileFormatEnum": {
+            "description": "Describes the format of a caption annotation file",
+            "enum": [
+                "saber"
+            ],
+            "title": "CaptionAnnotationFileFormatEnum",
+            "type": "string"
         },
         "CellComponent": {
             "additionalProperties": false,
