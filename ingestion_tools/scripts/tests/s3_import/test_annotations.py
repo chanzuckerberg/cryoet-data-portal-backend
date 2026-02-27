@@ -9,6 +9,7 @@ import pytest
 import trimesh
 from importers.annotation import (
     InstanceSegmentationAnnotation,
+    InstanceSegmentationMaskAnnotation,
     OrientedPointAnnotation,
     PointAnnotation,
     SegmentationMaskAnnotation,
@@ -1637,3 +1638,142 @@ def test_ingest_triangular_mesh_hff(
     expected_hash = trimesh.comparison.identifier_hash(trimesh.comparison.identifier_simple(expected_mesh))
 
     assert actual_hash == expected_hash
+
+
+ingest_instancemask_test_cases = [
+    # Mask with 3 labels (1,2,3) and background 0
+    {
+        "case": "InstanceSegmentationMaskAnnotation, MRC",
+        "source_cfg": {
+            "InstanceSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[3, 3, 3, 3], [0, 2, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                ],
+                "shape": (4, 4, 4),
+            },
+        ],
+    },
+    {
+        "case": "InstanceSegmentationMaskAnnotation, rescale=True, MRC",
+        "source_cfg": {
+            "InstanceSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "rescale": True,
+                "glob_string": "annotations/semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[3, 3, 3, 3], [0, 2, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                    [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]],
+                ],
+                "shape": (4, 4, 4),
+            },
+        ],
+    },
+    {
+        "case": "InstanceSegmentationMaskAnnotation, small mask, rescale=True, MRC",
+        "source_cfg": {
+            "InstanceSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "rescale": True,
+                "glob_string": "annotations/small_semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[2, 2, 2, 2], [2, 2, 2, 2], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[2, 2, 2, 2], [2, 2, 2, 2], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                    [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
+                ],
+                "shape": (4, 4, 4),
+            },
+        ],
+    },
+    {
+        "case": "InstanceSegmentationMaskAnnotation, small mask, rescale=False, MRC",
+        "source_cfg": {
+            "InstanceSegmentationMask": {
+                "file_format": "mrc",
+                "is_visualization_default": True,
+                "rescale": False,
+                "glob_string": "annotations/small_semantic_mask.mrc",
+            },
+        },
+        "out_data": [
+            {
+                "volume": [
+                    [[2, 2], [0, 0]],
+                    [[0, 0], [0, 0]],
+                ],
+                "shape": (2, 2, 2),
+            },
+        ],
+    },
+]
+
+
+@pytest.mark.parametrize("case", ingest_instancemask_test_cases)
+def test_ingest_instancesegmentationmask(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    voxel_spacing_importer_s3,
+    deposition_config_s3: DepositionImportConfig,
+    s3_client: S3Client,
+    case: Dict[str, Any],
+):
+    # loop through test cases
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            case["source_cfg"],
+        ],
+    }
+    deposition_config_s3._set_object_configs("annotation", [anno_config])
+
+    args = dict(
+        config=deposition_config_s3,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/"
+        + case["source_cfg"]["InstanceSegmentationMask"].get("glob_string"),
+        parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
+        identifier=100,
+        alignment_metadata_path="foo",
+        **case["source_cfg"]["InstanceSegmentationMask"],
+    )
+
+    anno = InstanceSegmentationMaskAnnotation(**args)
+    anno.import_item()
+
+    # Strip the bucket name and annotation name from the annotation's output path.
+    anno_file = anno.get_output_path() + "_instancesegmentationmask.mrc"
+
+    # Sanity check the mrc file
+    with s3_fs.open(anno_file, "rb") as fh:
+        mrc = MrcInterpreter(fh)
+        data = mrc.data
+
+    exp_data = case["out_data"][0]["volume"]
+    shape = case["out_data"][0]["shape"]
+
+    # Mask shape
+    assert data.shape == shape, f"Incorrect shape for {case['case']}"
+    # Mask data
+    assert np.all(data == np.array(exp_data, dtype=int)), f"Incorrect data for {case['case']}"

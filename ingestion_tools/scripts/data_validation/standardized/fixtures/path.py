@@ -395,12 +395,14 @@ def annotation_files(
     oriented_point_annotation_files: List[str],
     instance_seg_annotation_files: List[str],
     seg_mask_annotation_mrc_files: List[str],
+    instance_seg_mask_annotation_mrc_files: List[str],
 ) -> List[str]:
     all_files = (
         point_annotation_files
         + oriented_point_annotation_files
         + instance_seg_annotation_files
         + seg_mask_annotation_mrc_files
+        + instance_seg_mask_annotation_mrc_files
     )
     assert len(all_files) > 0, "No annotation files found, but folder exists."
     return all_files
@@ -581,7 +583,73 @@ def seg_mask_annotation_zarr_files(annotations_dir: str, filesystem: FileSystemA
 @pytest.fixture(scope="session")
 def seg_mask_annotation_zarr_files_to_metadata_files(
     bucket: str,
+    seg_mask_annotation_zarr_files: List[str],
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
-    return get_annotation_files_to_metadata_files(bucket, annotation_metadata, filesystem, "SegmentationMask", "zarr")
+    return get_annotation_files_to_metadata_files(
+        bucket,
+        seg_mask_annotation_zarr_files,
+        annotation_metadata,
+        filesystem,
+        "SegmentationMask",
+        "zarr",
+    )
+
+
+@pytest.fixture(scope="session")
+def instance_seg_mask_annotation_mrc_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
+    """
+    [Dataset]/[ExperimentRun]/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/*/*_instancesegmentationmask.mrc
+
+    Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
+    if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
+    """
+    files = filesystem.glob(f"{annotations_dir}/*/*_instancesegmentationmask.mrc")
+    return ["s3://" + file for file in files]
+
+
+@pytest.fixture(scope="session")
+def instance_seg_mask_annotation_mrc_files_to_metadata_files(
+    bucket: str,
+    instance_seg_mask_annotation_mrc_files: List[str],
+    annotation_metadata: Dict[str, Dict],
+    filesystem: FileSystemApi,
+) -> Dict[str, str]:
+    return get_annotation_files_to_metadata_files(
+        bucket,
+        instance_seg_mask_annotation_mrc_files,
+        annotation_metadata,
+        filesystem,
+        "InstanceSegmentationMask",
+        "mrc",
+    )
+
+
+@pytest.fixture(scope="session")
+def instance_seg_mask_annotation_zarr_files(annotations_dir: str, filesystem: FileSystemApi) -> List[str]:
+    """
+    [Dataset]/[ExperimentRun]/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/*/*_instancesegmentationmask.zarr
+
+    Note: for files like this, we don't actually want to skip if there's no files found, because we're testing
+    if the metadata and annotation files are consistent. See `get_annotation_files_to_metadata_files` for more info.
+    """
+    files = filesystem.glob(f"{annotations_dir}/*/*_instancesegmentationmask.zarr")
+    return ["s3://" + file for file in files]
+
+
+@pytest.fixture(scope="session")
+def instance_seg_mask_annotation_zarr_files_to_metadata_files(
+    bucket: str,
+    instance_seg_mask_annotation_zarr_files: List[str],
+    annotation_metadata: Dict[str, Dict],
+    filesystem: FileSystemApi,
+) -> Dict[str, str]:
+    return get_annotation_files_to_metadata_files(
+        bucket,
+        instance_seg_mask_annotation_zarr_files,
+        annotation_metadata,
+        filesystem,
+        "InstanceSegmentationMask",
+        "zarr",
+    )

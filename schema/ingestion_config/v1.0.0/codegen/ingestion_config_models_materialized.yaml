@@ -2069,6 +2069,18 @@ classes:
         range: AnnotationSemanticSegmentationMaskFile
         inlined: true
         inlined_as_list: true
+      InstanceSegmentationMask:
+        name: InstanceSegmentationMask
+        description: File and sourcing data for an instance segmentation annotation
+          mask. Annotation that identifies individual instances of object shape masks.
+        from_schema: cdp-ingestion-config
+        alias: InstanceSegmentationMask
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationInstanceSegmentationMaskFile
+        inlined: true
+        inlined_as_list: true
       TriangularMesh:
         name: TriangularMesh
         description: File and sourcing data for a triangular mesh annotation. Annotation

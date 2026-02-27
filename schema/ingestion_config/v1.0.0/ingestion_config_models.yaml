@@ -314,6 +314,9 @@ classes:
       SemanticSegmentationMask:
         description: The semantic segmentation mask annotation source.
         range: AnnotationSemanticSegmentationMaskFile
+      InstanceSegmentationMask:
+        description: The instance segmentation mask annotation source.
+        range: AnnotationInstanceSegmentationMaskFile
       TriangularMesh:
         description: The triangular mesh annotation source.
         range: AnnotationTriangularMeshFile
