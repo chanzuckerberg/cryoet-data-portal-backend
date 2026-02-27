@@ -643,7 +643,7 @@ class GlobalCaptionAnnotation(BaseAnnotationSource):
     output_format: str = "json"
     # TODO: Implement converter functions when the json structure change or the input format is not json
     map_functions = {
-        "saber": shutil.copy2,
+        "saber": shutil.copy,
     }
     valid_file_formats = list(map_functions.keys())
 
