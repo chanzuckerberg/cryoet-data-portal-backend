@@ -311,16 +311,16 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
             return [], False
         data = await response.json()
         names = []
-        for entry in data["_embedded"]["terms"]:
+        for entry in data.get("_embedded", {}).get("terms", []):
             names.append(entry["label"])
             names += entry["synonyms"]
         return names, True
 
 
 @alru_cache
-async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
+async def is_id_ancestor(id_ancestor: str, id: str) -> tuple[bool, List[str]]:
     """
-    Returns whether or not id_ancestor is an ancestor of id
+    Returns whether or not id_ancestor is an ancestor of id, and the ancestors.
     """
     # Encode the IRI
     iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
@@ -335,8 +335,8 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
 
     async with aiohttp.ClientSession() as session, session.get(url) as response:
         logger.debug("Getting ancestors for ID %s at %s, status %s", id, url, response.status)
-        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]]
-        return response.status == 200 and id_ancestor in ancestor_ids
+        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json()).get("_embedded", {}).get("terms", [])]
+        return response.status == 200 and id_ancestor in ancestor_ids, ancestor_ids
 
 
 @alru_cache
@@ -450,14 +450,15 @@ def validate_id_name_object(
     valid_name = retrieved_names == [] or any(name == retrieved_name for retrieved_name in retrieved_names)
 
     if not valid_name:
-        raise ValueError(f"name '{name}' does not match id: {id}")
+        raise ValueError(f"name '{name}' does not match id: {id}, retrieved names: {retrieved_names}")
 
     if ancestor is None:
         return
 
     logger.debug("Valid name, now checking if %s is an ancestor of %s", name, ancestor)
-    if not asyncio.run(validate_ancestor_function(ancestor, id)):
-        raise ValueError(f"'{name}' is not a descendant of {ancestor}")
+    is_ancestor, ancestor_ids = asyncio.run(validate_ancestor_function(ancestor, id))
+    if not is_ancestor:
+        raise ValueError(f"'{name}' is not a descendant of {ancestor}, ancestors: {ancestor_ids}")
 
 
 def validate_cell_strain_object(self: CellStrain) -> CellStrain:
