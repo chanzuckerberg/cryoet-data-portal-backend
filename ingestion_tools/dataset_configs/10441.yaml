@@ -1,14 +1,9 @@
-depositions:
-- sources:
-  - literal:
-      value:
-      - 10310
 alignments:
 - metadata:
-    format: IMOD
-    method_type: undefined
     alignment_type: GLOBAL
+    format: IMOD
     is_portal_standard: true
+    method_type: undefined
   sources:
   - source_multi_glob:
       list_globs:
@@ -16,6 +11,7 @@ alignments:
       - '{run_name}/TiltSeries/*.xf'
 annotations:
 - metadata:
+    annotation_ingest_id: membrane-1
     annotation_method: polnet-simulated ground truth
     annotation_object:
       id: GO:0016020
@@ -26,14 +22,14 @@ annotations:
     - ORCID: 0000-0002-8063-6951
       name: Jonathan Schwartz
       primary_author_status: true
-    - name: Kyle I. S. Harrington
-      primary_author_status: false
+    - ORCID: 0000-0002-7237-1973
       corresponding_author_status: true
-      ORCID: 0000-0002-7237-1973
-    - name: Mohammadreza Paraan
+      name: Kyle I. S. Harrington
       primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
       corresponding_author_status: true
-      ORCID: 0000-0002-8402-0134
+      name: Mohammadreza Paraan
+      primary_author_status: false
     dates: &id002
       deposition_date: '2024-10-30'
       last_modified_date: '2024-10-30'
@@ -54,11 +50,12 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
+    annotation_ingest_id: ferritin-complex-1
     annotation_method: polnet-simulated ground truth
     annotation_object:
-      state: apo
       id: GO:0070288
       name: ferritin complex
+      state: apo
     annotation_publications: 10.1109/TMI.2024.3398401, EMD-41923
     annotation_software: polnet
     authors: *id001
@@ -80,9 +77,10 @@ annotations:
       glob_strings:
       - '{run_name}/Picks/apo-ferritin.star'
       is_visualization_default: true
+      mesh_source_path: mesh_source/ferritin_complex.glb
       order: xyz
-      mesh_source_path: 'mesh_source/ferritin_complex.glb'
 - metadata:
+    annotation_ingest_id: beta-amylase-1
     annotation_method: polnet-simulated ground truth
     annotation_object:
       id: UniProtKB:P10537
@@ -108,9 +106,10 @@ annotations:
       glob_strings:
       - '{run_name}/Picks/beta-amylase.star'
       is_visualization_default: true
+      mesh_source_path: mesh_source/beta-amylase.glb
       order: xyz
-      mesh_source_path: 'mesh_source/beta-amylase.glb'
 - metadata:
+    annotation_ingest_id: beta-galactosidase-1
     annotation_method: polnet-simulated ground truth
     annotation_object:
       id: UniProtKB:P00722
@@ -136,9 +135,10 @@ annotations:
       glob_strings:
       - '{run_name}/Picks/beta-galactoside.star'
       is_visualization_default: true
+      mesh_source_path: mesh_source/beta-galactosidase.glb
       order: xyz
-      mesh_source_path: 'mesh_source/beta-galactosidase.glb'
 - metadata:
+    annotation_ingest_id: cytosolic-ribosome-1
     annotation_method: polnet-simulated ground truth
     annotation_object:
       id: GO:0022626
@@ -164,9 +164,10 @@ annotations:
       glob_strings:
       - '{run_name}/Picks/ribosome.star'
       is_visualization_default: true
+      mesh_source_path: mesh_source/ribosome.glb
       order: xyz
-      mesh_source_path: 'mesh_source/ribosome.glb'
 - metadata:
+    annotation_ingest_id: thyroglobulin-1
     annotation_method: polnet-simulated ground truth
     annotation_object:
       id: UniProtKB:P01267
@@ -192,9 +193,10 @@ annotations:
       glob_strings:
       - '{run_name}/Picks/thyroglobulin.star'
       is_visualization_default: true
+      mesh_source_path: mesh_source/thyroglobulin.glb
       order: xyz
-      mesh_source_path: 'mesh_source/thyroglobulin.glb'
 - metadata:
+    annotation_ingest_id: virus-like-capsid-1
     annotation_method: polnet-simulated ground truth
     annotation_object:
       description: PP7 VLP
@@ -221,60 +223,69 @@ annotations:
       glob_strings:
       - '{run_name}/Picks/virus-like-particle.star'
       is_visualization_default: true
+      mesh_source_path: mesh_source/virus_like_capsid.glb
       order: xyz
-      mesh_source_path: 'mesh_source/virus_like_capsid.glb'
 collection_metadata:
 - sources:
   - source_glob:
       list_glob: '{run_name}/mdocs/{run_name}_vali.mdoc'
-datasets:
-- metadata:
-    authors: *id001
-    cross_references:
-      publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
-      related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181, EMD-41917
-    dataset_description: This dataset is comprised of simulated tiltseries, tomograms and ground truth annotations for the
-      purpose of training object identification algorithms in the context of the CryoET Object Identification Challenge. The
-      data was simulated using polnet, and contains point labels and semantic masks for all 6 protein complexes included in
-      the challenge dataset (Apo-ferritin, Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP),
-      as well as membranes.
-    dataset_identifier: 10441
-    dataset_title: CZII - CryoET Object Identification Challenge - Simulated Training Data
-    dates: *id002
-    funding:
-    - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: "CZII-2023\u2013327779"
-    grid_preparation: ''
-    sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's xyzproj + addition of noise + reconstruction
-      with IMOD's tilt
-    sample_type: in_silico
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
-  sources:
-  - literal:
-      value:
-      - '10441'
-frames:
-- metadata:
-    is_gain_corrected: true
-    dose_rate: 3.226
-  sources:
-  - literal:
-      value:
-      - default
 dataset_keyphotos:
 - sources:
   - literal:
       value:
         snapshot: null
         thumbnail: null
+datasets:
+- metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
+    authors: *id001
+    cross_references:
+      publications: 10.1101/2024.11.04.621686, 10.1101/2024.11.04.621608, 10.1109/TMI.2024.3398401
+      related_database_entries: EMD-41923, EMD-30405, EMD-0153, EMD-3883, EMD-24181,
+        EMD-41917
+    dataset_description: This dataset is comprised of simulated tiltseries, tomograms
+      and ground truth annotations for the purpose of training object identification
+      algorithms in the context of the CryoET Object Identification Challenge. The
+      data was simulated using polnet, and contains point labels and semantic masks
+      for all 6 protein complexes included in the challenge dataset (Apo-ferritin,
+      Beta-amylase, Beta-galactosidase, cytosolic ribosomes, thyroglobulin and VLP),
+      as well as membranes.
+    dataset_identifier: 10441
+    dataset_title: CZII - CryoET Object Identification Challenge - Simulated Training
+      Data
+    dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: "CZII-2023\u2013327779"
+    grid_preparation: ''
+    sample_preparation: Simulation of 3D volumes with polnet + projection using IMOD's
+      xyzproj + addition of noise + reconstruction with IMOD's tilt
+    sample_type: in_silico
+  sources:
+  - literal:
+      value:
+      - '10441'
+depositions:
+- sources:
+  - literal:
+      value:
+      - 10310
+frames:
+- metadata:
+    dose_rate: 3.226
+    is_gain_corrected: true
+  sources:
+  - literal:
+      value:
+      - default
 rawtilts:
 - sources:
   - source_glob:
@@ -352,7 +363,7 @@ tomograms:
   sources:
   - source_glob:
       list_glob: '{run_name}/VoxelSpacing10.000/wbp.mrc'
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

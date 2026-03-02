@@ -408,6 +408,10 @@
             "additionalProperties": false,
             "description": "Metadata describing an annotation.",
             "properties": {
+                "annotation_ingest_id": {
+                    "description": "A unique identifier used during ingestion to identify this annotation.",
+                    "type": "string"
+                },
                 "annotation_method": {
                     "description": "Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
                     "type": "string"
@@ -510,6 +514,7 @@
                 }
             },
             "required": [
+                "annotation_ingest_id",
                 "annotation_method",
                 "annotation_object",
                 "method_type",
