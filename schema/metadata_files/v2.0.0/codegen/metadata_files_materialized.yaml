@@ -1558,7 +1558,6 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:frames_is_gain_corrected
-        ifabsent: 'False'
         alias: is_gain_corrected
         owner: PerFrameMetadata
         domain_of:
@@ -1615,7 +1614,6 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:frames_is_gain_corrected
-        ifabsent: 'False'
         alias: is_gain_corrected
         owner: FramesMetadata
         domain_of:
