@@ -114,8 +114,17 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = TriangularMeshAnnotationGroup(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
-        if skip_source_validation or anno.is_valid():
+        if skip_source_validation:
+            # Check if destination data exists instead of validating source
+            output_dir = anno.get_output_path()
+            rel_path = os.path.relpath(output_dir, config.output_prefix)
+            if anno.destination_files_exist(rel_path):
+                return anno
+            # Destination doesn't exist, don't include this annotation
+            return None
+        elif anno.is_valid():
             return anno
+        return None
 
     @classmethod
     def _get_alignment_metadata_path(cls, config: DepositionImportConfig, parents: dict[str, Any]) -> str:
@@ -234,6 +243,22 @@ class BaseAnnotationSource(AnnotationImporter):
         # To be overridden by subclasses when additional check needed to validate if a source contains valid information
         # for this run.
         return True
+
+    def destination_files_exist(self, output_prefix: str) -> bool:
+        """
+        Check if destination files exist for this annotation.
+        Uses get_metadata() to get expected file paths, then checks if any exist.
+        Used when skip_source_validation=True to verify data was previously converted.
+
+        Args:
+            output_prefix: Relative path prefix for output files (relative to config.output_prefix)
+        """
+        metadata_entries = self.get_metadata(output_prefix)
+        for entry in metadata_entries:
+            file_path = os.path.join(self.config.output_prefix, entry["path"])
+            if self.config.fs.exists(file_path):
+                return True
+        return False
 
     @abstractmethod
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
