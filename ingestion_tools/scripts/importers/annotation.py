@@ -75,6 +75,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
         path: str,
         allow_imports: bool,
         parents: dict[str, Any] | None,
+        skip_source_validation: bool = False,
     ):
         source_args = {k: v for k, v in self.source.items() if k not in {"shape", "glob_string", "glob_strings"}}
         alignment_path = config.to_formatted_path(self._get_alignment_metadata_path(config, parents))
@@ -113,7 +114,7 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = TriangularMeshAnnotationGroup(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
-        if anno.is_valid():
+        if skip_source_validation or anno.is_valid():
             return anno
 
     @classmethod
@@ -171,9 +172,10 @@ class AnnotationImporter(BaseImporter):
         if filename in self.written_metadata_files:
             return  # We've already written this metadata file
 
+        # Skip source validation since import_metadata is only called after data conversion
         anno_files = [
             item
-            for item in AnnotationImporter.finder(self.config, **self.parents)
+            for item in AnnotationImporter.finder(self.config, skip_source_validation=True, **self.parents)
             if item.identifier == self.identifier
         ]
 
