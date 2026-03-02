@@ -76,6 +76,7 @@ class Annotation(Base):
     https_metadata_path: Mapped[str] = mapped_column(String, nullable=False)
     annotation_publication: Mapped[str] = mapped_column(String, nullable=True)
     annotation_method: Mapped[str] = mapped_column(String, nullable=False)
+    annotation_ingest_id: Mapped[str] = mapped_column(String, nullable=True)
     ground_truth_status: Mapped[bool] = mapped_column(Boolean, nullable=True, server_default="False")
     object_id: Mapped[str] = mapped_column(String, nullable=False)
     object_name: Mapped[str] = mapped_column(String, nullable=False)
