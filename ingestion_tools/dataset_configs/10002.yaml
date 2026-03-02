@@ -26,6 +26,7 @@ alignments:
       - metadata/{run_name}.tlt
 annotations:
 - metadata:
+    annotation_ingest_id: actin-filament-1
     annotation_method: manual segmentation
     annotation_object:
       description: Actin ground truth
@@ -79,6 +80,7 @@ annotations:
       glob_string: labels/{run_name}_actin_ground_truth.mrc
       is_visualization_default: true
 - metadata:
+    annotation_ingest_id: actin-filament-2
     annotation_method: 2D CNN + 3D CNN hyperparameter tuning
     annotation_object:
       description: Actin DeePiCt training prediction
@@ -113,6 +115,9 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10989.gif
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id004
     - ORCID: 0000-0002-4691-9501
       name: Irene de Teresa Trueba
@@ -144,40 +149,40 @@ datasets:
       corresponding_author_status: true
       name: Judith B. Zaugg
     cell_strain:
-      name: hTERT-RPE1
       id: CVCL_4388
+      name: hTERT-RPE1
     cell_type:
-      name: retinal pigment epithelial cell
       id: CL:0002586
+      name: retinal pigment epithelial cell
     cross_references:
       publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
       related_database_entries: EMPIAR-10989
-    dataset_description: Cryo-electron tomograms of RPE1 cells. Comprehensive annotation of actin filaments and microtubules
+    dataset_description: Cryo-electron tomograms of RPE1 cells. Comprehensive annotation
+      of actin filaments and microtubules
     dataset_identifier: 10002
     dataset_title: RPE1 cytosol with actin stress fiber
     dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: European Research Council (ERC)
       grant_id: '760067'
-    grid_preparation: 'model: Quantifoil, material: GOLD, support_film_film_type_id: 1, support_film_film_topology: HOLEY,
-      support_film_instance_type: support_film, pretreatment_type_: PLASMA CLEANING'
+    grid_preparation: 'model: Quantifoil, material: GOLD, support_film_film_type_id:
+      1, support_film_film_topology: HOLEY, support_film_instance_type: support_film,
+      pretreatment_type_: PLASMA CLEANING'
     organism:
       name: Homo sapiens
       taxonomy_id: 9606
-    sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant: None, instance_type: tomography_preparation'
+    sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, cryo_protectant:
+      None, instance_type: tomography_preparation'
     sample_type: cell_line
     tissue:
-      name: retinal pigment epithelial cell
       id: CL:0002586
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
+      name: retinal pigment epithelial cell
   sources:
   - literal:
       value:
@@ -196,19 +201,19 @@ frames:
       list_glob: frames/{mapped_frame_name}_*.tif
 gains:
 - sources:
-  - source_glob:
-      list_glob: frames/CountRef_TS_011_012.dm4
-    parent_filters:
+  - parent_filters:
       include:
         run:
         - ^00011$
         - ^00012$
-  - source_glob:
-      list_glob: frames/CountRef_0004.dm4
-    parent_filters:
+    source_glob:
+      list_glob: frames/CountRef_TS_011_012.dm4
+  - parent_filters:
       include:
         run:
         - ^00004$
+    source_glob:
+      list_glob: frames/CountRef_0004.dm4
 rawtilts:
 - sources:
   - source_glob:
@@ -277,7 +282,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms/{run_name}_*.rec
       match_regex: .*
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

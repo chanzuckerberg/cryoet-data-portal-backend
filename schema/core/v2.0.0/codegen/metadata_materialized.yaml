@@ -4806,7 +4806,7 @@ classes:
         domain_of:
         - Annotation
         range: string
-        required: false
+        required: true
         inlined: true
         inlined_as_list: true
       annotation_method:

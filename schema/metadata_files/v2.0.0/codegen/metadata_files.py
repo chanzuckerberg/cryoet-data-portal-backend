@@ -3096,10 +3096,8 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixins': ['DateStampedEntity', 'AuthoredEntity']})
 
-    annotation_ingest_id: Optional[str] = Field(None, description="""A unique identifier used during ingestion to identify this annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_ingest_id',
-         'domain_of': ['Annotation', 'AnnotationMetadata']} })
-    annotation_method: str = Field(..., description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_method',
-         'domain_of': ['Annotation', 'AnnotationMetadata'],
+    annotation_ingest_id: str = Field(default=..., description="""A unique identifier used during ingestion to identify this annotation.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'AnnotationMetadata']} })
+    annotation_method: str = Field(default=..., description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'AnnotationMetadata'],
          'exact_mappings': ['cdp-common:annotation_method']} })
     annotation_object: AnnotationObject = Field(default=..., description="""Metadata describing the object being annotated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'AnnotationMetadata']} })
     annotation_publications: Optional[str] = Field(default=None, description="""List of publication IDs (EMPIAR, EMDB, DOI, PDB) that describe this annotation method. Comma separated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'AnnotationMetadata'],
@@ -3906,10 +3904,8 @@ class AnnotationMetadata(DefaultMetadata, Annotation):
                        'TiltSeriesMetadata',
                        'TomogramMetadata'],
          'exact_mappings': ['cdp-common:last_updated_at']} })
-    annotation_ingest_id: Optional[str] = Field(None, description="""A unique identifier used during ingestion to identify this annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_ingest_id',
-         'domain_of': ['Annotation', 'AnnotationMetadata']} })
-    annotation_method: str = Field(..., description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""", json_schema_extra = { "linkml_meta": {'alias': 'annotation_method',
-         'domain_of': ['Annotation', 'AnnotationMetadata'],
+    annotation_ingest_id: str = Field(default=..., description="""A unique identifier used during ingestion to identify this annotation.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'AnnotationMetadata']} })
+    annotation_method: str = Field(default=..., description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'AnnotationMetadata'],
          'exact_mappings': ['cdp-common:annotation_method']} })
     annotation_object: AnnotationObject = Field(default=..., description="""Metadata describing the object being annotated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'AnnotationMetadata']} })
     annotation_publications: Optional[str] = Field(default=None, description="""List of publication IDs (EMPIAR, EMDB, DOI, PDB) that describe this annotation method. Comma separated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'AnnotationMetadata'],

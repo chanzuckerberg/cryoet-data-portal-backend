@@ -9,6 +9,7 @@ alignments:
       - alignments/si20220214_{run_name}_vali.tlt
 annotations:
 - metadata:
+    annotation_ingest_id: microtubule-doublet-48-nm-repeat-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       id: GO:0097545
@@ -41,6 +42,7 @@ annotations:
       glob_string: coorinates_dmt48/s{run_name}_dmt48_coordinates_bin2.txt
       is_visualization_default: true
 - metadata:
+    annotation_ingest_id: microtubule-doublet-96-nm-repeat-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       id: GO:0097545
@@ -72,6 +74,9 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11221.gif
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id003
     - name: Zhen Chen
       primary_author_status: true
@@ -90,24 +95,33 @@ datasets:
       corresponding_author_status: true
       name: David A. Agard
     cell_component:
-      name: sperm flagellum
       id: GO:0036126
+      name: sperm flagellum
     cell_strain:
       name: C57BI/6J
     cell_type:
-      name: sperm
       id: CL:0000019
+      name: sperm
     cross_references: &id004
       publications: doi:10.1101/2022.09.28.510016
-    dataset_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM lamella.
+    dataset_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
+      lamella.
     dataset_identifier: 10005
     dataset_title: Microtubule doublet from mouse sperm
     dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: Howard Hughes Medical Institute (HHMI)
-    - funding_agency_name: National Institutes of Health/National Institute of General Medical Sciences (NIH/NIGMS)
+    - funding_agency_name: National Institutes of Health/National Institute of General
+        Medical Sciences (NIH/NIGMS)
       grant_id: GM118106
-    - funding_agency_name: National Institutes of Health/National Institute of General Medical Sciences (NIH/NIGMS)
+    - funding_agency_name: National Institutes of Health/National Institute of General
+        Medical Sciences (NIH/NIGMS)
       grant_id: GM118099
     - funding_agency_name: The Pew Charitable Trusts
       grant_id: Pew Biomedical Scholar Award
@@ -115,31 +129,29 @@ datasets:
     organism:
       name: Mus musculus
       taxonomy_id: 10090
-    sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, instance_type: subtomogram_averaging_preparation'
+    sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, instance_type:
+      subtomogram_averaging_preparation'
     sample_type: primary_cell_culture
     tissue:
-      name: sperm
       id: CL:0000019
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
+      name: sperm
   sources:
   - literal:
       value:
       - '10005'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10005_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10005_thumbnail.png
 depositions:
 - metadata:
     authors: *id003
     cross_references: *id004
     dates: *id002
-    deposition_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM lamella, including annotations of
-      microtubule doublets (48 nm and 96 nm repeat).
+    deposition_description: Cryo-electron tomograms of mouse sperm flagella from FIB-SEM
+      lamella, including annotations of microtubule doublets (48 nm and 96 nm repeat).
     deposition_identifier: 10005
     deposition_title: Microtubule doublet from mouse sperm
     deposition_types:
@@ -149,16 +161,10 @@ depositions:
   - literal:
       value:
       - 10005
-deposition_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10005_snapshot.png
-        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10005_thumbnail.png
 frames:
 - metadata:
-    is_gain_corrected: true
     dose_rate: 4
+    is_gain_corrected: true
   sources:
   - literal:
       value:
@@ -241,7 +247,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms_bin2/si20220214_{run_name}_ctf_bin2.xyzw
       match_regex: .*\.xyzw
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

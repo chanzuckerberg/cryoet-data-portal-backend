@@ -4822,10 +4822,10 @@ class Annotation(AuthoredEntity, DateStampedEntity):
         {"from_schema": "metadata", "mixins": ["DateStampedEntity", "AuthoredEntity"]}
     )
 
-    annotation_ingest_id: Optional[str] = Field(
-        None,
+    annotation_ingest_id: str = Field(
+        default=...,
         description="""A unique identifier used during ingestion to identify this annotation.""",
-        json_schema_extra={"linkml_meta": {"alias": "annotation_ingest_id", "domain_of": ["Annotation"]}},
+        json_schema_extra={"linkml_meta": {"domain_of": ["Annotation"]}},
     )
     annotation_method: str = Field(
         default=...,
