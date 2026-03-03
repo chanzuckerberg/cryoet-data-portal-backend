@@ -68,7 +68,7 @@ def gain_headers(
     gain_files: List[str],
     filesystem: FileSystemApi,
 ) -> Dict[str, Union[List[tifffile.TiffPage], MrcInterpreter]]:
-    """Get the mrc file headers for a gain file."""
+    """Get the MRC or TIFF headers for a list of gain files."""
     return helper_util.get_tiff_mrc_headers(gain_files, filesystem)
 
 

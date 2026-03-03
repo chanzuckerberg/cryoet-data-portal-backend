@@ -1,0 +1,111 @@
+alignments:
+- sources:
+  - destination_glob:
+      list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
+      match_regex: .*
+      name_regex: (.*)
+annotations:
+- metadata:
+    annotation_ingest_id: bacterial-type-flagellum-motor-1
+    annotation_method: "3D UNet ensemble \u2192 Napari manual annotation"
+    annotation_object:
+      id: GO:0120100
+      name: bacterial-type flagellum motor
+    annotation_software: Napari + custom UNet ensemble
+    authors: &id001
+    - email: cbraxtonowens@gmail.com
+      name: C. Braxton Owens
+      primary_author_status: true
+    - corresponding_author_status: true
+      email: mohammedk@uchicago.edu
+      name: Mohammed Kaplan
+      primary_author_status: true
+    - corresponding_author_status: false
+      email: isenseef@gmail.com
+      name: Fabian Isensee
+      primary_author_status: true
+    - corresponding_author_status: false
+      email: brendan.artley@gmail.com
+      name: Brenden Artley
+      primary_author_status: true
+    - corresponding_author_status: false
+      email: andrewjdarley@gmail.com
+      name: Andrew Darley
+      primary_author_status: true
+    - corresponding_author_status: false
+      email: gushart@gmail.com
+      name: Gus L.W. Hart
+      primary_author_status: true
+    - corresponding_author_status: false
+      email: ejl62@student.byu.edu
+      name: Eben Lonsdale
+      primary_author_status: true
+    - corresponding_author_status: false
+      email: jp32405@student.byu.edu
+      name: Jackson Pond
+      primary_author_status: true
+    dates: &id002
+      deposition_date: '2025-08-06'
+      last_modified_date: '2025-08-06'
+      release_date: '2025-08-06'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links:
+    - custom_name: MotorBench Kaggle overview
+      link: https://www.kaggle.com/competitions/byu-locating-bacterial-flagellar-motors-2025
+      link_type: website
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - Point:
+      columns: zyx
+      file_format: csv
+      glob_string: '{dataset_name}/{run_name}_flagellar_motor.csv'
+      is_visualization_default: true
+datasets:
+- sources:
+  - source_glob:
+      list_glob: 10???
+      match_regex: .*
+      name_regex: (.*)
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10332_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10332_thumbnail.png
+depositions:
+- metadata:
+    authors: *id001
+    cross_references:
+      publications: 10.1101/2025.04.23.650258
+    dates: *id002
+    deposition_description: Resulting training annotations from the "BYU - Locating
+      Bacterial Flagellar Motors" Kaggle competition. This training set of annotations
+      is a collection from three organizations, the hosts, and two competitors. More
+      information on how the annotations were made is available in the accompanying
+      paper.
+    deposition_identifier: 10332
+    deposition_title: BYU - Locating Bacterial Flagellar Motors Challenge Train Annotations
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10332
+runs:
+- sources:
+  - source_glob:
+      list_glob: '{dataset_name}/*'
+      match_regex: .*_flagellar_motor\.csv
+      name_regex: (.*?)_flagellar_motor\.csv
+standardization_config:
+  deposition_id: 10332
+  source_prefix: braxton_owens_07_2025
+version: 1.3.0
+voxel_spacings:
+- sources:
+  - destination_glob:
+      list_glob: '{run_output_path}/Reconstructions/VoxelSpacing*'
+      match_regex: .*
+      name_regex: VoxelSpacing(.*)

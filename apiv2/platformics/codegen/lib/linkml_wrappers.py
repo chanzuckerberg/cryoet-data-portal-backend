@@ -86,7 +86,7 @@ class FieldWrapper:
             if self.wrapped_field.ifabsent is not None:
                 default_value = self.wrapped_field.ifabsent
                 # Make sure to quote this so it's safe!
-                return repr(default_value.value)
+                return repr(default_value)
             if "default_sa_function" in self.wrapped_field.annotations:
                 return "func.{func}".format(func=self.wrapped_field.annotations["default_sa_function"].value)
         except AttributeError:

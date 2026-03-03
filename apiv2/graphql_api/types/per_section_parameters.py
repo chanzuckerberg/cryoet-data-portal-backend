@@ -207,7 +207,7 @@ class PerSectionParameters(EntityInterface):
         default=None,
     )
     phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in degrees.", default=None,
+        description="Phase shift estimated for this tilt image in radians.", default=None,
     )
     raw_angle: float = strawberry.field(
         description="Nominal tilt angle for this tilt image reported by the microscope.",
@@ -361,7 +361,7 @@ class PerSectionParametersCreateInput:
         default=None,
     )
     phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in degrees.", default=None,
+        description="Phase shift estimated for this tilt image in radians.", default=None,
     )
     raw_angle: float = strawberry.field(
         description="Nominal tilt angle for this tilt image reported by the microscope.",
@@ -388,7 +388,7 @@ class PerSectionParametersUpdateInput:
         default=None,
     )
     phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in degrees.", default=None,
+        description="Phase shift estimated for this tilt image in radians.", default=None,
     )
     raw_angle: Optional[float] = strawberry.field(
         description="Nominal tilt angle for this tilt image reported by the microscope.",
