@@ -64,7 +64,7 @@ depositions:
         deposition_date: '2025-11-07'
         last_modified_date: '2025-11-07'
         release_date: '2025-11-07'
-      deposition_description: The bacteriphage virus-like particles form highly symmetric capsids that are suitable for
+      deposition_description: The bacteriophage virus-like particles form highly symmetric capsids that are suitable for
         high-resolution structure determination (cite). These datasets were collected on E. coli overexpressing the VLPs,
         therefore, providing a thick crowded in situ sample that is suitable for benchmarking cryoET applications
         including both data collection and data processing.
@@ -131,12 +131,12 @@ datasets:
         publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178
         related_database_entries: EMD-44783, EMD-44737, EMD-44743
       dataset_description:
-        Leviridae PP7 VLP were incoluated into BL21(DE3) E.Coli and plunge-frozen at the 3-hour timepoint. The targets
+        Leviridae PP7 VLP were incoluated into BL21(DE3) E. coli and plunge-frozen at the 3-hour timepoint. The targets
         for cryoET were selected based on high crowdedness and variable thickness (100-300 nm). The processing pipeline
         includes AreTomo3 Live, Embrella, copick, octopi, and py2rely. The most abundant geometry- the icosahedral T=3-
         was refined to 3.3 Å.
       dataset_identifier: 10455
-      dataset_title: PP7 virus-like particles in E.Coli at 3.3 Å
+      dataset_title: PP7 virus-like particles in E. coli at 3.3 Å
       dates: &dates
         deposition_date: '2025-11-07'
         last_modified_date: '2025-11-07'
@@ -145,13 +145,13 @@ datasets:
         - funding_agency_name: Chan Zuckerberg Initiative
           grant_id: "CZII-2023\u2013327779"
       grid_preparation: Quantifoil R 2/1 Cu 200 Mesh grid glow discharged on carbon side at 15 mA for 30 seconds.
-        Leica GP2 chamber conditions set to 10C temperature, 90% humudity, 30 second delay time between adding sample
+        Leica GP2 chamber conditions set to 10C temperature, 90% humidity, 30 second delay time between adding sample
         and blotting, and blot for 6 seconds. Carefully apply 4uL of sample.
       organism:
         name: Escherichia coli BL21(DE3)
         taxonomy_id: 469008
       sample_preparation:
-        PP7 plasmid are transformed into BL21(DE3) Competent E.coli cells and heat shocked for 30 seconds at 42C. Place
+        PP7 plasmids are transformed into BL21(DE3) Competent E. coli cells and heat shocked for 30 seconds at 42C. Place
         the mixture on ice for 5 minutes and then pipette 950uL of RT SOC into the mixture and place at 37C, 200rpm for
         the recovery stage. After an hour, spread up to 100uL of mixture on streptomycin selection plates and leave
         overnight at 37C. Next day, carefully pick off an isolated colony mix into 50mL of 2YT+streptomycin media. Wait
@@ -160,7 +160,7 @@ datasets:
         induction process and collect 20mL of culture in a falcon tube every hour to be pelleted down and frozen
         (until hour 4). When ready to plunge-freeze, quickly thaw tube (either hand-thaw or in a water bath).
         Resuspend pellet with 500uL LB and measure OD600. Dilute sample until OD of 0.25 is reached. This dataset
-        specfically is from the 3-hour time point.
+        specifically is from the 3-hour time point.
       sample_type: primary_cell_culture
       tissue:
         name: prokaryotic cell
@@ -186,6 +186,7 @@ datasets:
             - '10455'
 annotations:
   - metadata:
+      annotation_ingest_id: membrane-1
       annotation_method: Prediction using membrain-seg without rescaling and weights MemBrain_seg_v10_alpha.ckpt
       annotation_object:
         id: GO:0016020
@@ -222,6 +223,7 @@ annotations:
           mask_label: 1
           rescale: true
   - metadata:
+      annotation_ingest_id: capsid-protein-1
       annotation_method: octopi prediction + 2D/3D classification and refinement (RELION) + max likelihood filtering
       annotation_object: &object
         description: Pseudomonas phage PP7 VLP
@@ -253,6 +255,7 @@ annotations:
             - copick_output/ExperimentRuns/{run_name}/Picks/relionrefine_1_VLP.json
           is_visualization_default: false
   - metadata:
+      annotation_ingest_id: capsid-protein-2
       annotation_method: octopi prediction + 2D classification and refinement (RELION) + max likelihood filtering
       annotation_object: *object
       annotation_publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178
@@ -281,6 +284,7 @@ annotations:
             - copick_output/ExperimentRuns/{run_name}/Picks/relionrefine_2_VLP.json
           is_visualization_default: false
   - metadata:
+      annotation_ingest_id: capsid-protein-3
       annotation_method: octopi prediction + 3D refinement (RELION) + max likelihood filtering
       annotation_object: *object
       annotation_publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178
@@ -309,6 +313,7 @@ annotations:
             - copick_output/ExperimentRuns/{run_name}/Picks/relionrefine_3_VLP.json
           is_visualization_default: true
   - metadata:
+      annotation_ingest_id: capsid-protein-4
       annotation_method: manual picking in ChimeraX-copick
       annotation_object: *object
       annotation_publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178
@@ -326,7 +331,7 @@ annotations:
           link_type: source_code
         - custom_name: Copick documentation
           link: https://copick.github.io/copick/
-          link_type: source_code
+          link_type: documentation
       method_type: manual
       version: 1.0
     sources:
