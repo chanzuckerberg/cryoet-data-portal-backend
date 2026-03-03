@@ -390,6 +390,10 @@
             "additionalProperties": false,
             "description": "Metadata describing an annotation.",
             "properties": {
+                "annotation_ingest_id": {
+                    "description": "A unique identifier used during ingestion to identify this annotation.",
+                    "type": "string"
+                },
                 "annotation_method": {
                     "description": "Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
                     "type": "string"
@@ -492,6 +496,7 @@
                 }
             },
             "required": [
+                "annotation_ingest_id",
                 "annotation_method",
                 "annotation_object",
                 "method_type",
@@ -574,7 +579,7 @@
                 "shape": {
                     "$ref": "#/$defs/AnnotationFileShapeTypeEnum",
                     "description": "The shape type of the annotation file.",
-                    "pattern": "(^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)"
+                    "pattern": "(^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^GlobalCaption$)"
                 }
             },
             "required": [
@@ -592,7 +597,8 @@
                 "SegmentationMask",
                 "OrientedPoint",
                 "Point",
-                "InstanceSegmentation"
+                "InstanceSegmentation",
+                "GlobalCaption"
             ],
             "title": "AnnotationFileShapeTypeEnum",
             "type": "string"
@@ -606,6 +612,50 @@
             ],
             "title": "AnnotationFileSourceEnum",
             "type": "string"
+        },
+        "AnnotationGlobalCaptionFile": {
+            "additionalProperties": false,
+            "description": "File and sourcing data for a global caption annotation. Text captions describing the entire tomogram.",
+            "properties": {
+                "file_format": {
+                    "$ref": "#/$defs/CaptionAnnotationFileFormatEnum",
+                    "description": "The format of the caption annotation file.",
+                    "pattern": "^saber$"
+                },
+                "glob_string": {
+                    "description": "Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "glob_strings": {
+                    "description": "Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "is_portal_standard": {
+                    "description": "Whether the annotation source is a portal standard.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "is_visualization_default": {
+                    "description": "This annotation will be rendered in neuroglancer by default.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                }
+            },
+            "title": "AnnotationGlobalCaptionFile",
+            "type": "object"
         },
         "AnnotationInstanceSegmentationFile": {
             "additionalProperties": false,
@@ -690,6 +740,10 @@
                         "string",
                         "null"
                     ]
+                },
+                "annotation_ingest_id": {
+                    "description": "A unique identifier used during ingestion to identify this annotation.",
+                    "type": "string"
                 },
                 "annotation_method": {
                     "description": "Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
@@ -803,6 +857,7 @@
             "required": [
                 "deposition_id",
                 "last_updated_at",
+                "annotation_ingest_id",
                 "annotation_method",
                 "annotation_object",
                 "method_type",
@@ -1499,6 +1554,14 @@
             ],
             "title": "CameraDetails",
             "type": "object"
+        },
+        "CaptionAnnotationFileFormatEnum": {
+            "description": "Describes the format of a caption annotation file",
+            "enum": [
+                "saber"
+            ],
+            "title": "CaptionAnnotationFileFormatEnum",
+            "type": "string"
         },
         "CellComponent": {
             "additionalProperties": false,
@@ -2442,14 +2505,12 @@
                 },
                 "is_gain_corrected": {
                     "description": "Is the frame gain corrected",
-                    "type": [
-                        "boolean",
-                        "null"
-                    ]
+                    "type": "boolean"
                 }
             },
             "required": [
-                "dose_rate"
+                "dose_rate",
+                "is_gain_corrected"
             ],
             "title": "Frame",
             "type": "object"

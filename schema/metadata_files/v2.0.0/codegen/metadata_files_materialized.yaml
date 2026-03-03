@@ -563,6 +563,9 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      GlobalCaption:
+        text: GlobalCaption
+        description: A set of text captions describing the entire tomogram
   point_annotation_file_format_enum:
     name: point_annotation_file_format_enum
     description: Describes the format of the point annotation file
@@ -640,6 +643,13 @@ enums:
     permissible_values:
       hff:
         text: hff
+  caption_annotation_file_format_enum:
+    name: caption_annotation_file_format_enum
+    description: Describes the format of a caption annotation file
+    from_schema: metadata
+    permissible_values:
+      saber:
+        text: saber
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -1135,6 +1145,7 @@ classes:
         - AnnotationSemanticSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -1218,7 +1229,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^GlobalCaption$)
       is_visualization_default:
         name: is_visualization_default
         description: Whether the annotation file is selected for visualization by
@@ -1236,6 +1247,7 @@ classes:
         - AnnotationSemanticSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
         - AnnotationFileMetadata
         range: boolean
         required: true
@@ -1306,6 +1318,18 @@ classes:
         domain_of:
         - DefaultMetadata
         range: float
+        required: true
+        inlined: true
+        inlined_as_list: true
+      annotation_ingest_id:
+        name: annotation_ingest_id
+        description: A unique identifier used during ingestion to identify this annotation.
+        from_schema: metadata
+        alias: annotation_ingest_id
+        owner: AnnotationMetadata
+        domain_of:
+        - Annotation
+        range: string
         required: true
         inlined: true
         inlined_as_list: true
@@ -1558,7 +1582,6 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:frames_is_gain_corrected
-        ifabsent: 'False'
         alias: is_gain_corrected
         owner: PerFrameMetadata
         domain_of:
@@ -1615,7 +1638,6 @@ classes:
         from_schema: metadata
         exact_mappings:
         - cdp-common:frames_is_gain_corrected
-        ifabsent: 'False'
         alias: is_gain_corrected
         owner: FramesMetadata
         domain_of:
@@ -3078,6 +3100,7 @@ classes:
         - AnnotationSemanticSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
         - AnnotationFileMetadata
         range: boolean
         required: true

@@ -1,16 +1,31 @@
+alignments:
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    tilt_offset: 0
+    x_rotation_offset: 0
+  sources:
+  - source_glob:
+      list_glob: '{dataset_name}_{run_name}/*/outputs/aretomo/reconstruct_only/{run_name}.aln'
 datasets:
 - sources:
   - destination_glob:
       list_glob: '{output_path}/*'
-      match_regex: '/\d*$'
+      match_regex: /\d*$
       name_regex: (.*)
 depositions:
 - metadata:
     authors: &id001
-      - ORCID: 0000-0003-4685-037X
-        corresponding_author_status: true
-        name: Utz Heinrich Ermel
-        primary_author_status: true
+    - ORCID: 0000-0003-4685-037X
+      corresponding_author_status: true
+      name: Utz Heinrich Ermel
+      primary_author_status: true
     dates: &id002
       deposition_date: '2024-10-15'
       last_modified_date: '2024-10-15'
@@ -36,36 +51,15 @@ runs:
 standardization_config:
   deposition_id: 10311
   source_prefix: CZII/standard_tomograms_v2/
-version: 1.1.0
-voxel_spacings:
-- sources:
-  - source_glob:
-      list_glob: '{dataset_name}_{run_name}/*'
-      match_regex: '[\d\.]{5,7}$'
-      name_regex: '([\d\.]{5,7})$'
-    exclude:
-    - logs
-alignments:
-- metadata:
-    alignment_type: LOCAL
-    format: ARETOMO3
-    method_type: projection_matching
-    is_portal_standard: true
-    offset:
-      x: 0
-      y: 0
-      z: 0
-    x_rotation_offset: 0
-    tilt_offset: 0
-  sources:
-    - source_glob:
-        list_glob: '{dataset_name}_{run_name}/*/outputs/aretomo/reconstruct_only/{run_name}.aln'
 tomograms:
 - metadata:
     align_software: ARETOMO3
     authors: *id001
     ctf_corrected: true
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
+    is_portal_standard: true
+    is_visualization_default: true
     offset:
       x: 0
       y: 0
@@ -76,17 +70,17 @@ tomograms:
     reconstruction_software: AreTomo3
     tomogram_version: 1.0
     voxel_spacing: float {voxel_spacing_name}
-    is_visualization_default: true
-    is_portal_standard: true
-    dates: *id002
   sources:
-    - source_glob:
-        list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_Vol.zarr'
+  - source_glob:
+      list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_Vol.zarr'
 - metadata:
     align_software: ARETOMO3
     authors: *id001
     ctf_corrected: true
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
+    is_standardized: true
+    is_visualization_default: false
     offset:
       x: 0
       y: 0
@@ -97,18 +91,18 @@ tomograms:
     reconstruction_software: AreTomo3
     tomogram_version: 1.0
     voxel_spacing: float {voxel_spacing_name}
-    is_visualization_default: false
-    is_standardized: true
-    dates: *id002
   sources:
-    - source_glob:
-        list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_2ND_Vol.zarr'
-        match_regex: .*
+  - source_glob:
+      list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_2ND_Vol.zarr'
+      match_regex: .*
 - metadata:
     align_software: ARETOMO3
     authors: *id001
     ctf_corrected: true
+    dates: *id002
     fiducial_alignment_status: FIDUCIAL
+    is_standardized: true
+    is_visualization_default: false
     offset:
       x: 0
       y: 0
@@ -119,10 +113,16 @@ tomograms:
     reconstruction_software: AreTomo3
     tomogram_version: 1.0
     voxel_spacing: float {voxel_spacing_name}
-    is_visualization_default: false
-    is_standardized: true
-    dates: *id002
   sources:
-    - source_glob:
-        list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_3RD_Vol.zarr'
-        match_regex: .*
+  - source_glob:
+      list_glob: '{dataset_name}_{run_name}/{voxel_spacing_name}/outputs/aretomo/reconstruct_only/{run_name}_3RD_Vol.zarr'
+      match_regex: .*
+version: 1.3.0
+voxel_spacings:
+- sources:
+  - exclude:
+    - logs
+    source_glob:
+      list_glob: '{dataset_name}_{run_name}/*'
+      match_regex: '[\d\.]{5,7}$'
+      name_regex: ([\d\.]{5,7})$

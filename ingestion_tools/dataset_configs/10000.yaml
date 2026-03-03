@@ -9,12 +9,14 @@ alignments:
       - metadata/{run_name}.tlt
 annotations:
 - metadata:
-    annotation_method: Cumulative template-matching trained 2D CNN predictions + visual filtering + distance constraints +
-      manual addition
+    annotation_ingest_id: fatty-acid-synthase-complex-1
+    annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
+      filtering + distance constraints + manual addition
     annotation_object:
       id: GO:0005835
       name: fatty acid synthase complex
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: pyTOM + Keras
     authors: &id001
     - ORCID: 0000-0002-9903-3667
@@ -65,12 +67,14 @@ annotations:
       glob_string: particle_lists/{run_name}_fas.csv
       is_visualization_default: false
 - metadata:
-    annotation_method: Cumulative template-matching trained 2D CNN predictions + visual filtering + distance constraints +
-      manual addition
+    annotation_ingest_id: cytosolic-ribosome-1
+    annotation_method: Cumulative template-matching trained 2D CNN predictions + visual
+      filtering + distance constraints + manual addition
     annotation_object:
       id: GO:0022626
       name: cytosolic ribosome
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: pyTOM + Keras
     authors: *id001
     dates: *id002
@@ -86,11 +90,13 @@ annotations:
       glob_string: particle_lists/{run_name}_cyto_ribosomes.csv
       is_visualization_default: true
 - metadata:
+    annotation_ingest_id: cytoplasm-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005737
       name: cytoplasm
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -106,11 +112,13 @@ annotations:
       is_visualization_default: false
       mask_label: 1
 - metadata:
+    annotation_ingest_id: mitochondrion-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005739
       name: mitochondrion
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -126,11 +134,13 @@ annotations:
       is_visualization_default: true
       mask_label: 2
 - metadata:
+    annotation_ingest_id: vesicle-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0031982
       name: vesicle
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -146,11 +156,13 @@ annotations:
       is_visualization_default: false
       mask_label: 3
 - metadata:
+    annotation_ingest_id: microtubule-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005874
       name: microtubule
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -166,11 +178,13 @@ annotations:
       is_visualization_default: true
       mask_label: 4
 - metadata:
+    annotation_ingest_id: endoplasmic-reticulum-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005783
       name: endoplasmic reticulum
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -186,11 +200,13 @@ annotations:
       is_visualization_default: true
       mask_label: 5
 - metadata:
+    annotation_ingest_id: nuclear-envelope-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005635
       name: nuclear envelope
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -206,11 +222,13 @@ annotations:
       is_visualization_default: true
       mask_label: 6
 - metadata:
+    annotation_ingest_id: nucleus-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005634
       name: nucleus
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -226,11 +244,13 @@ annotations:
       is_visualization_default: false
       mask_label: 7
 - metadata:
+    annotation_ingest_id: vacuole-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005773
       name: vacuole
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -246,11 +266,13 @@ annotations:
       is_visualization_default: false
       mask_label: 8
 - metadata:
+    annotation_ingest_id: lipid-droplet-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005811
       name: lipid droplet
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -266,11 +288,13 @@ annotations:
       is_visualization_default: false
       mask_label: 9
 - metadata:
+    annotation_ingest_id: golgi-apparatus-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005794
       name: Golgi apparatus
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -286,11 +310,13 @@ annotations:
       is_visualization_default: true
       mask_label: 10
 - metadata:
+    annotation_ingest_id: multivesicular-body-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0005771
       name: multivesicular body
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -306,11 +332,13 @@ annotations:
       is_visualization_default: false
       mask_label: 11
 - metadata:
+    annotation_ingest_id: membrane-enclosed-lumen-1
     annotation_method: spectrum equalization filter + 2D CNN prediction + manual correction
     annotation_object:
       id: GO:0031974
       name: membrane-enclosed lumen
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -326,11 +354,13 @@ annotations:
       is_visualization_default: false
       mask_label: 13
 - metadata:
+    annotation_ingest_id: membrane-1
     annotation_method: 3D CNN prediction + manual correction
     annotation_object:
       id: GO:0016020
       name: membrane
-    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
+    annotation_publications: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+      EMD-14418, EMD-14419, EMD-14420, 10.1101/2022.04.12.488077
     annotation_software: Keras + AMIRA
     authors: *id001
     dates: *id002
@@ -357,6 +387,9 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10988.gif
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id004
     - ORCID: 0000-0002-4691-9501
       name: Irene de Teresa Trueba
@@ -388,41 +421,41 @@ datasets:
       corresponding_author_status: true
       name: Judith B. Zaugg
     cell_strain:
-      name: Schizosaccharomyces pombe 972h-
       id: NCBITaxon:284812
+      name: Schizosaccharomyces pombe 972h-
+    cell_type:
+      id: CL:0000334
+      name: vegetative cell (sensu Fungi)
     cross_references: &id005
       publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
-      related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417, EMD-14418, EMD-14419, EMD-14420
-    dataset_description: Defocus cryo-electron tomography of S. pombe cryo-FIB lamellae with comprehensive annotations of
-      structures and macromolecules
+      related_database_entries: EMPIAR-10988, EMD-14412, EMD-14413, EMD-14415, EMD-14417,
+        EMD-14418, EMD-14419, EMD-14420
+    dataset_description: Defocus cryo-electron tomography of S. pombe cryo-FIB lamellae
+      with comprehensive annotations of structures and macromolecules
     dataset_identifier: 10000
     dataset_title: S. pombe cells with defocus
     dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: European Research Council (ERC)
       grant_id: '760067'
-    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, mesh: 200, support_film_film_type_id: 1, support_film_film_material:
-      CARBON, support_film_film_topology: HOLEY, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
+    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, mesh: 200, support_film_film_type_id:
+      1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
+      support_film, pretreatment_type_: GLOW DISCHARGE'
     organism:
       name: Schizosaccharomyces pombe 972h-
       taxonomy_id: 284812
-    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type: subtomogram_averaging_preparation'
+    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE, instance_type:
+      subtomogram_averaging_preparation'
     sample_type: primary_cell_culture
     tissue:
-      name: vegetative cell (sensu Fungi)
       id: CL:0000334
-    cell_type:
       name: vegetative cell (sensu Fungi)
-      id: CL:0000334
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
   sources:
   - literal:
       value:
@@ -438,12 +471,15 @@ depositions:
     authors: *id004
     cross_references: *id005
     dates: *id002
-    deposition_description: Datasets comprising 20 annotated Schizosaccharomyces pombe cryo-electron tomograms, with 10 tomograms
-      acquired using a Volta phase plate (VPP) for enhanced contrast and 10 using conventional defocus. The dataset includes
-      comprehensive annotations of ribosomes, fatty acid synthases, membranes, organelles, and cytosol. Additionally, 3 tomograms
-      of RPE-1 cells used to train networks for actin segmentation are included. These datasets enabled the development and
-      validation of DeePiCt, a deep learning framework combining 2D and 3D convolutional neural networks for cellular structure
-      segmentation and macromolecular complex localization across different species and acquisition conditions.
+    deposition_description: Datasets comprising 20 annotated Schizosaccharomyces pombe
+      cryo-electron tomograms, with 10 tomograms acquired using a Volta phase plate
+      (VPP) for enhanced contrast and 10 using conventional defocus. The dataset includes
+      comprehensive annotations of ribosomes, fatty acid synthases, membranes, organelles,
+      and cytosol. Additionally, 3 tomograms of RPE-1 cells used to train networks
+      for actin segmentation are included. These datasets enabled the development
+      and validation of DeePiCt, a deep learning framework combining 2D and 3D convolutional
+      neural networks for cellular structure segmentation and macromolecular complex
+      localization across different species and acquisition conditions.
     deposition_identifier: 10000
     deposition_title: DeePiCt Training and Evaluation Datasets
     deposition_types:
@@ -544,7 +580,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms/{run_name}.rec
       match_regex: .*\.rec
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

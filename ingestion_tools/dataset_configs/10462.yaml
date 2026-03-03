@@ -10,73 +10,75 @@ alignments:
       - '{run_name}.aln'
 annotations:
 - metadata:
-    annotation_method: Prediction using membrain-seg without rescaling and weights MemBrain_seg_v10_alpha.ckpt
+    annotation_ingest_id: membrane-1
+    annotation_method: Prediction using membrain-seg without rescaling and weights
+      MemBrain_seg_v10_alpha.ckpt
     annotation_object:
       id: GO:0016020
       name: membrane
     annotation_publications: 10.1101/2024.01.05.574336
     annotation_software: membrain-seg 0.0.1
     authors:
-    - name: Rahel Woldeyes
-      ORCID: 0000-0003-0737-8383
+    - ORCID: 0000-0003-0737-8383
+      corresponding_author_status: false
+      name: Rahel Woldeyes
       primary_author_status: true
+    - ORCID: 0000-0002-3248-9678
       corresponding_author_status: false
-    - name: Jonathan Schwartz
-      ORCID: 0000-0002-3248-9678
+      name: Jonathan Schwartz
       primary_author_status: true
+    - ORCID: 0009-0002-6674-7601
       corresponding_author_status: false
-    - name: Hannah Siems
-      ORCID: 0009-0002-6674-7601
+      name: Hannah Siems
       primary_author_status: true
+    - ORCID: 0000-0002-4719-2893
       corresponding_author_status: false
-    - name: Bisco Hill
-      ORCID: 0000-0002-4719-2893
+      name: Bisco Hill
       primary_author_status: true
+    - ORCID: 0000-0002-5940-3897
       corresponding_author_status: false
-    - name: Ariana Peck
-      ORCID: 0000-0002-5940-3897
+      name: Ariana Peck
       primary_author_status: false
+    - ORCID: 0000-0002-8063-6951
       corresponding_author_status: false
-    - name: Yue Yu
-      ORCID: 0000-0002-8063-6951
+      name: Yue Yu
       primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
       corresponding_author_status: false
-    - name: Elizabeth Montabana
-      ORCID: 0000-0002-6731-5854
+      name: Elizabeth Montabana
       primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
       corresponding_author_status: false
-    - name: Utz Ermel
-      ORCID: 0000-0003-4685-037X
+      name: Utz Ermel
       primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
       corresponding_author_status: false
-    - name: Joshua Hutchings
-      ORCID: 0000-0001-6841-8583
+      name: Joshua Hutchings
       primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
       corresponding_author_status: false
-    - name: Mohammadreza Paraan
-      ORCID: 0000-0002-8402-0134
+      name: Mohammadreza Paraan
       primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
       corresponding_author_status: false
-    - name: Dari Kimanius
-      ORCID: 0000-0002-2662-6373
+      name: Dari Kimanius
       primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
       corresponding_author_status: false
-    - name: Shawn Zheng
-      ORCID: 0000-0001-9517-3075
+      name: Shawn Zheng
       primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
       corresponding_author_status: false
-    - name: Bridget Carragher
-      ORCID: 0000-0002-0624-5020
+      name: Bridget Carragher
       primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
       corresponding_author_status: false
-    - name: David Agard
-      ORCID: 0000-0003-3512-695X
+      name: David Agard
       primary_author_status: false
-      corresponding_author_status: false
-    - name: Daniel Serwas
-      ORCID: 0000-0001-9010-7298
-      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
       corresponding_author_status: true
+      name: Daniel Serwas
+      primary_author_status: false
     dates: &id001
       deposition_date: '2025-12-18'
       last_modified_date: '2025-12-18'
@@ -98,75 +100,76 @@ annotations:
       glob_strings:
       - '{run_name}_Vol_Segment_mask.mrc'
       is_visualization_default: true
-      threshold: 0.5
       rescale: true
+      threshold: 0.5
 - metadata:
+    annotation_ingest_id: intracellular-membrane-bounded-organelle-1
     annotation_method: Prediction using SABER
     annotation_object:
       id: GO:0043231
       name: intracellular membrane-bounded organelle
     annotation_software: SABER 0.9.0
     authors:
-    - name: Rahel Woldeyes
-      ORCID: 0000-0003-0737-8383
+    - ORCID: 0000-0003-0737-8383
+      corresponding_author_status: false
+      name: Rahel Woldeyes
       primary_author_status: true
+    - ORCID: 0000-0002-3248-9678
       corresponding_author_status: false
-    - name: Jonathan Schwartz
-      ORCID: 0000-0002-3248-9678
+      name: Jonathan Schwartz
       primary_author_status: true
+    - ORCID: 0009-0002-6674-7601
       corresponding_author_status: false
-    - name: Hannah Siems
-      ORCID: 0009-0002-6674-7601
+      name: Hannah Siems
       primary_author_status: true
+    - ORCID: 0000-0002-4719-2893
       corresponding_author_status: false
-    - name: Bisco Hill
-      ORCID: 0000-0002-4719-2893
+      name: Bisco Hill
       primary_author_status: true
+    - ORCID: 0000-0002-5940-3897
       corresponding_author_status: false
-    - name: Ariana Peck
-      ORCID: 0000-0002-5940-3897
+      name: Ariana Peck
       primary_author_status: false
+    - ORCID: 0000-0002-8063-6951
       corresponding_author_status: false
-    - name: Yue Yu
-      ORCID: 0000-0002-8063-6951
+      name: Yue Yu
       primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
       corresponding_author_status: false
-    - name: Elizabeth Montabana
-      ORCID: 0000-0002-6731-5854
+      name: Elizabeth Montabana
       primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
       corresponding_author_status: false
-    - name: Utz Ermel
-      ORCID: 0000-0003-4685-037X
+      name: Utz Ermel
       primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
       corresponding_author_status: false
-    - name: Joshua Hutchings
-      ORCID: 0000-0001-6841-8583
+      name: Joshua Hutchings
       primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
       corresponding_author_status: false
-    - name: Mohammadreza Paraan
-      ORCID: 0000-0002-8402-0134
+      name: Mohammadreza Paraan
       primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
       corresponding_author_status: false
-    - name: Dari Kimanius
-      ORCID: 0000-0002-2662-6373
+      name: Dari Kimanius
       primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
       corresponding_author_status: false
-    - name: Shawn Zheng
-      ORCID: 0000-0001-9517-3075
+      name: Shawn Zheng
       primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
       corresponding_author_status: false
-    - name: Bridget Carragher
-      ORCID: 0000-0002-0624-5020
+      name: Bridget Carragher
       primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
       corresponding_author_status: false
-    - name: David Agard
-      ORCID: 0000-0003-3512-695X
+      name: David Agard
       primary_author_status: false
-      corresponding_author_status: false
-    - name: Daniel Serwas
-      ORCID: 0000-0001-9010-7298
-      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
       corresponding_author_status: true
+      name: Daniel Serwas
+      primary_author_status: false
     dates: *id001
     ground_truth_status: false
     is_curator_recommended: true
@@ -208,122 +211,131 @@ dataset_keyphotos:
         thumbnail: null
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors:
-    - name: Rahel Woldeyes
-      ORCID: 0000-0003-0737-8383
+    - ORCID: 0000-0003-0737-8383
+      corresponding_author_status: false
       email: rahel.woldeyes@biohub.org
+      name: Rahel Woldeyes
       primary_author_status: true
+    - ORCID: 0009-0002-6674-7601
       corresponding_author_status: false
-    - name: Hannah Siems
-      ORCID: 0009-0002-6674-7601
+      name: Hannah Siems
       primary_author_status: true
+    - ORCID: 0000-0002-4719-2893
       corresponding_author_status: false
-    - name: Bisco Hill
-      ORCID: 0000-0002-4719-2893
+      name: Bisco Hill
       primary_author_status: true
+    - ORCID: 0000-0002-3248-9678
       corresponding_author_status: false
-    - name: Jonathan Schwartz
-      ORCID: 0000-0002-3248-9678
+      name: Jonathan Schwartz
       primary_author_status: false
+    - ORCID: 0000-0002-5940-3897
       corresponding_author_status: false
-    - name: Ariana Peck
-      ORCID: 0000-0002-5940-3897
+      name: Ariana Peck
       primary_author_status: false
+    - ORCID: 0000-0002-8063-6951
       corresponding_author_status: false
-    - name: Yue Yu
-      ORCID: 0000-0002-8063-6951
+      name: Yue Yu
       primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
       corresponding_author_status: false
-    - name: Elizabeth Montabana
-      ORCID: 0000-0002-6731-5854
+      name: Elizabeth Montabana
       primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
       corresponding_author_status: false
-    - name: Utz Ermel
-      ORCID: 0000-0003-4685-037X
+      name: Utz Ermel
       primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
       corresponding_author_status: false
-    - name: Joshua Hutchings
-      ORCID: 0000-0001-6841-8583
+      name: Joshua Hutchings
       primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
       corresponding_author_status: false
-    - name: Mohammadreza Paraan
-      ORCID: 0000-0002-8402-0134
+      name: Mohammadreza Paraan
       primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
       corresponding_author_status: false
-    - name: Dari Kimanius
-      ORCID: 0000-0002-2662-6373
+      name: Dari Kimanius
       primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
       corresponding_author_status: false
-    - name: Shawn Zheng
-      ORCID: 0000-0001-9517-3075
+      name: Shawn Zheng
       primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
       corresponding_author_status: false
-    - name: Bridget Carragher
-      ORCID: 0000-0002-0624-5020
+      name: Bridget Carragher
       primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
       corresponding_author_status: false
-    - name: David Agard
-      ORCID: 0000-0003-3512-695X
+      name: David Agard
       primary_author_status: false
-      corresponding_author_status: false
-    - name: Daniel Serwas
-      ORCID: 0000-0001-9010-7298
-      email: daniel.serwas@biohub.org
-      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
       corresponding_author_status: true
+      email: daniel.serwas@biohub.org
+      name: Daniel Serwas
+      primary_author_status: false
     cell_component:
       id: GO:0043231
       name: intracellular membrane-bounded organelle
     cell_strain:
-      name: HEK293T
       id: CVCL_0063
+      name: HEK293T
     cell_type:
-      name: kidney epithelial cell
       id: CL:0002518
-    dataset_description: This large-scale cryo-electron tomography (cryo-ET) dataset contains tilt series from affinity-captured
-      organelles derived from HEK293T lysates. The experimental design utilizes electron microscopy grids functionalized with
-      anti-GFP nanobodies to capture organelles tagged with GFP-TMEM192 from cells treated with Bafilomycin A1 for 3 hours.
-      The V-ATPase V1A subunit was targeted using a SpyCatcher system conjugated to 3 nm gold nanoparticles. The complete
-      dataset includes raw frames, alignments, tomograms, and annotations. All data were processed using the automated AreTomo3
-      pipeline, with semantic segmentations generated by both SABER and Membrain-Seg.
+      name: kidney epithelial cell
+    dataset_description: This large-scale cryo-electron tomography (cryo-ET) dataset
+      contains tilt series from affinity-captured organelles derived from HEK293T
+      lysates. The experimental design utilizes electron microscopy grids functionalized
+      with anti-GFP nanobodies to capture organelles tagged with GFP-TMEM192 from
+      cells treated with Bafilomycin A1 for 3 hours. The V-ATPase V1A subunit was
+      targeted using a SpyCatcher system conjugated to 3 nm gold nanoparticles. The
+      complete dataset includes raw frames, alignments, tomograms, and annotations.
+      All data were processed using the automated AreTomo3 pipeline, with semantic
+      segmentations generated by both SABER and Membrain-Seg.
     dataset_identifier: 10462
-    dataset_title: Large-scale cryo-ET dataset of affinity-captured organelles (TMEM192 + Bafilomycin + V1A SpyCatcher-Gold)
-      HEK293T cells
+    dataset_title: Large-scale cryo-ET dataset of affinity-captured organelles (TMEM192
+      + Bafilomycin + V1A SpyCatcher-Gold) HEK293T cells
     dates: *id001
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
-      grant_id: CZII-2023–327779
-    grid_preparation: Grid preparation was performed using a Leica EM GP2 + Affinity grids were incubated with 6 µl of lysate
-      for approximately 15 seconds, after which excess liquid was removed by blotting from the grid edge with filter paper
-      + This lysate addition and blotting step was repeated three times, followed by a wash with 6 µl of ice-cold PBS + The
-      entire sample application and washing process was performed twice + Finally, 6 µl of PBS was added immediately prior
-      to blotting and plunging into liquid ethane
+      grant_id: "CZII-2023\u2013327779"
+    grid_preparation: "Grid preparation was performed using a Leica EM GP2 + Affinity\
+      \ grids were incubated with 6 \xB5l of lysate for approximately 15 seconds,\
+      \ after which excess liquid was removed by blotting from the grid edge with\
+      \ filter paper + This lysate addition and blotting step was repeated three times,\
+      \ followed by a wash with 6 \xB5l of ice-cold PBS + The entire sample application\
+      \ and washing process was performed twice + Finally, 6 \xB5l of PBS was added\
+      \ immediately prior to blotting and plunging into liquid ethane"
     organism:
       name: Homo sapiens
       taxonomy_id: 9606
     other_setup: null
-    sample_preparation: Affinity-grids were prepared by covering holey carbon grids with a thin layer of graphene oxide +
-      GFP-nanobodies were then immobilized onto the graphene oxide surface using a PEG-linker + For cell processing, cells
-      expressing TMEM192-GFP were treated with Bafilomycin A1 for 3 hours + Cells were washed and detached using ice-cold
-      PBS + They were then transferred to a chilled 15 ml Falcon tube and pelleted by centrifugation at 500 x g for 5 minutes
-      at 4°C + After aspirating the PBS, the pellet was resuspended in approximately 950 µl of hypotonic homogenization buffer
-      + The cells were subsequently mechanically lysed using a 23G blunt needle + The resulting mixture was transferred to
-      and mixed with isotonic sucrose buffer + Finally, the lysates were centrifuged at 1000 x g for 10 minutes at 4°C, and
-      the resulting supernatant was incubated with SpyCatcher-functionalized 3 nm gold nanoparticles to label V1A  at 4°C
-      for 1 hour for use in grid preparation.
+    sample_preparation: "Affinity-grids were prepared by covering holey carbon grids\
+      \ with a thin layer of graphene oxide + GFP-nanobodies were then immobilized\
+      \ onto the graphene oxide surface using a PEG-linker + For cell processing,\
+      \ cells expressing TMEM192-GFP were treated with Bafilomycin A1 for 3 hours\
+      \ + Cells were washed and detached using ice-cold PBS + They were then transferred\
+      \ to a chilled 15 ml Falcon tube and pelleted by centrifugation at 500 x g for\
+      \ 5 minutes at 4\xB0C + After aspirating the PBS, the pellet was resuspended\
+      \ in approximately 950 \xB5l of hypotonic homogenization buffer + The cells\
+      \ were subsequently mechanically lysed using a 23G blunt needle + The resulting\
+      \ mixture was transferred to and mixed with isotonic sucrose buffer + Finally,\
+      \ the lysates were centrifuged at 1000 x g for 10 minutes at 4\xB0C, and the\
+      \ resulting supernatant was incubated with SpyCatcher-functionalized 3 nm gold\
+      \ nanoparticles to label V1A  at 4\xB0C for 1 hour for use in grid preparation."
     sample_type: organelle
     tissue:
-      name: kidney epithelial cell
       id: CL:0002518
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
+      name: kidney epithelial cell
   sources:
   - literal:
       value:
@@ -412,66 +424,66 @@ tomograms:
       - 0
       - 1
     authors: &id002
-    - name: Rahel Woldeyes
-      ORCID: 0000-0003-0737-8383
+    - ORCID: 0000-0003-0737-8383
+      corresponding_author_status: false
+      name: Rahel Woldeyes
       primary_author_status: true
+    - ORCID: 0009-0002-6674-7601
       corresponding_author_status: false
-    - name: Hannah Siems
-      ORCID: 0009-0002-6674-7601
+      name: Hannah Siems
       primary_author_status: true
+    - ORCID: 0000-0002-4719-2893
       corresponding_author_status: false
-    - name: Bisco Hill
-      ORCID: 0000-0002-4719-2893
+      name: Bisco Hill
       primary_author_status: true
+    - ORCID: 0000-0002-3248-9678
       corresponding_author_status: false
-    - name: Jonathan Schwartz
-      ORCID: 0000-0002-3248-9678
+      name: Jonathan Schwartz
       primary_author_status: false
+    - ORCID: 0000-0002-5940-3897
       corresponding_author_status: false
-    - name: Ariana Peck
-      ORCID: 0000-0002-5940-3897
+      name: Ariana Peck
       primary_author_status: false
+    - ORCID: 0000-0002-8063-6951
       corresponding_author_status: false
-    - name: Yue Yu
-      ORCID: 0000-0002-8063-6951
+      name: Yue Yu
       primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
       corresponding_author_status: false
-    - name: Elizabeth Montabana
-      ORCID: 0000-0002-6731-5854
+      name: Elizabeth Montabana
       primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
       corresponding_author_status: false
-    - name: Utz Ermel
-      ORCID: 0000-0003-4685-037X
+      name: Utz Ermel
       primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
       corresponding_author_status: false
-    - name: Joshua Hutchings
-      ORCID: 0000-0001-6841-8583
+      name: Joshua Hutchings
       primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
       corresponding_author_status: false
-    - name: Mohammadreza Paraan
-      ORCID: 0000-0002-8402-0134
+      name: Mohammadreza Paraan
       primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
       corresponding_author_status: false
-    - name: Dari Kimanius
-      ORCID: 0000-0002-2662-6373
+      name: Dari Kimanius
       primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
       corresponding_author_status: false
-    - name: Shawn Zheng
-      ORCID: 0000-0001-9517-3075
+      name: Shawn Zheng
       primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
       corresponding_author_status: false
-    - name: Bridget Carragher
-      ORCID: 0000-0002-0624-5020
+      name: Bridget Carragher
       primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
       corresponding_author_status: false
-    - name: David Agard
-      ORCID: 0000-0003-3512-695X
+      name: David Agard
       primary_author_status: false
-      corresponding_author_status: false
-    - name: Daniel Serwas
-      ORCID: 0000-0001-9010-7298
-      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
       corresponding_author_status: true
+      name: Daniel Serwas
+      primary_author_status: false
     ctf_corrected: true
     dates: *id001
     fiducial_alignment_status: NON_FIDUCIAL
@@ -527,7 +539,7 @@ tomograms:
   - source_glob:
       list_glob: '{run_name}_dctf_Vol.mrc'
       match_regex: (.*)\.mrc
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

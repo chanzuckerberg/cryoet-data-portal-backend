@@ -9,6 +9,7 @@ alignments:
       - tomo/raw_stacks/{session_name}/imod/{processing_prefix}_vali.xf
 annotations:
 - metadata:
+    annotation_ingest_id: hydrogen-dependent-co2-reductase-filament-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       id: GO:0009326
@@ -58,6 +59,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: cytosolic-ribosome-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       id: GO:0022626
@@ -90,6 +92,9 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11058.gif
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id003
     - ORCID: 0000-0002-4416-0271
       name: Helge Markus Dietrich
@@ -118,6 +123,9 @@ datasets:
       name: Jan Michael Schuller
     cell_strain:
       name: LKT-1
+    cell_type:
+      id: CL:0000000
+      name: cell
     cross_references: &id004
       publications: doi:10.1038/s41586-022-04971-z
       related_database_entries: EMPIAR-11058
@@ -125,6 +133,12 @@ datasets:
     dataset_identifier: 10008
     dataset_title: Hydrogen-dependent CO2 reductase
     dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: SCHU 3364/1-1
@@ -135,30 +149,18 @@ datasets:
     - funding_agency_name: Alexander von Humboldt Foundation
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: 20016/446
-    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id: 1, support_film_film_material:
-      CARBON, support_film_film_topology: HOLEY, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE,
-      pretreatment_atmosphere: AIR'
+    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
+      1, support_film_film_material: CARBON, support_film_film_topology: HOLEY, support_film_instance_type:
+      support_film, pretreatment_type_: GLOW DISCHARGE, pretreatment_atmosphere: AIR'
     organism:
       name: Thermoanaerobacter kivui
       taxonomy_id: 2325
-    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE, vitrification_instrument: FEI VITROBOT
-      MARK IV, instance_type: subtomogram_averaging_preparation'
+    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
+      vitrification_instrument: FEI VITROBOT MARK IV, instance_type: subtomogram_averaging_preparation'
     sample_type: primary_cell_culture
     tissue:
-      name: cell
       id: CL:0000000
-    cell_type:
       name: cell
-      id: CL:0000000
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
   sources:
   - literal:
       value:
@@ -174,10 +176,12 @@ depositions:
     authors: *id003
     cross_references: *id004
     dates: *id002
-    deposition_description: Cryo-electron tomograms of T. kivui FIB-SEM lamellas, including annotations of membrane-anchored
-      hydrogen-dependent CO2 reductase filaments and ribosomes, refined using STOPGAP.
+    deposition_description: Cryo-electron tomograms of T. kivui FIB-SEM lamellas,
+      including annotations of membrane-anchored hydrogen-dependent CO2 reductase
+      filaments and ribosomes, refined using STOPGAP.
     deposition_identifier: 10008
-    deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires in T. kivui
+    deposition_title: Membrane-anchored Hydrogen-dependent CO2 reductase nanowires
+      in T. kivui
     deposition_types:
     - dataset
     - annotation
@@ -272,7 +276,7 @@ tomograms:
   - source_glob:
       list_glob: tomo/bin4_denoised/{run_name}.rec
       match_regex: .*
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:
