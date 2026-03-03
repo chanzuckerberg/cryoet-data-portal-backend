@@ -181,10 +181,9 @@ class AnnotationImporter(BaseImporter):
         if filename in self.written_metadata_files:
             return  # We've already written this metadata file
 
-        # Skip source validation since import_metadata is only called after data conversion
         anno_files = [
             item
-            for item in AnnotationImporter.finder(self.config, skip_source_validation=True, **self.parents)
+            for item in AnnotationImporter.finder(self.config, **self.parents)
             if item.identifier == self.identifier
         ]
 
