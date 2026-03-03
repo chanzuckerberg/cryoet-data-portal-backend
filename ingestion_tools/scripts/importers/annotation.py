@@ -172,7 +172,7 @@ class AnnotationImporter(BaseImporter):
         self.config.fs.makedirs(output_dir)
         return self.annotation_metadata.get_filename_prefix(output_dir)
 
-    def import_metadata(self):
+    def import_metadata(self, skip_source_validation: bool = False):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name} metadata")
             return
@@ -183,7 +183,7 @@ class AnnotationImporter(BaseImporter):
 
         anno_files = [
             item
-            for item in AnnotationImporter.finder(self.config, **self.parents)
+            for item in AnnotationImporter.finder(self.config, skip_source_validation=skip_source_validation, **self.parents)
             if item.identifier == self.identifier
         ]
 

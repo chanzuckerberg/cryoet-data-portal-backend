@@ -93,7 +93,10 @@ def do_import(
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
             if import_class in metadata_import and item.has_metadata:
                 print(f"Importing {import_class.type_key} metadata")
-                item.import_metadata()
+                if import_class.type_key == "annotation":
+                    item.import_metadata(skip_source_validation=skip_source_validation)
+                else:
+                    item.import_metadata()
 
 
 @cli.command()
