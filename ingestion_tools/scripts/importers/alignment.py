@@ -97,7 +97,7 @@ class AlignmentImporter(BaseFileImporter):
     def get_dest_filename(self, path: str) -> str | None:
         if not path:
             return None
-        return os.path.join(self.get_output_path(), os.path.basename(path))
+        return os.path.join(self.get_output_path(), self.parents["run"].name + os.path.splitext(path)[1])
 
     def get_extra_metadata(self) -> dict:
         extra_metadata = {

@@ -10,33 +10,79 @@ alignments:
       - '{run_name}.aln'
 annotations:
 - metadata:
-    annotation_method: Prediction using membrain-seg without rescaling and weights MemBrain_seg_v10_alpha.ckpt
+    annotation_ingest_id: membrane-1
+    annotation_method: Prediction using membrain-seg without rescaling and weights
+      MemBrain_seg_v10_alpha.ckpt
     annotation_object:
       id: GO:0016020
       name: membrane
     annotation_publications: 10.1101/2024.01.05.574336
     annotation_software: membrain-seg 0.0.1
     authors:
+    - ORCID: 0000-0003-0737-8383
+      corresponding_author_status: false
+      name: Rahel Woldeyes
+      primary_author_status: true
     - ORCID: 0000-0002-8063-6951
-      corresponding_author_status: true
+      corresponding_author_status: false
       name: Jonathan Schwartz
       primary_author_status: true
-    - ORCID: 0000-0002-3248-9678
-      corresponding_author_status: true
-      name: Yue Yu
+    - ORCID: 0009-0002-6674-7601
+      corresponding_author_status: false
+      name: Hannah Siems
       primary_author_status: true
-    - ORCID: 0000-0002-8402-0134
-      corresponding_author_status: true
-      name: Mohammadreza Paraan
+    - ORCID: 0000-0002-4719-2893
+      corresponding_author_status: false
+      name: Bisco Hill
       primary_author_status: true
     - ORCID: 0000-0002-5940-3897
-      corresponding_author_status: true
+      corresponding_author_status: false
       name: Ariana Peck
-      primary_author_status: true
+      primary_author_status: false
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: false
+      name: Yue Yu
+      primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
+      corresponding_author_status: false
+      name: Elizabeth Montabana
+      primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
+      corresponding_author_status: false
+      name: Utz Ermel
+      primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
+      corresponding_author_status: false
+      name: Joshua Hutchings
+      primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: false
+      name: Mohammadreza Paraan
+      primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
+      corresponding_author_status: false
+      name: Dari Kimanius
+      primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: false
+      name: Shawn Zheng
+      primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
+      corresponding_author_status: false
+      name: Bridget Carragher
+      primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
+      corresponding_author_status: false
+      name: David Agard
+      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
+      corresponding_author_status: true
+      name: Daniel Serwas
+      primary_author_status: false
     dates: &id001
-      deposition_date: '2024-11-26'
-      last_modified_date: '2024-11-26'
-      release_date: '2024-11-26'
+      deposition_date: '2025-12-18'
+      last_modified_date: '2025-12-18'
+      release_date: '2025-12-18'
     ground_truth_status: false
     is_curator_recommended: true
     method_links:
@@ -54,94 +100,239 @@ annotations:
       glob_strings:
       - '{run_name}_Vol_Segment_mask.mrc'
       is_visualization_default: true
-      mask_label: 1
       rescale: true
-collection_metadata:
-- sources:
-  - source_glob:
-      list_glob: '{run_name}.mdoc'
-dataset_keyphotos:
-- sources:
-  - literal:
-      value:
-        snapshot: cryoetportal-rawdatasets-dev/CZII/20241206_lysosome_orange/10444-key-photo-snapshot.png
-        thumbnail: cryoetportal-rawdatasets-dev/CZII/20241206_lysosome_orange/10444-key-photo-thumbnail.png
-datasets:
+      threshold: 0.5
 - metadata:
-    authors: &id002
-    - ORCID: 0009-0002-6674-7601
+    annotation_ingest_id: intracellular-membrane-bounded-organelle-1
+    annotation_method: Prediction using SABER
+    annotation_object:
+      id: GO:0043231
+      name: intracellular membrane-bounded organelle
+    annotation_software: SABER 0.9.0
+    authors:
+    - ORCID: 0000-0003-0737-8383
       corresponding_author_status: false
-      name: Hannah Siems
-      primary_author_status: true
-    - ORCID: 0000-0002-3248-9678
-      corresponding_author_status: false
-      name: Yue Yu
-      primary_author_status: true
-    - ORCID: 0000-0002-5940-3897
-      corresponding_author_status: false
-      name: Ariana Peck
+      name: Rahel Woldeyes
       primary_author_status: true
     - ORCID: 0000-0002-8063-6951
       corresponding_author_status: false
       name: Jonathan Schwartz
       primary_author_status: true
+    - ORCID: 0009-0002-6674-7601
+      corresponding_author_status: false
+      name: Hannah Siems
+      primary_author_status: true
+    - ORCID: 0000-0002-4719-2893
+      corresponding_author_status: false
+      name: Bisco Hill
+      primary_author_status: true
+    - ORCID: 0000-0002-5940-3897
+      corresponding_author_status: false
+      name: Ariana Peck
+      primary_author_status: false
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: false
+      name: Yue Yu
+      primary_author_status: false
     - ORCID: 0000-0002-6731-5854
       corresponding_author_status: false
       name: Elizabeth Montabana
-      primary_author_status: true
+      primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
+      corresponding_author_status: false
+      name: Utz Ermel
+      primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
+      corresponding_author_status: false
+      name: Joshua Hutchings
+      primary_author_status: false
     - ORCID: 0000-0002-8402-0134
-      corresponding_author_status: true
+      corresponding_author_status: false
       name: Mohammadreza Paraan
+      primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
+      corresponding_author_status: false
+      name: Dari Kimanius
+      primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: false
+      name: Shawn Zheng
+      primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
+      corresponding_author_status: false
+      name: Bridget Carragher
+      primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
+      corresponding_author_status: false
+      name: David Agard
       primary_author_status: false
     - ORCID: 0000-0001-9010-7298
       corresponding_author_status: true
       name: Daniel Serwas
       primary_author_status: false
-    cell_component:
-      name: lysosome
-      id: GO:0005764
-    cell_strain:
-      name: HEK293
-      id: CVCL_0045
-    cell_type:
-      name: kidney epithelial cell
-      id: CL:0002518
-    dataset_description: Cryo-electron tomography data of affinity-captured LAMP1-GFP positive organelles from HEK293T cells.
-      Contained data were collected on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms were reconstructed
-      using AreTomo3.
-    dataset_identifier: 10444
-    dataset_title: Affinity-Captured Endo-/Lysosomes
     dates: *id001
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: SABER on GitHub
+      link: https://github.com/chanzuckerberg/saber
+      link_type: source_code
+    - custom_name: SABER on PyPI
+      link: https://pypi.org/project/saber-em/
+      link_type: other
+    - custom_name: SABER documentation
+      link: https://chanzuckerberg.github.io/saber/
+      link_type: documentation
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - '{run_name}_Vol_saber_Segment_mask.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}.fixed.mdoc'
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_CTFFIND_format_CTF.txt'
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+datasets:
+- metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
+    authors:
+    - ORCID: 0000-0003-0737-8383
+      corresponding_author_status: false
+      email: rahel.woldeyes@biohub.org
+      name: Rahel Woldeyes
+      primary_author_status: true
+    - ORCID: 0009-0002-6674-7601
+      corresponding_author_status: false
+      name: Hannah Siems
+      primary_author_status: true
+    - ORCID: 0000-0002-4719-2893
+      corresponding_author_status: false
+      name: Bisco Hill
+      primary_author_status: true
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: false
+      name: Jonathan Schwartz
+      primary_author_status: false
+    - ORCID: 0000-0002-5940-3897
+      corresponding_author_status: false
+      name: Ariana Peck
+      primary_author_status: false
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: false
+      name: Yue Yu
+      primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
+      corresponding_author_status: false
+      name: Elizabeth Montabana
+      primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
+      corresponding_author_status: false
+      name: Utz Ermel
+      primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
+      corresponding_author_status: false
+      name: Joshua Hutchings
+      primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: false
+      name: Mohammadreza Paraan
+      primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
+      corresponding_author_status: false
+      name: Dari Kimanius
+      primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: false
+      name: Shawn Zheng
+      primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
+      corresponding_author_status: false
+      name: Bridget Carragher
+      primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
+      corresponding_author_status: false
+      name: David Agard
+      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
+      corresponding_author_status: true
+      email: daniel.serwas@biohub.org
+      name: Daniel Serwas
+      primary_author_status: false
+    cell_component:
+      id: GO:0043231
+      name: intracellular membrane-bounded organelle
+    cell_strain:
+      id: CVCL_0063
+      name: HEK293T
+    cell_type:
+      id: CL:0002518
+      name: kidney epithelial cell
+    dataset_description: This large-scale cryo-electron tomography (cryo-ET) dataset
+      contains tilt series from affinity-captured organelles derived from HEK293T
+      lysates. The experimental design utilizes electron microscopy grids functionalized
+      with anti-GFP nanobodies to capture organelles tagged with GFP-LAMP1 from untreated
+      cells. The complete dataset includes raw frames, alignments, tomograms, and
+      annotations. All data were processed using the automated AreTomo3 pipeline,
+      with semantic segmentations generated by both SABER and Membrain-Seg.
+    dataset_identifier: 10444
+    dataset_title: Large-scale cryo-ET dataset of affinity-captured organelles (LAMP1
+      + untreated) HEK293T cells
+    dates: *id001
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: Chan Zuckerberg Initiative
       grant_id: "CZII-2023\u2013327779"
-    grid_preparation: "6 \xB5l of lysates were added to affinity grids and then blotted after ~15 seconds from the grid edge\
-      \ with filter paper 3 times,  grids were washed with 6 \xB5l ice cold PBS, sample addition and washing steps were repeated\
-      \ ones and 6 \xB5l PBS were added before blotting and plunging into liquid ethane. Leica GP2 was used for grid preparation."
+    grid_preparation: "Grid preparation was performed using a Leica EM GP2 + Affinity\
+      \ grids were incubated with 6 \xB5l of lysate for approximately 15 seconds,\
+      \ after which excess liquid was removed by blotting from the grid edge with\
+      \ filter paper + This lysate addition and blotting step was repeated three times,\
+      \ followed by a wash with 6 \xB5l of ice-cold PBS + The entire sample application\
+      \ and washing process was performed twice + Finally, 6 \xB5l of PBS was added\
+      \ immediately prior to blotting and plunging into liquid ethane"
     organism:
       name: Homo sapiens
       taxonomy_id: 9606
-    other_setup: Samples were imaged in a cryo-fluorescence microscope before cryoET imaging. Some of the surface contamination
-      originates from that additional imaging step.
-    sample_preparation: "Affinity-grids were prepared by overlaying holey carbon grids with a thin layer of graphene oxide.\
-      \ GFP-nanobodies were immoblilized on the graphene oxide surface using a PEG-linker. Cells expressing LAMP1-GFP were\
-      \ washed and detached with ice cold PBS, and transfer to chilled 15 ml falcon tube, pelleted by centrifugation at 500\
-      \ x g for 5 min at 4\xB0C, PBS was aspirated, pellet was resuspended in hypotonic homogenization buffer (~1 mL), cells\
-      \ were mechanically lysed using 23G blunt needle, transferred to and mixed with isotonic sucrose buffer, lysates were\
-      \ centrifuge at 1000 x g for 10 min at 4\xB0C, supernatant was used for grid preparation."
+    other_setup: 'Cell strain: czML0879_LAMP1-C-mGFP-Spytag003'
+    sample_preparation: "Affinity-grids were prepared by covering holey carbon grids\
+      \ with a thin layer of graphene oxide + GFP-nanobodies were then immobilized\
+      \ onto the graphene oxide surface using a PEG-linker + For cell processing,\
+      \ cells expressing LAMP1-GFP were first washed and detached using ice-cold PBS\
+      \ + They were then transferred to a chilled 15 ml Falcon tube and pelleted by\
+      \ centrifugation at 500 x g for 5 minutes at 4\xB0C + After aspirating the PBS,\
+      \ the pellet was resuspended in approximately 950 \xB5l of hypotonic homogenization\
+      \ buffer + The cells were subsequently mechanically lysed using a 23G blunt\
+      \ needle + The resulting mixture was transferred to and mixed with isotonic\
+      \ sucrose buffer + Finally, the lysates were centrifuged at 1000 x g for 10\
+      \ minutes at 4\xB0C, and the resulting supernatant was collected for use in\
+      \ grid preparation."
     sample_type: organelle
     tissue:
-      name: kidney epithelial cell
       id: CL:0002518
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
+      name: kidney epithelial cell
   sources:
   - literal:
       value:
@@ -154,16 +345,86 @@ deposition_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10318_thumbnail.png
 depositions:
 - metadata:
-    authors: *id002
+    authors:
+    - ORCID: 0000-0003-0737-8383
+      corresponding_author_status: false
+      email: rahel.woldeyes@biohub.org
+      name: Rahel Woldeyes
+      primary_author_status: true
+    - ORCID: 0009-0002-6674-7601
+      corresponding_author_status: false
+      name: Hannah Siems
+      primary_author_status: true
+    - ORCID: 0000-0002-4719-2893
+      corresponding_author_status: false
+      name: Bisco Hill
+      primary_author_status: true
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: false
+      name: Jonathan Schwartz
+      primary_author_status: false
+    - ORCID: 0000-0002-5940-3897
+      corresponding_author_status: false
+      name: Ariana Peck
+      primary_author_status: false
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: false
+      name: Yue Yu
+      primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
+      corresponding_author_status: false
+      name: Elizabeth Montabana
+      primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
+      corresponding_author_status: false
+      name: Utz Ermel
+      primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
+      corresponding_author_status: false
+      name: Joshua Hutchings
+      primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: false
+      name: Mohammadreza Paraan
+      primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
+      corresponding_author_status: false
+      name: Dari Kimanius
+      primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: false
+      name: Shawn Zheng
+      primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
+      corresponding_author_status: false
+      name: Bridget Carragher
+      primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
+      corresponding_author_status: false
+      name: David Agard
+      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
+      corresponding_author_status: true
+      email: daniel.serwas@biohub.org
+      name: Daniel Serwas
+      primary_author_status: false
     dates:
-      deposition_date: '2024-12-06'
-      last_modified_date: '2024-12-06'
-      release_date: '2024-12-06'
-    deposition_description: Cryo-electron tomography data of affinity-captured LAMP1-GFP positive organelles from HEK293T
-      cells. Contained data were collected on a Krios G4 using a Falcon 4i detector and SelctrisX energy filter. Tomograms
-      were reconstructed using AreTomo3.
+      deposition_date: '2025-12-18'
+      last_modified_date: '2025-12-18'
+      release_date: '2025-12-18'
+    deposition_description: "This is a deposition of a large-scale cryo-ET dataset\
+      \ composed of  ~13,700 tilt series of organelles that were affinity-captured\
+      \ from HEK293T lysates. It includes raw frames, alignments, tomograms, and annotations.\
+      \ The experimental design uses electron microscopy grids functionalized with\
+      \ anti-GFP nanobodies to capture organelles tagged with either GFP-LAMP1 or\
+      \ GFP-TMEM192 and from multiple physiological states. The dataset includes i)\
+      \ untreated cells, ii) cells treated with bafilomycin A1, iii) amino acid\u2013\
+      starved cells, and iv) amino\u2013acid starved cells + reintroduction of amino\
+      \ acids. All data were processed using the automated AreTomo3 pipeline and include\
+      \ semantic segmentations generated by SABER and Membrain-Seg."
     deposition_identifier: 10318
-    deposition_title: Affinity-Captured Endo-/Lysosomes
+    deposition_title: Large-scale cryo-ET dataset of affinity-captured organelles
+      (LAMP1/TMEM192) from HEK293T cells under multiple physiological states
     deposition_types:
     - dataset
     - annotation
@@ -173,7 +434,7 @@ depositions:
       - 10318
 frames:
 - metadata:
-    dose_rate: 7.303
+    dose_rate: float {dose_rate}
     is_gain_corrected: false
   sources:
   - source_glob:
@@ -194,8 +455,8 @@ runs:
       name_regex: (.*)\.aln$
 standardization_config:
   deposition_id: 10318
-  run_data_map_file: run_to_data_map_updated_quality_updated.tsv
-  source_prefix: CZII/20241206_lysosome_orange/
+  run_data_map_file: run_to_data_map_combined.tsv
+  source_prefix: CZII/20251216_lysosomes/10444/
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
@@ -212,7 +473,7 @@ tiltseries:
       energy_filter: Selectris X
     pixel_spacing: 1.54
     spherical_aberration_constant: 2.7
-    tilt_axis: 80
+    tilt_axis: -96
     tilt_range:
       max: float {tilt_series_max_tilt}
       min: float {tilt_series_min_tilt}
@@ -243,7 +504,67 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id002
+    authors: &id002
+    - ORCID: 0000-0003-0737-8383
+      corresponding_author_status: false
+      name: Rahel Woldeyes
+      primary_author_status: true
+    - ORCID: 0009-0002-6674-7601
+      corresponding_author_status: false
+      name: Hannah Siems
+      primary_author_status: true
+    - ORCID: 0000-0002-4719-2893
+      corresponding_author_status: false
+      name: Bisco Hill
+      primary_author_status: true
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: false
+      name: Jonathan Schwartz
+      primary_author_status: false
+    - ORCID: 0000-0002-5940-3897
+      corresponding_author_status: false
+      name: Ariana Peck
+      primary_author_status: false
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: false
+      name: Yue Yu
+      primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
+      corresponding_author_status: false
+      name: Elizabeth Montabana
+      primary_author_status: false
+    - ORCID: 0000-0003-4685-037X
+      corresponding_author_status: false
+      name: Utz Ermel
+      primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
+      corresponding_author_status: false
+      name: Joshua Hutchings
+      primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: false
+      name: Mohammadreza Paraan
+      primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
+      corresponding_author_status: false
+      name: Dari Kimanius
+      primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: false
+      name: Shawn Zheng
+      primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
+      corresponding_author_status: false
+      name: Bridget Carragher
+      primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
+      corresponding_author_status: false
+      name: David Agard
+      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
+      corresponding_author_status: true
+      name: Daniel Serwas
+      primary_author_status: false
     ctf_corrected: true
     dates: *id001
     fiducial_alignment_status: NON_FIDUCIAL
@@ -255,9 +576,9 @@ tomograms:
     processing: denoised
     processing_software: DenoisET
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 v2.0.4
+    reconstruction_software: AreTomo3 v2.2.2
     tomogram_version: 1
-    voxel_spacing: 4.99
+    voxel_spacing: 5.006
   sources:
   - source_glob:
       list_glob: '{run_name}_Vol.mrc'
@@ -290,18 +611,18 @@ tomograms:
       y: 0
       z: 0
     processing: filtered
-    processing_software: AreTomo3 v2.0.4
+    processing_software: AreTomo3 v2.2.2
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 v2.0.4
+    reconstruction_software: AreTomo3 v2.2.2
     tomogram_version: 1
-    voxel_spacing: 4.99
+    voxel_spacing: 5.006
   sources:
   - source_glob:
       list_glob: '{run_name}_dctf_Vol.mrc'
       match_regex: (.*)\.mrc
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:
       value:
-      - 4.99
+      - 5.006

@@ -3,6 +3,7 @@ import os
 from typing import Any
 
 from database import models
+from db_import.common.config import PROD_URL, STAGING_URL
 from db_import.common.finders import MetadataFileFinder
 from db_import.common.normalize_fields import normalize_fiducial_alignment
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
@@ -39,6 +40,16 @@ class TomogramItem(ItemDBImporter):
         "is_visualization_default": ["is_visualization_default"],
     }
 
+    def _update_ng_urls(self, ng_config_text: str) -> str:
+        """
+        A simple function to find and replace all production URLs in the neuroglancer config with the staging URL when in the staging environment.
+        This is done to ensure that the URLs in the neuroglancer config are correct for the staging environment.
+        """
+        if self.config.https_prefix != STAGING_URL:
+            return ng_config_text
+
+        return ng_config_text.replace(PROD_URL, self.config.https_prefix)
+
     def normalize_to_unknown_str(self, value: str) -> str:
         return value.replace(" ", "_") if value else "Unknown"
 
@@ -47,9 +58,13 @@ class TomogramItem(ItemDBImporter):
             # Handle the case where there is no neuroglancer config file specified which is expected when
             # visualization_default is set to False.
             return None
-        config = self.config.load_key_json(path, is_file_required=False)
+        ng_config_text = self.config.load_key_text(path, is_file_required=False)
+        if ng_config_text:
+            ng_config_text = self._update_ng_urls(ng_config_text)
+            ng_config_json = json.loads(ng_config_text)
+
         # TODO: Log warning
-        return json.dumps(config, separators=(",", ":")) if config else "{}"
+        return json.dumps(ng_config_json, separators=(",", ":")) if ng_config_json else "{}"
 
     def load_computed_fields(self):
         https_prefix = self.config.https_prefix

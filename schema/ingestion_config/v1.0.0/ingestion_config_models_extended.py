@@ -6,7 +6,7 @@ import asyncio
 import logging
 import re
 import urllib
-from typing import List, Optional, Set, Tuple, Union
+from typing import Callable, List, Optional, Set, Tuple, Union
 
 import aiohttp
 import numpy
@@ -70,8 +70,10 @@ from codegen.ingestion_config_models import (
     TomogramSource,
     VoxelSpacingEntity,
     VoxelSpacingSource,
+    linkml_meta,
 )
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, ModelWrapValidatorHandler, ValidationError, field_validator, model_validator
+from pydantic_core import ErrorDetails
 from typing_extensions import Self
 
 logger = logging.getLogger(__name__)
@@ -82,9 +84,9 @@ GO_ID_REGEX = r"^GO:[0-9]{7}$"
 UNIPROT_ID_REGEX = r"^UniProtKB:[A-Z0-9]+$"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
-# Note that model namees should all be uppercase or pascal case
+# Note that model names should all be uppercase or pascal case
 CAMERA_MANUFACTURER_TO_MODEL = {
-    ("FEI", "TFS"): ["FALCON IV", "Falcon4i"],
+    ("FEI", "TFS"): ["FALCON IV", "FALCON 4i"],
     ("Gatan"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
     ("simulated"): ["simulated"],
 }
@@ -102,6 +104,11 @@ def skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = True
     global validation_exclusions
 
     for base in obj.__class__.__bases__:
+        # a class that has an add_regex_error_augmenter, so the base case is still the "Extended" class,
+        # so we need to go down one more level to get the actual base class
+        if base.__name__.startswith("Extended"):
+            base = base.__bases__[0]
+
         if base.__name__ not in validation_exclusions:
             continue
 
@@ -123,6 +130,66 @@ def skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = True
     return False
 
 
+def get_patterns(field_linkml_meta: dict) -> list[str]:
+    """
+    Given a field's linkml metadata, returns the regex matching patterns for that field.
+    """
+    ranges = []
+    if "range" in field_linkml_meta:
+        ranges.append(field_linkml_meta["range"])
+    any_of = field_linkml_meta.get('any_of', [])
+    for item in any_of:
+        range_value = item.get('range')
+        if range_value:
+            ranges.append(range_value)
+    ranges = [r for r in ranges if r in linkml_meta['types'] and r not in ['string', 'date', 'datetime', 'decimal', 'double', 'float', 'integer', 'boolean']]
+    patterns = [linkml_meta['types'][r]['pattern'] for r in ranges]
+    return patterns
+
+
+def add_regex_error_augmenter(
+    field: str,
+) -> Callable[[type], type]:
+    """
+    Class decorator that injects a wrap field validator for `field`
+    which appends possible regex formats to a matching error message.
+    """
+
+    def decorator(cls: type) -> type:
+        @field_validator(field, mode="wrap", check_fields=False)
+        @classmethod
+        def _validator(
+            cls,
+            value: Optional[str],
+            handler: ModelWrapValidatorHandler,
+        ) -> Optional[str]:
+            possible_regexes = get_patterns(cls.model_fields[field].json_schema_extra["linkml_meta"])
+            try:
+                return handler(value)
+            except ValidationError as e:
+                new_errors: List[ErrorDetails] = []
+                for error in e.errors():
+                    if f"Invalid {field} format:" in error.get("msg", ""):
+                        new_error = error.copy()
+                        if possible_regexes:
+                            new_error["msg"] += f". Valid formats include: {possible_regexes}"
+
+                        new_error["msg"] += f". Field description: {cls.model_fields[field].description}"
+                        new_error["ctx"]["error"] = new_error["msg"]
+                        new_errors.append(new_error)
+                    else:
+                        new_errors.append(error)
+                raise ValidationError.from_exception_data(cls.__name__, new_errors) from None
+
+        # need to create new subclass so that pydantic actually uses the new validator
+        new_subclass = {
+            f"augment_{field}_regex_error_message": _validator,
+            "__module__": cls.__module__,
+        }
+        return type(cls.__name__, (cls,), new_subclass)
+
+    return decorator
+
 # ==============================================================================
 # Author Validation
 # ==============================================================================
@@ -141,6 +208,7 @@ def validate_authors_status(authors: List[Author]) -> List[ValueError]:
 
     return errors
 
+orcid_cache = {}
 
 @alru_cache
 async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
@@ -149,6 +217,8 @@ async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
     """
     url = f"https://pub.orcid.org/v3.0/{orcid_id}"
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking ORCID %s at %s, status %s", orcid_id, url, response.status)
+        orcid_cache[(orcid_id,)] = response.status == 200
         return orcid_id, response.status == 200
 
 
@@ -157,9 +227,12 @@ async def validate_orcids(orcid_list: Set[str]) -> Set[str]:
     Returns a list of invalid ORCIDs, from the provided list
     """
     invalid_orcids: Set[str] = []
+    lookup_orcid_queue = RateLimitedQueue(interval=0.2, cache=orcid_cache)  # limit to 5/sec, ORCID rate limit is 12/sec
 
-    tasks = [lookup_orcid(orcid) for orcid in orcid_list]
+    tasks = [lookup_orcid_queue.enqueue(lookup_orcid, orcid) for orcid in orcid_list]
+    lookup_orcid_queue.start()
     results = await asyncio.gather(*tasks)
+    await lookup_orcid_queue.stop()
     invalid_orcids += {orcid for orcid, valid in results if not valid}
     return invalid_orcids
 
@@ -232,23 +305,22 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
     # OLS API URL
     url = f"https://www.ebi.ac.uk/ols/api/terms?iri={encoded_iri}"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
         names = []
-        for entry in data["_embedded"]["terms"]:
+        for entry in data.get("_embedded", {}).get("terms", []):
             names.append(entry["label"])
             names += entry["synonyms"]
         return names, True
 
 
 @alru_cache
-async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
+async def is_id_ancestor(id_ancestor: str, id: str) -> tuple[bool, List[str]]:
     """
-    Returns whether or not id_ancestor is an ancestor of id
+    Returns whether or not id_ancestor is an ancestor of id, and the ancestors.
     """
     # Encode the IRI
     iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
@@ -261,11 +333,10 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
     ontology = id_ancestor.split(":")[0]
     url = f"https://www.ebi.ac.uk/ols4/api/ontologies/{ontology}/terms/{encoded_iri}/ancestors"
 
-    logger.debug("Getting ancestors for ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
-        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]]
-        return response.status == 200 and id_ancestor in ancestor_ids
+        logger.debug("Getting ancestors for ID %s at %s, status %s", id, url, response.status)
+        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json()).get("_embedded", {}).get("terms", [])]
+        return response.status == 200 and id_ancestor in ancestor_ids, ancestor_ids
 
 
 @alru_cache
@@ -276,10 +347,9 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
 
     url = f"http://rest.wormbase.org/rest/field/strain/{id}/name"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     names = []
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -289,6 +359,7 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
 
     async with aiohttp.ClientSession() as session, session.get(names_url) as response:
+        logger.debug("Getting other names for ID %s at %s, status %s", id, names_url, response.status)
         if response.status >= 400:
             return [], True
         data = await response.json()
@@ -305,9 +376,8 @@ async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
     """
     url = f"https://api.cellosaurus.org/cell-line/{id}?format=json&fld=id&fld=sy"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -330,9 +400,8 @@ async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
     id = id.replace("UniProtKB:", "")
     url = f"https://rest.uniprot.org/uniprotkb/{id}"
 
-    logger.debug("Getting ID %s at %s", id, url)
-
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         data = await response.json()
@@ -381,14 +450,15 @@ def validate_id_name_object(
     valid_name = retrieved_names == [] or any(name == retrieved_name for retrieved_name in retrieved_names)
 
     if not valid_name:
-        raise ValueError(f"name '{name}' does not match id: {id}")
+        raise ValueError(f"name '{name}' does not match id: {id}, retrieved names: {retrieved_names}")
 
     if ancestor is None:
         return
 
     logger.debug("Valid name, now checking if %s is an ancestor of %s", name, ancestor)
-    if not asyncio.run(validate_ancestor_function(ancestor, id)):
-        raise ValueError(f"'{name}' is not a descendant of {ancestor}")
+    is_ancestor, ancestor_ids = asyncio.run(validate_ancestor_function(ancestor, id))
+    if not is_ancestor:
+        raise ValueError(f"'{name}' is not a descendant of {ancestor}, ancestors: {ancestor_ids}")
 
 
 def validate_cell_strain_object(self: CellStrain) -> CellStrain:
@@ -465,28 +535,31 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 # ==============================================================================
 # Publication Validation
 # ==============================================================================
+doi_cache = {}
+
 @alru_cache
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
     doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}"
-    logger.debug("Checking DOI %s at %s", doi, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking DOI %s at %s, status %s", doi, url, response.status)
+        doi_cache[(doi,)] = response.status == 200
         return doi, response.status == 200
 
 
 @alru_cache
 async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
-    logger.debug("Checking EMPIAR ID %s at %s", empiar_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking EMPIAR ID %s at %s, status %s", empiar_id, url, response.status)
         return empiar_id, response.status == 200
 
 
 @alru_cache
 async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
-    logger.debug("Checking EMDB ID %s at %s", emdb_id, url)
     async with aiohttp.ClientSession() as session, session.head(url) as response:
+        logger.debug("Checking EMDB ID %s at %s, status %s", emdb_id, url, response.status)
         return emdb_id, response.status == 200
 
 
@@ -494,8 +567,8 @@ async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
 async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
     pdb_id = pdb_id.replace("PDB-", "")
     url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
-    logger.debug("Checking PDB ID %s at %s", pdb_id, url)
     async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Checking PDB ID %s at %s, status %s", pdb_id, url, response.status)
         return pdb_id, response.status == 200
 
 
@@ -506,18 +579,67 @@ PUBLICATION_REGEXES_AND_FUNCTIONS = {
     "pdb": (r"^PDB-[0-9a-zA-Z]{4,8}$", lookup_pdb),
 }
 
+class RateLimitedQueue:
+    def __init__(self, interval: float, cache: dict = None):
+        self.interval = interval
+        self.queue = asyncio.Queue()
+        self.last_executed = 0.0
+        self.cache = cache if cache is not None else {}
+        self.worker_task = None
+
+    def start(self):
+        if self.worker_task is None:
+            self.worker_task = asyncio.create_task(self._worker())
+
+    async def stop(self):
+        await self.queue.join()
+
+        if self.worker_task:
+            self.worker_task.cancel()
+            self.worker_task = None
+
+    async def _worker(self):
+        while True:
+            if self.queue.empty():
+                await asyncio.sleep(0.25)
+                continue
+
+            func, args, future = await self.queue.get()
+            now = asyncio.get_event_loop().time()
+            wait_time = self.interval - (now - self.last_executed)
+            if wait_time > 0 and args not in self.cache:
+                await asyncio.sleep(wait_time)
+            try:
+                result = await func(*args)
+                future.set_result(result)
+            except Exception as e:
+                future.set_exception(e)
+            self.last_executed = asyncio.get_event_loop().time()
+            self.queue.task_done()
+
+    async def enqueue(self, func, *args):
+        future = asyncio.get_event_loop().create_future()
+        await self.queue.put((func, args, future))
+        return await future
+
 
 async def validate_publication_lists(publication_list: List[str]) -> List[str]:
     tasks = []
+    lookup_doi_queue = RateLimitedQueue(interval=1.0, cache=doi_cache) # have to rate limit DOIs to prevent 429s
 
     for publication in publication_list:
         for _, (regex, validate_function) in PUBLICATION_REGEXES_AND_FUNCTIONS.items():
             if not re.match(regex, publication):
                 continue
-            tasks.append(validate_function(publication))
+            if validate_function == lookup_doi:
+                tasks.append(lookup_doi_queue.enqueue(validate_function, publication))
+            else:
+                tasks.append(validate_function(publication))
             break
 
+    lookup_doi_queue.start()
     results = await asyncio.gather(*tasks)
+    await lookup_doi_queue.stop()
     return [publication for publication, valid in results if not valid]
 
 
@@ -611,6 +733,7 @@ class ExtendValidationAlignment(Alignment):
 # ==============================================================================
 # Annotation Object Validation
 # ==============================================================================
+@add_regex_error_augmenter("id")
 class ExtendedValidationAnnotationObject(AnnotationObject):
     @model_validator(mode="after")
     def validate_annotation_object(self) -> Self:
@@ -726,12 +849,12 @@ class ExtendedValidationAnnotationEntity(AnnotationEntity):
             has_parent_filters = source_element.parent_filters is not None
 
             # Get the actual shapes in the source entry
-            shapes = source_element.model_fields.copy()
+            shapes = source_element.__class__.model_fields.copy()
             if has_parent_filters:
                 shapes.pop("parent_filters")
 
             # Only one of these should be present (tested above)
-            shapes = [shape for shape in shapes if getattr(source_element, shape) is not None]
+            shapes = [shape for shape in shapes if getattr(source_element, shape)]
             shape = shapes[0] if shapes else None
 
             # If the shape is already used in another source entry, add the shape to the error set
@@ -780,6 +903,7 @@ class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
 # ==============================================================================
 # Dataset Validation
 # ==============================================================================
+@add_regex_error_augmenter("id")
 class ExtendedValidationCellComponent(CellComponent):
     @model_validator(mode="after")
     def validate_cell_component(self) -> Self:
@@ -787,19 +911,20 @@ class ExtendedValidationCellComponent(CellComponent):
         return self
 
 
+@add_regex_error_augmenter("id")
 class ExtendedValidationCellStrain(CellStrain):
     @model_validator(mode="after")
     def validate_cell_strain(self) -> Self:
         return validate_cell_strain_object(self)
 
-
+@add_regex_error_augmenter("id")
 class ExtendedValidationCellType(CellType):
     @model_validator(mode="after")
     def validate_cell_type(self) -> Self:
         validate_id_name_object(self, self.id, self.name)
         return self
 
-
+@add_regex_error_augmenter("id")
 class ExtendedValidationTissue(TissueDetails):
     @model_validator(mode="after")
     def validate_tissue(self) -> Self:
@@ -819,20 +944,27 @@ class ExtendedValidationOrganism(OrganismDetails):
         )
         return self
 
+@add_regex_error_augmenter("id")
 class ExtendedValidationAssay(Assay):
     @model_validator(mode="after")
     def validate_assay(self) -> Self:
         validate_id_name_object(self, self.id, self.name)
         return self
 
+@add_regex_error_augmenter("id")
 class ExtendedValidationDevelopmentStageDetails(DevelopmentStageDetails):
     @model_validator(mode="after")
     def validate_development_stage(self) -> Self:
         if self.id == "unknown" and self.name == "unknown":
             return self
+        elif self.id == "unknown":
+            raise ValueError("Development stage cannot have 'unknown' name with a known ID; set both to 'unknown' if the development stage is unknown; otherwise, provide a valid ID")
+        elif self.name == "unknown":
+            raise ValueError("Development stage cannot have 'unknown' ID with a known name; set both to 'unknown' if the development stage is unknown; otherwise, provide a valid name")
         validate_id_name_object(self, self.id, self.name)
         return self
 
+@add_regex_error_augmenter("id")
 class ExtendedValidationDisease(Disease):
     @model_validator(mode="after")
     def validate_disease(self) -> Self:
@@ -961,6 +1093,7 @@ class ExtendedValidationGainEntity(GainEntity):
 # ==============================================================================
 # Identified Object Validation
 # ==============================================================================
+@add_regex_error_augmenter("id")
 class ExtendedValidationIdentifiedObject(IdentifiedObject):
     @model_validator(mode="after")
     def validate_identified_object(self) -> Self:
@@ -1087,6 +1220,42 @@ class ExtendedValidationVoxelSpacingEntity(VoxelSpacingEntity):
 
 
 class ExtendedValidationContainer(Container):
+    @field_validator("annotations")
+    @classmethod
+    def validate_unique_annotation_ingest_ids(
+        cls: Self,
+        annotations: Optional[List[ExtendedValidationAnnotationEntity]],
+    ) -> Optional[List[ExtendedValidationAnnotationEntity]]:
+        """Validate that annotation_ingest_id values are unique within the config."""
+        if not annotations:
+            return annotations
+
+        seen_ids = set()
+        duplicate_ids = set()
+
+        for annotation in annotations:
+            metadata = annotation.metadata
+            if metadata is None:
+                continue
+
+            # Get the annotation_ingest_id, skip if not present
+            ingest_id = getattr(metadata, "annotation_ingest_id", None)
+            if ingest_id is None:
+                continue
+
+            if ingest_id in seen_ids:
+                duplicate_ids.add(ingest_id)
+            else:
+                seen_ids.add(ingest_id)
+
+        if duplicate_ids:
+            raise ValueError(
+                f"Duplicate annotation_ingest_id values found: {sorted(duplicate_ids)}. "
+                "Each annotation must have a unique annotation_ingest_id within the config file.",
+            )
+
+        return annotations
+
     # Set global network_validation flag
     def __init__(self, **data):
         global running_network_validation

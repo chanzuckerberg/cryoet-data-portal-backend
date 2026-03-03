@@ -76,7 +76,13 @@ classes:
     attributes:
       format:
         description: The format of the annotation file.
-        range: cdp-common:annotation_file_format_enum
+        any_of:
+          - range: cdp-common:point_annotation_file_format_enum
+          - range: cdp-common:oriented_point_annotation_file_format_enum
+          - range: cdp-common:instance_segmentation_annotation_file_format_enum
+          - range: cdp-common:volume_annotation_file_format_enum
+          - range: cdp-common:triangular_mesh_annotation_file_format_enum
+          - range: cdp-common:triangular_mesh_annotation_group_file_format_enum
         required: true
       path:
         description: The path to the annotation file.

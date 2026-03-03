@@ -12,10 +12,13 @@ alignments:
       - Data_Set_3/{run_name}/aligned_tilt_series/*_Imod/*.com
 annotations:
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: microsporidian-type-exospore-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       id: GO:0090642
       name: microsporidian-type exospore
@@ -53,10 +56,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: microsporidian-type-endospore-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       id: GO:0090641
       name: microsporidian-type endospore
@@ -76,10 +82,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: plasma-membrane-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       id: GO:0005886
       name: plasma membrane
@@ -99,10 +108,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polar-tube-anchoring-disc-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: anchoring disc lumen
       id: GO:0160202
@@ -123,10 +135,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polar-tube-anchoring-disc-2
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: anchoring disc boundary
       id: GO:0160202
@@ -147,10 +162,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polaroplast-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       id: GO:0160201
       name: polaroplast
@@ -170,10 +188,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polaroplast-2
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: vesicles in polaroplast
       id: GO:0160201
@@ -194,10 +215,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: nuclear-envelope-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       id: GO:0005635
       name: nuclear envelope
@@ -217,10 +241,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: nuclear-lumen-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       id: GO:0031981
       name: nuclear lumen
@@ -240,10 +267,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polar-tube-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: polar tube M-Layer
       id: GO:0044099
@@ -265,10 +295,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polar-tube-2
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: polar tube M-Layer, top coils only
       id: GO:0044099
@@ -290,10 +323,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polar-tube-3
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: polar tube OF-Layer
       id: GO:0044099
@@ -315,10 +351,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polar-tube-4
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: polar tube OF-Layer, straight portion
       id: GO:0044099
@@ -340,10 +379,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: polar-tube-5
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: polar tube, unknown cluster
       id: GO:0044099
@@ -364,10 +406,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: cellular-anatomical-entity-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: unknown structure
       id: GO:0110165
@@ -388,10 +433,13 @@ annotations:
       is_visualization_default: true
       mask_label: 1
 - metadata:
-    annotation_method: Manually annotate 5 slices of object of interest on 8X binned tomogram+ Train a 2D U net model with
-      DICE Loss in segmentation wizard of dragonfly + Use trained model to predict segmentation for all slices in the tomogram
-      + manually correct any aberrations, then retrain + Overlay predicted segmentations with raw slices and perform any clean
-      up manually + convert to contour meshes and smooth
+    annotation_ingest_id: vesicle-1
+    annotation_method: Manually annotate 5 slices of object of interest on 8X binned
+      tomogram+ Train a 2D U net model with DICE Loss in segmentation wizard of dragonfly
+      + Use trained model to predict segmentation for all slices in the tomogram +
+      manually correct any aberrations, then retrain + Overlay predicted segmentations
+      with raw slices and perform any clean up manually + convert to contour meshes
+      and smooth
     annotation_object:
       description: extra-membranous vesicle
       id: GO:0031982
@@ -423,6 +471,9 @@ dataset_keyphotos:
         thumbnail: cryoetportal-rawdatasets-dev/mahrukh_usmani_06_2024/Data_Set_3/thumbnail.png
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors:
     - ORCID: 0000-0002-9479-3800
       corresponding_author_status: true
@@ -445,16 +496,24 @@ datasets:
     cell_strain:
       name: ATCC-50506
     cell_type:
-      name: fungal spore
       id: CL:0002369
+      name: fungal spore
     cross_references:
       publications: 10.1101/2024.07.13.603322
       related_database_entries: EMD-45674, EMD-45671, EMD-45672, EMD-45673
-    dataset_description: This dataset contains raw frames, tilt series, tomogram reconstructions and segmentations from Encephalitozoon
-      intestinalis microsporidian spores. Samples were cryo-FIB milled.
+    dataset_description: This dataset contains raw frames, tilt series, tomogram reconstructions
+      and segmentations from Encephalitozoon intestinalis microsporidian spores. Samples
+      were cryo-FIB milled.
     dataset_identifier: 10437
-    dataset_title: Cryo-ET dataset (3) of dormant microporidian spores from Encephalitozoon intestinalis
+    dataset_title: Cryo-ET dataset (3) of dormant microporidian spores from Encephalitozoon
+      intestinalis
     dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: American Heart Association
       grant_id: '915749'
@@ -464,7 +523,8 @@ datasets:
       grant_id: R01AI147131
     - funding_agency_name: The Pew Charitable Trusts
       grant_id: PEW-00033055
-    - funding_agency_name: NIH Common Fund Transformative High Resolution Cryo-Electron Microscopy program
+    - funding_agency_name: NIH Common Fund Transformative High Resolution Cryo-Electron
+        Microscopy program
       grant_id: U24 GM129539
     - funding_agency_name: Simons Foundation
       grant_id: SF349247
@@ -472,26 +532,19 @@ datasets:
     - funding_agency_name: NIH/NIGMS
       grant_id: 9 P41 GM103310
     - funding_agency_name: Irma T. Hirschl Career Scientist Award
-    grid_preparation: quantifoil 2/2 200mesh, ~20nm evaporated carbon,prepared using waffle method
+    grid_preparation: quantifoil 2/2 200mesh, ~20nm evaporated carbon,prepared using
+      waffle method
     organism:
       name: Encephalitozoon intestinalis
       taxonomy_id: 58839
     other_setup: Cryo-FIB milling
-    sample_preparation: 'E. intestinalis spores were purified from infected vero cells. (For method details see: Cryo-ET reveals
-      the in situ architecture of the polar tube invasion apparatus from microsporidian parasites)'
+    sample_preparation: 'E. intestinalis spores were purified from infected vero cells.
+      (For method details see: Cryo-ET reveals the in situ architecture of the polar
+      tube invasion apparatus from microsporidian parasites)'
     sample_type: primary_cell_culture
     tissue:
-      name: fungal spore
       id: CL:0002369
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
+      name: fungal spore
   sources:
   - literal:
       value:
@@ -608,7 +661,7 @@ tomograms:
   - source_glob:
       list_glob: Data_Set_3/{run_name}/tomo_rec_4bin_SART/*.mrc
       match_regex: (.*)\.mrc
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

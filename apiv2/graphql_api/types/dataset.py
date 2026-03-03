@@ -366,7 +366,7 @@ class Dataset(EntityInterface):
         default=None,
     )
     assay_ontology_id: Optional[str] = strawberry.field(
-        description="Ontology identifier for the type of assay performed in a CryoET dataset", default=None,
+        description="EFO ontology identifier for the type of assay performed in a CryoET dataset", default=None,
     )
     development_stage_name: Optional[str] = strawberry.field(
         description="Development stage of the organism from which a biological sample used the study is derived.",
@@ -394,13 +394,13 @@ class Dataset(EntityInterface):
         description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
         default=None,
     )
-    tissue_id: Optional[str] = strawberry.field(description="UBERON identifier for the tissue", default=None)
+    tissue_id: Optional[str] = strawberry.field(description="The ontology identifier for the tissue.", default=None)
     cell_name: Optional[str] = strawberry.field(
         description="Name of the cell from which a biological sample used in a CryoET study is derived from.",
         default=None,
     )
     cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type", default=None,
+        description="The ontology identifier for the cell type.", default=None,
     )
     cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
     cell_strain_id: Optional[str] = strawberry.field(
@@ -629,7 +629,7 @@ class DatasetCreateInput:
         default=None,
     )
     assay_ontology_id: Optional[str] = strawberry.field(
-        description="Ontology identifier for the type of assay performed in a CryoET dataset", default=None,
+        description="EFO ontology identifier for the type of assay performed in a CryoET dataset", default=None,
     )
     development_stage_name: Optional[str] = strawberry.field(
         description="Development stage of the organism from which a biological sample used the study is derived.",
@@ -657,13 +657,13 @@ class DatasetCreateInput:
         description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
         default=None,
     )
-    tissue_id: Optional[str] = strawberry.field(description="UBERON identifier for the tissue", default=None)
+    tissue_id: Optional[str] = strawberry.field(description="The ontology identifier for the tissue.", default=None)
     cell_name: Optional[str] = strawberry.field(
         description="Name of the cell from which a biological sample used in a CryoET study is derived from.",
         default=None,
     )
     cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type", default=None,
+        description="The ontology identifier for the cell type.", default=None,
     )
     cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
     cell_strain_id: Optional[str] = strawberry.field(
@@ -727,7 +727,7 @@ class DatasetUpdateInput:
         default=None,
     )
     assay_ontology_id: Optional[str] = strawberry.field(
-        description="Ontology identifier for the type of assay performed in a CryoET dataset", default=None,
+        description="EFO ontology identifier for the type of assay performed in a CryoET dataset", default=None,
     )
     development_stage_name: Optional[str] = strawberry.field(
         description="Development stage of the organism from which a biological sample used the study is derived.",
@@ -755,13 +755,13 @@ class DatasetUpdateInput:
         description="Name of the tissue from which a biological sample used in a CryoET study is derived from.",
         default=None,
     )
-    tissue_id: Optional[str] = strawberry.field(description="UBERON identifier for the tissue", default=None)
+    tissue_id: Optional[str] = strawberry.field(description="The ontology identifier for the tissue.", default=None)
     cell_name: Optional[str] = strawberry.field(
         description="Name of the cell from which a biological sample used in a CryoET study is derived from.",
         default=None,
     )
     cell_type_id: Optional[str] = strawberry.field(
-        description="Cell Ontology identifier for the cell type", default=None,
+        description="The ontology identifier for the cell type.", default=None,
     )
     cell_strain_name: Optional[str] = strawberry.field(description="Cell line or strain for the sample.", default=None)
     cell_strain_id: Optional[str] = strawberry.field(

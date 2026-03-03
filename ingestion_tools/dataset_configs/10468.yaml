@@ -1,0 +1,572 @@
+alignments:
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}.aln'
+annotations:
+- metadata:
+    annotation_ingest_id: membrane-1
+    annotation_method: Prediction using membrain-seg without rescaling and weights
+      MemBrain_seg_v10_alpha.ckpt
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1101/2024.01.05.574336
+    annotation_software: membrain-seg 0.0.1
+    authors: &id001
+    - ORCID: 0000-0002-3248-9678
+      corresponding_author_status: true
+      email: yue.yu@czii.org
+      name: Yue Yu
+      primary_author_status: true
+    - ORCID: 0009-0007-8169-0996
+      corresponding_author_status: false
+      email: mallak.ali@czii.org
+      name: Mallak Ali
+      primary_author_status: true
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: false
+      email: reza.paraan@czii.org
+      name: Mohammadreza Paraan
+      primary_author_status: true
+    - ORCID: 0000-0002-6731-5854
+      corresponding_author_status: false
+      name: Elizabeth Montabana
+      primary_author_status: true
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: false
+      email: shawn.zheng@czii.org
+      name: Shawn Zheng
+      primary_author_status: false
+    - ORCID: 0000-0002-5940-3897
+      corresponding_author_status: false
+      email: ariana.peck@czii.org
+      name: Ariana Peck
+      primary_author_status: false
+    - ORCID: 0000-0001-6841-8583
+      corresponding_author_status: false
+      email: josh.hutching@czii.org
+      name: Josh Hutching
+      primary_author_status: false
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: false
+      email: jonathan.schwartz@czii.org
+      name: Jonathan Schwartz
+      primary_author_status: false
+    dates: &id002
+      deposition_date: '2026-01-09'
+      last_modified_date: '2026-01-09'
+      release_date: '2026-01-09'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_strings:
+      - '{run_name}_Vol_Segment_mask.mrc'
+      is_visualization_default: true
+      rescale: true
+      threshold: 0.5
+- metadata:
+    annotation_ingest_id: virus-like-capsid-1
+    annotation_method: manual particle selection
+    annotation_object:
+      description: PP7 VLP
+      id: GO:0170047
+      name: virus-like capsid
+    annotation_publications: null
+    annotation_software: ChimeraX-copick 1.4.3
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links:
+    - custom_name: chimerax-copick on GitHub
+      link: https://github.com/copick/chimerax-copick
+      link_type: source_code
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    method_type: manual
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5.006
+      columns: xyz
+      file_format: copick
+      glob_strings:
+      - ExperimentRuns/{run_name}_Vol/Picks/ArtiaX_manual-1_VLP.json
+      is_visualization_default: false
+- metadata:
+    annotation_ingest_id: virus-like-capsid-2
+    annotation_method: octopi prediction
+    annotation_object:
+      description: PP7 VLP
+      id: GO:0170047
+      name: virus-like capsid
+    annotation_publications: null
+    annotation_software: octopi 1.2.0
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    method_type: automated
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5.006
+      columns: xyz
+      file_format: copick
+      glob_strings:
+      - ExperimentRuns/{run_name}_Vol/Picks/octopi_1_VLP.json
+      is_visualization_default: false
+- metadata:
+    annotation_ingest_id: virus-like-capsid-3
+    annotation_method: octopi prediction + slabpick + py2rely 2D classification +
+      manual class selection
+    annotation_object:
+      description: PP7 VLP
+      id: GO:0170047
+      name: virus-like capsid
+    annotation_publications: null
+    annotation_software: octopi 1.2.0 + slabpick 0.1.0 + py2rely 0.1.0
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: slabpick on GitHub
+      link: https://github.com/apeck12/slabpick
+      link_type: source_code
+    - custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - custom_name: py2rely documentation
+      link: https://chanzuckerberg.github.io/py2rely/
+      link_type: documentation
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5.006
+      columns: xyz
+      file_format: copick
+      glob_strings:
+      - ExperimentRuns/{run_name}_Vol/Picks/2daverage_1_VLP.json
+      is_visualization_default: false
+- metadata:
+    annotation_ingest_id: virus-like-capsid-4
+    annotation_method: octopi prediction + slabpick + py2rely 2D classification +
+      manual class selection + py2rely 3D refinement
+    annotation_object:
+      description: PP7 VLP
+      id: GO:0170047
+      name: virus-like capsid
+    annotation_publications: null
+    annotation_software: octopi 1.2.0 + slabpick 0.1.0 + py2rely 0.1.0
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: slabpick on GitHub
+      link: https://github.com/apeck12/slabpick
+      link_type: source_code
+    - custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - custom_name: py2rely documentation
+      link: https://chanzuckerberg.github.io/py2rely/
+      link_type: documentation
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 5.006
+      file_format: copick
+      glob_strings:
+      - ExperimentRuns/{run_name}_Vol/Picks/3daverage_1_VLP.json
+      is_visualization_default: true
+      mesh_source_path: mesh/25jul02a_VLP_mesh.glb
+- metadata:
+    annotation_ingest_id: cytosolic-ribosome-1
+    annotation_method: manual particle selection
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_publications: null
+    annotation_software: ChimeraX-copick 1.4.3
+    authors: *id001
+    dates: *id002
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links:
+    - custom_name: chimerax-copick on GitHub
+      link: https://github.com/copick/chimerax-copick
+      link_type: source_code
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    method_type: manual
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5.006
+      columns: xyz
+      file_format: copick
+      glob_strings:
+      - ExperimentRuns/{run_name}_Vol/Picks/yue.yu_manual-2_ribosome.json
+      is_visualization_default: false
+- metadata:
+    annotation_ingest_id: cytosolic-ribosome-2
+    annotation_method: octopi prediction
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_publications: null
+    annotation_software: octopi 1.2.0
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    method_type: automated
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5.006
+      columns: xyz
+      file_format: copick
+      glob_strings:
+      - ExperimentRuns/{run_name}_Vol/Picks/octopi_3_ribosome.json
+      is_visualization_default: false
+- metadata:
+    annotation_ingest_id: cytosolic-ribosome-3
+    annotation_method: octopi prediction + slabpick + py2rely 2D classification +
+      manual class selection
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_publications: null
+    annotation_software: octopi 1.2.0 + slabpick 0.1.0 + py2rely 0.1.0
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: slabpick on GitHub
+      link: https://github.com/apeck12/slabpick
+      link_type: source_code
+    - custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - custom_name: py2rely documentation
+      link: https://chanzuckerberg.github.io/py2rely/
+      link_type: documentation
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5.006
+      columns: xyz
+      file_format: copick
+      glob_strings:
+      - ExperimentRuns/{run_name}_Vol/Picks/2daverage_2_ribosome.json
+      is_visualization_default: true
+- metadata:
+    annotation_ingest_id: cytosolic-ribosome-4
+    annotation_method: octopi prediction + slabpick + py2rely 2D classification +
+      manual class selection + py2rely 3D refinement
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_publications: null
+    annotation_software: octopi 1.2.0 + slabpick 0.1.0 + py2rely 0.1.0
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: slabpick on GitHub
+      link: https://github.com/apeck12/slabpick
+      link_type: source_code
+    - custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - custom_name: py2rely documentation
+      link: https://chanzuckerberg.github.io/py2rely/
+      link_type: documentation
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 5.006
+      file_format: copick
+      glob_strings:
+      - ExperimentRuns/{run_name}_Vol/Picks/3daverage_2_ribosome.json
+      is_visualization_default: true
+      mesh_source_path: mesh/25jul02a_ribosome_80s_mesh.glb
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}.fixed.mdoc'
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_CTFFIND_format_CTF.txt'
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+datasets:
+- metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
+    authors: *id001
+    dataset_description: "This dataset, acquired with defocus imaging only (no phase\
+      \ plates), is intended for comparison with a corresponding VPP dataset to benchmark\
+      \ the effect of the Volta Phase Plate in tomogram alignment and subtomogram\
+      \ averaging. The virus-like particles and the 80S ribosomes (with available\
+      \ annotations) reached sub-5\xC5 STA resolution."
+    dataset_identifier: 10468
+    dataset_title: CZII 2-protein phantom (version 1.0) with defocus-based imaging
+    dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: "CZII-2023\u2013327779"
+    grid_preparation: null
+    other_setup: null
+    sample_preparation: null
+    sample_type: in_vitro
+    tissue:
+      id: UBERON:0000061
+      name: anatomical structure
+  sources:
+  - literal:
+      value:
+      - '10468'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10341_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10341_thumbnail.png
+depositions:
+- metadata:
+    authors: *id001
+    dates:
+      deposition_date: '2026-01-09'
+      last_modified_date: '2026-01-09'
+      release_date: '2026-01-09'
+    deposition_description: This deposition has two datasets, one acquired with the
+      Volta phase plate at low defocus and one acquired without at higher defocus.
+      The datasets are comprised of movie stacks, tiltseries, alignments, tomograms
+      and hand-curated ground truth annotations of PP7 virus like particles. The data
+      was acquired on a Krios G4 using a Falcon 4i detector and SelectrisX energy
+      filter. Tomograms were aligned using AreTomo3 2.2.2. Each run provides denoised
+      and CTF-corrected tomograms.
+    deposition_identifier: 10341
+    deposition_title: CZII 2-protein phantom (version 1.0)
+    deposition_types:
+    - dataset
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10341
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/*.eer'
+gains:
+- sources:
+  - source_glob:
+      list_glob: '{gain_file}'
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}_st.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*.aln'
+      match_regex: .*\.aln$
+      name_regex: (.*)\.aln$
+standardization_config:
+  deposition_id: 10341
+  run_data_map_file: run_to_data_map_combined.tsv
+  source_prefix: CZII/20260109_2protein_1.0/3protein_phantom/
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i
+    data_acquisition_software: Tomo5
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: TITAN KRIOS G4
+    microscope_optical_setup:
+      energy_filter: Selectris X
+    pixel_spacing: 1.54
+    spherical_aberration_constant: 2.7
+    tilt_axis: -96
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_TS.mrc'
+      match_regex: .*\.mrc$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id001
+    ctf_corrected: true
+    dates: *id002
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    processing_software: DenoisET
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.2.2
+    tomogram_version: 1
+    voxel_spacing: 5.006
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_Vol.mrc'
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id001
+    ctf_corrected: true
+    dates: *id002
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    processing_software: AreTomo3 v2.2.2
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.2.2
+    tomogram_version: 1
+    voxel_spacing: 5.006
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_dctf_Vol.mrc'
+      match_regex: (.*)\.mrc
+version: 1.3.0
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 5.006

@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import os.path
 from abc import ABC, abstractmethod
@@ -16,9 +17,24 @@ from mrcfile.mrcfile import MrcFile
 from ome_zarr.io import ZarrLocation
 from ome_zarr.reader import Reader as Reader
 from skimage.transform import downscale_local_mean, resize_local_mean
+from tenacity import (
+    before_sleep_log,
+    retry,
+    retry_if_exception,
+    stop_after_attempt,
+    wait_exponential_jitter,
+)
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi, S3Filesystem
+from common.retry import (
+    RETRY_INITIAL_WAIT_SECONDS,
+    RETRY_JITTER_SECONDS,
+    RETRY_MAX_ATTEMPTS,
+    RETRY_MAX_WAIT_SECONDS,
+    is_s3_throttling,
+    logger,
+)
 
 
 @dataclass
@@ -62,6 +78,20 @@ class ZarrReader:
 
 class ZarrWriter:
     def __init__(self, fs: FileSystemApi, zarrdir: str):
+        self._init_zarr_store(fs, zarrdir)
+
+    @retry(
+        stop=stop_after_attempt(RETRY_MAX_ATTEMPTS),
+        wait=wait_exponential_jitter(
+            initial=RETRY_INITIAL_WAIT_SECONDS,
+            max=RETRY_MAX_WAIT_SECONDS,
+            jitter=RETRY_JITTER_SECONDS,
+        ),
+        retry=retry_if_exception(is_s3_throttling),
+        before_sleep=before_sleep_log(logger, logging.WARNING),
+        reraise=True,
+    )
+    def _init_zarr_store(self, fs: FileSystemApi, zarrdir: str):
         if isinstance(fs, S3Filesystem):
             fsstore = zarr.storage.FSStore(url=zarrdir, mode="w", fs=fs.s3fs, dimension_separator="/")
             self.loc = ZarrLocation(fsstore)
@@ -91,6 +121,17 @@ class ZarrWriter:
     def ome_zarr_transforms(self, voxel_size: Tuple[float, float, float]) -> List[Dict[str, Any]]:
         return [{"scale": [voxel_size[0], voxel_size[1], voxel_size[2]], "type": "scale"}]
 
+    @retry(
+        stop=stop_after_attempt(RETRY_MAX_ATTEMPTS),
+        wait=wait_exponential_jitter(
+            initial=RETRY_INITIAL_WAIT_SECONDS,
+            max=RETRY_MAX_WAIT_SECONDS,
+            jitter=RETRY_JITTER_SECONDS,
+        ),
+        retry=retry_if_exception(is_s3_throttling),
+        before_sleep=before_sleep_log(logger, logging.WARNING),
+        reraise=True,
+    )
     def write_data(
         self,
         data: List[np.ndarray],
@@ -110,14 +151,53 @@ class ZarrWriter:
             pyramid.append(d)
             scales.append(self.ome_zarr_transforms(vs))
 
-        # Write the pyramid to the zarr store
-        return ome_zarr.writer.write_multiscale(
-            pyramid,
+        # TODO: Currently not being used because of memory spikes for large volumes (100GB+ memory spikes for 10GB+ data)
+        # Fixed in latest version of ome_zarr (0.12.2), but can't upgrade because Zarr V3 is required and we don't support Zarr V3 yet.
+        # # Write the pyramid to the zarr store
+        # return ome_zarr.writer.write_multiscale(
+        #     pyramid,
+        #     group=self.root_group,
+        #     axes=self.ome_zarr_axes(),
+        #     coordinate_transformations=scales,
+        #     storage_options=dict(chunks=chunk_size, overwrite=True),
+        #     compute=True,
+        # )
+        # TODO: Remove this temporary workaround
+        datasets_meta = []
+
+        for i, (arr, vs) in enumerate(zip(data, voxel_spacing)):
+            path = str(i)
+            zds = self.root_group.create_dataset(
+                path,
+                shape=arr.shape,
+                dtype=arr.dtype,
+                chunks=chunk_size,
+                overwrite=True,
+            )
+
+            z, y, x = map(int, arr.shape)
+            zc, yc, xc = map(int, chunk_size)
+
+            for z0 in range(0, z, zc):
+                z1 = min(z0 + zc, z)
+                for y0 in range(0, y, yc):
+                    y1 = min(y0 + yc, y)
+                    for x0 in range(0, x, xc):
+                        x1 = min(x0 + xc, x)
+                        zds[z0:z1, y0:y1, x0:x1] = np.asarray(arr[z0:z1, y0:y1, x0:x1], dtype=arr.dtype, order="C")
+
+            datasets_meta.append(
+                {
+                    "path": path,
+                    "coordinateTransformations": self.ome_zarr_transforms(vs),
+                },
+            )
+
+        ome_zarr.writer.write_multiscales_metadata(
             group=self.root_group,
             axes=self.ome_zarr_axes(),
-            coordinate_transformations=scales,
-            storage_options=dict(chunks=chunk_size, overwrite=True),
-            compute=True,
+            datasets=datasets_meta,
+            name="/",
         )
 
 
@@ -285,6 +365,7 @@ class TomoConverter:
         max_layers: int = 2,
         scale_z_axis: bool = True,
         voxel_spacing: float = None,
+        dtype: str = None,
     ) -> Tuple[List[np.ndarray], List[Tuple[float, float, float]]]:
         # Voxel size for unbinned
         if not voxel_spacing:
@@ -299,7 +380,7 @@ class TomoConverter:
         # Then make a pyramid of 100/50/25 percent scale volumes
         for i in range(max_layers):
             downscaled_data = self.scaled_data_transformation(downscale_local_mean(pyramid[i], (z_scale, 2, 2)))
-            pyramid.append(downscaled_data)
+            pyramid.append(downscaled_data.astype(dtype) if dtype else downscaled_data)
             pyramid_voxel_spacing.append(
                 (
                     pyramid_voxel_spacing[i][0] * z_scale,
@@ -344,12 +425,13 @@ class TomoConverter:
         zarrdir: str,
         write: bool = True,
         pyramid_voxel_spacing: List[Tuple[float, float, float]] = None,
+        chunk_size: Tuple[int, int, int] = (256, 256, 256),
     ) -> str:
         destination_zarrdir = fs.destformat(zarrdir)
         # Write zarr data as 256^3 voxel chunks
         if write:
             writer = ZarrWriter(fs, destination_zarrdir)
-            writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=(256, 256, 256))
+            writer.write_data(pyramid, voxel_spacing=pyramid_voxel_spacing, chunk_size=chunk_size)
         else:
             print(f"skipping remote push for {destination_zarrdir}")
         return os.path.basename(zarrdir)
@@ -508,19 +590,26 @@ def make_pyramids(
     write_mrc: bool = True,
     write_zarr: bool = True,
     header_mapper: Callable[[np.array], None] = None,
-    voxel_spacing=None,
+    voxel_spacing: float = None,
     label: int = None,
     scale_0_dims=None,
     threshold: float | None = None,
+    chunk_size: Tuple[int, int, int] = (256, 256, 256),
+    dtype: str = None,
 ):
     tc = get_converter(fs, tomo_filename, label, scale_0_dims, threshold)
-    pyramid, pyramid_voxel_spacing = tc.make_pyramid(scale_z_axis=scale_z_axis, voxel_spacing=voxel_spacing)
+    pyramid, pyramid_voxel_spacing = tc.make_pyramid(
+        scale_z_axis=scale_z_axis,
+        voxel_spacing=voxel_spacing,
+        dtype=dtype,
+    )
     _ = tc.pyramid_to_omezarr(
         fs,
         pyramid,
         f"{output_prefix}.zarr",
         write_zarr,
         pyramid_voxel_spacing=pyramid_voxel_spacing,
+        chunk_size=chunk_size,
     )
     _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
 

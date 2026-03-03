@@ -96,5 +96,5 @@ class Alignment(Base):
     affine_transformation_matrix: Mapped[str] = mapped_column(String, nullable=True)
     s3_alignment_metadata: Mapped[str] = mapped_column(String, nullable=True)
     https_alignment_metadata: Mapped[str] = mapped_column(String, nullable=True)
-    is_portal_standard: Mapped[bool] = mapped_column(Boolean, nullable=True)
+    is_portal_standard: Mapped[bool] = mapped_column(Boolean, nullable=True, server_default="False")
     id: Mapped[int] = mapped_column(Integer, nullable=False, index=True, autoincrement=True, primary_key=True)
