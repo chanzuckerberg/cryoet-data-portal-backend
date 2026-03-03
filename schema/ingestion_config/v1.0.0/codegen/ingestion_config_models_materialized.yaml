@@ -548,6 +548,9 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      GlobalCaption:
+        text: GlobalCaption
+        description: A set of text captions describing the entire tomogram
   point_annotation_file_format_enum:
     name: point_annotation_file_format_enum
     description: Describes the format of the point annotation file
@@ -625,6 +628,13 @@ enums:
     permissible_values:
       hff:
         text: hff
+  caption_annotation_file_format_enum:
+    name: caption_annotation_file_format_enum
+    description: Describes the format of a caption annotation file
+    from_schema: cdp-ingestion-config
+    permissible_values:
+      saber:
+        text: saber
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -2091,6 +2101,18 @@ classes:
         domain_of:
         - AnnotationSource
         range: AnnotationTriangularMeshGroupFile
+        inlined: true
+        inlined_as_list: true
+      GlobalCaption:
+        name: GlobalCaption
+        description: File and sourcing data for a global caption annotation. Text
+          captions describing the entire tomogram.
+        from_schema: cdp-ingestion-config
+        alias: GlobalCaption
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationGlobalCaptionFile
         inlined: true
         inlined_as_list: true
       parent_filters:
