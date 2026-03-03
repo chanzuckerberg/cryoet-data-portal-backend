@@ -153,6 +153,14 @@ def convert(
         metadata_import = {k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")}
         needs_iteration = to_import.union(metadata_import)
         to_iterate = needs_iteration.union({k for k, v in iteration_deps if needs_iteration.intersection(v)})
+
+    if skip_source_validation:
+        print(
+            "WARNING: --skip-source-validation is enabled. Source data will not be validated. "
+            "Only use this flag when migrating metadata for data that has already been converted. "
+            "Annotations without existing destination files will be skipped.",
+        )
+
     do_import(
         config,
         IMPORTER_DEP_TREE,
