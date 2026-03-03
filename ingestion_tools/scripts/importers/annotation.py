@@ -1,5 +1,7 @@
+import json
 import os
 import os.path
+import shutil
 from abc import abstractmethod
 from typing import Any, Callable, Type
 
@@ -29,7 +31,9 @@ class AnnotationIdentifierHelper(IdentifierHelper):
     def _get_metadata_glob(cls, config: DepositionImportConfig, parents: dict[str, Any], *args, **kwargs) -> str:
         vs = parents["voxel_spacing"]
         anno_dir_path = config.resolve_output_path("annotation", vs, {"annotation_id": "*"})
-        return os.path.join(anno_dir_path, "*.json")
+        # Use *[0-9].json to match only annotation metadata files (e.g., some_protein-1.0.json)
+        # and exclude annotation data files which have a _{shape} suffix (e.g., some_protein-1.0_globalcaption.json)
+        return os.path.join(anno_dir_path, "*[0-9].json")
 
     @classmethod
     def _generate_hash_key(cls, container_key: str, metadata: dict[str, Any], parents: dict[str, Any], *args, **kwargs):
@@ -111,6 +115,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = TriangularMeshAnnotation(**instance_args)
         if shape == "TriangularMeshGroup":
             anno = TriangularMeshAnnotationGroup(**instance_args)
+        if shape == "GlobalCaption":
+            anno = GlobalCaptionAnnotation(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
         if anno.is_valid():
@@ -628,3 +634,39 @@ class TriangularMeshAnnotationGroup(AbstractTriangularMeshAnnotation):
 
     def is_valid(self) -> bool:
         return bool(mc.check_mesh_name(self.mesh_file, self.mesh_name))
+
+
+class GlobalCaptionAnnotation(BaseAnnotationSource):
+    """Annotation source for whole-tomogram text captions."""
+
+    shape = "GlobalCaption"
+    output_format: str = "json"
+    # TODO: Implement converter functions when the json structure change or the input format is not json
+    map_functions = {
+        "saber": shutil.copy,
+    }
+    valid_file_formats = list(map_functions.keys())
+
+    def convert(self, output_prefix: str):
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        input_file = self.config.fs.localreadable(self.path)
+        output_file = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](input_file, output_file)
+        self.config.fs.push(output_file)
+
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        metadata = [
+            {
+                "format": self.output_format,
+                "path": self.get_output_filename(output_prefix, self.output_format),
+                "shape": self.shape,
+                "is_visualization_default": False,
+            },
+        ]
+        return metadata
+
+    def get_object_count(self, output_prefix: str) -> int:
+        output_file = self.get_output_filename(output_prefix, self.output_format)
+        with self.config.fs.open(output_file, "r") as f:
+            data = json.load(f)
+        return len(data.get("captions", []))
