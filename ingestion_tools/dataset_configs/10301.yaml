@@ -9,6 +9,7 @@ alignments:
       - '{run_name}/AreTomo/{run_name}_dose-filt.xf'
 annotations:
 - metadata:
+    annotation_ingest_id: f1-f0-complex-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       description: proton-transporting ATP synthase complex
@@ -74,6 +75,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: f1-f0-complex-2
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       description: mitochondrial proton-transporting ATP synthase complex
@@ -97,6 +99,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: cytosolic-ribosome-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       description: Cytosolic ribosome
@@ -120,6 +123,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: nucleosome-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       id: GO:0000786
@@ -142,6 +146,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: rubisco-complex-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       description: ribulose bisphosphate carboxylase complex
@@ -165,6 +170,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: microtubule-1
     annotation_method: Template matching + manual filtering + 3D classification filtering
     annotation_object:
       id: GO:0005874
@@ -198,6 +204,9 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons//11756.gif
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id004
     - corresponding_author_status: false
       name: Ron Kelley
@@ -248,35 +257,34 @@ datasets:
     - corresponding_author_status: true
       name: Abhay Kotecha
       primary_author_status: false
+    cell_strain:
+      id: CC-3994
+      name: mat3-4
     cell_type:
-      name: eukaryotic cell
       id: CL:0000255
+      name: eukaryotic cell
     cross_references: &id005
       publications: 10.1093/micmic/ozad067.480
       related_database_entries: EMPIAR-11756
-    dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled lamella.
+    dataset_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
+      lamella.
     dataset_identifier: 10301
-    dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using cryo-plasmaFIB milling
+    dataset_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using
+      cryo-plasmaFIB milling
     dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     organism:
       name: Chlamydomonas reinhardtii
       taxonomy_id: 3055
     sample_type: primary_cell_culture
     tissue:
-      name: eukaryotic cell
       id: CL:0000255
-    cell_strain:
-      name: mat3-4
-      id: CC-3994
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
+      name: eukaryotic cell
   sources:
   - literal:
       value:
@@ -292,11 +300,13 @@ depositions:
     authors: *id004
     cross_references: *id005
     dates: *id002
-    deposition_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled lamella of Chlamydomonas reinhardtii.
-      Contained tomograms are partially annotated, including annotations for ribosomes, nucleosomes, F1F0-ATPase, RubisCO,
-      and microtubules.
+    deposition_description: Cryo-electron tomography dataset of cryo-plasmaFIB milled
+      lamella of Chlamydomonas reinhardtii. Contained tomograms are partially annotated,
+      including annotations for ribosomes, nucleosomes, F1F0-ATPase, RubisCO, and
+      microtubules.
     deposition_identifier: 10300
-    deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared using cryo-plasmaFIB milling
+    deposition_title: In situ cryo-ET dataset of Chlamydomonas reinhardtii prepared
+      using cryo-plasmaFIB milling
     deposition_types:
     - dataset
     - annotation
@@ -401,7 +411,7 @@ tomograms:
   - source_glob:
       list_glob: cryocare_bin4_tomoname/{run_name}.mrc
       match_regex: (.*)\.mrc
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

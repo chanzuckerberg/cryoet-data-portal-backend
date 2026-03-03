@@ -311,16 +311,16 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
             return [], False
         data = await response.json()
         names = []
-        for entry in data["_embedded"]["terms"]:
+        for entry in data.get("_embedded", {}).get("terms", []):
             names.append(entry["label"])
             names += entry["synonyms"]
         return names, True
 
 
 @alru_cache
-async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
+async def is_id_ancestor(id_ancestor: str, id: str) -> tuple[bool, List[str]]:
     """
-    Returns whether or not id_ancestor is an ancestor of id
+    Returns whether or not id_ancestor is an ancestor of id, and the ancestors.
     """
     # Encode the IRI
     iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
@@ -335,8 +335,8 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
 
     async with aiohttp.ClientSession() as session, session.get(url) as response:
         logger.debug("Getting ancestors for ID %s at %s, status %s", id, url, response.status)
-        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]]
-        return response.status == 200 and id_ancestor in ancestor_ids
+        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json()).get("_embedded", {}).get("terms", [])]
+        return response.status == 200 and id_ancestor in ancestor_ids, ancestor_ids
 
 
 @alru_cache
@@ -450,14 +450,15 @@ def validate_id_name_object(
     valid_name = retrieved_names == [] or any(name == retrieved_name for retrieved_name in retrieved_names)
 
     if not valid_name:
-        raise ValueError(f"name '{name}' does not match id: {id}")
+        raise ValueError(f"name '{name}' does not match id: {id}, retrieved names: {retrieved_names}")
 
     if ancestor is None:
         return
 
     logger.debug("Valid name, now checking if %s is an ancestor of %s", name, ancestor)
-    if not asyncio.run(validate_ancestor_function(ancestor, id)):
-        raise ValueError(f"'{name}' is not a descendant of {ancestor}")
+    is_ancestor, ancestor_ids = asyncio.run(validate_ancestor_function(ancestor, id))
+    if not is_ancestor:
+        raise ValueError(f"'{name}' is not a descendant of {ancestor}, ancestors: {ancestor_ids}")
 
 
 def validate_cell_strain_object(self: CellStrain) -> CellStrain:
@@ -1219,6 +1220,42 @@ class ExtendedValidationVoxelSpacingEntity(VoxelSpacingEntity):
 
 
 class ExtendedValidationContainer(Container):
+    @field_validator("annotations")
+    @classmethod
+    def validate_unique_annotation_ingest_ids(
+        cls: Self,
+        annotations: Optional[List[ExtendedValidationAnnotationEntity]],
+    ) -> Optional[List[ExtendedValidationAnnotationEntity]]:
+        """Validate that annotation_ingest_id values are unique within the config."""
+        if not annotations:
+            return annotations
+
+        seen_ids = set()
+        duplicate_ids = set()
+
+        for annotation in annotations:
+            metadata = annotation.metadata
+            if metadata is None:
+                continue
+
+            # Get the annotation_ingest_id, skip if not present
+            ingest_id = getattr(metadata, "annotation_ingest_id", None)
+            if ingest_id is None:
+                continue
+
+            if ingest_id in seen_ids:
+                duplicate_ids.add(ingest_id)
+            else:
+                seen_ids.add(ingest_id)
+
+        if duplicate_ids:
+            raise ValueError(
+                f"Duplicate annotation_ingest_id values found: {sorted(duplicate_ids)}. "
+                "Each annotation must have a unique annotation_ingest_id within the config file.",
+            )
+
+        return annotations
+
     # Set global network_validation flag
     def __init__(self, **data):
         global running_network_validation
