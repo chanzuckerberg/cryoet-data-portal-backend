@@ -9,11 +9,13 @@ alignments:
       - '{run_name}/{run_name}.mdoc-dose_filt.xf'
 annotations:
 - metadata:
+    annotation_ingest_id: cytosolic-ribosome-1
     annotation_method: Template matching + 2D classification filtering
     annotation_object:
       id: GO:0022626
       name: cytosolic ribosome
-    annotation_publications: 10.1101/2023.04.28.538734, EMD-17241, EMD-17242, EMD-17243, EMD-17244, EMD-17245
+    annotation_publications: 10.1101/2023.04.28.538734, EMD-17241, EMD-17242, EMD-17243,
+      EMD-17244, EMD-17245
     annotation_software: STOPGAP + RELION
     authors:
     - ORCID: 0000-0002-1632-7820
@@ -82,6 +84,9 @@ dataset_keyphotos:
         thumbnail: null
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id002
     - ORCID: 0009-0008-3301-8270
       corresponding_author_status: false
@@ -120,32 +125,30 @@ datasets:
       name: "M. J\xFCrgen Plitzko"
       primary_author_status: false
     cell_strain:
-      name: NK2476
       id: WBStrain00050783
+      name: NK2476
     cross_references: &id003
       publications: doi:10.1101/2023.04.28.538734
       related_database_entries: EMD-17241, EMD-17242, EMD-17243, EMD-17244, EMD-17245
-    dataset_description: Partial dataset used in the ribosome subtomogram reconstruction selected from tomograms from double-sided
-      attachment Serial Lift-Out experiment.
+    dataset_description: Partial dataset used in the ribosome subtomogram reconstruction
+      selected from tomograms from double-sided attachment Serial Lift-Out experiment.
     dataset_identifier: 10004
-    dataset_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular Anatomy of Whole Organisms"
+    dataset_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular\
+      \ Anatomy of Whole Organisms"
     dates: *id001
+    development_stage:
+      id: WBls:0000818
+      name: C. elegans life stage occurring during L1 larval stage
+    disease:
+      id: PATO:0000461
+      name: normal
     organism:
       name: Caenorhabditis elegans
       taxonomy_id: 6239
     sample_type: organism
     tissue:
-      name: organism
       id: WBbt:0007833
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: C. elegans life stage occurring during L1 larval stage
-      id: WBls:0000818
-    disease:
-      name: normal
-      id: PATO:0000461
+      name: organism
   sources:
   - literal:
       value:
@@ -161,10 +164,12 @@ depositions:
     authors: *id002
     cross_references: *id003
     dates: *id001
-    deposition_description: Cryo-electron tomograms from double-sided attachment Serial Lift-Out experiment of C. elegans,
-      including annotations of ribosomes identified and refined using STOPGAP and RELION.
+    deposition_description: Cryo-electron tomograms from double-sided attachment Serial
+      Lift-Out experiment of C. elegans, including annotations of ribosomes identified
+      and refined using STOPGAP and RELION.
     deposition_identifier: 10004
-    deposition_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular Anatomy of Whole Organisms"
+    deposition_title: "C. Elegans from Serial Lift-Out \u2013 Sampling the Molecular\
+      \ Anatomy of Whole Organisms"
     deposition_types:
     - dataset
     - annotation
@@ -203,7 +208,7 @@ tiltseries:
     binning_from_frames: 1
     camera:
       manufacturer: TFS
-      model: Falcon4i
+      model: FALCON 4i
     data_acquisition_software: Tomo5
     is_aligned: false
     microscope:
@@ -262,7 +267,7 @@ tomograms:
   - source_glob:
       list_glob: '{run_name}/*.rec'
       match_regex: .*\.rec
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

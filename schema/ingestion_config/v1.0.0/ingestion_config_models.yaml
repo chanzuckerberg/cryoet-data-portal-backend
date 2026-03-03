@@ -320,6 +320,9 @@ classes:
       TriangularMeshGroup:
         description: The triangular mesh group annotation source.
         range: AnnotationTriangularMeshGroupFile
+      GlobalCaption:
+        description: The global caption annotation source.
+        range: AnnotationGlobalCaptionFile
       parent_filters:
         description: Filters for the parent of a source.
         range: AnnotationParentFilters
@@ -853,13 +856,11 @@ classes:
         description: The value for the voxel spacing literal.
         multivalued: true
         required: true
-        range: float
-        # TODO: uncomment after this is fixed https://github.com/linkml/linkml/pull/2273
-        # any_of:
-        #   - range: float
-        #     # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
-        #     # minimum_value: 0.0
-        #   - range: FloatFormattedString
+        any_of:
+          - range: float
+            # TODO: uncomment after any_of is fixed https://github.com/linkml/linkml/issues/1521
+            # minimum_value: 0.0
+          - range: FloatFormattedString
 
   TomogramHeader:
     description: A tomogram header, a unique source attribute for voxel spacing.

@@ -88,7 +88,7 @@ def test_frames_import(
     frame_path = f"{parents['dataset'].name}/{run_name}/Frames"
     prefix = f"output/{frame_path}"
     validate_output_data_is_same_as_source(s3_client, test_output_bucket, prefix, frames_importer)
-    expected_metadata = generate_expected_metadata(VALID_FRAMES_METADATA, True,"foo-TS_run1.mdoc", frame_path)
+    expected_metadata = generate_expected_metadata(VALID_FRAMES_METADATA, True,"TS_run1.mdoc", frame_path)
     validate_metadata(expected_metadata, prefix)
 
 
@@ -111,8 +111,8 @@ def test_frames_default_import(
     run_name = parents["run"].name
     frame_path = f"{parents['dataset'].name}/{run_name}/Frames"
     prefix = f"output/{frame_path}"
-    assert {"foo-TS_run1.mdoc", "frames_metadata.json"} == get_children(s3_client, test_output_bucket, prefix)
-    expected_metadata = generate_expected_metadata(DEFAULT_FRAMES_METADATA, None,"foo-TS_run1.mdoc", frame_path)
+    assert {"TS_run1.mdoc", "frames_metadata.json"} == get_children(s3_client, test_output_bucket, prefix)
+    expected_metadata = generate_expected_metadata(DEFAULT_FRAMES_METADATA, None,"TS_run1.mdoc", frame_path)
     validate_metadata(expected_metadata, prefix)
 
 def test_frames_invalid_import(
@@ -137,7 +137,7 @@ def test_frames_invalid_import(
     run_name = parents["run"].name
     frame_path = f"{parents['dataset'].name}/{run_name}/Frames"
     prefix = f"output/{frame_path}"
-    assert {"foo-TS_run1.mdoc"} == get_children(s3_client, test_output_bucket, prefix)
+    assert {"TS_run1.mdoc"} == get_children(s3_client, test_output_bucket, prefix)
 
 
 def test_frames_no_import(s3_fs: FileSystemApi, test_output_bucket: str, s3_client: S3Client) -> None:

@@ -341,7 +341,7 @@ types:
     description: A UniProt identifier
     from_schema: metadata
     base: str
-    pattern: ^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$
+    pattern: ^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$
   NCBI_TAXON_ID:
     name: NCBI_TAXON_ID
     description: A NCBI Taxonomy identifier
@@ -354,24 +354,60 @@ types:
     from_schema: metadata
     base: str
     pattern: WBStrain[0-9]{8}$
-  WORMBASE_TISSUE_ID:
-    name: WORMBASE_TISSUE_ID
-    description: A WormBase tissue identifier
-    from_schema: metadata
-    base: str
-    pattern: WBbt:[0-9]{7}$
   WORMBASE_DEVELOPMENT_ID:
     name: WORMBASE_DEVELOPMENT_ID
-    description: A WormBase identifier
+    description: A WormBase developmental stage identifier
     from_schema: metadata
     base: str
     pattern: WBls:[0-9]{7}$
   HSAPDV_ID:
     name: HSAPDV_ID
-    description: A Human Developmental Phenotype Ontology identifier
+    description: A human developmental phenotype ontology identifier
     from_schema: metadata
     base: str
     pattern: HsapDv:[0-9]{7}$
+  MMUSDV_ID:
+    name: MMUSDV_ID
+    description: A mouse developmental stage ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: MmusDv:[0-9]{7}$
+  ZFS_ID:
+    name: ZFS_ID
+    description: A zebrafish developmental stage ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ZFS:[0-9]{7}$
+  FBDV_ID:
+    name: FBDV_ID
+    description: A drosophila developmental stage ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: FBdv:[0-9]{8}$
+  WBBT_ID:
+    name: WBBT_ID
+    description: A WormBase anatomy ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: WBbt:[0-9]{7}$
+  ZFA_ID:
+    name: ZFA_ID
+    description: A zebrafish anatomy ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ZFA:[0-9]{7}$
+  FBBT_ID:
+    name: FBBT_ID
+    description: A drosophila anatomy ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: FBbt:[0-9]{8}$
+  CHEBI_ID:
+    name: CHEBI_ID
+    description: A Chemical Entities of Biological Interest ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ^CHEBI:[0-9]+$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
@@ -528,23 +564,93 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
-  annotation_file_format_enum:
-    name: annotation_file_format_enum
-    description: Describes the format of the annotation file
+      GlobalCaption:
+        text: GlobalCaption
+        description: A set of text captions describing the entire tomogram
+  point_annotation_file_format_enum:
+    name: point_annotation_file_format_enum
+    description: Describes the format of the point annotation file
+    from_schema: metadata
+    permissible_values:
+      csv:
+        text: csv
+      csv_with_header:
+        text: csv_with_header
+      tsv:
+        text: tsv
+      mod:
+        text: mod
+      relion3_star:
+        text: relion3_star
+      relion4_star:
+        text: relion4_star
+      tomoman_relion_star:
+        text: tomoman_relion_star
+      copick:
+        text: copick
+  oriented_point_annotation_file_format_enum:
+    name: oriented_point_annotation_file_format_enum
+    description: Describes the format of the oriented point annotation file
+    from_schema: metadata
+    permissible_values:
+      mod:
+        text: mod
+      relion3_star:
+        text: relion3_star
+      relion4_star:
+        text: relion4_star
+      tomoman_relion_star:
+        text: tomoman_relion_star
+      copick:
+        text: copick
+      stopgap_star:
+        text: stopgap_star
+  instance_segmentation_annotation_file_format_enum:
+    name: instance_segmentation_annotation_file_format_enum
+    description: Describes the format of an instance segmentation annotation file
+    from_schema: metadata
+    permissible_values:
+      tardis:
+        text: tardis
+      copick:
+        text: copick
+  volume_annotation_file_format_enum:
+    name: volume_annotation_file_format_enum
+    description: Describes the format of a volume (semantic / semantic segmentation)
+      annotation file
     from_schema: metadata
     permissible_values:
       mrc:
         text: mrc
-        description: MRC format
       zarr:
         text: zarr
-        description: OMEZARR format
-      ndjson:
-        text: ndjson
-        description: NDJSON format
+  triangular_mesh_annotation_file_format_enum:
+    name: triangular_mesh_annotation_file_format_enum
+    description: Describes the format of a triangular mesh annotation file
+    from_schema: metadata
+    permissible_values:
+      obj:
+        text: obj
+      stl:
+        text: stl
+      vtk:
+        text: vtk
       glb:
         text: glb
-        description: GLB format
+  triangular_mesh_annotation_group_file_format_enum:
+    name: triangular_mesh_annotation_group_file_format_enum
+    description: Describes the format of a triangular mesh group annotation file
+    from_schema: metadata
+    permissible_values:
+      hff:
+        text: hff
+  caption_annotation_file_format_enum:
+    name: caption_annotation_file_format_enum
+    description: Describes the format of a caption annotation file
+    from_schema: metadata
+    permissible_values:
+      saber:
+        text: saber
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -575,6 +681,12 @@ enums:
       CTFFIND:
         text: CTFFIND
         description: The file has ctffind schema
+      Gctf:
+        text: Gctf
+        description: The file has Gctf schema
+      IMOD:
+        text: IMOD
+        description: The file has IMOD schema
   deposition_types_enum:
     name: deposition_types_enum
     description: Types of data a deposition has
@@ -659,6 +771,48 @@ enums:
       simulated:
         text: simulated
         description: Simulated data
+  tiltseries_camera_model_fei_tfs_enum:
+    name: tiltseries_camera_model_fei_tfs_enum
+    description: Camera model for FEI / TFS cameras
+    from_schema: metadata
+    permissible_values:
+      FALCON IV:
+        text: FALCON IV
+        description: FALCON IV
+      FALCON 4i:
+        text: FALCON 4i
+        description: FALCON 4i
+  tiltseries_camera_model_gatan_enum:
+    name: tiltseries_camera_model_gatan_enum
+    description: Camera model for Gatan cameras
+    from_schema: metadata
+    permissible_values:
+      K2:
+        text: K2
+        description: K2
+      K2 SUMMIT:
+        text: K2 SUMMIT
+        description: K2 SUMMIT
+      K3:
+        text: K3
+        description: K3
+      K3 BIOQUANTUM:
+        text: K3 BIOQUANTUM
+        description: K3 BIOQUANTUM
+      UltraCam:
+        text: UltraCam
+        description: UltraCam
+      UltraScan:
+        text: UltraScan
+        description: UltraScan
+  tiltseries_camera_model_simulated_enum:
+    name: tiltseries_camera_model_simulated_enum
+    description: Camera model for simulated cameras
+    from_schema: metadata
+    permissible_values:
+      simulated:
+        text: simulated
+        description: Simulated camera model
   tiltseries_microscope_manufacturer_enum:
     name: tiltseries_microscope_manufacturer_enum
     description: Microscope manufacturer
@@ -1239,7 +1393,8 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: The EFO identifier for the cellular component.
+        description: EFO ontology identifier for the type of assay performed in a
+          CryoET dataset
         from_schema: metadata
         exact_mappings:
         - cdp-common:assay_id
@@ -1291,7 +1446,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: A placeholder for any type of data.
+        description: The ontology identifier for the developmental stage component.
         from_schema: metadata
         exact_mappings:
         - cdp-common:development_stage_id
@@ -1310,12 +1465,15 @@ classes:
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: (^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)
+        pattern: (^unknown$)|(WBls:[0-9]{7}$)|(^UBERON:[0-9]{7}$)|(HsapDv:[0-9]{7}$)|(MmusDv:[0-9]{7}$)|(ZFS:[0-9]{7}$)|(FBdv:[0-9]{8}$)
         any_of:
         - range: UNKNOWN_LITERAL
         - range: WORMBASE_DEVELOPMENT_ID
         - range: UBERON_ID
         - range: HSAPDV_ID
+        - range: MMUSDV_ID
+        - range: ZFS_ID
+        - range: FBDV_ID
   Disease:
     name: Disease
     description: The disease or condition of the patients from which assayed biosamples
@@ -1348,7 +1506,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: A placeholder for any type of data.
+        description: The ontology identifier for the disease component.
         from_schema: metadata
         exact_mappings:
         - cdp-common:disease_id
@@ -1448,7 +1606,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: A placeholder for any type of data.
+        description: The ontology identifier for the tissue.
         from_schema: metadata
         exact_mappings:
         - cdp-common:tissue_id
@@ -1467,10 +1625,13 @@ classes:
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: (^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(^UBERON:[0-9]{7}$)
+        pattern: (^BTO:[0-9]{7}$)|(^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)
         any_of:
+        - range: BTO_ID
         - range: CL_ID
-        - range: WORMBASE_TISSUE_ID
+        - range: WBBT_ID
+        - range: ZFA_ID
+        - range: FBBT_ID
         - range: UBERON_ID
   CellType:
     name: CellType
@@ -1504,7 +1665,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: A placeholder for any type of data.
+        description: The ontology identifier for the cell type.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_type_id
@@ -1523,9 +1684,12 @@ classes:
         recommended: true
         inlined: true
         inlined_as_list: true
-        pattern: (^CL:[0-9]{7}$)|(^UBERON:[0-9]{7}$)
+        pattern: (^CL:[0-9]{7}$)|(WBbt:[0-9]{7}$)|(ZFA:[0-9]{7}$)|(FBbt:[0-9]{8}$)|(^UBERON:[0-9]{7}$)
         any_of:
         - range: CL_ID
+        - range: WBBT_ID
+        - range: ZFA_ID
+        - range: FBBT_ID
         - range: UBERON_ID
   CellStrain:
     name: CellStrain
@@ -1558,7 +1722,7 @@ classes:
         inlined_as_list: true
       id:
         name: id
-        description: A placeholder for any type of data.
+        description: The ontology identifier for the cell strain.
         from_schema: metadata
         exact_mappings:
         - cdp-common:cell_strain_id
@@ -2184,7 +2348,7 @@ classes:
     attributes:
       acquire_mode:
         name: acquire_mode
-        description: A placeholder for any type of data.
+        description: Camera acquisition mode
         from_schema: metadata
         exact_mappings:
         - cdp-common:tiltseries_camera_acquire_mode
@@ -2226,10 +2390,17 @@ classes:
         domain_of:
         - CameraDetails
         - MicroscopeDetails
-        range: string
+        range: Any
         required: true
         inlined: true
         inlined_as_list: true
+        pattern: (^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|((^FALCON IV$)|(^FALCON 4i$))|((^K2$)|(^K2
+          SUMMIT$)|(^K3$)|(^K3 BIOQUANTUM$)|(^UltraCam$)|(^UltraScan$))|(^simulated$)
+        any_of:
+        - range: StringFormattedString
+        - range: tiltseries_camera_model_fei_tfs_enum
+        - range: tiltseries_camera_model_gatan_enum
+        - range: tiltseries_camera_model_simulated_enum
   MicroscopeDetails:
     name: MicroscopeDetails
     description: The microscope used to collect the tilt series.
@@ -2251,7 +2422,7 @@ classes:
         inlined_as_list: true
       manufacturer:
         name: manufacturer
-        description: A placeholder for any type of data.
+        description: Name of the microscope manufacturer
         from_schema: metadata
         alias: manufacturer
         owner: MicroscopeDetails
@@ -2338,7 +2509,7 @@ classes:
     attributes:
       min:
         name: min
-        description: A placeholder for any type of data.
+        description: Minimal tilt angle in degrees
         from_schema: metadata
         alias: min
         owner: TiltRange
@@ -2368,7 +2539,7 @@ classes:
         - range: FloatFormattedString
       max:
         name: max
-        description: A placeholder for any type of data.
+        description: Maximal tilt angle in degrees
         from_schema: metadata
         alias: max
         owner: TiltRange
@@ -2633,9 +2804,8 @@ classes:
           descriptive_name: volts
       aligned_tiltseries_binning:
         name: aligned_tiltseries_binning
-        description: A placeholder for any type of data.
+        description: Binning factor of the aligned tilt series
         from_schema: metadata
-        ifabsent: float(1)
         alias: aligned_tiltseries_binning
         owner: TiltSeries
         domain_of:
@@ -2654,9 +2824,8 @@ classes:
         - range: FloatFormattedString
       binning_from_frames:
         name: binning_from_frames
-        description: A placeholder for any type of data.
+        description: Describes the binning factor from frames to tilt series file
         from_schema: metadata
-        ifabsent: float(1)
         alias: binning_from_frames
         owner: TiltSeries
         domain_of:
@@ -2768,7 +2937,7 @@ classes:
         pattern: ^EMPIAR-[0-9]+$
       spherical_aberration_constant:
         name: spherical_aberration_constant
-        description: A placeholder for any type of data.
+        description: Spherical Aberration Constant of the objective lens in millimeters
         from_schema: metadata
         alias: spherical_aberration_constant
         owner: TiltSeries
@@ -2809,7 +2978,7 @@ classes:
         inlined_as_list: true
       tilt_axis:
         name: tilt_axis
-        description: A placeholder for any type of data.
+        description: Rotation angle in degrees
         from_schema: metadata
         alias: tilt_axis
         owner: TiltSeries
@@ -2851,7 +3020,8 @@ classes:
         inlined_as_list: true
       tilt_series_quality:
         name: tilt_series_quality
-        description: A placeholder for any type of data.
+        description: Author assessment of tilt series quality within the dataset (1-5,
+          5 is best)
         from_schema: metadata
         alias: tilt_series_quality
         owner: TiltSeries
@@ -2876,7 +3046,7 @@ classes:
         - range: IntegerFormattedString
       tilt_step:
         name: tilt_step
-        description: A placeholder for any type of data.
+        description: Tilt step in degrees
         from_schema: metadata
         alias: tilt_step
         owner: TiltSeries
@@ -2920,7 +3090,8 @@ classes:
         inlined_as_list: true
       total_flux:
         name: total_flux
-        description: A placeholder for any type of data.
+        description: Number of Electrons reaching the specimen in a square Angstrom
+          area for the entire tilt series
         from_schema: metadata
         alias: total_flux
         owner: TiltSeries
@@ -2949,7 +3120,7 @@ classes:
         - range: FloatFormattedString
       pixel_spacing:
         name: pixel_spacing
-        description: A placeholder for any type of data.
+        description: Pixel spacing for the tilt series
         from_schema: metadata
         alias: pixel_spacing
         owner: TiltSeries
@@ -3113,7 +3284,7 @@ classes:
     attributes:
       voxel_spacing:
         name: voxel_spacing
-        description: A placeholder for any type of data.
+        description: Voxel spacing equal in all three axes in angstroms
         from_schema: metadata
         alias: voxel_spacing
         owner: Tomogram
@@ -3141,7 +3312,8 @@ classes:
         - range: FloatFormattedString
       fiducial_alignment_status:
         name: fiducial_alignment_status
-        description: A placeholder for any type of data.
+        description: Whether the tomographic alignment was computed based on fiducial
+          markers.
         from_schema: metadata
         alias: fiducial_alignment_status
         owner: Tomogram
@@ -3189,7 +3361,7 @@ classes:
         inlined_as_list: true
       reconstruction_method:
         name: reconstruction_method
-        description: A placeholder for any type of data.
+        description: Describe reconstruction method (WBP, SART, SIRT)
         from_schema: metadata
         alias: reconstruction_method
         owner: Tomogram
@@ -3426,7 +3598,7 @@ classes:
     attributes:
       id:
         name: id
-        description: A placeholder for any type of data.
+        description: Ontology identifier for the annotation object.
         from_schema: metadata
         exact_mappings:
         - cdp-common:annotation_object_id
@@ -3445,10 +3617,12 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)
+        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)
         any_of:
         - range: GO_ID
         - range: UNIPROT_ID
+        - range: UBERON_ID
+        - range: CHEBI_ID
       name:
         name: name
         description: Name of the object being annotated (e.g. ribosome, nuclear pore
@@ -3557,20 +3731,6 @@ classes:
       annotation.sources.
     from_schema: metadata
     attributes:
-      file_format:
-        name: file_format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_format
-        alias: file_format
-        owner: AnnotationSourceFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
-        inlined: true
-        inlined_as_list: true
       glob_string:
         name: glob_string
         description: Glob string to match annotation files in the dataset. Required
@@ -3642,6 +3802,27 @@ classes:
     - OrientedPoint
     is_a: AnnotationSourceFile
     attributes:
+      file_format:
+        name: file_format
+        description: The format of the oriented point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:oriented_point_annotation_file_format
+        alias: file_format
+        owner: AnnotationOrientedPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        range: oriented_point_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)|(^stopgap_star$)
       binning:
         name: binning
         description: The binning factor for a point / oriented point / instance segmentation
@@ -3702,20 +3883,6 @@ classes:
         domain_of:
         - AnnotationOrientedPointFile
         range: string
-        inlined: true
-        inlined_as_list: true
-      file_format:
-        name: file_format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_format
-        alias: file_format
-        owner: AnnotationOrientedPointFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -3789,6 +3956,27 @@ classes:
     - InstanceSegmentation
     is_a: AnnotationOrientedPointFile
     attributes:
+      file_format:
+        name: file_format
+        description: The format of the instance segmentation annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:instance_segmentation_annotation_file_format
+        alias: file_format
+        owner: AnnotationInstanceSegmentationFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        range: instance_segmentation_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^tardis$)|(^copick$)
       binning:
         name: binning
         description: The binning factor for a point / oriented point / instance segmentation
@@ -3849,20 +4037,6 @@ classes:
         domain_of:
         - AnnotationOrientedPointFile
         range: string
-        inlined: true
-        inlined_as_list: true
-      file_format:
-        name: file_format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_format
-        alias: file_format
-        owner: AnnotationInstanceSegmentationFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -3936,6 +4110,27 @@ classes:
     - Point
     is_a: AnnotationSourceFile
     attributes:
+      file_format:
+        name: file_format
+        description: The format of the point annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:point_annotation_file_format
+        alias: file_format
+        owner: AnnotationPointFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        range: point_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^csv$)|(^csv_with_header$)|(^tsv$)|(^mod$)|(^relion3_star$)|(^relion4_star$)|(^tomoman_relion_star$)|(^copick$)
       binning:
         name: binning
         description: The binning factor for a point / oriented point / instance segmentation
@@ -3995,20 +4190,6 @@ classes:
         - AnnotationPointFile
         - IdentifiedObjectList
         range: string
-        inlined: true
-        inlined_as_list: true
-      file_format:
-        name: file_format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_format
-        alias: file_format
-        owner: AnnotationPointFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -4084,18 +4265,25 @@ classes:
     attributes:
       file_format:
         name: file_format
-        description: File format for this file
+        description: The format of the volume annotation file.
         from_schema: metadata
         exact_mappings:
-        - cdp-common:annotation_source_file_format
+        - cdp-common:volume_annotation_file_format
         alias: file_format
         owner: AnnotationSegmentationMaskFile
         domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        range: volume_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
+        pattern: (^mrc$)|(^zarr$)
       glob_string:
         name: glob_string
         description: Glob string to match annotation files in the dataset. Required
@@ -4167,6 +4355,27 @@ classes:
     - SemanticSegmentationMask
     is_a: AnnotationSourceFile
     attributes:
+      file_format:
+        name: file_format
+        description: The format of the volume annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:volume_annotation_file_format
+        alias: file_format
+        owner: AnnotationSemanticSegmentationMaskFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        range: volume_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^mrc$)|(^zarr$)
       mask_label:
         name: mask_label
         description: The mask label for a semantic segmentation mask annotation file.
@@ -4206,20 +4415,6 @@ classes:
         domain_of:
         - AnnotationSemanticSegmentationMaskFile
         range: float
-        inlined: true
-        inlined_as_list: true
-      file_format:
-        name: file_format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_format
-        alias: file_format
-        owner: AnnotationSemanticSegmentationMaskFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -4293,6 +4488,27 @@ classes:
     - TriangularMesh
     is_a: AnnotationSourceFile
     attributes:
+      file_format:
+        name: file_format
+        description: The format of the triangular mesh annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:triangular_mesh_annotation_file_format
+        alias: file_format
+        owner: AnnotationTriangularMeshFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        range: triangular_mesh_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^obj$)|(^stl$)|(^vtk$)|(^glb$)
       scale_factor:
         name: scale_factor
         description: The scale factor for a mesh annotation file.
@@ -4309,20 +4525,6 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_value: 0
-      file_format:
-        name: file_format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_format
-        alias: file_format
-        owner: AnnotationTriangularMeshFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
-        inlined: true
-        inlined_as_list: true
       glob_string:
         name: glob_string
         description: Glob string to match annotation files in the dataset. Required
@@ -4393,6 +4595,27 @@ classes:
     - TriangularMeshGroup
     is_a: AnnotationSourceFile
     attributes:
+      file_format:
+        name: file_format
+        description: The format of the triangular mesh annotation group file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:triangular_mesh_annotation_group_file_format
+        alias: file_format
+        owner: AnnotationTriangularMeshGroupFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        range: triangular_mesh_annotation_group_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: ^hff$
       scale_factor:
         name: scale_factor
         description: The scale factor for a mesh annotation file.
@@ -4431,20 +4654,6 @@ classes:
         - AnnotationTriangularMeshGroupFile
         - AuthorMixin
         range: string
-        inlined: true
-        inlined_as_list: true
-      file_format:
-        name: file_format
-        description: File format for this file
-        from_schema: metadata
-        exact_mappings:
-        - cdp-common:annotation_source_file_format
-        alias: file_format
-        owner: AnnotationTriangularMeshGroupFile
-        domain_of:
-        - AnnotationSourceFile
-        range: string
-        required: true
         inlined: true
         inlined_as_list: true
       glob_string:
@@ -4509,6 +4718,98 @@ classes:
         required: false
         inlined: true
         inlined_as_list: true
+  AnnotationGlobalCaptionFile:
+    name: AnnotationGlobalCaptionFile
+    description: File and sourcing data for a global caption annotation. Text captions
+      describing the entire tomogram.
+    from_schema: metadata
+    aliases:
+    - GlobalCaption
+    is_a: AnnotationSourceFile
+    attributes:
+      file_format:
+        name: file_format
+        description: The format of the caption annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:caption_annotation_file_format
+        alias: file_format
+        owner: AnnotationGlobalCaptionFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        range: caption_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: ^saber$
+      glob_string:
+        name: glob_string
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationGlobalCaptionFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationGlobalCaptionFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
+        alias: is_visualization_default
+        owner: AnnotationGlobalCaptionFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationGlobalCaptionFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
   IdentifiedObject:
     name: IdentifiedObject
     description: Metadata describing an identified object.
@@ -4516,7 +4817,8 @@ classes:
     attributes:
       object_id:
         name: object_id
-        description: A placeholder for any type of data.
+        description: Gene Ontology Cellular Component identifier or UniProtKB accession
+          for the identified object.
         from_schema: metadata
         exact_mappings:
         - cdp-common:identified_object_id
@@ -4528,7 +4830,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$)
+        pattern: (^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)
         any_of:
         - range: GO_ID
         - range: UNIPROT_ID
@@ -4604,6 +4906,18 @@ classes:
     - DateStampedEntity
     - AuthoredEntity
     attributes:
+      annotation_ingest_id:
+        name: annotation_ingest_id
+        description: A unique identifier used during ingestion to identify this annotation.
+        from_schema: metadata
+        alias: annotation_ingest_id
+        owner: Annotation
+        domain_of:
+        - Annotation
+        range: string
+        required: true
+        inlined: true
+        inlined_as_list: true
       annotation_method:
         name: annotation_method
         description: Describe how the annotation is made (e.g. Manual, crYoLO, Positive
@@ -4807,7 +5121,7 @@ classes:
     attributes:
       x:
         name: x
-        description: A placeholder for any type of data.
+        description: X dimension of the reconstruction volume in angstrom
         from_schema: metadata
         alias: x
         owner: AlignmentSize
@@ -4830,7 +5144,7 @@ classes:
         - range: FloatFormattedString
       y:
         name: y
-        description: A placeholder for any type of data.
+        description: Y dimension of the reconstruction volume in angstrom
         from_schema: metadata
         alias: y
         owner: AlignmentSize
@@ -4853,7 +5167,7 @@ classes:
         - range: FloatFormattedString
       z:
         name: z
-        description: A placeholder for any type of data.
+        description: Z dimension of the reconstruction volume in angstrom
         from_schema: metadata
         alias: z
         owner: AlignmentSize
@@ -4882,9 +5196,8 @@ classes:
     attributes:
       x:
         name: x
-        description: A placeholder for any type of data.
+        description: X shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: x
         owner: AlignmentOffset
         domain_of:
@@ -4906,9 +5219,8 @@ classes:
         - range: FloatFormattedString
       y:
         name: y
-        description: A placeholder for any type of data.
+        description: Y shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: y
         owner: AlignmentOffset
         domain_of:
@@ -4930,9 +5242,8 @@ classes:
         - range: FloatFormattedString
       z:
         name: z
-        description: A placeholder for any type of data.
+        description: Z shift of the reconstruction volume in angstrom
         from_schema: metadata
-        ifabsent: float(0)
         alias: z
         owner: AlignmentOffset
         domain_of:
@@ -5110,9 +5421,8 @@ classes:
         inlined_as_list: true
       x_rotation_offset:
         name: x_rotation_offset
-        description: A placeholder for any type of data.
+        description: The x rotation offset relative to the tomogram.
         from_schema: metadata
-        ifabsent: int(0)
         alias: x_rotation_offset
         owner: Alignment
         domain_of:
@@ -5202,7 +5512,7 @@ classes:
     attributes:
       dose_rate:
         name: dose_rate
-        description: A placeholder for any type of data.
+        description: The dose exposure for a given frame.
         from_schema: metadata
         alias: dose_rate
         owner: Frame
@@ -5225,7 +5535,7 @@ classes:
         domain_of:
         - Frame
         range: boolean
-        required: false
+        required: true
         inlined: true
         inlined_as_list: true
   Ctf:
@@ -5246,10 +5556,9 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: ^CTFFIND$
+        pattern: (^CTFFIND$)|(^Gctf$)|(^IMOD$)
   Any:
     name: Any
-    description: A placeholder for any type of data.
     from_schema: metadata
     class_uri: linkml:Any
   DateStampedEntityMixin:

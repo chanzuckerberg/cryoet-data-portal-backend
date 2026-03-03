@@ -9,6 +9,7 @@ alignments:
       - Tomo{run_name}/raw_data/imod_metadata/*_vali.xf
 annotations:
 - metadata:
+    annotation_ingest_id: stellate-1
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0035869
@@ -68,6 +69,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: y-shaped-link-1
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0097537
@@ -89,6 +91,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: mtd-sleeve-1
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0035869
@@ -110,6 +113,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: y-shaped-link-2
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       description: MTD stellate
@@ -132,6 +136,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: ift-b-complex-1
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0030992
@@ -153,6 +158,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: ift-a-complex-1
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0030991
@@ -174,6 +180,7 @@ annotations:
       is_visualization_default: true
       order: xyz
 - metadata:
+    annotation_ingest_id: dynein-1b-1
     annotation_method: manual picking + line fit + pick on line + CC based filtering
     annotation_object:
       id: GO:0005858
@@ -206,6 +213,9 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/11078.gif
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id003
     - ORCID: 0000-0003-4978-8516
       name: Hugo G. van den Hoek
@@ -243,11 +253,14 @@ datasets:
       corresponding_author_status: true
       name: Benjamin D. Engel
     cell_component:
-      name: cilium
       id: GO:0005929
+      name: cilium
     cell_strain:
-      name: mat3-4
       id: CC-3994
+      name: mat3-4
+    cell_type:
+      id: CL:0000255
+      name: eukaryotic cell
     cross_references: &id004
       publications: doi:10.1126/science.abm6704
       related_database_entries: EMPIAR-11078
@@ -255,6 +268,12 @@ datasets:
     dataset_identifier: 10009
     dataset_title: C. reinhardtii ciliary transition zone
     dates: *id002
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: European Molecular Biology Organization (EMBO)
       grant_id: ALTF 537-2021
@@ -267,29 +286,18 @@ datasets:
       grant_id: PP00P3_187198
     - funding_agency_name: Max Planck Society
     - funding_agency_name: Helmholtz Association
-    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id: 1, support_film_film_material:
-      CARBON, support_film_film_topology: CONTINUOUS, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
+    grid_preparation: 'model: Quantifoil R2/1, material: COPPER, support_film_film_type_id:
+      1, support_film_film_material: CARBON, support_film_film_topology: CONTINUOUS,
+      support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
     organism:
       name: Chlamydomonas reinhardtii
       taxonomy_id: 3055
-    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE, vitrification_instrument: FEI VITROBOT
-      MARK IV, instance_type: tomography_preparation'
+    sample_preparation: 'buffer_ph: 7.0, vitrification_cryogen_name: ETHANE-PROPANE,
+      vitrification_instrument: FEI VITROBOT MARK IV, instance_type: tomography_preparation'
     sample_type: primary_cell_culture
     tissue:
-      name: eukaryotic cell
       id: CL:0000255
-    cell_type:
       name: eukaryotic cell
-      id: CL:0000255
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
   sources:
   - literal:
       value:
@@ -305,8 +313,9 @@ depositions:
     authors: *id003
     cross_references: *id004
     dates: *id002
-    deposition_description: Cryo-electron tomograms of FIB-SEM lamellas of the Chlamydomonas reinhardtii ciliary base, including
-      annotations of the intraflagellar transport machinery, refined using STOPGAP.
+    deposition_description: Cryo-electron tomograms of FIB-SEM lamellas of the Chlamydomonas
+      reinhardtii ciliary base, including annotations of the intraflagellar transport
+      machinery, refined using STOPGAP.
     deposition_identifier: 10009
     deposition_title: Architecture of the Chlamydomonas reinhardtii ciliary base
     deposition_types:
@@ -321,20 +330,20 @@ frames:
     dose_rate: float {dose_rate}
     is_gain_corrected: true
   sources:
-  - source_glob:
-      list_glob: Tomo{run_name}/raw_data/raw_frames/*.mrc.bz2
-    parent_filters:
+  - parent_filters:
       exclude:
         run:
         - ^12$
         - ^13$
-  - source_glob:
-      list_glob: Tomo{run_name}/aligned_frames/*.mrc
-    parent_filters:
+    source_glob:
+      list_glob: Tomo{run_name}/raw_data/raw_frames/*.mrc.bz2
+  - parent_filters:
       include:
         run:
         - ^12$
         - ^13$
+    source_glob:
+      list_glob: Tomo{run_name}/aligned_frames/*.mrc
 rawtilts:
 - sources:
   - source_glob:
@@ -413,7 +422,7 @@ tomograms:
   - source_glob:
       list_glob: bin4_deconvoluted_tomos_forvisualisation/t{run_name}.rec
       match_regex: .*
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

@@ -13,9 +13,9 @@ from ingestion_config_models_extended import ExtendedValidationContainer
 from pydantic import ValidationError
 
 ORIGINAL_DIR = os.getcwd()
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+THIS_FILE_DIR = os.path.dirname(os.path.abspath(__file__)) + "/"
 ROOT_DIR = "../../../"
-sys.path.append(ROOT_DIR)  # To import the helper function from common.py
+sys.path.append(THIS_FILE_DIR + ROOT_DIR)  # To import the helper function from common.py
 from ingestion_tools.scripts.common.yaml_files import EXCLUDE_KEYWORDS_LIST, get_yaml_config_files  # noqa: E402
 
 logger = logging.getLogger(__name__)
@@ -23,9 +23,9 @@ log_handler = logging.StreamHandler()
 logger.addHandler(log_handler)
 logger.setLevel(logging.INFO)
 
-DATASET_CONFIGS_DIR = "../../../ingestion_tools/dataset_configs/"
-ERRORS_OUTPUT_DIR = "./ingestion_config_validate_errors"
-VALIDATION_EXCLUSIONS_FILE = "ingestion_config_validation_exclusions.json"
+DATASET_CONFIGS_DIR = THIS_FILE_DIR + "../../../ingestion_tools/dataset_configs/"
+ERRORS_OUTPUT_DIR = THIS_FILE_DIR + "ingestion_config_validate_errors"
+VALIDATION_EXCLUSIONS_FILE = THIS_FILE_DIR + "ingestion_config_validation_exclusions.json"
 
 # The permitted parent attribute for formatted strings and its corresponding depth
 # If the attribute has a parent attribute in this list, it is allowed to be a formatted string

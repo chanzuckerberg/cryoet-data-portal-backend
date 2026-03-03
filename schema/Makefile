@@ -71,7 +71,7 @@ build-ingestion-config: clean-core clean-ingestion-config
 	cd ingestion_config && ln -sf $(INGESTION_CONFIG_VERSION) latest && cd ..
 
 # To build-ingestion-config for the non-default version, run `make build-ingestion-config INGESTION_CONFIG_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
-.PHONY: build-metadata_files
+.PHONY: build-metadata-files
 build-metadata-files:
 	python3 schema.py materialize $(METADATA_YAML) $(COMMON_YAML) $(METADATA_MATERIALIZED_YAML)
 	python3 schema.py materialize $(METADATA_FILES_MODELS_YAML) $(COMMON_YAML) $(METADATA_FILES_MODELS_MATERIALIZED_YAML)

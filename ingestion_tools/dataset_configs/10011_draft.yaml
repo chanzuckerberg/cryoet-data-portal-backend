@@ -7,6 +7,7 @@ alignments:
       - metadata/{run_name}.xf
 annotations:
 - metadata:
+    annotation_ingest_id: required-1
     annotation_method: REQUIRED
     annotation_object:
       description: OPTIONAL
@@ -92,7 +93,10 @@ datasets:
       value:
       - '10011'
 frames:
-- sources:
+- metadata:
+    dose_rate: 0
+    is_gain_corrected: false
+  sources:
   - source_glob:
       list_glob: frames/{run_name}_*.tif
 gains:
@@ -178,7 +182,7 @@ tomograms:
   - source_glob:
       list_glob: tomograms/*.rec
       match_regex: .*
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

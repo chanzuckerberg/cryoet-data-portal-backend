@@ -24,7 +24,8 @@ class GainImporter(BaseImporter):
             dest_file_name = os.path.splitext(source_file_name)[0] + ".mrc"
             local_input = fs.localreadable(item)
             local_output = fs.localwritable(os.path.join(output_dir, dest_file_name))
-            subprocess.check_output(["/usr/local/IMOD/bin/dm2mrc", local_input, local_output])
+            d2mrc_path = "/usr/local/IMOD/bin/dm2mrc" if os.path.exists("/usr/local/IMOD/bin/dm2mrc") else "dm2mrc"
+            subprocess.check_output([d2mrc_path, local_input, local_output])
             fs.push(local_output)
         else:
             dest_file_path = os.path.join(output_dir, source_file_name)

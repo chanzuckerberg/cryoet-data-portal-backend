@@ -60,7 +60,7 @@ class AnnotationFile(Base):
     s3_path: Mapped[str] = mapped_column(String, nullable=False)
     file_size: Mapped[float] = mapped_column(Float, nullable=True)
     https_path: Mapped[str] = mapped_column(String, nullable=False)
-    is_visualization_default: Mapped[bool] = mapped_column(Boolean, nullable=True)
+    is_visualization_default: Mapped[bool] = mapped_column(Boolean, nullable=True, server_default="False")
     source: Mapped[annotation_file_source_enum] = mapped_column(
         Enum(annotation_file_source_enum, native_enum=False), nullable=True,
     )

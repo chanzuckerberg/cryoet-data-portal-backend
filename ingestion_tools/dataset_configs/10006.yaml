@@ -1,5 +1,6 @@
 annotations:
 - metadata:
+    annotation_ingest_id: sars-cov2-spike-protein-1
     annotation_method: Template matching + 3D classification filtering
     annotation_object:
       description: SARS-CoV2 Spike protein
@@ -66,6 +67,9 @@ dataset_keyphotos:
         thumbnail: https://www.ebi.ac.uk/pdbe/emdb-empiar/entryIcons/10493.gif
 datasets:
 - metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
     authors: &id002
     - ORCID: 0000-0002-8408-850X
       name: Zunlong Ke
@@ -101,15 +105,25 @@ datasets:
     - ORCID: 0000-0003-3990-6910
       corresponding_author_status: true
       name: John Briggs
+    cell_component:
+      id: GO:0044423
+      name: virion component
     cell_strain:
       name: Germany/BavPat1/2020
     cross_references: &id003
       publications: doi:10.1038/s41586-020-2665-2
       related_database_entries: EMPIAR-10493
-    dataset_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact virions.
+    dataset_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact
+      virions.
     dataset_identifier: 10006
     dataset_title: Severe acute respiratory syndrome coronavirus 2
     dates: *id001
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
     funding:
     - funding_agency_name: European Research Council (ERC)
       grant_id: ERC-CoG-648432
@@ -120,26 +134,15 @@ datasets:
     - funding_agency_name: Japan Society for the Promotion of Science (JSPS)
     - funding_agency_name: German Research Foundation (DFG)
       grant_id: 240245660-SFB 1129
-    grid_preparation: 'model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material: CARBON, support_film_film_topology:
-      HOLEY ARRAY, support_film_instance_type: support_film, pretreatment_type_: GLOW DISCHARGE'
+    grid_preparation: 'model: C-flat-2/2, support_film_film_type_id: 1, support_film_film_material:
+      CARBON, support_film_film_topology: HOLEY ARRAY, support_film_instance_type:
+      support_film, pretreatment_type_: GLOW DISCHARGE'
     organism:
       name: Severe acute respiratory syndrome coronavirus 2
       taxonomy_id: 2697049
-    sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument: LEICA EM GP, instance_type:
-      subtomogram_averaging_preparation'
+    sample_preparation: 'buffer_ph: 7.4, vitrification_cryogen_name: ETHANE, vitrification_instrument:
+      LEICA EM GP, instance_type: subtomogram_averaging_preparation'
     sample_type: virus
-    cell_component:
-      name: virion component
-      id: GO:0044423
-    assay:
-      name: microscopy assay
-      id: EFO:0002909
-    development_stage:
-      name: unknown
-      id: unknown
-    disease:
-      name: normal
-      id: PATO:0000461
   sources:
   - literal:
       value:
@@ -155,10 +158,11 @@ depositions:
     authors: *id002
     cross_references: *id003
     dates: *id001
-    deposition_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on intact virions with annotations of spike
-      proteins, refined using RELION.
+    deposition_description: Cryo-electron tomograms of SARS-CoV-2 spike proteins on
+      intact virions with annotations of spike proteins, refined using RELION.
     deposition_identifier: 10006
-    deposition_title: Structures and distributions of severe acute respiratory syndrome coronavirus 2 spike proteins
+    deposition_title: Structures and distributions of severe acute respiratory syndrome
+      coronavirus 2 spike proteins
     deposition_types:
     - dataset
     - annotation
@@ -246,7 +250,7 @@ tomograms:
   - source_glob:
       list_glob: tomos_bin4/{run_name}_dose-filt_lp50.rec
       match_regex: .*
-version: 1.1.0
+version: 1.3.0
 voxel_spacings:
 - sources:
   - literal:

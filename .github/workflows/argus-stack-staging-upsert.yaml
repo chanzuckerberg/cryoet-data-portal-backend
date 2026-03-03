@@ -32,4 +32,4 @@ jobs:
         with:
           appName: cryoet-apiv2
           envName: staging
-          postStackDetails: false
+          postStackDetails: comment
