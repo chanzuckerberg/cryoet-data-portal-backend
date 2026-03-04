@@ -320,6 +320,7 @@ class AnnotationWhereClause(TypedDict):
     https_metadata_path: Optional[StrComparators] | None
     annotation_publication: Optional[StrComparators] | None
     annotation_method: Optional[StrComparators] | None
+    annotation_ingest_id: Optional[StrComparators] | None
     ground_truth_status: Optional[BoolComparators] | None
     object_id: Optional[StrComparators] | None
     object_name: Optional[StrComparators] | None
@@ -351,6 +352,7 @@ class AnnotationOrderByClause(TypedDict):
     https_metadata_path: Optional[orderBy] | None
     annotation_publication: Optional[orderBy] | None
     annotation_method: Optional[orderBy] | None
+    annotation_ingest_id: Optional[orderBy] | None
     ground_truth_status: Optional[orderBy] | None
     object_id: Optional[orderBy] | None
     object_name: Optional[orderBy] | None
@@ -408,6 +410,9 @@ class Annotation(EntityInterface):
     )
     annotation_method: str = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
+    )
+    annotation_ingest_id: Optional[str] = strawberry.field(
+        description="An identifier for the annotation to be used during ingestion.", default=None,
     )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
@@ -494,6 +499,7 @@ class AnnotationMinMaxColumns:
     https_metadata_path: Optional[str] = None
     annotation_publication: Optional[str] = None
     annotation_method: Optional[str] = None
+    annotation_ingest_id: Optional[str] = None
     object_id: Optional[str] = None
     object_name: Optional[str] = None
     object_description: Optional[str] = None
@@ -520,6 +526,7 @@ class AnnotationCountColumns(enum.Enum):
     httpsMetadataPath = "https_metadata_path"
     annotationPublication = "annotation_publication"
     annotationMethod = "annotation_method"
+    annotationIngestId = "annotation_ingest_id"
     groundTruthStatus = "ground_truth_status"
     objectId = "object_id"
     objectName = "object_name"
@@ -610,6 +617,9 @@ class AnnotationCreateInput:
     annotation_method: str = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
     )
+    annotation_ingest_id: Optional[str] = strawberry.field(
+        description="An identifier for the annotation to be used during ingestion.", default=None,
+    )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
     )
@@ -674,6 +684,9 @@ class AnnotationUpdateInput:
     )
     annotation_method: Optional[str] = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
+    )
+    annotation_ingest_id: Optional[str] = strawberry.field(
+        description="An identifier for the annotation to be used during ingestion.", default=None,
     )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
