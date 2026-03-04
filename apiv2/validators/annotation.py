@@ -46,6 +46,13 @@ class AnnotationCreateInputValidator(BaseModel):
             strip_whitespace=True,
         ),
     ]
+    annotation_ingest_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"^[a-z0-9]+(-[a-z0-9]+)*-[0-9]+$",
+        ),
+    ]
     ground_truth_status: Annotated[bool | None, Field()]
     object_id: Annotated[
         str,
@@ -135,6 +142,13 @@ class AnnotationUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
+        ),
+    ]
+    annotation_ingest_id: Annotated[
+        str | None,
+        StringConstraints(
+            strip_whitespace=True,
+            pattern=r"^[a-z0-9]+(-[a-z0-9]+)*-[0-9]+$",
         ),
     ]
     ground_truth_status: Annotated[bool | None, Field()]
