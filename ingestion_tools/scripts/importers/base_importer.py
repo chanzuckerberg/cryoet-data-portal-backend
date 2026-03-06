@@ -161,20 +161,31 @@ class BaseImporter:
         return self.allow_imports
 
     @classmethod
-    def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> Iterator["BaseImporter"]:
+    def finder(
+        cls,
+        config: DepositionImportConfig,
+        skip_source_validation: bool = False,
+        **parents: dict[str, "BaseImporter"],
+    ) -> Iterator["BaseImporter"]:
         """
         Finds the importer entities based on the configuration source specified. If no items are found, but a default
         entry exists, then the default entry is returned.
+
+        Args:
+            config: The deposition import configuration.
+            skip_source_validation: If True, skip source file validation (useful for metadata-only imports).
+            **parents: Parent importer objects.
+
         Returns:
             list[BaseImporter]: A list of importer entities.
         """
         finder_configs = config.get_object_configs(cls.type_key)
         item_found = False
-        for item in cls._finder_execution(finder_configs, config, **parents):
+        for item in cls._finder_execution(finder_configs, config, skip_source_validation, **parents):
             item_found = True
             yield item
         if not item_found and (default_config := cls.get_default_config()):
-            for item in cls._finder_execution(default_config, config, **parents):
+            for item in cls._finder_execution(default_config, config, skip_source_validation, **parents):
                 yield item
 
     @classmethod
@@ -208,6 +219,7 @@ class BaseImporter:
         cls,
         finder_configs: list[dict],
         config: DepositionImportConfig,
+        skip_source_validation: bool = False,
         **parents: dict[str, "BaseImporter"],
     ) -> list["BaseImporter"]:
         """
@@ -219,7 +231,12 @@ class BaseImporter:
             sources = finder.get("sources", [])
             for source in sources:
                 source_finder_factory = cls.finder_factory(source, cls)
-                for item in source_finder_factory.find(config, metadata, **parents):
+                for item in source_finder_factory.find(
+                    config,
+                    metadata,
+                    skip_source_validation=skip_source_validation,
+                    **parents,
+                ):
                     yield item
 
     def __repr__(self) -> str:

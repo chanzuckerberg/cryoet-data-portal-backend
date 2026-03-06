@@ -219,6 +219,7 @@ class DepositionObjectImporterFactory(ABC):
         path: str,
         allow_imports: bool,
         parents: dict[str, Any] | None,
+        skip_source_validation: bool = False,
     ):
         return self.importer_cls(
             config=config,
@@ -233,6 +234,7 @@ class DepositionObjectImporterFactory(ABC):
         self,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
+        skip_source_validation: bool = False,
         **parent_objects: dict[str, Any] | None,
     ) -> list[BaseImporter]:
         loader = self.load(config, **parent_objects)
@@ -245,7 +247,14 @@ class DepositionObjectImporterFactory(ABC):
                 print(f"Excluding {self.importer_cls.type_key} {name}...")
                 continue
             filtered_results[name] = path
-        return self._get_instantiated_results(config, metadata, filtered_results, loader.allow_imports, parent_objects)
+        return self._get_instantiated_results(
+            config,
+            metadata,
+            filtered_results,
+            loader.allow_imports,
+            parent_objects,
+            skip_source_validation,
+        )
 
     def _get_instantiated_results(
         self,
@@ -254,12 +263,13 @@ class DepositionObjectImporterFactory(ABC):
         filtered_results: dict[str, str],
         allow_imports: bool,
         parents: dict[str, Any] | None,
+        skip_source_validation: bool = False,
     ) -> list[BaseImporter]:
         results = []
         for name, path in filtered_results.items():
             # If the file found is a metadata file from finders such as DestinationFilteredMetadataFinder
             name, path, metadata = self.handle_for_metadata_file(config, name, path, metadata)
-            item = self._instantiate(config, metadata, name, path, allow_imports, parents)
+            item = self._instantiate(config, metadata, name, path, allow_imports, parents, skip_source_validation)
             if item:
                 results.append(item)
         return results
@@ -269,11 +279,12 @@ class DepositionObjectImporterFactory(ABC):
         self,
         config: DepositionImportConfig,
         metadata: dict[str, Any],
+        skip_source_validation: bool = False,
         **parent_objects: dict[str, Any] | None,
     ):
         if not self._should_search(**parent_objects):
             return []
-        return self._get_results(config, metadata, **parent_objects)
+        return self._get_results(config, metadata, skip_source_validation, **parent_objects)
 
     def handle_for_metadata_file(
         self,
@@ -332,6 +343,7 @@ class MultiSourceFileFinder(DefaultImporterFactory):
         filtered_results: dict[str, str],
         allow_imports: bool,
         parents: dict[str, Any] | None,
+        skip_source_validation: bool = False,
     ):
         if not filtered_results:
             return []

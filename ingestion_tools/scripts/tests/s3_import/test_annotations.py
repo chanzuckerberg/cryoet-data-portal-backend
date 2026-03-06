@@ -1640,6 +1640,55 @@ def test_ingest_triangular_mesh_hff(
     assert actual_hash == expected_hash
 
 
+def test_destination_files_exist_method(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    voxel_spacing_importer_s3: VoxelSpacingImporter,
+    deposition_config_s3: DepositionImportConfig,
+) -> None:
+    """
+    Unit test for destination_files_exist() method.
+
+    Verifies that destination_files_exist() returns False before import
+    and True after import, which is the core logic used when
+    skip_source_validation=True.
+    """
+    anno_config = {
+        "metadata": default_anno_metadata,
+        "sources": [
+            {
+                "SemanticSegmentationMask": {
+                    "file_format": "mrc",
+                    "mask_label": 1,
+                    "glob_string": "annotations/semantic_mask.mrc",
+                },
+            },
+        ],
+    }
+    deposition_config_s3._set_object_configs("annotation", [anno_config])
+
+    anno = SemanticSegmentationMaskAnnotation(
+        config=deposition_config_s3,
+        metadata=default_anno_metadata,
+        path="test-public-bucket/input_bucket/20002/annotations/semantic_mask.mrc",
+        parents={"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents},
+        identifier=100,
+        mask_label=1,
+        file_format="mrc",
+        alignment_metadata_path="foo",
+    )
+
+    output_dir = anno.get_output_path()
+    rel_path = os.path.relpath(output_dir, deposition_config_s3.output_prefix)
+
+    # Before import: destination files don't exist
+    assert not anno.destination_files_exist(rel_path), "Destination should not exist before import"
+
+    # After import: destination files exist
+    anno.import_item()
+    assert anno.destination_files_exist(rel_path), "Destination should exist after import"
+
+
 def test_ingest_global_caption(
     voxel_spacing_importer_local,
     deposition_config_local: DepositionImportConfig,

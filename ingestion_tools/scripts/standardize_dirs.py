@@ -42,7 +42,16 @@ def flatten_dependency_tree(tree) -> dict[type, set[type]]:
     return treedict
 
 
-def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, parents: Optional[dict[str, Any]] = None):
+def do_import(
+    config,
+    tree,
+    to_import,
+    metadata_import,
+    to_iterate,
+    kwargs,
+    parents: Optional[dict[str, Any]] = None,
+    skip_source_validation: bool = False,
+):
     parents = dict(parents) if parents else {}
     for import_class, child_import_classes in tree.items():
         if import_class not in to_iterate:
@@ -55,7 +64,7 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
         # all ancestors
         parent_args = dict(parents)
 
-        items = import_class.finder(config, **parent_args)
+        items = import_class.finder(config, skip_source_validation=skip_source_validation, **parent_args)
         for item in items:
             print(f"Iterating {item.type_key}: {item.name}")
             if list(filter(lambda x: x.match(item.name), exclude_patterns)):
@@ -71,11 +80,23 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
             if child_import_classes:
                 sub_parents = {import_class.type_key: item}
                 sub_parents.update(parents)
-                do_import(config, child_import_classes, to_import, metadata_import, to_iterate, kwargs, sub_parents)
+                do_import(
+                    config,
+                    child_import_classes,
+                    to_import,
+                    metadata_import,
+                    to_iterate,
+                    kwargs,
+                    sub_parents,
+                    skip_source_validation,
+                )
             # Not all importers have metadata, but we don't expose the option for it unless it's supported
             if import_class in metadata_import and item.has_metadata:
                 print(f"Importing {import_class.type_key} metadata")
-                item.import_metadata()
+                if import_class.type_key == "annotation":
+                    item.import_metadata(skip_source_validation=skip_source_validation)
+                else:
+                    item.import_metadata()
 
 
 @cli.command()
@@ -87,6 +108,12 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
 @click.option("--write-zarr/--no-write-zarr", default=True)
 @click.option("--force-overwrite", is_flag=True, default=False)
 @click.option("--local-fs", type=bool, is_flag=True, default=False)
+@click.option(
+    "--skip-source-validation",
+    is_flag=True,
+    default=False,
+    help="Skip source file validation (useful for metadata-only imports where data was already converted)",
+)
 @common_options
 @click.pass_context
 def convert(
@@ -101,6 +128,7 @@ def convert(
     write_zarr: bool,
     force_overwrite: bool,
     local_fs: bool,
+    skip_source_validation: bool,
     **kwargs,
 ):
     fs_mode = "s3"
@@ -128,7 +156,23 @@ def convert(
         metadata_import = {k for k in IMPORTERS if kwargs.get(f"import_{k.type_key}_metadata")}
         needs_iteration = to_import.union(metadata_import)
         to_iterate = needs_iteration.union({k for k, v in iteration_deps if needs_iteration.intersection(v)})
-    do_import(config, IMPORTER_DEP_TREE, to_import, metadata_import, to_iterate, kwargs)
+
+    if skip_source_validation:
+        print(
+            "WARNING: --skip-source-validation is enabled. Source data will not be validated. "
+            "Only use this flag when migrating metadata for data that has already been converted. "
+            "Annotations without existing destination files will be skipped.",
+        )
+
+    do_import(
+        config,
+        IMPORTER_DEP_TREE,
+        to_import,
+        metadata_import,
+        to_iterate,
+        kwargs,
+        skip_source_validation=skip_source_validation,
+    )
 
 
 if __name__ == "__main__":
