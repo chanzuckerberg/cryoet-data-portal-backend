@@ -366,6 +366,14 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
         unique_labels = np.unique(data)
         return int(np.count_nonzero(unique_labels))
 
+    def is_valid(self) -> bool:
+        try:
+            input_file = self.path
+            # for instance seg masks, we don't have a specific label to check for, so we just check that there is at least one non-zero label in the mask
+            return check_mask_for_label(self.config.fs, input_file, label=None, threshold=1)
+        except Exception:
+            return False
+
 
 class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
     shape = "SegmentationMask"  # Don't expose SemanticSegmentationMask to the public portal.
