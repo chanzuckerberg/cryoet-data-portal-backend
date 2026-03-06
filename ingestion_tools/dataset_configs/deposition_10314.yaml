@@ -8,7 +8,7 @@ annotations:
 - metadata:
     annotation_ingest_id: ribosome-1
     annotation_method: Convolutional neural network trained on manually annotated
-      input data.
+      input data
     annotation_object:
       id: GO:0005840
       name: ribosome
