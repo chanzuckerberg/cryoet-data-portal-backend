@@ -3305,6 +3305,7 @@ class Tomogram(AuthoredEntity):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3593,6 +3594,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3613,6 +3615,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3634,6 +3637,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3656,6 +3660,7 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3685,6 +3690,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3757,6 +3763,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3777,6 +3784,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3798,6 +3806,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3820,6 +3829,7 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3864,6 +3874,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3936,6 +3947,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3956,6 +3968,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3977,6 +3990,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -3999,6 +4013,7 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4041,6 +4056,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4114,6 +4130,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4134,6 +4151,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4155,6 +4173,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4177,6 +4196,7 @@ class AnnotationPointFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4221,6 +4241,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4241,6 +4262,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4261,6 +4283,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4282,6 +4305,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4304,6 +4328,7 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4346,6 +4371,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4370,7 +4396,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
         description="""Whether the annotation file needs to be rescaled.""",
         json_schema_extra={
             "linkml_meta": {
-                "domain_of": ["AnnotationSemanticSegmentationMaskFile"],
+                "domain_of": ["AnnotationSemanticSegmentationMaskFile", "AnnotationInstanceSegmentationMaskFile"],
                 "exact_mappings": ["cdp-common:annotation_source_file_rescale"],
                 "ifabsent": "False",
             }
@@ -4398,6 +4424,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4418,6 +4445,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4439,6 +4467,7 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4461,6 +4490,143 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_portal_standard"],
+                "ifabsent": "False",
+            }
+        },
+    )
+
+    @field_validator("file_format")
+    def pattern_file_format(cls, v):
+        pattern = re.compile(r"(^mrc$)|(^zarr$)")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid file_format format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid file_format format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+
+class AnnotationInstanceSegmentationMaskFile(AnnotationSourceFile):
+    """
+    File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({"aliases": ["InstanceSegmentationMask"], "from_schema": "metadata"})
+
+    file_format: Optional[VolumeAnnotationFileFormatEnum] = Field(
+        default=None,
+        description="""The format of the volume annotation file.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:volume_annotation_file_format"],
+            }
+        },
+    )
+    rescale: Optional[bool] = Field(
+        default=False,
+        description="""Whether the annotation file needs to be rescaled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["AnnotationSemanticSegmentationMaskFile", "AnnotationInstanceSegmentationMaskFile"],
+                "exact_mappings": ["cdp-common:annotation_source_file_rescale"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    glob_string: Optional[str] = Field(
+        default=None,
+        description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_string"],
+            }
+        },
+    )
+    glob_strings: Optional[list[str]] = Field(
+        default=[],
+        description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_glob_strings"],
+            }
+        },
+    )
+    is_visualization_default: Optional[bool] = Field(
+        default=False,
+        description="""This annotation will be rendered in neuroglancer by default.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Tomogram",
+                    "AnnotationSourceFile",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
+                    "AnnotationTriangularMeshFile",
+                    "AnnotationTriangularMeshGroupFile",
+                ],
+                "exact_mappings": ["cdp-common:annotation_source_file_is_visualization_default"],
+                "ifabsent": "False",
+            }
+        },
+    )
+    is_portal_standard: Optional[bool] = Field(
+        default=False,
+        description="""Whether the annotation source is a portal standard.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "AnnotationSourceFile",
+                    "Alignment",
+                    "AnnotationOrientedPointFile",
+                    "AnnotationInstanceSegmentationFile",
+                    "AnnotationPointFile",
+                    "AnnotationSegmentationMaskFile",
+                    "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4503,6 +4669,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4535,6 +4702,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4555,6 +4723,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4576,6 +4745,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4598,6 +4768,7 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4640,6 +4811,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4695,6 +4867,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4715,6 +4888,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4736,6 +4910,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -4758,6 +4933,7 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -5457,6 +5633,7 @@ class Alignment(ConfiguredBaseModel):
                     "AnnotationPointFile",
                     "AnnotationSegmentationMaskFile",
                     "AnnotationSemanticSegmentationMaskFile",
+                    "AnnotationInstanceSegmentationMaskFile",
                     "AnnotationTriangularMeshFile",
                     "AnnotationTriangularMeshGroupFile",
                     "AnnotationGlobalCaptionFile",
@@ -6053,6 +6230,7 @@ AnnotationInstanceSegmentationFile.model_rebuild()
 AnnotationPointFile.model_rebuild()
 AnnotationSegmentationMaskFile.model_rebuild()
 AnnotationSemanticSegmentationMaskFile.model_rebuild()
+AnnotationInstanceSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
 AnnotationGlobalCaptionFile.model_rebuild()

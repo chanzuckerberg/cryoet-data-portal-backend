@@ -236,6 +236,11 @@ def seg_mask_annotation_files_to_metadata(seg_mask_annotation_mrc_files_to_metad
     """Load the annotation metadata, keyed by path."""
     return load_metadata_dict(seg_mask_annotation_mrc_files_to_metadata_files, filesystem)
 
+@pytest.fixture(scope="session")
+def instance_seg_mask_annotation_files_to_metadata(instance_seg_mask_annotation_mrc_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by path."""
+    return load_metadata_dict(instance_seg_mask_annotation_mrc_files_to_metadata_files, filesystem)
+
 
 def get_ndjson_annotations(
     annotation_files: List[str],
@@ -306,6 +311,35 @@ def seg_mask_annotation_zarr_headers(
     """
     headers = {}
     for zarr_filename in seg_mask_annotation_zarr_files:
+        headers[zarr_filename] = helper_util.get_zarr_metadata(zarr_filename, filesystem)
+
+    return headers
+
+
+@pytest.fixture(scope="session")
+def instance_seg_mask_annotation_mrc_headers(
+    instance_seg_mask_annotation_mrc_files: List[str],
+    filesystem: FileSystemApi,
+) -> Dict[str, MrcInterpreter]:
+    """Get the mrc file headers for an instance segmentation mask mrc annotation file."""
+    headers = {}
+    for mrc_filename in instance_seg_mask_annotation_mrc_files:
+        headers[mrc_filename] = helper_util.get_mrc_header(mrc_filename, filesystem)
+
+    return headers
+
+
+@pytest.fixture(scope="session")
+def instance_seg_mask_annotation_zarr_headers(
+    instance_seg_mask_annotation_zarr_files: List[str],
+    filesystem: FileSystemApi,
+) -> Dict[str, Dict[str, Dict]]:
+    """
+    Get the zattrs and zarray data for an instance segmentation mask zarr annotation file.
+    Dictionary structure: headers = {annotation_a_filename: {"zattrs": Dict, "zarrays": Dict}}, annotation_b_filename: ...}.
+    """
+    headers = {}
+    for zarr_filename in instance_seg_mask_annotation_zarr_files:
         headers[zarr_filename] = helper_util.get_zarr_metadata(zarr_filename, filesystem)
 
     return headers

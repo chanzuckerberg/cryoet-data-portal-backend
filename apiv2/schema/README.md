@@ -22,6 +22,7 @@ Annotation {
     string https_metadata_path
     string annotation_publication
     string annotation_method
+    string annotation_ingest_id
     boolean ground_truth_status
     string object_id
     string object_name

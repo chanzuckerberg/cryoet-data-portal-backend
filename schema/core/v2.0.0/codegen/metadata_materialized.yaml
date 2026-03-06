@@ -3816,6 +3816,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
@@ -3970,6 +3971,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
@@ -4124,6 +4126,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
@@ -4277,6 +4280,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
@@ -4369,6 +4373,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
@@ -4401,6 +4406,7 @@ classes:
         owner: AnnotationSemanticSegmentationMaskFile
         domain_of:
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -4479,6 +4485,113 @@ classes:
         required: false
         inlined: true
         inlined_as_list: true
+  AnnotationInstanceSegmentationMaskFile:
+    name: AnnotationInstanceSegmentationMaskFile
+    description: File and sourcing data for an instance segmentation annotation mask.
+      Annotation that identifies individual instances of object shape masks.
+    from_schema: metadata
+    aliases:
+    - InstanceSegmentationMask
+    is_a: AnnotationSourceFile
+    attributes:
+      file_format:
+        name: file_format
+        description: The format of the volume annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:volume_annotation_file_format
+        alias: file_format
+        owner: AnnotationInstanceSegmentationMaskFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        range: volume_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: (^mrc$)|(^zarr$)
+      rescale:
+        name: rescale
+        description: Whether the annotation file needs to be rescaled.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_rescale
+        ifabsent: 'False'
+        alias: rescale
+        owner: AnnotationInstanceSegmentationMaskFile
+        domain_of:
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationInstanceSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationInstanceSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
+        alias: is_visualization_default
+        owner: AnnotationInstanceSegmentationMaskFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationInstanceSegmentationMaskFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
   AnnotationTriangularMeshFile:
     name: AnnotationTriangularMeshFile
     description: File and sourcing data for a triangular mesh annotation. Annotation
@@ -4502,6 +4615,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
@@ -4609,6 +4723,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile

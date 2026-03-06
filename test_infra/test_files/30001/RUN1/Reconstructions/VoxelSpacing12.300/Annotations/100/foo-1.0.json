@@ -53,6 +53,18 @@
       "path": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100-foo-1.0_segmask.zarr",
       "shape": "SegmentationMask",
       "is_visualization_default": false
+    },
+    {
+      "format": "mrc",
+      "path": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100-foo-1.0_instancesegmask.mrc",
+      "shape": "InstanceSegmentationMask",
+      "is_visualization_default": false
+    },
+    {
+      "format": "zarr",
+      "path": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100-foo-1.0_instancesegmask.zarr",
+      "shape": "InstanceSegmentationMask",
+      "is_visualization_default": false
     }
   ],
   "method_links": [
