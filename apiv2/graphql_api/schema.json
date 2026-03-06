@@ -5213,6 +5213,15 @@
             },
             {
               "defaultValue": null,
+              "name": "annotationIngestId",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "StrComparators",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
               "name": "groundTruthStatus",
               "type": {
                 "kind": "INPUT_OBJECT",
@@ -5811,6 +5820,9 @@
             },
             {
               "name": "annotationMethod"
+            },
+            {
+              "name": "annotationIngestId"
             },
             {
               "name": "groundTruthStatus"
@@ -12322,6 +12334,9 @@
               "name": "InstanceSegmentation"
             },
             {
+              "name": "InstanceSegmentationMask"
+            },
+            {
               "name": "Mesh"
             }
           ],
@@ -14571,6 +14586,15 @@
             },
             {
               "args": [],
+              "name": "annotationIngestId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
               "name": "groundTruthStatus",
               "type": {
                 "kind": "SCALAR",
@@ -14915,6 +14939,15 @@
             {
               "defaultValue": null,
               "name": "annotationMethod",
+              "type": {
+                "kind": "ENUM",
+                "name": "orderBy",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": null,
+              "name": "annotationIngestId",
               "type": {
                 "kind": "ENUM",
                 "name": "orderBy",
@@ -15361,6 +15394,15 @@
             {
               "args": [],
               "name": "annotationMethod",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "annotationIngestId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -21651,6 +21693,15 @@
             {
               "args": [],
               "name": "annotationMethod",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "args": [],
+              "name": "annotationIngestId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
@@ -36855,6 +36906,15 @@
             },
             {
               "defaultValue": "null",
+              "name": "annotationIngestId",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
               "name": "groundTruthStatus",
               "type": {
                 "kind": "SCALAR",
@@ -37083,6 +37143,15 @@
             {
               "defaultValue": null,
               "name": "annotationMethod",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            {
+              "defaultValue": "null",
+              "name": "annotationIngestId",
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
