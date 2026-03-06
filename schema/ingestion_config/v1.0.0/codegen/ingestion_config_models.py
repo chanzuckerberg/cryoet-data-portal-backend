@@ -628,6 +628,10 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     """
     A volume with labels for multiple instances
     """
+    GlobalCaption = "GlobalCaption"
+    """
+    A set of text captions describing the entire tomogram
+    """
 
 
 class PointAnnotationFileFormatEnum(str, Enum):
@@ -687,6 +691,13 @@ class TriangularMeshAnnotationGroupFileFormatEnum(str, Enum):
     Describes the format of a triangular mesh group annotation file
     """
     hff = "hff"
+
+
+class CaptionAnnotationFileFormatEnum(str, Enum):
+    """
+    Describes the format of a caption annotation file
+    """
+    saber = "saber"
 
 
 class AnnotationMethodLinkTypeEnum(str, Enum):
@@ -2170,7 +2181,8 @@ class Tomogram(AuthoredEntity):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'ifabsent': 'True'} })
     cross_references: Optional[CrossReferences] = Field(default=None, description="""A set of cross-references to other databases and publications.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CrossReferencedEntity', 'Tomogram', 'Dataset', 'Deposition']} })
     dates: DateStamp = Field(default=..., description="""A set of dates at which a data item was deposited, published and last modified.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DateStampedEntity',
@@ -2347,7 +2359,8 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
     glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2357,7 +2370,8 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -2368,7 +2382,8 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
@@ -2380,7 +2395,8 @@ class AnnotationSourceFile(ConfiguredBaseModel):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
@@ -2398,7 +2414,8 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:oriented_point_annotation_file_format']} })
     binning: Optional[float] = Field(default=1, description="""The binning factor for a point / oriented point / instance segmentation annotation file.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
@@ -2425,7 +2442,8 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
     glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2435,7 +2453,8 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -2446,7 +2465,8 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
@@ -2458,7 +2478,8 @@ class AnnotationOrientedPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
@@ -2489,7 +2510,8 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:instance_segmentation_annotation_file_format']} })
     binning: Optional[float] = Field(default=1, description="""The binning factor for a point / oriented point / instance segmentation annotation file.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
@@ -2516,7 +2538,8 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
     glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2526,7 +2549,8 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -2537,7 +2561,8 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
@@ -2549,7 +2574,8 @@ class AnnotationInstanceSegmentationFile(AnnotationOrientedPointFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
@@ -2580,7 +2606,8 @@ class AnnotationPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:point_annotation_file_format']} })
     binning: Optional[float] = Field(default=1, description="""The binning factor for a point / oriented point / instance segmentation annotation file.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationOrientedPointFile',
                        'AnnotationPointFile',
@@ -2606,7 +2633,8 @@ class AnnotationPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
     glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2616,7 +2644,8 @@ class AnnotationPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -2627,7 +2656,8 @@ class AnnotationPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
@@ -2639,7 +2669,8 @@ class AnnotationPointFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
@@ -2670,7 +2701,8 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:volume_annotation_file_format']} })
     glob_string: Optional[str] = Field(default=None, description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2680,7 +2712,8 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
     glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2690,7 +2723,8 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -2701,7 +2735,8 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
@@ -2713,7 +2748,8 @@ class AnnotationSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
@@ -2744,7 +2780,8 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:volume_annotation_file_format']} })
     mask_label: Optional[int] = Field(default=1, description="""The mask label for a semantic segmentation mask annotation file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSemanticSegmentationMaskFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_mask_label'],
@@ -2763,7 +2800,8 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
     glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2773,7 +2811,8 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -2784,7 +2823,8 @@ class AnnotationSemanticSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
@@ -2874,7 +2914,8 @@ class AnnotationInstanceSegmentationMaskFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
@@ -2905,7 +2946,8 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:triangular_mesh_annotation_file_format']} })
     scale_factor: Optional[float] = Field(default=1, description="""The scale factor for a mesh annotation file.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
@@ -2919,7 +2961,8 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
     glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -2929,7 +2972,8 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -2940,7 +2984,8 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
@@ -2952,7 +2997,8 @@ class AnnotationTriangularMeshFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
@@ -2983,7 +3029,8 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:triangular_mesh_annotation_group_file_format']} })
     scale_factor: Optional[float] = Field(default=1, description="""The scale factor for a mesh annotation file.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTriangularMeshFile',
                        'AnnotationTriangularMeshGroupFile'],
@@ -3010,7 +3057,8 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
     glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
                        'AnnotationOrientedPointFile',
@@ -3020,7 +3068,8 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
     is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
                        'AnnotationSourceFile',
@@ -3031,7 +3080,8 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
          'ifabsent': 'False'} })
     is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
@@ -3043,13 +3093,88 @@ class AnnotationTriangularMeshGroupFile(AnnotationSourceFile):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
          'ifabsent': 'False'} })
 
     @field_validator('file_format')
     def pattern_file_format(cls, v):
         pattern=re.compile(r"^hff$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid file_format format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid file_format format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+
+class AnnotationGlobalCaptionFile(AnnotationSourceFile):
+    """
+    File and sourcing data for a global caption annotation. Text captions describing the entire tomogram.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['GlobalCaption'], 'from_schema': 'metadata'})
+
+    file_format: Optional[CaptionAnnotationFileFormatEnum] = Field(default=None, description="""The format of the caption annotation file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
+         'exact_mappings': ['cdp-common:caption_annotation_file_format']} })
+    glob_string: Optional[str] = Field(default=None, description="""Glob string to match annotation files in the dataset. Required if annotation_source_file_glob_strings is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_glob_string']} })
+    glob_strings: Optional[list[str]] = Field(default=[], description="""Glob strings to match annotation files in the dataset. Required if annotation_source_file_glob_string is not provided.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_glob_strings']} })
+    is_visualization_default: Optional[bool] = Field(default=False, description="""This annotation will be rendered in neuroglancer by default.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tomogram',
+                       'AnnotationSourceFile',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_visualization_default'],
+         'ifabsent': 'False'} })
+    is_portal_standard: Optional[bool] = Field(default=False, description="""Whether the annotation source is a portal standard.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSourceFile',
+                       'Alignment',
+                       'AnnotationOrientedPointFile',
+                       'AnnotationInstanceSegmentationFile',
+                       'AnnotationPointFile',
+                       'AnnotationSegmentationMaskFile',
+                       'AnnotationSemanticSegmentationMaskFile',
+                       'AnnotationTriangularMeshFile',
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
+         'exact_mappings': ['cdp-common:annotation_source_file_is_portal_standard'],
+         'ifabsent': 'False'} })
+
+    @field_validator('file_format')
+    def pattern_file_format(cls, v):
+        pattern=re.compile(r"^saber$")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -3110,6 +3235,7 @@ class Annotation(AuthoredEntity, DateStampedEntity):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata', 'mixins': ['DateStampedEntity', 'AuthoredEntity']})
 
+    annotation_ingest_id: str = Field(default=..., description="""A unique identifier used during ingestion to identify this annotation.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation']} })
     annotation_method: str = Field(default=..., description="""Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation'],
          'exact_mappings': ['cdp-common:annotation_method']} })
     annotation_object: AnnotationObject = Field(default=..., description="""Metadata describing the object being annotated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation']} })
@@ -3358,7 +3484,8 @@ class Alignment(ConfiguredBaseModel):
                        'AnnotationSemanticSegmentationMaskFile',
                        'AnnotationInstanceSegmentationMaskFile',
                        'AnnotationTriangularMeshFile',
-                       'AnnotationTriangularMeshGroupFile'],
+                       'AnnotationTriangularMeshGroupFile',
+                       'AnnotationGlobalCaptionFile'],
          'ifabsent': 'False'} })
     format: AlignmentFormatEnum = Field(default=..., description="""The format of the alignment.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Alignment', 'Ctf']} })
     method_type: Optional[AlignmentMethodTypeEnum] = Field(default=None, description="""The alignment method type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'Alignment']} })
@@ -3424,7 +3551,7 @@ class Frame(ConfiguredBaseModel):
 
     dose_rate: Union[float, str] = Field(default=..., description="""The dose exposure for a given frame.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'float'}, {'range': 'FloatFormattedString'}],
          'domain_of': ['Frame']} })
-    is_gain_corrected: Optional[bool] = Field(default=None, description="""Is the frame gain corrected""", json_schema_extra = { "linkml_meta": {'domain_of': ['Frame']} })
+    is_gain_corrected: bool = Field(default=..., description="""Is the frame gain corrected""", json_schema_extra = { "linkml_meta": {'domain_of': ['Frame']} })
 
     @field_validator('dose_rate')
     def pattern_dose_rate(cls, v):
@@ -4367,6 +4494,7 @@ class AnnotationSource(DefaultSource):
     InstanceSegmentationMask: Optional[AnnotationInstanceSegmentationMaskFile] = Field(default=None, description="""File and sourcing data for an instance segmentation annotation mask. Annotation that identifies individual instances of object shape masks.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSource']} })
     TriangularMesh: Optional[AnnotationTriangularMeshFile] = Field(default=None, description="""File and sourcing data for a triangular mesh annotation. Annotation that identifies an object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSource']} })
     TriangularMeshGroup: Optional[AnnotationTriangularMeshGroupFile] = Field(default=None, description="""File and sourcing data containing one or more triangular mesh annotations.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSource']} })
+    GlobalCaption: Optional[AnnotationGlobalCaptionFile] = Field(default=None, description="""File and sourcing data for a global caption annotation. Text captions describing the entire tomogram.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationSource']} })
     parent_filters: Optional[AnnotationParentFilters] = Field(default=None, description="""Filters for the parent of an annotation source.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentSource',
                        'AnnotationSource',
                        'CollectionMetadataSource',
@@ -8041,6 +8169,7 @@ AnnotationSemanticSegmentationMaskFile.model_rebuild()
 AnnotationInstanceSegmentationMaskFile.model_rebuild()
 AnnotationTriangularMeshFile.model_rebuild()
 AnnotationTriangularMeshGroupFile.model_rebuild()
+AnnotationGlobalCaptionFile.model_rebuild()
 IdentifiedObject.model_rebuild()
 IdentifiedObjectList.model_rebuild()
 Annotation.model_rebuild()

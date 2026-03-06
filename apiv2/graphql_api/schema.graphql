@@ -479,6 +479,9 @@ type Annotation implements EntityInterface & Node {
   """
   annotationMethod: String!
 
+  """An identifier for the annotation to be used during ingestion."""
+  annotationIngestId: String
+
   """
   Whether an annotation is considered ground truth, as determined by the annotator.
   """
@@ -839,6 +842,7 @@ enum AnnotationCountColumns {
   httpsMetadataPath
   annotationPublication
   annotationMethod
+  annotationIngestId
   groundTruthStatus
   objectId
   objectName
@@ -876,6 +880,9 @@ input AnnotationCreateInput {
   Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)
   """
   annotationMethod: String!
+
+  """An identifier for the annotation to be used during ingestion."""
+  annotationIngestId: String = null
 
   """
   Whether an annotation is considered ground truth, as determined by the annotator.
@@ -1181,6 +1188,7 @@ type AnnotationGroupByOptions {
   httpsMetadataPath: String
   annotationPublication: String
   annotationMethod: String
+  annotationIngestId: String
   groundTruthStatus: Boolean
   objectId: String
   objectName: String
@@ -1350,6 +1358,7 @@ type AnnotationMinMaxColumns {
   httpsMetadataPath: String
   annotationPublication: String
   annotationMethod: String
+  annotationIngestId: String
   objectId: String
   objectName: String
   objectDescription: String
@@ -1379,6 +1388,7 @@ input AnnotationOrderByClause {
   httpsMetadataPath: orderBy
   annotationPublication: orderBy
   annotationMethod: orderBy
+  annotationIngestId: orderBy
   groundTruthStatus: orderBy
   objectId: orderBy
   objectName: orderBy
@@ -1559,6 +1569,9 @@ input AnnotationUpdateInput {
   """
   annotationMethod: String
 
+  """An identifier for the annotation to be used during ingestion."""
+  annotationIngestId: String = null
+
   """
   Whether an annotation is considered ground truth, as determined by the annotator.
   """
@@ -1637,6 +1650,7 @@ input AnnotationWhereClause {
   httpsMetadataPath: StrComparators
   annotationPublication: StrComparators
   annotationMethod: StrComparators
+  annotationIngestId: StrComparators
   groundTruthStatus: BoolComparators
   objectId: StrComparators
   objectName: StrComparators

@@ -6,7 +6,7 @@ import asyncio
 import logging
 import re
 import urllib
-from typing import List, Optional, Set, Tuple, Union
+from typing import Callable, List, Optional, Set, Tuple, Union
 
 import aiohttp
 import numpy
@@ -70,8 +70,10 @@ from codegen.ingestion_config_models import (
     TomogramSource,
     VoxelSpacingEntity,
     VoxelSpacingSource,
+    linkml_meta,
 )
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, ModelWrapValidatorHandler, ValidationError, field_validator, model_validator
+from pydantic_core import ErrorDetails
 from typing_extensions import Self
 
 logger = logging.getLogger(__name__)
@@ -102,6 +104,11 @@ def skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = True
     global validation_exclusions
 
     for base in obj.__class__.__bases__:
+        # a class that has an add_regex_error_augmenter, so the base case is still the "Extended" class,
+        # so we need to go down one more level to get the actual base class
+        if base.__name__.startswith("Extended"):
+            base = base.__bases__[0]
+
         if base.__name__ not in validation_exclusions:
             continue
 
@@ -122,6 +129,66 @@ def skip_validation(obj: BaseModel, field_name: str, case_sensitive: bool = True
             return True
     return False
 
+
+def get_patterns(field_linkml_meta: dict) -> list[str]:
+    """
+    Given a field's linkml metadata, returns the regex matching patterns for that field.
+    """
+    ranges = []
+    if "range" in field_linkml_meta:
+        ranges.append(field_linkml_meta["range"])
+    any_of = field_linkml_meta.get('any_of', [])
+    for item in any_of:
+        range_value = item.get('range')
+        if range_value:
+            ranges.append(range_value)
+    ranges = [r for r in ranges if r in linkml_meta['types'] and r not in ['string', 'date', 'datetime', 'decimal', 'double', 'float', 'integer', 'boolean']]
+    patterns = [linkml_meta['types'][r]['pattern'] for r in ranges]
+    return patterns
+
+
+def add_regex_error_augmenter(
+    field: str,
+) -> Callable[[type], type]:
+    """
+    Class decorator that injects a wrap field validator for `field`
+    which appends possible regex formats to a matching error message.
+    """
+
+    def decorator(cls: type) -> type:
+        @field_validator(field, mode="wrap", check_fields=False)
+        @classmethod
+        def _validator(
+            cls,
+            value: Optional[str],
+            handler: ModelWrapValidatorHandler,
+        ) -> Optional[str]:
+            possible_regexes = get_patterns(cls.model_fields[field].json_schema_extra["linkml_meta"])
+            try:
+                return handler(value)
+            except ValidationError as e:
+                new_errors: List[ErrorDetails] = []
+                for error in e.errors():
+                    if f"Invalid {field} format:" in error.get("msg", ""):
+                        new_error = error.copy()
+                        if possible_regexes:
+                            new_error["msg"] += f". Valid formats include: {possible_regexes}"
+
+                        new_error["msg"] += f". Field description: {cls.model_fields[field].description}"
+                        new_error["ctx"]["error"] = new_error["msg"]
+                        new_errors.append(new_error)
+                    else:
+                        new_errors.append(error)
+                raise ValidationError.from_exception_data(cls.__name__, new_errors) from None
+
+        # need to create new subclass so that pydantic actually uses the new validator
+        new_subclass = {
+            f"augment_{field}_regex_error_message": _validator,
+            "__module__": cls.__module__,
+        }
+        return type(cls.__name__, (cls,), new_subclass)
+
+    return decorator
 
 # ==============================================================================
 # Author Validation
@@ -244,16 +311,16 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
             return [], False
         data = await response.json()
         names = []
-        for entry in data["_embedded"]["terms"]:
+        for entry in data.get("_embedded", {}).get("terms", []):
             names.append(entry["label"])
             names += entry["synonyms"]
         return names, True
 
 
 @alru_cache
-async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
+async def is_id_ancestor(id_ancestor: str, id: str) -> tuple[bool, List[str]]:
     """
-    Returns whether or not id_ancestor is an ancestor of id
+    Returns whether or not id_ancestor is an ancestor of id, and the ancestors.
     """
     # Encode the IRI
     iri = f"http://purl.obolibrary.org/obo/{id.replace(':', '_')}"
@@ -268,8 +335,8 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> bool:
 
     async with aiohttp.ClientSession() as session, session.get(url) as response:
         logger.debug("Getting ancestors for ID %s at %s, status %s", id, url, response.status)
-        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json())["_embedded"]["terms"]]
-        return response.status == 200 and id_ancestor in ancestor_ids
+        ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json()).get("_embedded", {}).get("terms", [])]
+        return response.status == 200 and id_ancestor in ancestor_ids, ancestor_ids
 
 
 @alru_cache
@@ -383,14 +450,15 @@ def validate_id_name_object(
     valid_name = retrieved_names == [] or any(name == retrieved_name for retrieved_name in retrieved_names)
 
     if not valid_name:
-        raise ValueError(f"name '{name}' does not match id: {id}")
+        raise ValueError(f"name '{name}' does not match id: {id}, retrieved names: {retrieved_names}")
 
     if ancestor is None:
         return
 
     logger.debug("Valid name, now checking if %s is an ancestor of %s", name, ancestor)
-    if not asyncio.run(validate_ancestor_function(ancestor, id)):
-        raise ValueError(f"'{name}' is not a descendant of {ancestor}")
+    is_ancestor, ancestor_ids = asyncio.run(validate_ancestor_function(ancestor, id))
+    if not is_ancestor:
+        raise ValueError(f"'{name}' is not a descendant of {ancestor}, ancestors: {ancestor_ids}")
 
 
 def validate_cell_strain_object(self: CellStrain) -> CellStrain:
@@ -665,6 +733,7 @@ class ExtendValidationAlignment(Alignment):
 # ==============================================================================
 # Annotation Object Validation
 # ==============================================================================
+@add_regex_error_augmenter("id")
 class ExtendedValidationAnnotationObject(AnnotationObject):
     @model_validator(mode="after")
     def validate_annotation_object(self) -> Self:
@@ -834,6 +903,7 @@ class ExtendedValidationDatasetKeyPhotoEntity(DatasetKeyPhotoEntity):
 # ==============================================================================
 # Dataset Validation
 # ==============================================================================
+@add_regex_error_augmenter("id")
 class ExtendedValidationCellComponent(CellComponent):
     @model_validator(mode="after")
     def validate_cell_component(self) -> Self:
@@ -841,19 +911,20 @@ class ExtendedValidationCellComponent(CellComponent):
         return self
 
 
+@add_regex_error_augmenter("id")
 class ExtendedValidationCellStrain(CellStrain):
     @model_validator(mode="after")
     def validate_cell_strain(self) -> Self:
         return validate_cell_strain_object(self)
 
-
+@add_regex_error_augmenter("id")
 class ExtendedValidationCellType(CellType):
     @model_validator(mode="after")
     def validate_cell_type(self) -> Self:
         validate_id_name_object(self, self.id, self.name)
         return self
 
-
+@add_regex_error_augmenter("id")
 class ExtendedValidationTissue(TissueDetails):
     @model_validator(mode="after")
     def validate_tissue(self) -> Self:
@@ -873,20 +944,27 @@ class ExtendedValidationOrganism(OrganismDetails):
         )
         return self
 
+@add_regex_error_augmenter("id")
 class ExtendedValidationAssay(Assay):
     @model_validator(mode="after")
     def validate_assay(self) -> Self:
         validate_id_name_object(self, self.id, self.name)
         return self
 
+@add_regex_error_augmenter("id")
 class ExtendedValidationDevelopmentStageDetails(DevelopmentStageDetails):
     @model_validator(mode="after")
     def validate_development_stage(self) -> Self:
         if self.id == "unknown" and self.name == "unknown":
             return self
+        elif self.id == "unknown":
+            raise ValueError("Development stage cannot have 'unknown' name with a known ID; set both to 'unknown' if the development stage is unknown; otherwise, provide a valid ID")
+        elif self.name == "unknown":
+            raise ValueError("Development stage cannot have 'unknown' ID with a known name; set both to 'unknown' if the development stage is unknown; otherwise, provide a valid name")
         validate_id_name_object(self, self.id, self.name)
         return self
 
+@add_regex_error_augmenter("id")
 class ExtendedValidationDisease(Disease):
     @model_validator(mode="after")
     def validate_disease(self) -> Self:
@@ -1015,6 +1093,7 @@ class ExtendedValidationGainEntity(GainEntity):
 # ==============================================================================
 # Identified Object Validation
 # ==============================================================================
+@add_regex_error_augmenter("id")
 class ExtendedValidationIdentifiedObject(IdentifiedObject):
     @model_validator(mode="after")
     def validate_identified_object(self) -> Self:
@@ -1141,6 +1220,42 @@ class ExtendedValidationVoxelSpacingEntity(VoxelSpacingEntity):
 
 
 class ExtendedValidationContainer(Container):
+    @field_validator("annotations")
+    @classmethod
+    def validate_unique_annotation_ingest_ids(
+        cls: Self,
+        annotations: Optional[List[ExtendedValidationAnnotationEntity]],
+    ) -> Optional[List[ExtendedValidationAnnotationEntity]]:
+        """Validate that annotation_ingest_id values are unique within the config."""
+        if not annotations:
+            return annotations
+
+        seen_ids = set()
+        duplicate_ids = set()
+
+        for annotation in annotations:
+            metadata = annotation.metadata
+            if metadata is None:
+                continue
+
+            # Get the annotation_ingest_id, skip if not present
+            ingest_id = getattr(metadata, "annotation_ingest_id", None)
+            if ingest_id is None:
+                continue
+
+            if ingest_id in seen_ids:
+                duplicate_ids.add(ingest_id)
+            else:
+                seen_ids.add(ingest_id)
+
+        if duplicate_ids:
+            raise ValueError(
+                f"Duplicate annotation_ingest_id values found: {sorted(duplicate_ids)}. "
+                "Each annotation must have a unique annotation_ingest_id within the config file.",
+            )
+
+        return annotations
+
     # Set global network_validation flag
     def __init__(self, **data):
         global running_network_validation

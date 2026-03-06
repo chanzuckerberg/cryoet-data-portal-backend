@@ -15,6 +15,7 @@ class AnnotationItem(ItemDBImporter):
         "release_date": ["dates", "release_date"],
         "last_modified_date": ["dates", "last_modified_date"],
         "annotation_publication": ["annotation_publications"],
+        "annotation_ingest_id": ["annotation_ingest_id"],
         "annotation_method": ["annotation_method"],
         "ground_truth_status": ["ground_truth_status"],
         "object_name": ["annotation_object", "name"],
