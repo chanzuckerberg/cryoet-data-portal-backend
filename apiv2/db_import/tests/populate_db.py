@@ -260,6 +260,7 @@ def populate_stale_tomogram_voxel_spacing(session: sa.orm.Session, run_id: int =
     session.add(TomogramAuthor(tomogram=stale_tomogram, name="Jane Smith", author_list_order=1))
     session.add(TomogramAuthor(tomogram=stale_tomogram, name="John John", author_list_order=2))
     stale_annotation = Annotation(
+        annotation_ingest_id="100-bar-1.0",
         s3_metadata_path="foo",
         https_metadata_path="foo",
         deposition_date="2025-04-01",
@@ -512,6 +513,7 @@ def populate_annotations(session: sa.orm.Session) -> Annotation:
     return Annotation(
         id=ANNOTATION_ID,
         run_id=RUN1_ID,
+        annotation_ingest_id="100-foo-1.0",
         deposition_id=DEPOSITION_ID2,
         s3_metadata_path=(
             "s3://test-public-bucket/30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100/foo-1.0.json"
@@ -535,6 +537,7 @@ def populate_stale_annotations(session: sa.orm.Session) -> Annotation:
     return Annotation(
         id=STALE_ANNOTATION_ID,
         run_id=RUN1_ID,
+        annotation_ingest_id="100-bar-1.0",
         s3_metadata_path="foo",
         https_metadata_path="foo",
         deposition_date="2025-04-01",

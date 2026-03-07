@@ -411,8 +411,8 @@ class Annotation(EntityInterface):
     annotation_method: str = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
     )
-    annotation_ingest_id: Optional[str] = strawberry.field(
-        description="An identifier for the annotation to be used during ingestion.", default=None,
+    annotation_ingest_id: str = strawberry.field(
+        description="An identifier for the annotation to be used during ingestion.",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
@@ -617,8 +617,8 @@ class AnnotationCreateInput:
     annotation_method: str = strawberry.field(
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
     )
-    annotation_ingest_id: Optional[str] = strawberry.field(
-        description="An identifier for the annotation to be used during ingestion.", default=None,
+    annotation_ingest_id: str = strawberry.field(
+        description="An identifier for the annotation to be used during ingestion.",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
@@ -686,7 +686,7 @@ class AnnotationUpdateInput:
         description="Describe how the annotation is made (e.g. Manual, crYoLO, Positive Unlabeled Learning, template matching)",
     )
     annotation_ingest_id: Optional[str] = strawberry.field(
-        description="An identifier for the annotation to be used during ingestion.", default=None,
+        description="An identifier for the annotation to be used during ingestion.",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
         description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
