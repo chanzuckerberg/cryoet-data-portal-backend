@@ -88,6 +88,13 @@
             "SCALAR"
           ],
           "name": "specifiedBy"
+        },
+        {
+          "args": [],
+          "locations": [
+            "INPUT_OBJECT"
+          ],
+          "name": "oneOf"
         }
       ],
       "mutationType": {
@@ -14588,9 +14595,13 @@
               "args": [],
               "name": "annotationIngestId",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               }
             },
             {
@@ -36905,12 +36916,16 @@
               }
             },
             {
-              "defaultValue": "null",
+              "defaultValue": null,
               "name": "annotationIngestId",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               }
             },
             {
@@ -37150,7 +37165,7 @@
               }
             },
             {
-              "defaultValue": "null",
+              "defaultValue": null,
               "name": "annotationIngestId",
               "type": {
                 "kind": "SCALAR",
@@ -42926,5 +42941,12 @@
         }
       ]
     }
+  },
+  "headers": {
+    "Connection": "close",
+    "Content-Length": "534667",
+    "Content-Type": "application/json",
+    "Date": "Sat, 07 Mar 2026 00:20:36 GMT",
+    "Server": "nginx/1.22.1"
   }
 }
