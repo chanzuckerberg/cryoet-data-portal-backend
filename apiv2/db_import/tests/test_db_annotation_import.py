@@ -30,6 +30,7 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
         {
             "id": ANNOTATION_ID,
             "run_id": RUN1_ID,
+            "annotation_ingest_id": "100-foo-1.0",
             "s3_metadata_path": f"s3://test-public-bucket/{path}",
             "https_metadata_path": f"{http_prefix}/{path}",
             "deposition_date": datetime.date(2023, 4, 1),
