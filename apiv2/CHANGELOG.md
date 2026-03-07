@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.16.0...apiv2-v1.17.0) (2026-03-07)
+
+
+### Features
+
+* add instance segmentation mask support ([#602](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/602)) ([aaca757](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/aaca7579b5e1d4ccd6977f8aa2e0d869d4a553a2))
+
 ## [1.16.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.15.0...apiv2-v1.16.0) (2026-03-04)
 
 
