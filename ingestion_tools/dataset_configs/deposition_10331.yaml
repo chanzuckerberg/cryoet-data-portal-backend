@@ -81,7 +81,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_bacteria-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_bacteria-multilabel.zarr'
       is_visualization_default: false
       threshold: 0.5
     parent_filters:
@@ -98,7 +98,7 @@ annotations:
   - InstanceSegmentation:
       binning: 15.6
       file_format: copick
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
       is_visualization_default: false
       order: xyz
     parent_filters:
@@ -127,7 +127,7 @@ annotations:
   sources:
     - SemanticSegmentationMask:
         file_format: zarr
-        glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_bacteria-multilabel.zarr'
+        glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_bacteria-multilabel.zarr'
         is_visualization_default: false
         threshold: 0.5
       parent_filters:
@@ -138,7 +138,7 @@ annotations:
     - InstanceSegmentation:
         binning: 16.8
         file_format: copick
-        glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
+        glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
         is_visualization_default: false
         order: xyz
       parent_filters:
@@ -167,7 +167,7 @@ annotations:
   sources:
     - InstanceSegmentationMask:
         file_format: zarr
-        glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_SABER_1_bacteria-multilabel.zarr'
+        glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_bacteria-multilabel.zarr'
         is_visualization_default: true
       parent_filters:
         include:
@@ -206,7 +206,7 @@ annotations:
   sources:
     - SemanticSegmentationMask:
         file_format: zarr
-        glob_string: '20250522_sam2/{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_whole-cell-multilabel.zarr'
+        glob_string: '{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_whole-cell-multilabel.zarr'
         is_visualization_default: false
         threshold: 0.5
       parent_filters:
@@ -239,7 +239,7 @@ annotations:
   sources:
     - InstanceSegmentationMask:
         file_format: zarr
-        glob_string: '20250522_sam2/{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_whole-cell-multilabel.zarr'
+        glob_string: '{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_whole-cell-multilabel.zarr'
         is_visualization_default: true
       parent_filters:
         include:
@@ -272,7 +272,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_(granules|inclusion)-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_(granules|inclusion)-multilabel.zarr'
       is_visualization_default: false
       threshold: 0.5
     parent_filters:
@@ -289,7 +289,7 @@ annotations:
   - InstanceSegmentation:
       binning: 15.6
       file_format: copick
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
       is_visualization_default: false
       order: xyz
     parent_filters:
@@ -318,7 +318,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_granules-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_granules-multilabel.zarr'
       is_visualization_default: false
       threshold: 0.5
     parent_filters:
@@ -329,7 +329,7 @@ annotations:
   - InstanceSegmentation:
       binning: 16.8
       file_format: copick
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
       is_visualization_default: false
       order: xyz
     parent_filters:
@@ -358,7 +358,7 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_(granules|inclusion)-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_(granules|inclusion)-multilabel.zarr'
       is_visualization_default: true
     parent_filters:
       include:
@@ -397,7 +397,7 @@ annotations:
   sources:
     - SemanticSegmentationMask:
         file_format: zarr
-        glob_string: '20250522_sam2/{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_inclusion-multilabel.zarr'
+        glob_string: '{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_inclusion-multilabel.zarr'
         is_visualization_default: false
         threshold: 0.5
       parent_filters:
@@ -430,7 +430,7 @@ annotations:
   sources:
     - SemanticSegmentationMask:
         file_format: zarr
-        glob_string: '20250522_sam2/{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_inclusion-multilabel.zarr'
+        glob_string: '{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_inclusion-multilabel.zarr'
         is_visualization_default: true
         threshold: 0.5
       parent_filters:
@@ -462,7 +462,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_minicell*-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_minicell*-multilabel.zarr'
       is_visualization_default: false
       rescale: true
       threshold: 0.5
@@ -474,7 +474,7 @@ annotations:
   - InstanceSegmentation:
       binning: 5.006
       file_format: copick
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
       is_visualization_default: false
       order: xyz
     parent_filters:
@@ -502,7 +502,7 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_minicell*-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_minicell*-multilabel.zarr'
       is_visualization_default: true
       rescale: true
     parent_filters:
@@ -534,7 +534,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_saber_1_virus-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_saber_1_virus-multilabel.zarr'
       is_visualization_default: true
       rescale: true
       threshold: 0.5
@@ -563,7 +563,7 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_saber_1_virus-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_saber_1_virus-multilabel.zarr'
       is_visualization_default: true
       rescale: true
     parent_filters:
@@ -593,7 +593,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_nuclear-envelope-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_nuclear-envelope-multilabel.zarr'
       is_visualization_default: false
       rescale: true
       threshold: 0.5
@@ -621,7 +621,7 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_nuclear-envelope-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_nuclear-envelope-multilabel.zarr'
       is_visualization_default: true
       rescale: true
     parent_filters:
@@ -651,7 +651,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_polar-tube-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_polar-tube-multilabel.zarr'
       is_visualization_default: false
       threshold: 0.5
       rescale: true
@@ -680,7 +680,7 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_polar-tube-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_polar-tube-multilabel.zarr'
       is_visualization_default: true
       rescale: true
     parent_filters:
@@ -710,7 +710,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_spores-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_spores-multilabel.zarr'
       is_visualization_default: false
       rescale: true
       threshold: 0.5
@@ -739,7 +739,7 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_spores-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_spores-multilabel.zarr'
       is_visualization_default: true
       rescale: true
     parent_filters:
@@ -752,15 +752,7 @@ annotations:
 datasets:
 - sources:
   - source_glob:
-      list_glob: '20250522_sam2/10???'
-      match_regex: .*
-      name_regex: (.*)
-  - source_glob:
-      list_glob: '20260306_SABER_paper/10???'
-      match_regex: .*
-      name_regex: (.*)
-  - source_glob:
-      list_glob: '20260306_SABER_paper/10???'
+      list_glob: '10???'
       match_regex: .*
       name_regex: (.*)
 deposition_keyphotos:
@@ -843,13 +835,13 @@ depositions:
 runs:
 - sources:
   - source_glob:
-      list_glob: '20250522_sam2/{dataset_name}/overlay/ExperimentRuns/*'
+      list_glob: '{dataset_name}/overlay/ExperimentRuns/*'
       match_regex: .*
       name_regex: (.*)
 
 standardization_config:
   deposition_id: 10331
-  source_prefix: CZII/
+  source_prefix: CZII/20250522_sam2/
 version: 1.3.0
 voxel_spacings:
 - sources:
