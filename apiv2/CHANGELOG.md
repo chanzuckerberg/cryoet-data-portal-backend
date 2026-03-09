@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.17.0...apiv2-v1.18.0) (2026-03-09)
+
+
+### Features
+
+* use annotation_ingest_id for uniqueness hash key in s3 + db ([#609](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/609)) ([87ecb60](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/87ecb6040a5f5f971833eb50931a8a879f7f12d7))
+
 ## [1.17.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.16.0...apiv2-v1.17.0) (2026-03-07)
 
 
