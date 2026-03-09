@@ -81,7 +81,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_bacteria-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_bacteria-multilabel.zarr'
       is_visualization_default: false
       threshold: 0.5
     parent_filters:
@@ -167,7 +167,7 @@ annotations:
   sources:
     - InstanceSegmentationMask:
         file_format: zarr
-        glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_bacteria-multilabel.zarr'
+        glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_bacteria-multilabel.zarr'
         is_visualization_default: true
       parent_filters:
         include:
@@ -272,7 +272,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_(granules|inclusion)-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_(granules|inclusion)-multilabel.zarr'
       is_visualization_default: false
       threshold: 0.5
     parent_filters:
@@ -358,7 +358,7 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_(granules|inclusion)-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_(granules|inclusion)-multilabel.zarr'
       is_visualization_default: true
     parent_filters:
       include:
@@ -462,7 +462,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_minicell*-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_minicell*-multilabel.zarr'
       is_visualization_default: false
       rescale: true
       threshold: 0.5
@@ -502,7 +502,7 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_(SABER|saber)_1_minicell*-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_minicell*-multilabel.zarr'
       is_visualization_default: true
       rescale: true
     parent_filters:
