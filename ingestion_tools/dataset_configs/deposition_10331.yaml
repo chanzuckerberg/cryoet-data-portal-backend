@@ -473,18 +473,18 @@ annotations:
     parent_filters:
       include:
         dataset:
-        - '10442'
-        - '10452'
-  - InstanceSegmentation:
-      binning: 5.006
-      file_format: copick
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
-      is_visualization_default: false
-      order: xyz
-    parent_filters:
-      include:
-        dataset:
-        - '10442'
+          - '10452'
+        #- '10442'
+#  - InstanceSegmentation:
+#      binning: 5.006
+#      file_format: copick
+#      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
+#      is_visualization_default: false
+#      order: xyz
+#    parent_filters:
+#      include:
+#        dataset:
+#        - '10442'
 
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-5
@@ -512,8 +512,9 @@ annotations:
     parent_filters:
       include:
         dataset:
-        - '10442'
-        - '10452'
+          - '10452'
+        #- '10442'
+
 ############################ END Minicell cell body SABER ############################
 
 
