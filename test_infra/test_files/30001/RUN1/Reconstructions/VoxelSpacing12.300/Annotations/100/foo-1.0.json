@@ -1,4 +1,5 @@
 {
+  "annotation_ingest_id": "100-foo-1.0",
   "annotation_object": {
     "id": "GO:000000",
     "name": "foo"

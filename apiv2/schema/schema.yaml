@@ -1016,7 +1016,7 @@ classes:
         description: An identifier for the annotation to be used during ingestion.
         from_schema: cdp-dataset-config
         range: string
-        required: false
+        required: true
         pattern: ^[a-z0-9]+(-[a-z0-9]+)*-[0-9]+$
       ground_truth_status:
         name: ground_truth_status

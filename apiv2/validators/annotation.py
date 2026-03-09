@@ -47,7 +47,7 @@ class AnnotationCreateInputValidator(BaseModel):
         ),
     ]
     annotation_ingest_id: Annotated[
-        str | None,
+        str,
         StringConstraints(
             strip_whitespace=True,
             pattern=r"^[a-z0-9]+(-[a-z0-9]+)*-[0-9]+$",

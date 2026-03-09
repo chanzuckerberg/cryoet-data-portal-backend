@@ -88,6 +88,13 @@
             "SCALAR"
           ],
           "name": "specifiedBy"
+        },
+        {
+          "args": [],
+          "locations": [
+            "INPUT_OBJECT"
+          ],
+          "name": "oneOf"
         }
       ],
       "mutationType": {
@@ -42926,5 +42933,12 @@
         }
       ]
     }
+  },
+  "headers": {
+    "Connection": "close",
+    "Content-Length": "534667",
+    "Content-Type": "application/json",
+    "Date": "Sat, 07 Mar 2026 00:20:36 GMT",
+    "Server": "nginx/1.22.1"
   }
 }
