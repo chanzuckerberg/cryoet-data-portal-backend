@@ -272,7 +272,9 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_(granules|inclusion)-multilabel.zarr'
+      glob_strings:
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_granules-multilabel.zarr'
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_inclusion-multilabel.zarr'
       is_visualization_default: false
       threshold: 0.5
     parent_filters:
@@ -358,7 +360,9 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_(granules|inclusion)-multilabel.zarr'
+      glob_strings:
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_granules-multilabel.zarr'
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_inclusion-multilabel.zarr'
       is_visualization_default: true
     parent_filters:
       include:
