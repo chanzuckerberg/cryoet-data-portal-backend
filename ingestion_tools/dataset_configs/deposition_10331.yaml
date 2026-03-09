@@ -9,7 +9,7 @@ annotations:
 ############################ BEGIN Bacteria cell body SABER ############################
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-1
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: &method_links
       - link_type: source_code
         link: https://github.com/chanzuckerberg/saber
@@ -109,7 +109,7 @@ annotations:
 
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-2
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: *method_links
     annotation_object:
       id: GO:0005622
@@ -185,7 +185,7 @@ annotations:
 
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-8
-    annotation_method: Semi-manual annotation using nnInteractive
+    annotation_method: Semi-manual annotation using nnInteractive + Threshold at 0.5
     method_links:
       - link_type: source_code
         link: https://github.com/MIC-DKFZ/nnInteractive
@@ -254,7 +254,7 @@ annotations:
 ############################ START Bacteria inclusion SABER ############################
 - metadata:
     annotation_ingest_id: inclusion-body-1
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: *method_links
     annotation_object:
       id: GO:0016234
@@ -272,7 +272,9 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_(granules|inclusion)-multilabel.zarr'
+      glob_strings:
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_granules-multilabel.zarr'
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_inclusion-multilabel.zarr'
       is_visualization_default: false
       threshold: 0.5
     parent_filters:
@@ -300,7 +302,7 @@ annotations:
 
 - metadata:
     annotation_ingest_id: inclusion-body-2
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: *method_links
     annotation_object:
       id: GO:0016234
@@ -358,7 +360,9 @@ annotations:
   sources:
   - InstanceSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_(granules|inclusion)-multilabel.zarr'
+      glob_strings:
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_granules-multilabel.zarr'
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_inclusion-multilabel.zarr'
       is_visualization_default: true
     parent_filters:
       include:
@@ -376,7 +380,7 @@ annotations:
 
 - metadata:
     annotation_ingest_id: inclusion-body-4
-    annotation_method: Semi-manual annotation using nnInteractive
+    annotation_method: Semi-manual annotation using nnInteractive + Threshold at 0.5
     method_links:
       - link_type: source_code
         link: https://github.com/MIC-DKFZ/nnInteractive
@@ -444,7 +448,7 @@ annotations:
 ############################ START Minicell cell body SABER ############################
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-3
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: *method_links
     annotation_object:
       id: GO:0005622
@@ -469,18 +473,18 @@ annotations:
     parent_filters:
       include:
         dataset:
-        - '10442'
-        - '10452'
-  - InstanceSegmentation:
-      binning: 5.006
-      file_format: copick
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
-      is_visualization_default: false
-      order: xyz
-    parent_filters:
-      include:
-        dataset:
-        - '10442'
+          - '10452'
+        #- '10442'
+#  - InstanceSegmentation:
+#      binning: 5.006
+#      file_format: copick
+#      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
+#      is_visualization_default: false
+#      order: xyz
+#    parent_filters:
+#      include:
+#        dataset:
+#        - '10442'
 
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-5
@@ -508,15 +512,16 @@ annotations:
     parent_filters:
       include:
         dataset:
-        - '10442'
-        - '10452'
+          - '10452'
+        #- '10442'
+
 ############################ END Minicell cell body SABER ############################
 
 
 ############################ BEGIN VLP SABER ############################
 - metadata:
     annotation_ingest_id: virus-like-particle-1
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: *method_links
     annotation_object:
       id: GO:0170047
@@ -575,7 +580,7 @@ annotations:
 ############################ BEGIN Microsporidia nuclear envelope SABER ############################
 - metadata:
     annotation_ingest_id: nuclear-envelope-1
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: *method_links
     annotation_object:
       id: GO:0005635
@@ -633,7 +638,7 @@ annotations:
 ############################ BEGIN Microsporidia polar tube SABER ############################
 - metadata:
     annotation_ingest_id: polar-tube-1
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: *method_links
     annotation_object:
       id: GO:0044099
@@ -692,7 +697,7 @@ annotations:
 ############################ BEGIN Microsporidia spore SABER ############################
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-6
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
     method_links: *method_links
     annotation_object:
       id: GO:0005622
