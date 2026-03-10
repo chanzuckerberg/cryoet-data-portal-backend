@@ -7,7 +7,7 @@ from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
 
 
 class AnnotationItem(ItemDBImporter):
-    id_fields = ["run_id", "deposition_id", "annotation_method", "object_name", "object_description", "object_state"]
+    id_fields = ["run_id", "deposition_id", "annotation_ingest_id"]
     model_class = models.Annotation
     direct_mapped_fields = {
         "deposition_id": ["deposition_id"],
