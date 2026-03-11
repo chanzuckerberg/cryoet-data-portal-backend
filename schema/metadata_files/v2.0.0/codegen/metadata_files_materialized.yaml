@@ -407,6 +407,12 @@ types:
     from_schema: metadata
     base: str
     pattern: ^CHEBI:[0-9]+$
+  CDPO_ID:
+    name: CDPO_ID
+    description: A CryoET Data Portal Ontology identifier
+    from_schema: metadata
+    base: str
+    pattern: ^CDPO:[0-9]{7}$
   ONTOLOGY_ID:
     name: ONTOLOGY_ID
     description: An ontology identifier
