@@ -99,6 +99,13 @@ linkml_meta = LinkMLMeta(
                 "name": "CC_ID",
                 "pattern": "^CC-[0-9]{4}$",
             },
+            "CDPO_ID": {
+                "base": "str",
+                "description": "A CryoET Data Portal Ontology " "identifier",
+                "from_schema": "metadata",
+                "name": "CDPO_ID",
+                "pattern": "^CDPO:[0-9]{7}$",
+            },
             "CHEBI_ID": {
                 "base": "str",
                 "description": "A Chemical Entities of Biological " "Interest ontology identifier",
@@ -3450,7 +3457,13 @@ class AnnotationObject(ConfiguredBaseModel):
         description="""Ontology identifier for the annotation object.""",
         json_schema_extra={
             "linkml_meta": {
-                "any_of": [{"range": "GO_ID"}, {"range": "UNIPROT_ID"}, {"range": "UBERON_ID"}, {"range": "CHEBI_ID"}],
+                "any_of": [
+                    {"range": "GO_ID"},
+                    {"range": "UNIPROT_ID"},
+                    {"range": "UBERON_ID"},
+                    {"range": "CHEBI_ID"},
+                    {"range": "CDPO_ID"},
+                ],
                 "domain_of": [
                     "Assay",
                     "DevelopmentStageDetails",
@@ -3509,7 +3522,7 @@ class AnnotationObject(ConfiguredBaseModel):
     @field_validator("id")
     def pattern_id(cls, v):
         pattern = re.compile(
-            r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)"
+            r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)|(^CDPO:[0-9]{7}$)"
         )
         if isinstance(v, list):
             for element in v:

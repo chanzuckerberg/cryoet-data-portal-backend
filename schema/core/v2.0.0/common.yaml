@@ -753,6 +753,7 @@ slots:
       - range: UNIPROT_ID
       - range: UBERON_ID
       - range: CHEBI_ID
+      - range: CDPO_ID
     required: true
     description: Ontology identifier for the annotation object.
   annotation_object_name:
@@ -1667,6 +1668,11 @@ types:
     description: A Chemical Entities of Biological Interest ontology identifier
     base: str
     pattern: '^CHEBI:[0-9]+$'
+
+  CDPO_ID:
+    description: A CryoET Data Portal Ontology identifier
+    base: str
+    pattern: '^CDPO:[0-9]{7}$'
 
   ONTOLOGY_ID:
     description: An ontology identifier
