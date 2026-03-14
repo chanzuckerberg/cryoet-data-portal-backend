@@ -1,0 +1,290 @@
+# CryoET Data Portal Ingestion Configuration
+# Dataset: 10473 (Deposition: 10343)
+# Source: EMPIAR-11398 - Optimizing Cryo-FIB Lamellas for sub-5Å in situ Structural Biology
+
+version: 1.1.0
+
+standardization_config:
+  deposition_id: 10343
+  source_prefix: EMPIAR/EMPIAR-11398/nopt
+  run_data_map_file: run_to_data_map.tsv
+
+datasets:
+- metadata:
+    dataset_identifier: 10473
+    dataset_title: Cryo-FIB milled S. cerevisiae lamellas without post-milling platinum sputter coating
+    dataset_description: >
+      Cryo-electron tomography dataset of Saccharomyces cerevisiae cells prepared by cryo-FIB milling
+      without post-milling platinum sputter coating. This dataset serves as the control condition
+      for a study demonstrating that metallic platinum coating of cryo-FIB milled lamellas
+      significantly reduces beam-induced sample movement. Yeast cells were plunge frozen and
+      automatically FIB-milled using standard preparation without the additional post-milling
+      platinum sputter coating step. Tilt series were collected using a dose-symmetric scheme
+      on a Krios G4 microscope with Selectris X energy filter and Falcon 4 detector at 300 kV.
+    authors: &dataset_authors
+    - name: Sagar Khavnekar
+      ORCID: 0000-0003-2020-3561
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Veronika Vrbovska
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Magda Zaoralova
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Ron Kelley
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Florian Beck
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Sven Klumpe
+      ORCID: 0000-0002-8350-6503
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Abhay Kotecha
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Jurgen Plitzko
+      ORCID: 0000-0002-6402-8315
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Philipp S. Erdmann
+      ORCID: 0000-0001-8289-9133
+      primary_author_status: false
+      corresponding_author_status: true
+    dates: &dataset_dates
+      deposition_date: '2022-06-16'
+      release_date: '2022-06-16'
+      last_modified_date: '2022-06-16'
+    organism:
+      name: Saccharomyces cerevisiae
+      taxonomy_id: 4932
+    sample_type: primary_cell_culture
+    tissue:
+      name: vegetative cell (sensu Fungi)
+      id: CL:0000334
+    cell_type:
+      name: vegetative cell (sensu Fungi)
+      id: CL:0000334
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: normal
+      id: PATO:0000461
+    funding:
+    - funding_agency_name: Max Planck Society
+      grant_id: null
+    grid_preparation: >
+      Glow-discharged 200 mesh holey carbon copper grids (Quantifoil R1.2/3). 4 uL of S. cerevisiae
+      cells at OD600 0.8 were applied and vitrified in liquid ethane using Vitrobot Mark IV
+      (Thermo Fisher Scientific) at 4C and 100% humidity. Blot force 10, blot time 10 s, wait time 1 s.
+    sample_preparation: >
+      S. cerevisiae cells were grown in log phase conditions to OD600 of 0.8. After plunge freezing,
+      grids were clipped in Autogrids with cutout slot and subjected to automated FIB-milling on
+      Aquilos 2 (Thermo Fisher Scientific) using AutoTEM Cryo. Prior to milling, grids were sputter
+      coated with metallic platinum for 30 s (30 mA, 10 Pa) followed by ~500 nm organometallic Pt
+      from gas injection system. No post-milling platinum sputter coating was applied (control condition).
+    cross_references:
+      publications: 10.1101/2022.06.16.496417
+      related_database_entries: EMPIAR-11398
+  sources:
+  - literal:
+      value:
+      - '10473'
+
+depositions:
+- metadata:
+    deposition_identifier: 10343
+    deposition_title: Optimizing cryo-FIB lamellas for high-resolution in situ structural biology
+    deposition_description: >
+      Cryo-electron tomography deposition comparing cryo-FIB milled S. cerevisiae lamellas with
+      and without post-milling platinum sputter coating. This deposition demonstrates that metallic
+      platinum coating of cryo-FIB milled lamellas significantly reduces beam-induced sample movement,
+      enabling sub-5 Angstrom resolution subtomogram averaging of 80S ribosomes in situ. The deposition
+      includes two datasets: one with post-milling platinum sputter coating and one without (control).
+      Both datasets include tilt series, tomograms, and membrane segmentations from S. cerevisiae
+      cells imaged on a Krios G4 with Falcon 4 detector.
+    deposition_types:
+    - dataset
+    authors: *dataset_authors
+    dates: *dataset_dates
+    cross_references:
+      publications: 10.1101/2022.06.16.496417
+      related_database_entries: EMPIAR-11398
+  sources:
+  - literal:
+      value:
+      - 10343
+
+runs:
+- sources:
+  - source_glob:
+      list_glob: tiltseries/*
+      match_regex: .*
+      name_regex: (.*)
+
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 5.003
+
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    pixel_spacing: 1.6
+    spherical_aberration_constant: 2.7
+    is_aligned: false
+    camera:
+      manufacturer: TFS
+      model: FALCON IV
+    microscope:
+      manufacturer: TFS
+      model: Krios G4
+    microscope_optical_setup:
+      energy_filter: Selectris X
+    data_acquisition_software: TEM Tomography 5
+    tilt_axis: 85.23
+    tilt_range:
+      min: float {tilt_series_min_tilt}
+      max: float {tilt_series_max_tilt}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+    tilt_series_quality: int {tilt_series_quality}
+    related_empiar_entry: EMPIAR-11398
+  sources:
+  - source_glob:
+      list_glob: tiltseries/{run_name}/*
+
+tomograms:
+- metadata:
+    reconstruction_software: AreTomo3 v2.2.8
+    reconstruction_method: WBP
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: &tomo_offset
+      x: 0
+      y: 0
+      z: 0
+    affine_transformation_matrix: &tomo_affine
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *dataset_authors
+    dates: *dataset_dates
+    voxel_spacing: 5.003
+    processing: filtered
+    processing_software: AreTomo3 v2.2.8
+    ctf_corrected: true
+    is_visualization_default: true
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/ctf-deconvolved.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.2.8
+    reconstruction_method: WBP
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *tomo_offset
+    affine_transformation_matrix: *tomo_affine
+    authors: *dataset_authors
+    dates: *dataset_dates
+    voxel_spacing: 5.003
+    processing: raw
+    processing_software: AreTomo3 v2.2.8
+    ctf_corrected: false
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/wbp.zarr
+
+annotations:
+- metadata:
+    annotation_ingest_id: 10473-membrane-1
+    annotation_method: Prediction using membrain-seg
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1101/2024.01.05.574336
+    annotation_software: membrain-seg
+    authors: *dataset_authors
+    dates: *dataset_dates
+    ground_truth_status: false
+    is_curator_recommended: false
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_strings:
+      - copick/ExperimentRuns/{run_name}/Segmentations/*_membrain-seg_0_membrane.zarr
+      is_visualization_default: true
+      threshold: 0.5
+
+alignments:
+- metadata:
+    format: IMOD
+    alignment_type: LOCAL
+    method_type: projection_matching
+    is_portal_standard: true
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - alignment/{run_name}/*.xf
+      - alignment/{run_name}/*.tlt
+
+ctfs:
+- metadata:
+    format: IMOD
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/*
+
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: frames/{run_name}/*
+
+gains:
+- sources:
+  - source_glob:
+      list_glob: gain/{gain_file}
+
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}/*
+
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: collection_metadata/{run_name}/*
