@@ -1,6 +1,6 @@
 ## S3 Source Validation Test Scripts
 
-Pytest-based data validation tests for the source data entities in the S3 buckets of the CryoET Data Portal. Fetches test entites from the S3 bucket using the ingestion config and parametrizes tests based on the combinations found in the source bucket. Utilizes pytest-xdist's multiprocessing features to run tests quicker. See below for more information.
+Pytest-based data validation tests for the source data entities in the S3 buckets of the CryoET Data Portal. Fetches test entities from the S3 bucket using the ingestion config and parametrizes tests based on the combinations found in the source bucket. Utilizes pytest-xdist's multiprocessing features to run tests quicker. See below for more information.
 
 ### Writing New Tests
 
@@ -72,11 +72,11 @@ Ensure you have the allure command line tool installed (e.g. `brew install allur
 To run (from this directory):
 
 ```
-python allure_tests.py --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --datasets [DATASET_ID] --multiprocessing/--no-multiprocessing --save-history/--no-save-history --extra-args [EXTRA_ARGS]
+python allure_tests.py --ingestion-config [CONFIG_FILE] --local-dir [LOCAL_DIR] --input-bucket [BUCKET_NAME] --output-bucket [OUTPUT_BUCKET_NAME] --multiprocessing/--no-multiprocessing --history/--no-history --extra-args [EXTRA_ARGS]
 
 --local-dir: Local directory to store the results. Default: `./results`
 --input-bucket: The S3 bucket where the data is stored.
---output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoetportal-output-test`
+--output-bucket: The S3 bucket where the Allure report will be uploaded. Default: `cryoet-data-portal-staging`
 --output-dir: The remote s3 directory to store the results. Default: `source_validation`
 --ingestion-config: The path of the ingestion config file.
 --multiprocessing/--no-multiprocessing: Run tests in parallel with multiple workers (pytest-xdist). Default: `--multiprocessing`
