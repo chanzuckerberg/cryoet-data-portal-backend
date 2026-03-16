@@ -1,4 +1,4 @@
-Did# Getting started
+# Getting started
 
 ```
 make apiv2-init # from the root of the repo
