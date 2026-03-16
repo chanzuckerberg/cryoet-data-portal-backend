@@ -99,25 +99,7 @@ datasets:
       - '10474'
 
 depositions:
-- metadata:
-    deposition_identifier: 10343
-    deposition_title: Optimizing cryo-FIB lamellas for high-resolution in situ structural biology
-    deposition_description: >
-      Cryo-electron tomography deposition comparing cryo-FIB milled S. cerevisiae lamellas with
-      and without post-milling platinum sputter coating. This deposition demonstrates that metallic
-      platinum coating of cryo-FIB milled lamellas significantly reduces beam-induced sample movement,
-      enabling sub-5 Angstrom resolution subtomogram averaging of 80S ribosomes in situ. The deposition
-      includes two datasets: one with post-milling platinum sputter coating and one without (control).
-      Both datasets include tilt series, tomograms, and membrane segmentations from S. cerevisiae
-      cells imaged on a Krios G4 with Falcon 4 detector.
-    deposition_types:
-    - dataset
-    authors: *dataset_authors
-    dates: *dataset_dates
-    cross_references:
-      publications: 10.1101/2022.06.16.496417
-      related_database_entries: EMPIAR-11398
-  sources:
+- sources:
   - literal:
       value:
       - 10343
@@ -128,6 +110,8 @@ runs:
       list_glob: tiltseries/*
       match_regex: .*
       name_regex: (.*)
+    exclude:
+      - "^210617_day5_lam28_position_1$"
 
 voxel_spacings:
 - sources:
