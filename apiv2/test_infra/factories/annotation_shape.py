@@ -33,7 +33,15 @@ class AnnotationShapeFactory(CommonFactory):
         AnnotationFactory,
     )
     shape_type = fuzzy.FuzzyChoice(
-        ["SegmentationMask", "OrientedPoint", "Point", "InstanceSegmentation", "InstanceSegmentationMask", "Mesh"],
+        [
+            "SegmentationMask",
+            "OrientedPoint",
+            "Point",
+            "InstanceSegmentation",
+            "InstanceSegmentationMask",
+            "Mesh",
+            "GlobalCaption",
+        ],
     )
 
     # Auto increment integer identifiers starting with 1
