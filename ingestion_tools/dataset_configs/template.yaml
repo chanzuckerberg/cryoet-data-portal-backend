@@ -22,6 +22,7 @@ alignments: OPTIONAL
   sources: REQUIRED, SEE datasets.sources and runs.sources.parent_filters
 annotations: OPTIONAL
 - metadata: REQUIRED
+    annotation_ingest_id: REQUIRED, STRING (GLOBALLY UNIQUE, e.g. golgi-apparatus-1, actin-filament-1)
     confidence: OPTIONAL
       ground_truth_used: OPTIONAL, STRING
       precision: OPTIONAL IF ground_truth_used ELSE null, FLOAT ([0, 100])
