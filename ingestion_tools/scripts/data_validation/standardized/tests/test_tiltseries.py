@@ -12,6 +12,8 @@ from data_validation.shared.util import BINNING_FACTORS
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 from mrcfile.mrcinterpreter import MrcInterpreter
 
+MAX_DEVIATING_INCREMENTS = 4
+
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.tiltseries
@@ -160,7 +162,7 @@ class TestTiltseries(TiltSeriesHelper):
             )
 
         # Fail if min/max mismatch or more than 4 deviating increments
-        if len(increment_errors) > 4:
+        if len(increment_errors) > MAX_DEVIATING_INCREMENTS:
             fatal_errors.extend(increment_errors)
 
         range_info = f"\nRange: {tilt_min} to {tilt_max}, with step {tilt_step}"
