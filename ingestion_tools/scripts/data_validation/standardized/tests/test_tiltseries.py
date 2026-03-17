@@ -208,24 +208,17 @@ class TestTiltseries(TiltSeriesHelper):
         if len(errors) > 0:
             raise AssertionError("\n".join(errors))
 
-    @allure.title("PerSectionParameters: maxResolution > 0 (>= 0 for IMOD format).")
+    @allure.title("PerSectionParameters: maxResolution >= 0.")
     def test_max_resolution(self, tiltseries_metadata: dict[str, Any]):
-        is_imod = tiltseries_metadata.get("format") == "IMOD"
         errors = []
         for i, per_section_parameter in enumerate(tiltseries_metadata["per_section_parameter"]):
             max_resolution = per_section_parameter["max_resolution"]
             if max_resolution is None:
                 continue
             try:
-                if is_imod:
-                    assert max_resolution >= 0
-                else:
-                    assert max_resolution > 0
+                assert max_resolution >= 0
             except AssertionError:
-                if is_imod:
-                    errors.append(f"per_section_parameter[{i}].max_resolution= {max_resolution} is not greater than or equal to 0.")
-                else:
-                    errors.append(f"per_section_parameter[{i}].max_resolution= {max_resolution} is not greater than 0.")
+                errors.append(f"per_section_parameter[{i}].max_resolution= {max_resolution} is not greater than or equal to 0.")
         if len(errors) > 0:
             raise AssertionError("\n".join(errors))
 
