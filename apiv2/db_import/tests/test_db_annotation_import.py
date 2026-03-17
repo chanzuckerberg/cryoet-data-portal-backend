@@ -59,7 +59,7 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_globalcaption.json",
             "https_path": f"{http_prefix}/{path}100-foo-1.0_globalcaption.json",
             "source": "community",
-            "format": "json",
+            "format": "saber",
             "is_visualization_default": False,
             "file_size": 0,
         },
