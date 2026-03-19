@@ -134,7 +134,7 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: Selectris X
     data_acquisition_software: TEM Tomography 5
-    tilt_axis: 85.23
+    tilt_axis: -85.23
     tilt_range:
       min: float {tilt_series_min_tilt}
       max: float {tilt_series_max_tilt}
