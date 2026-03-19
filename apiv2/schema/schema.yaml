@@ -285,6 +285,9 @@ enums:
       Mesh:
         text: Mesh
         description: A surface mesh volumes
+      GlobalCaption:
+        text: GlobalCaption
+        description: A text caption for the tomogram
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -925,11 +928,11 @@ classes:
         annotations:
           cascade_delete: true
       shape_type:
-        description: The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)
+        description: The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask, GlobalCaption)
         name: shape_type
         from_schema: cdp-dataset-config
         range: annotation_file_shape_type_enum
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^Mesh$)|(^InstanceSegmentationMask$)
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^Mesh$)|(^InstanceSegmentationMask$)|(^GlobalCaption$)
   Annotation:
     name: Annotation
     annotations:
