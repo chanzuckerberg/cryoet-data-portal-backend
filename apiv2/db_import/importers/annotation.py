@@ -107,7 +107,7 @@ class AnnotationImporter(IntegratedDBImporter):
         return {
             "path": os.path.join(self.tomogram_voxel_spacing.s3_prefix, "Annotations/"),
             # Use *[0-9].json to match only annotation metadata files (e.g., foo-1.0.json)
-            # and exclude annotation data files which have a _{shape} suffix (e.g., foo-1.0_globalcaption.json)
+            # and exclude annotation data files which have a _{shape} suffix (e.g., foo-1.0_globalcaption.json, foo-1.0_point_caption.json)
             "file_glob": "*/*[0-9].json",
         }
 

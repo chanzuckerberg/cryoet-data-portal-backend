@@ -4518,6 +4518,7 @@ classes:
         - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
         range: volume_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4863,6 +4864,7 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile

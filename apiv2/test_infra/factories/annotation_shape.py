@@ -41,6 +41,7 @@ class AnnotationShapeFactory(CommonFactory):
             "InstanceSegmentationMask",
             "Mesh",
             "GlobalCaption",
+            "AnnotationCaption",
         ],
     )
 

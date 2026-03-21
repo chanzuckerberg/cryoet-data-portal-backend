@@ -41,6 +41,7 @@ class annotation_file_shape_type_enum(enum.StrEnum):
     InstanceSegmentationMask = "InstanceSegmentationMask"
     Mesh = "Mesh"
     GlobalCaption = "GlobalCaption"
+    AnnotationCaption = "AnnotationCaption"
 
 
 @strawberry.enum

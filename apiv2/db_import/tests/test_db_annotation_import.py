@@ -54,6 +54,17 @@ def expected_annotations(http_prefix: str) -> list[dict[str, Any]]:
 def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
     path = f"{DATASET_ID}/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/"
     return [
+        # AnnotationCaption (sorted first by shape_type alphabetically)
+        {
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
+            "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_point_caption.json",
+            "https_path": f"{http_prefix}/{path}100-foo-1.0_point_caption.json",
+            "source": "community",
+            "format": "saber",
+            "is_visualization_default": False,
+            "file_size": 0,
+        },
+        # GlobalCaption
         {
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_globalcaption.json",
@@ -63,6 +74,7 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "is_visualization_default": False,
             "file_size": 0,
         },
+        # InstanceSegmentationMask (mrc then zarr, sorted by format)
         {
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_instancesegmask.mrc",
@@ -81,6 +93,7 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "is_visualization_default": False,
             "file_size": 0,
         },
+        # Point
         {
             "id": ANNOTATION_FILE_ID,
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
@@ -91,6 +104,7 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "is_visualization_default": True,
             "file_size": 0,
         },
+        # SegmentationMask (mrc then zarr)
         {
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_segmask.mrc",
