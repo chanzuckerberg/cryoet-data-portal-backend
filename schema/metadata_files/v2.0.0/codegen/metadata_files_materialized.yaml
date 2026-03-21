@@ -572,6 +572,9 @@ enums:
       GlobalCaption:
         text: GlobalCaption
         description: A set of text captions describing the entire tomogram
+      AnnotationCaption:
+        text: AnnotationCaption
+        description: Per-instance text captions for an annotation shape
   point_annotation_file_format_enum:
     name: point_annotation_file_format_enum
     description: Describes the format of the point annotation file
@@ -1153,6 +1156,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: boolean
         inlined: true
         inlined_as_list: true
@@ -1236,7 +1240,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^GlobalCaption$)
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^GlobalCaption$)|(^AnnotationCaption$)
       is_visualization_default:
         name: is_visualization_default
         description: Whether the annotation file is selected for visualization by
@@ -1256,6 +1260,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         - AnnotationFileMetadata
         range: boolean
         required: true
@@ -3110,6 +3115,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         - AnnotationFileMetadata
         range: boolean
         required: true

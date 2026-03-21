@@ -885,6 +885,19 @@ classes:
       file_format:
         exact_mappings:
           - cdp-common:caption_annotation_file_format
+
+  AnnotationCaptionFile:
+    is_a: AnnotationSourceFile
+    aliases:
+      - AnnotationCaption
+    description: File and sourcing data for a per-instance caption annotation. Text captions for individual annotation instances.
+    attributes:
+      file_format:
+        exact_mappings:
+          - cdp-common:caption_annotation_file_format
+      companion_shape:
+        range: string
+        description: The annotation shape type that this caption is associated with.
   # ============================================================================
 
   # ============================================================================
