@@ -1326,6 +1326,8 @@ enums:
         description: A volume with labels for multiple instances
       GlobalCaption:
         description: A set of text captions describing the entire tomogram
+      AnnotationCaption:
+        description: Per-instance text captions for an annotation shape
 
   point_annotation_file_format_enum:
     description: Describes the format of the point annotation file

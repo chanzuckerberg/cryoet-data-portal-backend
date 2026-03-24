@@ -573,6 +573,9 @@ enums:
       GlobalCaption:
         text: GlobalCaption
         description: A set of text captions describing the entire tomogram
+      AnnotationCaption:
+        text: AnnotationCaption
+        description: Per-instance text captions for an annotation shape
   point_annotation_file_format_enum:
     name: point_annotation_file_format_enum
     description: Describes the format of the point annotation file
@@ -3827,6 +3830,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: oriented_point_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -3982,6 +3986,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: instance_segmentation_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4137,6 +4142,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: point_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4291,6 +4297,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: volume_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4384,6 +4391,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: volume_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4518,6 +4526,8 @@ classes:
         - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: volume_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4626,6 +4636,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: triangular_mesh_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4734,6 +4745,7 @@ classes:
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: triangular_mesh_annotation_group_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4863,9 +4875,11 @@ classes:
         - AnnotationPointFile
         - AnnotationSegmentationMaskFile
         - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
         - AnnotationTriangularMeshFile
         - AnnotationTriangularMeshGroupFile
         - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
         range: caption_annotation_file_format_enum
         inlined: true
         inlined_as_list: true
@@ -4925,6 +4939,111 @@ classes:
         ifabsent: 'False'
         alias: is_portal_standard
         owner: AnnotationGlobalCaptionFile
+        domain_of:
+        - AnnotationSourceFile
+        - Alignment
+        range: boolean
+        required: false
+        inlined: true
+        inlined_as_list: true
+  AnnotationCaptionFile:
+    name: AnnotationCaptionFile
+    description: File and sourcing data for a per-instance caption annotation. Text
+      captions for individual annotation instances.
+    from_schema: metadata
+    aliases:
+    - AnnotationCaption
+    is_a: AnnotationSourceFile
+    attributes:
+      file_format:
+        name: file_format
+        description: The format of the caption annotation file.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:caption_annotation_file_format
+        alias: file_format
+        owner: AnnotationCaptionFile
+        domain_of:
+        - AnnotationOrientedPointFile
+        - AnnotationInstanceSegmentationFile
+        - AnnotationPointFile
+        - AnnotationSegmentationMaskFile
+        - AnnotationSemanticSegmentationMaskFile
+        - AnnotationInstanceSegmentationMaskFile
+        - AnnotationTriangularMeshFile
+        - AnnotationTriangularMeshGroupFile
+        - AnnotationGlobalCaptionFile
+        - AnnotationCaptionFile
+        range: caption_annotation_file_format_enum
+        inlined: true
+        inlined_as_list: true
+        pattern: ^saber$
+      companion_shape:
+        name: companion_shape
+        description: The annotation shape type that this caption is associated with.
+        from_schema: metadata
+        alias: companion_shape
+        owner: AnnotationCaptionFile
+        domain_of:
+        - AnnotationCaptionFile
+        range: string
+        inlined: true
+        inlined_as_list: true
+      glob_string:
+        name: glob_string
+        description: Glob string to match annotation files in the dataset. Required
+          if annotation_source_file_glob_strings is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_string
+        alias: glob_string
+        owner: AnnotationCaptionFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        inlined: true
+        inlined_as_list: true
+      glob_strings:
+        name: glob_strings
+        description: Glob strings to match annotation files in the dataset. Required
+          if annotation_source_file_glob_string is not provided.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_glob_strings
+        alias: glob_strings
+        owner: AnnotationCaptionFile
+        domain_of:
+        - AnnotationSourceFile
+        range: string
+        required: false
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+      is_visualization_default:
+        name: is_visualization_default
+        description: This annotation will be rendered in neuroglancer by default.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_visualization_default
+        ifabsent: 'False'
+        alias: is_visualization_default
+        owner: AnnotationCaptionFile
+        domain_of:
+        - Tomogram
+        - AnnotationSourceFile
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      is_portal_standard:
+        name: is_portal_standard
+        description: Whether the annotation source is a portal standard.
+        from_schema: metadata
+        exact_mappings:
+        - cdp-common:annotation_source_file_is_portal_standard
+        ifabsent: 'False'
+        alias: is_portal_standard
+        owner: AnnotationCaptionFile
         domain_of:
         - AnnotationSourceFile
         - Alignment
