@@ -269,6 +269,24 @@ annotations:
       is_visualization_default: true
       threshold: 0.5
 
+alignments:
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_multi_glob:
+      list_globs:
+        - alignment/{run_name}/*.aln
+
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/*
+
 frames:
 - metadata:
     dose_rate: float {dose_rate}
