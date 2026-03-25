@@ -180,7 +180,7 @@ tiltseries:
 tomograms:
 - metadata:
     reconstruction_software: AreTomo3 v2.2.8
-    reconstruction_method: SART
+    reconstruction_method: WBP
     fiducial_alignment_status: NON_FIDUCIAL
     tomogram_version: 1
     offset: &offset
