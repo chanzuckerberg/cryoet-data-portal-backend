@@ -119,27 +119,10 @@ datasets:
       - '10476'
 
 depositions:
-- metadata:
-    deposition_identifier: 10344
-    deposition_title: Cryo-electron tomography of HeLa cells under mitochondrial proteostatic stress
-    deposition_description: >-
-      In situ cryo-electron tomography data of FIB-milled HeLa PINK1-GFP cells under
-      G-TPP-induced mitochondrial proteostatic stress and untreated control conditions.
-      Includes raw tilt series movie frames, assembled tilt series, SART and WBP tomographic
-      reconstructions from AreTomo3, and automated semantic segmentations (membrain-seg for
-      membranes, copick-easymode for ribosomes, microtubules, actin, mitochondria, prohibitin,
-      cytoplasm, and void regions). Associated with the study of structural remodeling of the
-      mitochondrial protein biogenesis machinery under proteostatic stress.
-    deposition_types:
-    - dataset
-    - annotation
-    authors: *authors
-    cross_references: *cross_references
-    dates: *dates
-  sources:
-  - literal:
-      value:
-      - 10344
+  - sources:
+    - literal:
+        value:
+        - 10344
 
 runs:
 - sources:
