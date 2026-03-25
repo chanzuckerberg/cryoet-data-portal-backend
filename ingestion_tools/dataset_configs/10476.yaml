@@ -150,7 +150,7 @@ voxel_spacings:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    pixel_spacing: 2.31245
+    pixel_spacing: 2.3125
     spherical_aberration_constant: 2.7
     is_aligned: false
     binning_from_frames: 1

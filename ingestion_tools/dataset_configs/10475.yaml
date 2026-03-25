@@ -161,6 +161,8 @@ runs:
       - "^20230412_P5_ts_003$"
       - "^20230412_P5_ts_004$"
       - "^20230424_P4_ts_003$"
+      - "^20221108_P1_ts_008$"
+      - "^20221109_P4_ts_007$"
 
 voxel_spacings:
 - sources:
@@ -171,7 +173,7 @@ voxel_spacings:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    pixel_spacing: 2.31245
+    pixel_spacing: 2.3125
     spherical_aberration_constant: 2.7
     is_aligned: false
     binning_from_frames: 1
