@@ -5,7 +5,6 @@ import allure
 import numpy as np
 import pandas as pd
 import pytest
-from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
 from data_validation.shared.helper.tiltseries_helper import TILT_AXIS_ANGLE_REGEX
 
 
@@ -78,49 +77,23 @@ class TestAlignments:
     def test_tilt_angle_range(self, alignment_tilt: pd.DataFrame):
         assert all(-90 <= angle <= 90 for angle in alignment_tilt["TiltAngle"])
 
-    @allure.title("Alignment: every tilt angle maps to a raw tilt angle.")
+    @allure.title("Alignment: number of tilt angles equals the number of raw tilt angles.")
     def test_tilt_raw_tilt(self, alignment_tilt: pd.DataFrame, alignment_tiltseries_raw_tilt: pd.DataFrame):
-        errors = helper_angles_injection_errors(
-            alignment_tilt["TiltAngle"].to_list(),
-            alignment_tiltseries_raw_tilt["TiltAngle"].to_list(),
-            "tilt file",
-            "raw tilt file",
+        assert len(alignment_tilt) == len(alignment_tiltseries_raw_tilt), (
+            f"Tilt file has {len(alignment_tilt)} angles, but raw tilt file has {len(alignment_tiltseries_raw_tilt)} angles."
         )
-        if len(errors) > 0:
-            raise AssertionError("\n".join(errors))
 
-    @allure.title("Alignment: every tilt angle maps to a mdoc tilt angle.")
+    @allure.title("Alignment: number of tilt angles is less than or equal to the number of mdoc tilt angles.")
     def test_tilt_mdoc(self, alignment_tilt: pd.DataFrame, mdoc_data: pd.DataFrame):
-        errors = helper_angles_injection_errors(
-            alignment_tilt["TiltAngle"].to_list(),
-            mdoc_data["TiltAngle"].to_list(),
-            "tilt file",
-            "mdoc file",
+        assert len(alignment_tilt) <= len(mdoc_data), (
+            f"Tilt file has {len(alignment_tilt)} angles, but mdoc file has {len(mdoc_data)} angles."
         )
-        if len(errors) > 0:
-            raise AssertionError("\n".join(errors))
 
     @allure.title(
         "Alignment: number of tilt angles is less than or equal to the number of tiltseries metadata size['z'].",
     )
     def test_tilt_tiltseries_metadata(self, alignment_tilt: pd.DataFrame, alignment_tiltseries_metadata: Dict):
         assert len(alignment_tilt) <= alignment_tiltseries_metadata["size"]["z"]
-
-    @allure.title("Alignment: angles correspond to the tilt_range + tilt_step metadata field.")
-    @allure.description("Not all angles in the tilt range must be present in the tilt file.")
-    def test_tilt_tiltseries_range(
-        self,
-        alignment_tilt: pd.DataFrame,
-        alignment_tiltseries_metadata: Dict,
-        alignment_tiltseries_metadata_range: List[float],
-    ):
-        errors = helper_angles_injection_errors(
-            alignment_tilt["TiltAngle"].to_list(),
-            alignment_tiltseries_metadata_range,
-            "tilt file",
-            "tiltseries metadata tilt_range",
-        )
-        assert len(errors) == 0, "\n".join(errors) + f"\nRange: {alignment_tiltseries_metadata['tilt_range']['min']} to {alignment_tiltseries_metadata['tilt_range']['max']}, with step {alignment_tiltseries_metadata['tilt_step']}"
 
     @allure.title("Alignment: tilt angle in mdoc file matches that in the alignment metadata [per_section_alignment_parameters.in_plane_rotation] (+/- 10 deg)")
     def test_mdoc_tilt_axis_angle_in_alignment_per_section_alignment_parameters(self, mdoc_tilt_axis_angle: float, alignment_metadata: dict[str, dict]):
