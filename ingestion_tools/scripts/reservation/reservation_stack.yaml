@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CryoET Data Portal - Dataset/Deposition ID Reservation Service
+
+Parameters:
+  CodeS3Bucket:
+    Type: String
+    Default: cryoetportal-biohub-hpc-globus
+    Description: S3 bucket containing the Lambda deployment package
+  CodeS3Key:
+    Type: String
+    Default: SUBMISSION_METADATA/lambda/reservation_lambda.zip
+    Description: S3 key for the Lambda deployment zip
+
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: cryoetportal-submission-reservation-lambda-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: ReservationLambdaPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "arn:aws:logs:*:*:*"
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: "arn:aws:s3:::cryoetportal-biohub-hpc-globus/SUBMISSION_METADATA/reservations.json"
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                Resource: "arn:aws:s3:::cryoetportal-biohub-hpc-globus"
+                Condition:
+                  StringLike:
+                    s3:prefix: "SUBMISSION_METADATA/reservations.json"
+
+  ReservationFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: cryoetportal-submission-reservation
+      Runtime: python3.12
+      Handler: lambda_function.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 30
+      MemorySize: 128
+      ReservedConcurrentExecutions: 10
+      Code:
+        S3Bucket: !Ref CodeS3Bucket
+        S3Key: !Ref CodeS3Key
+
+  FunctionUrl:
+    Type: AWS::Lambda::Url
+    Properties:
+      AuthType: NONE
+      TargetFunctionArn: !GetAtt ReservationFunction.Arn
+
+  FunctionUrlPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ReservationFunction
+      Action: lambda:InvokeFunctionUrl
+      Principal: "*"
+      FunctionUrlAuthType: NONE
+
+  FunctionInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ReservationFunction
+      Action: lambda:InvokeFunction
+      Principal: "*"
+
+Outputs:
+  FunctionUrl:
+    Description: URL for the Reservation API
+    Value: !GetAtt FunctionUrl.FunctionUrl
+  FunctionArn:
+    Description: ARN of the Lambda function
+    Value: !GetAtt ReservationFunction.Arn

@@ -1,6 +1,5 @@
 services:
   ingestor:
-    platform: linux/amd64
     image: ingestor
     profiles: ["ingestor"]
     build:

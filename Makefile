@@ -1,4 +1,5 @@
-export docker_compose:=docker compose -f ./docker-compose.yml -f ./ingestion_tools/docker-compose.yml
+COMPOSE ?= docker compose
+export docker_compose:=$(COMPOSE) -f ./docker-compose.yml -f ./ingestion_tools/docker-compose.yml
 
 .PHONY: init
 init: ingestor-init apiv2-init
@@ -22,7 +23,7 @@ ingestor-init:
 
 .PHONY: apiv2-init
 apiv2-init:
-	docker compose --profile apiv2 up -d
+	$(docker_compose) --profile apiv2 up -d
 	cd ./test_infra/; ./seed_moto.sh
 	$(MAKE) -C apiv2 alembic-upgrade-head
 
@@ -32,11 +33,11 @@ clean:
 
 .PHONY: ingestor-test-s3
 ingestor-test-s3:
-	docker compose exec ingestor pytest -vvv -s . -k s3_import
+	$(docker_compose) --profile ingestor exec ingestor pytest -vvv -s .
 
 .PHONY: apiv2-test
 apiv2-test:  ## Run apiv2 tests
-	$(docker_compose) exec graphql-api pytest -vvv
+	$(docker_compose) --profile apiv2 exec graphql-api pytest -vvv
 
 .PHONY: push-local-ingestor-build
 push-local-ingestor-build:

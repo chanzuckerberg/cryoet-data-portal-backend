@@ -11,15 +11,22 @@ RUN apt update && apt install -y wget unzip jq libgl1
 ADD https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem /usr/local/share/ca-certificates/global-bundle.crt
 RUN update-ca-certificates
 
-# IMOD helps with MRC ingestion
+# IMOD helps with MRC ingestion (x86_64 only - no ARM Linux build available)
 # bio3d.colorado.edu isn't sending an intermediate cert, which breaks openssl (no AIA support). So we're installing it here.
-RUN wget -O- https://sectigo.tbs-certificats.com/SectigoPublicServerAuthenticationCAOVR36.crt \
-    | openssl x509 -out /tmp/intermediate.pem \
-    && wget --ca-certificate /tmp/intermediate.pem https://bio3d.colorado.edu/imod/AMD64-RHEL5/imod_4.11.24_RHEL7-64_CUDA10.1.sh \
-    && bash imod_4.11.24_RHEL7-64_CUDA10.1.sh -yes && rm /tmp/intermediate.pem
+RUN if [ "$(dpkg --print-architecture)" = "amd64" ]; then \
+        wget -O- https://sectigo.tbs-certificats.com/SectigoPublicServerAuthenticationCAOVR36.crt \
+        | openssl x509 -out /tmp/intermediate.pem \
+        && wget --ca-certificate /tmp/intermediate.pem https://bio3d.colorado.edu/imod/AMD64-RHEL5/imod_4.11.24_RHEL7-64_CUDA10.1.sh \
+        && bash imod_4.11.24_RHEL7-64_CUDA10.1.sh -yes && rm /tmp/intermediate.pem; \
+    else \
+        echo "Skipping IMOD install (not available for $(dpkg --print-architecture))"; \
+    fi
 
 # Install the AWS CLI
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && rm -rf ./aws
+RUN ARCH=$(dpkg --print-architecture) && \
+    if [ "$ARCH" = "amd64" ]; then AWS_CLI_ARCH="x86_64"; else AWS_CLI_ARCH="aarch64"; fi && \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-${AWS_CLI_ARCH}.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && ./aws/install && rm -rf ./aws
 
 ENV IMOD_DIR /usr/local/IMOD
 

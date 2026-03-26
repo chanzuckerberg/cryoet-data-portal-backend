@@ -101,7 +101,7 @@ erDiagram
 
     Run ||--}o Gain : ""
     Run ||--}o Frame : ""
-    Run || --}o CollectionMetadata : ""
+    Run ||--}o CollectionMetadata : ""
     Run ||--}o Tiltseries : ""
     Run ||--}o Tomogram : ""
     Run ||--}o Alignment : ""

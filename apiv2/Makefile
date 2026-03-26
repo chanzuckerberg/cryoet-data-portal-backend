@@ -13,13 +13,14 @@ LOCAL_DB_CONN_STRING = postgresql://$(LOCAL_DB_USERNAME):$(LOCAL_DB_PASSWORD)@$(
 ### DOCKER ENV VARS #################################################
 export DOCKER_BUILDKIT:=1
 export COMPOSE_DOCKER_CLI_BUILD:=1
-export docker_compose:=docker compose
+COMPOSE ?= docker compose
+export docker_compose:=$(COMPOSE) -f ../docker-compose.yml -f ../ingestion_tools/docker-compose.yml --profile apiv2
 # IMPORTANT!! VSCode's support for devcontainers is pretty dependent on NOT
 # having a bunch of old `docker compose run` containers laying around. It basically
 # just hangs on OSX trying to launch itself in a container if it can't figure out
 # which one to use, so it's *VERY* important to include the --rm flag when invoking
 # docker compose run.
-export docker_compose_run:=docker compose run --rm --no-deps
+export docker_compose_run:=$(COMPOSE) -f ../docker-compose.yml -f ../ingestion_tools/docker-compose.yml --profile apiv2 run --rm --no-deps
 
 ### HELPFUL #################################################
 .PHONY: help
@@ -39,9 +40,9 @@ update-schema: codegen alembic-autogenerate alembic-upgrade-head
 	# $(docker_compose_run) $(CONTAINER) ruff check --fix .
 	$(docker_compose_run) $(APP_CONTAINER) sh -c 'strawberry export-schema main:schema > /app/graphql_api/schema.graphql'
 	linkml generate erdiagram --structural --classes Alignment --classes AnnotationAuthor --classes AnnotationFile --classes AnnotationShape --classes Annotation --classes DatasetAuthor --classes DatasetFunding --classes Dataset --classes DepositionAuthor --classes Deposition --classes Frame --classes IdentifiedObject --classes PerSectionAlignmentParameters --classes AnnotationMethodLink --classes GainFile --classes FrameAcquisitionFile --classes Run --classes Tiltseries --classes PerSectionParameters --classes TomogramAuthor --classes TomogramVoxelSpacing --classes Tomogram schema/schema.yaml> schema/README.md
-	docker compose up -d
+	$(docker_compose) up -d
 	sleep 5 # wait for the app to reload after having files updated.
-	docker compose exec $(APP_CONTAINER) python3 -m sgqlc.introspection --exclude-deprecated --exclude-description http://localhost:9009/graphql graphql_api/schema.json
+	$(docker_compose) exec $(APP_CONTAINER) python3 -m sgqlc.introspection --exclude-deprecated --exclude-description http://localhost:9009/graphql graphql_api/schema.json
 	pre-commit run
 
 .PHONY: seed-moto
