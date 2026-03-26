@@ -219,7 +219,7 @@ datasets:
         a K2 Summit detector, Volta phase plate, and energy filter. 12 tomograms were collected at centrosomes in
         interphase, prophase, metaphase, anaphase, and telophase stages. Comprehensive annotations of centrioles,
         microtubules, ribosomes, membranes, and pericentriolar material are provided. Tilt series were aligned using
-        patch tracking in IMOD, and tomograms were reconstructed using weighted back projection in Warp.
+        patch tracking in IMOD, and tomograms were reconstructed using Warp.
       dataset_identifier: 10477
       dataset_title: Cryo-electron tomography of centrosomes in C. elegans embryonic cells
       dates: *dates
@@ -392,7 +392,7 @@ tomograms:
         z: 0
       processing: filtered
       processing_software: Warp 1.0.9
-      reconstruction_method: WBP
+      reconstruction_method: Fourier Space
       reconstruction_software: Warp 1.0.9
       tomogram_version: 1.0
       voxel_spacing: 13.481
