@@ -12,6 +12,8 @@ from data_validation.shared.util import BINNING_FACTORS
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 from mrcfile.mrcinterpreter import MrcInterpreter
 
+MDOC_TILT_RANGE_DECIMAL_PLACE = 1
+
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.tiltseries
@@ -128,11 +130,13 @@ class TestTiltseries(TiltSeriesHelper):
             mdoc_data["TiltAngle"].to_list(),
             "tiltseries metadata tilt_range",
             "mdoc file",
+            MDOC_TILT_RANGE_DECIMAL_PLACE,
         )
         assert len(errors) == 0, (
             "\n".join(errors)
             + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, "
-            f"with step {tiltseries_metadata['tilt_step']}"
+            f"with step {tiltseries_metadata['tilt_step']}, "
+            f"with tolerance of {10**(-MDOC_TILT_RANGE_DECIMAL_PLACE)}."
         )
 
     ### END metadata-mdoc consistency tests ###
