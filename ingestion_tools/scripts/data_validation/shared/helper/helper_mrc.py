@@ -48,7 +48,7 @@ class HelperTestMRCHeader:
     """
 
     # Class variables that need to be set by the subclass
-    map_id: bytes = b"MAP "
+    map_id: str = "MAP "
     spacegroup: int = None
     mrc_headers: Dict[str, MrcInterpreter] = None
     spacing: float = None
