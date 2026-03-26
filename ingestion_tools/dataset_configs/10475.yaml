@@ -17,9 +17,8 @@ datasets:
       Cryo-electron tomography of FIB-milled HeLa PINK1-GFP cells treated with 10 uM
       Gamitrinib-triphenylphosphonium (G-TPP) for 4 hours to induce mitochondrial proteostatic
       stress. Data includes raw tilt series movie frames, assembled tilt series, tomographic
-      reconstructions (SART with CTF deconvolution and WBP), and automated segmentations of
-      cellular structures including membranes, ribosomes, microtubules, actin, mitochondria,
-      prohibitin, cytoplasm, and void regions. Acquired on a Titan Krios G4 with Falcon 4i
+      reconstructions (WBP with and without CTF deconvolution), and automated segmentations of
+      membranes. Acquired on a Titan Krios G4 with Falcon 4i
       detector and Selectris energy filter at 300 kV using dose-symmetric tilting with 3 degree
       increments. Cryo-FIB milling was performed on an Aquilos 2 cryo-FIB/SEM to produce lamellae
       of less than 250 nm thickness.
@@ -126,10 +125,9 @@ depositions:
     deposition_description: >-
       In situ cryo-electron tomography data of FIB-milled HeLa PINK1-GFP cells under
       G-TPP-induced mitochondrial proteostatic stress and untreated control conditions.
-      Includes raw tilt series movie frames, assembled tilt series, SART and WBP tomographic
+      Includes raw tilt series movie frames, assembled tilt series, and WBP tomographic
       reconstructions from AreTomo3, and automated semantic segmentations (membrain-seg for
-      membranes, copick-easymode for ribosomes, microtubules, actin, mitochondria, prohibitin,
-      cytoplasm, and void regions). Associated with the study of structural remodeling of the
+      membranes). Associated with the study of structural remodeling of the
       mitochondrial protein biogenesis machinery under proteostatic stress.
     deposition_types:
     - dataset

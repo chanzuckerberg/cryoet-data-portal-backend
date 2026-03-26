@@ -17,9 +17,8 @@ datasets:
       Cryo-electron tomography of FIB-milled HeLa PINK1-GFP cells under untreated control
       conditions. This dataset serves as the control for the G-TPP-treated condition (dataset
       10475) studying mitochondrial proteostatic stress. Data includes raw tilt series movie
-      frames, assembled tilt series, tomographic reconstructions (SART with CTF deconvolution
-      and WBP), and automated segmentations of cellular structures including membranes,
-      ribosomes, microtubules, actin, mitochondria, prohibitin, cytoplasm, and void regions.
+      frames, assembled tilt series, tomographic reconstructions (WBP with and without CTF deconvolution),
+      and automated segmentations of membranes.
       Acquired on a Titan Krios G4 with Falcon 4i detector and Selectris energy filter at
       300 kV using dose-symmetric tilting with 3 degree increments. Cryo-FIB milling was
       performed on an Aquilos 2 cryo-FIB/SEM to produce lamellae of less than 250 nm thickness.
