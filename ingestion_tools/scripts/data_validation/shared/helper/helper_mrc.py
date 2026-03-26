@@ -84,7 +84,7 @@ class HelperTestMRCHeader:
     def test_map_id_string(self):
         def check_map_id(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert header.map.strip() == self.map_id.strip(), f"MAP ID is {header.map}, expected {self.map_id}"
+            assert header.map.item().decode('utf-8').strip() == self.map_id.strip(), f"MAP ID is {header.map}, expected {self.map_id}"
 
         self.mrc_header_helper(check_map_id)
 
