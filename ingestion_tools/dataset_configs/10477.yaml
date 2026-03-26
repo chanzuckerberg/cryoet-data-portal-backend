@@ -8,7 +8,7 @@ alignments:
       - source_multi_glob:
           list_globs:
             - frames/{date_folder}/processing/{ts_name}.xf
-            - frames/{date_folder}/processing/{ts_name}.rawtlt
+            - rawtlt-corrected/{date_folder}_{ts_name}.rawtlt
 
 annotations:
   - metadata:
@@ -314,7 +314,7 @@ gains:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: frames/{date_folder}/processing/{ts_name}.rawtlt
+          list_glob: rawtlt-corrected/{date_folder}_{ts_name}.rawtlt
 
 runs:
   - sources:

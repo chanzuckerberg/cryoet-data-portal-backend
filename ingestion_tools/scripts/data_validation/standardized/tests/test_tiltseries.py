@@ -196,7 +196,6 @@ class TestTiltseries(TiltSeriesHelper):
             mdoc_data["TiltAngle"].to_list(),
             "tiltseries metadata per_section_parameter raw_angle",
             "mdoc file",
-            angle_tolerance=10 ** -2,
         )
         if errors:
             raise AssertionError("\n".join(errors))

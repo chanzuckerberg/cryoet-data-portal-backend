@@ -1,4 +1,4 @@
-ANGLE_TOLERANCE = 0.05
+DECIMAL_PLACE_TOLERANCE = 2
 
 
 def helper_angles_injection_errors(
@@ -6,7 +6,7 @@ def helper_angles_injection_errors(
     codomain_angles: list[float],
     domain_name: str,
     codomain_name: str,
-    angle_tolerance: float = ANGLE_TOLERANCE,
+    decimal_place_tolerance: int = DECIMAL_PLACE_TOLERANCE,
 ) -> list[str]:
     """Helper function to check if all angles in the domain are in the codomain."""
     errors = []
@@ -14,7 +14,7 @@ def helper_angles_injection_errors(
     for domain_angle in domain_angles:
         found_match = False
         for codomain_angle in remaining_angles:
-            if abs(domain_angle - codomain_angle) < angle_tolerance:
+            if round(domain_angle, decimal_place_tolerance) == round(codomain_angle, decimal_place_tolerance):
                 found_match = True
                 remaining_angles.remove(codomain_angle)
                 break
