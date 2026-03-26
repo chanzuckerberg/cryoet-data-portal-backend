@@ -48,9 +48,9 @@ annotations:
           affiliation_name: Structural and Computational Biology Unit, European Molecular Biology Laboratory (EMBL), Heidelberg, Germany
           email: julia.mahamid@embl.de
       dates: &dates
-        deposition_date: "2025-03-25"
-        last_modified_date: "2025-03-25"
-        release_date: "2025-03-25"
+        deposition_date: "2026-03-26"
+        last_modified_date: "2026-03-26"
+        release_date: "2026-03-26"
       ground_truth_status: true
       is_curator_recommended: true
       method_links:
