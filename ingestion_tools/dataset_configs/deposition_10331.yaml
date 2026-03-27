@@ -5,17 +5,71 @@ alignments:
       match_regex: .*
       name_regex: (.*)
 annotations:
+
+############################ BEGIN Bacteria cell body SABER ############################
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-1
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: &method_links
+      - link_type: source_code
+        link: https://github.com/chanzuckerberg/saber
+        custom_name: SABER on GitHub
+      - link_type: documentation
+        link: https://chanzuckerberg.github.io/saber/
+        custom_name: SABER documentation
     annotation_object:
       id: GO:0005622
       name: intracellular anatomical structure
     annotation_software: SABER
-    authors:
-    - corresponding_author_status: true
-      name: Anonymous Author
-      primary_author_status: true
+    authors: &authors
+      - ORCID: 0000-0002-8063-6951
+        corresponding_author_status: false
+        name: Jonathan Schwartz
+        primary_author_status: true
+      - ORCID: 0000-0003-4685-037X
+        corresponding_author_status: false
+        name: Utz Ermel
+        primary_author_status: false
+      - ORCID: 0000-0002-7324-2559
+        corresponding_author_status: false
+        name: Saugat Kandel
+        primary_author_status: false
+      - ORCID: 0009-0002-6674-7601
+        corresponding_author_status: false
+        name: Hannah Siems
+        primary_author_status: false
+      - ORCID: 0000-0001-8560-7407
+        corresponding_author_status: false
+        name: Julia Peukes
+        primary_author_status: false
+      - ORCID: 0000-0002-0936-114X
+        corresponding_author_status: false
+        name: Ruiming Cao
+        primary_author_status: false
+      - ORCID: 0000-0001-9517-3075
+        corresponding_author_status: false
+        name: Shawn Zheng
+        primary_author_status: false
+      - ORCID: 0000-0002-6551-2432
+        corresponding_author_status: false
+        name: Jose Miguel Andrade Lopez
+        primary_author_status: false
+      - ORCID: 0000-0002-2666-0758
+        corresponding_author_status: false
+        name: Casper C. Hoogenraad
+        primary_author_status: false
+      - ORCID: 0000-0003-0758-4654
+        corresponding_author_status: false
+        name: Shu-Hsien Sheu
+        primary_author_status: false
+      - ORCID: 0000-0001-9010-7298
+        corresponding_author_status: false
+        name: Daniel Serwas
+        primary_author_status: false
+      - ORCID: 0000-0002-2662-6373
+        corresponding_author_status: true
+        name: Dari Kimanius
+        primary_author_status: false
     dates:
       deposition_date: '2025-05-22'
       last_modified_date: '2025-05-22'
@@ -27,36 +81,41 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_bacteria-multilabel.zarr'
-      is_visualization_default: true
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_bacteria-multilabel.zarr'
+      is_visualization_default: false
       threshold: 0.5
     parent_filters:
       include:
         dataset:
-        - '10062'
-        - '10064'
+          - '10062'
+          - '10063'
+          - '10064'
+          - '10076'
+          - '10079'
+          - '10082'
+          - '10083'
+          - '10085'
   - InstanceSegmentation:
       binning: 15.6
       file_format: copick
       glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
-      is_visualization_default: true
+      is_visualization_default: false
       order: xyz
     parent_filters:
       include:
         dataset:
-        - '10062'
-        - '10064'
+          - '10062'
+          - '10064'
+
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-2
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: *method_links
     annotation_object:
       id: GO:0005622
       name: intracellular anatomical structure
     annotation_software: SABER
-    authors:
-    - corresponding_author_status: true
-      name: Anonymous Author
-      primary_author_status: true
+    authors: *authors
     dates:
       deposition_date: '2025-05-22'
       last_modified_date: '2025-05-22'
@@ -66,38 +125,142 @@ annotations:
     method_type: automated
     version: 1.0
   sources:
-  - SemanticSegmentationMask:
-      file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_bacteria-multilabel.zarr'
-      is_visualization_default: true
-      threshold: 0.5
-    parent_filters:
-      include:
-        dataset:
-        - '10077'
-        - '10084'
-  - InstanceSegmentation:
-      binning: 16.8
-      file_format: copick
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
-      is_visualization_default: true
-      order: xyz
-    parent_filters:
-      include:
-        dataset:
-        - '10077'
-        - '10084'
+    - SemanticSegmentationMask:
+        file_format: zarr
+        glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_bacteria-multilabel.zarr'
+        is_visualization_default: false
+        threshold: 0.5
+      parent_filters:
+        include:
+          dataset:
+            - '10077'
+            - '10084'
+    - InstanceSegmentation:
+        binning: 16.8
+        file_format: copick
+        glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_bacteria.json'
+        is_visualization_default: false
+        order: xyz
+      parent_filters:
+        include:
+          dataset:
+            - '10077'
+            - '10084'
+
+- metadata:
+    annotation_ingest_id: intracellular-anatomical-structure-4
+    annotation_method: Prediction using SABER
+    method_links: *method_links
+    annotation_object:
+      id: GO:0005622
+      name: intracellular anatomical structure
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+    - InstanceSegmentationMask:
+        file_format: zarr
+        glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_bacteria-multilabel.zarr'
+        is_visualization_default: true
+      parent_filters:
+        include:
+          dataset:
+            - '10062'
+            - '10063'
+            - '10064'
+            - '10076'
+            - '10077'
+            - '10079'
+            - '10082'
+            - '10083'
+            - '10084'
+            - '10085'
+
+- metadata:
+    annotation_ingest_id: intracellular-anatomical-structure-8
+    annotation_method: Semi-manual annotation using nnInteractive + Threshold at 0.5
+    method_links:
+      - link_type: source_code
+        link: https://github.com/MIC-DKFZ/nnInteractive
+        custom_name: nnInteractive on GitHub
+    annotation_object:
+      id: GO:0005622
+      name: intracellular anatomical structure
+    annotation_software: nnInteractive
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+    - SemanticSegmentationMask:
+        file_format: zarr
+        glob_string: '{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_whole-cell-multilabel.zarr'
+        is_visualization_default: false
+        threshold: 0.5
+      parent_filters:
+        include:
+          dataset:
+            - '10062'
+            - '10064'
+            - '10077'
+
+- metadata:
+    annotation_ingest_id: intracellular-anatomical-structure-9
+    annotation_method: Semi-manual annotation using nnInteractive
+    method_links:
+      - link_type: source_code
+        link: https://github.com/MIC-DKFZ/nnInteractive
+        custom_name: nnInteractive on GitHub
+    annotation_object:
+      id: GO:0005622
+      name: intracellular anatomical structure
+    annotation_software: nnInteractive
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+    - InstanceSegmentationMask:
+        file_format: zarr
+        glob_string: '{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_whole-cell-multilabel.zarr'
+        is_visualization_default: true
+      parent_filters:
+        include:
+          dataset:
+            - '10062'
+            - '10064'
+            - '10077'
+
+############################ END Bacteria cell body SABER ############################
+
+
+############################ START Bacteria inclusion SABER ############################
 - metadata:
     annotation_ingest_id: inclusion-body-1
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: *method_links
     annotation_object:
       id: GO:0016234
       name: inclusion body
     annotation_software: SABER
-    authors:
-    - corresponding_author_status: true
-      name: Anonymous Author
-      primary_author_status: true
+    authors: *authors
     dates:
       deposition_date: '2025-05-22'
       last_modified_date: '2025-05-22'
@@ -109,36 +272,43 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/15.600_SABER_1_granules-multilabel.zarr'
-      is_visualization_default: true
+      glob_strings:
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_granules-multilabel.zarr'
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_inclusion-multilabel.zarr'
+      is_visualization_default: false
       threshold: 0.5
     parent_filters:
       include:
         dataset:
-        - '10062'
-        - '10064'
+          - '10062'
+          - '10063'
+          - '10064'
+          - '10076'
+          - '10079'
+          - '10082'
+          - '10083'
+          - '10085'
   - InstanceSegmentation:
       binning: 15.6
       file_format: copick
       glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
-      is_visualization_default: true
+      is_visualization_default: false
       order: xyz
     parent_filters:
       include:
         dataset:
-        - '10062'
-        - '10064'
+          - '10062'
+          - '10064'
+
 - metadata:
     annotation_ingest_id: inclusion-body-2
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: *method_links
     annotation_object:
       id: GO:0016234
       name: inclusion body
     annotation_software: SABER
-    authors:
-    - corresponding_author_status: true
-      name: Anonymous Author
-      primary_author_status: true
+    authors: *authors
     dates:
       deposition_date: '2025-05-22'
       last_modified_date: '2025-05-22'
@@ -151,7 +321,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: zarr
       glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/16.800_SABER_1_granules-multilabel.zarr'
-      is_visualization_default: true
+      is_visualization_default: false
       threshold: 0.5
     parent_filters:
       include:
@@ -162,24 +332,129 @@ annotations:
       binning: 16.8
       file_format: copick
       glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_granules.json'
-      is_visualization_default: true
+      is_visualization_default: false
       order: xyz
     parent_filters:
       include:
         dataset:
         - '10077'
         - '10084'
+
+- metadata:
+    annotation_ingest_id: inclusion-body-3
+    annotation_method: Prediction using SABER
+    method_links: *method_links
+    annotation_object:
+      id: GO:0016234
+      name: inclusion body
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - InstanceSegmentationMask:
+      file_format: zarr
+      glob_strings:
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_granules-multilabel.zarr'
+        - '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_inclusion-multilabel.zarr'
+      is_visualization_default: true
+    parent_filters:
+      include:
+        dataset:
+          - '10062'
+          - '10063'
+          - '10064'
+          - '10076'
+          - '10077'
+          - '10079'
+          - '10082'
+          - '10083'
+          - '10084'
+          - '10085'
+
+- metadata:
+    annotation_ingest_id: inclusion-body-4
+    annotation_method: Semi-manual annotation using nnInteractive + Threshold at 0.5
+    method_links:
+      - link_type: source_code
+        link: https://github.com/MIC-DKFZ/nnInteractive
+        custom_name: nnInteractive on GitHub
+    annotation_object:
+      id: GO:0016234
+      name: inclusion body
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+    - SemanticSegmentationMask:
+        file_format: zarr
+        glob_string: '{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_inclusion-multilabel.zarr'
+        is_visualization_default: false
+        threshold: 0.5
+      parent_filters:
+        include:
+          dataset:
+            - '10062'
+            - '10064'
+            - '10077'
+
+- metadata:
+    annotation_ingest_id: inclusion-body-5
+    annotation_method: Semi-manual annotation using nnInteractive
+    method_links:
+      - link_type: source_code
+        link: https://github.com/MIC-DKFZ/nnInteractive
+        custom_name: nnInteractive on GitHub
+    annotation_object:
+      id: GO:0016234
+      name: inclusion body
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_type: hybrid
+    version: 1.0
+  sources:
+    - SemanticSegmentationMask:
+        file_format: zarr
+        glob_string: '{dataset_name}/overlay_gt/ExperimentRuns/{run_name}/Segmentations/*_nnInteractive_0_inclusion-multilabel.zarr'
+        is_visualization_default: true
+        threshold: 0.5
+      parent_filters:
+        include:
+          dataset:
+            - '10062'
+            - '10064'
+            - '10077'
+############################ END Bacteria inclusion SABER ############################
+
+############################ START Minicell cell body SABER ############################
 - metadata:
     annotation_ingest_id: intracellular-anatomical-structure-3
-    annotation_method: Prediction using SABER
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: *method_links
     annotation_object:
       id: GO:0005622
       name: intracellular anatomical structure
     annotation_software: SABER
-    authors:
-    - corresponding_author_status: true
-      name: Anonymous Author
-      primary_author_status: true
+    authors: *authors
     dates:
       deposition_date: '2025-05-22'
       last_modified_date: '2025-05-22'
@@ -191,35 +466,68 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/10.000_SABER_1_minicell-multilabel.zarr'
-      is_visualization_default: true
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_minicell*-multilabel.zarr'
+      is_visualization_default: false
       rescale: true
       threshold: 0.5
     parent_filters:
       include:
         dataset:
-        - '10442'
-  - InstanceSegmentation:
-      binning: 5.006
-      file_format: copick
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
-      is_visualization_default: true
-      order: xyz
-    parent_filters:
-      include:
-        dataset:
-        - '10442'
+          - '10452'
+        #- '10442'
+#  - InstanceSegmentation:
+#      binning: 5.006
+#      file_format: copick
+#      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Picks/SABER_1_minicell.json'
+#      is_visualization_default: false
+#      order: xyz
+#    parent_filters:
+#      include:
+#        dataset:
+#        - '10442'
+
 - metadata:
-    annotation_ingest_id: lysosome-1
+    annotation_ingest_id: intracellular-anatomical-structure-5
     annotation_method: Prediction using SABER
+    method_links: *method_links
     annotation_object:
-      id: GO:0005764
-      name: lysosome
+      id: GO:0005622
+      name: intracellular anatomical structure
     annotation_software: SABER
-    authors:
-    - corresponding_author_status: true
-      name: Anonymous Author
-      primary_author_status: true
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - InstanceSegmentationMask:
+      file_format: zarr
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_[Ss][Aa][Bb][Ee][Rr]_1_minicell*-multilabel.zarr'
+      is_visualization_default: true
+      rescale: true
+    parent_filters:
+      include:
+        dataset:
+          - '10452'
+        #- '10442'
+
+############################ END Minicell cell body SABER ############################
+
+
+############################ BEGIN VLP SABER ############################
+- metadata:
+    annotation_ingest_id: virus-like-particle-1
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: *method_links
+    annotation_object:
+      id: GO:0170047
+      name: virus-like particle
+    annotation_software: SABER
+    authors: *authors
     dates:
       deposition_date: '2025-05-22'
       last_modified_date: '2025-05-22'
@@ -231,18 +539,225 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
-      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/10.000_SABER_2_lysosome-multilabel.zarr'
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_saber_1_virus-multilabel.zarr'
       is_visualization_default: true
       rescale: true
       threshold: 0.5
     parent_filters:
       include:
         dataset:
-        - '10444'
+        - '10006'
+
+- metadata:
+    annotation_ingest_id: virus-like-particle-2
+    annotation_method: Prediction using SABER
+    method_links: *method_links
+    annotation_object:
+      id: GO:0170047
+      name: virus-like particle
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - InstanceSegmentationMask:
+      file_format: zarr
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/*_saber_1_virus-multilabel.zarr'
+      is_visualization_default: true
+      rescale: true
+    parent_filters:
+      include:
+        dataset:
+        - '10006'
+############################ END VLP SABER ############################
+
+############################ BEGIN Microsporidia nuclear envelope SABER ############################
+- metadata:
+    annotation_ingest_id: nuclear-envelope-1
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: *method_links
+    annotation_object:
+      id: GO:0005635
+      name: nuclear envelope
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_nuclear-envelope-multilabel.zarr'
+      is_visualization_default: false
+      rescale: true
+      threshold: 0.5
+    parent_filters:
+      include:
+        dataset:
+        - '10437'
+- metadata:
+    annotation_ingest_id: nuclear-envelope-2
+    annotation_method: Prediction using SABER
+    method_links: *method_links
+    annotation_object:
+      id: GO:0005635
+      name: nuclear envelope
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - InstanceSegmentationMask:
+      file_format: zarr
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_nuclear-envelope-multilabel.zarr'
+      is_visualization_default: true
+      rescale: true
+    parent_filters:
+      include:
+        dataset:
+        - '10437'
+############################ END Microsporidia nuclear envelope SABER ############################
+
+############################ BEGIN Microsporidia polar tube SABER ############################
+- metadata:
+    annotation_ingest_id: polar-tube-1
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: *method_links
+    annotation_object:
+      id: GO:0044099
+      name: polar tube
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_polar-tube-multilabel.zarr'
+      is_visualization_default: false
+      threshold: 0.5
+      rescale: true
+    parent_filters:
+      include:
+        dataset:
+        - '10437'
+
+- metadata:
+    annotation_ingest_id: polar-tube-2
+    annotation_method: Prediction using SABER
+    method_links: *method_links
+    annotation_object:
+      id: GO:0044099
+      name: polar tube
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - InstanceSegmentationMask:
+      file_format: zarr
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_polar-tube-multilabel.zarr'
+      is_visualization_default: true
+      rescale: true
+    parent_filters:
+      include:
+        dataset:
+        - '10437'
+############################ END Microsporidia polar tube SABER ############################
+
+############################ BEGIN Microsporidia spore SABER ############################
+- metadata:
+    annotation_ingest_id: intracellular-anatomical-structure-6
+    annotation_method: Prediction using SABER + Threshold at 0.5
+    method_links: *method_links
+    annotation_object:
+      id: GO:0005622
+      name: intracellular anatomical structure
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_spores-multilabel.zarr'
+      is_visualization_default: false
+      rescale: true
+      threshold: 0.5
+    parent_filters:
+      include:
+        dataset:
+        - '10437'
+
+- metadata:
+    annotation_ingest_id: intracellular-anatomical-structure-7
+    annotation_method: Prediction using SABER
+    method_links: *method_links
+    annotation_object:
+      id: GO:0005622
+      name: intracellular anatomical structure
+    annotation_software: SABER
+    authors: *authors
+    dates:
+      deposition_date: '2025-05-22'
+      last_modified_date: '2025-05-22'
+      release_date: '2025-05-22'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_type: automated
+    version: 1.0
+  sources:
+  - InstanceSegmentationMask:
+      file_format: zarr
+      glob_string: '{dataset_name}/overlay/ExperimentRuns/{run_name}/Segmentations/13.720_saber_1_spores-multilabel.zarr'
+      is_visualization_default: true
+      rescale: true
+    parent_filters:
+      include:
+        dataset:
+        - '10437'
+############################ END Microsporidia spore SABER ############################
+
+
 datasets:
 - sources:
   - source_glob:
-      list_glob: 10???
+      list_glob: '10???'
       match_regex: .*
       name_regex: (.*)
 deposition_keyphotos:
@@ -254,13 +769,58 @@ deposition_keyphotos:
 depositions:
 - metadata:
     authors:
-    - corresponding_author_status: true
-      name: Anonymous Author
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: false
+      name: Jonathan Schwartz
       primary_author_status: true
+    - ORCID: 0000-0003-4685-037X
+      corresponding_author_status: false
+      name: Utz Ermel
+      primary_author_status: false
+    - ORCID: 0000-0002-7324-2559
+      corresponding_author_status: false
+      name: Saugat Kandel
+      primary_author_status: false
+    - ORCID: 0009-0002-6674-7601
+      corresponding_author_status: false
+      name: Hannah Siems
+      primary_author_status: false
+    - ORCID: 0000-0001-8560-7407
+      corresponding_author_status: false
+      name: Julia Peukes
+      primary_author_status: false
+    - ORCID: 0000-0002-0936-114X
+      corresponding_author_status: false
+      name: Ruiming Cao
+      primary_author_status: false
+    - ORCID: 0000-0001-9517-3075
+      corresponding_author_status: false
+      name: Shawn Zheng
+      primary_author_status: false
+    - ORCID: 0000-0002-6551-2432
+      corresponding_author_status: false
+      name: Jose Miguel Andrade Lopez
+      primary_author_status: false
+    - ORCID: 0000-0002-2666-0758
+      corresponding_author_status: false
+      name: Casper C. Hoogenraad
+      primary_author_status: false
+    - ORCID: 0000-0003-0758-4654
+      corresponding_author_status: false
+      name: Shu-Hsien Sheu
+      primary_author_status: false
+    - ORCID: 0000-0001-9010-7298
+      corresponding_author_status: false
+      name: Daniel Serwas
+      primary_author_status: false
+    - ORCID: 0000-0002-2662-6373
+      corresponding_author_status: true
+      name: Dari Kimanius
+      primary_author_status: false
     dates:
-      deposition_date: '2025-05-22'
-      last_modified_date: '2025-05-22'
-      release_date: '2025-05-22'
+      deposition_date: '2026-03-09'
+      last_modified_date: '2026-03-09'
+      release_date: '2026-03-09'
     deposition_description: This deposition contains segmentations of whole cells,
       lysosomes and components of bacterial cells. The segmentations were generated
       using the SABER package, which is a SAM2-based segmentation framework that uses
@@ -283,6 +843,7 @@ runs:
       list_glob: '{dataset_name}/overlay/ExperimentRuns/*'
       match_regex: .*
       name_regex: (.*)
+
 standardization_config:
   deposition_id: 10331
   source_prefix: CZII/20250522_sam2/
