@@ -15,6 +15,7 @@ from test_infra.factories.dataset import DatasetFactory
 from test_infra.factories.dataset_author import DatasetAuthorFactory
 from test_infra.factories.deposition import DepositionFactory
 from test_infra.factories.run import RunFactory
+from test_infra.factories.tomogram_voxel_spacing import TomogramVoxelSpacingFactory
 
 date_now = datetime.datetime.now()
 
@@ -37,13 +38,15 @@ async def test_simple_aggregate(
         # create a run that matches the annotation filter but not the name filter.
         r3 = RunFactory.create(name="012")
         for run in [r1, r2, r3]:
+            vs = TomogramVoxelSpacingFactory.create(run=run)
             # important: add *two* membrane annotations for each run!
-            AnnotationFactory.create(run=run, object_name="some membrane")
-            AnnotationFactory.create(run=run, object_name="another membrane")
-            AnnotationFactory.create(run=run, object_name="ribosome")
+            AnnotationFactory.create(run=run, object_name="some membrane", tomogram_voxel_spacing=vs)
+            AnnotationFactory.create(run=run, object_name="another membrane", tomogram_voxel_spacing=vs)
+            AnnotationFactory.create(run=run, object_name="ribosome", tomogram_voxel_spacing=vs)
         # create a run that matches the name filter but not the annotation filter
         r3 = RunFactory.create(name="003")
-        AnnotationFactory.create(run=r3, object_name="ribosome")
+        vs = TomogramVoxelSpacingFactory.create(run=r3)
+        AnnotationFactory.create(run=r3, object_name="ribosome", tomogram_voxel_spacing=vs)
 
     # Fetch all runs that have membrane annotations and names starting with "00"
     query = """
@@ -84,13 +87,15 @@ async def test_filtered_aggregate(
         # create a run that matches the annotation filter but not the name filter.
         r3 = RunFactory.create(name="012")
         for run in [r1, r2, r3]:
+            vs = TomogramVoxelSpacingFactory.create(run=run)
             # important: add *two* membrane annotations for each run!
-            AnnotationFactory.create(run=run, object_name="some membrane")
-            AnnotationFactory.create(run=run, object_name="another membrane")
-            AnnotationFactory.create(run=run, object_name="ribosome")
+            AnnotationFactory.create(run=run, object_name="some membrane", tomogram_voxel_spacing=vs)
+            AnnotationFactory.create(run=run, object_name="another membrane", tomogram_voxel_spacing=vs)
+            AnnotationFactory.create(run=run, object_name="ribosome", tomogram_voxel_spacing=vs)
         # create a run that matches the name filter but not the annotation filter
         r3 = RunFactory.create(name="003")
-        AnnotationFactory.create(run=r3, object_name="ribosome")
+        vs = TomogramVoxelSpacingFactory.create(run=r3)
+        AnnotationFactory.create(run=r3, object_name="ribosome", tomogram_voxel_spacing=vs)
 
     # Fetch all runs that have membrane annotations and names starting with "00"
     query = """
@@ -128,11 +133,12 @@ async def test_onetomany_groupby_aggregate(
         # create a run that matches the annotation filter but not the name filter.
         r3 = RunFactory.create(name="012", dataset=ds)
         for run in [r1, r2, r3]:
+            vs = TomogramVoxelSpacingFactory.create(run=run)
             annos = []
-            annos.append(AnnotationFactory.create(run=run, object_name="some membrane", deposition=dep))
-            annos.append(AnnotationFactory.create(run=run, object_name="another membrane", deposition=dep))
-            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep))
-            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep2))
+            annos.append(AnnotationFactory.create(run=run, object_name="some membrane", deposition=dep, tomogram_voxel_spacing=vs))
+            annos.append(AnnotationFactory.create(run=run, object_name="another membrane", deposition=dep, tomogram_voxel_spacing=vs))
+            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep, tomogram_voxel_spacing=vs))
+            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep2, tomogram_voxel_spacing=vs))
             for anno in annos:
                 AnnotationShapeFactory.create(annotation=anno, shape_type="SegmentationMask")
             AnnotationShapeFactory.create(annotation=annos[1], shape_type="OrientedPoint")
@@ -198,11 +204,12 @@ async def test_manytoone_groupby_aggregate(
         # create a run that matches the annotation filter but not the name filter.
         r3 = RunFactory.create(name="012", dataset=ds)
         for run in [r1, r2, r3]:
+            vs = TomogramVoxelSpacingFactory.create(run=run)
             annos = []
-            annos.append(AnnotationFactory.create(run=run, object_name="some membrane", deposition=dep))
-            annos.append(AnnotationFactory.create(run=run, object_name="another membrane", deposition=dep))
-            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep))
-            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep2))
+            annos.append(AnnotationFactory.create(run=run, object_name="some membrane", deposition=dep, tomogram_voxel_spacing=vs))
+            annos.append(AnnotationFactory.create(run=run, object_name="another membrane", deposition=dep, tomogram_voxel_spacing=vs))
+            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep, tomogram_voxel_spacing=vs))
+            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep2, tomogram_voxel_spacing=vs))
             for anno in annos:
                 AnnotationShapeFactory.create(annotation=anno, shape_type="SegmentationMask")
             AnnotationShapeFactory.create(annotation=annos[1], shape_type="OrientedPoint")
