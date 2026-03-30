@@ -7,18 +7,21 @@ Make changes to the template codegen/templates/graphql_api/groupby_helpers.py.j2
 
 from typing import TYPE_CHECKING, Annotated, Any, Optional
 
+import graphql_api.helpers.annotation as annotation_helper
 import graphql_api.helpers.annotation_file as annotation_file_helper
 import graphql_api.helpers.run as run_helper
 import graphql_api.helpers.tomogram as tomogram_helper
 import strawberry
 
 if TYPE_CHECKING:
+    from graphql_api.helpers.annotation import AnnotationGroupByOptions
     from graphql_api.helpers.annotation_file import AnnotationFileGroupByOptions
     from graphql_api.helpers.run import RunGroupByOptions
     from graphql_api.helpers.tomogram import TomogramGroupByOptions
 else:
     AnnotationFileGroupByOptions = "AnnotationFileGroupByOptions"
     RunGroupByOptions = "RunGroupByOptions"
+    AnnotationGroupByOptions = "AnnotationGroupByOptions"
     TomogramGroupByOptions = "TomogramGroupByOptions"
 
 
@@ -34,6 +37,9 @@ class TomogramVoxelSpacingGroupByOptions:
         Annotated["AnnotationFileGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation_file")]
     ] = None
     run: Optional[Annotated["RunGroupByOptions", strawberry.lazy("graphql_api.helpers.run")]] = None
+    annotations: Optional[Annotated["AnnotationGroupByOptions", strawberry.lazy("graphql_api.helpers.annotation")]] = (
+        None
+    )
     tomograms: Optional[Annotated["TomogramGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram")]] = None
     voxel_spacing: Optional[float] = None
     s3_prefix: Optional[str] = None
@@ -77,6 +83,19 @@ def build_tomogram_voxel_spacing_groupby_output(
                 )
             else:
                 value = run_helper.build_run_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "annotations":
+            if getattr(group_object, key):
+                value = annotation_helper.build_annotation_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = annotation_helper.build_annotation_groupby_output(
                     None,
                     keys,
                     value,

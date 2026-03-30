@@ -21,6 +21,7 @@ if TYPE_CHECKING:
     from database.models.annotation_shape import AnnotationShape
     from database.models.deposition import Deposition
     from database.models.run import Run
+    from database.models.tomogram_voxel_spacing import TomogramVoxelSpacing
 
     from platformics.database.models.file import File
 
@@ -32,6 +33,7 @@ else:
     AnnotationMethodLink = "AnnotationMethodLink"
     AnnotationAuthor = "AnnotationAuthor"
     Deposition = "Deposition"
+    TomogramVoxelSpacing = "TomogramVoxelSpacing"
     ...
 
 
@@ -70,6 +72,14 @@ class Annotation(Base):
     deposition: Mapped["Deposition"] = relationship(
         "Deposition",
         foreign_keys=deposition_id,
+        back_populates="annotations",
+    )
+    tomogram_voxel_spacing_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("tomogram_voxel_spacing.id"), nullable=True, index=True,
+    )
+    tomogram_voxel_spacing: Mapped["TomogramVoxelSpacing"] = relationship(
+        "TomogramVoxelSpacing",
+        foreign_keys=tomogram_voxel_spacing_id,
         back_populates="annotations",
     )
     s3_metadata_path: Mapped[str] = mapped_column(String, nullable=False)

@@ -21,6 +21,7 @@ class AnnotationCreateInputValidator(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     run_id: Annotated[uuid.UUID | None, Field()]
     deposition_id: Annotated[uuid.UUID | None, Field()]
+    tomogram_voxel_spacing_id: Annotated[uuid.UUID | None, Field()]
     s3_metadata_path: Annotated[
         str,
         StringConstraints(
@@ -119,6 +120,7 @@ class AnnotationUpdateInputValidator(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     run_id: Annotated[uuid.UUID | None, Field()]
     deposition_id: Annotated[uuid.UUID | None, Field()]
+    tomogram_voxel_spacing_id: Annotated[uuid.UUID | None, Field()]
     s3_metadata_path: Annotated[
         str | None,
         StringConstraints(

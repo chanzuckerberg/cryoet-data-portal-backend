@@ -983,6 +983,12 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.annotations
         range: Deposition
+      tomogram_voxel_spacing:
+        name: tomogram_voxel_spacing
+        description: The voxel spacing this annotation is associated with
+        from_schema: cdp-dataset-config
+        inverse: TomogramVoxelSpacing.annotations
+        range: TomogramVoxelSpacing
       s3_metadata_path:
         name: s3_metadata_path
         description: S3 path for the metadata json file for this annotation
@@ -2525,6 +2531,15 @@ classes:
         inverse: run.tomogram_voxel_spacings
         range: Run
         description: The the run this tomogram voxel spacing is a part of
+      annotations:
+        name: annotations
+        description: Annotations associated with this voxel spacing
+        from_schema: cdp-dataset-config
+        multivalued: true
+        inverse: Annotation.tomogram_voxel_spacing
+        range: Annotation
+        annotations:
+          cascade_delete: true
       tomograms:
         name: tomograms
         description: Metadata describing a tomogram.

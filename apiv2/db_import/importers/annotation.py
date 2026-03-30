@@ -37,6 +37,7 @@ class AnnotationItem(ItemDBImporter):
     def load_computed_fields(self):
         extra_data = {
             "run_id": self.input_data["run"].id,
+            "tomogram_voxel_spacing_id": self.input_data["tomogram_voxel_spacing"].id,
             "s3_metadata_path": self.get_s3_url(self.input_data["file"]),
             "https_metadata_path": self.get_https_url(self.input_data["file"]),
         }
