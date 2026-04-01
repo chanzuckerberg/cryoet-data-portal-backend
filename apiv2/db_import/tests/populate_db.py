@@ -537,6 +537,7 @@ def populate_stale_annotations(session: sa.orm.Session) -> Annotation:
     return Annotation(
         id=STALE_ANNOTATION_ID,
         run_id=RUN1_ID,
+        tomogram_voxel_spacing_id=TOMOGRAM_VOXEL_ID1,
         annotation_ingest_id="100-bar-1.0",
         s3_metadata_path="foo",
         https_metadata_path="foo",

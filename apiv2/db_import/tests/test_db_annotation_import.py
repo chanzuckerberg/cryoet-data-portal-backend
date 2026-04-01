@@ -196,8 +196,6 @@ def test_import_annotations(
     assert len(files) == len(expected_annotation_files)
 
 
-# Tests state annotation and files are removed
-@pytest.mark.skip(reason="Cleaning up stale annotations is currently disabled.")
 def test_import_annotations_files_removes_stale(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
@@ -212,12 +210,15 @@ def test_import_annotations_files_removes_stale(
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
     actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    files = []
     for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
-        assert len(annotation.files) == len(expected_annotation_files)
-        for file in annotation.files.order_by(models.AnnotationFile.shape_type, models.AnnotationFile.format):
-            verify_model(file, next(expected_annotations_files_iter))
+        for shape in sorted(annotation.annotation_shapes, key=lambda x: x.shape_type):
+            files.extend(shape.annotation_files)
+            for file in sorted(shape.annotation_files, key=lambda x: x.format):
+                verify_model(file, next(expected_annotations_files_iter))
         assert len(annotation.authors) == 0
+    assert len(files) == len(expected_annotation_files)
 
 
 # Tests update of existing annotation authors, addition of new authors
