@@ -1257,6 +1257,21 @@ files = [
 ]
 
 [[package]]
+name = "cross-web"
+version = "0.4.1"
+description = "A library for working with web frameworks"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "cross_web-0.4.1-py3-none-any.whl", hash = "sha256:41b07c3a38253c517ec0603c1a366353aff77538946092b0f9a2235033f192c2"},
+    {file = "cross_web-0.4.1.tar.gz", hash = "sha256:0466295028dcae98c9ab3d18757f90b0e74fac2ff90efbe87e74657546d9993d"},
+]
+
+[package.dependencies]
+typing-extensions = ">=4.14.0"
+
+[[package]]
 name = "cryptography"
 version = "46.0.3"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
@@ -4852,33 +4867,34 @@ full = ["httpx (>=0.27.0,<0.29.0)", "itsdangerous", "jinja2", "python-multipart 
 
 [[package]]
 name = "strawberry-graphql"
-version = "0.257.0"
+version = "0.312.3"
 description = "A library for creating GraphQL APIs"
 optional = false
-python-versions = "<4.0,>=3.9"
+python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "strawberry_graphql-0.257.0-py3-none-any.whl", hash = "sha256:07781c1448c94dc533bce8372d1561e7723bdcee901ac1593b2231953e4c5333"},
-    {file = "strawberry_graphql-0.257.0.tar.gz", hash = "sha256:4f95c432fe6091df7e910e9ab3de2ae6cee80183208b669544ef6129d6b6e916"},
+    {file = "strawberry_graphql-0.312.3-py3-none-any.whl", hash = "sha256:4a79d5f8438adcc95076b80e7836b5e0f9c871a92dc3474bc7ebfadd78843db0"},
+    {file = "strawberry_graphql-0.312.3.tar.gz", hash = "sha256:f29957dcbe4cc838ba97b2981a90bf108d4400eddaf4f9fd524fc91345d6d3c5"},
 ]
 
 [package.dependencies]
+cross-web = ">=0.4.0"
 graphql-core = ">=3.2.0,<3.4.0"
-python-dateutil = ">=2.7.0,<3.0.0"
+packaging = ">=23"
+python-dateutil = ">=2.7"
 typing-extensions = ">=4.5.0"
 
 [package.extras]
-aiohttp = ["aiohttp (>=3.7.4.post0,<4.0.0)"]
+aiohttp = ["aiohttp (>=3.7.4.post0,<4)"]
 asgi = ["python-multipart (>=0.0.7)", "starlette (>=0.18.0)"]
-chalice = ["chalice (>=1.22,<2.0)"]
-channels = ["asgiref (>=3.2,<4.0)", "channels (>=3.0.5)"]
-cli = ["libcst (>=0.4.7)", "pygments (>=2.3,<3.0)", "rich (>=12.0.0)", "typer (>=0.7.0)"]
-debug = ["libcst (>=0.4.7)", "rich (>=12.0.0)"]
-debug-server = ["libcst (>=0.4.7)", "pygments (>=2.3,<3.0)", "python-multipart (>=0.0.7)", "rich (>=12.0.0)", "starlette (>=0.18.0)", "typer (>=0.7.0)", "uvicorn (>=0.11.6)"]
-django = ["Django (>=3.2)", "asgiref (>=3.2,<4.0)"]
+chalice = ["chalice (>=1.22)"]
+channels = ["asgiref (>=3.2)", "channels (>=3.0.5)"]
+cli = ["libcst", "pygments (>=2.3)", "python-multipart (>=0.0.7)", "rich (>=12.0.0)", "starlette (>=0.18.0)", "typer (>=0.12.4)", "uvicorn (>=0.11.6)", "websockets (>=15.0.1,<16)"]
+debug = ["libcst", "rich (>=12.0.0)"]
+django = ["Django (>=3.2)", "asgiref (>=3.2)"]
 fastapi = ["fastapi (>=0.65.2)", "python-multipart (>=0.0.7)"]
 flask = ["flask (>=1.1)"]
-litestar = ["litestar (>=2)"]
+litestar = ["litestar (>=2) ; python_version ~= \"3.10\""]
 opentelemetry = ["opentelemetry-api (<2)", "opentelemetry-sdk (<2)"]
 pydantic = ["pydantic (>1.6.1)"]
 pyinstrument = ["pyinstrument (>=4.0.0)"]
@@ -5036,7 +5052,7 @@ files = [
     {file = "tzdata-2025.3-py2.py3-none-any.whl", hash = "sha256:06a47e5700f3081aab02b2e513160914ff0694bce9947d6b76ebd6bf57cfc5d1"},
     {file = "tzdata-2025.3.tar.gz", hash = "sha256:de39c2ca5dc7b0344f2eba86f49d614019d29f060fc4ebc8a417896a620b56a7"},
 ]
-markers = {dev = "sys_platform == \"win32\" or platform_system == \"Windows\""}
+markers = {dev = "platform_system == \"Windows\" or sys_platform == \"win32\""}
 
 [[package]]
 name = "uri-template"
@@ -5429,4 +5445,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "5f46b6ec1014ae091e92dee8e67a7e1c25c83994c740186605f2914c54461c5c"
+content-hash = "9e7c1b6b33ac97ddb3d31d87537719009aa2934b5fe82d8816c3c6db2a6b99ac"
