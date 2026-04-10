@@ -326,6 +326,9 @@ classes:
       GlobalCaption:
         description: The global caption annotation source.
         range: AnnotationGlobalCaptionFile
+      AnnotationCaption:
+        description: The per-instance annotation caption source.
+        range: AnnotationCaptionFile
       parent_filters:
         description: Filters for the parent of a source.
         range: AnnotationParentFilters

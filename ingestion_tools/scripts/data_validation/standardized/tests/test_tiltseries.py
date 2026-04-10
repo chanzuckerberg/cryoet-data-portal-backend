@@ -13,6 +13,7 @@ from data_validation.standardized.tests.test_deposition import HelperTestDeposit
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 MAX_DEVIATING_INCREMENTS = 4
+MDOC_TILT_RANGE_DECIMAL_PLACE = 1
 
 
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
@@ -124,8 +125,7 @@ class TestTiltseries(TiltSeriesHelper):
         tiltseries_metadata: dict,
         mdoc_data: pd.DataFrame,
     ):
-        from data_validation.shared.helper.angles_helper import ANGLE_TOLERANCE
-
+        dp = MDOC_TILT_RANGE_DECIMAL_PLACE
         tilt_step = tiltseries_metadata["tilt_step"]
         tilt_min = tiltseries_metadata["tilt_range"]["min"]
         tilt_max = tiltseries_metadata["tilt_range"]["max"]
@@ -133,24 +133,21 @@ class TestTiltseries(TiltSeriesHelper):
 
         fatal_errors = []
 
-        # Check min and max
-        if abs(mdoc_angles[0] - tilt_min) >= ANGLE_TOLERANCE:
-            fatal_errors.append(f"Min mdoc angle {mdoc_angles[0]} does not match tilt_range min {tilt_min} (tolerance {ANGLE_TOLERANCE}).")
-        if abs(mdoc_angles[-1] - tilt_max) >= ANGLE_TOLERANCE:
-            fatal_errors.append(f"Max mdoc angle {mdoc_angles[-1]} does not match tilt_range max {tilt_max} (tolerance {ANGLE_TOLERANCE}).")
+        # Check min and max (round both sides to dp decimal places)
+        if round(mdoc_angles[0], dp) != round(tilt_min, dp):
+            fatal_errors.append(f"Min mdoc angle {mdoc_angles[0]} does not match tilt_range min {tilt_min} (rounded to {dp} decimal places).")
+        if round(mdoc_angles[-1], dp) != round(tilt_max, dp):
+            fatal_errors.append(f"Max mdoc angle {mdoc_angles[-1]} does not match tilt_range max {tilt_max} (rounded to {dp} decimal places).")
 
         # Check increments between consecutive angles
         increment_errors = []
-        increments = {}
         for i in range(len(mdoc_angles) - 1):
             start_angle = mdoc_angles[i]
             end_angle = mdoc_angles[i + 1]
-            increments[(start_angle, end_angle)] = end_angle - start_angle
-
-        for (start_angle, end_angle), increment in increments.items():
-            if abs(increment - tilt_step) >= ANGLE_TOLERANCE:
+            increment = end_angle - start_angle
+            if round(increment, dp) != round(tilt_step, dp):
                 increment_errors.append(
-                    f"Increment from {start_angle} to {end_angle} is {increment}, expected tilt_step {tilt_step} (tolerance {ANGLE_TOLERANCE}).",
+                    f"Increment from {start_angle} to {end_angle} is {increment}, expected tilt_step {tilt_step} (rounded to {dp} decimal places).",
                 )
 
         # Always log increment deviations as warnings
@@ -161,11 +158,11 @@ class TestTiltseries(TiltSeriesHelper):
                 attachment_type=allure.attachment_type.TEXT,
             )
 
-        # Fail if min/max mismatch or more than 4 deviating increments
+        # Fail if min/max mismatch or more than MAX_DEVIATING_INCREMENTS deviating increments
         if len(increment_errors) > MAX_DEVIATING_INCREMENTS:
             fatal_errors.extend(increment_errors)
 
-        range_info = f"\nRange: {tilt_min} to {tilt_max}, with step {tilt_step}"
+        range_info = f"\nRange: {tilt_min} to {tilt_max}, with step {tilt_step}, rounded to {dp} decimal places."
         assert len(fatal_errors) == 0, "\n".join(fatal_errors) + range_info
 
     ### END metadata-mdoc consistency tests ###
@@ -229,7 +226,6 @@ class TestTiltseries(TiltSeriesHelper):
             mdoc_data["TiltAngle"].to_list(),
             "tiltseries metadata per_section_parameter raw_angle",
             "mdoc file",
-            angle_tolerance=10 ** -2,
         )
         if errors:
             raise AssertionError("\n".join(errors))

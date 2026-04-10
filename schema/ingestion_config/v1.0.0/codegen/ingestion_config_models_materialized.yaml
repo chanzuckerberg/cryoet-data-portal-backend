@@ -557,6 +557,9 @@ enums:
       GlobalCaption:
         text: GlobalCaption
         description: A set of text captions describing the entire tomogram
+      AnnotationCaption:
+        text: AnnotationCaption
+        description: Per-instance text captions for an annotation shape
   point_annotation_file_format_enum:
     name: point_annotation_file_format_enum
     description: Describes the format of the point annotation file
@@ -2131,6 +2134,18 @@ classes:
         domain_of:
         - AnnotationSource
         range: AnnotationGlobalCaptionFile
+        inlined: true
+        inlined_as_list: true
+      AnnotationCaption:
+        name: AnnotationCaption
+        description: File and sourcing data for a per-instance caption annotation.
+          Text captions for individual annotation instances.
+        from_schema: cdp-ingestion-config
+        alias: AnnotationCaption
+        owner: AnnotationSource
+        domain_of:
+        - AnnotationSource
+        range: AnnotationCaptionFile
         inlined: true
         inlined_as_list: true
       parent_filters:

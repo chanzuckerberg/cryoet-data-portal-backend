@@ -1,0 +1,409 @@
+alignments:
+  - metadata:
+      alignment_type: GLOBAL
+      format: IMOD
+      is_portal_standard: true
+      method_type: patch_tracking
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - frames/{date_folder}/processing/{ts_name}.xf
+            - rawtlt-corrected/{date_folder}_{ts_name}.rawtlt
+
+annotations:
+  - metadata:
+      annotation_ingest_id: centriole-1
+      annotation_method: Centriole microtubules were manually traced in Amira 2021.1.
+      annotation_object:
+        id: GO:0005814
+        name: centriole
+      annotation_publications: 10.1016/j.devcel.2024.12.002
+      annotation_software: Amira 2021.1
+      authors: &annotation_authors
+        - name: Fergus Tollervey
+          primary_author_status: true
+          corresponding_author_status: false
+          ORCID: 0000-0003-4829-3159
+          affiliation_name: Structural and Computational Biology Unit, European Molecular Biology Laboratory (EMBL), Heidelberg, Germany
+        - name: Manolo U. Rios
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0001-8457-5378
+          affiliation_name: Department of Cell Biology and Biophysics, University of Texas Southwestern Medical Center, Dallas, TX, USA
+        - name: Evgenia Zagoriy
+          primary_author_status: false
+          corresponding_author_status: false
+          ORCID: 0000-0003-2523-5132
+          affiliation_name: Structural and Computational Biology Unit, European Molecular Biology Laboratory (EMBL), Heidelberg, Germany
+        - name: Jeffrey B. Woodruff
+          primary_author_status: false
+          corresponding_author_status: true
+          ORCID: 0000-0002-5590-9620
+          affiliation_name: Department of Cell Biology and Biophysics, University of Texas Southwestern Medical Center, Dallas, TX, USA
+          email: jeffrey.woodruff@utsouthwestern.edu
+        - name: Julia Mahamid
+          primary_author_status: false
+          corresponding_author_status: true
+          ORCID: 0000-0001-6968-041X
+          affiliation_name: Structural and Computational Biology Unit, European Molecular Biology Laboratory (EMBL), Heidelberg, Germany
+          email: julia.mahamid@embl.de
+      dates: &dates
+        deposition_date: "2026-03-26"
+        last_modified_date: "2026-03-26"
+        release_date: "2026-03-26"
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Amira
+          link: https://www.thermofisher.com/ch/en/home/electron-microscopy/products/software-em-3d-vis/amira-software.html
+          link_type: website
+      method_type: manual
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/{run_name}_centrioles.mrc
+          is_visualization_default: true
+          mask_label: 1
+
+  - metadata:
+      annotation_ingest_id: microtubule-1
+      annotation_method: >-
+        Segmentation of microtubules was carried out using a cylinder correlation function in Amira 2021.1 on
+        Gaussian-filtered 4x binned tomograms. Results were manually examined and erroneous results removed. For one
+        tomogram, binary masks from the other 11 were used to train a DeePiCt model, and the trained model was used
+        for prediction with manual cleanup.
+      annotation_object:
+        id: GO:0005874
+        name: microtubule
+      annotation_publications: 10.1016/j.devcel.2024.12.002
+      annotation_software: Amira 2021.1, DeePiCt
+      authors: *annotation_authors
+      dates: *dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Amira
+          link: https://www.thermofisher.com/ch/en/home/electron-microscopy/products/software-em-3d-vis/amira-software.html
+          link_type: website
+        - custom_name: DeePiCt
+          link: https://github.com/ZauggGroup/DeePiCt
+          link_type: source_code
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/{run_name}_microtubules.mrc
+          is_visualization_default: true
+          mask_label: 1
+
+  - metadata:
+      annotation_ingest_id: cytosolic-ribosome-1
+      annotation_method: >-
+        Ribosomes were segmented using DeePiCt with the model ribo_model2_IF4_D2_0.
+        Results were inspected in Amira 2021.1 to remove false positives.
+      annotation_object:
+        id: GO:0022626
+        name: cytosolic ribosome
+      annotation_publications: 10.1016/j.devcel.2024.12.002
+      annotation_software: DeePiCt, Amira 2021.1
+      authors: *annotation_authors
+      dates: *dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: DeePiCt
+          link: https://github.com/ZauggGroup/DeePiCt
+          link_type: source_code
+        - custom_name: Amira
+          link: https://www.thermofisher.com/ch/en/home/electron-microscopy/products/software-em-3d-vis/amira-software.html
+          link_type: website
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/{run_name}_ribosomes.mrc
+          is_visualization_default: true
+          mask_label: 1
+
+  - metadata:
+      annotation_ingest_id: membrane-1
+      annotation_method: >-
+        Membranes were segmented using DeePiCt with the model full_vpp_memb_model_IF4_D2_BN.
+        Results were inspected in Amira 2021.1 to remove false positives.
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+      annotation_publications: 10.1016/j.devcel.2024.12.002
+      annotation_software: DeePiCt, Amira 2021.1
+      authors: *annotation_authors
+      dates: *dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: DeePiCt
+          link: https://github.com/ZauggGroup/DeePiCt
+          link_type: source_code
+        - custom_name: Amira
+          link: https://www.thermofisher.com/ch/en/home/electron-microscopy/products/software-em-3d-vis/amira-software.html
+          link_type: website
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/{run_name}_membranes.mrc
+          is_visualization_default: true
+          mask_label: 1
+
+  - metadata:
+      annotation_ingest_id: pericentriolar-material-1
+      annotation_method: >-
+        Denoised tomograms were used for matrix segmentation. Centrioles, microtubules, ribosomes and membranes were
+        masked in the tomogram volumes. Two models were generated following manual annotation using Ilastik 1.3.3: one
+        utilized 3D Pixel Classification, while the other used 2D Autocontext trained on the central 50 XY slices. The
+        Autocontext model outputs were combined and binarized in MATLAB 2019a to obtain the final matrix model.
+      annotation_object:
+        id: GO:0000242
+        name: pericentriolar material
+      annotation_publications: 10.1016/j.devcel.2024.12.002
+      annotation_software: Ilastik 1.3.3, MATLAB 2019a
+      authors: *annotation_authors
+      dates: *dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Ilastik
+          link: https://www.ilastik.org/
+          link_type: website
+        - custom_name: MATLAB
+          link: https://www.mathworks.com/products/matlab.html
+          link_type: website
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: labels/{run_name}_matrix.mrc
+          is_visualization_default: true
+          mask_label: 1
+
+collection_metadata:
+  - sources:
+      - source_glob:
+          list_glob: frames/{date_folder}/metadata/{ts_name}_orig.mdoc
+
+datasets:
+  - metadata:
+      assay:
+        id: EFO:0002909
+        name: microscopy assay
+      authors: *annotation_authors
+      cell_component:
+        id: GO:0005813
+        name: centrosome
+      cell_strain:
+        name: JWW69
+      cell_type:
+        id: WBbt:0007028
+        name: embryonic cell
+      cross_references: &cross_refs
+        publications: 10.1016/j.devcel.2024.12.002
+        related_database_entries: EMPIAR-12049, EMD-19778, EMD-19779, EMD-19780, EMD-19781
+      dataset_description: >-
+        Cryo-electron tomography data of centrosomes in dissociated C. elegans embryonic cells across the cell cycle.
+        Centrosomes were visualized in cells isolated from early-stage embryos (strain JWW69 expressing GFP::SPD-5 and
+        H2B::mCherry). Cells were plunge-frozen, thinned by cryo-FIB milling, and imaged on a 300 kV Titan Krios with
+        a K2 Summit detector, Volta phase plate, and energy filter. 12 tomograms were collected at centrosomes in
+        interphase, prophase, metaphase, anaphase, and telophase stages. Comprehensive annotations of centrioles,
+        microtubules, ribosomes, membranes, and pericentriolar material are provided. Tilt series were aligned using
+        patch tracking in IMOD, and tomograms were reconstructed using Warp.
+      dataset_identifier: 10477
+      dataset_title: Cryo-electron tomography of centrosomes in C. elegans embryonic cells
+      dates: *dates
+      development_stage:
+        id: WBls:0000003
+        name: embryo Ce
+      disease:
+        id: PATO:0000461
+        name: normal
+      funding:
+        - funding_agency_name: Cancer Prevention Research Institute of Texas (CPRIT)
+          grant_id: RR170063
+        - funding_agency_name: Welch Foundation
+          grant_id: I-2052-20200401
+        - funding_agency_name: National Institute of General Medical Sciences (NIGMS/NIH)
+          grant_id: 1R35GM142522
+        - funding_agency_name: National Institutes of Health (NIH)
+          grant_id: T32 GM007062
+        - funding_agency_name: European Research Council (ERC)
+          grant_id: 3DCellPhase-760067
+        - funding_agency_name: EMBL
+        - funding_agency_name: Endowed Scholars program at UT Southwestern
+      grid_preparation: >-
+        Quantifoil Holey SiO2 R 1/4 Au 200 mesh EM grids were glow discharged on both sides (Pelco easyglow, 45 s,
+        0.37 mBar, 15 mA). 4 ul of cell suspension was added to the front of the grid, 2 ul of supplemented L-15
+        media to the back. Grids were blotted from the back for 3 s and plunge-frozen in liquid ethane at -185 C using
+        a Leica EM GP2 (chamber: 22 C, 70% humidity). Cryo-FIB milling was performed on a dual beam Aquilos1
+        (ThermoFisher Scientific) at 30 kV with sequential milling currents (1 nA, 500 pA, 300 pA, 100 pA fine
+        milling). Lamellae were milled at 20 degree stage tilt with 45 degree pretilt shuttle. 300 nm micro-expansion
+        joints were milled on both sides.
+      organism:
+        name: Caenorhabditis elegans
+        taxonomy_id: 6239
+      sample_preparation: >-
+        Cells were isolated from early-stage C. elegans embryos (strain JWW69 expressing GFP::SPD-5 and
+        H2B::mCherry). Gravid adults were bleached to collect embryos. Embryos were treated with chitinase (4 mg/ml)
+        in modified L-15 media for 15 min, followed by mechanical dissociation and accutase treatment. Cells were
+        filtered through 20 um and 10 um cell strainers.
+      sample_type: primary_cell_culture
+    sources:
+      - literal:
+          value:
+            - "10477"
+
+dataset_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10345_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10345_thumbnail.png
+
+depositions:
+  - metadata:
+      authors: *annotation_authors
+      cross_references: *cross_refs
+      dates: *dates
+      deposition_description: >-
+        Cryo-electron tomography data of centrosomes in dissociated C. elegans embryonic cells across the cell cycle.
+        The deposition includes raw frames, tilt series stacks, alignment transforms, reconstructed tomograms, and
+        semantic segmentation annotations of centrioles, microtubules, ribosomes, membranes, and pericentriolar
+        material. 12 tomograms from cells at different cell cycle stages (interphase, prophase, metaphase, anaphase,
+        telophase) were collected on a 300 kV Titan Krios with K2 Summit detector and Volta phase plate.
+      deposition_identifier: 10345
+      deposition_title: Cryo-electron tomography of centrosomes in C. elegans embryonic cells
+      deposition_types:
+        - dataset
+    sources:
+      - literal:
+          value:
+            - 10345
+
+frames:
+  - metadata:
+      dose_rate: float {tilt_series_dose_rate}
+      is_gain_corrected: false
+    sources:
+      - source_glob:
+          list_glob: frames/{date_folder}/{ts_name}_*.tif
+
+gains:
+  - sources:
+      - source_glob:
+          list_glob: frames/{gain_date_folder}/{gain_file}
+
+rawtilts:
+  - sources:
+      - source_glob:
+          list_glob: rawtlt-corrected/{date_folder}_{ts_name}.rawtlt
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: rawTomos/*.mrc
+          match_regex: .*
+          name_regex: (.*)\.mrc$
+
+standardization_config:
+  deposition_id: 10345
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: EMPIAR/EMPIAR-12049/data/
+
+tiltseries:
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        acquire_mode: counting
+        manufacturer: Gatan
+        model: K2 SUMMIT
+      data_acquisition_software: SerialEM 3.8
+      is_aligned: false
+      microscope:
+        manufacturer: TFS
+        model: Titan Krios
+      microscope_optical_setup:
+        energy_filter: Gatan quantum
+        phase_plate: Volta Phase Plate
+      pixel_spacing: float {pixel_spacing}
+      related_empiar_entry: EMPIAR-12049
+      spherical_aberration_constant: 2.7
+      tilt_alignment_software: IMOD 4.1.1
+      tilt_axis: float {tilt_axis}
+      tilt_range:
+        max: float {tilt_series_max_tilt}
+        min: float {tilt_series_min_tilt}
+      tilt_series_quality: int {tilt_series_quality}
+      tilt_step: 2.0
+      tilting_scheme: dose-symmetric
+      total_flux: 120
+    sources:
+      - source_glob:
+          list_glob: frames/{date_folder}/processing/{ts_name}.st
+
+tomograms:
+  - metadata:
+      affine_transformation_matrix:
+        - - 1
+          - 0
+          - 0
+          - 0
+        - - 0
+          - 1
+          - 0
+          - 0
+        - - 0
+          - 0
+          - 1
+          - 0
+        - - 0
+          - 0
+          - 0
+          - 1
+      align_software: IMOD 4.1.1
+      authors: *annotation_authors
+      cross_references: *cross_refs
+      ctf_corrected: true
+      dates: *dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: filtered
+      processing_software: Warp 1.0.9
+      reconstruction_method: Fourier Space
+      reconstruction_software: Warp 1.0.9
+      tomogram_version: 1.0
+      voxel_spacing: 13.481
+    sources:
+      - source_glob:
+          list_glob: rawTomos/{run_name}.mrc
+
+version: 1.0.0
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 13.481

@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.20.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.19.0...apiv2-v1.20.0) (2026-03-30)
+
+
+### Features
+
+* add tomogram_voxel_spacing_id foreign key to annotation table ([#641](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/641)) ([be584c0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/be584c0c27f9bf6dc278a67b58a87fb334f73a28))
+* annotation caption for s3 and db/api ingestion ([#629](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/629)) ([b06b786](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/b06b78644fd29e5b97798900c0b7b0fae63c50ac))
+
+## [1.19.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.18.0...apiv2-v1.19.0) (2026-03-19)
+
+
+### Features
+
+* add GlobalCaption to db/api for text annotation ([#625](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/625)) ([756b680](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/756b68075e25a5b426aa73ef514bda1f9d6b1cd1))
+
 ## [1.18.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.17.0...apiv2-v1.18.0) (2026-03-09)
 
 

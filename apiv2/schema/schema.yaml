@@ -285,6 +285,12 @@ enums:
       Mesh:
         text: Mesh
         description: A surface mesh volumes
+      GlobalCaption:
+        text: GlobalCaption
+        description: A text caption for the tomogram
+      AnnotationCaption:
+        text: AnnotationCaption
+        description: Per-instance text captions for an annotation shape
   annotation_method_link_type_enum:
     name: annotation_method_link_type_enum
     description: Describes the type of link associated to the annotation method.
@@ -925,11 +931,11 @@ classes:
         annotations:
           cascade_delete: true
       shape_type:
-        description: The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)
+        description: The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask, GlobalCaption, AnnotationCaption)
         name: shape_type
         from_schema: cdp-dataset-config
         range: annotation_file_shape_type_enum
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^Mesh$)|(^InstanceSegmentationMask$)
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^Mesh$)|(^InstanceSegmentationMask$)|(^GlobalCaption$)|(^AnnotationCaption$)
   Annotation:
     name: Annotation
     annotations:
@@ -977,6 +983,12 @@ classes:
         from_schema: cdp-dataset-config
         inverse: Deposition.annotations
         range: Deposition
+      tomogram_voxel_spacing:
+        name: tomogram_voxel_spacing
+        description: The voxel spacing this annotation is associated with
+        from_schema: cdp-dataset-config
+        inverse: TomogramVoxelSpacing.annotations
+        range: TomogramVoxelSpacing
       s3_metadata_path:
         name: s3_metadata_path
         description: S3 path for the metadata json file for this annotation
@@ -2519,6 +2531,15 @@ classes:
         inverse: run.tomogram_voxel_spacings
         range: Run
         description: The the run this tomogram voxel spacing is a part of
+      annotations:
+        name: annotations
+        description: Annotations associated with this voxel spacing
+        from_schema: cdp-dataset-config
+        multivalued: true
+        inverse: Annotation.tomogram_voxel_spacing
+        range: Annotation
+        annotations:
+          cascade_delete: true
       tomograms:
         name: tomograms
         description: Metadata describing a tomogram.

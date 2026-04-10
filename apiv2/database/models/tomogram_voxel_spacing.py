@@ -14,6 +14,7 @@ from platformics.database.models.base import Base
 from platformics.database.models.file import File
 
 if TYPE_CHECKING:
+    from database.models.annotation import Annotation
     from database.models.annotation_file import AnnotationFile
     from database.models.run import Run
     from database.models.tomogram import Tomogram
@@ -25,6 +26,7 @@ else:
     File = "File"
     AnnotationFile = "AnnotationFile"
     Run = "Run"
+    Annotation = "Annotation"
     Tomogram = "Tomogram"
     ...
 
@@ -45,6 +47,13 @@ class TomogramVoxelSpacing(Base):
         "Run",
         foreign_keys=run_id,
         back_populates="tomogram_voxel_spacings",
+    )
+    annotations: Mapped[list[Annotation]] = relationship(
+        "Annotation",
+        back_populates="tomogram_voxel_spacing",
+        uselist=True,
+        foreign_keys="Annotation.tomogram_voxel_spacing_id",
+        cascade="all, delete-orphan",
     )
     tomograms: Mapped[list[Tomogram]] = relationship(
         "Tomogram",
