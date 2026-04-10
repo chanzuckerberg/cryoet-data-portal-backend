@@ -106,7 +106,7 @@ annotations: OPTIONAL
       rescale: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
-  - SegmentationMask:
+  - SegmentationMask: # SHOULD NO LONGER BE USED, USE SemanticSegmentationMask INSTEAD
       file_format: REQUIRED, ENUM [mrc, zarr]
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
