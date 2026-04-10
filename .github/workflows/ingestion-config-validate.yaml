@@ -28,6 +28,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -41,9 +43,44 @@ jobs:
       - name: Build Pydantic models
         run: make build
         working-directory: schema/
+      - name: Determine files to validate
+        id: changed-files
+        run: |
+          # For workflow_dispatch, validate everything
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "validate_all=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Determine base commit for diff
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE=${{ github.event.pull_request.base.sha }}
+          else
+            BASE=${{ github.event.before }}
+          fi
+
+          # If schema files changed, validate all configs
+          SCHEMA_CHANGED=$(git diff --name-only "$BASE" HEAD -- 'schema/' | head -1)
+          if [ -n "$SCHEMA_CHANGED" ]; then
+            echo "validate_all=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Otherwise, only validate changed configs (exclude deletions)
+          # Paths are repo-root-relative; prepend $GITHUB_WORKSPACE to make them absolute
+          CHANGED_CONFIGS=$(git diff --name-only --diff-filter=ACMR "$BASE" HEAD -- 'ingestion_tools/dataset_configs/*.yaml' \
+            | sed "s|^|$GITHUB_WORKSPACE/|" | tr '\n' ' ')
+          echo "validate_all=false" >> $GITHUB_OUTPUT
+          echo "changed_files=$CHANGED_CONFIGS" >> $GITHUB_OUTPUT
       - name: Validate dataset configs
         run: |
-          make validate-configs-with-network
+          if [ "${{ steps.changed-files.outputs.validate_all }}" = "true" ]; then
+            make validate-configs-with-network
+          elif [ -n "${{ steps.changed-files.outputs.changed_files }}" ]; then
+            make validate-changed-configs-with-network CHANGED_FILES="${{ steps.changed-files.outputs.changed_files }}"
+          else
+            echo "No config files to validate."
+          fi
         working-directory: schema/
       - name: Archive validation results
         if: failure()

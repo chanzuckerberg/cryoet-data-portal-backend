@@ -106,7 +106,7 @@ annotations: OPTIONAL
       rescale: OPTIONAL, BOOLEAN (DEFAULT FALSE)
     parent_filters: see InstanceSegmentation.parent_filters
     exclude: SEE InstanceSegmentation.exclude
-  - SegmentationMask:
+  - SegmentationMask: # SHOULD NO LONGER BE USED, USE SemanticSegmentationMask INSTEAD
       file_format: REQUIRED, ENUM [mrc, zarr]
       glob_string: see InstanceSegmentation.glob_string
       glob_strings: see InstanceSegmentation.glob_strings
@@ -218,7 +218,7 @@ datasets: REQUIRED
     parent_filters: SEE runs.sources.parent_filters
   - literal: OPTIONAL
       value:
-      - REQUIRED, ANY (STRING, INTEGER, FLOAT, BOOLEAN)
+      - REQUIRED, STRING (e.g., '10001')
     parent_filters: SEE runs.sources.parent_filters
 deposition_keyphotos: SEE dataset_keyphotos
 depositions: REQUIRED
@@ -232,7 +232,13 @@ depositions: REQUIRED
       deposition_types: REQUIRED
       - STRING (ENUM [annotation, dataset, tomogram])
       tag: OPTIONAL, STRING
-    sources: REQUIRED, SEE datasets.sources and runs.sources.parent_filters
+    sources: REQUIRED (source_glob, source_multi_glob, destination_glob, literal)
+    # SEE datasets.sources for source_glob, source_multi_glob, destination_glob
+    # For literal, the value must be an integer (deposition ID):
+    - literal: OPTIONAL
+        value:
+        - REQUIRED, INTEGER (e.g., 10001)
+      parent_filters: N/A (depositions have no parent filters)
 frames: OPTIONAL
 - metadata: OPTIONAL
     dose_rate: REQUIRED, FLOAT
