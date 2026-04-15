@@ -101,7 +101,7 @@ annotations:
       version: 1.0
     sources:
       - OrientedPoint:
-          binning: 16
+          binning: 8
           order: xyz
           file_format: relion4_star
           glob_string: particle_tables/CCVs_fragment_relion_dataset_1_fixed.star
