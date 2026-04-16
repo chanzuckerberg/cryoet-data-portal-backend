@@ -6054,22 +6054,22 @@ testing = ["google-api-core (>=1.31.5)"]
 
 [[package]]
 name = "protobuf"
-version = "6.33.2"
+version = "6.33.5"
 description = ""
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "protobuf-6.33.2-cp310-abi3-win32.whl", hash = "sha256:87eb388bd2d0f78febd8f4c8779c79247b26a5befad525008e49a6955787ff3d"},
-    {file = "protobuf-6.33.2-cp310-abi3-win_amd64.whl", hash = "sha256:fc2a0e8b05b180e5fc0dd1559fe8ebdae21a27e81ac77728fb6c42b12c7419b4"},
-    {file = "protobuf-6.33.2-cp39-abi3-macosx_10_9_universal2.whl", hash = "sha256:d9b19771ca75935b3a4422957bc518b0cecb978b31d1dd12037b088f6bcc0e43"},
-    {file = "protobuf-6.33.2-cp39-abi3-manylinux2014_aarch64.whl", hash = "sha256:b5d3b5625192214066d99b2b605f5783483575656784de223f00a8d00754fc0e"},
-    {file = "protobuf-6.33.2-cp39-abi3-manylinux2014_s390x.whl", hash = "sha256:8cd7640aee0b7828b6d03ae518b5b4806fdfc1afe8de82f79c3454f8aef29872"},
-    {file = "protobuf-6.33.2-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:1f8017c48c07ec5859106533b682260ba3d7c5567b1ca1f24297ce03384d1b4f"},
-    {file = "protobuf-6.33.2-cp39-cp39-win32.whl", hash = "sha256:7109dcc38a680d033ffb8bf896727423528db9163be1b6a02d6a49606dcadbfe"},
-    {file = "protobuf-6.33.2-cp39-cp39-win_amd64.whl", hash = "sha256:2981c58f582f44b6b13173e12bb8656711189c2a70250845f264b877f00b1913"},
-    {file = "protobuf-6.33.2-py3-none-any.whl", hash = "sha256:7636aad9bb01768870266de5dc009de2d1b936771b38a793f73cbbf279c91c5c"},
-    {file = "protobuf-6.33.2.tar.gz", hash = "sha256:56dc370c91fbb8ac85bc13582c9e373569668a290aa2e66a590c2a0d35ddb9e4"},
+    {file = "protobuf-6.33.5-cp310-abi3-win32.whl", hash = "sha256:d71b040839446bac0f4d162e758bea99c8251161dae9d0983a3b88dee345153b"},
+    {file = "protobuf-6.33.5-cp310-abi3-win_amd64.whl", hash = "sha256:3093804752167bcab3998bec9f1048baae6e29505adaf1afd14a37bddede533c"},
+    {file = "protobuf-6.33.5-cp39-abi3-macosx_10_9_universal2.whl", hash = "sha256:a5cb85982d95d906df1e2210e58f8e4f1e3cdc088e52c921a041f9c9a0386de5"},
+    {file = "protobuf-6.33.5-cp39-abi3-manylinux2014_aarch64.whl", hash = "sha256:9b71e0281f36f179d00cbcb119cb19dec4d14a81393e5ea220f64b286173e190"},
+    {file = "protobuf-6.33.5-cp39-abi3-manylinux2014_s390x.whl", hash = "sha256:8afa18e1d6d20af15b417e728e9f60f3aa108ee76f23c3b2c07a2c3b546d3afd"},
+    {file = "protobuf-6.33.5-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:cbf16ba3350fb7b889fca858fb215967792dc125b35c7976ca4818bee3521cf0"},
+    {file = "protobuf-6.33.5-cp39-cp39-win32.whl", hash = "sha256:a3157e62729aafb8df6da2c03aa5c0937c7266c626ce11a278b6eb7963c4e37c"},
+    {file = "protobuf-6.33.5-cp39-cp39-win_amd64.whl", hash = "sha256:8f04fa32763dcdb4973d537d6b54e615cc61108c7cb38fe59310c3192d29510a"},
+    {file = "protobuf-6.33.5-py3-none-any.whl", hash = "sha256:69915a973dd0f60f31a08b8318b73eab2bd6a392c79184b3612226b0a3f8ec02"},
+    {file = "protobuf-6.33.5.tar.gz", hash = "sha256:6ddcac2a081f8b7b9642c09406bc6a4290128fce5f471cddd165960bb9119e5c"},
 ]
 
 [[package]]
@@ -7582,6 +7582,18 @@ files = [
     {file = "shard_computer-1.2.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0cf936bae73c2933cb7fba80b9da6ba80b0a53532ba23de7e316529c770aadc9"},
     {file = "shard_computer-1.2.2-cp313-cp313-win32.whl", hash = "sha256:a2ed5726d1588608015e7372c94b9b5d599198f70a3967cc064fb17fb149193f"},
     {file = "shard_computer-1.2.2-cp313-cp313-win_amd64.whl", hash = "sha256:bfba706d23971f570fa4be0b918ead2a3cfc1fbc2f68a69702b1acb5df76e304"},
+    {file = "shard_computer-1.2.2-cp314-cp314-macosx_10_15_x86_64.whl", hash = "sha256:ebfaf4dc8ba5caa8e8e67ffcd55fcba3ab95a5e410dbb26e1cd863a797038bd3"},
+    {file = "shard_computer-1.2.2-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:afd99ec5b688b2a638c6b03a7a57a43a984a728e2c08f41ec3753bbdd9ff6cca"},
+    {file = "shard_computer-1.2.2-cp314-cp314-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:6621825b486daf28a666ad0dd57ae43e00fcbc5a7f30603ce13bb02bc393c937"},
+    {file = "shard_computer-1.2.2-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:880bd7351170755b8a27c1c2e71bfd8607efe5e273aa3bf742bf906853b7cf84"},
+    {file = "shard_computer-1.2.2-cp314-cp314-win32.whl", hash = "sha256:851ea6deb49065787ed291edb74210178a6795aba68196baca7669069b7f5410"},
+    {file = "shard_computer-1.2.2-cp314-cp314-win_amd64.whl", hash = "sha256:660e03f6a697b86ab100dc65bcd5dc781b88b2040972bc5da2def3ed10c5fe1b"},
+    {file = "shard_computer-1.2.2-cp314-cp314t-macosx_10_15_x86_64.whl", hash = "sha256:a652dda133a59e998e5e47f0bd8a373781828af0c4f8aff4fb6f1aceaaaa8e16"},
+    {file = "shard_computer-1.2.2-cp314-cp314t-macosx_11_0_arm64.whl", hash = "sha256:ae179513123b9f5a55ebb33456c9956dc9ae9d06752b892ea341940a7e3f2d2e"},
+    {file = "shard_computer-1.2.2-cp314-cp314t-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:08f70b2f86af221047bfcd1de142667e9d71cb6c3dd677573e24c2c4265d9b7a"},
+    {file = "shard_computer-1.2.2-cp314-cp314t-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:c2197479b4fcc63ebf5bd1aeb9c2a2cbf4c91052695b526214e2336f9b3ee350"},
+    {file = "shard_computer-1.2.2-cp314-cp314t-win32.whl", hash = "sha256:342eaaf2c7e045c2def233d62bdaeeb0abf5164ccb7ad38ceb93a799ec14fe04"},
+    {file = "shard_computer-1.2.2-cp314-cp314t-win_amd64.whl", hash = "sha256:e83056170d949efea5bd4a7a24db343deb85b1c4dfdff28125828585dbd737bc"},
     {file = "shard_computer-1.2.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:3f54789bf3f98d4cc2ea7b7eac7424659fd89114114262793d3abc1ed6b1c35f"},
     {file = "shard_computer-1.2.2-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:94d68bd018c2040085071f944d4d36e509fcc6aa83cc954f05a34cf7732c1f83"},
     {file = "shard_computer-1.2.2-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:25b1dda85684802f9e0ba9b0cdbfb1d77fe7f52d18481746099fd1a508a7b1b2"},
