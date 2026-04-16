@@ -5,7 +5,6 @@ import pytest as pytest
 from database import models
 from db_import.tests.populate_db import (
     ANNOTATION_AUTHOR_ID,
-    ANNOTATION_FILE_ID,
     ANNOTATION_ID,
     ANNOTATION_METHOD_LINK_ID,
     DATASET_ID,
@@ -91,7 +90,6 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "file_size": 0,
         },
         {
-            "id": ANNOTATION_FILE_ID,
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_point.ndjson",
             "https_path": f"{http_prefix}/{path}100-foo-1.0_point.ndjson",
