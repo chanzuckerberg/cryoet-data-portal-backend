@@ -26,6 +26,8 @@ def get_parents(config: DepositionImportConfig) -> dict[str, BaseImporter]:
 
     # creates the tomogram volume files required for the visualization config
     parents["tomogram"].import_item()
+    # writes tomogram_metadata.json to disk, required by _get_tomograms_from_disk()
+    parents["tomogram"].import_metadata()
 
     return parents
 
@@ -364,3 +366,79 @@ def test_viz_config_with_tomogram_and_annotation(
         args["name"] = args["name"].replace("orientedpoint", shape)
         args.pop("is_instance_segmentation", None)
         mock_state_generator.generate_oriented_point_mesh_layer.assert_called_once_with(**args)
+
+
+def test_viz_config_multiple_tomograms(
+    test_output_bucket: str,
+    s3_client: S3Client,
+    config: DepositionImportConfig,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Verify that a neuroglancer config is generated for each tomogram found on disk."""
+    parents = get_parents(config)
+    vs_path = get_vs_path(parents)
+
+    # Manually write a second tomogram_metadata.json under a different tomogram id
+    alignment_path = f"{parents['dataset'].name}/TS_run1/Alignments/100/alignment_metadata.json"
+    second_tomo_metadata = {
+        "alignment_metadata_path": alignment_path,
+        "omezarr_dir": "TS_run1_second.zarr",
+    }
+    second_metadata_key = os.path.join(vs_path, "Tomograms", "101", "tomogram_metadata.json")
+    s3_client.put_object(
+        Bucket=test_output_bucket,
+        Key=second_metadata_key,
+        Body=json.dumps(second_tomo_metadata).encode(),
+    )
+
+    # Patch _create_config so we don't need real zarr data for either tomogram
+    monkeypatch.setattr(
+        VisualizationConfigImporter,
+        "_create_config",
+        lambda self, alignment_metadata_path: {"key": "combine_json_layers", "foo": "bar"},
+    )
+
+    viz_config = list(VisualizationConfigImporter.finder(config, **parents))
+    for item in viz_config:
+        item.import_item()
+
+    precompute_dir = os.path.join(vs_path, "NeuroglancerPrecompute")
+    config_files = get_children(s3_client, test_output_bucket, precompute_dir)
+    assert "100-neuroglancer_config.json" in config_files, "Missing config for first tomogram"
+    assert "101-neuroglancer_config.json" in config_files, "Missing config for second tomogram"
+
+
+def test_viz_config_annotation_only_deposition(
+    test_output_bucket: str,
+    s3_client: S3Client,
+    config: DepositionImportConfig,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """
+    Verify that viz config generation works when invoked from an annotation-only deposition
+    (i.e. no tomogram in the parent hierarchy). Tomograms already exist on disk from a prior
+    ingestion run; the importer must discover them via _get_tomograms_from_disk().
+    """
+    parents = get_parents(config)
+    vs_path = get_vs_path(parents)
+
+    # Simulate annotation-only deposition: remove tomogram from parents, as it would
+    # not be present when running --import-viz-config without re-ingesting tomograms.
+    parents_without_tomogram = {k: v for k, v in parents.items() if k != "tomogram"}
+
+    # Patch _create_config so we don't need real zarr data
+    monkeypatch.setattr(
+        VisualizationConfigImporter,
+        "_create_config",
+        lambda self, alignment_metadata_path: {"key": "combine_json_layers", "foo": "bar"},
+    )
+
+    viz_config = list(VisualizationConfigImporter.finder(config, **parents_without_tomogram))
+    for item in viz_config:
+        item.import_item()
+
+    precompute_dir = os.path.join(vs_path, "NeuroglancerPrecompute")
+    config_files = get_children(s3_client, test_output_bucket, precompute_dir)
+    assert "100-neuroglancer_config.json" in config_files, (
+        "Viz config not generated for annotation-only deposition — tomogram not discovered from disk"
+    )
