@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.20.0...apiv2-v1.21.0) (2026-04-01)
+
+
+### Features
+
+* enable stale annotation cleanup during db import ([#642](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/642)) ([2d653cc](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/2d653ccf209f59981ac35b25bef52b321ce27b20))
+
 ## [1.20.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.19.0...apiv2-v1.20.0) (2026-03-30)
 
 
