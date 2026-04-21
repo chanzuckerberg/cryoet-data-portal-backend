@@ -2368,7 +2368,8 @@ class AnnotationObject(ConfiguredBaseModel):
                     {'range': 'UNIPROT_ID'},
                     {'range': 'UBERON_ID'},
                     {'range': 'CHEBI_ID'},
-                    {'range': 'CDPO_ID'}],
+                    {'range': 'CDPO_ID'},
+                    {'range': 'CL_ID'}],
          'domain_of': ['Assay',
                        'DevelopmentStageDetails',
                        'Disease',
@@ -2398,7 +2399,7 @@ class AnnotationObject(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)|(^CDPO:[0-9]{7}$)")
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)|(^CDPO:[0-9]{7}$)|(^CL:[0-9]{7}$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -3462,7 +3463,10 @@ class IdentifiedObject(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'metadata'})
 
-    object_id: str = Field(default=..., description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'GO_ID'}, {'range': 'UNIPROT_ID'}],
+    object_id: str = Field(default=..., description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'GO_ID'},
+                    {'range': 'UNIPROT_ID'},
+                    {'range': 'CDPO_ID'},
+                    {'range': 'CL_ID'}],
          'domain_of': ['IdentifiedObject'],
          'exact_mappings': ['cdp-common:identified_object_id']} })
     object_name: str = Field(default=..., description="""Name of the object that was identified (e.g. ribosome, nuclear pore complex, actin filament, membrane)""", json_schema_extra = { "linkml_meta": {'domain_of': ['IdentifiedObject'],
@@ -3474,7 +3478,7 @@ class IdentifiedObject(ConfiguredBaseModel):
 
     @field_validator('object_id')
     def pattern_object_id(cls, v):
-        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)")
+        pattern=re.compile(r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^CDPO:[0-9]{7}$)|(^CL:[0-9]{7}$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
