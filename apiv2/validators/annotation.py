@@ -59,7 +59,7 @@ class AnnotationCreateInputValidator(BaseModel):
         str,
         StringConstraints(
             strip_whitespace=True,
-            pattern=r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)",
+            pattern=r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)|(^CDPO:[0-9]{7}$)|(^CL:[0-9]{7}$)",
         ),
     ]
     object_name: Annotated[
@@ -158,7 +158,7 @@ class AnnotationUpdateInputValidator(BaseModel):
         str | None,
         StringConstraints(
             strip_whitespace=True,
-            pattern=r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)",
+            pattern=r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)|(^CDPO:[0-9]{7}$)|(^CL:[0-9]{7}$)",
         ),
     ]
     object_name: Annotated[

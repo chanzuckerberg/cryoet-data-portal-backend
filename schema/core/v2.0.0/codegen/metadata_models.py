@@ -3468,6 +3468,7 @@ class AnnotationObject(ConfiguredBaseModel):
                     {"range": "UBERON_ID"},
                     {"range": "CHEBI_ID"},
                     {"range": "CDPO_ID"},
+                    {"range": "CL_ID"},
                 ],
                 "domain_of": [
                     "Assay",
@@ -3527,7 +3528,7 @@ class AnnotationObject(ConfiguredBaseModel):
     @field_validator("id")
     def pattern_id(cls, v):
         pattern = re.compile(
-            r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)|(^CDPO:[0-9]{7}$)"
+            r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^UBERON:[0-9]{7}$)|(^CHEBI:[0-9]+$)|(^CDPO:[0-9]{7}$)|(^CL:[0-9]{7}$)"
         )
         if isinstance(v, list):
             for element in v:
@@ -5312,7 +5313,7 @@ class IdentifiedObject(ConfiguredBaseModel):
         description="""Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.""",
         json_schema_extra={
             "linkml_meta": {
-                "any_of": [{"range": "GO_ID"}, {"range": "UNIPROT_ID"}],
+                "any_of": [{"range": "GO_ID"}, {"range": "UNIPROT_ID"}, {"range": "CDPO_ID"}, {"range": "CL_ID"}],
                 "domain_of": ["IdentifiedObject"],
                 "exact_mappings": ["cdp-common:identified_object_id"],
             }
@@ -5346,7 +5347,7 @@ class IdentifiedObject(ConfiguredBaseModel):
     @field_validator("object_id")
     def pattern_object_id(cls, v):
         pattern = re.compile(
-            r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)"
+            r"(^GO:[0-9]{7}$)|(^UniProtKB:(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})$)|(^CDPO:[0-9]{7}$)|(^CL:[0-9]{7}$)"
         )
         if isinstance(v, list):
             for element in v:
