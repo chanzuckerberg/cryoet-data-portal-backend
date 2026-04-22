@@ -10,8 +10,8 @@ annotations:
       annotation_publications: 10.1002/pro.70578
       annotation_method: semi-manual annotation using napari-nnInteractive
       annotation_object:
-        id: GO:0005622
-        name: intracellular anatomical structure
+        id: CL:0000000
+        name: cell
       annotation_software: napari-nninteractive
       method_links:
         - custom_name: Napari-nnInteractive on GitHub
