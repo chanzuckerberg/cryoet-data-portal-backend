@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.22.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.21.0...apiv2-v1.22.0) (2026-04-22)
+
+
+### Features
+
+* add CL (Cell Ontology) support for annotation object IDs ([#661](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/661)) ([a7a154c](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a7a154ccff372d7564315edd028e7bf4b99e1c3a))
+
+
+### Bug Fixes
+
+* remove hardcoded id assertion for annotation files in test ([#657](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/657)) ([ec03a0e](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/ec03a0e0fb15475eb2e716c5c74ba863f847e666))
+
 ## [1.21.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.20.0...apiv2-v1.21.0) (2026-04-01)
 
 
