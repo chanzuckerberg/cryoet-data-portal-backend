@@ -1,0 +1,340 @@
+# CryoET Data Portal Ingestion Configuration
+# Dataset 10475 - EMPIAR-13145 GTPP-treated (4h) condition
+# Structural remodeling of the mitochondrial protein biogenesis machinery under proteostatic stress
+
+version: 1.1.0
+
+standardization_config:
+  deposition_id: 10344
+  source_prefix: EMPIAR/EMPIAR-13145/GTPP/
+  run_data_map_file: run_to_data_map.tsv
+
+datasets:
+- metadata:
+    dataset_identifier: 10475
+    dataset_title: Cryo-electron tomography of G-TPP-treated HeLa cells under mitochondrial proteostatic stress
+    dataset_description: >-
+      Cryo-electron tomography of FIB-milled HeLa PINK1-GFP cells treated with 10 uM
+      Gamitrinib-triphenylphosphonium (G-TPP) for 4 hours to induce mitochondrial proteostatic
+      stress. Data includes raw tilt series movie frames, assembled tilt series, tomographic
+      reconstructions (WBP with and without CTF deconvolution), and automated segmentations of
+      membranes. Acquired on a Titan Krios G4 with Falcon 4i
+      detector and Selectris energy filter at 300 kV using dose-symmetric tilting with 3 degree
+      increments. Cryo-FIB milling was performed on an Aquilos 2 cryo-FIB/SEM to produce lamellae
+      of less than 250 nm thickness.
+    authors: &authors
+    - name: Kenneth Ehses
+      ORCID: 0000-0002-8595-5994
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Jorge P. Lopez-Alonso
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Odetta Antico
+      ORCID: 0000-0002-7325-3303
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Abdussalam Azem
+      ORCID: 0000-0002-2288-2986
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Miratul M.K. Muqit
+      ORCID: 0000-0001-9733-2404
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Iban Ubarretxena-Belandia
+      ORCID: 0000-0003-4082-4349
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Ruben Fernandez-Busnadiego
+      ORCID: 0000-0002-8366-7622
+      primary_author_status: false
+      corresponding_author_status: true
+    dates: &dates
+      deposition_date: "2026-03-24"
+      release_date: "2026-03-24"
+      last_modified_date: "2026-03-24"
+    sample_type: cell_line
+    organism:
+      name: Homo sapiens
+      taxonomy_id: 9606
+    cell_type:
+      name: epithelial cell
+      id: CL:0000066
+    cell_strain:
+      name: HeLa PINK1-GFP
+      id: CVCL_F1H5
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: cervical carcinoma
+      id: MONDO:0005131
+    funding:
+    - funding_agency_name: Deutsche Forschungsgemeinschaft
+      grant_id: EXC 2067/1-390729940
+    - funding_agency_name: Deutsche Forschungsgemeinschaft
+      grant_id: "448415290"
+    - funding_agency_name: Wellcome Trust
+      grant_id: 210753/Z/18/Z
+    - funding_agency_name: Michael J. Fox Foundation
+      grant_id: MJFF-010458
+    - funding_agency_name: Aligning Science Across Parkinson's
+      grant_id: ASAP-000463
+    - funding_agency_name: Aligning Science Across Parkinson's
+      grant_id: ASAP-000282
+    - funding_agency_name: Israel Science Foundation
+      grant_id: 1723/23
+    - funding_agency_name: Ministerio de Ciencia, Innovacion y Universidades
+      grant_id: PID2022-143177NB-I00
+    - funding_agency_name: Recanati Foundation
+      grant_id: null
+    - funding_agency_name: Ministry of Science and Culture of the State of Lower Saxony
+      grant_id: null
+    - funding_agency_name: Basque Government
+      grant_id: null
+    grid_preparation: >-
+      200-mesh R2/2 gold Ultrafoil grids (Quantifoil), glow-discharged. Cells plated directly
+      onto grids at 30-50% confluency and allowed to adhere overnight. Grids incubated in 10%
+      glycerol for approximately 30 seconds before freezing. Back-side blotted for 5 s (blot
+      force 0) and plunge-frozen in liquid ethane/propane mixture using Vitrobot Mark IV at
+      37 degrees C. Cryo-FIB milled on Aquilos 2 (Thermo Fisher Scientific) with organometallic
+      platinum coating, rough milling with AutoTEM 5 (1 nA to 300 pA at 10 degree milling angle),
+      and final manual polishing (100 to 30 pA) to less than 250 nm thickness.
+    sample_preparation: >-
+      HeLa PINK1-GFP cells (CRISPR/Cas9 knock-in of C-terminal GFP tag at endogenous PINK1
+      locus) were plated on grids and treated with 10 uM Gamitrinib-triphenylphosphonium (G-TPP),
+      a mitochondrial matrix Hsp90/TRAP1 inhibitor, for 4 hours to induce mitochondrial
+      proteostatic stress. Cells were vitrified by plunge freezing and thinned by cryo-focused
+      ion beam (cryo-FIB) milling to produce lamellae suitable for cryo-electron tomography.
+    cross_references: &cross_references
+      publications: 10.1101/2025.10.06.680693
+      related_database_entries: EMPIAR-13145
+  sources:
+  - literal:
+      value:
+      - '10475'
+
+depositions:
+- metadata:
+    deposition_identifier: 10344
+    deposition_title: Cryo-electron tomography of HeLa cells under mitochondrial proteostatic stress
+    deposition_description: >-
+      In situ cryo-electron tomography data of FIB-milled HeLa PINK1-GFP cells under
+      G-TPP-induced mitochondrial proteostatic stress and untreated control conditions.
+      Includes raw tilt series movie frames, assembled tilt series, and WBP tomographic
+      reconstructions from AreTomo3, and automated semantic segmentations (membrain-seg for
+      membranes). Associated with the study of structural remodeling of the
+      mitochondrial protein biogenesis machinery under proteostatic stress.
+    deposition_types:
+    - dataset
+    - annotation
+    authors: *authors
+    cross_references: *cross_references
+    dates: *dates
+  sources:
+  - literal:
+      value:
+      - 10344
+
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10344_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10344_thumbnail.png
+
+
+runs:
+- sources:
+  - source_glob:
+      list_glob: tiltseries/*
+      match_regex: .*
+      name_regex: (.*)
+    exclude:
+      - "^20221005_P4_ts_005$"
+      - "^20221019_P2_ts_008$"
+      - "^20221019_P2_ts_009$"
+      - "^20221019_P4_ts_003$"
+      - "^20221019_P4_ts_006$"
+      - "^20221019_P5_ts_005$"
+      - "^20221019_P5_ts_006$"
+      - "^20221109_P5_ts_003$"
+      - "^20221109_P5_ts_004$"
+      - "^20230412_P5_ts_003$"
+      - "^20230412_P5_ts_004$"
+      - "^20230424_P4_ts_003$"
+      - "^20221108_P1_ts_008$"
+      - "^20221109_P4_ts_007$"
+
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 10.012
+
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    pixel_spacing: 2.3125
+    spherical_aberration_constant: 2.7
+    is_aligned: false
+    binning_from_frames: 1
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i
+      acquire_mode: counting
+    microscope:
+      manufacturer: TFS
+      model: Titan Krios G4
+    microscope_optical_setup:
+      energy_filter: TFS Selectris
+    data_acquisition_software: SerialEM
+    related_empiar_entry: EMPIAR-13145
+    tilt_axis: -95.6
+    tilt_range:
+      min: float {tilt_series_min_tilt}
+      max: float {tilt_series_max_tilt}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+    tilt_series_quality: int {tilt_series_quality}
+  sources:
+  - source_glob:
+      list_glob: tiltseries/{run_name}/*
+
+tomograms:
+- metadata:
+    reconstruction_software: AreTomo3 v2.2.8
+    reconstruction_method: WBP
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: &offset
+      x: 0
+      y: 0
+      z: 0
+    affine_transformation_matrix: &affine
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors:
+      - ORCID: 0000-0003-4685-037X
+        corresponding_author_status: true
+        primary_author_status: true
+        name: Utz Heinrich Ermel
+    dates: *dates
+    voxel_spacing: 10.012
+    processing: filtered
+    processing_software: AreTomo3 v2.2.8
+    ctf_corrected: true
+    is_visualization_default: true
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/ctf-deconvolved.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.2.8
+    reconstruction_method: WBP
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *affine
+    authors:
+      - ORCID: 0000-0003-4685-037X
+        corresponding_author_status: true
+        primary_author_status: true
+        name: Utz Heinrich Ermel
+    dates: *dates
+    voxel_spacing: 10.012
+    processing: raw
+    processing_software: AreTomo3 v2.2.8
+    ctf_corrected: false
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/wbp.zarr
+
+annotations:
+- metadata:
+    annotation_ingest_id: membrane-1
+    annotation_method: Prediction using membrain-seg
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1101/2024.01.05.574336
+    annotation_software: membrain-seg
+    authors:
+      - ORCID: 0000-0003-4685-037X
+        corresponding_author_status: true
+        primary_author_status: true
+        name: Utz Heinrich Ermel
+    dates: *dates
+    ground_truth_status: false
+    is_curator_recommended: false
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_strings:
+      - copick/ExperimentRuns/{run_name}/Segmentations/*_membrain-seg_0_membrane.zarr
+      is_visualization_default: true
+      threshold: 0.5
+
+alignments:
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_multi_glob:
+      list_globs:
+        - alignment/{run_name}/*.aln
+
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/*
+
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: True
+  sources:
+  - source_glob:
+      list_glob: frames/{run_name}/*
+
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}/*
+
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: collection_metadata/{run_name}/*
