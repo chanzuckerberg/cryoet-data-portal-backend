@@ -432,7 +432,7 @@ def queue(
                     excluded_args = ["filter_dataset_name", "filter_run_name"]
                     for k, v in kwargs.items():
                         if any(substring in k for substring in excluded_args):
-                            break
+                            continue
                         per_run_args[k] = v
                     new_args = to_args(
                         https_prefix=https_prefix,
