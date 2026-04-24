@@ -754,6 +754,7 @@ slots:
       - range: UBERON_ID
       - range: CHEBI_ID
       - range: CDPO_ID
+      - range: CL_ID
     required: true
     description: Ontology identifier for the annotation object.
   annotation_object_name:
@@ -895,6 +896,8 @@ slots:
     any_of:
       - range: GO_ID
       - range: UNIPROT_ID
+      - range: CDPO_ID
+      - range: CL_ID
     required: true
     description: Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.
   identified_object_name:

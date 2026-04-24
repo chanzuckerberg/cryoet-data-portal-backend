@@ -1,8 +1,8 @@
 import json
-import os.path
+import os
 from pathlib import Path
 from time import time
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any, Generator, cast
 
 import cryoet_data_portal_neuroglancer.state_generator as state_generator
 
@@ -36,10 +36,42 @@ class VisualizationConfigImporter(BaseImporter):
             print(f"Skipping import of {self.name}")
             return
 
-        tomogram = self.get_tomogram()
-        ng_contents = self._create_config(tomogram.alignment_metadata_path)
-        meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
-        meta.write_metadata(self.get_output_path())
+        for tomo in self._get_tomograms_from_disk():
+            self.parents["tomogram"] = tomo
+            try:
+                ng_contents = self._create_config(tomo.alignment_metadata_path)
+                meta = NeuroglancerMetadata(self.config.fs, self.get_deposition().name, ng_contents)
+                meta.write_metadata(self.get_output_path())
+            finally:
+                self.parents.pop("tomogram", None)
+
+    def _get_tomograms_from_disk(self) -> Generator["TomogramImporter", None, None]:
+        from importers.tomogram import TomogramImporter
+
+        voxel_spacing_path = self.config.resolve_output_path("voxel_spacing", self)
+        metadata_glob = os.path.join(voxel_spacing_path, "Tomograms", "*", "tomogram_metadata.json")
+
+        for metadata_file in self.config.fs.glob(metadata_glob):
+            with open(self.config.fs.localreadable(metadata_file), "r") as f:
+                tomo_metadata = json.load(f)
+
+            alignment_metadata_path = tomo_metadata.get("alignment_metadata_path")
+            if not alignment_metadata_path:
+                print(f"Skipping tomogram {metadata_file}: missing alignment_metadata_path")
+                continue
+
+            omezarr_dir = tomo_metadata.get("omezarr_dir", "")
+            tomo = TomogramImporter(
+                config=self.config,
+                metadata=tomo_metadata,
+                name=omezarr_dir,
+                path=os.path.join(self.config.output_prefix, omezarr_dir) if omezarr_dir else "",
+                allow_imports=False,
+                parents={k: v for k, v in self.parents.items() if k != "tomogram"},
+                alignment_metadata_path=alignment_metadata_path,
+            )
+            tomo.identifier = int(Path(metadata_file).parent.name)
+            yield tomo
 
     def _get_annotation_metadata_files(self) -> list[str]:
         # Getting a list of paths to the annotation metadata files using glob instead of using the annotation finder

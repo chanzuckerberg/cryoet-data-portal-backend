@@ -83,6 +83,7 @@ CELLULAR_COMPONENT_GO_ID = "GO:0005575"
 GO_ID_REGEX = r"^GO:[0-9]{7}$"
 UNIPROT_ID_REGEX = r"^UniProtKB:[A-Z0-9]+$"
 CDPO_ID_REGEX = r"^CDPO:[0-9]{7}$"
+CL_ID_REGEX = r"^CL:[0-9]{7}$"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 # Note that model names should all be uppercase or pascal case
@@ -419,6 +420,36 @@ async def validate_cdpo_id(id: str) -> Tuple[List[str], bool]:
     url = "https://raw.githubusercontent.com/uermel/cdpo/main/cdpo.obo"
     async with aiohttp.ClientSession() as session, session.get(url) as response:
         logger.debug("Getting CDPO id %s from %s, status %s", id, url, response.status)
+        if response.status >= 400:
+            return [], False
+        text = await response.text()
+
+    term_id = None
+    name = None
+    for line in text.splitlines():
+        line = line.strip()
+        if line == "[Term]":
+            term_id = None
+            name = None
+        elif line.startswith("id: "):
+            term_id = line[4:]
+        elif line.startswith("name: "):
+            name = line[6:]
+            if term_id == id:
+                return [name], True
+
+    return [], False
+
+
+@alru_cache
+async def validate_cl_id(id: str) -> Tuple[List[str], bool]:
+    """
+    Returns a tuple of the ID names and whether it is valid.
+    Validates against the Cell Ontology OBO file hosted at https://github.com/obophenotype/cell-ontology.
+    """
+    url = "https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl.obo"
+    async with aiohttp.ClientSession() as session, session.get(url) as response:
+        logger.debug("Getting CL id %s from %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
         text = await response.text()
@@ -793,6 +824,8 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
             validate_id_name_object(self, self.id, self.name, validate_id_function=validate_uniprot_id)
         elif re.match(CDPO_ID_REGEX, self.id):
             validate_id_name_object(self, self.id, self.name, validate_id_function=validate_cdpo_id)
+        elif re.match(CL_ID_REGEX, self.id):
+            validate_id_name_object(self, self.id, self.name, validate_id_function=validate_cl_id)
         return self
 
 
@@ -1157,6 +1190,10 @@ class ExtendedValidationIdentifiedObject(IdentifiedObject):
             validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_name=True, ancestor=CELLULAR_COMPONENT_GO_ID)
         elif re.match(UNIPROT_ID_REGEX, self.object_id):
             validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_id_function=validate_uniprot_id)
+        elif re.match(CDPO_ID_REGEX, self.object_id):
+            validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_id_function=validate_cdpo_id)
+        elif re.match(CL_ID_REGEX, self.object_id):
+            validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_id_function=validate_cl_id)
         return self
 
 

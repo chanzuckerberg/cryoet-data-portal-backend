@@ -60,9 +60,9 @@ IMPORTER_DEP_TREE = {
                         AnnotationVisualizationImporter: {},
                     },
                     TomogramImporter: {
-                        VisualizationConfigImporter: {},
                         KeyImageImporter: {},
                     },
+                    VisualizationConfigImporter: {},
                 },
             },
             DatasetKeyPhotoImporter: {},
