@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - .github/workflows/ingestion-config-validate.yaml
       - ingestion_tools/dataset_configs/**
       - schema/**/*.py
       - schema/**/*.yaml
@@ -13,6 +14,7 @@ on:
       - schema/.version
   pull_request:
     paths:
+      - .github/workflows/ingestion-config-validate.yaml
       - ingestion_tools/dataset_configs/**
       - schema/**/*.py
       - schema/**/*.yaml
@@ -45,18 +47,22 @@ jobs:
         working-directory: schema/
       - name: Determine files to validate
         id: changed-files
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
         run: |
           # For workflow_dispatch, validate everything
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             echo "validate_all=true" >> $GITHUB_OUTPUT
             exit 0
           fi
 
           # Determine base commit for diff
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            BASE=${{ github.event.pull_request.base.sha }}
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            BASE="$PR_BASE_SHA"
           else
-            BASE=${{ github.event.before }}
+            BASE="$PUSH_BEFORE_SHA"
           fi
 
           # If schema files changed, validate all configs
@@ -73,11 +79,14 @@ jobs:
           echo "validate_all=false" >> $GITHUB_OUTPUT
           echo "changed_files=$CHANGED_CONFIGS" >> $GITHUB_OUTPUT
       - name: Validate dataset configs
+        env:
+          VALIDATE_ALL: ${{ steps.changed-files.outputs.validate_all }}
+          CHANGED_FILES: ${{ steps.changed-files.outputs.changed_files }}
         run: |
-          if [ "${{ steps.changed-files.outputs.validate_all }}" = "true" ]; then
+          if [ "$VALIDATE_ALL" = "true" ]; then
             make validate-configs-with-network
-          elif [ -n "${{ steps.changed-files.outputs.changed_files }}" ]; then
-            make validate-changed-configs-with-network CHANGED_FILES="${{ steps.changed-files.outputs.changed_files }}"
+          elif [ -n "$CHANGED_FILES" ]; then
+            make validate-changed-configs-with-network CHANGED_FILES="$CHANGED_FILES"
           else
             echo "No config files to validate."
           fi
