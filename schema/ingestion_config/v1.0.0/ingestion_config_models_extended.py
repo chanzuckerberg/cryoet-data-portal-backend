@@ -750,6 +750,25 @@ def validate_sources(source_list: List[StandardSource] | List[VoxelSpacingSource
         raise ValueError(total_errors)
 
 
+def validate_literal_values(source_list: List[StandardSource], expected_type: type, entity_name: str) -> None:
+    total_errors = []
+    for index, source in enumerate(source_list):
+        if source.literal is None:
+            continue
+        for i, val in enumerate(source.literal.value):
+            # bool is a subclass of int, so check bool first to reject it when int is expected
+            if isinstance(val, bool) or not isinstance(val, expected_type):
+                total_errors.append(
+                    ValueError(
+                        f"{entity_name} source entry {index} literal value[{i}] must be "
+                        f"{expected_type.__name__}, got {type(val).__name__}: {val}",
+                    ),
+                )
+
+    if total_errors:
+        raise ValueError(total_errors)
+
+
 # ==============================================================================
 # Alignment Entity Validation
 # ==============================================================================
@@ -1083,7 +1102,9 @@ class ExtendedValidationDatasetEntity(DatasetEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DatasetSource]) -> List[DatasetSource]:
-        return validate_sources(source_list)
+        validate_sources(source_list)
+        validate_literal_values(source_list, str, "Dataset")
+        return source_list
 
 
 # ==============================================================================
@@ -1122,7 +1143,9 @@ class ExtendedValidationDepositionEntity(DepositionEntity):
     @field_validator("sources")
     @classmethod
     def valid_sources(cls: Self, source_list: List[DepositionSource]) -> List[DepositionSource]:
-        return validate_sources(source_list)
+        validate_sources(source_list)
+        validate_literal_values(source_list, int, "Deposition")
+        return source_list
 
 
 # ==============================================================================
