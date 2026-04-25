@@ -277,8 +277,8 @@ class VolumeAnnotationSource(BaseAnnotationSource):
         if not getattr(self, "rescale", False):
             return None
         target = self.get_output_dim()
-        info = get_volume_info(self.config.fs, self.path)
-        src = (info.zend, info.yend, info.xend)
+        d = get_volume_info(self.config.fs, self.path).get_dimensions()
+        src = (d["z"], d["y"], d["x"])
         return None if src == target else target
 
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
