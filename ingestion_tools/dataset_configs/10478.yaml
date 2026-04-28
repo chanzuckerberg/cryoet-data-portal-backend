@@ -135,6 +135,11 @@ rawtilts:
       - source_glob:
           list_glob: "{run_name}.rawtlt"
 
+collection_metadata:
+  - sources:
+      - source_glob:
+          list_glob: "{run_name}.mdoc"
+
 voxel_spacings:
   - sources:
       - tomogram_header:
