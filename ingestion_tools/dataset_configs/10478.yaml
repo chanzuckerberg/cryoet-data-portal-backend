@@ -16,16 +16,13 @@ depositions:
       authors: &deposition_authors
         - name: William Jules Nicolas
           ORCID: 0000-0001-5970-8626
-          email: william.nicolas.pro@gmail.com
           primary_author_status: true
           corresponding_author_status: true
-        - name: Grant J Jensen
-          email: grant_jensen@byu.edu
+        - name: Grant Jensen
           primary_author_status: false
           corresponding_author_status: true
         - name: Elliot M Meyerowitz
           ORCID: 0000-0003-4798-5153
-          email: meyerow@caltech.edu
           primary_author_status: false
           corresponding_author_status: true
       dates: &deposition_dates
