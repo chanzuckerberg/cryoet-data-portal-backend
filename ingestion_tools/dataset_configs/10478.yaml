@@ -51,6 +51,13 @@ depositions:
           value:
             - 10346
 
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10346_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10346_thumbnail.png
+
 datasets:
   - metadata:
       assay:
