@@ -143,8 +143,29 @@ identified_objects:
 
 voxel_spacings:
   - sources:
-      - tomogram_header:
-          list_glob: "{run_name}{tomo_suffix}"
+      - literal:
+          value:
+            - 13.328
+        parent_filters:
+          include:
+            run:
+              - "^pol5-.*"
+              - "^pol6-.*"
+              - "^pol7-.*"
+      - literal:
+          value:
+            - 10.600
+        parent_filters:
+          include:
+            run:
+              - "^pol9-3.*"
+      - literal:
+          value:
+            - 13.320
+        parent_filters:
+          include:
+            run:
+              - "^pol9-4.*"
 
 tomograms:
   - metadata:
