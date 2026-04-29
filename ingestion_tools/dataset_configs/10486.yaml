@@ -234,11 +234,6 @@ rawtilts:
       - source_glob:
           list_glob: '{run_name}/*.rawtlt'
           match_regex: '.*\.rawtlt$'
-        parent_filters:
-          exclude:
-            run:
-              - 'sma2022\-09\-19\-103'
-
 
 runs:
   - sources:

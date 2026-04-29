@@ -232,7 +232,105 @@ tiltseries:
         parent_filters:
           exclude:
             run:
+              - 'Vibrio_pilT_pilU_103'
+              - 'Vibrio_pilT_pilU_105'
+              - 'Vibrio_pilT_pilU_113'
+              - 'Vibrio_pilT_pilU_120'
+              - 'Vibrio_pilT_pilU_121'
+              - 'Vibrio_pilT_pilU_122'
+              - 'Vibrio_pilT_pilU_125'
+              - 'Vibrio_pilT_pilU_126'
+              - 'Vibrio_pilT_pilU_127'
+              - 'Vibrio_pilT_pilU_129'
+              - 'Vibrio_pilT_pilU_130'
+              - 'Vibrio_pilT_pilU_131'
+              - 'Vibrio_pilT_pilU_132'
+              - 'Vibrio_pilT_pilU_133'
+              - 'Vibrio_pilT_pilU_134'
+              - 'Vibrio_pilT_pilU_135'
+              - 'Vibrio_pilT_pilU_136'
               - 'Vibrio_pilT_pilU_47'
+              - 'Vibrio_pilT_pilU_48'
+              - 'Vibrio_pilT_pilU_54'
+              - 'Vibrio_pilT_pilU_55'
+              - 'Vibrio_pilT_pilU_79'
+              - 'Vibrio_pilT_pilU_81'
+              - 'Vibrio_pilT_pilU_88'
+              - 'Vibrio_pilT_pilU_89'
+              - 'Vibrio_pilT_pilU_90'
+              - 'Vibrio_pilT_pilU_91'
+              - 'Vibrio_pilT_pilU_92'
+              - 'Vibrio_pilT_pilU_93'
+              - 'Vibrio_pilT_pilU_94'
+              - 'Vibrio_pilT_pilU_95'
+              - 'Vibrio_pilT_pilU_96'
+              - 'Vibrio_pilT_pilU_97'
+              - 'Vibrio_pilT_pilU_98'
+              - 'Vibrio_pilT_pilU_99'
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 4
+      camera:
+        manufacturer: Gatan
+        model: K3
+      data_acquisition_software: SerialEM
+      is_aligned: true
+      microscope:
+        manufacturer: FEI
+        model: Titan Krios
+      microscope_optical_setup:
+        energy_filter: GIF Quantum LS
+      pixel_spacing: 13.328
+      spherical_aberration_constant: 2.7
+      tilt_axis: 85.3
+      tilt_range:
+        max: 60
+        min: -60
+      tilt_step: 3.0
+      tilting_scheme: dose-symmetric
+      tilt_series_quality: 4
+      total_flux: 160
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/*_ali.mrc'
+          match_regex: '.*_ali\.mrc$'
+        parent_filters:
+          include:
+            run:
+              - 'Vibrio_pilT_pilU_103'
+              - 'Vibrio_pilT_pilU_105'
+              - 'Vibrio_pilT_pilU_113'
+              - 'Vibrio_pilT_pilU_120'
+              - 'Vibrio_pilT_pilU_121'
+              - 'Vibrio_pilT_pilU_122'
+              - 'Vibrio_pilT_pilU_125'
+              - 'Vibrio_pilT_pilU_126'
+              - 'Vibrio_pilT_pilU_127'
+              - 'Vibrio_pilT_pilU_129'
+              - 'Vibrio_pilT_pilU_130'
+              - 'Vibrio_pilT_pilU_131'
+              - 'Vibrio_pilT_pilU_132'
+              - 'Vibrio_pilT_pilU_133'
+              - 'Vibrio_pilT_pilU_134'
+              - 'Vibrio_pilT_pilU_135'
+              - 'Vibrio_pilT_pilU_136'
+              - 'Vibrio_pilT_pilU_48'
+              - 'Vibrio_pilT_pilU_54'
+              - 'Vibrio_pilT_pilU_55'
+              - 'Vibrio_pilT_pilU_79'
+              - 'Vibrio_pilT_pilU_81'
+              - 'Vibrio_pilT_pilU_88'
+              - 'Vibrio_pilT_pilU_89'
+              - 'Vibrio_pilT_pilU_90'
+              - 'Vibrio_pilT_pilU_91'
+              - 'Vibrio_pilT_pilU_92'
+              - 'Vibrio_pilT_pilU_93'
+              - 'Vibrio_pilT_pilU_94'
+              - 'Vibrio_pilT_pilU_95'
+              - 'Vibrio_pilT_pilU_96'
+              - 'Vibrio_pilT_pilU_97'
+              - 'Vibrio_pilT_pilU_98'
+              - 'Vibrio_pilT_pilU_99'
 
 tomograms:
   - metadata:
