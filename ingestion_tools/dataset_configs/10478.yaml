@@ -2,7 +2,7 @@ version: "1.3.0"
 
 standardization_config:
   deposition_id: 10346
-  run_data_map_file: run_to_data_map.tsv
+  run_data_map_file: run_to_data_map_v2.tsv
   source_prefix: william_nicolas_04_2026/
 
 runs:
@@ -139,6 +139,15 @@ collection_metadata:
   - sources:
       - source_glob:
           list_glob: "{run_name}.mdoc"
+
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: true
+  sources:
+  - literal:
+      value:
+      - default
 
 voxel_spacings:
   - sources:
