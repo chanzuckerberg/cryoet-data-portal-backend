@@ -198,7 +198,7 @@ runs:
 
 standardization_config:
   deposition_id: 10347
-  run_data_map_file: run_to_data_map_v2.tsv
+  run_data_map_file: run_to_data_map_v3.tsv
   source_prefix: braxton_owens_07_2025/dataset5/
 
 tiltseries:
