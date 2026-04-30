@@ -119,8 +119,8 @@ tiltseries:
       data_acquisition_software: SerialEM
       is_aligned: false
       microscope:
-        manufacturer: TFS
-        model: Krios
+        manufacturer: FEI
+        model: Polara
       microscope_optical_setup:
         energy_filter: GIF Quantum LS
       pixel_spacing: float {ts_pixel_spacing}
