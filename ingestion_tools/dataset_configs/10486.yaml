@@ -241,6 +241,9 @@ runs:
           list_glob: '*'
           match_regex: 'sma2022-09-19-.*|sma2022-10-07-.*'
           name_regex: '(.*)'
+        exclude:
+          - 'sma2022\-09\-19\-103'
+
 
 standardization_config:
   deposition_id: 10347
