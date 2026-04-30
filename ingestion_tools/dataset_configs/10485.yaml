@@ -130,6 +130,13 @@ depositions:
           value:
             - 10347
 
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10347_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10347_thumbnail.png
+
 frames:
   - metadata:
       dose_rate: float {dose_rate}
