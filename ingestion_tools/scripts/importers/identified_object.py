@@ -98,9 +98,11 @@ class IdentifiedObjectImporter(BaseFileImporter):
         except Exception as e:
             print(f"Error reading CSV {self.path}: {e}")
             return
-        # Filter by run name and exclude run_name column
         run_name = self.parents["run"].name
-        df_filtered = df[df['run_identifier'] == run_name].drop(columns=['run_identifier']) if 'run_identifier' in df.columns else df
+        if 'run_name' not in df.columns:
+            print(f"Warning: CSV at {self.path} has no 'run_name' column — skipping import for run {run_name}")
+            return
+        df_filtered = df[df['run_name'] == run_name].drop(columns=['run_name'])
 
         output_file = f"{dest_path}/identified_objects.json"
         with self.config.fs.open(output_file, "w") as f:
