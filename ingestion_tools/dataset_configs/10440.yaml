@@ -422,7 +422,6 @@ depositions:
     deposition_title: CZII - CryoET Object Identification Challenge
     deposition_types:
     - dataset
-    - annotation
   sources:
   - literal:
       value:
