@@ -44,9 +44,9 @@ datasets:
         networks of vesicles and lipid droplets, organelles such as Golgi,
         endoplasmic reticulum and vacuoles, and the surrounding cell wall.
         Tilt series were collected on a 300 kV TFS Krios with a Gatan K3 camera
-        using SerialEM in a dose-symmetric scheme; tomograms were reconstructed
-        in IMOD with a SIRT-like filter applied to a weighted back-projection
-        reconstruction.
+        using SerialEM with dose-symmetric or bi-directional tilt schemes. Tomograms were
+        reconstructed in IMOD with a SIRT-like filter applied to a weighted
+        back-projection reconstruction.
       dataset_identifier: 10479
       dataset_title: Arabidopsis thaliana pollen tubes
       dates: &dataset_dates
@@ -109,11 +109,48 @@ tiltseries:
         min: float {ts_tilt_min}
       tilt_series_quality: int {tilt_series_quality}
       tilt_step: 3.0
+      tilting_scheme: bi-directional
+      total_flux: 70
+    sources:
+      - source_glob:
+          list_glob: "{mapped_tilt_series_name}.st"
+        parent_filters:
+          include:
+            run:
+              - "^pol5-.*"
+              - "^pol6-.*"
+              - "^pol7-.*"
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: Gatan
+        model: K3
+      data_acquisition_software: SerialEM
+      is_aligned: false
+      microscope:
+        manufacturer: TFS
+        model: Krios
+      microscope_optical_setup:
+        energy_filter: Gatan Bioquantum
+      pixel_spacing: float {ts_pixel_spacing}
+      spherical_aberration_constant: 2.7
+      tilt_axis: float {tilt_axis}
+      tilt_range:
+        max: float {ts_tilt_max}
+        min: float {ts_tilt_min}
+      tilt_series_quality: int {tilt_series_quality}
+      tilt_step: 3.0
       tilting_scheme: dose-symmetric
       total_flux: 70
     sources:
       - source_glob:
           list_glob: "{mapped_tilt_series_name}.st"
+        parent_filters:
+          include:
+            run:
+              - "^pol9-3.*"
+              - "^pol9-4.*"
 
 rawtilts:
   - sources:

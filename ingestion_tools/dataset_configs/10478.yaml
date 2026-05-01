@@ -19,6 +19,7 @@ depositions:
           primary_author_status: true
           corresponding_author_status: true
         - name: Grant Jensen
+          ORCID: 0000-0003-1556-4864
           primary_author_status: false
           corresponding_author_status: true
         - name: Elliot M Meyerowitz
@@ -31,7 +32,7 @@ depositions:
         release_date: "2026-04-28"
       deposition_description: >
         Cryo-electron tomography of Arabidopsis thaliana, comprising two
-        complementary datasets acquired on a 300 kV TFS Krios with SerialEM
+        complementary datasets acquired on a 300 kV FEI Polara or TFS Krios with SerialEM
         data acquisition. The first dataset (CEMOVIS / CETOVIS) contains cryo-
         tomograms of plant-type cell walls captured in cryosections of high-
         pressure-frozen liquid-cultured Arabidopsis cells, imaged on a Gatan K2
@@ -72,7 +73,7 @@ datasets:
         Arabidopsis thaliana cells. Cells were high-pressure frozen and
         processed by cryo-ultramicrotomy to produce vitreous cryosections
         (CEMOVIS / CETOVIS), capturing the cell wall between adjacent cells in
-        a near-native state. Tilt series were collected on a 300 kV TFS Krios
+        a near-native state. Tilt series were collected on a 300 kV FEI Polara
         with a Gatan K2 SUMMIT camera using SerialEM in a dose-symmetric
         scheme; tomograms were reconstructed in IMOD using weighted
         back-projection with a SIRT-like filter applied during reconstruction.
