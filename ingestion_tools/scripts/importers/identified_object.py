@@ -23,6 +23,22 @@ class IdentifiedObjectIdentifierHelper(IdentifierHelper):
         return metadata_glob
 
     @classmethod
+    def _load_ids_for_container(cls, container_key, config, parents, *args, **kwargs):
+        if container_key in cls.loaded_containers:
+            return
+        metadata_glob = cls._get_metadata_glob(config, parents, *args, **kwargs)
+        for file in config.fs.glob(metadata_glob):
+            metadata = json.loads(config.fs.open(file, "r").read())
+            current_ids_key = cls._generate_hash_key(container_key, metadata, parents, *args, **kwargs)
+            try:
+                identifier = int(metadata.get("identifier", 100))
+            except (ValueError, TypeError):
+                identifier = 100
+            cls.cached_identifiers[current_ids_key] = identifier
+            cls.next_identifier[container_key] = identifier + 1
+        cls.loaded_containers.add(container_key)
+
+    @classmethod
     def _generate_hash_key(
         cls,
         container_key: str,
@@ -83,7 +99,7 @@ class IdentifiedObjectImporter(BaseFileImporter):
             return
         # Filter by run name and exclude run_name column
         run_name = self.parents["run"].name
-        df_filtered = df[df['run_name'] == run_name].drop(columns=['run_name']) if 'run_name' in df.columns else df
+        df_filtered = df[df['run_identifier'] == run_name].drop(columns=['run_identifier']) if 'run_identifier' in df.columns else df
 
         output_file = f"{dest_path}/identified_objects.json"
         with self.config.fs.open(output_file, "w") as f:
@@ -108,7 +124,7 @@ class IdentifiedObjectImporter(BaseFileImporter):
             "columns": list(data[0].keys()) if data else [],
             "file_format": "json",
             "source_file": self.path,
-            "identifier": self.path,
+            "identifier": self.identifier,
         }
 
         metadata = IdentifiedObjectMetadata(
