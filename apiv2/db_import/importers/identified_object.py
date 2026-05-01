@@ -71,13 +71,7 @@ class IdentifiedObjectImporter(IntegratedDBImporter):
 
         path = f"{self.config.bucket_name}/{s3_prefix.rstrip('/')}/IdentifiedObjects/identified_objects.json"
 
-        run_identifier = self.run.name
-
-        return {
-            "path": path,
-            "match_key": "run_identifier",
-            "match_value": run_identifier,
-        }
+        return {"path": path}
 
 
 class StaleIdentifiedObjectDeletionDBImporter(StaleParentDeletionDBImporter):
