@@ -103,7 +103,7 @@ class VisualizationConfigImporter(BaseImporter):
             name=self.get_run().name,
             mean=volume_info.dmean,
             rms=volume_info.rms,
-            start={d: getattr(volume_info, f"{d}start") for d in "xyz"},
+            start={"x": 0, "y": 0, "z": 0},
             threedee_contrast_limits=contrast_limits,
         )
 

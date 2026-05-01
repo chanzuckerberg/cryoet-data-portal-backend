@@ -69,7 +69,7 @@ class TestTiltSeries(TiltSeriesHelper):
         raw_tilt_data: pd.DataFrame,
     ):
         volume_info = get_volume_info(filesystem, tiltseries.volume_filename)
-        assert len(raw_tilt_data) == volume_info.zend - volume_info.zstart, (
+        assert len(raw_tilt_data) == volume_info.zdim, (
             f"Number of rawtlt entries: {len(raw_tilt_data)} != Number of z-sections: "
-            f"{volume_info.zend - volume_info.zstart}"
+            f"{volume_info.zdim}"
         )
