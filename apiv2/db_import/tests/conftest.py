@@ -87,6 +87,8 @@ def verify_dataset_import(
         inputs.update(default_inputs)
         inputs["s3_prefix"] = str(DATASET_ID)
         load_func(**inputs)
+        # load_func writes via a separate session; expire ours so reads see DB state, not stale cache.
+        sync_db_session.expire_all()
         actual = sync_db_session.scalars(sa.select(Dataset).where(Dataset.id == DATASET_ID)).one()
         verify_model(actual, expected_dataset)
         return actual
