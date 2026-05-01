@@ -28,13 +28,14 @@ annotations:
           link: https://www.kaggle.com/competitions/byu-locating-bacterial-flagellar-motors-2025
           custom_name: MotorBench Kaggle overview
       authors: &authors
-        - name: Stephano Maggi
+        - name: Stefano Maggi
           corresponding_author_status: true
           primary_author_status: true
         - name: Christopher Braxton Owens
           corresponding_author_status: false
           primary_author_status: false
         - name: Gus L. W. Hart
+          ORCID: 0000-0002-6149-9234
           corresponding_author_status: false
           primary_author_status: false
         - name: Andrew Darley
@@ -74,9 +75,9 @@ datasets:
       authors: *authors
       dates: *dates
       dataset_identifier: 10485
-      dataset_title: Vibrio Cholerae Competence pilus - ComEA deletion strain
+      dataset_title: Vibrio cholerae competence pilus - ComEA deletion strain
       dataset_description: |
-        This dataset was collected to study Vibrio Cholerae competence pilus (CP) lacking ComEA protein. The cell are over-expressing the CP machine in presence of IPTG. Other pili machine have been deleted (TCP and MSHA).
+        This dataset was collected to study the Vibrio cholerae competence pilus (CP) lacking ComEA protein. The cells are over-expressing the CP machine in presence of IPTG. Other pilus machines (TCP and MSHA) have been deleted.
       assay:
         name: microscopy assay
         id: EFO:0002909
@@ -124,7 +125,7 @@ depositions:
       cross_references:
         publications: 10.1101/2025.04.23.650258
       deposition_types:
-        - annotation
+        - dataset
     sources:
       - literal:
           value:

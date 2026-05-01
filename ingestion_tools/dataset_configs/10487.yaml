@@ -22,14 +22,20 @@ annotations:
         id: GO:0120100
         name: bacterial-type flagellum motor
       annotation_software: IMOD
+      annotation_publications: 10.1101/2025.04.23.650258
+      method_links:
+        - link_type: website
+          link: https://www.kaggle.com/competitions/byu-locating-bacterial-flagellar-motors-2025
+          custom_name: MotorBench Kaggle overview
       authors: &authors
-        - name: Stephano Maggi
+        - name: Stefano Maggi
           corresponding_author_status: true
           primary_author_status: true
         - name: Christopher Braxton Owens
           corresponding_author_status: false
           primary_author_status: false
         - name: Gus L. W. Hart
+          ORCID: 0000-0002-6149-9234
           corresponding_author_status: false
           primary_author_status: false
         - name: Andrew Darley
@@ -130,9 +136,9 @@ datasets:
       authors: *authors
       dates: *dates
       dataset_identifier: 10487
-      dataset_title: Vibrio Cholerae Competence pilus - PilQ GFP variant, PilT deletion
+      dataset_title: Vibrio cholerae competence pilus - PilQ GFP variant, PilT deletion
       dataset_description: |
-        This dataset was collected to study Vibrio Cholerae competence pilus (CP). These cells have a PilQ variant harboring a GFP in position 35 and are lacking PilT. The cell are over-expressing the CP machine in presence of IPTG. Other pili machine have been deleted (TCP and MSHA).
+        This dataset was collected to study the Vibrio cholerae competence pilus (CP). These cells have a PilQ variant harboring a GFP at position 35 and are lacking PilT. The cells are over-expressing the CP machine in presence of IPTG. Other pilus machines (TCP and MSHA) have been deleted.
       assay:
         name: microscopy assay
         id: EFO:0002909
@@ -161,6 +167,8 @@ datasets:
         Cu Quantifoils R2/2 + 10 nm gold beads + Frozen in Vitrobot at 100% humidity, blot time 8s, blot force 8.
       other_setup: |
         Genotype : rpoS*, pilA S81C, lacZ::lacIq, comEA-mCherry, ΔluxO, Ptac-tfoX, Ptac- recA, ∆TCP::ZeoR, ∆MSHA::CarbR, ∆CTX::KanR, pilT136A::TmR, PilQ35sfGFP
+      cross_references:
+        publications: 10.1101/2025.04.23.650258
     sources:
       - literal:
           value:

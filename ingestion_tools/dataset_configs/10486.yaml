@@ -22,14 +22,20 @@ annotations:
         id: GO:0120100
         name: bacterial-type flagellum motor
       annotation_software: IMOD
+      annotation_publications: 10.1101/2025.04.23.650258
+      method_links:
+        - link_type: website
+          link: https://www.kaggle.com/competitions/byu-locating-bacterial-flagellar-motors-2025
+          custom_name: MotorBench Kaggle overview
       authors: &authors
-        - name: Stephano Maggi
+        - name: Stefano Maggi
           corresponding_author_status: true
           primary_author_status: true
         - name: Christopher Braxton Owens
           corresponding_author_status: false
           primary_author_status: false
         - name: Gus L. W. Hart
+          ORCID: 0000-0002-6149-9234
           corresponding_author_status: false
           primary_author_status: false
         - name: Andrew Darley
@@ -49,111 +55,6 @@ annotations:
           glob_string: '{run_name}/{file_prefix}_flagellar_motor.csv'
           is_visualization_default: true
           columns: zyx
-        parent_filters:
-          exclude:
-            run:
-              - 'sma2022\-09\-19\-1'
-              - 'sma2022\-09\-19\-103'
-              - 'sma2022\-09\-19\-104'
-              - 'sma2022\-09\-19\-105'
-              - 'sma2022\-09\-19\-108'
-              - 'sma2022\-09\-19\-111'
-              - 'sma2022\-09\-19\-114'
-              - 'sma2022\-09\-19\-116'
-              - 'sma2022\-09\-19\-117'
-              - 'sma2022\-09\-19\-118'
-              - 'sma2022\-09\-19\-12'
-              - 'sma2022\-09\-19\-120'
-              - 'sma2022\-09\-19\-121'
-              - 'sma2022\-09\-19\-122'
-              - 'sma2022\-09\-19\-123'
-              - 'sma2022\-09\-19\-126'
-              - 'sma2022\-09\-19\-130'
-              - 'sma2022\-09\-19\-131'
-              - 'sma2022\-09\-19\-133'
-              - 'sma2022\-09\-19\-136'
-              - 'sma2022\-09\-19\-137'
-              - 'sma2022\-09\-19\-139'
-              - 'sma2022\-09\-19\-140'
-              - 'sma2022\-09\-19\-142'
-              - 'sma2022\-09\-19\-144'
-              - 'sma2022\-09\-19\-146'
-              - 'sma2022\-09\-19\-147'
-              - 'sma2022\-09\-19\-15'
-              - 'sma2022\-09\-19\-150'
-              - 'sma2022\-09\-19\-152'
-              - 'sma2022\-09\-19\-153'
-              - 'sma2022\-09\-19\-154'
-              - 'sma2022\-09\-19\-16'
-              - 'sma2022\-09\-19\-17'
-              - 'sma2022\-09\-19\-18'
-              - 'sma2022\-09\-19\-19'
-              - 'sma2022\-09\-19\-2'
-              - 'sma2022\-09\-19\-20'
-              - 'sma2022\-09\-19\-21'
-              - 'sma2022\-09\-19\-22'
-              - 'sma2022\-09\-19\-23'
-              - 'sma2022\-09\-19\-26'
-              - 'sma2022\-09\-19\-29'
-              - 'sma2022\-09\-19\-3'
-              - 'sma2022\-09\-19\-31'
-              - 'sma2022\-09\-19\-33'
-              - 'sma2022\-09\-19\-34'
-              - 'sma2022\-09\-19\-35'
-              - 'sma2022\-09\-19\-36'
-              - 'sma2022\-09\-19\-37'
-              - 'sma2022\-09\-19\-38'
-              - 'sma2022\-09\-19\-39'
-              - 'sma2022\-09\-19\-4'
-              - 'sma2022\-09\-19\-40'
-              - 'sma2022\-09\-19\-41'
-              - 'sma2022\-09\-19\-43'
-              - 'sma2022\-09\-19\-44'
-              - 'sma2022\-09\-19\-45'
-              - 'sma2022\-09\-19\-46'
-              - 'sma2022\-09\-19\-47'
-              - 'sma2022\-09\-19\-48'
-              - 'sma2022\-09\-19\-49'
-              - 'sma2022\-09\-19\-5'
-              - 'sma2022\-09\-19\-50'
-              - 'sma2022\-09\-19\-51'
-              - 'sma2022\-09\-19\-53'
-              - 'sma2022\-09\-19\-54'
-              - 'sma2022\-09\-19\-55'
-              - 'sma2022\-09\-19\-58'
-              - 'sma2022\-09\-19\-59'
-              - 'sma2022\-09\-19\-6'
-              - 'sma2022\-09\-19\-60'
-              - 'sma2022\-09\-19\-61'
-              - 'sma2022\-09\-19\-62'
-              - 'sma2022\-09\-19\-63'
-              - 'sma2022\-09\-19\-65'
-              - 'sma2022\-09\-19\-66'
-              - 'sma2022\-09\-19\-67'
-              - 'sma2022\-09\-19\-68'
-              - 'sma2022\-09\-19\-69'
-              - 'sma2022\-09\-19\-71'
-              - 'sma2022\-09\-19\-73'
-              - 'sma2022\-09\-19\-74'
-              - 'sma2022\-09\-19\-76'
-              - 'sma2022\-09\-19\-77'
-              - 'sma2022\-09\-19\-79'
-              - 'sma2022\-09\-19\-8'
-              - 'sma2022\-09\-19\-84'
-              - 'sma2022\-09\-19\-85'
-              - 'sma2022\-09\-19\-87'
-              - 'sma2022\-09\-19\-88'
-              - 'sma2022\-09\-19\-9'
-              - 'sma2022\-09\-19\-90'
-              - 'sma2022\-09\-19\-91'
-              - 'sma2022\-09\-19\-92'
-              - 'sma2022\-09\-19\-93'
-              - 'sma2022\-09\-19\-94'
-              - 'sma2022\-09\-19\-95'
-              - 'sma2022\-09\-19\-96'
-              - 'sma2022\-09\-19\-98'
-              - 'sma2022\-10\-07\-29'
-              - 'sma2022\-10\-07\-4'
 
 collection_metadata:
   - sources:
@@ -178,9 +79,9 @@ datasets:
       authors: *authors
       dates: *dates
       dataset_identifier: 10486
-      dataset_title: Vibrio Cholerae Competence pilus - PilT K136A inactive variant
+      dataset_title: Vibrio cholerae competence pilus - PilT K136A inactive variant
       dataset_description: |
-        This dataset was collected to study Vibrio Cholerae competence pilus (CP) with a inactive version of the pilT (K136A). The cell are over-expressing the CP machine in presence of IPTG. Other pili machine have been deleted (TCP and MSHA).
+        This dataset was collected to study the Vibrio cholerae competence pilus (CP) with an inactive version of pilT (K136A). The cells are over-expressing the CP machine in presence of IPTG. Other pilus machines (TCP and MSHA) have been deleted.
       assay:
         name: microscopy assay
         id: EFO:0002909
@@ -209,6 +110,8 @@ datasets:
         Cu Quantifoils R2/2 + 10 nm gold beads + Frozen in Vitrobot at 100% humidity, blot time 8s, blot force 8.
       other_setup: |
         Genotype : rpoS*, pilA S81C, lacZ::lacIq, comEA-mCherry, ΔluxO, Ptac-tfoX, Ptac- recA, ∆TCP::ZeoR, ∆MSHA::CarbR, ∆CTX::KanR, pilT136A::TmR
+      cross_references:
+        publications: 10.1101/2025.04.23.650258
     sources:
       - literal:
           value:
