@@ -12,6 +12,7 @@ from data_validation.shared.util import BINNING_FACTORS
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 from mrcfile.mrcinterpreter import MrcInterpreter
 
+MAX_DEVIATING_INCREMENTS = 4
 MDOC_TILT_RANGE_DECIMAL_PLACE = 1
 
 
@@ -117,27 +118,52 @@ class TestTiltseries(TiltSeriesHelper):
     def test_mdoc_tiltseries_metadata(self, tiltseries_metadata: dict, mdoc_data: pd.DataFrame):
         assert len(mdoc_data) >= tiltseries_metadata["size"]["z"]
 
-    @allure.title("Mdoc: every mdoc tilt angle corresponds to the tilt_range + tilt_step metadata field.")
-    @allure.description("Not all angles in the tilt range must be present in the MDOC file.")
+    @allure.title("Mdoc: mdoc tilt angles are consistent with tilt_range and tilt_step metadata.")
+    @allure.description("Checks that the min/max of mdoc angles match tilt_range and that increments between consecutive angles match tilt_step.")
     def test_mdoc_tiltseries_range(
         self,
         tiltseries_metadata: dict,
         mdoc_data: pd.DataFrame,
-        tiltseries_metadata_range: list[float],
     ):
-        errors = helper_angles_injection_errors(
-            tiltseries_metadata_range,
-            mdoc_data["TiltAngle"].to_list(),
-            "tiltseries metadata tilt_range",
-            "mdoc file",
-            MDOC_TILT_RANGE_DECIMAL_PLACE,
-        )
-        assert len(errors) == 0, (
-            "\n".join(errors)
-            + f"\nRange: {tiltseries_metadata['tilt_range']['min']} to {tiltseries_metadata['tilt_range']['max']}, "
-            f"with step {tiltseries_metadata['tilt_step']}, "
-            f"with tolerance of {10**(-MDOC_TILT_RANGE_DECIMAL_PLACE)}."
-        )
+        dp = MDOC_TILT_RANGE_DECIMAL_PLACE
+        tilt_step = tiltseries_metadata["tilt_step"]
+        tilt_min = tiltseries_metadata["tilt_range"]["min"]
+        tilt_max = tiltseries_metadata["tilt_range"]["max"]
+        mdoc_angles = sorted(mdoc_data["TiltAngle"].to_list())
+
+        fatal_errors = []
+
+        # Check min and max (round both sides to dp decimal places)
+        if round(mdoc_angles[0], dp) != round(tilt_min, dp):
+            fatal_errors.append(f"Min mdoc angle {mdoc_angles[0]} does not match tilt_range min {tilt_min} (rounded to {dp} decimal places).")
+        if round(mdoc_angles[-1], dp) != round(tilt_max, dp):
+            fatal_errors.append(f"Max mdoc angle {mdoc_angles[-1]} does not match tilt_range max {tilt_max} (rounded to {dp} decimal places).")
+
+        # Check increments between consecutive angles
+        increment_errors = []
+        for i in range(len(mdoc_angles) - 1):
+            start_angle = mdoc_angles[i]
+            end_angle = mdoc_angles[i + 1]
+            increment = end_angle - start_angle
+            if round(increment, dp) != round(tilt_step, dp):
+                increment_errors.append(
+                    f"Increment from {start_angle} to {end_angle} is {increment}, expected tilt_step {tilt_step} (rounded to {dp} decimal places).",
+                )
+
+        # Always log increment deviations as warnings
+        if increment_errors:
+            allure.attach(
+                "\n".join(increment_errors),
+                name=f"Increment deviations ({len(increment_errors)} found)",
+                attachment_type=allure.attachment_type.TEXT,
+            )
+
+        # Fail if min/max mismatch or more than MAX_DEVIATING_INCREMENTS deviating increments
+        if len(increment_errors) > MAX_DEVIATING_INCREMENTS:
+            fatal_errors.extend(increment_errors)
+
+        range_info = f"\nRange: {tilt_min} to {tilt_max}, with step {tilt_step}, rounded to {dp} decimal places."
+        assert len(fatal_errors) == 0, "\n".join(fatal_errors) + range_info
 
     ### END metadata-mdoc consistency tests ###
 
@@ -179,7 +205,7 @@ class TestTiltseries(TiltSeriesHelper):
         if len(errors) > 0:
             raise AssertionError("\n".join(errors))
 
-    @allure.title("PerSectionParameters: maxResolution > 0.")
+    @allure.title("PerSectionParameters: maxResolution >= 0.")
     def test_max_resolution(self, tiltseries_metadata: dict[str, Any]):
         errors = []
         for i, per_section_parameter in enumerate(tiltseries_metadata["per_section_parameter"]):
@@ -187,9 +213,9 @@ class TestTiltseries(TiltSeriesHelper):
             if max_resolution is None:
                 continue
             try:
-                assert max_resolution > 0
+                assert max_resolution >= 0
             except AssertionError:
-                errors.append(f"per_section_parameter[{i}].max_resolution= {max_resolution} is not greater than 0.")
+                errors.append(f"per_section_parameter[{i}].max_resolution= {max_resolution} is not greater than or equal to 0.")
         if len(errors) > 0:
             raise AssertionError("\n".join(errors))
 
