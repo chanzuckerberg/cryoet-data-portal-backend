@@ -35,7 +35,8 @@ class IdentifiedObjectIdentifierHelper(IdentifierHelper):
             except (ValueError, TypeError):
                 identifier = 100
             cls.cached_identifiers[current_ids_key] = identifier
-            cls.next_identifier[container_key] = identifier + 1
+            if identifier >= cls.next_identifier[container_key]:
+                cls.next_identifier[container_key] = identifier + 1
         cls.loaded_containers.add(container_key)
 
     @classmethod
