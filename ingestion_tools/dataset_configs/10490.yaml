@@ -8,11 +8,13 @@ annotations:
         name: membrane
         description: >-
           Lipid-bilayer membranes (membranous vesicles, membrane-embedded complexes). One of five classes in the CryoETSim general 5-class semantic mask.
-      annotation_method: >-
-        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
-        alongside the tomogram. Voxel value 1 marks membrane voxels in the multi-label
-        semantic_general MRC (channel index 1 in
-        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_method: &id_anno_method >-
+        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim)
+        simulator alongside the tomogram. Class index per voxel maps 1:1 to a
+        line in gts/semantic_general_classes_ids.dat (1=membrane, 2=particles,
+        3=microtubules, 4=actin, 5=dna/rna filaments); voxel value 0 is
+        background. The per-class label for this entry is given by the
+        source's mask_label.
       annotation_software: cryo-TomoSim (CTS)
       annotation_publications: 10.1101/2025.11.11.687379
       method_type: simulated
@@ -87,11 +89,7 @@ annotations:
         name: protein-containing complex
         description: >-
           Catch-all class for ~141 PDB-derived macromolecular complexes placed in the volume (mass range 10 kDa - 4 MDa; ribosomes, proteasomes, GroEL, TRiC, ATP synthases, GPCRs, nucleosomes, etc.).
-      annotation_method: >-
-        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
-        alongside the tomogram. Voxel value 2 marks protein-containing complex voxels in the multi-label
-        semantic_general MRC (channel index 2 in
-        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_method: *id_anno_method
       annotation_software: cryo-TomoSim (CTS)
       annotation_publications: 10.1101/2025.11.11.687379
       method_type: simulated
@@ -115,11 +113,7 @@ annotations:
         name: microtubule
         description: >-
           Microtubule filaments (MT_6o2tx2, neuroMT structures).
-      annotation_method: >-
-        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
-        alongside the tomogram. Voxel value 3 marks microtubule voxels in the multi-label
-        semantic_general MRC (channel index 3 in
-        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_method: *id_anno_method
       annotation_software: cryo-TomoSim (CTS)
       annotation_publications: 10.1101/2025.11.11.687379
       method_type: simulated
@@ -143,11 +137,7 @@ annotations:
         name: actin filament
         description: >-
           Actin filaments (actin_long, actin_cofilactin, actin-monomer 2Q0U).
-      annotation_method: >-
-        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
-        alongside the tomogram. Voxel value 4 marks actin filament voxels in the multi-label
-        semantic_general MRC (channel index 4 in
-        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_method: *id_anno_method
       annotation_software: cryo-TomoSim (CTS)
       annotation_publications: 10.1101/2025.11.11.687379
       method_type: simulated
@@ -171,11 +161,7 @@ annotations:
         name: chromatin
         description: >-
           DNA/RNA filament class. Includes wormlike-chain DNA filaments (PolymerCpp; lengths 50-1000 bp, persistence 5-20 bp) and filamentous RNA densities derived from transcription/translation PDB entries.
-      annotation_method: >-
-        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
-        alongside the tomogram. Voxel value 5 marks chromatin voxels in the multi-label
-        semantic_general MRC (channel index 5 in
-        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_method: *id_anno_method
       annotation_software: cryo-TomoSim (CTS); PolymerCpp
       annotation_publications: 10.1101/2025.11.11.687379
       method_type: simulated
@@ -299,7 +285,10 @@ datasets:
         variable Z). Voxel-wise semantic segmentation masks (background, membranes,
         microtubules, actin, DNA/RNA filaments, particle classes) and instance
         segmentation masks with per-particle coordinates and volume metadata are
-        provided as ground truth.
+        provided as ground truth. Full list of ~141 PDB-derived structures used by the
+        simulator is in gts/semantic_classes_ids.dat and Supplementary Table 2 of the
+        source publication; cross_references.related_database_entries lists only a
+        representative subset.
       sample_type: in_silico
       assay:
         name: microscopy assay
@@ -324,32 +313,14 @@ datasets:
           grant_id: 2021-234620
       cross_references: &id_cross_references
         publications: 10.1101/2025.11.11.687379
+        # Representative subset of the ~141 PDB-derived structures used by the
+        # CTS simulator. Full list in gts/semantic_classes_ids.dat (deposited
+        # alongside the data) and Supplementary Table 2 of the source publication.
         related_database_entries: >-
           EMPIAR-10499, EMPIAR-11756,
-          PDB-1BXN, PDB-1EXR, PDB-1G3I, PDB-1I94, PDB-1MWS, PDB-1N9G, PDB-1QTX,
-          PDB-1QVR, PDB-1S3X, PDB-1SJJ, PDB-1SS8, PDB-1U6G, PDB-1UL1, PDB-1ZBB,
-          PDB-12GS, PDB-2CG9, PDB-2DFS, PDB-2Q0U, PDB-2R9R, PDB-2RHS, PDB-2VZ9,
-          PDB-2WW2, PDB-2XNX, PDB-3CF3, PDB-3D2F, PDB-3GL1, PDB-3H84, PDB-3LUE,
-          PDB-3MKQ, PDB-3QM1, PDB-3ULV, PDB-4COF, PDB-4CR2, PDB-4UIC, PDB-4UJD,
-          PDB-4V4R, PDB-4V5C, PDB-4V5D, PDB-4V5F, PDB-4V5G, PDB-4WRM, PDB-4XK8,
-          PDB-4YG2, PDB-5A20, PDB-5CSA, PDB-5F99, PDB-5FMG, PDB-5G04, PDB-5H0S,
-          PDB-5JH9, PDB-5LJO, PDB-5MRC, PDB-5O32, PDB-5OOL, PDB-5OXV, PDB-5OY7,
-          PDB-5SOA, PDB-6AHU, PDB-6AWB, PDB-6BQ1, PDB-6CA0, PDB-6CES, PDB-6CNJ,
-          PDB-6DUZ, PDB-6EMK, PDB-6F8L, PDB-6GY6, PDB-6GYM, PDB-6HIS, PDB-6ID1,
-          PDB-6IGC, PDB-6IOD, PDB-6JYO, PDB-6KLH, PDB-6KRK, PDB-6KS8, PDB-6KSP,
-          PDB-6L49, PDB-6L4A, PDB-6LA8, PDB-6LFM, PDB-6LMT, PDB-6LX3, PDB-6LXK,
-          PDB-6LXV, PDB-6M3V, PDB-6M04, PDB-6MRC, PDB-6N52, PDB-6N60, PDB-6PIF,
-          PDB-6SCJ, PDB-6TA5, PDB-6TAV, PDB-6TGC, PDB-6TPS, PDB-6U8Q, PDB-6UP6,
-          PDB-6VGR, PDB-6VN1, PDB-6VZ8, PDB-6W6M, PDB-6WHV, PDB-6WZT, PDB-6X5Z,
-          PDB-6X9Q, PDB-6XF8, PDB-6YT5, PDB-6Z3A, PDB-6Z6O, PDB-6Z80, PDB-6ZIU,
-          PDB-6ZQJ, PDB-6ZTN, PDB-7AMV, PDB-7B5S, PDB-7B7U, PDB-7BKC, PDB-7BLG,
-          PDB-7BLR, PDB-7DD9, PDB-7E6G, PDB-7E8H, PDB-7EEP, PDB-7EGD, PDB-7EGE,
-          PDB-7EGQ, PDB-7ELY, PDB-7ETM, PDB-7EY7, PDB-7JSN, PDB-7K5X, PDB-7KDV,
-          PDB-7KFE, PDB-7KJ2, PDB-7LSY, PDB-7MEI, PDB-7NHS, PDB-7NIU, PDB-7NYZ,
-          PDB-7O01, PDB-7OOC, PDB-7P6Z, PDB-7PAT, PDB-7PET, PDB-7PEU, PDB-7PEV,
-          PDB-7PEW, PDB-7PEX, PDB-7PEY, PDB-7PF0, PDB-7PFA, PDB-7PFT, PDB-7Q21,
-          PDB-7QJ0, PDB-7R04, PDB-7S7K, PDB-7SFW, PDB-7SGM, PDB-7SHK, PDB-7SN7,
-          PDB-7T3U, PDB-7V9K, PDB-7VA4, PDB-7VTG, PDB-7WBT, PDB-7WOO
+          PDB-1BXN, PDB-1MWS, PDB-1SS8, PDB-1ZBB, PDB-2CG9, PDB-2Q0U,
+          PDB-4CR2, PDB-4UJD, PDB-4V4R, PDB-4V5C, PDB-5FMG, PDB-5OOL,
+          PDB-5OXV, PDB-6KS8, PDB-6X9Q, PDB-7PEY
         related_database_links: >-
           https://github.com/frosinastojanovska/cryosiam,
           https://github.com/frosinastojanovska/cryosiam_vis,
@@ -374,11 +345,8 @@ datasets:
         placed from largest to smallest using brute-force model filling, up to a
         crowding density of ~80% to emulate realistic in-cell environments. Sample
         thicknesses ranged 60-100 nm. Each 3D structural model was projected into a
-        synthetic tilt series from -60° to +60° in 2° increments (61 tilts) at
-        6.8 Å/pixel and 300 kV, with defocus values varied between 2 µm and 5 µm,
-        amplitude contrast 2.7, total electron dose 120 e-/Å², additive Gaussian noise
-        σ = 0.2 per projection, and CTF modulation matched to the chosen defocus. Both
-        the clean (unmodulated) and noisy (CTF-modulated, noise-corrupted) tilt series
+        CTF-modulated synthetic tilt series (acquisition parameters in tiltseries
+        metadata). Both the clean (unmodulated) and noisy (CTF-modulated) tilt series
         were independently reconstructed into 3D tomograms via weighted back-projection
         (WBP) in IMOD. The CTS source code was modified to additionally export
         per-particle instance masks, spatial coordinates, and volume measurements,
@@ -425,7 +393,8 @@ depositions:
         mask (background, membranes, particles, microtubules, actin, DNA/RNA
         filaments) and a fine 149-class semantic mask that resolves individual
         particle identities. The general scene additionally includes per-particle
-        instance masks with coordinate and volume metadata.
+        instance masks with coordinate and volume metadata. Full PDB list in
+        Supplementary Table 2 of the source publication.
       deposition_types:
         - dataset
       authors: *id_authors
