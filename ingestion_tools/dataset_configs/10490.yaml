@@ -1,0 +1,614 @@
+version: 1.0.0
+
+annotations:
+  - metadata:
+      annotation_ingest_id: cryosiam-semantic-general-membrane-1
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+        description: >-
+          Lipid-bilayer membranes (membranous vesicles, membrane-embedded complexes). One of five classes in the CryoETSim general 5-class semantic mask.
+      annotation_method: >-
+        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
+        alongside the tomogram. Voxel value 1 marks membrane voxels in the multi-label
+        semantic_general MRC (channel index 1 in
+        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_software: cryo-TomoSim (CTS)
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: &id_authors
+        - name: Frosina Stojanovska
+          ORCID: 0000-0002-4327-1068
+          primary_author_status: true
+          corresponding_author_status: true
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Ricardo M. Sanchez
+          ORCID: 0000-0002-2854-0119
+          primary_author_status: false
+          corresponding_author_status: false
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Rasmus K. Jensen
+          ORCID: 0000-0001-5472-4862
+          primary_author_status: false
+          corresponding_author_status: false
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Julia Mahamid
+          ORCID: 0000-0001-6968-041X
+          primary_author_status: false
+          corresponding_author_status: true
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Anna Kreshuk
+          ORCID: 0000-0003-1334-6388
+          primary_author_status: false
+          corresponding_author_status: true
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Judith B. Zaugg
+          ORCID: 0000-0001-8324-4040
+          primary_author_status: false
+          corresponding_author_status: true
+          affiliation_name: European Molecular Biology Laboratory
+      dates: &id_dates
+        deposition_date: "2026-05-01"
+        last_modified_date: "2026-05-01"
+        release_date: "2026-05-01"
+      method_links: &id_method_links
+        - link_type: source_code
+          custom_name: cryoSiam
+          link: https://github.com/frosinastojanovska/cryosiam
+        - link_type: source_code
+          custom_name: cryo-TomoSim (CTS)
+          link: https://github.com/carsonpurnell/cryotomosim_CTS
+        - link_type: website
+          custom_name: CTS paper (Purnell et al. 2023)
+          link: https://www.biorxiv.org/content/10.1101/2023.04.28.538636v1.full
+        - link_type: source_code
+          custom_name: PolymerCpp
+          link: https://github.com/kmdouglass/PolymerCpp
+        - link_type: other
+          custom_name: PolymerCpp Zenodo (Stefko, Douglass & Manley 2020)
+          link: https://zenodo.org/records/3928659
+        - link_type: website
+          custom_name: IMOD
+          link: https://bio3d.colorado.edu/imod/
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: gts/semantic_general/{run_name}.mrc
+          mask_label: 1
+          rescale: false
+          is_visualization_default: true
+
+  - metadata:
+      annotation_ingest_id: cryosiam-semantic-general-particles-1
+      annotation_object:
+        id: GO:0032991
+        name: protein-containing complex
+        description: >-
+          Catch-all class for ~141 PDB-derived macromolecular complexes placed in the volume (mass range 10 kDa - 4 MDa; ribosomes, proteasomes, GroEL, TRiC, ATP synthases, GPCRs, nucleosomes, etc.).
+      annotation_method: >-
+        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
+        alongside the tomogram. Voxel value 2 marks protein-containing complex voxels in the multi-label
+        semantic_general MRC (channel index 2 in
+        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_software: cryo-TomoSim (CTS)
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: *id_authors
+      dates: *id_dates
+      method_links: *id_method_links
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: gts/semantic_general/{run_name}.mrc
+          mask_label: 2
+          rescale: false
+          is_visualization_default: true
+
+  - metadata:
+      annotation_ingest_id: cryosiam-semantic-general-microtubules-1
+      annotation_object:
+        id: GO:0005874
+        name: microtubule
+        description: >-
+          Microtubule filaments (MT_6o2tx2, neuroMT structures).
+      annotation_method: >-
+        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
+        alongside the tomogram. Voxel value 3 marks microtubule voxels in the multi-label
+        semantic_general MRC (channel index 3 in
+        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_software: cryo-TomoSim (CTS)
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: *id_authors
+      dates: *id_dates
+      method_links: *id_method_links
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: gts/semantic_general/{run_name}.mrc
+          mask_label: 3
+          rescale: false
+          is_visualization_default: true
+
+  - metadata:
+      annotation_ingest_id: cryosiam-semantic-general-actin-1
+      annotation_object:
+        id: GO:0005884
+        name: actin filament
+        description: >-
+          Actin filaments (actin_long, actin_cofilactin, actin-monomer 2Q0U).
+      annotation_method: >-
+        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
+        alongside the tomogram. Voxel value 4 marks actin filament voxels in the multi-label
+        semantic_general MRC (channel index 4 in
+        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_software: cryo-TomoSim (CTS)
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: *id_authors
+      dates: *id_dates
+      method_links: *id_method_links
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: gts/semantic_general/{run_name}.mrc
+          mask_label: 4
+          rescale: false
+          is_visualization_default: true
+
+  - metadata:
+      annotation_ingest_id: cryosiam-semantic-general-dna-rna-filaments-1
+      annotation_object:
+        id: GO:0000785
+        name: chromatin
+        description: >-
+          DNA/RNA filament class. Includes wormlike-chain DNA filaments (PolymerCpp; lengths 50-1000 bp, persistence 5-20 bp) and filamentous RNA densities derived from transcription/translation PDB entries.
+      annotation_method: >-
+        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim) simulator
+        alongside the tomogram. Voxel value 5 marks chromatin voxels in the multi-label
+        semantic_general MRC (channel index 5 in
+        gts/semantic_general_classes_ids.dat). Voxel value 0 is background.
+      annotation_software: cryo-TomoSim (CTS); PolymerCpp
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: *id_authors
+      dates: *id_dates
+      method_links: *id_method_links
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: gts/semantic_general/{run_name}.mrc
+          mask_label: 5
+          rescale: false
+          is_visualization_default: true
+
+  - metadata:
+      annotation_ingest_id: cryosiam-semantic-149class-1
+      annotation_object:
+        id: GO:0110165
+        name: cellular anatomical structure
+        description: >-
+          Fine-grained 149-class semantic mask. Per-voxel integer label encoding every
+          individual macromolecular structure type used by the simulator. Class index
+          N (1..149) corresponds to the N-th line of gts/semantic_classes_ids.dat.
+          Label 0 = background. Includes ~141 PDB-derived macromolecules (e.g. fix_4UJD
+          = mammalian 80S ribosome, fix_5OOL = human mitochondrial ribosome, fix_5FMG
+          = proteasome, fix_4CR2 = 26S proteasome, fix_2CG9 = Hsp90-Sba1, fix_1SS8 =
+          GroEL, fix_6KS8 = TRiC, fix_1BXN = rubisco), cytoskeletal filaments
+          (actin_long, actin_cofilactin, MT_6o2tx2, neuroMT), 50 DNA-filament
+          length/persistence variants, and ligand-gated/membrane receptors.
+      annotation_method: >-
+        Per-voxel ground-truth fine-grained semantic mask emitted by CTS; the modified
+        CTS code records the class index of every PDB-derived particle in addition to
+        the 5-class general semantic mask.
+      annotation_software: cryo-TomoSim (CTS); PolymerCpp
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: *id_authors
+      dates: *id_dates
+      method_links: *id_method_links
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: gts/semantic/{run_name}.mrc
+          rescale: false
+          is_visualization_default: false
+
+  - metadata:
+      annotation_ingest_id: cryosiam-instance-segmentation-1
+      annotation_object:
+        id: GO:0032991
+        name: protein-containing complex
+        description: >-
+          Per-particle instance segmentation: every macromolecular complex in the
+          volume is assigned a unique integer instance ID. Generated by the authors'
+          modified CTS code, which exports per-particle masks together with spatial
+          coordinates and per-instance volume measurements (see
+          gts/instance_stats/stats_sample_*.csv).
+      annotation_method: >-
+        Per-voxel ground-truth instance segmentation mask emitted by a modified version
+        of CTS that records, in addition to the semantic class, a unique integer ID
+        per individual particle placed in the volume.
+      annotation_software: cryo-TomoSim (CTS, modified by the cryoSiam authors)
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: *id_authors
+      dates: *id_dates
+      method_links: *id_method_links
+    sources:
+      - InstanceSegmentationMask:
+          file_format: mrc
+          glob_string: gts/instance/{run_name}.mrc
+          rescale: false
+          is_visualization_default: true
+
+collection_metadata:
+  - sources:
+      - source_glob:
+          list_glob: mdocs_fixed/{run_name}.mdoc
+
+ctfs:
+  - metadata:
+      format: CTFFIND
+    sources:
+      - source_glob:
+          list_glob: ctf_find_combined/{run_name}_combined.txt
+
+dataset_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
+
+datasets:
+  - metadata:
+      dataset_identifier: 10490
+      dataset_title: >-
+        CryoETSim 'general' - 300 simulated cryo-electron tomograms of cellular molecular crowding (CryoSiam training set)
+      dataset_description: >-
+        Synthetic cryo-electron tomography dataset comprising 300 simulated tomograms
+        of generic cellular molecular crowding, generated for training and evaluating
+        the CryoSiam self-supervised representation-learning framework (Stojanovska et
+        al., bioRxiv 2025.11.11.687379). Tomograms were produced with the cryo-TomoSim
+        (CTS) simulator using 141 PDB-derived macromolecular structures spanning 10 kDa
+        to >4000 kDa together with membranous vesicles, membrane-embedded complexes,
+        smaller cytosolic complexes (distractors), actin filaments, and microtubules.
+        Particles were placed largest-to-smallest with brute-force model filling,
+        achieving up to 80% crowding density to mimic realistic in-cell environments.
+        Sample thicknesses range 60-100 nm. For each run the deposit contains a clean
+        tilt series and a noisy CTF-modulated tilt series (300 kV, 6.8 Å/pixel,
+        tilt range -60° to +60° in 2° increments, 61 tilts, 120 e-/Å² total dose,
+        2-5 µm defocus, amplitude contrast 2.7, additive Gaussian noise σ = 0.2),
+        reconstructed via weighted back-projection (IMOD) into clean, noisy,
+        CTF-corrected (phase-flipped) and CryoSiam-denoised tomograms (XY 600x600,
+        variable Z). Voxel-wise semantic segmentation masks (background, membranes,
+        microtubules, actin, DNA/RNA filaments, particle classes) and instance
+        segmentation masks with per-particle coordinates and volume metadata are
+        provided as ground truth.
+      sample_type: in_silico
+      assay:
+        name: microscopy assay
+        id: EFO:0002909
+      development_stage:
+        name: unknown
+        id: unknown
+      disease:
+        name: normal
+        id: PATO:0000461
+      authors: *id_authors
+      funding: &id_funding
+        - funding_agency_name: Independent Research Fund Denmark
+          grant_id: 0164-00010A
+        - funding_agency_name: European Commission, Horizon 2020 (Marie Skłodowska-Curie Actions, ARISE fellowship)
+          grant_id: "945405"
+        - funding_agency_name: European Molecular Biology Laboratory
+          grant_id: EMBL core funding
+        - funding_agency_name: European Molecular Biology Laboratory
+          grant_id: EMBL Infection Biology Transversal Theme Synergy grant
+        - funding_agency_name: Chan Zuckerberg Initiative
+          grant_id: 2021-234620
+      cross_references: &id_cross_references
+        publications: 10.1101/2025.11.11.687379
+        related_database_entries: >-
+          EMPIAR-10499, EMPIAR-11756,
+          PDB-1BXN, PDB-1EXR, PDB-1G3I, PDB-1I94, PDB-1MWS, PDB-1N9G, PDB-1QTX,
+          PDB-1QVR, PDB-1S3X, PDB-1SJJ, PDB-1SS8, PDB-1U6G, PDB-1UL1, PDB-1ZBB,
+          PDB-12GS, PDB-2CG9, PDB-2DFS, PDB-2Q0U, PDB-2R9R, PDB-2RHS, PDB-2VZ9,
+          PDB-2WW2, PDB-2XNX, PDB-3CF3, PDB-3D2F, PDB-3GL1, PDB-3H84, PDB-3LUE,
+          PDB-3MKQ, PDB-3QM1, PDB-3ULV, PDB-4COF, PDB-4CR2, PDB-4UIC, PDB-4UJD,
+          PDB-4V4R, PDB-4V5C, PDB-4V5D, PDB-4V5F, PDB-4V5G, PDB-4WRM, PDB-4XK8,
+          PDB-4YG2, PDB-5A20, PDB-5CSA, PDB-5F99, PDB-5FMG, PDB-5G04, PDB-5H0S,
+          PDB-5JH9, PDB-5LJO, PDB-5MRC, PDB-5O32, PDB-5OOL, PDB-5OXV, PDB-5OY7,
+          PDB-5SOA, PDB-6AHU, PDB-6AWB, PDB-6BQ1, PDB-6CA0, PDB-6CES, PDB-6CNJ,
+          PDB-6DUZ, PDB-6EMK, PDB-6F8L, PDB-6GY6, PDB-6GYM, PDB-6HIS, PDB-6ID1,
+          PDB-6IGC, PDB-6IOD, PDB-6JYO, PDB-6KLH, PDB-6KRK, PDB-6KS8, PDB-6KSP,
+          PDB-6L49, PDB-6L4A, PDB-6LA8, PDB-6LFM, PDB-6LMT, PDB-6LX3, PDB-6LXK,
+          PDB-6LXV, PDB-6M3V, PDB-6M04, PDB-6MRC, PDB-6N52, PDB-6N60, PDB-6PIF,
+          PDB-6SCJ, PDB-6TA5, PDB-6TAV, PDB-6TGC, PDB-6TPS, PDB-6U8Q, PDB-6UP6,
+          PDB-6VGR, PDB-6VN1, PDB-6VZ8, PDB-6W6M, PDB-6WHV, PDB-6WZT, PDB-6X5Z,
+          PDB-6X9Q, PDB-6XF8, PDB-6YT5, PDB-6Z3A, PDB-6Z6O, PDB-6Z80, PDB-6ZIU,
+          PDB-6ZQJ, PDB-6ZTN, PDB-7AMV, PDB-7B5S, PDB-7B7U, PDB-7BKC, PDB-7BLG,
+          PDB-7BLR, PDB-7DD9, PDB-7E6G, PDB-7E8H, PDB-7EEP, PDB-7EGD, PDB-7EGE,
+          PDB-7EGQ, PDB-7ELY, PDB-7ETM, PDB-7EY7, PDB-7JSN, PDB-7K5X, PDB-7KDV,
+          PDB-7KFE, PDB-7KJ2, PDB-7LSY, PDB-7MEI, PDB-7NHS, PDB-7NIU, PDB-7NYZ,
+          PDB-7O01, PDB-7OOC, PDB-7P6Z, PDB-7PAT, PDB-7PET, PDB-7PEU, PDB-7PEV,
+          PDB-7PEW, PDB-7PEX, PDB-7PEY, PDB-7PF0, PDB-7PFA, PDB-7PFT, PDB-7Q21,
+          PDB-7QJ0, PDB-7R04, PDB-7S7K, PDB-7SFW, PDB-7SGM, PDB-7SHK, PDB-7SN7,
+          PDB-7T3U, PDB-7V9K, PDB-7VA4, PDB-7VTG, PDB-7WBT, PDB-7WOO
+        related_database_links: >-
+          https://github.com/frosinastojanovska/cryosiam,
+          https://github.com/frosinastojanovska/cryosiam_vis,
+          https://cryoetdataportal.czscience.com/datasets/10003,
+          https://cryoetdataportal.czscience.com/datasets/10301
+      dates: *id_dates
+      grid_preparation: >-
+        Not applicable - purely synthetic dataset generated in silico via the
+        cryo-TomoSim (CTS) simulator. No physical grid preparation was performed.
+      sample_preparation: >-
+        Tomograms were simulated with cryo-TomoSim (CTS; Purnell et al., bioRxiv
+        2023.04.28.538636), generating 300 synthetic 'general' tomograms. Each volume
+        was populated with 141 PDB-derived macromolecular structures (Supplementary
+        Table 2 of the source publication; see gts/semantic_classes_ids.dat for the
+        canonical class list deposited alongside the data), spanning molecular weights
+        from ~10 kDa (e.g. 7ELY peptide, 1EXR/1QTX calmodulin) to >4000 kDa (e.g. 4UJD
+        mammalian 80S ribosome, 5MRC yeast mitochondrial ribosome, 6X9Q
+        transcription-translation complex), together with membranous vesicles and
+        membrane-embedded complexes (S-layers, BAM, GPCRs, GABA-A R, NMDA R, mGluR5,
+        5-HT3), smaller cytosolic complexes serving as distractors (calmodulin, GST,
+        alpha-actinin), actin filaments, and microtubules. Particles were sequentially
+        placed from largest to smallest using brute-force model filling, up to a
+        crowding density of ~80% to emulate realistic in-cell environments. Sample
+        thicknesses ranged 60-100 nm. Each 3D structural model was projected into a
+        synthetic tilt series from -60° to +60° in 2° increments (61 tilts) at
+        6.8 Å/pixel and 300 kV, with defocus values varied between 2 µm and 5 µm,
+        amplitude contrast 2.7, total electron dose 120 e-/Å², additive Gaussian noise
+        σ = 0.2 per projection, and CTF modulation matched to the chosen defocus. Both
+        the clean (unmodulated) and noisy (CTF-modulated, noise-corrupted) tilt series
+        were independently reconstructed into 3D tomograms via weighted back-projection
+        (WBP) in IMOD. The CTS source code was modified to additionally export
+        per-particle instance masks, spatial coordinates, and volume measurements,
+        yielding voxel-wise semantic masks (background, membranes, microtubules, actin,
+        DNA/RNA filaments, particle classes) and instance masks alongside the
+        tomograms. Tomogram XY dimensions are 600x600 voxels; Z varies per run.
+      other_setup: In silico simulation (CTS pipeline; CryoETSim general subset)
+    sources:
+      - literal:
+          value:
+            - "10490"
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
+
+depositions:
+  - metadata:
+      deposition_identifier: 10348
+      deposition_title: >-
+        CryoETSim: simulated cryo-electron tomograms for self-supervised
+        representation learning with the CryoSiam framework
+      deposition_description: >-
+        The CryoETSim deposition provides 400 simulated cryo-electron tomograms
+        generated with the cryo-TomoSim (CTS) simulator to systematically model
+        defocus variation, sample thickness, and molecular crowding characteristic
+        of experimental cryo-ET data. The deposition is split across three scenes:
+        a general macromolecular crowding scene (300 runs spanning ~150 macromolecular
+        complexes, cytoskeletal filaments, membrane proteins, and small distractor
+        proteins), a chromatin scene (50 runs of DNA filaments with nucleosomes,
+        sampling a wide range of contour lengths and persistence lengths), and a
+        minimal-bacterium scene (50 runs containing DNA filaments,
+        transcription/translation complexes such as 70S ribosomes and RNA polymerase
+        expressomes, membrane proteins, and small distractors). Tomograms are
+        simulated at 600x600 voxels in XY with variable Z, 6.8 Å/voxel, 300 kV,
+        ±60° tilt range with 2° steps using a dose-symmetric scheme, and ~120
+        e-/Å² total dose. For every simulated run, four tomogram variants are
+        provided - clean (noise-free ground truth), noisy (noise + CTF), noisy with
+        CTF-corrected phase flipping, and a CryoSiam-denoised version - together
+        with paired voxel-level ground-truth annotations: a coarse 5-class semantic
+        mask (background, membranes, particles, microtubules, actin, DNA/RNA
+        filaments) and a fine 149-class semantic mask that resolves individual
+        particle identities. The general scene additionally includes per-particle
+        instance masks with coordinate and volume metadata.
+      deposition_types:
+        - dataset
+      authors: *id_authors
+      cross_references: *id_cross_references
+      dates: *id_dates
+    sources:
+      - literal:
+          value:
+            - 10348
+
+rawtilts:
+  - sources:
+      - source_glob:
+          list_glob: tilt_angles/{run_name}.txt
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: tomograms/clean/sample_*.mrc
+          name_regex: (sample_\d+)\.mrc$
+
+standardization_config:
+  deposition_id: 10348
+  source_prefix: frosina_stojanovska_11_2025/general/
+
+tiltseries:
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: simulated
+        model: simulated
+      data_acquisition_software: CTS (cryo-TomoSim)
+      is_aligned: false
+      microscope:
+        manufacturer: SIMULATED
+        model: simulated
+      microscope_optical_setup:
+        energy_filter: none
+      pixel_spacing: 6.8
+      spherical_aberration_constant: 2.7
+      tilt_axis: 0.0
+      tilt_range:
+        max: 60
+        min: -60
+      tilt_series_quality: 5
+      tilt_step: 2.0
+      tilting_scheme: dose-symmetric
+      total_flux: 120.0
+    sources:
+      - source_glob:
+          list_glob: tilts/clean/{run_name}.mrc
+
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: simulated
+        model: simulated
+      data_acquisition_software: CTS (cryo-TomoSim)
+      is_aligned: false
+      microscope:
+        manufacturer: SIMULATED
+        model: simulated
+      microscope_optical_setup:
+        energy_filter: none
+      pixel_spacing: 6.8
+      spherical_aberration_constant: 2.7
+      tilt_axis: 0.0
+      tilt_range:
+        max: 60
+        min: -60
+      tilt_series_quality: 5
+      tilt_step: 2.0
+      tilting_scheme: dose-symmetric
+      total_flux: 120.0
+    sources:
+      - source_glob:
+          list_glob: tilts/noisy/{run_name}.mrc
+
+tomograms:
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *id_authors
+      ctf_corrected: false
+      dates: *id_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: cryo-TomoSim (CTS)
+      reconstruction_method: Unknown
+      reconstruction_software: cryo-TomoSim (CTS)
+      tomogram_version: 1.0
+      voxel_spacing: 6.800
+    sources:
+      - source_glob:
+          list_glob: tomograms/clean/{run_name}.mrc
+
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *id_authors
+      ctf_corrected: false
+      dates: *id_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: IMOD
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1.0
+      voxel_spacing: 6.800
+    sources:
+      - source_glob:
+          list_glob: tomograms/noisy/{run_name}.mrc
+
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *id_authors
+      ctf_corrected: true
+      dates: *id_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: filtered
+      processing_software: Unknown
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1.0
+      voxel_spacing: 6.800
+    sources:
+      - source_glob:
+          list_glob: tomograms/noisy_ctf_corrected_phase_flip/{run_name}.mrc
+
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *id_authors
+      ctf_corrected: true
+      dates: *id_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: denoised
+      processing_software: CryoSiam (DenseSimSiam denoising network)
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1.0
+      voxel_spacing: 6.800
+    sources:
+      - source_glob:
+          list_glob: tomograms/denoised/{run_name}.mrc
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 6.800
