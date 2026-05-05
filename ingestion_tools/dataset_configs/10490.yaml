@@ -408,7 +408,7 @@ depositions:
 rawtilts:
   - sources:
       - source_glob:
-          list_glob: tilt_angles/{run_name}.txt
+          list_glob: tilt_angles_corrected/{run_name}.rawtlt
 
 runs:
   - sources:
