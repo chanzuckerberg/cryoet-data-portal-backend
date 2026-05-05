@@ -172,7 +172,7 @@ class PerSectionParameterGenerator:
 
     def _get_raw_tlt_dest(self) -> str:
         for rawtlt in RawTiltImporter.finder(self.config, **self.parents):
-            # Check to prevent any other files being included in the rawtlt section from being incorrectly pulled in here. 
+            # Check to prevent any other files being included in the rawtlt section from being incorrectly pulled in here.
             if rawtlt.path and rawtlt.path.endswith(".rawtlt"):
                 return rawtlt.get_destination_path()
         raise FileNotFoundError(f"No rawtlt found for run: {self.parents['run'].name}")
