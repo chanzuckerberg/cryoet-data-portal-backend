@@ -6,8 +6,7 @@ annotations:
       annotation_object:
         id: GO:0016020
         name: membrane
-        description: >-
-          Lipid-bilayer membranes (membranous vesicles, membrane-embedded complexes). One of five classes in the CryoETSim general 5-class semantic mask.
+        description: Lipid-bilayer membranes (vesicles, membrane-embedded complexes).
       annotation_method: &id_anno_method >-
         Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim)
         simulator alongside the tomogram. Class index per voxel maps 1:1 to a
@@ -88,7 +87,7 @@ annotations:
         id: GO:0032991
         name: protein-containing complex
         description: >-
-          Catch-all class for ~141 PDB-derived macromolecular complexes placed in the volume (mass range 10 kDa - 4 MDa; ribosomes, proteasomes, GroEL, TRiC, ATP synthases, GPCRs, nucleosomes, etc.).
+          Catch-all label for ~141 PDB-derived macromolecular complexes (10 kDa-4 MDa; e.g. ribosomes, proteasomes, GroEL, TRiC, ATP synthases, GPCRs).
       annotation_method: *id_anno_method
       annotation_software: cryo-TomoSim (CTS)
       annotation_publications: 10.1101/2025.11.11.687379
@@ -112,7 +111,7 @@ annotations:
         id: GO:0000785
         name: chromatin
         description: >-
-          DNA/RNA filament class. Includes wormlike-chain DNA filaments (PolymerCpp; lengths 50-1000 bp, persistence 5-20 bp) and filamentous RNA densities derived from transcription/translation PDB entries.
+          Combined DNA/RNA filament label (wormlike-chain DNA filaments and RNA densities from transcription/translation complexes); broader than the GO chromatin term.
       annotation_method: *id_anno_method
       annotation_software: cryo-TomoSim (CTS); PolymerCpp
       annotation_publications: 10.1101/2025.11.11.687379
@@ -136,19 +135,12 @@ annotations:
         id: GO:0110165
         name: cellular anatomical structure
         description: >-
-          Fine-grained 149-class semantic mask. Per-voxel integer label encoding every
-          individual macromolecular structure type used by the simulator. Class index
-          N (1..149) corresponds to the N-th line of gts/semantic_classes_ids.dat.
-          Label 0 = background. Includes ~141 PDB-derived macromolecules (e.g. fix_4UJD
-          = mammalian 80S ribosome, fix_5OOL = human mitochondrial ribosome, fix_5FMG
-          = proteasome, fix_4CR2 = 26S proteasome, fix_2CG9 = Hsp90-Sba1, fix_1SS8 =
-          GroEL, fix_6KS8 = TRiC, fix_1BXN = rubisco), cytoskeletal filaments
-          (actin_long, actin_cofilactin, MT_6o2tx2, neuroMT), 50 DNA-filament
-          length/persistence variants, and ligand-gated/membrane receptors.
+          Fine-grained label resolving individual macromolecular structure types (PDB-derived complexes, cytoskeletal filaments, DNA-filament variants, membrane receptors).
       annotation_method: >-
-        Per-voxel ground-truth fine-grained semantic mask emitted by CTS; the modified
-        CTS code records the class index of every PDB-derived particle in addition to
-        the 5-class general semantic mask.
+        Per-voxel ground-truth fine-grained 149-class semantic mask emitted by the
+        modified CTS code, which records the class index of every PDB-derived particle
+        in addition to the 5-class general semantic mask. Class index N (1..149) maps
+        to the N-th line of gts/semantic_classes_ids.dat; voxel value 0 = background.
       annotation_software: cryo-TomoSim (CTS); PolymerCpp
       annotation_publications: 10.1101/2025.11.11.687379
       method_type: simulated
