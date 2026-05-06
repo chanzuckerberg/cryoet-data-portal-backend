@@ -129,32 +129,10 @@ annotations:
           rescale: false
           is_visualization_default: true
 
-  - metadata:
-      annotation_ingest_id: cryosiam-semantic-149class-1
-      annotation_object:
-        id: GO:0110165
-        name: cellular anatomical structure
-        description: >-
-          Fine-grained label resolving individual macromolecular structure types (PDB-derived complexes, cytoskeletal filaments, DNA-filament variants, membrane receptors).
-      annotation_method: >-
-        Per-voxel ground-truth fine-grained 149-class semantic mask emitted by the
-        modified CTS code, which records the class index of every PDB-derived particle
-        in addition to the 5-class general semantic mask. Class index N (1..149) maps
-        to the N-th line of gts/semantic_classes_ids.dat; voxel value 0 = background.
-      annotation_software: cryo-TomoSim (CTS); PolymerCpp
-      annotation_publications: 10.1101/2025.11.11.687379
-      method_type: simulated
-      ground_truth_status: true
-      version: 1.0
-      authors: *id_authors
-      dates: *id_dates
-      method_links: *id_method_links
-    sources:
-      - SemanticSegmentationMask:
-          file_format: mrc
-          glob_string: gts/semantic/{run_name}.mrc
-          rescale: false
-          is_visualization_default: false
+  # Note: gts/semantic/{run_name}.mrc (the fine semantic mask) is intentionally
+  # not ingested as a portal annotation. Without a per-class mask_label split it
+  # would render as a single lumped annotation, which is redundant with the
+  # per-class breakdown above (membrane / particles / dna-rna).
 
 collection_metadata:
   - sources:
@@ -179,7 +157,7 @@ datasets:
   - metadata:
       dataset_identifier: 10492
       dataset_title: >-
-        CryoETSim 'minimal_bacterium' - 50 simulated cryo-electron tomograms of bacterial transcription/translation machineries (CryoSiam training set)
+        CryoSiam minimal-bacterium training dataset - simulated cryo-electron tomograms of bacterial transcription/translation machineries
       dataset_description: >-
         Synthetic cryo-electron tomography dataset comprising 50 simulated tomograms
         representing a minimal-bacterium cellular volume, generated for the CryoSiam
@@ -418,9 +396,9 @@ tomograms:
         y: 0
         z: 0
       processing: raw
-      processing_software: cryo-TomoSim (CTS)
-      reconstruction_method: Unknown
-      reconstruction_software: cryo-TomoSim (CTS)
+      processing_software: IMOD WBP (clean / noise-free synthetic projections)
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
       tomogram_version: 1.0
       voxel_spacing: 6.800
     sources:
@@ -443,7 +421,7 @@ tomograms:
         y: 0
         z: 0
       processing: raw
-      processing_software: IMOD
+      processing_software: IMOD WBP (noisy / CTF-modulated, no CTF correction)
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
@@ -468,7 +446,7 @@ tomograms:
         y: 0
         z: 0
       processing: filtered
-      processing_software: Unknown
+      processing_software: IMOD WBP (noisy / CTF-corrected via ctfphaseflip)
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
@@ -493,7 +471,7 @@ tomograms:
         y: 0
         z: 0
       processing: denoised
-      processing_software: CryoSiam (DenseSimSiam denoising network)
+      processing_software: "CryoSiam DenseSimSiam denoising network (input: noisy_ctf_corrected_phase_flip)"
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
