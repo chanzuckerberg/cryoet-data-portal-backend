@@ -98,8 +98,11 @@ def frames_meta_file(frames_dir: str, filesystem: FileSystemApi) -> str:
     dst = f"{frames_dir}/frames_metadata.json"
     if filesystem.exists(dst):
         return dst
-    else:
-        pytest.fail(f"The frames directory exists, but frames_metadata.json is not found: {dst}")
+    # CollectionMetadataImporter writes the mdoc into Frames/ even when no frames are configured (e.g. synthetic datasets).
+    files = filesystem.glob(f"{frames_dir}/*")
+    if files and all(".mdoc" in f for f in files):
+        pytest.skip(f"Frames directory contains only mdoc files, no frames_metadata.json expected: {frames_dir}")
+    pytest.fail(f"The frames directory exists, but frames_metadata.json is not found: {dst}")
 
 
 @pytest.fixture(scope="session")
