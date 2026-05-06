@@ -8,7 +8,7 @@ from db_import.importers.base_importer import StaleParentDeletionDBImporter
 
 
 class IdentifiedObjectItem(ItemDBImporter):
-    id_fields = ["run_id", "object_id", "object_name", "object_state", "object_description"]
+    id_fields = ["run_id", "object_id"]
     model_class = models.IdentifiedObject
     direct_mapped_fields = {
         "object_id": ["object_id"],
