@@ -12,6 +12,10 @@ INT_COLOR_PAIR = tuple[list[INT_COLOR], list[FLOAT_COLOR]]
 HEX_COLOR_PAIR = tuple[list[HEX_COLOR], list[FLOAT_COLOR]]
 _MAX_SEED_VALUE = int(2**32 - 1)
 _KEYS_FOR_COLOR_SEED = {"annotation_method", "annotation_object", "deposition_id", "ground_truth_status"}
+# distinctipy is an iterative optimizer; past ~20 colors humans can't tell hues
+# apart anyway and runtime explodes (it never terminates for instance masks
+# with tens of thousands of segments). Cycle a base palette beyond this cap.
+_MAX_DISTINCT_COLORS = 20
 
 
 def _convert_colors_to_int(input_colors: list[FLOAT_COLOR]) -> list[INT_COLOR]:
@@ -30,6 +34,9 @@ def _is_valid_color(color: FLOAT_COLOR) -> bool:
 
 
 def _get_colors(n_colors: int, exclude: list[FLOAT_COLOR], seed: int = None) -> list[FLOAT_COLOR]:
+    if n_colors > _MAX_DISTINCT_COLORS:
+        base = _get_colors(_MAX_DISTINCT_COLORS, exclude=exclude, seed=seed)
+        return [base[i % _MAX_DISTINCT_COLORS] for i in range(n_colors)]
     colors = distinctipy.get_colors(n_colors, exclude_colors=exclude, rng=seed)
     output_colors = [color for color in colors if _is_valid_color(color)]
     if len(output_colors) < n_colors:
