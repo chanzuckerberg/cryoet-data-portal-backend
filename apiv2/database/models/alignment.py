@@ -80,10 +80,12 @@ class Alignment(Base):
         back_populates="alignments",
     )
     alignment_type: Mapped[alignment_type_enum] = mapped_column(
-        Enum(alignment_type_enum, native_enum=False), nullable=True,
+        Enum(alignment_type_enum, native_enum=False),
+        nullable=True,
     )
     alignment_method: Mapped[alignment_method_type_enum] = mapped_column(
-        Enum(alignment_method_type_enum, native_enum=False), nullable=True,
+        Enum(alignment_method_type_enum, native_enum=False),
+        nullable=True,
     )
     volume_x_dimension: Mapped[float] = mapped_column(Float, nullable=True)
     volume_y_dimension: Mapped[float] = mapped_column(Float, nullable=True)

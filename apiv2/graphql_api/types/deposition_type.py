@@ -80,7 +80,7 @@ async def load_deposition_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.DepositionType)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type: ignore
 
 
 """
@@ -133,9 +133,7 @@ Define DepositionType type
 
 @strawberry.type(description=None)
 class DepositionType(EntityInterface):
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type: ignore
     deposition_id: int
     type: Optional[deposition_types_enum] = strawberry.field(
         description="The type of data submitted as a part of this deposition (annotation, dataset, tomogram)",
@@ -216,7 +214,9 @@ class DepositionTypeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DepositionTypeCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[DepositionTypeCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore

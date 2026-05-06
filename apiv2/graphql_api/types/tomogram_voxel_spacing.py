@@ -104,9 +104,7 @@ These are batching functions for loading related objects to avoid N+1 queries.
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]],  # type: ignore
 )
 async def load_annotation_file_rows(
     root: "TomogramVoxelSpacing",
@@ -119,7 +117,7 @@ async def load_annotation_file_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["annotation_files"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -132,7 +130,7 @@ async def load_annotation_file_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["annotation_files"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_annotation_file_aggregate_output(rows)
     return aggregate_output
 
@@ -147,11 +145,11 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type: ignore
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]],  # type:ignore
+    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]],  # type: ignore
 )
 async def load_annotation_rows(
     root: "TomogramVoxelSpacing",
@@ -164,7 +162,7 @@ async def load_annotation_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["annotations"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -177,13 +175,13 @@ async def load_annotation_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["annotations"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_annotation_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
+    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type: ignore
 )
 async def load_tomogram_rows(
     root: "TomogramVoxelSpacing",
@@ -194,7 +192,7 @@ async def load_tomogram_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["tomograms"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -207,7 +205,7 @@ async def load_tomogram_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["tomograms"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_tomogram_aggregate_output(rows)
     return aggregate_output
 
@@ -281,26 +279,14 @@ Define TomogramVoxelSpacing type
 
 @strawberry.type(description="Voxel spacings for a run")
 class TomogramVoxelSpacing(EntityInterface):
-    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
-        load_annotation_file_rows
-    )  # type:ignore
-    annotation_files_aggregate: Optional[
-        Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
-    ] = load_annotation_file_aggregate_rows  # type:ignore
-    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_rows  # type: ignore
+    annotation_files_aggregate: Optional[Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_aggregate_rows  # type: ignore
+    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type: ignore
     run_id: Optional[int]
-    annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
-    annotations_aggregate: Optional[
-        Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]
-    ] = load_annotation_aggregate_rows  # type:ignore
-    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_rows
-    )  # type:ignore
-    tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_aggregate_rows
-    )  # type:ignore
+    annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_rows  # type: ignore
+    annotations_aggregate: Optional[Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_aggregate_rows  # type: ignore
+    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type: ignore
+    tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_aggregate_rows  # type: ignore
     voxel_spacing: float = strawberry.field(description="The voxel spacing for the tomograms in this set in angstroms")
     s3_prefix: str = strawberry.field(
         description="The S3 public bucket path where this tomogram voxel spacing is contained",
@@ -389,7 +375,9 @@ class TomogramVoxelSpacingAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[TomogramVoxelSpacingCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[TomogramVoxelSpacingCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -423,7 +411,8 @@ Mutation types
 @strawberry.input()
 class TomogramVoxelSpacingCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(
-        description="The the run this tomogram voxel spacing is a part of", default=None,
+        description="The the run this tomogram voxel spacing is a part of",
+        default=None,
     )
     voxel_spacing: float = strawberry.field(description="The voxel spacing for the tomograms in this set in angstroms")
     s3_prefix: str = strawberry.field(
@@ -438,7 +427,8 @@ class TomogramVoxelSpacingCreateInput:
 @strawberry.input()
 class TomogramVoxelSpacingUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(
-        description="The the run this tomogram voxel spacing is a part of", default=None,
+        description="The the run this tomogram voxel spacing is a part of",
+        default=None,
     )
     voxel_spacing: Optional[float] = strawberry.field(
         description="The voxel spacing for the tomograms in this set in angstroms",
@@ -568,7 +558,13 @@ async def create_tomogram_voxel_spacing(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -610,7 +606,13 @@ async def update_tomogram_voxel_spacing(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -619,7 +621,13 @@ async def update_tomogram_voxel_spacing(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.UPDATE,
+        db.TomogramVoxelSpacing,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -651,7 +659,13 @@ async def delete_tomogram_voxel_spacing(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.TomogramVoxelSpacing, session, authz_client, principal, where, [], AuthzAction.DELETE,
+        db.TomogramVoxelSpacing,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

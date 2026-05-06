@@ -39,7 +39,7 @@ def add(session, model, item, parents):
 
     # Set some default arguments for `get_or_create` that can be mutated for special cases below.
     new_item_id = remote_item.get("id")
-    find_item_filters = [(model.id == new_item_id)]
+    find_item_filters = [model.id == new_item_id]
 
     if model == models.DepositionAuthor:
         local_item_data = {
@@ -268,7 +268,7 @@ def add(session, model, item, parents):
             "primary_author_status": remote_item["primary_author_status"],
         }
     if model == models.Alignment:
-        find_item_filters = [(model.run_id == parents["run_id"])]
+        find_item_filters = [model.run_id == parents["run_id"]]
         if not remote_item.get("affine_transformation_matrix"):
             remote_item["affine_transformation_matrix"] = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
         local_item_data = {
@@ -367,16 +367,13 @@ def fetch_method_links(client_url, annotation):
     headers = {
         "Content-type": "application/json",
     }
-    query = (
-        """
+    query = """
         query MyQuery {
             annotations(where: {id: {_eq: %d }}) {
                 method_links
             }
         }
-    """
-        % annotation.id
-    )
+    """ % annotation.id
     payload = json.dumps({"query": query, "variables": None, "operationName": "MyQuery"})
     res = requests.post(client_url, headers=headers, data=payload)
     data = res.json()

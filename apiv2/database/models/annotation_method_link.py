@@ -37,7 +37,8 @@ class AnnotationMethodLink(Base):
         back_populates="method_links",
     )
     link_type: Mapped[annotation_method_link_type_enum] = mapped_column(
-        Enum(annotation_method_link_type_enum, native_enum=False), nullable=False,
+        Enum(annotation_method_link_type_enum, native_enum=False),
+        nullable=False,
     )
     name: Mapped[str] = mapped_column(String, nullable=True)
     link: Mapped[str] = mapped_column(String, nullable=False)

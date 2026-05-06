@@ -65,7 +65,10 @@ class Tomogram(Base):
         back_populates="tomograms",
     )
     tomogram_voxel_spacing_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("tomogram_voxel_spacing.id"), nullable=True, index=True,
+        Integer,
+        ForeignKey("tomogram_voxel_spacing.id"),
+        nullable=True,
+        index=True,
     )
     tomogram_voxel_spacing: Mapped["TomogramVoxelSpacing"] = relationship(
         "TomogramVoxelSpacing",
@@ -78,13 +81,16 @@ class Tomogram(Base):
     size_z: Mapped[int] = mapped_column(Integer, nullable=False)
     voxel_spacing: Mapped[float] = mapped_column(Float, nullable=False)
     fiducial_alignment_status: Mapped[fiducial_alignment_status_enum] = mapped_column(
-        Enum(fiducial_alignment_status_enum, native_enum=False), nullable=False,
+        Enum(fiducial_alignment_status_enum, native_enum=False),
+        nullable=False,
     )
     reconstruction_method: Mapped[tomogram_reconstruction_method_enum] = mapped_column(
-        Enum(tomogram_reconstruction_method_enum, native_enum=False), nullable=False,
+        Enum(tomogram_reconstruction_method_enum, native_enum=False),
+        nullable=False,
     )
     processing: Mapped[tomogram_processing_enum] = mapped_column(
-        Enum(tomogram_processing_enum, native_enum=False), nullable=False,
+        Enum(tomogram_processing_enum, native_enum=False),
+        nullable=False,
     )
     tomogram_version: Mapped[float] = mapped_column(Float, nullable=True)
     processing_software: Mapped[str] = mapped_column(String, nullable=True)

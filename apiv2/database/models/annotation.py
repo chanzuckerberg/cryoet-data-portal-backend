@@ -75,7 +75,10 @@ class Annotation(Base):
         back_populates="annotations",
     )
     tomogram_voxel_spacing_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("tomogram_voxel_spacing.id"), nullable=True, index=True,
+        Integer,
+        ForeignKey("tomogram_voxel_spacing.id"),
+        nullable=True,
+        index=True,
     )
     tomogram_voxel_spacing: Mapped["TomogramVoxelSpacing"] = relationship(
         "TomogramVoxelSpacing",
@@ -99,7 +102,8 @@ class Annotation(Base):
     annotation_software: Mapped[str] = mapped_column(String, nullable=True)
     is_curator_recommended: Mapped[bool] = mapped_column(Boolean, nullable=True, server_default="False")
     method_type: Mapped[annotation_method_type_enum] = mapped_column(
-        Enum(annotation_method_type_enum, native_enum=False), nullable=False,
+        Enum(annotation_method_type_enum, native_enum=False),
+        nullable=False,
     )
     deposition_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     release_date: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)

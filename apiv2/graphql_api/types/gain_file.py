@@ -72,7 +72,7 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.GainFile)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type: ignore
 
 
 """
@@ -127,7 +127,7 @@ Define GainFile type
 
 @strawberry.type(description="Gain values for frames in this run")
 class GainFile(EntityInterface):
-    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type: ignore
     run_id: int
     s3_file_path: str = strawberry.field(description="Path to the file in s3")
     https_file_path: str = strawberry.field(description="Path to the file as an https url")
@@ -368,7 +368,13 @@ async def create_gain_file(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -410,7 +416,13 @@ async def update_gain_file(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

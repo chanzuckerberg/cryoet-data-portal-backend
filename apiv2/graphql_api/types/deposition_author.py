@@ -80,7 +80,7 @@ async def load_deposition_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.DepositionAuthor)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type: ignore
 
 
 """
@@ -151,35 +151,39 @@ Define DepositionAuthor type
 
 @strawberry.type(description="Authors for a deposition")
 class DepositionAuthor(EntityInterface):
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type: ignore
     deposition_id: int
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: str = strawberry.field(description="Full name of a deposition author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the deposition", default=None,
+        description="Indicates whether an author is the main person creating the deposition",
+        default=None,
     )
 
 
@@ -273,7 +277,9 @@ class DepositionAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DepositionAuthorCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[DepositionAuthorCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -310,28 +316,34 @@ class DepositionAuthorCreateInput:
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: str = strawberry.field(description="Full name of a deposition author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the deposition", default=None,
+        description="Indicates whether an author is the main person creating the deposition",
+        default=None,
     )
 
 
@@ -343,28 +355,34 @@ class DepositionAuthorUpdateInput:
         description="The order in which the author appears in the publication",
     )
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: Optional[str] = strawberry.field(description="Full name of a deposition author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the deposition", default=None,
+        description="Indicates whether an author is the main person creating the deposition",
+        default=None,
     )
 
 

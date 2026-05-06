@@ -872,7 +872,7 @@ classes:
         required: true
       file_size:
         name: file_size
-        description: Size of annota file in bytes
+        description: Size of annotation file in bytes
         from_schema: cdp-dataset-config
         exact_mappings:
           - api_file_size
@@ -1915,7 +1915,7 @@ classes:
         description: Frame that this section is a part of
         inverse: Frame.per_section_parameters
         range: Frame
-        required: true
+        required: false
       major_defocus:
         name: major_defocus
         description: Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).

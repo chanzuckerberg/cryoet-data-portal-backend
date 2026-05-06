@@ -92,13 +92,11 @@ async def load_annotation_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationShape)
     relationship = mapper.relationships["annotation"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id)  # type: ignore
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]],  # type: ignore
 )
 async def load_annotation_file_rows(
     root: "AnnotationShape",
@@ -111,7 +109,7 @@ async def load_annotation_file_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationShape)
     relationship = mapper.relationships["annotation_files"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -124,7 +122,7 @@ async def load_annotation_file_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationShape)
     relationship = mapper.relationships["annotation_files"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_annotation_file_aggregate_output(rows)
     return aggregate_output
 
@@ -186,16 +184,10 @@ Define AnnotationShape type
 
 @strawberry.type(description="Shapes associated with an annotation")
 class AnnotationShape(EntityInterface):
-    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
+    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_rows  # type: ignore
     annotation_id: Optional[int]
-    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = (
-        load_annotation_file_rows
-    )  # type:ignore
-    annotation_files_aggregate: Optional[
-        Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]
-    ] = load_annotation_file_aggregate_rows  # type:ignore
+    annotation_files: Sequence[Annotated["AnnotationFile", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_rows  # type: ignore
+    annotation_files_aggregate: Optional[Annotated["AnnotationFileAggregate", strawberry.lazy("graphql_api.types.annotation_file")]] = load_annotation_file_aggregate_rows  # type: ignore
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
         description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask, GlobalCaption, AnnotationCaption)",
         default=None,
@@ -275,7 +267,9 @@ class AnnotationShapeAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationShapeCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[AnnotationShapeCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -309,7 +303,8 @@ Mutation types
 @strawberry.input()
 class AnnotationShapeCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an shapes for an annotation", default=None,
+        description="Metadata about an shapes for an annotation",
+        default=None,
     )
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
         description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask, GlobalCaption, AnnotationCaption)",
@@ -321,7 +316,8 @@ class AnnotationShapeCreateInput:
 @strawberry.input()
 class AnnotationShapeUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Metadata about an shapes for an annotation", default=None,
+        description="Metadata about an shapes for an annotation",
+        default=None,
     )
     shape_type: Optional[annotation_file_shape_type_enum] = strawberry.field(
         description="The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask, GlobalCaption, AnnotationCaption)",

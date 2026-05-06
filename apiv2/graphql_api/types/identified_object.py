@@ -72,7 +72,7 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.IdentifiedObject)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type: ignore
 
 
 """
@@ -133,7 +133,7 @@ Define IdentifiedObject type
     description="An ontology term/ID or accession code, state and description associated with a Run, describing cellular components that were visually identified, but not labeled, in a tomogram associated with the Run",
 )
 class IdentifiedObject(EntityInterface):
-    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type: ignore
     run_id: Optional[int]
     object_id: str = strawberry.field(
         description="Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.",
@@ -146,7 +146,8 @@ class IdentifiedObject(EntityInterface):
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state of the identified object (e.g. open, closed)", default=None,
+        description="Molecule state of the identified object (e.g. open, closed)",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -230,7 +231,9 @@ class IdentifiedObjectAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[IdentifiedObjectCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[IdentifiedObjectCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -264,7 +267,8 @@ Mutation types
 @strawberry.input()
 class IdentifiedObjectCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(
-        description="Run that this identified object is a part of", default=None,
+        description="Run that this identified object is a part of",
+        default=None,
     )
     object_id: str = strawberry.field(
         description="Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.",
@@ -277,7 +281,8 @@ class IdentifiedObjectCreateInput:
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state of the identified object (e.g. open, closed)", default=None,
+        description="Molecule state of the identified object (e.g. open, closed)",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -285,7 +290,8 @@ class IdentifiedObjectCreateInput:
 @strawberry.input()
 class IdentifiedObjectUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(
-        description="Run that this identified object is a part of", default=None,
+        description="Run that this identified object is a part of",
+        default=None,
     )
     object_id: Optional[str] = strawberry.field(
         description="Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.",
@@ -298,7 +304,8 @@ class IdentifiedObjectUpdateInput:
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state of the identified object (e.g. open, closed)", default=None,
+        description="Molecule state of the identified object (e.g. open, closed)",
+        default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -419,7 +426,13 @@ async def create_identified_object(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -461,7 +474,13 @@ async def update_identified_object(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

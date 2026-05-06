@@ -58,7 +58,11 @@ class Dataset(Base):
         cascade="all, delete-orphan",
     )
     runs: Mapped[list[Run]] = relationship(
-        "Run", back_populates="dataset", uselist=True, foreign_keys="Run.dataset_id", cascade="all, delete-orphan",
+        "Run",
+        back_populates="dataset",
+        uselist=True,
+        foreign_keys="Run.dataset_id",
+        cascade="all, delete-orphan",
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)

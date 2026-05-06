@@ -83,7 +83,7 @@ async def load_alignment_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.PerSectionAlignmentParameters)
     relationship = mapper.relationships["alignment"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.alignment_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.alignment_id)  # type: ignore
 
 
 """
@@ -145,20 +145,21 @@ Define PerSectionAlignmentParameters type
 
 @strawberry.type(description="Map alignment parameters to tilt series frames")
 class PerSectionAlignmentParameters(EntityInterface):
-    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_rows
-    )  # type:ignore
+    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type: ignore
     alignment_id: int
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
+        description="In-plane X-shift of the projection in angstrom",
+        default=None,
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
+        description="In-plane Y-shift of the projection in angstrom",
+        default=None,
     )
     volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
     in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
+        description="In-plane rotation of the projection in degrees",
+        default=None,
     )
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -251,7 +252,9 @@ class PerSectionAlignmentParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[PerSectionAlignmentParametersCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[PerSectionAlignmentParametersCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -287,14 +290,17 @@ class PerSectionAlignmentParametersCreateInput:
     alignment_id: strawberry.ID = strawberry.field(description="Tiltseries Alignment")
     z_index: int = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
+        description="In-plane X-shift of the projection in angstrom",
+        default=None,
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
+        description="In-plane Y-shift of the projection in angstrom",
+        default=None,
     )
     volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
     in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
+        description="In-plane rotation of the projection in degrees",
+        default=None,
     )
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -305,14 +311,17 @@ class PerSectionAlignmentParametersUpdateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment")
     z_index: Optional[int] = strawberry.field(description="z-index of the frame in the tiltseries")
     x_offset: Optional[float] = strawberry.field(
-        description="In-plane X-shift of the projection in angstrom", default=None,
+        description="In-plane X-shift of the projection in angstrom",
+        default=None,
     )
     y_offset: Optional[float] = strawberry.field(
-        description="In-plane Y-shift of the projection in angstrom", default=None,
+        description="In-plane Y-shift of the projection in angstrom",
+        default=None,
     )
     volume_x_rotation: Optional[float] = strawberry.field(description="X-axis rotation in degrees", default=None)
     in_plane_rotation: Optional[List[List[float]]] = strawberry.field(
-        description="In-plane rotation of the projection in degrees", default=None,
+        description="In-plane rotation of the projection in degrees",
+        default=None,
     )
     tilt_angle: Optional[float] = strawberry.field(description="Tilt angle of the projection in degrees", default=None)
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
@@ -499,7 +508,13 @@ async def update_per_section_alignment_parameters(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE,
+        db.PerSectionAlignmentParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -531,7 +546,13 @@ async def delete_per_section_alignment_parameters(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionAlignmentParameters, session, authz_client, principal, where, [], AuthzAction.DELETE,
+        db.PerSectionAlignmentParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

@@ -73,7 +73,7 @@ async def load_dataset_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.DatasetAuthor)
     relationship = mapper.relationships["dataset"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.dataset_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.dataset_id)  # type: ignore
 
 
 """
@@ -144,32 +144,35 @@ Define DatasetAuthor type
 
 @strawberry.type(description="An author of a dataset")
 class DatasetAuthor(EntityInterface):
-    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_rows
-    )  # type:ignore
+    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type: ignore
     dataset_id: Optional[int]
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: str = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
         description="Indicates whether an author is the main person associated with the corresponding dataset",
@@ -267,7 +270,9 @@ class DatasetAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DatasetAuthorCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[DatasetAuthorCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -304,25 +309,30 @@ class DatasetAuthorCreateInput:
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: str = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
         description="Indicates whether an author is the main person associated with the corresponding dataset",
@@ -338,25 +348,30 @@ class DatasetAuthorUpdateInput:
         description="The order in which the author appears in the publication",
     )
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: Optional[str] = strawberry.field(description="Full name of a dataset author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
         description="Indicates whether an author is the main person associated with the corresponding dataset",
@@ -478,7 +493,13 @@ async def create_dataset_author(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
+            db.Dataset,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.dataset_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
@@ -520,7 +541,13 @@ async def update_dataset_author(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
+            db.Dataset,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.dataset_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")

@@ -101,7 +101,7 @@ async def load_alignment_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationFile)
     relationship = mapper.relationships["alignment"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.alignment_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.alignment_id)  # type: ignore
 
 
 @strawberry.field
@@ -116,7 +116,7 @@ async def load_annotation_shape_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationFile)
     relationship = mapper.relationships["annotation_shape"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_shape_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_shape_id)  # type: ignore
 
 
 @strawberry.field
@@ -135,9 +135,7 @@ async def load_tomogram_voxel_spacing_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationFile)
     relationship = mapper.relationships["tomogram_voxel_spacing"]
-    return await dataloader.loader_for(relationship, where, order_by).load(
-        root.tomogram_voxel_spacing_id,
-    )  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.tomogram_voxel_spacing_id)  # type: ignore
 
 
 """
@@ -221,21 +219,15 @@ Define AnnotationFile type
 
 @strawberry.type(description="Metadata for files associated with an annotation")
 class AnnotationFile(EntityInterface):
-    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_rows
-    )  # type:ignore
+    alignment: Optional[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type: ignore
     alignment_id: Optional[int]
-    annotation_shape: Optional[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = (
-        load_annotation_shape_rows
-    )  # type:ignore
+    annotation_shape: Optional[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = load_annotation_shape_rows  # type: ignore
     annotation_shape_id: Optional[int]
-    tomogram_voxel_spacing: Optional[
-        Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
-    ] = load_tomogram_voxel_spacing_rows  # type:ignore
+    tomogram_voxel_spacing: Optional[Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]] = load_tomogram_voxel_spacing_rows  # type: ignore
     tomogram_voxel_spacing_id: Optional[int]
     format: str = strawberry.field(description="File format for this file")
     s3_path: str = strawberry.field(description="s3 path of the annotation file")
-    file_size: Optional[float] = strawberry.field(description="Size of annota file in bytes", default=None)
+    file_size: Optional[float] = strawberry.field(description="Size of annotation file in bytes", default=None)
     https_path: str = strawberry.field(description="HTTPS path for this annotation file")
     is_visualization_default: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice of default annotation to display in visualization for an object",
@@ -330,7 +322,9 @@ class AnnotationFileAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationFileCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[AnnotationFileCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -365,14 +359,16 @@ Mutation types
 class AnnotationFileCreateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation", default=None,
+        description="Shapes associated with an annotation",
+        default=None,
     )
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacing that this annotation file is associated with", default=None,
+        description="Voxel spacing that this annotation file is associated with",
+        default=None,
     )
     format: str = strawberry.field(description="File format for this file")
     s3_path: str = strawberry.field(description="s3 path of the annotation file")
-    file_size: Optional[float] = strawberry.field(description="Size of annota file in bytes", default=None)
+    file_size: Optional[float] = strawberry.field(description="Size of annotation file in bytes", default=None)
     https_path: str = strawberry.field(description="HTTPS path for this annotation file")
     is_visualization_default: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice of default annotation to display in visualization for an object",
@@ -389,14 +385,16 @@ class AnnotationFileCreateInput:
 class AnnotationFileUpdateInput:
     alignment_id: Optional[strawberry.ID] = strawberry.field(description="Tiltseries Alignment", default=None)
     annotation_shape_id: Optional[strawberry.ID] = strawberry.field(
-        description="Shapes associated with an annotation", default=None,
+        description="Shapes associated with an annotation",
+        default=None,
     )
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="Voxel spacing that this annotation file is associated with", default=None,
+        description="Voxel spacing that this annotation file is associated with",
+        default=None,
     )
     format: Optional[str] = strawberry.field(description="File format for this file")
     s3_path: Optional[str] = strawberry.field(description="s3 path of the annotation file")
-    file_size: Optional[float] = strawberry.field(description="Size of annota file in bytes", default=None)
+    file_size: Optional[float] = strawberry.field(description="Size of annotation file in bytes", default=None)
     https_path: Optional[str] = strawberry.field(description="HTTPS path for this annotation file")
     is_visualization_default: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice of default annotation to display in visualization for an object",

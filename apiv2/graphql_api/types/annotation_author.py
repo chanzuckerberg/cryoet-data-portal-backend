@@ -80,7 +80,7 @@ async def load_annotation_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationAuthor)
     relationship = mapper.relationships["annotation"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id)  # type: ignore
 
 
 """
@@ -151,17 +151,17 @@ Define AnnotationAuthor type
 
 @strawberry.type(description="Metadata for an annotation's authors")
 class AnnotationAuthor(EntityInterface):
-    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
+    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_rows  # type: ignore
     annotation_id: Optional[int]
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: str = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
@@ -170,14 +170,16 @@ class AnnotationAuthor(EntityInterface):
         default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an annotator is affiliated with.", default=None,
+        description="Address of the institution an annotator is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an annotator is the corresponding author", default=None,
+        description="Indicates whether an annotator is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
         description="Indicates whether an author is the main person executing the annotation, especially on manual annotation",
@@ -275,7 +277,9 @@ class AnnotationAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationAuthorCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[AnnotationAuthorCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -309,15 +313,18 @@ Mutation types
 @strawberry.input()
 class AnnotationAuthorCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to the annotation this author contributed to", default=None,
+        description="Reference to the annotation this author contributed to",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: str = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
@@ -326,14 +333,16 @@ class AnnotationAuthorCreateInput:
         default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an annotator is affiliated with.", default=None,
+        description="Address of the institution an annotator is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an annotator is the corresponding author", default=None,
+        description="Indicates whether an annotator is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
         description="Indicates whether an author is the main person executing the annotation, especially on manual annotation",
@@ -344,17 +353,20 @@ class AnnotationAuthorCreateInput:
 @strawberry.input()
 class AnnotationAuthorUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to the annotation this author contributed to", default=None,
+        description="Reference to the annotation this author contributed to",
+        default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: Optional[int] = strawberry.field(
         description="The order in which the author appears in the publication",
     )
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: Optional[str] = strawberry.field(description="Full name of an annotation author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
@@ -363,14 +375,16 @@ class AnnotationAuthorUpdateInput:
         default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an annotator is affiliated with.", default=None,
+        description="Address of the institution an annotator is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an annotator is the corresponding author", default=None,
+        description="Indicates whether an annotator is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
         description="Indicates whether an author is the main person executing the annotation, especially on manual annotation",

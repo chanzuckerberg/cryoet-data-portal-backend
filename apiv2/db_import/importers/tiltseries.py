@@ -29,14 +29,16 @@ class PerSectionParametersItem(ItemDBImporter):
         self.model_args["tiltseries_id"] = self.input_data["tiltseries"].id
         run_id = self.input_data["tiltseries"].run_id
         self.model_args["run_id"] = run_id
-        # query the database for the frame_id using run_id and acquisition_order
-        self.model_args["frame_id"] = (
+        # Look up the frame by (run_id, acquisition_order). Synthetic / no-frames-deposited
+        # datasets still emit per-section CTF data without corresponding Frame rows, so
+        # frame_id is allowed to be NULL.
+        frame = (
             self.config.get_db_session()
             .query(models.Frame)
             .filter_by(run_id=run_id, acquisition_order=self.input_data["frame_acquisition_order"])
-            .one()
-            .id
+            .one_or_none()
         )
+        self.model_args["frame_id"] = frame.id if frame else None
 
 
 class PerSectionParametersImporter(IntegratedDBImporter):

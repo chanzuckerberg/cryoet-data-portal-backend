@@ -138,9 +138,7 @@ These are batching functions for loading related objects to avoid N+1 queries.
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]],  # type: ignore
 )
 async def load_deposition_author_rows(
     root: "Deposition",
@@ -155,7 +153,7 @@ async def load_deposition_author_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["authors"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -170,13 +168,13 @@ async def load_deposition_author_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["authors"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_deposition_author_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]],  # type:ignore
+    relay.ListConnection[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]],  # type: ignore
 )
 async def load_alignment_rows(
     root: "Deposition",
@@ -187,7 +185,7 @@ async def load_alignment_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["alignments"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -200,13 +198,13 @@ async def load_alignment_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["alignments"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_alignment_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]],  # type:ignore
+    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]],  # type: ignore
 )
 async def load_annotation_rows(
     root: "Deposition",
@@ -219,7 +217,7 @@ async def load_annotation_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["annotations"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -232,13 +230,13 @@ async def load_annotation_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["annotations"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_annotation_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]],  # type:ignore
+    relay.ListConnection[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]],  # type: ignore
 )
 async def load_dataset_rows(
     root: "Deposition",
@@ -249,7 +247,7 @@ async def load_dataset_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["datasets"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -262,14 +260,12 @@ async def load_dataset_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["datasets"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_dataset_aggregate_output(rows)
     return aggregate_output
 
 
-@relay.connection(
-    relay.ListConnection[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]],  # type:ignore
-)
+@relay.connection(relay.ListConnection[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]])  # type: ignore
 async def load_frame_rows(
     root: "Deposition",
     info: Info,
@@ -279,7 +275,7 @@ async def load_frame_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["frames"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -292,13 +288,13 @@ async def load_frame_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["frames"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_frame_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]],  # type:ignore
+    relay.ListConnection[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]],  # type: ignore
 )
 async def load_tiltseries_rows(
     root: "Deposition",
@@ -311,7 +307,7 @@ async def load_tiltseries_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["tiltseries"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -324,13 +320,13 @@ async def load_tiltseries_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["tiltseries"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_tiltseries_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type:ignore
+    relay.ListConnection[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]],  # type: ignore
 )
 async def load_tomogram_rows(
     root: "Deposition",
@@ -341,7 +337,7 @@ async def load_tomogram_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["tomograms"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -354,15 +350,13 @@ async def load_tomogram_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["tomograms"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_tomogram_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]],  # type: ignore
 )
 async def load_deposition_type_rows(
     root: "Deposition",
@@ -375,7 +369,7 @@ async def load_deposition_type_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["deposition_types"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -388,7 +382,7 @@ async def load_deposition_type_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Deposition)
     relationship = mapper.relationships["deposition_types"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_deposition_type_aggregate_output(rows)
     return aggregate_output
 
@@ -499,67 +493,40 @@ Define Deposition type
 
 @strawberry.type(description="Deposition metadata")
 class Deposition(EntityInterface):
-    authors: Sequence[Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]] = (
-        load_deposition_author_rows
-    )  # type:ignore
-    authors_aggregate: Optional[
-        Annotated["DepositionAuthorAggregate", strawberry.lazy("graphql_api.types.deposition_author")]
-    ] = load_deposition_author_aggregate_rows  # type:ignore
-    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_rows
-    )  # type:ignore
-    alignments_aggregate: Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]] = (
-        load_alignment_aggregate_rows
-    )  # type:ignore
-    annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
-    annotations_aggregate: Optional[
-        Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]
-    ] = load_annotation_aggregate_rows  # type:ignore
-    datasets: Sequence[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_rows
-    )  # type:ignore
-    datasets_aggregate: Optional[Annotated["DatasetAggregate", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_aggregate_rows
-    )  # type:ignore
-    frames: Sequence[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
-    frames_aggregate: Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]] = (
-        load_frame_aggregate_rows
-    )  # type:ignore
-    tiltseries: Sequence[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows
-    )  # type:ignore
-    tiltseries_aggregate: Optional[
-        Annotated["TiltseriesAggregate", strawberry.lazy("graphql_api.types.tiltseries")]
-    ] = load_tiltseries_aggregate_rows  # type:ignore
-    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_rows
-    )  # type:ignore
-    tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_aggregate_rows
-    )  # type:ignore
+    authors: Sequence[Annotated["DepositionAuthor", strawberry.lazy("graphql_api.types.deposition_author")]] = load_deposition_author_rows  # type: ignore
+    authors_aggregate: Optional[Annotated["DepositionAuthorAggregate", strawberry.lazy("graphql_api.types.deposition_author")]] = load_deposition_author_aggregate_rows  # type: ignore
+    alignments: Sequence[Annotated["Alignment", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_rows  # type: ignore
+    alignments_aggregate: Optional[Annotated["AlignmentAggregate", strawberry.lazy("graphql_api.types.alignment")]] = load_alignment_aggregate_rows  # type: ignore
+    annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_rows  # type: ignore
+    annotations_aggregate: Optional[Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_aggregate_rows  # type: ignore
+    datasets: Sequence[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type: ignore
+    datasets_aggregate: Optional[Annotated["DatasetAggregate", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_aggregate_rows  # type: ignore
+    frames: Sequence[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type: ignore
+    frames_aggregate: Optional[Annotated["FrameAggregate", strawberry.lazy("graphql_api.types.frame")]] = load_frame_aggregate_rows  # type: ignore
+    tiltseries: Sequence[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = load_tiltseries_rows  # type: ignore
+    tiltseries_aggregate: Optional[Annotated["TiltseriesAggregate", strawberry.lazy("graphql_api.types.tiltseries")]] = load_tiltseries_aggregate_rows  # type: ignore
+    tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type: ignore
+    tomograms_aggregate: Optional[Annotated["TomogramAggregate", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_aggregate_rows  # type: ignore
     title: str = strawberry.field(description="Title for the deposition")
     description: str = strawberry.field(description="Description for the deposition")
     tag: Optional[str] = strawberry.field(description="Tag for the deposition - like ml competition", default=None)
-    deposition_types: Sequence[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]] = (
-        load_deposition_type_rows
-    )  # type:ignore
-    deposition_types_aggregate: Optional[
-        Annotated["DepositionTypeAggregate", strawberry.lazy("graphql_api.types.deposition_type")]
-    ] = load_deposition_type_aggregate_rows  # type:ignore
+    deposition_types: Sequence[Annotated["DepositionType", strawberry.lazy("graphql_api.types.deposition_type")]] = load_deposition_type_rows  # type: ignore
+    deposition_types_aggregate: Optional[Annotated["DepositionTypeAggregate", strawberry.lazy("graphql_api.types.deposition_type")]] = load_deposition_type_aggregate_rows  # type: ignore
     deposition_publications: Optional[str] = strawberry.field(
-        description="The publications related to this deposition", default=None,
+        description="The publications related to this deposition",
+        default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="The related database entries to this deposition", default=None,
+        description="The related database entries to this deposition",
+        default=None,
     )
     deposition_date: datetime.datetime = strawberry.field(description="The date the deposition was deposited")
     release_date: datetime.datetime = strawberry.field(description="The date the deposition was released")
     last_modified_date: datetime.datetime = strawberry.field(description="The date the deposition was last modified")
     key_photo_url: Optional[str] = strawberry.field(description="URL for the deposition preview image.", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the deposition thumbnail image.", default=None,
+        description="URL for the deposition thumbnail image.",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -655,7 +622,9 @@ class DepositionAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DepositionCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[DepositionCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -692,17 +661,20 @@ class DepositionCreateInput:
     description: str = strawberry.field(description="Description for the deposition")
     tag: Optional[str] = strawberry.field(description="Tag for the deposition - like ml competition", default=None)
     deposition_publications: Optional[str] = strawberry.field(
-        description="The publications related to this deposition", default=None,
+        description="The publications related to this deposition",
+        default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="The related database entries to this deposition", default=None,
+        description="The related database entries to this deposition",
+        default=None,
     )
     deposition_date: datetime.datetime = strawberry.field(description="The date the deposition was deposited")
     release_date: datetime.datetime = strawberry.field(description="The date the deposition was released")
     last_modified_date: datetime.datetime = strawberry.field(description="The date the deposition was last modified")
     key_photo_url: Optional[str] = strawberry.field(description="URL for the deposition preview image.", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the deposition thumbnail image.", default=None,
+        description="URL for the deposition thumbnail image.",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -713,10 +685,12 @@ class DepositionUpdateInput:
     description: Optional[str] = strawberry.field(description="Description for the deposition")
     tag: Optional[str] = strawberry.field(description="Tag for the deposition - like ml competition", default=None)
     deposition_publications: Optional[str] = strawberry.field(
-        description="The publications related to this deposition", default=None,
+        description="The publications related to this deposition",
+        default=None,
     )
     related_database_entries: Optional[str] = strawberry.field(
-        description="The related database entries to this deposition", default=None,
+        description="The related database entries to this deposition",
+        default=None,
     )
     deposition_date: Optional[datetime.datetime] = strawberry.field(description="The date the deposition was deposited")
     release_date: Optional[datetime.datetime] = strawberry.field(description="The date the deposition was released")
@@ -725,7 +699,8 @@ class DepositionUpdateInput:
     )
     key_photo_url: Optional[str] = strawberry.field(description="URL for the deposition preview image.", default=None)
     key_photo_thumbnail_url: Optional[str] = strawberry.field(
-        description="URL for the deposition thumbnail image.", default=None,
+        description="URL for the deposition thumbnail image.",
+        default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 

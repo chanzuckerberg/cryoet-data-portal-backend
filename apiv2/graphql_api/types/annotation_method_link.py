@@ -87,7 +87,7 @@ async def load_annotation_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.AnnotationMethodLink)
     relationship = mapper.relationships["annotation"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.annotation_id)  # type: ignore
 
 
 """
@@ -146,9 +146,7 @@ Define AnnotationMethodLink type
     description="A set of links to models, source code, documentation, etc referenced by annotation method",
 )
 class AnnotationMethodLink(EntityInterface):
-    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
-        load_annotation_rows
-    )  # type:ignore
+    annotation: Optional[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = load_annotation_rows  # type: ignore
     annotation_id: Optional[int]
     link_type: annotation_method_link_type_enum = strawberry.field(
         description="Type of link (e.g. model, source code, documentation)",
@@ -234,7 +232,9 @@ class AnnotationMethodLinkAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationMethodLinkCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[AnnotationMethodLinkCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -268,7 +268,8 @@ Mutation types
 @strawberry.input()
 class AnnotationMethodLinkCreateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to annotation this link applies to", default=None,
+        description="Reference to annotation this link applies to",
+        default=None,
     )
     link_type: annotation_method_link_type_enum = strawberry.field(
         description="Type of link (e.g. model, source code, documentation)",
@@ -281,7 +282,8 @@ class AnnotationMethodLinkCreateInput:
 @strawberry.input()
 class AnnotationMethodLinkUpdateInput:
     annotation_id: Optional[strawberry.ID] = strawberry.field(
-        description="Reference to annotation this link applies to", default=None,
+        description="Reference to annotation this link applies to",
+        default=None,
     )
     link_type: Optional[annotation_method_link_type_enum] = strawberry.field(
         description="Type of link (e.g. model, source code, documentation)",
@@ -470,7 +472,13 @@ async def update_annotation_method_link(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.AnnotationMethodLink, session, authz_client, principal, where, [], AuthzAction.UPDATE,
+        db.AnnotationMethodLink,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -502,7 +510,13 @@ async def delete_annotation_method_link(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.AnnotationMethodLink, session, authz_client, principal, where, [], AuthzAction.DELETE,
+        db.AnnotationMethodLink,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

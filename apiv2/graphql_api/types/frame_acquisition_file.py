@@ -78,7 +78,7 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.FrameAcquisitionFile)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type: ignore
 
 
 """
@@ -133,7 +133,7 @@ Define FrameAcquisitionFile type
 
 @strawberry.type(description="References to files containing more information about frame acquisition")
 class FrameAcquisitionFile(EntityInterface):
-    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type: ignore
     run_id: Optional[int]
     s3_mdoc_path: str = strawberry.field(description="Path to the frame acquisition mdoc file in s3")
     https_mdoc_path: str = strawberry.field(description="Path to the frame acquisition mdoc file as an https url")
@@ -215,7 +215,9 @@ class FrameAcquisitionFileAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[FrameAcquisitionFileCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[FrameAcquisitionFileCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -380,7 +382,13 @@ async def create_frame_acquisition_file(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -422,7 +430,13 @@ async def update_frame_acquisition_file(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -431,7 +445,13 @@ async def update_frame_acquisition_file(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.FrameAcquisitionFile, session, authz_client, principal, where, [], AuthzAction.UPDATE,
+        db.FrameAcquisitionFile,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -463,7 +483,13 @@ async def delete_frame_acquisition_file(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.FrameAcquisitionFile, session, authz_client, principal, where, [], AuthzAction.DELETE,
+        db.FrameAcquisitionFile,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

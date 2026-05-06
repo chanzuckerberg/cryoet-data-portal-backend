@@ -78,7 +78,7 @@ async def load_tomogram_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.TomogramAuthor)
     relationship = mapper.relationships["tomogram"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.tomogram_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.tomogram_id)  # type: ignore
 
 
 """
@@ -149,35 +149,39 @@ Define TomogramAuthor type
 
 @strawberry.type(description="Author of a tomogram")
 class TomogramAuthor(EntityInterface):
-    tomogram: Optional[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
-        load_tomogram_rows
-    )  # type:ignore
+    tomogram: Optional[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = load_tomogram_rows  # type: ignore
     tomogram_id: Optional[int]
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: str = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the tomogram", default=None,
+        description="Indicates whether an author is the main person creating the tomogram",
+        default=None,
     )
 
 
@@ -271,7 +275,9 @@ class TomogramAuthorAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[TomogramAuthorCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[TomogramAuthorCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -305,68 +311,82 @@ Mutation types
 @strawberry.input()
 class TomogramAuthorCreateInput:
     tomogram_id: Optional[strawberry.ID] = strawberry.field(
-        description="The tomogram this tomogram author is a part of", default=None,
+        description="The tomogram this tomogram author is a part of",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: int = strawberry.field(description="The order in which the author appears in the publication")
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: str = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the tomogram", default=None,
+        description="Indicates whether an author is the main person creating the tomogram",
+        default=None,
     )
 
 
 @strawberry.input()
 class TomogramAuthorUpdateInput:
     tomogram_id: Optional[strawberry.ID] = strawberry.field(
-        description="The tomogram this tomogram author is a part of", default=None,
+        description="The tomogram this tomogram author is a part of",
+        default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
     author_list_order: Optional[int] = strawberry.field(
         description="The order in which the author appears in the publication",
     )
     orcid: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for researchers, provided by ORCID.", default=None,
+        description="A unique, persistent identifier for researchers, provided by ORCID.",
+        default=None,
     )
     kaggle_id: Optional[str] = strawberry.field(
-        description="A unique, persistent identifier for kaggle users at kaggle.com.", default=None,
+        description="A unique, persistent identifier for kaggle users at kaggle.com.",
+        default=None,
     )
     name: Optional[str] = strawberry.field(description="Full name of an author (e.g. Jane Doe).")
     email: Optional[str] = strawberry.field(description="Email address for this author", default=None)
     affiliation_name: Optional[str] = strawberry.field(
-        description="Name of the institutions an author is affiliated with. Comma separated", default=None,
+        description="Name of the institutions an author is affiliated with. Comma separated",
+        default=None,
     )
     affiliation_address: Optional[str] = strawberry.field(
-        description="Address of the institution an author is affiliated with.", default=None,
+        description="Address of the institution an author is affiliated with.",
+        default=None,
     )
     affiliation_identifier: Optional[str] = strawberry.field(
         description="A unique identifier assigned to the affiliated institution by The Research Organization Registry (ROR).",
         default=None,
     )
     corresponding_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the corresponding author", default=None,
+        description="Indicates whether an author is the corresponding author",
+        default=None,
     )
     primary_author_status: Optional[bool] = strawberry.field(
-        description="Indicates whether an author is the main person creating the tomogram", default=None,
+        description="Indicates whether an author is the main person creating the tomogram",
+        default=None,
     )
 
 
@@ -486,7 +506,13 @@ async def create_tomogram_author(
     # Check that tomogram relationship is accessible.
     if validated.tomogram_id:
         tomogram = await get_db_rows(
-            db.Tomogram, session, authz_client, principal, {"id": {"_eq": validated.tomogram_id}}, [], AuthzAction.VIEW,
+            db.Tomogram,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.tomogram_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not tomogram:
             raise PlatformicsError("Unauthorized: tomogram does not exist")
@@ -528,7 +554,13 @@ async def update_tomogram_author(
     # Check that tomogram relationship is accessible.
     if validated.tomogram_id:
         tomogram = await get_db_rows(
-            db.Tomogram, session, authz_client, principal, {"id": {"_eq": validated.tomogram_id}}, [], AuthzAction.VIEW,
+            db.Tomogram,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.tomogram_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not tomogram:
             raise PlatformicsError("Unauthorized: tomogram does not exist")

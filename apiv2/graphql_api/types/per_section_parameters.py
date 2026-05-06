@@ -93,7 +93,7 @@ async def load_frame_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.PerSectionParameters)
     relationship = mapper.relationships["frame"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.frame_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.frame_id)  # type: ignore
 
 
 @strawberry.field
@@ -106,7 +106,7 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.PerSectionParameters)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type: ignore
 
 
 @strawberry.field
@@ -121,7 +121,7 @@ async def load_tiltseries_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.PerSectionParameters)
     relationship = mapper.relationships["tiltseries"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.tiltseries_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.tiltseries_id)  # type: ignore
 
 
 """
@@ -193,10 +193,11 @@ Define PerSectionParameters type
 @strawberry.type(description="Map individual Frames to a Tiltseries")
 class PerSectionParameters(EntityInterface):
     astigmatic_angle: Optional[float] = strawberry.field(
-        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
+        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.",
+        default=None,
     )
-    frame: Optional[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type:ignore
-    frame_id: int
+    frame: Optional[Annotated["Frame", strawberry.lazy("graphql_api.types.frame")]] = load_frame_rows  # type: ignore
+    frame_id: Optional[int]
     major_defocus: Optional[float] = strawberry.field(
         description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
         default=None,
@@ -207,16 +208,15 @@ class PerSectionParameters(EntityInterface):
         default=None,
     )
     phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in radians.", default=None,
+        description="Phase shift estimated for this tilt image in radians.",
+        default=None,
     )
     raw_angle: float = strawberry.field(
         description="Nominal tilt angle for this tilt image reported by the microscope.",
     )
-    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type: ignore
     run_id: int
-    tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = (
-        load_tiltseries_rows
-    )  # type:ignore
+    tiltseries: Optional[Annotated["Tiltseries", strawberry.lazy("graphql_api.types.tiltseries")]] = load_tiltseries_rows  # type: ignore
     tiltseries_id: int
     z_index: int = strawberry.field(description="Index (0-based) of this tilt image in the tilt series stack.")
     id: int = strawberry.field(description="Numeric identifier (May change!)")
@@ -314,7 +314,9 @@ class PerSectionParametersAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[PerSectionParametersCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[PerSectionParametersCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -348,9 +350,13 @@ Mutation types
 @strawberry.input()
 class PerSectionParametersCreateInput:
     astigmatic_angle: Optional[float] = strawberry.field(
-        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
+        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.",
+        default=None,
     )
-    frame_id: strawberry.ID = strawberry.field(description="Frame that this section is a part of")
+    frame_id: Optional[strawberry.ID] = strawberry.field(
+        description="Frame that this section is a part of",
+        default=None,
+    )
     major_defocus: Optional[float] = strawberry.field(
         description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
         default=None,
@@ -361,7 +367,8 @@ class PerSectionParametersCreateInput:
         default=None,
     )
     phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in radians.", default=None,
+        description="Phase shift estimated for this tilt image in radians.",
+        default=None,
     )
     raw_angle: float = strawberry.field(
         description="Nominal tilt angle for this tilt image reported by the microscope.",
@@ -375,9 +382,13 @@ class PerSectionParametersCreateInput:
 @strawberry.input()
 class PerSectionParametersUpdateInput:
     astigmatic_angle: Optional[float] = strawberry.field(
-        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.", default=None,
+        description="Angle (in degrees) from reciprocal space X axis to the major axis of defocus.",
+        default=None,
     )
-    frame_id: Optional[strawberry.ID] = strawberry.field(description="Frame that this section is a part of")
+    frame_id: Optional[strawberry.ID] = strawberry.field(
+        description="Frame that this section is a part of",
+        default=None,
+    )
     major_defocus: Optional[float] = strawberry.field(
         description="Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).",
         default=None,
@@ -388,7 +399,8 @@ class PerSectionParametersUpdateInput:
         default=None,
     )
     phase_shift: Optional[float] = strawberry.field(
-        description="Phase shift estimated for this tilt image in radians.", default=None,
+        description="Phase shift estimated for this tilt image in radians.",
+        default=None,
     )
     raw_angle: Optional[float] = strawberry.field(
         description="Nominal tilt angle for this tilt image reported by the microscope.",
@@ -517,14 +529,26 @@ async def create_per_section_parameters(
     # Check that frame relationship is accessible.
     if validated.frame_id:
         frame = await get_db_rows(
-            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW,
+            db.Frame,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.frame_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -579,7 +603,13 @@ async def update_per_section_parameters(
     # Check that frame relationship is accessible.
     if validated.frame_id:
         frame = await get_db_rows(
-            db.Frame, session, authz_client, principal, {"id": {"_eq": validated.frame_id}}, [], AuthzAction.VIEW,
+            db.Frame,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.frame_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not frame:
             raise PlatformicsError("Unauthorized: frame does not exist")
@@ -588,7 +618,13 @@ async def update_per_section_parameters(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -612,7 +648,13 @@ async def update_per_section_parameters(
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.UPDATE,
+        db.PerSectionParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.UPDATE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot update entities")
@@ -644,7 +686,13 @@ async def delete_per_section_parameters(
     """
     # Fetch entities for deletion, if we have access to them
     entities = await get_db_rows(
-        db.PerSectionParameters, session, authz_client, principal, where, [], AuthzAction.DELETE,
+        db.PerSectionParameters,
+        session,
+        authz_client,
+        principal,
+        where,
+        [],
+        AuthzAction.DELETE,
     )
     if len(entities) == 0:
         raise PlatformicsError("Unauthorized: Cannot delete entities")

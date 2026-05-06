@@ -101,7 +101,7 @@ async def load_deposition_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Frame)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type: ignore
 
 
 @strawberry.field
@@ -114,13 +114,11 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Frame)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type: ignore
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]],  # type: ignore
 )
 async def load_per_section_parameters_rows(
     root: "Frame",
@@ -137,7 +135,7 @@ async def load_per_section_parameters_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Frame)
     relationship = mapper.relationships["per_section_parameters"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -152,7 +150,7 @@ async def load_per_section_parameters_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Frame)
     relationship = mapper.relationships["per_section_parameters"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_per_section_parameters_aggregate_output(rows)
     return aggregate_output
 
@@ -199,7 +197,8 @@ class FrameWhereClause(TypedDict):
     per_section_parameters_aggregate: (
         Optional[
             Annotated[
-                "PerSectionParametersAggregateWhereClause", strawberry.lazy("graphql_api.types.per_section_parameters"),
+                "PerSectionParametersAggregateWhereClause",
+                strawberry.lazy("graphql_api.types.per_section_parameters"),
             ]
         ]
         | None
@@ -236,28 +235,25 @@ Define Frame type
 
 @strawberry.type(description=None)
 class Frame(EntityInterface):
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type: ignore
     deposition_id: int
-    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type: ignore
     run_id: int
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment", default=None,
+        description="Frame's acquistion order within a tilt experiment",
+        default=None,
     )
     accumulated_dose: Optional[float] = strawberry.field(
-        description="The total accumulated dose exposure frame", default=None,
+        description="The total accumulated dose exposure frame",
+        default=None,
     )
     exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected", default=None,
+        description="Whether this frame has been gain corrected",
+        default=None,
     )
-    per_section_parameters: Sequence[
-        Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ] = load_per_section_parameters_rows  # type:ignore
-    per_section_parameters_aggregate: Optional[
-        Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]
-    ] = load_per_section_parameters_aggregate_rows  # type:ignore
+    per_section_parameters: Sequence[Annotated["PerSectionParameters", strawberry.lazy("graphql_api.types.per_section_parameters")]] = load_per_section_parameters_rows  # type: ignore
+    per_section_parameters_aggregate: Optional[Annotated["PerSectionParametersAggregate", strawberry.lazy("graphql_api.types.per_section_parameters")]] = load_per_section_parameters_aggregate_rows  # type: ignore
     s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
     https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
     file_size: Optional[float] = strawberry.field(description="Size of the frame file in bytes", default=None)
@@ -386,14 +382,17 @@ class FrameCreateInput:
     deposition_id: strawberry.ID = strawberry.field(description=None)
     run_id: strawberry.ID = strawberry.field(description=None)
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment", default=None,
+        description="Frame's acquistion order within a tilt experiment",
+        default=None,
     )
     accumulated_dose: Optional[float] = strawberry.field(
-        description="The total accumulated dose exposure frame", default=None,
+        description="The total accumulated dose exposure frame",
+        default=None,
     )
     exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected", default=None,
+        description="Whether this frame has been gain corrected",
+        default=None,
     )
     s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
     https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
@@ -406,14 +405,17 @@ class FrameUpdateInput:
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None)
     run_id: Optional[strawberry.ID] = strawberry.field(description=None)
     acquisition_order: Optional[int] = strawberry.field(
-        description="Frame's acquistion order within a tilt experiment", default=None,
+        description="Frame's acquistion order within a tilt experiment",
+        default=None,
     )
     accumulated_dose: Optional[float] = strawberry.field(
-        description="The total accumulated dose exposure frame", default=None,
+        description="The total accumulated dose exposure frame",
+        default=None,
     )
     exposure_dose: Optional[float] = strawberry.field(description="The dose exposure of this frame", default=None)
     is_gain_corrected: Optional[bool] = strawberry.field(
-        description="Whether this frame has been gain corrected", default=None,
+        description="Whether this frame has been gain corrected",
+        default=None,
     )
     s3_frame_path: Optional[str] = strawberry.field(description="S3 path to the frame file", default=None)
     https_frame_path: Optional[str] = strawberry.field(description="HTTPS path to the frame file", default=None)
@@ -548,7 +550,13 @@ async def create_frame(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -605,7 +613,13 @@ async def update_frame(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

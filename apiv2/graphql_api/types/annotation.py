@@ -134,13 +134,11 @@ async def load_run_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["run"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type: ignore
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]],  # type: ignore
 )
 async def load_annotation_shape_rows(
     root: "Annotation",
@@ -153,7 +151,7 @@ async def load_annotation_shape_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["annotation_shapes"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -166,15 +164,13 @@ async def load_annotation_shape_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["annotation_shapes"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_annotation_shape_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]],  # type: ignore
 )
 async def load_annotation_method_link_rows(
     root: "Annotation",
@@ -191,7 +187,7 @@ async def load_annotation_method_link_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["method_links"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -206,15 +202,13 @@ async def load_annotation_method_link_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["method_links"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_annotation_method_link_aggregate_output(rows)
     return aggregate_output
 
 
 @relay.connection(
-    relay.ListConnection[
-        Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]
-    ],  # type:ignore
+    relay.ListConnection[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]],  # type: ignore
 )
 async def load_annotation_author_rows(
     root: "Annotation",
@@ -229,7 +223,7 @@ async def load_annotation_author_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["authors"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type: ignore
 
 
 @strawberry.field
@@ -244,7 +238,7 @@ async def load_annotation_author_aggregate_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["authors"]
-    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type: ignore
     aggregate_output = format_annotation_author_aggregate_output(rows)
     return aggregate_output
 
@@ -261,7 +255,7 @@ async def load_deposition_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["deposition"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type: ignore
 
 
 @strawberry.field
@@ -280,9 +274,7 @@ async def load_tomogram_voxel_spacing_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.Annotation)
     relationship = mapper.relationships["tomogram_voxel_spacing"]
-    return await dataloader.loader_for(relationship, where, order_by).load(
-        root.tomogram_voxel_spacing_id,
-    )  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.tomogram_voxel_spacing_id)  # type: ignore
 
 
 """
@@ -330,7 +322,8 @@ class AnnotationWhereClause(TypedDict):
     method_links_aggregate: (
         Optional[
             Annotated[
-                "AnnotationMethodLinkAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation_method_link"),
+                "AnnotationMethodLinkAggregateWhereClause",
+                strawberry.lazy("graphql_api.types.annotation_method_link"),
             ]
         ]
         | None
@@ -422,33 +415,17 @@ Define Annotation type
 
 @strawberry.type(description="Metadata for an annotation")
 class Annotation(EntityInterface):
-    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
+    run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type: ignore
     run_id: Optional[int]
-    annotation_shapes: Sequence[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = (
-        load_annotation_shape_rows
-    )  # type:ignore
-    annotation_shapes_aggregate: Optional[
-        Annotated["AnnotationShapeAggregate", strawberry.lazy("graphql_api.types.annotation_shape")]
-    ] = load_annotation_shape_aggregate_rows  # type:ignore
-    method_links: Sequence[
-        Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]
-    ] = load_annotation_method_link_rows  # type:ignore
-    method_links_aggregate: Optional[
-        Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]
-    ] = load_annotation_method_link_aggregate_rows  # type:ignore
-    authors: Sequence[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]] = (
-        load_annotation_author_rows
-    )  # type:ignore
-    authors_aggregate: Optional[
-        Annotated["AnnotationAuthorAggregate", strawberry.lazy("graphql_api.types.annotation_author")]
-    ] = load_annotation_author_aggregate_rows  # type:ignore
-    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = (
-        load_deposition_rows
-    )  # type:ignore
+    annotation_shapes: Sequence[Annotated["AnnotationShape", strawberry.lazy("graphql_api.types.annotation_shape")]] = load_annotation_shape_rows  # type: ignore
+    annotation_shapes_aggregate: Optional[Annotated["AnnotationShapeAggregate", strawberry.lazy("graphql_api.types.annotation_shape")]] = load_annotation_shape_aggregate_rows  # type: ignore
+    method_links: Sequence[Annotated["AnnotationMethodLink", strawberry.lazy("graphql_api.types.annotation_method_link")]] = load_annotation_method_link_rows  # type: ignore
+    method_links_aggregate: Optional[Annotated["AnnotationMethodLinkAggregate", strawberry.lazy("graphql_api.types.annotation_method_link")]] = load_annotation_method_link_aggregate_rows  # type: ignore
+    authors: Sequence[Annotated["AnnotationAuthor", strawberry.lazy("graphql_api.types.annotation_author")]] = load_annotation_author_rows  # type: ignore
+    authors_aggregate: Optional[Annotated["AnnotationAuthorAggregate", strawberry.lazy("graphql_api.types.annotation_author")]] = load_annotation_author_aggregate_rows  # type: ignore
+    deposition: Optional[Annotated["Deposition", strawberry.lazy("graphql_api.types.deposition")]] = load_deposition_rows  # type: ignore
     deposition_id: Optional[int]
-    tomogram_voxel_spacing: Optional[
-        Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
-    ] = load_tomogram_voxel_spacing_rows  # type:ignore
+    tomogram_voxel_spacing: Optional[Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]] = load_tomogram_voxel_spacing_rows  # type: ignore
     tomogram_voxel_spacing_id: Optional[int]
     s3_metadata_path: str = strawberry.field(description="S3 path for the metadata json file for this annotation")
     https_metadata_path: str = strawberry.field(description="HTTPS path for the metadata json file for this annotation")
@@ -463,7 +440,8 @@ class Annotation(EntityInterface):
         description="An identifier for the annotation to be used during ingestion.",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.",
+        default=None,
     )
     object_id: str = strawberry.field(description="Ontology identifier for the annotation object.")
     object_name: str = strawberry.field(
@@ -474,7 +452,8 @@ class Annotation(EntityInterface):
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)", default=None,
+        description="Molecule state annotated (e.g. open, closed)",
+        default=None,
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -486,10 +465,12 @@ class Annotation(EntityInterface):
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall", default=None,
+        description="Annotation filename used as ground truth for precision and recall",
+        default=None,
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation", default=None,
+        description="Software used for generating this annotation",
+        default=None,
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice as the best annotation of the same annotation object ID",
@@ -621,7 +602,9 @@ class AnnotationAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[AnnotationCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[AnnotationCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -657,7 +640,8 @@ class AnnotationCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="The voxel spacing this annotation is associated with", default=None,
+        description="The voxel spacing this annotation is associated with",
+        default=None,
     )
     s3_metadata_path: str = strawberry.field(description="S3 path for the metadata json file for this annotation")
     https_metadata_path: str = strawberry.field(description="HTTPS path for the metadata json file for this annotation")
@@ -672,7 +656,8 @@ class AnnotationCreateInput:
         description="An identifier for the annotation to be used during ingestion.",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.",
+        default=None,
     )
     object_id: str = strawberry.field(description="Ontology identifier for the annotation object.")
     object_name: str = strawberry.field(
@@ -683,7 +668,8 @@ class AnnotationCreateInput:
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)", default=None,
+        description="Molecule state annotated (e.g. open, closed)",
+        default=None,
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -695,10 +681,12 @@ class AnnotationCreateInput:
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall", default=None,
+        description="Annotation filename used as ground truth for precision and recall",
+        default=None,
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation", default=None,
+        description="Software used for generating this annotation",
+        default=None,
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice as the best annotation of the same annotation object ID",
@@ -724,7 +712,8 @@ class AnnotationUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
-        description="The voxel spacing this annotation is associated with", default=None,
+        description="The voxel spacing this annotation is associated with",
+        default=None,
     )
     s3_metadata_path: Optional[str] = strawberry.field(
         description="S3 path for the metadata json file for this annotation",
@@ -743,7 +732,8 @@ class AnnotationUpdateInput:
         description="An identifier for the annotation to be used during ingestion.",
     )
     ground_truth_status: Optional[bool] = strawberry.field(
-        description="Whether an annotation is considered ground truth, as determined by the annotator.", default=None,
+        description="Whether an annotation is considered ground truth, as determined by the annotator.",
+        default=None,
     )
     object_id: Optional[str] = strawberry.field(description="Ontology identifier for the annotation object.")
     object_name: Optional[str] = strawberry.field(
@@ -754,7 +744,8 @@ class AnnotationUpdateInput:
         default=None,
     )
     object_state: Optional[str] = strawberry.field(
-        description="Molecule state annotated (e.g. open, closed)", default=None,
+        description="Molecule state annotated (e.g. open, closed)",
+        default=None,
     )
     object_count: Optional[int] = strawberry.field(description="Number of objects identified", default=None)
     confidence_precision: Optional[float] = strawberry.field(
@@ -766,10 +757,12 @@ class AnnotationUpdateInput:
         default=None,
     )
     ground_truth_used: Optional[str] = strawberry.field(
-        description="Annotation filename used as ground truth for precision and recall", default=None,
+        description="Annotation filename used as ground truth for precision and recall",
+        default=None,
     )
     annotation_software: Optional[str] = strawberry.field(
-        description="Software used for generating this annotation", default=None,
+        description="Software used for generating this annotation",
+        default=None,
     )
     is_curator_recommended: Optional[bool] = strawberry.field(
         description="Data curator’s subjective choice as the best annotation of the same annotation object ID",
@@ -904,7 +897,13 @@ async def create_annotation(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")
@@ -972,7 +971,13 @@ async def update_annotation(
     # Check that run relationship is accessible.
     if validated.run_id:
         run = await get_db_rows(
-            db.Run, session, authz_client, principal, {"id": {"_eq": validated.run_id}}, [], AuthzAction.VIEW,
+            db.Run,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.run_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not run:
             raise PlatformicsError("Unauthorized: run does not exist")

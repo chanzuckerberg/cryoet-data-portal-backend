@@ -18,7 +18,7 @@ class PerSectionParametersCreateInputValidator(BaseModel):
     # Pydantic stuff
     model_config = ConfigDict(from_attributes=True)
     astigmatic_angle: Annotated[float | None, Field()]
-    frame_id: Annotated[uuid.UUID, Field()]
+    frame_id: Annotated[uuid.UUID | None, Field()]
     major_defocus: Annotated[float | None, Field()]
     max_resolution: Annotated[float | None, Field()]
     minor_defocus: Annotated[float | None, Field()]

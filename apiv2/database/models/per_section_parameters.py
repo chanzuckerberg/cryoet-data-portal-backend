@@ -34,7 +34,7 @@ class PerSectionParameters(Base):
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
     astigmatic_angle: Mapped[float] = mapped_column(Float, nullable=True)
-    frame_id: Mapped[int] = mapped_column(Integer, ForeignKey("frame.id"), nullable=False, index=True)
+    frame_id: Mapped[int] = mapped_column(Integer, ForeignKey("frame.id"), nullable=True, index=True)
     frame: Mapped["Frame"] = relationship(
         "Frame",
         foreign_keys=frame_id,

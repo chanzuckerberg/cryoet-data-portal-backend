@@ -50,10 +50,18 @@ class Run(Base):
     __mapper_args__ = {"polymorphic_identity": __tablename__, "polymorphic_load": "inline"}
 
     alignments: Mapped[list[Alignment]] = relationship(
-        "Alignment", back_populates="run", uselist=True, foreign_keys="Alignment.run_id", cascade="all, delete-orphan",
+        "Alignment",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="Alignment.run_id",
+        cascade="all, delete-orphan",
     )
     annotations: Mapped[list[Annotation]] = relationship(
-        "Annotation", back_populates="run", uselist=True, foreign_keys="Annotation.run_id", cascade="all, delete-orphan",
+        "Annotation",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="Annotation.run_id",
+        cascade="all, delete-orphan",
     )
     dataset_id: Mapped[int] = mapped_column(Integer, ForeignKey("dataset.id"), nullable=False, index=True)
     dataset: Mapped["Dataset"] = relationship(
@@ -62,10 +70,18 @@ class Run(Base):
         back_populates="runs",
     )
     frames: Mapped[list[Frame]] = relationship(
-        "Frame", back_populates="run", uselist=True, foreign_keys="Frame.run_id", cascade="all, delete-orphan",
+        "Frame",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="Frame.run_id",
+        cascade="all, delete-orphan",
     )
     gain_files: Mapped[list[GainFile]] = relationship(
-        "GainFile", back_populates="run", uselist=True, foreign_keys="GainFile.run_id", cascade="all, delete-orphan",
+        "GainFile",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="GainFile.run_id",
+        cascade="all, delete-orphan",
     )
     identified_objects: Mapped[list[IdentifiedObject]] = relationship(
         "IdentifiedObject",
@@ -89,7 +105,11 @@ class Run(Base):
         cascade="all, delete-orphan",
     )
     tiltseries: Mapped[list[Tiltseries]] = relationship(
-        "Tiltseries", back_populates="run", uselist=True, foreign_keys="Tiltseries.run_id", cascade="all, delete-orphan",
+        "Tiltseries",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="Tiltseries.run_id",
+        cascade="all, delete-orphan",
     )
     tomogram_voxel_spacings: Mapped[list[TomogramVoxelSpacing]] = relationship(
         "TomogramVoxelSpacing",
@@ -99,7 +119,11 @@ class Run(Base):
         cascade="all, delete-orphan",
     )
     tomograms: Mapped[list[Tomogram]] = relationship(
-        "Tomogram", back_populates="run", uselist=True, foreign_keys="Tomogram.run_id", cascade="all, delete-orphan",
+        "Tomogram",
+        back_populates="run",
+        uselist=True,
+        foreign_keys="Tomogram.run_id",
+        cascade="all, delete-orphan",
     )
     name: Mapped[str] = mapped_column(String, nullable=False)
     s3_prefix: Mapped[str] = mapped_column(String, nullable=False)

@@ -462,6 +462,8 @@ type Annotation implements EntityInterface & Node {
   authorsAggregate(where: AnnotationAuthorWhereClause = null): AnnotationAuthorAggregate
   deposition(where: DepositionWhereClause = null, orderBy: [DepositionOrderByClause!] = []): Deposition
   depositionId: Int
+  tomogramVoxelSpacing(where: TomogramVoxelSpacingWhereClause = null, orderBy: [TomogramVoxelSpacingOrderByClause!] = []): TomogramVoxelSpacing
+  tomogramVoxelSpacingId: Int
 
   """S3 path for the metadata json file for this annotation"""
   s3MetadataPath: String!
@@ -480,7 +482,7 @@ type Annotation implements EntityInterface & Node {
   annotationMethod: String!
 
   """An identifier for the annotation to be used during ingestion."""
-  annotationIngestId: String
+  annotationIngestId: String!
 
   """
   Whether an annotation is considered ground truth, as determined by the annotator.
@@ -865,6 +867,9 @@ input AnnotationCreateInput {
   runId: ID = null
   depositionId: ID = null
 
+  """The voxel spacing this annotation is associated with"""
+  tomogramVoxelSpacingId: ID = null
+
   """S3 path for the metadata json file for this annotation"""
   s3MetadataPath: String!
 
@@ -882,7 +887,7 @@ input AnnotationCreateInput {
   annotationMethod: String!
 
   """An identifier for the annotation to be used during ingestion."""
-  annotationIngestId: String = null
+  annotationIngestId: String!
 
   """
   Whether an annotation is considered ground truth, as determined by the annotator.
@@ -976,7 +981,7 @@ type AnnotationFile implements EntityInterface & Node {
   """s3 path of the annotation file"""
   s3Path: String!
 
-  """Size of annota file in bytes"""
+  """Size of annotation file in bytes"""
   fileSize: Float
 
   """HTTPS path for this annotation file"""
@@ -1054,7 +1059,7 @@ input AnnotationFileCreateInput {
   """s3 path of the annotation file"""
   s3Path: String!
 
-  """Size of annota file in bytes"""
+  """Size of annotation file in bytes"""
   fileSize: Float = null
 
   """HTTPS path for this annotation file"""
@@ -1138,7 +1143,7 @@ input AnnotationFileUpdateInput {
   """s3 path of the annotation file"""
   s3Path: String
 
-  """Size of annota file in bytes"""
+  """Size of annotation file in bytes"""
   fileSize: Float = null
 
   """HTTPS path for this annotation file"""
@@ -1184,6 +1189,7 @@ type AnnotationGroupByOptions {
   methodLinks: AnnotationMethodLinkGroupByOptions
   authors: AnnotationAuthorGroupByOptions
   deposition: DepositionGroupByOptions
+  tomogramVoxelSpacing: TomogramVoxelSpacingGroupByOptions
   s3MetadataPath: String
   httpsMetadataPath: String
   annotationPublication: String
@@ -1384,6 +1390,7 @@ type AnnotationNumericalColumns {
 input AnnotationOrderByClause {
   run: RunOrderByClause
   deposition: DepositionOrderByClause
+  tomogramVoxelSpacing: TomogramVoxelSpacingOrderByClause
   s3MetadataPath: orderBy
   httpsMetadataPath: orderBy
   annotationPublication: orderBy
@@ -1435,7 +1442,7 @@ type AnnotationShape implements EntityInterface & Node {
   annotationFilesAggregate(where: AnnotationFileWhereClause = null): AnnotationFileAggregate
 
   """
-  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)
+  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask, GlobalCaption, AnnotationCaption)
   """
   shapeType: annotation_file_shape_type_enum
 }
@@ -1485,7 +1492,7 @@ input AnnotationShapeCreateInput {
   annotationId: ID = null
 
   """
-  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)
+  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask, GlobalCaption, AnnotationCaption)
   """
   shapeType: annotation_file_shape_type_enum = null
 
@@ -1528,7 +1535,7 @@ input AnnotationShapeUpdateInput {
   annotationId: ID = null
 
   """
-  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask)
+  The shape of the annotation (SegmentationMask, OrientedPoint, Point, InstanceSegmentation, Mesh, InstanceSegmentationMask, GlobalCaption, AnnotationCaption)
   """
   shapeType: annotation_file_shape_type_enum = null
 
@@ -1553,6 +1560,9 @@ input AnnotationUpdateInput {
   runId: ID = null
   depositionId: ID = null
 
+  """The voxel spacing this annotation is associated with"""
+  tomogramVoxelSpacingId: ID = null
+
   """S3 path for the metadata json file for this annotation"""
   s3MetadataPath: String
 
@@ -1570,7 +1580,7 @@ input AnnotationUpdateInput {
   annotationMethod: String
 
   """An identifier for the annotation to be used during ingestion."""
-  annotationIngestId: String = null
+  annotationIngestId: String
 
   """
   Whether an annotation is considered ground truth, as determined by the annotator.
@@ -1646,6 +1656,8 @@ input AnnotationWhereClause {
   authorsAggregate: AnnotationAuthorAggregateWhereClause
   deposition: DepositionWhereClause
   depositionId: IntComparators
+  tomogramVoxelSpacing: TomogramVoxelSpacingWhereClause
+  tomogramVoxelSpacingId: IntComparators
   s3MetadataPath: StrComparators
   httpsMetadataPath: StrComparators
   annotationPublication: StrComparators
@@ -4585,7 +4597,7 @@ type PerSectionParameters implements EntityInterface & Node {
   """
   astigmaticAngle: Float
   frame(where: FrameWhereClause = null, orderBy: [FrameOrderByClause!] = []): Frame
-  frameId: Int!
+  frameId: Int
 
   """
   Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
@@ -4667,7 +4679,7 @@ input PerSectionParametersCreateInput {
   astigmaticAngle: Float = null
 
   """Frame that this section is a part of"""
-  frameId: ID!
+  frameId: ID = null
 
   """
   Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
@@ -4767,7 +4779,7 @@ input PerSectionParametersUpdateInput {
   astigmaticAngle: Float = null
 
   """Frame that this section is a part of"""
-  frameId: ID
+  frameId: ID = null
 
   """
   Defocus (major axis) estimated for this tilt image in Angstrom (underfocus has positive sign).
@@ -6841,6 +6853,23 @@ type TomogramVoxelSpacing implements EntityInterface & Node {
   annotationFilesAggregate(where: AnnotationFileWhereClause = null): AnnotationFileAggregate
   run(where: RunWhereClause = null, orderBy: [RunOrderByClause!] = []): Run
   runId: Int
+  annotations(
+    where: AnnotationWhereClause = null
+    orderBy: [AnnotationOrderByClause!] = []
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    after: String = null
+
+    """Returns the first n items from the list."""
+    first: Int = null
+
+    """Returns the items in the list that come after the specified cursor."""
+    last: Int = null
+  ): AnnotationConnection!
+  annotationsAggregate(where: AnnotationWhereClause = null): AnnotationAggregate
   tomograms(
     where: TomogramWhereClause = null
     orderBy: [TomogramOrderByClause!] = []
@@ -6948,6 +6977,7 @@ type TomogramVoxelSpacingEdge {
 type TomogramVoxelSpacingGroupByOptions {
   annotationFiles: AnnotationFileGroupByOptions
   run: RunGroupByOptions
+  annotations: AnnotationGroupByOptions
   tomograms: TomogramGroupByOptions
   voxelSpacing: Float
   s3Prefix: String
@@ -7001,6 +7031,8 @@ input TomogramVoxelSpacingWhereClause {
   annotationFilesAggregate: AnnotationFileAggregateWhereClause
   run: RunWhereClause
   runId: IntComparators
+  annotations: AnnotationWhereClause
+  annotationsAggregate: AnnotationAggregateWhereClause
   tomograms: TomogramWhereClause
   tomogramsAggregate: TomogramAggregateWhereClause
   voxelSpacing: FloatComparators
@@ -7108,6 +7140,8 @@ enum annotation_file_shape_type_enum {
   InstanceSegmentation
   InstanceSegmentationMask
   Mesh
+  GlobalCaption
+  AnnotationCaption
 }
 
 enum annotation_file_source_enum {

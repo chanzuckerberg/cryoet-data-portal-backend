@@ -72,7 +72,7 @@ async def load_dataset_rows(
     dataloader = info.context["sqlalchemy_loader"]
     mapper = inspect(db.DatasetFunding)
     relationship = mapper.relationships["dataset"]
-    return await dataloader.loader_for(relationship, where, order_by).load(root.dataset_id)  # type:ignore
+    return await dataloader.loader_for(relationship, where, order_by).load(root.dataset_id)  # type: ignore
 
 
 """
@@ -127,13 +127,12 @@ Define DatasetFunding type
 
 @strawberry.type(description="Metadata for a dataset's funding sources")
 class DatasetFunding(EntityInterface):
-    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = (
-        load_dataset_rows
-    )  # type:ignore
+    dataset: Optional[Annotated["Dataset", strawberry.lazy("graphql_api.types.dataset")]] = load_dataset_rows  # type: ignore
     dataset_id: Optional[int]
     funding_agency_name: Optional[str] = strawberry.field(description="Name of the funding agency.", default=None)
     grant_id: Optional[str] = strawberry.field(
-        description="Grant identifier provided by the funding agency.", default=None,
+        description="Grant identifier provided by the funding agency.",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -213,7 +212,9 @@ class DatasetFundingAggregateFunctions:
     # This is a hack to accept "distinct" and "columns" as arguments to "count"
     @strawberry.field
     def count(
-        self, distinct: Optional[bool] = False, columns: Optional[DatasetFundingCountColumns] = None,
+        self,
+        distinct: Optional[bool] = False,
+        columns: Optional[DatasetFundingCountColumns] = None,
     ) -> Optional[int]:
         # Count gets set with the proper value in the resolver, so we just return it here
         return self.count  # type: ignore
@@ -247,11 +248,13 @@ Mutation types
 @strawberry.input()
 class DatasetFundingCreateInput:
     dataset_id: Optional[strawberry.ID] = strawberry.field(
-        description="The dataset this dataset funding is a part of", default=None,
+        description="The dataset this dataset funding is a part of",
+        default=None,
     )
     funding_agency_name: Optional[str] = strawberry.field(description="Name of the funding agency.", default=None)
     grant_id: Optional[str] = strawberry.field(
-        description="Grant identifier provided by the funding agency.", default=None,
+        description="Grant identifier provided by the funding agency.",
+        default=None,
     )
     id: int = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -259,11 +262,13 @@ class DatasetFundingCreateInput:
 @strawberry.input()
 class DatasetFundingUpdateInput:
     dataset_id: Optional[strawberry.ID] = strawberry.field(
-        description="The dataset this dataset funding is a part of", default=None,
+        description="The dataset this dataset funding is a part of",
+        default=None,
     )
     funding_agency_name: Optional[str] = strawberry.field(description="Name of the funding agency.", default=None)
     grant_id: Optional[str] = strawberry.field(
-        description="Grant identifier provided by the funding agency.", default=None,
+        description="Grant identifier provided by the funding agency.",
+        default=None,
     )
     id: Optional[int] = strawberry.field(description="Numeric identifier (May change!)")
 
@@ -384,7 +389,13 @@ async def create_dataset_funding(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
+            db.Dataset,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.dataset_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
@@ -426,7 +437,13 @@ async def update_dataset_funding(
     # Check that dataset relationship is accessible.
     if validated.dataset_id:
         dataset = await get_db_rows(
-            db.Dataset, session, authz_client, principal, {"id": {"_eq": validated.dataset_id}}, [], AuthzAction.VIEW,
+            db.Dataset,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.dataset_id}},
+            [],
+            AuthzAction.VIEW,
         )
         if not dataset:
             raise PlatformicsError("Unauthorized: dataset does not exist")
