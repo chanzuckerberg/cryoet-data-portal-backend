@@ -297,6 +297,15 @@ depositions:
           value:
             - 10348
 
+frames:
+  - metadata:
+      dose_rate: 1.967
+      is_gain_corrected: true
+    sources:
+      - literal:
+          value:
+            - default
+
 rawtilts:
   - sources:
       - source_glob:
