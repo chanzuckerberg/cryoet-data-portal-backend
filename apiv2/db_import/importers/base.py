@@ -92,9 +92,11 @@ class ItemDBImporter:
         identifiers = self._get_identifiers()
 
         try:
-            query = sa.select(self.model_class).where(
-                sa.and_(*[getattr(self.model_class, k) == v for k, v in identifiers.items()]),
-            )
+            conditions = [
+                getattr(self.model_class, k).is_(None) if v is None else getattr(self.model_class, k) == v
+                for k, v in identifiers.items()
+            ]
+            query = sa.select(self.model_class).where(sa.and_(*conditions))
             db_obj = session.scalars(query).one()
         except NoResultFound:
             db_obj = self.model_class()
