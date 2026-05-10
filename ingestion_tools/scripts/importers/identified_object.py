@@ -23,6 +23,23 @@ class IdentifiedObjectIdentifierHelper(IdentifierHelper):
         return metadata_glob
 
     @classmethod
+    def _load_ids_for_container(cls, container_key, config, parents, *args, **kwargs):
+        if container_key in cls.loaded_containers:
+            return
+        metadata_glob = cls._get_metadata_glob(config, parents, *args, **kwargs)
+        for file in config.fs.glob(metadata_glob):
+            metadata = json.loads(config.fs.open(file, "r").read())
+            current_ids_key = cls._generate_hash_key(container_key, metadata, parents, *args, **kwargs)
+            try:
+                identifier = int(metadata.get("identifier", 100))
+            except (ValueError, TypeError):
+                identifier = 100
+            cls.cached_identifiers[current_ids_key] = identifier
+            if identifier >= cls.next_identifier[container_key]:
+                cls.next_identifier[container_key] = identifier + 1
+        cls.loaded_containers.add(container_key)
+
+    @classmethod
     def _generate_hash_key(
         cls,
         container_key: str,
@@ -81,9 +98,11 @@ class IdentifiedObjectImporter(BaseFileImporter):
         except Exception as e:
             print(f"Error reading CSV {self.path}: {e}")
             return
-        # Filter by run name and exclude run_name column
         run_name = self.parents["run"].name
-        df_filtered = df[df['run_name'] == run_name].drop(columns=['run_name']) if 'run_name' in df.columns else df
+        if 'run_name' not in df.columns:
+            print(f"Warning: CSV at {self.path} has no 'run_name' column — skipping import for run {run_name}")
+            return
+        df_filtered = df[df['run_name'] == run_name].drop(columns=['run_name'])
 
         output_file = f"{dest_path}/identified_objects.json"
         with self.config.fs.open(output_file, "w") as f:
@@ -108,7 +127,7 @@ class IdentifiedObjectImporter(BaseFileImporter):
             "columns": list(data[0].keys()) if data else [],
             "file_format": "json",
             "source_file": self.path,
-            "identifier": self.path,
+            "identifier": self.identifier,
         }
 
         metadata = IdentifiedObjectMetadata(

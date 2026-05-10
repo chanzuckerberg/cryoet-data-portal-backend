@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.23.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.22.0...apiv2-v1.23.0) (2026-05-07)
+
+
+### Features
+
+* Ingest configs for arabidopsis datasets.  ([#669](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/669)) ([89e2667](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/89e2667ba27f155e0638b3010b010b99c7eea8c5))
+
+
+### Bug Fixes
+
+* expire DB-cache in conftest to fix flaky test. ([#671](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/671)) ([625bd8d](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/625bd8da11f5550658838e936319df51d306a6c5))
+* prevent duplicate identified_object  on re-ingestion ([#679](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/679)) ([f8f1881](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/f8f1881e546c7fcdf0fe2f2a3ddb206764a45dd7))
+
+
+### Miscellaneous Chores
+
+* **deps:** bump apiv2 dependencies ([#664](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/664)) ([77c0a42](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/77c0a420ed4ef7eceead4a8e2cb97767cf35026e))
+
 ## [1.22.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.21.0...apiv2-v1.22.0) (2026-04-22)
 
 
