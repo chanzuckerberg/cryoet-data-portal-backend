@@ -390,7 +390,7 @@ tomograms:
       ctf_corrected: false
       dates: *id_dates
       fiducial_alignment_status: NON_FIDUCIAL
-      is_visualization_default: false
+      is_visualization_default: true
       offset:
         x: 0
         y: 0
@@ -465,7 +465,7 @@ tomograms:
       ctf_corrected: true
       dates: *id_dates
       fiducial_alignment_status: NON_FIDUCIAL
-      is_visualization_default: true
+      is_visualization_default: false
       offset:
         x: 0
         y: 0
