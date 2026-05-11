@@ -453,7 +453,7 @@ tomograms:
       voxel_spacing: 6.800
     sources:
       - source_glob:
-          list_glob: tomograms/denoised/{run_name}.mrc
+          list_glob: tomograms/denoised_corrected/{run_name}.mrc
 
 voxel_spacings:
   - sources:
