@@ -48,7 +48,6 @@ from codegen.ingestion_config_models import (
     FrameSource,
     GainEntity,
     GainSource,
-    IdentifiedObject,
     KeyImageEntity,
     KeyImageSource,
     KeyPhotoLiteral,
@@ -84,6 +83,9 @@ GO_ID_REGEX = r"^GO:[0-9]{7}$"
 UNIPROT_ID_REGEX = r"^UniProtKB:[A-Z0-9]+$"
 CDPO_ID_REGEX = r"^CDPO:[0-9]{7}$"
 CL_ID_REGEX = r"^CL:[0-9]{7}$"
+UBERON_ID_REGEX = r"^UBERON:[0-9]{7}$"
+CHEBI_ID_REGEX = r"^CHEBI:[0-9]+$"
+PDB_ID_REGEX = r"^PDB-[0-9a-zA-Z]{4,8}$"
 STRING_FORMATTED_STRING_REGEX = r"^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$"
 VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 # Note that model names should all be uppercase or pascal case
@@ -626,12 +628,24 @@ async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
 
 
 @alru_cache
-async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
-    pdb_id = pdb_id.replace("PDB-", "")
-    url = f"https://data.rcsb.org/rest/v1/core/entry/{pdb_id}"
+async def validate_pdb_id(id: str) -> Tuple[List[str], bool]:
+    """
+    Returns a tuple of the PDB entry's title (if any) and whether the ID is valid.
+    """
+    stripped = id.replace("PDB-", "")
+    url = f"https://data.rcsb.org/rest/v1/core/entry/{stripped}"
     async with aiohttp.ClientSession() as session, session.get(url) as response:
-        logger.debug("Checking PDB ID %s at %s, status %s", pdb_id, url, response.status)
-        return pdb_id, response.status == 200
+        logger.debug("Checking PDB ID %s at %s, status %s", stripped, url, response.status)
+        if response.status != 200:
+            return [], False
+        data = await response.json()
+        title = data.get("struct", {}).get("title")
+        return ([title] if title else []), True
+
+
+async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
+    _, valid = await validate_pdb_id(pdb_id)
+    return pdb_id.replace("PDB-", ""), valid
 
 
 PUBLICATION_REGEXES_AND_FUNCTIONS = {
@@ -826,6 +840,10 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
             validate_id_name_object(self, self.id, self.name, validate_id_function=validate_cdpo_id)
         elif re.match(CL_ID_REGEX, self.id):
             validate_id_name_object(self, self.id, self.name, validate_id_function=validate_cl_id)
+        elif re.match(UBERON_ID_REGEX, self.id) or re.match(CHEBI_ID_REGEX, self.id):
+            validate_id_name_object(self, self.id, self.name)
+        elif re.match(PDB_ID_REGEX, self.id):
+            validate_id_name_object(self, self.id, self.name, validate_id_function=validate_pdb_id)
         return self
 
 
@@ -1182,19 +1200,10 @@ class ExtendedValidationGainEntity(GainEntity):
 # ==============================================================================
 # Identified Object Validation
 # ==============================================================================
-@add_regex_error_augmenter("id")
-class ExtendedValidationIdentifiedObject(IdentifiedObject):
-    @model_validator(mode="after")
-    def validate_identified_object(self) -> Self:
-        if re.match(GO_ID_REGEX, self.object_id):
-            validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_name=True, ancestor=CELLULAR_COMPONENT_GO_ID)
-        elif re.match(UNIPROT_ID_REGEX, self.object_id):
-            validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_id_function=validate_uniprot_id)
-        elif re.match(CDPO_ID_REGEX, self.object_id):
-            validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_id_function=validate_cdpo_id)
-        elif re.match(CL_ID_REGEX, self.object_id):
-            validate_id_name_object(self, self.object_id, self.object_name, id_field_name="object_id", validate_id_function=validate_cl_id)
-        return self
+# TODO: validate identified-object id/name/ontology from the source CSV referenced
+# by IdentifiedObjectEntity.sources. Not done today because the validation pipeline
+# has no S3 access (the GH workflow has no AWS creds). apiv2 enforces the id regex
+# at DB write time as a backstop.
 
 
 # ==============================================================================

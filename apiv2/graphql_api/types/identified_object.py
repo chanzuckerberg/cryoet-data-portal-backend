@@ -135,9 +135,7 @@ Define IdentifiedObject type
 class IdentifiedObject(EntityInterface):
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: Optional[int]
-    object_id: str = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.",
-    )
+    object_id: str = strawberry.field(description="Ontology identifier for the identified object.")
     object_name: str = strawberry.field(
         description="Name of the identified object (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
     )
@@ -266,9 +264,7 @@ class IdentifiedObjectCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(
         description="Run that this identified object is a part of", default=None,
     )
-    object_id: str = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.",
-    )
+    object_id: str = strawberry.field(description="Ontology identifier for the identified object.")
     object_name: str = strawberry.field(
         description="Name of the identified object (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
     )
@@ -287,9 +283,7 @@ class IdentifiedObjectUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(
         description="Run that this identified object is a part of", default=None,
     )
-    object_id: Optional[str] = strawberry.field(
-        description="Gene Ontology Cellular Component identifier or UniProtKB accession for the identified object.",
-    )
+    object_id: Optional[str] = strawberry.field(description="Ontology identifier for the identified object.")
     object_name: Optional[str] = strawberry.field(
         description="Name of the identified object (e.g. ribosome, nuclear pore complex, actin filament, membrane)",
     )

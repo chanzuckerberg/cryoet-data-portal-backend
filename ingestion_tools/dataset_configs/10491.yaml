@@ -1,0 +1,460 @@
+version: 1.0.0
+
+annotations:
+  - metadata:
+      annotation_ingest_id: cryosiam-semantic-general-particles-1
+      annotation_object:
+        id: GO:0000786
+        name: nucleosome
+        description: >-
+          Nucleosome assemblies — mono-, di-, tri-, tetra-nucleosomes including H1-bound 4x177/4x197/4x207 arrays.
+      annotation_method: &id_anno_method >-
+        Per-voxel ground-truth semantic mask emitted by the CTS (cryo-TomoSim)
+        simulator alongside the tomogram. Class index per voxel maps 1:1 to a
+        line in gts/semantic_general_classes_ids.dat (1=membrane, 2=particles,
+        3=microtubules, 4=actin, 5=dna/rna filaments); voxel value 0 is
+        background. The per-class label for this entry is given by the
+        source's mask_label.
+      annotation_software: cryo-TomoSim (CTS)
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: &id_authors
+        - name: Frosina Stojanovska
+          ORCID: 0000-0002-4327-1068
+          primary_author_status: true
+          corresponding_author_status: true
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Ricardo M. Sanchez
+          ORCID: 0000-0002-2854-0119
+          primary_author_status: false
+          corresponding_author_status: false
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Rasmus K. Jensen
+          ORCID: 0000-0001-5472-4862
+          primary_author_status: false
+          corresponding_author_status: false
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Julia Mahamid
+          ORCID: 0000-0001-6968-041X
+          primary_author_status: false
+          corresponding_author_status: true
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Anna Kreshuk
+          ORCID: 0000-0003-1334-6388
+          primary_author_status: false
+          corresponding_author_status: true
+          affiliation_name: European Molecular Biology Laboratory
+        - name: Judith B. Zaugg
+          ORCID: 0000-0001-8324-4040
+          primary_author_status: false
+          corresponding_author_status: true
+          affiliation_name: European Molecular Biology Laboratory
+      dates: &id_dates
+        deposition_date: "2026-05-01"
+        last_modified_date: "2026-05-01"
+        release_date: "2026-05-01"
+      method_links: &id_method_links
+        - link_type: source_code
+          custom_name: cryoSiam
+          link: https://github.com/frosinastojanovska/cryosiam
+        - link_type: source_code
+          custom_name: cryo-TomoSim (CTS)
+          link: https://github.com/carsonpurnell/cryotomosim_CTS
+        - link_type: website
+          custom_name: CTS paper (Purnell et al. 2023)
+          link: https://www.biorxiv.org/content/10.1101/2023.04.28.538636v1.full
+        - link_type: source_code
+          custom_name: PolymerCpp
+          link: https://github.com/kmdouglass/PolymerCpp
+        - link_type: other
+          custom_name: PolymerCpp Zenodo (Stefko, Douglass & Manley 2020)
+          link: https://zenodo.org/records/3928659
+        - link_type: website
+          custom_name: IMOD
+          link: https://bio3d.colorado.edu/imod/
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: gts/semantic_general/{run_name}.mrc
+          mask_label: 2
+          rescale: false
+          is_visualization_default: true
+
+  - metadata:
+      annotation_ingest_id: cryosiam-semantic-general-dna-rna-filaments-1
+      annotation_object:
+        id: CHEBI:75979
+        name: double-stranded DNA polynucleotide
+      annotation_method: *id_anno_method
+      annotation_software: cryo-TomoSim (CTS); PolymerCpp
+      annotation_publications: 10.1101/2025.11.11.687379
+      method_type: simulated
+      ground_truth_status: true
+      version: 1.0
+      authors: *id_authors
+      dates: *id_dates
+      method_links: *id_method_links
+    sources:
+      - SemanticSegmentationMask:
+          file_format: mrc
+          glob_string: gts/semantic_general/{run_name}.mrc
+          mask_label: 5
+          rescale: false
+          is_visualization_default: true
+
+  # Note: gts/semantic/{run_name}.mrc (the fine semantic mask) is intentionally
+  # not ingested as a portal annotation. Without a per-class mask_label split it
+  # would render as a single lumped annotation, which is redundant with the
+  # per-class breakdown above (nucleosome / DNA).
+
+collection_metadata:
+  - sources:
+      - source_glob:
+          list_glob: mdocs_fixed/{run_name}.mdoc
+
+ctfs:
+  - metadata:
+      format: CTFFIND
+    sources:
+      - source_glob:
+          list_glob: ctf_find_combined/{run_name}_combined.txt
+
+dataset_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
+
+datasets:
+  - metadata:
+      dataset_identifier: 10491
+      dataset_title: >-
+        CryoSiam chromatin training dataset - simulated cryo-electron tomograms of nucleosome arrays and DNA filaments
+      dataset_description: >-
+        Synthetic cryo-electron tomography dataset comprising 50 simulated tomograms
+        of chromatin-like content, generated for the CryoSiam framework (Stojanovska
+        et al., bioRxiv 2025.11.11.687379). Each tomogram is populated with mono-,
+        di-, tri- and tetra-nucleosome arrays (including H1-bound 4x177, 4x197 and
+        4x207 arrays; PDBs 5F99, 7PEY, 7PEW, 7PEX, 5OXV, 1ZBB, 6M3V, 6LA8, 6L4A, 6L49,
+        7PEV, 7PEU, 7PF0, 7VA4, 7V9K, 7PFT, 5OY7, 7PFA, 7PET) together with short DNA
+        filaments (50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 1000 bp;
+        persistence lengths 5, 6, 8, 10, 20 bp) generated via the wormlike-chain (WLC)
+        model with PolymerCpp and converted to PDB before insertion. Sample
+        thicknesses range 35-100 nm; this subset mimics a less crowded environment
+        resembling isolated biomolecular assemblies. For each run the deposit contains
+        a clean and a noisy CTF-modulated tilt series (300 kV, 6.8 Å/pixel,
+        tilt range -60° to +60° in 2° increments, 61 tilts, 120 e-/Å² total dose,
+        2-5 µm defocus, amplitude contrast 2.7, Gaussian noise σ = 0.2),
+        reconstructed via WBP (IMOD) into clean, noisy, CTF-corrected (phase-flipped)
+        and CryoSiam-denoised tomograms (XY 600x600, variable Z), with voxel-wise
+        semantic masks (background, membranes, particles=nucleosomes, DNA/RNA
+        filaments) and a fine 149-class semantic mask (corresponding samples in the
+        paper: sample_351-sample_400). Full list of PDB structures used by the
+        simulator is in gts/semantic_classes_ids.dat and Supplementary Table 2 of
+        the source publication; cross_references.related_database_entries lists
+        only a representative subset.
+      sample_type: in_silico
+      assay:
+        name: microscopy assay
+        id: EFO:0002909
+      development_stage:
+        name: unknown
+        id: unknown
+      disease:
+        name: normal
+        id: PATO:0000461
+      authors: *id_authors
+      funding: &id_funding
+        - funding_agency_name: Independent Research Fund Denmark
+          grant_id: 0164-00010A
+        - funding_agency_name: European Commission, Horizon 2020 (Marie Skłodowska-Curie Actions, ARISE fellowship)
+          grant_id: "945405"
+        - funding_agency_name: European Molecular Biology Laboratory
+          grant_id: EMBL core funding
+        - funding_agency_name: European Molecular Biology Laboratory
+          grant_id: EMBL Infection Biology Transversal Theme Synergy grant
+        - funding_agency_name: Chan Zuckerberg Initiative
+          grant_id: 2021-234620
+      cross_references: &id_cross_references
+        publications: 10.1101/2025.11.11.687379
+        # Representative subset of the deposition's ~141 PDB-derived structures.
+        # For chromatin, the nucleosome PDB family (5F99, 5OXV, 5OY7, 1ZBB, 6M3V,
+        # 6LA8, 6L4A, 6L49, 7PEY, 7PEW, 7PEX, 7PEV, 7PEU, 7PFA, 7PET, 7PF0, 7PFT,
+        # 7VA4, 7V9K) is enumerated in dataset_description / sample_preparation.
+        # Full list in gts/semantic_classes_ids.dat and Supp. Table 2.
+        related_database_entries: >-
+          EMPIAR-10499, EMPIAR-11756,
+          PDB-1BXN, PDB-1MWS, PDB-1SS8, PDB-1ZBB, PDB-2CG9, PDB-2Q0U,
+          PDB-4CR2, PDB-4UJD, PDB-4V4R, PDB-4V5C, PDB-5FMG, PDB-5OOL,
+          PDB-5OXV, PDB-6KS8, PDB-6X9Q, PDB-7PEY
+        related_database_links: >-
+          https://github.com/frosinastojanovska/cryosiam,
+          https://github.com/frosinastojanovska/cryosiam_vis,
+          https://cryoetdataportal.czscience.com/datasets/10003,
+          https://cryoetdataportal.czscience.com/datasets/10301
+      dates: *id_dates
+      grid_preparation: >-
+        Not applicable - purely synthetic dataset generated in silico via the
+        cryo-TomoSim (CTS) simulator. No physical grid preparation was performed.
+      sample_preparation: >-
+        Tomograms were simulated with cryo-TomoSim (CTS; Purnell et al., bioRxiv
+        2023.04.28.538636), generating 50 synthetic 'chromatin' tomograms. The
+        chromatin sample is composed of nucleosome structures and DNA filaments.
+        Nucleosome species deposited as PDB-derived input include MMTV-A core particle
+        (5F99); H1-containing 4x177 nucleosome arrays (5OXV, 7PEY, 7PEW, 7PEX, 7PEV,
+        7PEU, 7PFA, 7PET) and tri-nucleosomes from those arrays (7PF0);
+        tetranucleosomes 5OY7 and 1ZBB; tri-/di-nucleosomes 6M3V, 6LA8, 6L4A, 6L49;
+        H1-containing 4x197 and 4x207 trinucleosomes (7PFT and others); and telomeric
+        tetranucleosomes (7VA4, 7V9K). DNA filaments were generated with the
+        PolymerCpp software (Stefko, Douglass & Manley, Zenodo 2020,
+        doi:10.5281/zenodo.3928659) using the wormlike-chain (WLC) model: filament
+        path lengths of 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, and 1000
+        base pairs at persistence lengths of 5, 6, 8, 10, and 20 base pairs (one
+        synthetic class per length×persistence combination). The 3D conformations
+        were converted to PDB and incorporated into the CTS simulations alongside
+        nucleosomes. Particles were placed largest-to-smallest with brute-force model
+        filling. Sample thicknesses ranged 35-100 nm. Each 3D model was projected into
+        a CTF-modulated synthetic tilt series (acquisition parameters in tiltseries
+        metadata). Clean and noisy/CTF-modulated tilt series
+        were independently reconstructed via weighted back-projection (WBP) in IMOD.
+        Tomogram XY dimensions are 600x600 voxels; Z varies per run.
+      other_setup: In silico simulation (CTS pipeline; CryoETSim chromatin subset)
+    sources:
+      - literal:
+          value:
+            - "10491"
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: null
+            thumbnail: null
+
+depositions:
+  - metadata:
+      deposition_identifier: 10348
+      deposition_title: >-
+        CryoETSim: simulated cryo-electron tomograms for self-supervised
+        representation learning with the CryoSiam framework
+      deposition_description: >-
+        The CryoETSim deposition provides 400 simulated cryo-electron tomograms
+        generated with the cryo-TomoSim (CTS) simulator to systematically model
+        defocus variation, sample thickness, and molecular crowding characteristic
+        of experimental cryo-ET data. The deposition is split across three scenes:
+        a general macromolecular crowding scene (300 runs spanning ~150 macromolecular
+        complexes, cytoskeletal filaments, membrane proteins, and small distractor
+        proteins), a chromatin scene (50 runs of DNA filaments with nucleosomes,
+        sampling a wide range of contour lengths and persistence lengths), and a
+        minimal-bacterium scene (50 runs containing DNA filaments,
+        transcription/translation complexes such as 70S ribosomes and RNA polymerase
+        expressomes, membrane proteins, and small distractors). Tomograms are
+        simulated at 600x600 voxels in XY with variable Z, 6.8 Å/voxel, 300 kV,
+        ±60° tilt range with 2° steps using a dose-symmetric scheme, and ~120
+        e-/Å² total dose. For every simulated run, four tomogram variants are
+        provided - clean (noise-free ground truth), noisy (noise + CTF), noisy with
+        CTF-corrected phase flipping, and a CryoSiam-denoised version - together
+        with paired voxel-level ground-truth annotations: a coarse 5-class semantic
+        mask (background, membranes, particles, microtubules, actin, DNA/RNA
+        filaments) and a fine 149-class semantic mask that resolves individual
+        particle identities. The general scene additionally includes per-particle
+        instance masks with coordinate and volume metadata. Full PDB list in
+        Supplementary Table 2 of the source publication.
+      deposition_types:
+        - dataset
+      authors: *id_authors
+      cross_references: *id_cross_references
+      dates: *id_dates
+    sources:
+      - literal:
+          value:
+            - 10348
+
+frames:
+  - metadata:
+      dose_rate: 1.967
+      is_gain_corrected: true
+    sources:
+      - literal:
+          value:
+            - default
+
+rawtilts:
+  - sources:
+      - source_glob:
+          list_glob: tilt_angles_corrected/{run_name}.rawtlt
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: tomograms/clean/sample_*.mrc
+          name_regex: (sample_\d+)\.mrc$
+
+standardization_config:
+  deposition_id: 10348
+  source_prefix: frosina_stojanovska_11_2025/chromatin/
+
+tiltseries:
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: simulated
+        model: simulated
+      data_acquisition_software: CTS (cryo-TomoSim)
+      is_aligned: false
+      microscope:
+        manufacturer: SIMULATED
+        model: simulated
+      microscope_optical_setup:
+        energy_filter: none
+      pixel_spacing: 6.8
+      spherical_aberration_constant: 2.7
+      tilt_axis: 0.0
+      tilt_range:
+        max: 60
+        min: -60
+      tilt_series_quality: 5
+      tilt_step: 2.0
+      tilting_scheme: dose-symmetric
+      total_flux: 120.0
+    sources:
+      - source_glob:
+          list_glob: tilts/clean/{run_name}.mrc
+
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 1
+      camera:
+        manufacturer: simulated
+        model: simulated
+      data_acquisition_software: CTS (cryo-TomoSim)
+      is_aligned: false
+      microscope:
+        manufacturer: SIMULATED
+        model: simulated
+      microscope_optical_setup:
+        energy_filter: none
+      pixel_spacing: 6.8
+      spherical_aberration_constant: 2.7
+      tilt_axis: 0.0
+      tilt_range:
+        max: 60
+        min: -60
+      tilt_series_quality: 5
+      tilt_step: 2.0
+      tilting_scheme: dose-symmetric
+      total_flux: 120.0
+    sources:
+      - source_glob:
+          list_glob: tilts/noisy/{run_name}.mrc
+
+tomograms:
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *id_authors
+      ctf_corrected: false
+      dates: *id_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: IMOD WBP (clean / noise-free synthetic projections)
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1.0
+      voxel_spacing: 6.800
+    sources:
+      - source_glob:
+          list_glob: tomograms/clean/{run_name}.mrc
+
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *id_authors
+      ctf_corrected: false
+      dates: *id_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: IMOD WBP (noisy / CTF-modulated, no CTF correction)
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1.0
+      voxel_spacing: 6.800
+    sources:
+      - source_glob:
+          list_glob: tomograms/noisy/{run_name}.mrc
+
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *id_authors
+      ctf_corrected: true
+      dates: *id_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: filtered
+      processing_software: IMOD WBP (noisy / CTF-corrected via ctfphaseflip)
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1.0
+      voxel_spacing: 6.800
+    sources:
+      - source_glob:
+          list_glob: tomograms/noisy_ctf_corrected_phase_flip/{run_name}.mrc
+
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *id_authors
+      ctf_corrected: true
+      dates: *id_dates
+      fiducial_alignment_status: NON_FIDUCIAL
+      is_visualization_default: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: denoised
+      processing_software: "CryoSiam DenseSimSiam denoising network (input: noisy_ctf_corrected_phase_flip)"
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1.0
+      voxel_spacing: 6.800
+    sources:
+      - source_glob:
+          list_glob: tomograms/denoised_corrected/{run_name}.mrc
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 6.800
