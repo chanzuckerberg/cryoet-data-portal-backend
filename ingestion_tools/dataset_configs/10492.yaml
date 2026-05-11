@@ -103,7 +103,7 @@ annotations:
           glob_string: gts/semantic_general/{run_name}.mrc
           mask_label: 2
           rescale: false
-          is_visualization_default: true
+          is_visualization_default: false
 
   - metadata:
       annotation_ingest_id: cryosiam-semantic-general-dna-rna-filaments-1
