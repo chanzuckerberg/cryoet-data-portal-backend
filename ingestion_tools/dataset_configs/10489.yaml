@@ -1,0 +1,374 @@
+version: 1.3.0
+
+alignments:
+  - metadata:
+      format: IMOD
+      method_type: fiducial_based
+      alignment_type: LOCAL
+      is_portal_standard: true
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/*.xf'
+          match_regex: '.*\.xf$'
+        parent_filters:
+          exclude:
+            run:
+              - 'Vibrio_pilT_pilU_47'
+      - source_glob:
+          list_glob: '{run_name}/*.tlt'
+          match_regex: '.*\.tlt$'
+        parent_filters:
+          exclude:
+            run:
+              - 'Vibrio_pilT_pilU_47'
+
+annotations:
+  - metadata:
+      annotation_ingest_id: byu_kaggle_flagellar_motor_10489
+      annotation_method: initial prediction by ML model + verified and corrected by hand
+      annotation_object:
+        id: GO:0120100
+        name: bacterial-type flagellum motor
+      annotation_software: IMOD
+      annotation_publications: 10.1101/2025.04.23.650258
+      method_links:
+        - link_type: website
+          link: https://www.kaggle.com/competitions/byu-locating-bacterial-flagellar-motors-2025
+          custom_name: MotorBench Kaggle overview
+      authors: &authors
+        - name: Stefano Maggi
+          corresponding_author_status: true
+          primary_author_status: true
+        - name: Christopher Braxton Owens
+          corresponding_author_status: false
+          primary_author_status: false
+        - name: Gus L. W. Hart
+          ORCID: 0000-0002-6149-9234
+          corresponding_author_status: false
+          primary_author_status: false
+        - name: Andrew Darley
+          corresponding_author_status: false
+          primary_author_status: false
+      dates: &dates
+        deposition_date: "2026-04-29"
+        last_modified_date: "2026-04-29"
+        release_date: "2026-04-29"
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - Point:
+          file_format: csv_with_header
+          glob_string: '{run_name}/{file_prefix}_flagellar_motor.csv'
+          is_visualization_default: true
+          columns: zyx
+
+collection_metadata:
+  - sources:
+      - source_glob:
+          list_glob: '{run_name}/*.mdoc'
+          match_regex: '.*\.mdoc$'
+
+ctfs:
+  - metadata:
+      format: IMOD
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/*.defocus'
+          match_regex: '.*\.defocus$'
+        parent_filters:
+          exclude:
+            run:
+              - 'Vibrio_pilT_pilU_115'
+              - 'Vibrio_pilT_pilU_119'
+              - 'Vibrio_pilT_pilU_138'
+              - 'Vibrio_pilT_pilU_139'
+              - 'Vibrio_pilT_pilU_141'
+              - 'Vibrio_pilT_pilU_142'
+              - 'Vibrio_pilT_pilU_143'
+              - 'Vibrio_pilT_pilU_144'
+              - 'Vibrio_pilT_pilU_145'
+              - 'Vibrio_pilT_pilU_146'
+              - 'Vibrio_pilT_pilU_147'
+              - 'Vibrio_pilT_pilU_148'
+              - 'Vibrio_pilT_pilU_149'
+              - 'Vibrio_pilT_pilU_150'
+              - 'Vibrio_pilT_pilU_151'
+              - 'Vibrio_pilT_pilU_152'
+              - 'Vibrio_pilT_pilU_153'
+              - 'Vibrio_pilT_pilU_154'
+              - 'Vibrio_pilT_pilU_155'
+              - 'Vibrio_pilT_pilU_156'
+              - 'Vibrio_pilT_pilU_158'
+              - 'Vibrio_pilT_pilU_159'
+              - 'Vibrio_pilT_pilU_160'
+              - 'Vibrio_pilT_pilU_161'
+              - 'Vibrio_pilT_pilU_162'
+              - 'Vibrio_pilT_pilU_163'
+              - 'Vibrio_pilT_pilU_164'
+              - 'Vibrio_pilT_pilU_165'
+              - 'Vibrio_pilT_pilU_166'
+              - 'Vibrio_pilT_pilU_167'
+              - 'Vibrio_pilT_pilU_168'
+              - 'Vibrio_pilT_pilU_169'
+              - 'Vibrio_pilT_pilU_170'
+              - 'Vibrio_pilT_pilU_171'
+              - 'Vibrio_pilT_pilU_172'
+              - 'Vibrio_pilT_pilU_173'
+              - 'Vibrio_pilT_pilU_174'
+              - 'Vibrio_pilT_pilU_175'
+              - 'Vibrio_pilT_pilU_176'
+              - 'Vibrio_pilT_pilU_177'
+              - 'Vibrio_pilT_pilU_36'
+              - 'Vibrio_pilT_pilU_37'
+              - 'Vibrio_pilT_pilU_38'
+              - 'Vibrio_pilT_pilU_39'
+              - 'Vibrio_pilT_pilU_40'
+              - 'Vibrio_pilT_pilU_41'
+              - 'Vibrio_pilT_pilU_42'
+              - 'Vibrio_pilT_pilU_43'
+              - 'Vibrio_pilT_pilU_44'
+              - 'Vibrio_pilT_pilU_46'
+              - 'Vibrio_pilT_pilU_47'
+              - 'Vibrio_pilT_pilU_58'
+
+datasets:
+  - metadata:
+      authors: *authors
+      dates: *dates
+      dataset_identifier: 10489
+      dataset_title: Vibrio cholerae competence pilus - PilT and PilU inactive variants
+      dataset_description: |
+        This dataset was collected to study the Vibrio cholerae competence pilus (CP) in the presence of both PilT and PilU inactive versions. The cells are over-expressing the CP machine in presence of IPTG. Other pilus machines (TCP, toxin-coregulated pilus; MSHA, mannose-sensitive hemagglutinin) have been deleted.
+      assay:
+        name: microscopy assay
+        id: EFO:0002909
+      cell_type:
+        name: prokaryotic cell
+        id: CL:0000520
+      cell_strain:
+        name: Vibrio cholerae O1 biovar El Tor str. N16961
+        id: NCBITaxon:243277
+      development_stage:
+        name: unknown
+        id: unknown
+      disease:
+        name: normal
+        id: PATO:0000461
+      organism:
+        name: Vibrio cholerae
+        taxonomy_id: 243277
+      tissue:
+        name: prokaryotic cell
+        id: CL:0000520
+      sample_type: primary_cell_culture
+      sample_preparation: |
+        Cells grown overnight in LB plus 10 mM CaCl2/20 mM MgCl2/0.1 mM IPTG at 30C + 10 uL overnight culture plated on a LB plus 10mM CaCl2/20 mM MgCl2/0.1 mM IPTG/agar plate + Grown overnight at 30C + Cells were collected with a pipette tip and resuspended in 100 uL resuspension buffer (7 gL-1 aquarium salt, 10 mM Tris-HCl pH 7.4 100 mgmL-1 Lysine) per 5 mg cells.
+      grid_preparation: |
+        Cu Quantifoils R2/2 + 10 nm gold beads + Frozen in Vitrobot at 100% humidity, blot time 8s, blot force 8.
+      other_setup: |
+        Genotype : rpoS*, pilA S81C, lacZ::lacIq, comEA-mCherry, ΔluxO, Ptac-tfoX, Ptac- recA, ∆TCP::ZeoR, ∆MSHA::CarbR, ∆CTX::KanR, pilT136A::TmR, pilUK133A
+      cross_references:
+        publications: 10.1101/2025.04.23.650258
+    sources:
+      - literal:
+          value:
+            - "10489"
+
+depositions:
+    - sources:
+      - literal:
+          value:
+            - 10347
+
+frames:
+  - metadata:
+      dose_rate: float {dose_rate}
+      is_gain_corrected: true
+    sources:
+      - literal:
+          value:
+            - default
+
+rawtilts:
+  - sources:
+      - source_glob:
+          list_glob: '{run_name}/*.rawtlt'
+          match_regex: '.*\.rawtlt$'
+
+runs:
+  - sources:
+      - source_glob:
+          list_glob: '*'
+          match_regex: 'Vibrio_pilT_pilU_.*'
+          name_regex: '(.*)'
+
+standardization_config:
+  deposition_id: 10347
+  run_data_map_file: run_to_data_map_v3.tsv
+  source_prefix: braxton_owens_07_2025/dataset5/
+
+tiltseries:
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 2
+      camera:
+        manufacturer: Gatan
+        model: K3
+      data_acquisition_software: SerialEM
+      is_aligned: false
+      microscope:
+        manufacturer: FEI
+        model: Titan Krios
+      microscope_optical_setup:
+        energy_filter: GIF Quantum LS
+      pixel_spacing: 6.664
+      spherical_aberration_constant: 2.7
+      tilt_axis: 85.3
+      tilt_range:
+        max: 60
+        min: -60
+      tilt_step: 3.0
+      tilting_scheme: dose-symmetric
+      tilt_series_quality: 4
+      total_flux: 160
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/*_orig.mrc'
+          match_regex: '.*_orig\.mrc$'
+        parent_filters:
+          exclude:
+            run:
+              - 'Vibrio_pilT_pilU_103'
+              - 'Vibrio_pilT_pilU_105'
+              - 'Vibrio_pilT_pilU_113'
+              - 'Vibrio_pilT_pilU_120'
+              - 'Vibrio_pilT_pilU_121'
+              - 'Vibrio_pilT_pilU_122'
+              - 'Vibrio_pilT_pilU_125'
+              - 'Vibrio_pilT_pilU_126'
+              - 'Vibrio_pilT_pilU_127'
+              - 'Vibrio_pilT_pilU_129'
+              - 'Vibrio_pilT_pilU_130'
+              - 'Vibrio_pilT_pilU_131'
+              - 'Vibrio_pilT_pilU_132'
+              - 'Vibrio_pilT_pilU_133'
+              - 'Vibrio_pilT_pilU_134'
+              - 'Vibrio_pilT_pilU_135'
+              - 'Vibrio_pilT_pilU_136'
+              - 'Vibrio_pilT_pilU_47'
+              - 'Vibrio_pilT_pilU_48'
+              - 'Vibrio_pilT_pilU_54'
+              - 'Vibrio_pilT_pilU_55'
+              - 'Vibrio_pilT_pilU_79'
+              - 'Vibrio_pilT_pilU_81'
+              - 'Vibrio_pilT_pilU_88'
+              - 'Vibrio_pilT_pilU_89'
+              - 'Vibrio_pilT_pilU_90'
+              - 'Vibrio_pilT_pilU_91'
+              - 'Vibrio_pilT_pilU_92'
+              - 'Vibrio_pilT_pilU_93'
+              - 'Vibrio_pilT_pilU_94'
+              - 'Vibrio_pilT_pilU_95'
+              - 'Vibrio_pilT_pilU_96'
+              - 'Vibrio_pilT_pilU_97'
+              - 'Vibrio_pilT_pilU_98'
+              - 'Vibrio_pilT_pilU_99'
+  - metadata:
+      acceleration_voltage: 300000
+      binning_from_frames: 4
+      camera:
+        manufacturer: Gatan
+        model: K3
+      data_acquisition_software: SerialEM
+      is_aligned: true
+      microscope:
+        manufacturer: FEI
+        model: Titan Krios
+      microscope_optical_setup:
+        energy_filter: GIF Quantum LS
+      pixel_spacing: 13.328
+      spherical_aberration_constant: 2.7
+      tilt_axis: 85.3
+      tilt_range:
+        max: 60
+        min: -60
+      tilt_step: 3.0
+      tilting_scheme: dose-symmetric
+      tilt_series_quality: 4
+      total_flux: 160
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/*_ali.mrc'
+          match_regex: '.*_ali\.mrc$'
+        parent_filters:
+          include:
+            run:
+              - 'Vibrio_pilT_pilU_103'
+              - 'Vibrio_pilT_pilU_105'
+              - 'Vibrio_pilT_pilU_113'
+              - 'Vibrio_pilT_pilU_120'
+              - 'Vibrio_pilT_pilU_121'
+              - 'Vibrio_pilT_pilU_122'
+              - 'Vibrio_pilT_pilU_125'
+              - 'Vibrio_pilT_pilU_126'
+              - 'Vibrio_pilT_pilU_127'
+              - 'Vibrio_pilT_pilU_129'
+              - 'Vibrio_pilT_pilU_130'
+              - 'Vibrio_pilT_pilU_131'
+              - 'Vibrio_pilT_pilU_132'
+              - 'Vibrio_pilT_pilU_133'
+              - 'Vibrio_pilT_pilU_134'
+              - 'Vibrio_pilT_pilU_135'
+              - 'Vibrio_pilT_pilU_136'
+              - 'Vibrio_pilT_pilU_48'
+              - 'Vibrio_pilT_pilU_54'
+              - 'Vibrio_pilT_pilU_55'
+              - 'Vibrio_pilT_pilU_79'
+              - 'Vibrio_pilT_pilU_81'
+              - 'Vibrio_pilT_pilU_88'
+              - 'Vibrio_pilT_pilU_89'
+              - 'Vibrio_pilT_pilU_90'
+              - 'Vibrio_pilT_pilU_91'
+              - 'Vibrio_pilT_pilU_92'
+              - 'Vibrio_pilT_pilU_93'
+              - 'Vibrio_pilT_pilU_94'
+              - 'Vibrio_pilT_pilU_95'
+              - 'Vibrio_pilT_pilU_96'
+              - 'Vibrio_pilT_pilU_97'
+              - 'Vibrio_pilT_pilU_98'
+              - 'Vibrio_pilT_pilU_99'
+
+tomograms:
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      authors: *authors
+      ctf_corrected: true
+      dates: *dates
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      reconstruction_method: SIRT
+      align_software: IMOD
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 13.328
+    sources:
+      - source_glob:
+          list_glob: '{run_name}/*_rec.mrc'
+          match_regex: '.*_rec\.mrc$'
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 13.328
