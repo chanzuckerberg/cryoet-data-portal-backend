@@ -152,10 +152,10 @@ annotations:
   - metadata:
       annotation_ingest_id: cryosiam-semantic-general-dna-rna-filaments-1
       annotation_object:
-        id: GO:0000785
-        name: chromatin
+        id: CHEBI:15986
+        name: polynucleotide
         description: >-
-          Combined DNA/RNA filament label (wormlike-chain DNA filaments and RNA densities from transcription/translation complexes); broader than the GO chromatin term.
+          Bare DNA polymer filaments and RNA densities from transcription/translation complexes.
       annotation_method: *id_anno_method
       annotation_software: cryo-TomoSim (CTS); PolymerCpp
       annotation_publications: 10.1101/2025.11.11.687379
