@@ -14,7 +14,7 @@ from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
 from common.id_helper import IdentifierHelper
-from common.image import check_mask_for_label, make_pyramids
+from common.image import check_mask_for_label, get_volume_info, make_pyramids
 from common.metadata import AnnotationMetadata
 from importers.alignment import AlignmentImporter
 from importers.base_importer import BaseImporter
@@ -271,6 +271,16 @@ class VolumeAnnotationSource(BaseAnnotationSource):
         )
         return dims
 
+    def _get_resize_target(self) -> tuple[int, int, int] | None:
+        """Return target dims when rescaling is needed; None if rescale is off
+        or the source already matches the target dims (no-op resize)."""
+        if not getattr(self, "rescale", False):
+            return None
+        target = self.get_output_dim()
+        d = get_volume_info(self.config.fs, self.path).get_dimensions()
+        src = (d["z"], d["y"], d["x"])
+        return None if src == target else target
+
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
             {
@@ -310,7 +320,7 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
             raise ValueError("Thresholding and selecting by label are mutually exclusive")
 
     def convert(self, output_prefix: str):
-        output_dims = self.get_output_dim() if self.rescale else None
+        output_dims = self._get_resize_target()
         return make_pyramids(
             self.config.fs,
             self.get_output_filename(output_prefix),
@@ -342,7 +352,7 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
         self.is_portal_standard = is_portal_standard
 
     def convert(self, output_prefix: str):
-        output_dims = self.get_output_dim() if self.rescale else None
+        output_dims = self._get_resize_target()
 
         return make_pyramids(
             self.config.fs,
@@ -399,7 +409,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             raise ValueError("Thresholding and selecting by label are mutually exclusive")
 
     def convert(self, output_prefix: str):
-        output_dims = self.get_output_dim() if self.rescale else None
+        output_dims = self._get_resize_target()
         return make_pyramids(
             self.config.fs,
             self.get_output_filename(output_prefix),
