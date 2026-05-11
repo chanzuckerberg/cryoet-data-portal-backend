@@ -85,10 +85,8 @@ annotations:
   - metadata:
       annotation_ingest_id: cryosiam-semantic-general-dna-rna-filaments-1
       annotation_object:
-        id: GO:0000785
-        name: chromatin
-        description: >-
-          Combined DNA/RNA filament label (wormlike-chain DNA filaments and RNA densities from transcription/translation complexes); broader than the GO chromatin term.
+        id: CHEBI:75979
+        name: double-stranded DNA polynucleotide
       annotation_method: *id_anno_method
       annotation_software: cryo-TomoSim (CTS); PolymerCpp
       annotation_publications: 10.1101/2025.11.11.687379
@@ -109,7 +107,7 @@ annotations:
   # Note: gts/semantic/{run_name}.mrc (the fine semantic mask) is intentionally
   # not ingested as a portal annotation. Without a per-class mask_label split it
   # would render as a single lumped annotation, which is redundant with the
-  # per-class breakdown above (nucleosome / chromatin).
+  # per-class breakdown above (nucleosome / DNA).
 
 collection_metadata:
   - sources:
