@@ -294,31 +294,32 @@ depositions:
     authors:
     - ORCID: 0009-0007-8169-0996
       corresponding_author_status: false
+      email: mallak.ali@czii.org
       name: Mallak Ali
       primary_author_status: true
-    - ORCID: 0000-0001-7620-2213
-      corresponding_author_status: false
-      name: Tahiti Dutta
-      primary_author_status: false
     - ORCID: 0000-0001-6841-8583
       corresponding_author_status: false
       name: Joshua Hutchings
       primary_author_status: false
-    - ORCID: 0000-0002-3248-9678
+    - ORCID: 0000-0001-7620-2213
       corresponding_author_status: false
-      name: Yue Yu
+      name: Tahiti Dutta
+      primary_author_status: false
+    - ORCID: 0009-0007-9777-9856
+      corresponding_author_status: false
+      name: Nikki Jean
+      primary_author_status: false
+    - ORCID: 0000-0002-9045-7666
+      corresponding_author_status: false
+      name: Garrett Greenan
+      primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
+      corresponding_author_status: false
+      name: Elizabeth A. Montabana
       primary_author_status: false
     - ORCID: 0000-0002-8063-6951
       corresponding_author_status: false
       name: Jonathan Schwartz
-      primary_author_status: false
-    - ORCID: 0000-0002-5940-3897
-      corresponding_author_status: false
-      name: Ariana Peck
-      primary_author_status: false
-    - ORCID: 0000-0002-6731-5854
-      corresponding_author_status: false
-      name: Elizabeth Montabana
       primary_author_status: false
     - ORCID: 0000-0003-0188-9799
       corresponding_author_status: false
@@ -328,8 +329,21 @@ depositions:
       corresponding_author_status: false
       name: M.G. Finn
       primary_author_status: false
+    - ORCID: 0000-0002-1796-1479
+      corresponding_author_status: false
+      name: Matthias Haury
+      primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
+      corresponding_author_status: false
+      name: David A. Agard
+      primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
+      corresponding_author_status: false
+      name: Bridget Carragher
+      primary_author_status: false
     - ORCID: 0000-0002-8402-0134
       corresponding_author_status: true
+      email: reza.paraan@czii.org
       name: Mohammadreza Paraan
       primary_author_status: false
     cross_references:
@@ -337,11 +351,11 @@ depositions:
       related_database_entries: EMD-44783, EMD-44737, EMD-44743
     dates:
       deposition_date: '2025-11-07'
-      last_modified_date: '2025-11-07'
+      last_modified_date: '2026-05-13'
       release_date: '2025-11-07'
-    deposition_description: The bacteriophage virus-like particles form highly symmetric
-      capsids that are suitable for high-resolution structure determination (cite).
-      These datasets were collected on E. coli overexpressing the VLPs, therefore,
+    deposition_description: The PP7 bacteriophage virus-like particles form highly
+      symmetric capsids that are suitable for high-resolution structure determination
+      (cite). These datasets were collected on E. coli overexpressing the VLPs, therefore,
       providing a thick crowded in situ sample that is suitable for benchmarking cryoET
       applications including both data collection and data processing.
     deposition_identifier: 10336
