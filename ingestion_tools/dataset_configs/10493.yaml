@@ -17,7 +17,6 @@ annotations:
       description: Pseudomonas phage PP7 virus-like particle, icosahedral T=3 cage
       id: GO:0170047
       name: virus-like capsid
-    annotation_publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178, EMD-44783
     annotation_software: octopi 1.2.0, RELION 5.0, copick 1.5.0, py2rely 1.0.0
     authors: &id003
     - ORCID: 0009-0007-8169-0996
@@ -112,7 +111,6 @@ annotations:
     annotation_ingest_id: capsid-protein-octopi-1
     annotation_method: octopi prediction
     annotation_object: *id002
-    annotation_publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178, EMD-44783
     annotation_software: octopi 1.2.0, copick 1.5.0
     authors: *id003
     dates: *id001
@@ -144,7 +142,6 @@ annotations:
       description: E. coli GroEL-GroES chaperonin complex
       id: GO:1990220
       name: GroEL-GroES complex
-    annotation_publications: 10.1016/j.yjsbx.2025.100125
     annotation_software: pytom-match-pick 0.6.0, octopi 1.2.0, copick 1.5.0
     authors: *id003
     dates: *id001
