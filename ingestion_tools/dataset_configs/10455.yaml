@@ -236,7 +236,6 @@ datasets:
       name: prokaryotic cell
     cross_references:
       publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178
-      related_database_entries: EMD-44783, EMD-44737, EMD-44743
     dataset_description: "Leviridae PP7 VLP were inoculated into BL21(DE3) E. coli\
       \ and plunge-frozen at the 3-hour timepoint. The targets for cryoET were selected\
       \ based on high crowdedness and variable thickness (100-300 nm). The processing\
@@ -348,7 +347,7 @@ depositions:
       primary_author_status: false
     cross_references:
       publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178
-      related_database_entries: EMD-44783, EMD-44737, EMD-44743
+      related_database_entries: EMD-77085, EMD-77087, EMD-77086, EMD-77088
     dates:
       deposition_date: '2025-11-07'
       last_modified_date: '2026-05-13'

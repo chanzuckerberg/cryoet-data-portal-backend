@@ -11,13 +11,13 @@ alignments:
 annotations:
 - metadata:
     annotation_ingest_id: capsid-protein-relionrefine-1
-    annotation_method: octopi prediction + 3D refinement (RELION) + max likelihood
-      filtering
+    annotation_method: octopi prediction + 2D classification + 3D refinement (RELION)
     annotation_object:
       description: Pseudomonas phage PP7 VLP
       id: UniProtKB:P03630
       name: Capsid protein
     annotation_software: octopi 1.2.0, RELION 5.0, copick 1.5.0, py2rely 1.0.0
+    annotation_publications: EMD-77086, EMD-77088
     authors: &id003
     - ORCID: 0009-0007-8169-0996
       corresponding_author_status: false
@@ -80,6 +80,9 @@ annotations:
     ground_truth_status: true
     is_curator_recommended: true
     method_links:
+    - custom_name: Model weights on Zenodo
+      link: https://doi.org/10.5281/zenodo.20057531
+      link_type: models_weights
     - custom_name: Octopi on GitHub
       link: https://github.com/chanzuckerberg/octopi
       link_type: source_code
@@ -131,7 +134,7 @@ datasets:
       name: prokaryotic cell
     cross_references:
       publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178, 10.1002/smll.202506285
-      related_database_entries: EMD-44783, EMD-44737, EMD-44743
+      related_database_entries: EMD-77086, EMD-77088
     dataset_description: "Leviviridae PP7 VLP were inoculated into BL21(DE3) E. coli\
       \ and high-pressure frozen at the 2-hour timepoint. 5 lamellae were generated\
       \ using a plasma FIB-SEM. The processing pipeline includes AreTomo3, Embrella,\
