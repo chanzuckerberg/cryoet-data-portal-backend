@@ -14,9 +14,9 @@ annotations:
     annotation_method: octopi prediction + 3D refinement (RELION) + max likelihood
       filtering
     annotation_object: &id002
-      description: Pseudomonas phage PP7 virus-like particle, icosahedral T=3 cage
-      id: GO:0170047
-      name: virus-like capsid
+      description: Pseudomonas phage PP7 VLP
+      id: UniProtKB:P03630
+      name: Capsid protein
     annotation_software: octopi 1.2.0, RELION 5.0, copick 1.5.0, py2rely 1.0.0
     authors: &id003
     - ORCID: 0009-0007-8169-0996
@@ -139,13 +139,12 @@ annotations:
     annotation_ingest_id: groel-upload-1
     annotation_method: pytom-match-pick template matching + octopi prediction filtering
     annotation_object:
-      description: E. coli GroEL-GroES chaperonin complex
-      id: GO:1990220
-      name: GroEL-GroES complex
+      id: UniProtKB:P0A6F5
+      name: Chaperonin GroEL
     annotation_software: pytom-match-pick 0.6.0, octopi 1.2.0, copick 1.5.0
     authors: *id003
     dates: *id001
-    ground_truth_status: false
+    ground_truth_status: true
     is_curator_recommended: true
     method_links:
     - custom_name: pytom-match-pick on GitHub
@@ -171,7 +170,7 @@ annotations:
       file_format: copick
       glob_strings:
       - annotations/ExperimentRuns/{run_name}/Picks/upload_1_GroEL.json
-      is_visualization_default: false
+      is_visualization_default: true
 collection_metadata:
 - sources:
   - source_glob:
