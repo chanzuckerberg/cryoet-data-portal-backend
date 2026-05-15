@@ -1,0 +1,334 @@
+alignments:
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_multi_glob:
+      list_globs:
+      - '{run_name}.aln'
+annotations:
+- metadata:
+    annotation_ingest_id: capsid-protein-relionrefine-1
+    annotation_method: octopi prediction + 2D classification + 3D refinement (RELION)
+    annotation_object:
+      description: Pseudomonas phage PP7 VLP
+      id: UniProtKB:P03630
+      name: Capsid protein
+    annotation_software: octopi 1.2.0, RELION 5.0, copick 1.5.0, py2rely 1.0.0
+    annotation_publications: EMD-77086, EMD-77088
+    authors: &id003
+    - ORCID: 0009-0007-8169-0996
+      corresponding_author_status: false
+      email: mallak.ali@czii.org
+      name: Mallak Ali
+      primary_author_status: true
+    - ORCID: 0000-0001-6841-8583
+      corresponding_author_status: false
+      name: Joshua Hutchings
+      primary_author_status: false
+    - ORCID: 0000-0001-7620-2213
+      corresponding_author_status: false
+      name: Tahiti Dutta
+      primary_author_status: false
+    - ORCID: 0009-0007-9777-9856
+      corresponding_author_status: false
+      name: Nikki Jean
+      primary_author_status: false
+    - ORCID: 0000-0002-9045-7666
+      corresponding_author_status: false
+      name: Garrett Greenan
+      primary_author_status: false
+    - ORCID: 0000-0002-6731-5854
+      corresponding_author_status: false
+      name: Elizabeth A. Montabana
+      primary_author_status: false
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: false
+      name: Jonathan Schwartz
+      primary_author_status: false
+    - ORCID: 0000-0003-0188-9799
+      corresponding_author_status: false
+      name: Mykhailo Kopylov
+      primary_author_status: false
+    - ORCID: 0000-0001-8247-3108
+      corresponding_author_status: false
+      name: M.G. Finn
+      primary_author_status: false
+    - ORCID: 0000-0002-1796-1479
+      corresponding_author_status: false
+      name: Matthias Haury
+      primary_author_status: false
+    - ORCID: 0000-0003-3512-695X
+      corresponding_author_status: false
+      name: David A. Agard
+      primary_author_status: false
+    - ORCID: 0000-0002-0624-5020
+      corresponding_author_status: false
+      name: Bridget Carragher
+      primary_author_status: false
+    - ORCID: 0000-0002-8402-0134
+      corresponding_author_status: true
+      email: reza.paraan@czii.org
+      name: Mohammadreza Paraan
+      primary_author_status: false
+    dates: &id001
+      deposition_date: '2026-05-13'
+      last_modified_date: '2026-05-13'
+      release_date: '2026-05-13'
+    ground_truth_status: true
+    is_curator_recommended: true
+    method_links:
+    - custom_name: Model weights on Zenodo
+      link: https://doi.org/10.5281/zenodo.20057531
+      link_type: models_weights
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    - custom_name: RELION on GitHub
+      link: https://github.com/3dem/relion
+      link_type: source_code
+    - custom_name: RELION documentation
+      link: https://relion.readthedocs.io/
+      link_type: documentation
+    - custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - custom_name: Copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 4.995
+      file_format: copick
+      glob_strings:
+      - annotations/ExperimentRuns/{run_name}/Picks/relionrefine_1_VLP.json
+      is_visualization_default: true
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}.mdoc'
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_CTFFIND_format_CTF.txt'
+datasets:
+- metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
+    authors: *id003
+    cell_strain:
+      id: NCBITaxon:469008
+      name: Escherichia coli BL21(DE3)
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
+    cross_references:
+      publications: 10.1021/acsnano.8b09683, 10.1021/acsnano.3c06178, 10.1002/smll.202506285
+      related_database_entries: EMD-77086, EMD-77088
+    dataset_description: "Leviviridae PP7 VLP were inoculated into BL21(DE3) E. coli\
+      \ and high-pressure frozen at the 2-hour timepoint. 5 lamellae were generated\
+      \ using a plasma FIB-SEM. The processing pipeline includes AreTomo3, Embrella,\
+      \ copick, octopi, RELION, and py2rely. The most abundant geometry- the icosahedral\
+      \ T=3- was refined to 3.9 \xC5."
+    dataset_identifier: 10494
+    dataset_title: "PP7 virus-like particles in E. coli at 3.9 \xC5 (lamellae)"
+    dates: *id001
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: "CZII-2023–327779"
+    grid_preparation: Quantifoil R 1/4 SiO2 200 Mesh grid glow discharged on back
+      side at 15 mA for 45 seconds. For every grid, two Leica Type B planchettes with
+      a diameter of 6 mm were sanded using P800, P7000, and P15000 grit in increasing
+      order and cleaned with metal polish. The planchettes were then coated with a
+      solution of 0.5% cetyl palmitate in diethyl ether and placed on Whatman filter
+      paper to dry; a thin film was visible on the planchettes after evaporation.
+      Carefully apply 3uL of the pellet to the grid without introducing air bubbles.
+    organism:
+      name: Escherichia coli BL21(DE3)
+      taxonomy_id: 469008
+    other_setup: High-pressure freezing + plasma Cryo-FIB milling
+    sample_preparation: PP7 plasmids are transformed into BL21(DE3) Competent E. coli
+      cells and heat shocked for 30 seconds at 42C. Place the mixture on ice for 5
+      minutes and then pipette 950uL of RT SOC into the mixture and place at 37C,
+      200rpm for the recovery stage. After an hour, spread up to 100uL of mixture
+      on streptomycin selection plates and leave overnight at 37C. Next day, carefully
+      pick off an isolated colony mix into 50mL of 2YT+streptomycin media. Wait 12-16
+      hours and take 10mL of starter culture and add to larger culture of 2YT media
+      + streptomycin and shake at 200rpm (37C) until OD600 is between 0.6 and 0.8.
+      Once this range is reached, add 500uL of IPTG to begin induction process and
+      collect 20mL of culture in a falcon tube every hour to be pelleted down and
+      frozen (until hour 4) and stored at -80C for long-term storage. When ready to
+      high-pressure freeze, hand thaw sample until last ice crystal disappears. Resuspend
+      pellet in 150uL of LB Broth and centrifuge at 1500 g for 15 min at 4C. Immediately
+      before freezing, remove most of the supernatant, add 10% glycerol to the pellet,
+      and gently mix without introducing air bubbles. After high-pressure freezing,
+      lamellae were prepared using a plasma FIB-SEM.
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
+  sources:
+  - literal:
+      value:
+      - '10494'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10336_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10336_thumbnail.png
+depositions:
+- sources:
+  - literal:
+      value:
+      - 10336
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: '{run_name}/*.eer'
+gains:
+- sources:
+  - source_glob:
+      list_glob: '{gain_file}'
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: '{run_name}_st.rawtlt'
+runs:
+- sources:
+  - source_glob:
+      list_glob: '*.aln'
+      match_regex: .*\.aln$
+      name_regex: (.*)\.aln$
+standardization_config:
+  deposition_id: 10336
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: CZII/10336/10494/
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i
+    data_acquisition_software: Tomo5
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: TITAN KRIOS G4
+    microscope_optical_setup:
+      energy_filter: Selectris X
+    pixel_spacing: 1.5
+    spherical_aberration_constant: 2.7
+    tilt_axis: -96
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_TS.mrc'
+      match_regex: .*\.mrc$
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id003
+    ctf_corrected: true
+    dates: *id001
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    processing_software: DenoisET
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 version 2.3.0, built on Mar. 21, 2026
+    tomogram_version: 1
+    voxel_spacing: 4.995
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_Vol.mrc'
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id003
+    ctf_corrected: true
+    dates: *id001
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    processing_software: AreTomo3 version 2.3.0, built on Mar. 21, 2026
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 version 2.3.0, built on Mar. 21, 2026
+    tomogram_version: 1
+    voxel_spacing: 4.995
+  sources:
+  - source_glob:
+      list_glob: '{run_name}_dctf_Vol.mrc'
+      match_regex: (.*)\.mrc
+version: 1.3.0
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 4.995
