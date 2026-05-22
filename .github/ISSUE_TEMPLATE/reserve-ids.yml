@@ -1,0 +1,43 @@
+name: Reserve Dataset / Deposition IDs
+description: Reserve dataset and/or deposition IDs from the CryoET portal allocator.
+title: "[id-reservation] "
+labels: ["id-reservation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Only users with **write** or **admin** permission on this repository will
+        have their request honored. Other issues will be closed automatically.
+        Use the dropdown below to reserve at most **one** deposition per issue;
+        if reserved alongside dataset IDs, that single deposition ID will be
+        wired into every generated dataset stub.
+  - type: input
+    id: dataset_count
+    attributes:
+      label: Number of dataset IDs to reserve
+      description: How many `<id>.yaml` stubs to create. Set 0 if reserving a deposition only. Max 20.
+      value: "0"
+    validations:
+      required: true
+  - type: dropdown
+    id: reserve_deposition
+    attributes:
+      label: Also reserve a deposition?
+      description: At most one deposition per issue. If "yes", all reserved dataset stubs will reference it.
+      options:
+        - "no"
+        - "yes"
+      default: 0
+    validations:
+      required: true
+  - type: checkboxes
+    id: deposition_types
+    attributes:
+      label: Deposition type(s)
+      description: |
+        Required if "Also reserve a deposition?" is yes. Maps to
+        `depositions[].metadata.deposition_types` in the generated stub.
+      options:
+        - label: annotation
+        - label: tomogram
+        - label: dataset

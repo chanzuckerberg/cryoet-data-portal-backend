@@ -1,0 +1,29 @@
+# Reports the current state of the ID allocator (last reserved IDs etc.).
+#
+# Manually triggered via the Actions tab; requires repository Actions write
+# permission, which mirrors the maintainer gate on the reservation workflow.
+#
+# Required repository secrets:
+#   STATE_URL  - GET endpoint returning current allocator state as JSON
+
+name: reserve-ids-state
+
+on:
+  workflow_dispatch:
+
+jobs:
+  state:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch allocator state
+        env:
+          STATE_URL: ${{ secrets.STATE_URL }}
+        run: |
+          response=$(curl -fsS "$STATE_URL")
+          {
+            echo '## Allocator state'
+            echo
+            echo '```json'
+            echo "$response" | jq .
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

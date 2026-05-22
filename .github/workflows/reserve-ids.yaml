@@ -1,0 +1,190 @@
+# Reserve Dataset / Deposition IDs from the CryoET portal allocator.
+#
+# Triggered when a maintainer files (or labels) an issue created from the
+# "Reserve Dataset / Deposition IDs" issue template. The workflow:
+#   1. Confirms the requester has write/admin permission on this repo.
+#   2. Parses the issue form body.
+#   3. Calls the dataset/deposition reservation Lambda Function URLs.
+#   4. Generates minimal stub YAMLs in ingestion_tools/dataset_configs/.
+#   5. Opens a DRAFT pull request (CI is skipped on id-reservation/* branches).
+#   6. Comments the PR link on the issue and closes it.
+#
+# Required repository secrets:
+#   RESERVE_DATASET_IDS_URL     - POST endpoint, returns reserved dataset IDs
+#   RESERVE_DEPOSITION_IDS_URL  - POST endpoint, returns reserved deposition IDs
+#   GH_ACTIONS_HELPER_APP_ID    - existing GitHub App for privileged operations
+#   GH_ACTIONS_HELPER_PK        - existing GitHub App private key
+#
+# The Lambda request/response shape is currently stubbed as:
+#   POST {"count": N} -> {"ids": [10500, 10501, ...]}
+# Update the curl/jq invocations below once the real contract is finalized.
+
+name: reserve-ids
+
+on:
+  issues:
+    types: [opened, labeled]
+
+concurrency:
+  group: reserve-ids-issue-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  reserve:
+    if: contains(github.event.issue.labels.*.name, 'id-reservation')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Generate app token
+        id: token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_ACTIONS_HELPER_APP_ID }}
+          private-key: ${{ secrets.GH_ACTIONS_HELPER_PK }}
+
+      - name: Authorize requester
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          EVENT_ACTION: ${{ github.event.action }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          LABELER: ${{ github.event.sender.login }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          if [[ "$EVENT_ACTION" == "labeled" ]]; then
+            user="$LABELER"
+          else
+            user="$ISSUE_AUTHOR"
+          fi
+          perm=$(gh api "repos/$REPO/collaborators/$user/permission" --jq .permission)
+          echo "User '$user' has permission: $perm"
+          if [[ "$perm" != "admin" && "$perm" != "write" ]]; then
+            gh issue comment "$ISSUE_NUMBER" \
+              -b "Sorry @$user — only maintainers (write/admin) may reserve IDs."
+            gh issue edit  "$ISSUE_NUMBER" --remove-label id-reservation || true
+            gh issue close "$ISSUE_NUMBER" -r "not planned"
+            exit 1
+          fi
+
+      - name: Short-circuit if a reservation PR already exists
+        id: precheck
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          branch="id-reservation/issue-$ISSUE_NUMBER"
+          existing=$(gh pr list --head "$branch" --state all --json url --jq '.[0].url' || true)
+          if [[ -n "$existing" ]]; then
+            gh issue comment "$ISSUE_NUMBER" \
+              -b "A reservation PR already exists for this issue: $existing"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.precheck.outputs.skip != 'true'
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.token.outputs.token }}
+          fetch-depth: 0
+
+      - name: Setup Python
+        if: steps.precheck.outputs.skip != 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Parse issue body
+        id: parse
+        if: steps.precheck.outputs.skip != 'true'
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: python .github/scripts/reserve_ids/parse_issue.py
+
+      - name: Reserve IDs from lambdas
+        id: reserve
+        if: steps.precheck.outputs.skip != 'true'
+        env:
+          DATASET_URL: ${{ secrets.RESERVE_DATASET_IDS_URL }}
+          DEPOSITION_URL: ${{ secrets.RESERVE_DEPOSITION_IDS_URL }}
+          DATASET_COUNT: ${{ steps.parse.outputs.dataset_count }}
+          RESERVE_DEPOSITION: ${{ steps.parse.outputs.reserve_deposition }}
+        run: |
+          # TODO: confirm exact request/response contract with the user.
+          # Placeholder: POST {"count": N} -> {"ids": [...]}.
+          dataset_ids='[]'
+          deposition_id=''
+          if [[ "$DATASET_COUNT" -gt 0 ]]; then
+            dataset_ids=$(curl -fsS -X POST "$DATASET_URL" \
+              -H 'content-type: application/json' \
+              -d "{\"count\":$DATASET_COUNT}" | jq -c '.ids')
+          fi
+          if [[ "$RESERVE_DEPOSITION" == "yes" ]]; then
+            deposition_id=$(curl -fsS -X POST "$DEPOSITION_URL" \
+              -H 'content-type: application/json' \
+              -d '{"count":1}' | jq -r '.ids[0]')
+          fi
+          echo "dataset_ids=$dataset_ids" >> "$GITHUB_OUTPUT"
+          echo "deposition_id=$deposition_id" >> "$GITHUB_OUTPUT"
+          echo "Reserved: dataset_ids=$dataset_ids, deposition_id=$deposition_id"
+
+      - name: Generate stub YAML files
+        if: steps.precheck.outputs.skip != 'true'
+        env:
+          DATASET_IDS: ${{ steps.reserve.outputs.dataset_ids }}
+          DEPOSITION_ID: ${{ steps.reserve.outputs.deposition_id }}
+          DEPOSITION_TYPES: ${{ steps.parse.outputs.deposition_types }}
+        run: python .github/scripts/reserve_ids/gen_stubs.py
+
+      - name: Open draft PR
+        id: cpr
+        if: steps.precheck.outputs.skip != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ steps.token.outputs.token }}
+          branch: id-reservation/issue-${{ github.event.issue.number }}
+          base: main
+          draft: true
+          commit-message: "chore: reserve IDs for issue #${{ github.event.issue.number }}"
+          title: "chore: reserve IDs for issue #${{ github.event.issue.number }}"
+          body: |
+            Closes #${{ github.event.issue.number }}
+
+            Auto-generated stub YAMLs for reserved IDs. This PR is opened as a
+            **draft** so the requester can complete the required fields per
+            `ingestion_tools/dataset_configs/template.yaml` before marking it ready.
+
+            - Dataset IDs:   ${{ steps.reserve.outputs.dataset_ids }}
+            - Deposition ID: ${{ steps.reserve.outputs.deposition_id }}
+          labels: id-reservation,automated
+
+      - name: Report success on issue
+        if: steps.precheck.outputs.skip != 'true' && steps.cpr.outputs.pull-request-url != ''
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
+          DATASET_IDS: ${{ steps.reserve.outputs.dataset_ids }}
+          DEPOSITION_ID: ${{ steps.reserve.outputs.deposition_id }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" -b "Reserved. Draft PR: $PR_URL
+          Dataset IDs: $DATASET_IDS
+          Deposition ID: $DEPOSITION_ID"
+          gh issue close "$ISSUE_NUMBER" -r completed
+
+      - name: Recover orphaned IDs if PR step failed
+        if: failure() && steps.reserve.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          DATASET_IDS: ${{ steps.reserve.outputs.dataset_ids }}
+          DEPOSITION_ID: ${{ steps.reserve.outputs.deposition_id }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" -b "⚠️ IDs were reserved but PR creation failed — IDs are NOT lost. Reserved:
+          Dataset IDs: $DATASET_IDS
+          Deposition ID: $DEPOSITION_ID"
+          gh issue edit "$ISSUE_NUMBER" --add-label reservation-orphan || true

@@ -26,6 +26,9 @@ on:
 jobs:
   run-validation:
     name: Validate dataset configs
+    # Skip validation on PRs from the auto-generated id-reservation branches —
+    # those stubs are intentionally minimal and would always fail validation.
+    if: github.event_name != 'pull_request' || !startsWith(github.head_ref, 'id-reservation/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
