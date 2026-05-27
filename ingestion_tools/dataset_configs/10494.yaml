@@ -133,7 +133,7 @@ datasets:
       id: CL:0000520
       name: prokaryotic cell
     cross_references:
-      publications: 10.64898/2026.05.20.726049v1
+      publications: 10.64898/2026.05.20.726049
       related_database_entries: EMD-77086, EMD-77088
     dataset_description: "Leviviridae PP7 VLP were inoculated into BL21(DE3) E. coli\
       \ and high-pressure frozen at the 2-hour timepoint. 5 lamellae were generated\

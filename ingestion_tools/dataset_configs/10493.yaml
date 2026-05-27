@@ -201,7 +201,7 @@ datasets:
       id: CL:0000520
       name: prokaryotic cell
     cross_references:
-      publications: 10.64898/2026.05.20.726049v1
+      publications: 10.64898/2026.05.20.726049
       related_database_entries: EMD-77085, EMD-77087
     dataset_description:
       Leviviridae PP7 VLP were inoculated into BL21(DE3) E. coli and plunge-frozen at the 1-hour timepoint. The targets
