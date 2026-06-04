@@ -473,6 +473,24 @@ async def validate_cl_id(id: str) -> Tuple[List[str], bool]:
     return [], False
 
 
+def _strict_name_match(name: str, retrieved: str) -> bool:
+    return name == retrieved
+
+
+def _substring_name_match(name: str, retrieved: str) -> bool:
+    """
+    Case-insensitive, punctuation-tolerant substring match (either direction).
+    Used for PDB names, where the curated label is usually a substring of an RCSB-returned
+    name (or vice versa) rather than an exact match.
+    """
+    def norm(s: str) -> str:
+        return re.sub(r"[^a-z0-9]+", " ", s.lower()).strip()
+    n, r = norm(name), norm(retrieved)
+    if not n or not r:
+        return False
+    return n in r or r in n
+
+
 def validate_id_name_object(
     self: Union[AnnotationObject, CellComponent, CellStrain, CellType, OrganismDetails, TissueDetails],
     id: str,
@@ -482,11 +500,12 @@ def validate_id_name_object(
     ancestor: str | None = None,
     validate_id_function: callable = validate_id,
     validate_ancestor_function: callable = is_id_ancestor,
+    name_match_function: Callable[[str, str], bool] = _strict_name_match,
 ) -> None:
     """
     Validates the ID and name, ensuring that:
     - The ID is valid (exists in the OLS API)
-    - The name matches the ID
+    - The name matches the ID (per `name_match_function`)
     - The name is an ancestor of the ancestor ID (if provided)
     """
     if (
@@ -511,7 +530,7 @@ def validate_id_name_object(
     logger.debug("Valid ID, now checking if name '%s' matches ID: %s", name, id)
 
     # if retrieved_names is empty, we can assume the name is valid
-    valid_name = retrieved_names == [] or any(name == retrieved_name for retrieved_name in retrieved_names)
+    valid_name = retrieved_names == [] or any(name_match_function(name, rn) for rn in retrieved_names)
 
     if not valid_name:
         raise ValueError(f"name '{name}' does not match id: {id}, retrieved names: {retrieved_names}")
@@ -630,17 +649,54 @@ async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
 @alru_cache
 async def validate_pdb_id(id: str) -> Tuple[List[str], bool]:
     """
-    Returns a tuple of the PDB entry's title (if any) and whether the ID is valid.
+    Returns the name-like fields RCSB exposes for this PDB entry, plus a validity flag.
+
+    Collects the entry title/descriptor/keywords plus each polymer entity's description and
+    macromolecular names, so short curated labels (e.g. "ClpB") can validate via
+    _substring_name_match without exact-matching the verbose RCSB deposition title.
     """
     stripped = id.replace("PDB-", "")
-    url = f"https://data.rcsb.org/rest/v1/core/entry/{stripped}"
-    async with aiohttp.ClientSession() as session, session.get(url) as response:
-        logger.debug("Checking PDB ID %s at %s, status %s", stripped, url, response.status)
-        if response.status != 200:
-            return [], False
-        data = await response.json()
-        title = data.get("struct", {}).get("title")
-        return ([title] if title else []), True
+    entry_url = f"https://data.rcsb.org/rest/v1/core/entry/{stripped}"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(entry_url) as response:
+            logger.debug("Checking PDB ID %s at %s, status %s", stripped, entry_url, response.status)
+            if response.status != 200:
+                return [], False
+            entry = await response.json()
+
+        names: List[str] = []
+        struct = entry.get("struct") or {}
+        if t := struct.get("title"):
+            names.append(t)
+        if d := struct.get("pdbx_descriptor"):
+            names.append(d)
+
+        kw = entry.get("struct_keywords") or {}
+        if k := kw.get("pdbx_keywords"):
+            names.append(k)
+
+        entity_ids = (entry.get("rcsb_entry_container_identifiers") or {}).get("polymer_entity_ids", [])
+        if entity_ids:
+            async def _fetch_entity(entity_id: str) -> Optional[dict]:
+                url = f"https://data.rcsb.org/rest/v1/core/polymer_entity/{stripped}/{entity_id}"
+                async with session.get(url) as r:
+                    if r.status != 200:
+                        return None
+                    return await r.json()
+
+            entities = await asyncio.gather(*[_fetch_entity(eid) for eid in entity_ids])
+            for e in entities:
+                if not e:
+                    continue
+                pe = e.get("rcsb_polymer_entity") or {}
+                if d := pe.get("pdbx_description"):
+                    names.append(d)
+                for nm in pe.get("rcsb_macromolecular_names_combined") or []:
+                    if v := nm.get("name"):
+                        names.append(v)
+                for v in (pe.get("rcsb_polymer_name_combined") or {}).get("names") or []:
+                    names.append(v)
+        return names, True
 
 
 async def lookup_pdb(pdb_id: str) -> Tuple[str, bool]:
@@ -843,7 +899,13 @@ class ExtendedValidationAnnotationObject(AnnotationObject):
         elif re.match(UBERON_ID_REGEX, self.id) or re.match(CHEBI_ID_REGEX, self.id):
             validate_id_name_object(self, self.id, self.name)
         elif re.match(PDB_ID_REGEX, self.id):
-            validate_id_name_object(self, self.id, self.name, validate_id_function=validate_pdb_id)
+            validate_id_name_object(
+                self,
+                self.id,
+                self.name,
+                validate_id_function=validate_pdb_id,
+                name_match_function=_substring_name_match,
+            )
         return self
 
 
