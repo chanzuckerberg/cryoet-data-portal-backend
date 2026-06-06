@@ -135,10 +135,22 @@ async def test_onetomany_groupby_aggregate(
         for run in [r1, r2, r3]:
             vs = TomogramVoxelSpacingFactory.create(run=run)
             annos = []
-            annos.append(AnnotationFactory.create(run=run, object_name="some membrane", deposition=dep, tomogram_voxel_spacing=vs))
-            annos.append(AnnotationFactory.create(run=run, object_name="another membrane", deposition=dep, tomogram_voxel_spacing=vs))
-            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep, tomogram_voxel_spacing=vs))
-            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep2, tomogram_voxel_spacing=vs))
+            annos.append(
+                AnnotationFactory.create(
+                    run=run, object_name="some membrane", deposition=dep, tomogram_voxel_spacing=vs,
+                ),
+            )
+            annos.append(
+                AnnotationFactory.create(
+                    run=run, object_name="another membrane", deposition=dep, tomogram_voxel_spacing=vs,
+                ),
+            )
+            annos.append(
+                AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep, tomogram_voxel_spacing=vs),
+            )
+            annos.append(
+                AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep2, tomogram_voxel_spacing=vs),
+            )
             for anno in annos:
                 AnnotationShapeFactory.create(annotation=anno, shape_type="SegmentationMask")
             AnnotationShapeFactory.create(annotation=annos[1], shape_type="OrientedPoint")
@@ -206,10 +218,22 @@ async def test_manytoone_groupby_aggregate(
         for run in [r1, r2, r3]:
             vs = TomogramVoxelSpacingFactory.create(run=run)
             annos = []
-            annos.append(AnnotationFactory.create(run=run, object_name="some membrane", deposition=dep, tomogram_voxel_spacing=vs))
-            annos.append(AnnotationFactory.create(run=run, object_name="another membrane", deposition=dep, tomogram_voxel_spacing=vs))
-            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep, tomogram_voxel_spacing=vs))
-            annos.append(AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep2, tomogram_voxel_spacing=vs))
+            annos.append(
+                AnnotationFactory.create(
+                    run=run, object_name="some membrane", deposition=dep, tomogram_voxel_spacing=vs,
+                ),
+            )
+            annos.append(
+                AnnotationFactory.create(
+                    run=run, object_name="another membrane", deposition=dep, tomogram_voxel_spacing=vs,
+                ),
+            )
+            annos.append(
+                AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep, tomogram_voxel_spacing=vs),
+            )
+            annos.append(
+                AnnotationFactory.create(run=run, object_name="ribosome", deposition=dep2, tomogram_voxel_spacing=vs),
+            )
             for anno in annos:
                 AnnotationShapeFactory.create(annotation=anno, shape_type="SegmentationMask")
             AnnotationShapeFactory.create(annotation=annos[1], shape_type="OrientedPoint")
