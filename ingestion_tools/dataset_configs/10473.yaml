@@ -44,11 +44,11 @@ datasets:
       corresponding_author_status: false
     - name: Abhay Kotecha
       primary_author_status: false
-      corresponding_author_status: false
+      corresponding_author_status: true
     - name: Jurgen Plitzko
       ORCID: 0000-0002-6402-8315
       primary_author_status: false
-      corresponding_author_status: false
+      corresponding_author_status: true
     - name: Philipp S. Erdmann
       ORCID: 0000-0001-8289-9133
       primary_author_status: false
@@ -91,7 +91,8 @@ datasets:
       from gas injection system. No post-milling platinum sputter coating was applied (control condition).
     cross_references:
       publications: 10.1101/2022.06.16.496417
-      related_database_entries: EMPIAR-11398
+      related_database_entries: EMPIAR-11398, EMD-16537
+    other_setup: Cryo-FIB milling
   sources:
   - literal:
       value:
@@ -115,7 +116,7 @@ depositions:
     dates: *dataset_dates
     cross_references:
       publications: 10.1101/2022.06.16.496417
-      related_database_entries: EMPIAR-11398
+      related_database_entries: EMPIAR-11398, EMD-16537
   sources:
   - literal:
       value:

@@ -92,7 +92,8 @@ datasets:
       from gas injection system. Post-milling platinum sputter coating was applied.
     cross_references:
       publications: 10.1101/2022.06.16.496417
-      related_database_entries: EMPIAR-11398
+      related_database_entries: EMPIAR-11398, EMD-16537
+    other_setup: Cryo-FIB milling
   sources:
   - literal:
       value:
