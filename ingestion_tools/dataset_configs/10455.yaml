@@ -236,7 +236,7 @@ datasets:
       name: prokaryotic cell
     cross_references:
       publications: 10.64898/2026.05.20.726049
-    dataset_description: "Leviridae PP7 VLP were inoculated into BL21(DE3) E. coli\
+    dataset_description: "Leviviridae PP7 VLP were inoculated into BL21(DE3) E. coli\
       \ and plunge-frozen at the 3-hour timepoint. The targets for cryoET were selected\
       \ based on high crowdedness and variable thickness (100-300 nm). The processing\
       \ pipeline includes AreTomo3 Live, Embrella, copick, octopi, and py2rely. The\
