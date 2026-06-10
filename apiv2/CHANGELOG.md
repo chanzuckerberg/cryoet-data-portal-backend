@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.24.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.23.0...apiv2-v1.24.0) (2026-06-10)
+
+
+### Features
+
+* PDB on annotation/identified objects, UBERON/CHEBI on identified objects; PDB/UBERON/CHEBI extended validation for annotation objects ([#681](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/681)) ([a785baa](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a785baaf31a97c7b8a9796f56d5a43b0cf6808c6))
+
 ## [1.23.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.22.0...apiv2-v1.23.0) (2026-05-07)
 
 
