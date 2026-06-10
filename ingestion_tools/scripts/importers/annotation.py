@@ -14,7 +14,7 @@ from common.config import DepositionImportConfig
 from common.finders import BaseFinder, DepositionObjectImporterFactory, SourceGlobFinder, SourceMultiGlobFinder
 from common.fs import FileSystemApi
 from common.id_helper import IdentifierHelper
-from common.image import check_mask_for_label, make_pyramids
+from common.image import check_mask_for_label, get_volume_info, make_pyramids
 from common.metadata import AnnotationMetadata
 from importers.alignment import AlignmentImporter
 from importers.base_importer import BaseImporter
@@ -33,7 +33,7 @@ class AnnotationIdentifierHelper(IdentifierHelper):
         vs = parents["voxel_spacing"]
         anno_dir_path = config.resolve_output_path("annotation", vs, {"annotation_id": "*"})
         # Use *[0-9].json to match only annotation metadata files (e.g., some_protein-1.0.json)
-        # and exclude annotation data files which have a _{shape} suffix (e.g., some_protein-1.0_globalcaption.json)
+        # and exclude annotation data files which have a _{shape} suffix (e.g., some_protein-1.0_globalcaption.json, some_protein-1.0_point_caption.json)
         return os.path.join(anno_dir_path, "*[0-9].json")
 
     @classmethod
@@ -117,6 +117,8 @@ class AnnotationImporterFactory(DepositionObjectImporterFactory):
             anno = TriangularMeshAnnotationGroup(**instance_args)
         if shape == "GlobalCaption":
             anno = GlobalCaptionAnnotation(**instance_args)
+        if shape == "AnnotationCaption":
+            anno = AnnotationCaptionAnnotation(**instance_args)
         if not anno:
             raise NotImplementedError(f"Unknown shape {shape}")
         if anno.is_valid():
@@ -269,6 +271,16 @@ class VolumeAnnotationSource(BaseAnnotationSource):
         )
         return dims
 
+    def _get_resize_target(self) -> tuple[int, int, int] | None:
+        """Return target dims when rescaling is needed; None if rescale is off
+        or the source already matches the target dims (no-op resize)."""
+        if not getattr(self, "rescale", False):
+            return None
+        target = self.get_output_dim()
+        d = get_volume_info(self.config.fs, self.path).get_dimensions()
+        src = (d["z"], d["y"], d["x"])
+        return None if src == target else target
+
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
         metadata = [
             {
@@ -308,7 +320,7 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
             raise ValueError("Thresholding and selecting by label are mutually exclusive")
 
     def convert(self, output_prefix: str):
-        output_dims = self.get_output_dim() if self.rescale else None
+        output_dims = self._get_resize_target()
         return make_pyramids(
             self.config.fs,
             self.get_output_filename(output_prefix),
@@ -340,7 +352,7 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
         self.is_portal_standard = is_portal_standard
 
     def convert(self, output_prefix: str):
-        output_dims = self.get_output_dim() if self.rescale else None
+        output_dims = self._get_resize_target()
 
         return make_pyramids(
             self.config.fs,
@@ -397,7 +409,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             raise ValueError("Thresholding and selecting by label are mutually exclusive")
 
     def convert(self, output_prefix: str):
-        output_dims = self.get_output_dim() if self.rescale else None
+        output_dims = self._get_resize_target()
         return make_pyramids(
             self.config.fs,
             self.get_output_filename(output_prefix),
@@ -719,3 +731,50 @@ class GlobalCaptionAnnotation(BaseAnnotationSource):
         with self.config.fs.open(output_file, "r") as f:
             data = json.load(f)
         return len(data.get("captions", []))
+
+
+class AnnotationCaptionAnnotation(BaseAnnotationSource):
+    """Annotation source for per-instance annotation captions tied to a companion shape."""
+
+    shape = "AnnotationCaption"
+    output_format: str = "json"
+    companion_shape: str
+    # TODO: Implement converter functions when the json structure change or the input format is not json
+    map_functions = {
+        "saber": shutil.copy,
+    }
+    valid_file_formats = list(map_functions.keys())
+
+    def __init__(self, companion_shape: str, *args, **kwargs) -> None:
+        self.companion_shape = companion_shape
+        super().__init__(*args, **kwargs)
+
+    def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
+        filename = f"{output_prefix}_{self.companion_shape.lower()}_caption"
+        if extension:
+            filename = f"{filename}.{extension}"
+        return filename
+
+    def convert(self, output_prefix: str):
+        output_file_name = self.get_output_filename(output_prefix, self.output_format)
+        input_file = self.config.fs.localreadable(self.path)
+        output_file = self.config.fs.localwritable(output_file_name)
+        self.map_functions[self.file_format](input_file, output_file)
+        self.config.fs.push(output_file)
+
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        metadata = [
+            {
+                "format": self.output_format,
+                "path": self.get_output_filename(output_prefix, self.output_format),
+                "shape": self.shape,
+                "is_visualization_default": False,
+            },
+        ]
+        return metadata
+
+    def get_object_count(self, output_prefix: str) -> int:
+        output_file = self.get_output_filename(output_prefix, self.output_format)
+        with self.config.fs.open(output_file, "r") as f:
+            data = json.load(f)
+        return len(data.get("objects", []))

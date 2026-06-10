@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - .github/workflows/ingestion-config-validate.yaml
       - ingestion_tools/dataset_configs/**
       - schema/**/*.py
       - schema/**/*.yaml
@@ -13,6 +14,7 @@ on:
       - schema/.version
   pull_request:
     paths:
+      - .github/workflows/ingestion-config-validate.yaml
       - ingestion_tools/dataset_configs/**
       - schema/**/*.py
       - schema/**/*.yaml
@@ -28,6 +30,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -41,9 +45,51 @@ jobs:
       - name: Build Pydantic models
         run: make build
         working-directory: schema/
-      - name: Validate dataset configs
+      - name: Determine files to validate
+        id: changed-files
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
         run: |
-          make validate-configs-with-network
+          # For workflow_dispatch, validate everything
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "validate_all=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Determine base commit for diff
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            BASE="$PR_BASE_SHA"
+          else
+            BASE="$PUSH_BEFORE_SHA"
+          fi
+
+          # If schema files changed, validate all configs
+          SCHEMA_CHANGED=$(git diff --name-only "$BASE" HEAD -- 'schema/' | head -1)
+          if [ -n "$SCHEMA_CHANGED" ]; then
+            echo "validate_all=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Otherwise, only validate changed configs (exclude deletions)
+          # Paths are repo-root-relative; prepend $GITHUB_WORKSPACE to make them absolute
+          CHANGED_CONFIGS=$(git diff --name-only --diff-filter=ACMR "$BASE" HEAD -- 'ingestion_tools/dataset_configs/*.yaml' \
+            | sed "s|^|$GITHUB_WORKSPACE/|" | tr '\n' ' ')
+          echo "validate_all=false" >> $GITHUB_OUTPUT
+          echo "changed_files=$CHANGED_CONFIGS" >> $GITHUB_OUTPUT
+      - name: Validate dataset configs
+        env:
+          VALIDATE_ALL: ${{ steps.changed-files.outputs.validate_all }}
+          CHANGED_FILES: ${{ steps.changed-files.outputs.changed_files }}
+        run: |
+          if [ "$VALIDATE_ALL" = "true" ]; then
+            make validate-configs-with-network
+          elif [ -n "$CHANGED_FILES" ]; then
+            make validate-changed-configs-with-network CHANGED_FILES="$CHANGED_FILES"
+          else
+            echo "No config files to validate."
+          fi
         working-directory: schema/
       - name: Archive validation results
         if: failure()

@@ -12,6 +12,7 @@ from test_infra.factories.annotation import AnnotationFactory
 from test_infra.factories.dataset import DatasetFactory
 from test_infra.factories.run import RunFactory
 from test_infra.factories.tomogram import TomogramFactory
+from test_infra.factories.tomogram_voxel_spacing import TomogramVoxelSpacingFactory
 
 date_now = datetime.datetime.now()
 
@@ -34,13 +35,15 @@ async def test_filter_query(
         # create a run that matches the annotation filter but not the name filter.
         r3 = RunFactory.create(name="012")
         for run in [r1, r2, r3]:
+            vs = TomogramVoxelSpacingFactory.create(run=run)
             # important: add *two* membrane annotations for each run!
-            AnnotationFactory.create(run=run, object_name="some membrane")
-            AnnotationFactory.create(run=run, object_name="another membrane")
-            AnnotationFactory.create(run=run, object_name="ribosome")
+            AnnotationFactory.create(run=run, object_name="some membrane", tomogram_voxel_spacing=vs)
+            AnnotationFactory.create(run=run, object_name="another membrane", tomogram_voxel_spacing=vs)
+            AnnotationFactory.create(run=run, object_name="ribosome", tomogram_voxel_spacing=vs)
         # create a run that matches the name filter but not the annotation filter
         r3 = RunFactory.create(name="003")
-        AnnotationFactory.create(run=r3, object_name="ribosome")
+        vs = TomogramVoxelSpacingFactory.create(run=r3)
+        AnnotationFactory.create(run=r3, object_name="ribosome", tomogram_voxel_spacing=vs)
 
     # Fetch all runs that have membrane annotations and names starting with "00"
     query = """
@@ -77,15 +80,17 @@ async def test_aggregate_filter_query(
         # create a run that matches the annotation filter but not the name filter.
         r3 = RunFactory.create(name="012", dataset=ds)
         for run in [r1, r2, r3]:
+            vs = TomogramVoxelSpacingFactory.create(run=run)
             # important: add *two* membrane annotations for each run!
             TomogramFactory.create(run=run, name=run.name)
-            AnnotationFactory.create(run=run, object_name="some membrane")
-            AnnotationFactory.create(run=run, object_name="another membrane")
-            AnnotationFactory.create(run=run, object_name="ribosome")
+            AnnotationFactory.create(run=run, object_name="some membrane", tomogram_voxel_spacing=vs)
+            AnnotationFactory.create(run=run, object_name="another membrane", tomogram_voxel_spacing=vs)
+            AnnotationFactory.create(run=run, object_name="ribosome", tomogram_voxel_spacing=vs)
         # create a run that matches the name filter but not the annotation filter
         r3 = RunFactory.create(name="003", dataset=ds)
+        vs = TomogramVoxelSpacingFactory.create(run=r3)
         TomogramFactory.create(run=r3, name=r3.name)
-        AnnotationFactory.create(run=r3, object_name="ribosome")
+        AnnotationFactory.create(run=r3, object_name="ribosome", tomogram_voxel_spacing=vs)
 
     # Fetch aggregate stats for tomograms that belong to runs with membrane annotations.
     query = """

@@ -102,6 +102,7 @@ def execute_allure_tests(
 
     executable_cmd_component = [
         "pytest",
+        ".",
         "--dist loadscope -n auto" if kwargs.get("multiprocessing") else "--dist no",
         f"--alluredir {localdir_raw}",
     ]

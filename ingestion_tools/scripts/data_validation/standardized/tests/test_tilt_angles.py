@@ -36,13 +36,29 @@ class TestTiltAngles(TiltAnglesHelper):
         frames_headers: dict[str, list[tifffile.TiffPage] | MrcInterpreter],
         tiltseries_metadata: dict,
     ):
+        errors = []
         for frame_file, frame_header in frames_headers.items():
             if isinstance(frame_header, MrcInterpreter):
                 # only need to check the first frame, since we check that all frames have the same pixel spacing
-                assert tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["x"] == pytest.approx(
-                    round(tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["y"]),
-                    abs=0.001,
-                ), f"Pixel spacing does not match tiltseries metadata, {frame_file}"
-                return
+                if tiltseries_metadata["pixel_spacing"] == 0:
+                    errors.append(
+                        f"Tiltseries metadata pixel spacing is 0, cannot check if it's an integer multiple of frame pixel spacing, {frame_file}",
+                    )
+                    continue
+                if frame_header.voxel_size["x"] == 0 or frame_header.voxel_size["y"] == 0:
+                    errors.append(
+                        f"Frame voxel size is 0, cannot check if tiltseries metadata pixel spacing is an integer multiple of frame pixel spacing, {frame_file}",
+                    )
+                    continue
+
+                if tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["x"] != pytest.approx(
+                    round(tiltseries_metadata["pixel_spacing"] / frame_header.voxel_size["y"]), abs=0.001,
+                ):
+                    errors.append(
+                        f"Pixel spacing does not match tiltseries metadata, {frame_file}, {dataset}",
+                    )
+
+                assert not errors, "\n".join(errors)
+                break
 
     ### END Tiltseries consistency tests ###

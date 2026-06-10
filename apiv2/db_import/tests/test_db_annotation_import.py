@@ -5,7 +5,6 @@ import pytest as pytest
 from database import models
 from db_import.tests.populate_db import (
     ANNOTATION_AUTHOR_ID,
-    ANNOTATION_FILE_ID,
     ANNOTATION_ID,
     ANNOTATION_METHOD_LINK_ID,
     DATASET_ID,
@@ -56,6 +55,24 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
     return [
         {
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
+            "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_point_caption.json",
+            "https_path": f"{http_prefix}/{path}100-foo-1.0_point_caption.json",
+            "source": "community",
+            "format": "saber",
+            "is_visualization_default": False,
+            "file_size": 0,
+        },
+        {
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
+            "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_globalcaption.json",
+            "https_path": f"{http_prefix}/{path}100-foo-1.0_globalcaption.json",
+            "source": "community",
+            "format": "saber",
+            "is_visualization_default": False,
+            "file_size": 0,
+        },
+        {
+            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_instancesegmask.mrc",
             "https_path": f"{http_prefix}/{path}100-foo-1.0_instancesegmask.mrc",
             "source": "community",
@@ -73,7 +90,6 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
             "file_size": 0,
         },
         {
-            "id": ANNOTATION_FILE_ID,
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_point.ndjson",
             "https_path": f"{http_prefix}/{path}100-foo-1.0_point.ndjson",
@@ -178,8 +194,6 @@ def test_import_annotations(
     assert len(files) == len(expected_annotation_files)
 
 
-# Tests state annotation and files are removed
-@pytest.mark.skip(reason="Cleaning up stale annotations is currently disabled.")
 def test_import_annotations_files_removes_stale(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],
@@ -194,12 +208,15 @@ def test_import_annotations_files_removes_stale(
     expected_annotations_iter = iter(expected_annotations)
     expected_annotations_files_iter = iter(expected_annotation_files)
     actual_runs = sync_db_session.get(models.Run, RUN1_ID)
+    files = []
     for annotation in sorted(actual_runs.annotations, key=lambda x: x.s3_metadata_path):
         verify_model(annotation, next(expected_annotations_iter))
-        assert len(annotation.files) == len(expected_annotation_files)
-        for file in annotation.files.order_by(models.AnnotationFile.shape_type, models.AnnotationFile.format):
-            verify_model(file, next(expected_annotations_files_iter))
+        for shape in sorted(annotation.annotation_shapes, key=lambda x: x.shape_type):
+            files.extend(shape.annotation_files)
+            for file in sorted(shape.annotation_files, key=lambda x: x.format):
+                verify_model(file, next(expected_annotations_files_iter))
         assert len(annotation.authors) == 0
+    assert len(files) == len(expected_annotation_files)
 
 
 # Tests update of existing annotation authors, addition of new authors

@@ -13,6 +13,7 @@ import graphql_api.helpers.annotation_method_link as annotation_method_link_help
 import graphql_api.helpers.annotation_shape as annotation_shape_helper
 import graphql_api.helpers.deposition as deposition_helper
 import graphql_api.helpers.run as run_helper
+import graphql_api.helpers.tomogram_voxel_spacing as tomogram_voxel_spacing_helper
 import strawberry
 from support.enums import annotation_method_type_enum
 
@@ -22,12 +23,14 @@ if TYPE_CHECKING:
     from graphql_api.helpers.annotation_shape import AnnotationShapeGroupByOptions
     from graphql_api.helpers.deposition import DepositionGroupByOptions
     from graphql_api.helpers.run import RunGroupByOptions
+    from graphql_api.helpers.tomogram_voxel_spacing import TomogramVoxelSpacingGroupByOptions
 else:
     RunGroupByOptions = "RunGroupByOptions"
     AnnotationShapeGroupByOptions = "AnnotationShapeGroupByOptions"
     AnnotationMethodLinkGroupByOptions = "AnnotationMethodLinkGroupByOptions"
     AnnotationAuthorGroupByOptions = "AnnotationAuthorGroupByOptions"
     DepositionGroupByOptions = "DepositionGroupByOptions"
+    TomogramVoxelSpacingGroupByOptions = "TomogramVoxelSpacingGroupByOptions"
 
 
 """
@@ -51,6 +54,9 @@ class AnnotationGroupByOptions:
     deposition: Optional[Annotated["DepositionGroupByOptions", strawberry.lazy("graphql_api.helpers.deposition")]] = (
         None
     )
+    tomogram_voxel_spacing: Optional[
+        Annotated["TomogramVoxelSpacingGroupByOptions", strawberry.lazy("graphql_api.helpers.tomogram_voxel_spacing")]
+    ] = None
     s3_metadata_path: Optional[str] = None
     https_metadata_path: Optional[str] = None
     annotation_publication: Optional[str] = None
@@ -149,6 +155,19 @@ def build_annotation_groupby_output(
                 )
             else:
                 value = deposition_helper.build_deposition_groupby_output(
+                    None,
+                    keys,
+                    value,
+                )
+        case "tomogram_voxel_spacing":
+            if getattr(group_object, key):
+                value = tomogram_voxel_spacing_helper.build_tomogram_voxel_spacing_groupby_output(
+                    getattr(group_object, key),
+                    keys,
+                    value,
+                )
+            else:
+                value = tomogram_voxel_spacing_helper.build_tomogram_voxel_spacing_groupby_output(
                     None,
                     keys,
                     value,

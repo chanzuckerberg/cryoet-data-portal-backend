@@ -1,5 +1,57 @@
 # Changelog
 
+## [1.23.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.22.0...apiv2-v1.23.0) (2026-05-07)
+
+
+### Features
+
+* Ingest configs for arabidopsis datasets.  ([#669](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/669)) ([89e2667](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/89e2667ba27f155e0638b3010b010b99c7eea8c5))
+
+
+### Bug Fixes
+
+* expire DB-cache in conftest to fix flaky test. ([#671](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/671)) ([625bd8d](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/625bd8da11f5550658838e936319df51d306a6c5))
+* prevent duplicate identified_object  on re-ingestion ([#679](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/679)) ([f8f1881](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/f8f1881e546c7fcdf0fe2f2a3ddb206764a45dd7))
+
+
+### Miscellaneous Chores
+
+* **deps:** bump apiv2 dependencies ([#664](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/664)) ([77c0a42](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/77c0a420ed4ef7eceead4a8e2cb97767cf35026e))
+
+## [1.22.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.21.0...apiv2-v1.22.0) (2026-04-22)
+
+
+### Features
+
+* add CL (Cell Ontology) support for annotation object IDs ([#661](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/661)) ([a7a154c](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a7a154ccff372d7564315edd028e7bf4b99e1c3a))
+
+
+### Bug Fixes
+
+* remove hardcoded id assertion for annotation files in test ([#657](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/657)) ([ec03a0e](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/ec03a0e0fb15475eb2e716c5c74ba863f847e666))
+
+## [1.21.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.20.0...apiv2-v1.21.0) (2026-04-01)
+
+
+### Features
+
+* enable stale annotation cleanup during db import ([#642](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/642)) ([2d653cc](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/2d653ccf209f59981ac35b25bef52b321ce27b20))
+
+## [1.20.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.19.0...apiv2-v1.20.0) (2026-03-30)
+
+
+### Features
+
+* add tomogram_voxel_spacing_id foreign key to annotation table ([#641](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/641)) ([be584c0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/be584c0c27f9bf6dc278a67b58a87fb334f73a28))
+* annotation caption for s3 and db/api ingestion ([#629](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/629)) ([b06b786](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/b06b78644fd29e5b97798900c0b7b0fae63c50ac))
+
+## [1.19.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.18.0...apiv2-v1.19.0) (2026-03-19)
+
+
+### Features
+
+* add GlobalCaption to db/api for text annotation ([#625](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/625)) ([756b680](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/756b68075e25a5b426aa73ef514bda1f9d6b1cd1))
+
 ## [1.18.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.17.0...apiv2-v1.18.0) (2026-03-09)
 
 

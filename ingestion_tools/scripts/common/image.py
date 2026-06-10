@@ -42,28 +42,20 @@ from common.retry import (
 class VolumeInfo:
     voxel_size: float
 
-    # start coords
-    xstart: int
-    ystart: int
-    zstart: int
-
-    # end coords
-    xend: int
-    yend: int
-    zend: int
+    # dimensions
+    xdim: int
+    ydim: int
+    zdim: int
 
     # Data we save
     rms: float
     dmean: float
 
     def get_dimensions(self) -> Dict[str, int]:
-        return {d: getattr(self, f"{d}end") - getattr(self, f"{d}start") for d in "xyz"}
+        return {d: getattr(self, f"{d}dim") for d in "xyz"}
 
     def get_max_dimension(self) -> int:
         return max(self.get_dimensions().values())
-
-    def get_center_coords(self) -> List[int]:
-        return [np.round(np.mean([getattr(self, f"{d}end"), getattr(self, f"{d}start")])) for d in "xyz"]
 
 
 class ZarrReader:
@@ -284,9 +276,6 @@ class MRCReader(VolumeReader):
     def get_volume_info(self) -> VolumeInfo:
         return VolumeInfo(
             self._voxel_size,
-            self.header.nxstart.item(),
-            self.header.nystart.item(),
-            self.header.nzstart.item(),
             self.header.nx.item(),
             self.header.ny.item(),
             self.header.nz.item(),
@@ -334,9 +323,6 @@ class OMEZarrReader(VolumeReader):
         z, y, x = self._shape
         return VolumeInfo(
             self._attrs["multiscales"][0]["datasets"][0]["coordinateTransformations"][0]["scale"][1],
-            0,
-            0,
-            0,
             x,
             y,
             z,

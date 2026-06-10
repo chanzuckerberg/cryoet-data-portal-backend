@@ -48,7 +48,7 @@ class HelperTestMRCHeader:
     """
 
     # Class variables that need to be set by the subclass
-    map_id: bytes = b"MAP "
+    map_id: str = "MAP "
     spacegroup: int = None
     mrc_headers: Dict[str, MrcInterpreter] = None
     spacing: float = None
@@ -84,7 +84,7 @@ class HelperTestMRCHeader:
     def test_map_id_string(self):
         def check_map_id(header, _interpreter, _mrc_filename):
             del _interpreter, _mrc_filename
-            assert header.map == self.map_id, f"MAP ID is {header.map}, expected {self.map_id}"
+            assert header.map.item().decode('utf-8').strip() == self.map_id.strip(), f"MAP ID is {header.map}, expected {self.map_id}"
 
         self.mrc_header_helper(check_map_id)
 

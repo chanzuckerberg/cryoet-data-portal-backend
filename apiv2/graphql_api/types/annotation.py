@@ -80,6 +80,12 @@ if TYPE_CHECKING:
         DepositionWhereClause,
     )
     from graphql_api.types.run import Run, RunAggregateWhereClause, RunOrderByClause, RunWhereClause
+    from graphql_api.types.tomogram_voxel_spacing import (
+        TomogramVoxelSpacing,
+        TomogramVoxelSpacingAggregateWhereClause,
+        TomogramVoxelSpacingOrderByClause,
+        TomogramVoxelSpacingWhereClause,
+    )
 
     pass
 else:
@@ -103,6 +109,10 @@ else:
     DepositionAggregateWhereClause = "DepositionAggregateWhereClause"
     Deposition = "Deposition"
     DepositionOrderByClause = "DepositionOrderByClause"
+    TomogramVoxelSpacingWhereClause = "TomogramVoxelSpacingWhereClause"
+    TomogramVoxelSpacingAggregateWhereClause = "TomogramVoxelSpacingAggregateWhereClause"
+    TomogramVoxelSpacing = "TomogramVoxelSpacing"
+    TomogramVoxelSpacingOrderByClause = "TomogramVoxelSpacingOrderByClause"
     pass
 
 
@@ -254,6 +264,27 @@ async def load_deposition_rows(
     return await dataloader.loader_for(relationship, where, order_by).load(root.deposition_id)  # type:ignore
 
 
+@strawberry.field
+async def load_tomogram_voxel_spacing_rows(
+    root: "Annotation",
+    info: Info,
+    where: (
+        Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")] | None
+    ) = None,
+    order_by: Optional[
+        list[
+            Annotated["TomogramVoxelSpacingOrderByClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
+        ]
+    ] = [],
+) -> Optional[Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.Annotation)
+    relationship = mapper.relationships["tomogram_voxel_spacing"]
+    return await dataloader.loader_for(relationship, where, order_by).load(
+        root.tomogram_voxel_spacing_id,
+    )  # type:ignore
+
+
 """
 ------------------------------------------------------------------------------
 Define Strawberry GQL types
@@ -316,6 +347,13 @@ class AnnotationWhereClause(TypedDict):
     )
     deposition: Optional[Annotated["DepositionWhereClause", strawberry.lazy("graphql_api.types.deposition")]] | None
     deposition_id: Optional[IntComparators] | None
+    tomogram_voxel_spacing: (
+        Optional[
+            Annotated["TomogramVoxelSpacingWhereClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
+        ]
+        | None
+    )
+    tomogram_voxel_spacing_id: Optional[IntComparators] | None
     s3_metadata_path: Optional[StrComparators] | None
     https_metadata_path: Optional[StrComparators] | None
     annotation_publication: Optional[StrComparators] | None
@@ -348,6 +386,12 @@ Supported ORDER BY clause attributes
 class AnnotationOrderByClause(TypedDict):
     run: Optional[Annotated["RunOrderByClause", strawberry.lazy("graphql_api.types.run")]] | None
     deposition: Optional[Annotated["DepositionOrderByClause", strawberry.lazy("graphql_api.types.deposition")]] | None
+    tomogram_voxel_spacing: (
+        Optional[
+            Annotated["TomogramVoxelSpacingOrderByClause", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
+        ]
+        | None
+    )
     s3_metadata_path: Optional[orderBy] | None
     https_metadata_path: Optional[orderBy] | None
     annotation_publication: Optional[orderBy] | None
@@ -402,6 +446,10 @@ class Annotation(EntityInterface):
         load_deposition_rows
     )  # type:ignore
     deposition_id: Optional[int]
+    tomogram_voxel_spacing: Optional[
+        Annotated["TomogramVoxelSpacing", strawberry.lazy("graphql_api.types.tomogram_voxel_spacing")]
+    ] = load_tomogram_voxel_spacing_rows  # type:ignore
+    tomogram_voxel_spacing_id: Optional[int]
     s3_metadata_path: str = strawberry.field(description="S3 path for the metadata json file for this annotation")
     https_metadata_path: str = strawberry.field(description="HTTPS path for the metadata json file for this annotation")
     annotation_publication: Optional[str] = strawberry.field(
@@ -608,6 +656,9 @@ Mutation types
 class AnnotationCreateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
+        description="The voxel spacing this annotation is associated with", default=None,
+    )
     s3_metadata_path: str = strawberry.field(description="S3 path for the metadata json file for this annotation")
     https_metadata_path: str = strawberry.field(description="HTTPS path for the metadata json file for this annotation")
     annotation_publication: Optional[str] = strawberry.field(
@@ -672,6 +723,9 @@ class AnnotationCreateInput:
 class AnnotationUpdateInput:
     run_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
     deposition_id: Optional[strawberry.ID] = strawberry.field(description=None, default=None)
+    tomogram_voxel_spacing_id: Optional[strawberry.ID] = strawberry.field(
+        description="The voxel spacing this annotation is associated with", default=None,
+    )
     s3_metadata_path: Optional[str] = strawberry.field(
         description="S3 path for the metadata json file for this annotation",
     )
@@ -867,6 +921,19 @@ async def create_annotation(
         )
         if not deposition:
             raise PlatformicsError("Unauthorized: deposition does not exist")
+    # Check that tomogram_voxel_spacing relationship is accessible.
+    if validated.tomogram_voxel_spacing_id:
+        tomogram_voxel_spacing = await get_db_rows(
+            db.TomogramVoxelSpacing,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.tomogram_voxel_spacing_id}},
+            [],
+            AuthzAction.VIEW,
+        )
+        if not tomogram_voxel_spacing:
+            raise PlatformicsError("Unauthorized: tomogram_voxel_spacing does not exist")
 
     # Save to DB
     params["owner_user_id"] = int(principal.id)
@@ -926,6 +993,21 @@ async def update_annotation(
             raise PlatformicsError("Unauthorized: deposition does not exist")
         params["deposition"] = deposition[0]
         del params["deposition_id"]
+    # Check that tomogram_voxel_spacing relationship is accessible.
+    if validated.tomogram_voxel_spacing_id:
+        tomogram_voxel_spacing = await get_db_rows(
+            db.TomogramVoxelSpacing,
+            session,
+            authz_client,
+            principal,
+            {"id": {"_eq": validated.tomogram_voxel_spacing_id}},
+            [],
+            AuthzAction.VIEW,
+        )
+        if not tomogram_voxel_spacing:
+            raise PlatformicsError("Unauthorized: tomogram_voxel_spacing does not exist")
+        params["tomogram_voxel_spacing"] = tomogram_voxel_spacing[0]
+        del params["tomogram_voxel_spacing_id"]
 
     # Fetch entities for update, if we have access to them
     entities = await get_db_rows(db.Annotation, session, authz_client, principal, where, [], AuthzAction.UPDATE)

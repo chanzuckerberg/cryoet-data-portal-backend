@@ -4,6 +4,7 @@ from typing import Any
 from database import models
 from db_import.common.finders import JsonDataFinder, MetadataFileFinder
 from db_import.importers.base import IntegratedDBImporter, ItemDBImporter
+from db_import.importers.base_importer import StaleParentDeletionDBImporter
 
 
 class AnnotationItem(ItemDBImporter):
@@ -37,6 +38,7 @@ class AnnotationItem(ItemDBImporter):
     def load_computed_fields(self):
         extra_data = {
             "run_id": self.input_data["run"].id,
+            "tomogram_voxel_spacing_id": self.input_data["tomogram_voxel_spacing"].id,
             "s3_metadata_path": self.get_s3_url(self.input_data["file"]),
             "https_metadata_path": self.get_https_url(self.input_data["file"]),
         }
@@ -89,10 +91,7 @@ class AnnotationFileItem(ItemDBImporter):
 class AnnotationImporter(IntegratedDBImporter):
     finder = MetadataFileFinder
     row_importer = AnnotationItem
-    # TODO This should ideally be True, but we've disabled it for the moment since
-    # we are only looking for annotations within a voxel spacing, however those
-    # annotations are only associated with runs.
-    clean_up_siblings = False
+    clean_up_siblings = True
 
     def __init__(self, config, run: models.Run, tomogram_voxel_spacing: models.TomogramVoxelSpacing, **unused_parents):
         self.run = run
@@ -101,12 +100,14 @@ class AnnotationImporter(IntegratedDBImporter):
         self.parents = {"run": run, "tomogram_voxel_spacing": tomogram_voxel_spacing}
 
     def get_filters(self) -> dict[str, Any]:
-        raise NotImplementedError("This method should not be called, since annotations don't support sibling cleanup")
+        return {"tomogram_voxel_spacing_id": self.tomogram_voxel_spacing.id}
 
     def get_finder_args(self) -> dict[str, Any]:
         return {
             "path": os.path.join(self.tomogram_voxel_spacing.s3_prefix, "Annotations/"),
-            "file_glob": "*/*.json",
+            # Use *[0-9].json to match only annotation metadata files (e.g., foo-1.0.json)
+            # and exclude annotation data files which have a _{shape} suffix (e.g., foo-1.0_globalcaption.json, foo-1.0_point_caption.json)
+            "file_glob": "*/*[0-9].json",
         }
 
 
@@ -256,3 +257,13 @@ class AnnotationMethodLinkImporter(IntegratedDBImporter):
             "path": self.convert_to_finder_path(metadata_path),
             "list_key": ["method_links"],
         }
+
+
+class StaleAnnotationDeletionDBImporter(StaleParentDeletionDBImporter):
+    ref_klass = AnnotationItem
+
+    def get_filters(self) -> dict[str, Any]:
+        return {"tomogram_voxel_spacing_id": self.parent_id}
+
+    def children_tables_references(self) -> dict[str, None]:
+        return {}

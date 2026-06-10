@@ -20,6 +20,7 @@ from graphql_api.helpers.tomogram_voxel_spacing import (
     TomogramVoxelSpacingGroupByOptions,
     build_tomogram_voxel_spacing_groupby_output,
 )
+from graphql_api.types.annotation import AnnotationAggregate, format_annotation_aggregate_output
 from graphql_api.types.annotation_file import AnnotationFileAggregate, format_annotation_file_aggregate_output
 from graphql_api.types.tomogram import TomogramAggregate, format_tomogram_aggregate_output
 from sqlalchemy import inspect
@@ -53,6 +54,12 @@ E = typing.TypeVar("E")
 T = typing.TypeVar("T")
 
 if TYPE_CHECKING:
+    from graphql_api.types.annotation import (
+        Annotation,
+        AnnotationAggregateWhereClause,
+        AnnotationOrderByClause,
+        AnnotationWhereClause,
+    )
     from graphql_api.types.annotation_file import (
         AnnotationFile,
         AnnotationFileAggregateWhereClause,
@@ -77,6 +84,10 @@ else:
     RunAggregateWhereClause = "RunAggregateWhereClause"
     Run = "Run"
     RunOrderByClause = "RunOrderByClause"
+    AnnotationWhereClause = "AnnotationWhereClause"
+    AnnotationAggregateWhereClause = "AnnotationAggregateWhereClause"
+    Annotation = "Annotation"
+    AnnotationOrderByClause = "AnnotationOrderByClause"
     TomogramWhereClause = "TomogramWhereClause"
     TomogramAggregateWhereClause = "TomogramAggregateWhereClause"
     Tomogram = "Tomogram"
@@ -137,6 +148,38 @@ async def load_run_rows(
     mapper = inspect(db.TomogramVoxelSpacing)
     relationship = mapper.relationships["run"]
     return await dataloader.loader_for(relationship, where, order_by).load(root.run_id)  # type:ignore
+
+
+@relay.connection(
+    relay.ListConnection[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]],  # type:ignore
+)
+async def load_annotation_rows(
+    root: "TomogramVoxelSpacing",
+    info: Info,
+    where: Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")] | None = None,
+    order_by: Optional[
+        list[Annotated["AnnotationOrderByClause", strawberry.lazy("graphql_api.types.annotation")]]
+    ] = [],
+) -> Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]]:
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.TomogramVoxelSpacing)
+    relationship = mapper.relationships["annotations"]
+    return await dataloader.loader_for(relationship, where, order_by).load(root.id)  # type:ignore
+
+
+@strawberry.field
+async def load_annotation_aggregate_rows(
+    root: "TomogramVoxelSpacing",
+    info: Info,
+    where: Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")] | None = None,
+) -> Optional[Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]]:
+    selections = get_nested_selected_fields(info.selected_fields)
+    dataloader = info.context["sqlalchemy_loader"]
+    mapper = inspect(db.TomogramVoxelSpacing)
+    relationship = mapper.relationships["annotations"]
+    rows = await dataloader.aggregate_loader_for(relationship, where, selections).load(root.id)  # type:ignore
+    aggregate_output = format_annotation_aggregate_output(rows)
+    return aggregate_output
 
 
 @relay.connection(
@@ -203,6 +246,10 @@ class TomogramVoxelSpacingWhereClause(TypedDict):
     )
     run: Optional[Annotated["RunWhereClause", strawberry.lazy("graphql_api.types.run")]] | None
     run_id: Optional[IntComparators] | None
+    annotations: Optional[Annotated["AnnotationWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    annotations_aggregate: (
+        Optional[Annotated["AnnotationAggregateWhereClause", strawberry.lazy("graphql_api.types.annotation")]] | None
+    )
     tomograms: Optional[Annotated["TomogramWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
     tomograms_aggregate: (
         Optional[Annotated["TomogramAggregateWhereClause", strawberry.lazy("graphql_api.types.tomogram")]] | None
@@ -242,6 +289,12 @@ class TomogramVoxelSpacing(EntityInterface):
     ] = load_annotation_file_aggregate_rows  # type:ignore
     run: Optional[Annotated["Run", strawberry.lazy("graphql_api.types.run")]] = load_run_rows  # type:ignore
     run_id: Optional[int]
+    annotations: Sequence[Annotated["Annotation", strawberry.lazy("graphql_api.types.annotation")]] = (
+        load_annotation_rows
+    )  # type:ignore
+    annotations_aggregate: Optional[
+        Annotated["AnnotationAggregate", strawberry.lazy("graphql_api.types.annotation")]
+    ] = load_annotation_aggregate_rows  # type:ignore
     tomograms: Sequence[Annotated["Tomogram", strawberry.lazy("graphql_api.types.tomogram")]] = (
         load_tomogram_rows
     )  # type:ignore

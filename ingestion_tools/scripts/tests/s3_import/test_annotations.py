@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 import trimesh
 from importers.annotation import (
+    AnnotationCaptionAnnotation,
     GlobalCaptionAnnotation,
     InstanceSegmentationAnnotation,
     InstanceSegmentationMaskAnnotation,
@@ -1843,3 +1844,70 @@ def test_ingest_global_caption(
         input_data = json.load(fh)
     assert output_data == input_data
     assert len(output_data["captions"]) == 3
+
+
+def test_ingest_annotation_caption(
+    voxel_spacing_importer_local,
+    deposition_config_local: DepositionImportConfig,
+    local_test_data_dir: str,
+):
+    # Arrange
+    glob_string = "annotations/annotation_caption.json"
+    deposition_config_local._set_object_configs(
+        "annotation",
+        [
+            {
+                "metadata": default_anno_metadata,
+                "sources": [
+                    {
+                        "AnnotationCaption": {
+                            "file_format": "saber",
+                            "glob_string": glob_string,
+                            "is_visualization_default": False,
+                            "companion_shape": "InstanceSegmentation",
+                        },
+                    },
+                ],
+            },
+        ],
+    )
+    fixtures_dir = os.path.join(local_test_data_dir, "fixtures")
+
+    # Action
+    anno = AnnotationCaptionAnnotation(
+        config=deposition_config_local,
+        metadata=default_anno_metadata,
+        path=os.path.join(fixtures_dir, glob_string),
+        parents={"voxel_spacing": voxel_spacing_importer_local, **voxel_spacing_importer_local.parents},
+        file_format="saber",
+        identifier=100,
+        alignment_metadata_path="foo",
+        companion_shape="InstanceSegmentation",
+    )
+    anno.import_item()
+    anno.import_metadata()
+
+    # Assert - verify local_metadata
+    path = "dataset1/run1/Reconstructions/VoxelSpacing1.123/Annotations/100/some_protein-1.0_instancesegmentation_caption.json"
+    expected_local_metadata = {
+        "object_count": 5,
+        "alignment_metadata_path": "foo",
+        "files": [
+            {
+                "format": "json",
+                "path": path,
+                "shape": "AnnotationCaption",
+                "is_visualization_default": False,
+            },
+        ],
+    }
+    assert anno.local_metadata == expected_local_metadata
+
+    # Verify the output file content matches the input
+    output_file = anno.get_output_filename(anno.get_output_path(), "json")
+    with open(output_file, "r") as fh:
+        output_data = json.load(fh)
+    with open(os.path.join(fixtures_dir, glob_string), "r") as fh:
+        input_data = json.load(fh)
+    assert output_data == input_data
+    assert len(output_data["objects"]) == 5
