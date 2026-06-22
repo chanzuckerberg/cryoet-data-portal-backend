@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import functools
 import logging
 import re
 import urllib
@@ -98,6 +99,43 @@ SOURCE_FILTER_FIELDS = {"parent_filters", "exclude"}
 
 # Flag to determine if network validation should be run (set by provided Container arg)
 running_network_validation = False
+
+# Retry transient connection errors from external APIs instead of failing validation.
+NETWORK_REQUEST_TIMEOUT = aiohttp.ClientTimeout(total=60)
+_RETRYABLE_NETWORK_ERRORS = (
+    aiohttp.ClientConnectionError,
+    aiohttp.ClientPayloadError,
+    asyncio.TimeoutError,
+)
+_NETWORK_MAX_ATTEMPTS = 4
+_NETWORK_RETRY_BASE_DELAY = 0.5  # seconds; exponential backoff
+
+
+def retry_on_network_error(
+    attempts: int = _NETWORK_MAX_ATTEMPTS,
+    base_delay: float = _NETWORK_RETRY_BASE_DELAY,
+):
+    """Retry an async network call on transient connection errors. Wrap inside @alru_cache."""
+    def decorator(func):
+        @functools.wraps(func)
+        async def wrapper(*args, **kwargs):
+            last_error = None
+            for attempt in range(attempts):
+                try:
+                    return await func(*args, **kwargs)
+                except _RETRYABLE_NETWORK_ERRORS as error:
+                    last_error = error
+                    if attempt < attempts - 1:
+                        delay = base_delay * (2**attempt)
+                        logger.warning(
+                            "Transient network error in %s (attempt %d/%d): %s; retrying in %.1fs",
+                            func.__name__, attempt + 1, attempts, error, delay,
+                        )
+                        await asyncio.sleep(delay)
+            logger.error("Network call %s failed after %d attempts: %s", func.__name__, attempts, last_error)
+            raise last_error
+        return wrapper
+    return decorator
 
 
 # ==============================================================================
@@ -215,12 +253,13 @@ def validate_authors_status(authors: List[Author]) -> List[ValueError]:
 orcid_cache = {}
 
 @alru_cache
+@retry_on_network_error()
 async def lookup_orcid(orcid_id: str) -> Tuple[str, bool]:
     """
     Returns a tuple of the ORCID ID and whether or not it is valid
     """
     url = f"https://pub.orcid.org/v3.0/{orcid_id}"
-    async with aiohttp.ClientSession() as session, session.head(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.head(url) as response:
         logger.debug("Checking ORCID %s at %s, status %s", orcid_id, url, response.status)
         orcid_cache[(orcid_id,)] = response.status == 200
         return orcid_id, response.status == 200
@@ -296,6 +335,7 @@ class ExtendedValidationDateStamp(DateStamp):
 # ID Object Validation
 # ==============================================================================
 @alru_cache
+@retry_on_network_error()
 async def validate_id(id: str) -> Tuple[List[str], bool]:
     """
     Returns a tuple of the ID names (including original label) and whether it is valid.
@@ -309,7 +349,7 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
     # OLS API URL
     url = f"https://www.ebi.ac.uk/ols/api/terms?iri={encoded_iri}"
 
-    async with aiohttp.ClientSession() as session, session.get(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(url) as response:
         logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
@@ -322,6 +362,7 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
 
 
 @alru_cache
+@retry_on_network_error()
 async def is_id_ancestor(id_ancestor: str, id: str) -> tuple[bool, List[str]]:
     """
     Returns whether or not id_ancestor is an ancestor of id, and the ancestors.
@@ -337,13 +378,14 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> tuple[bool, List[str]]:
     ontology = id_ancestor.split(":")[0]
     url = f"https://www.ebi.ac.uk/ols4/api/ontologies/{ontology}/terms/{encoded_iri}/ancestors"
 
-    async with aiohttp.ClientSession() as session, session.get(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(url) as response:
         logger.debug("Getting ancestors for ID %s at %s, status %s", id, url, response.status)
         ancestor_ids = [ancestor["obo_id"] for ancestor in (await response.json()).get("_embedded", {}).get("terms", [])]
         return response.status == 200 and id_ancestor in ancestor_ids, ancestor_ids
 
 
 @alru_cache
+@retry_on_network_error()
 async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     """
     Returns a tuple of the ID names (including original label) and whether it is valid.
@@ -352,7 +394,7 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     url = f"http://rest.wormbase.org/rest/field/strain/{id}/name"
 
     names = []
-    async with aiohttp.ClientSession() as session, session.get(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(url) as response:
         logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
@@ -362,7 +404,7 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
 
     names_url = f"http://rest.wormbase.org/rest/field/strain/{id}/other_names"
 
-    async with aiohttp.ClientSession() as session, session.get(names_url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(names_url) as response:
         logger.debug("Getting other names for ID %s at %s, status %s", id, names_url, response.status)
         if response.status >= 400:
             return [], True
@@ -374,13 +416,14 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
 
 
 @alru_cache
+@retry_on_network_error()
 async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
     """
     Returns a tuple of the ID names (including original label) and whether it is valid.
     """
     url = f"https://api.cellosaurus.org/cell-line/{id}?format=json&fld=id&fld=sy"
 
-    async with aiohttp.ClientSession() as session, session.get(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(url) as response:
         logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
@@ -395,6 +438,7 @@ async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
 
 
 @alru_cache
+@retry_on_network_error()
 async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
     """
     Returns a tuple of the ID names and whether it is valid.
@@ -404,7 +448,7 @@ async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
     id = id.replace("UniProtKB:", "")
     url = f"https://rest.uniprot.org/uniprotkb/{id}"
 
-    async with aiohttp.ClientSession() as session, session.get(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(url) as response:
         logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
@@ -414,13 +458,14 @@ async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
 
 
 @alru_cache
+@retry_on_network_error()
 async def validate_cdpo_id(id: str) -> Tuple[List[str], bool]:
     """
     Returns a tuple of the ID names and whether it is valid.
     Validates against the CDPO OBO file hosted at https://github.com/uermel/cdpo.
     """
     url = "https://raw.githubusercontent.com/uermel/cdpo/main/cdpo.obo"
-    async with aiohttp.ClientSession() as session, session.get(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(url) as response:
         logger.debug("Getting CDPO id %s from %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
@@ -444,13 +489,14 @@ async def validate_cdpo_id(id: str) -> Tuple[List[str], bool]:
 
 
 @alru_cache
+@retry_on_network_error()
 async def validate_cl_id(id: str) -> Tuple[List[str], bool]:
     """
     Returns a tuple of the ID names and whether it is valid.
     Validates against the Cell Ontology OBO file hosted at https://github.com/obophenotype/cell-ontology.
     """
     url = "https://raw.githubusercontent.com/obophenotype/cell-ontology/master/cl.obo"
-    async with aiohttp.ClientSession() as session, session.get(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(url) as response:
         logger.debug("Getting CL id %s from %s, status %s", id, url, response.status)
         if response.status >= 400:
             return [], False
@@ -567,6 +613,7 @@ def validate_cell_strain_object(self: CellStrain) -> CellStrain:
 # Key Photo Validation
 # ==============================================================================
 @alru_cache
+@retry_on_network_error()
 async def validate_image_format(image_url: str | None) -> bool:
     if not running_network_validation or image_url is None:
         return True
@@ -578,7 +625,7 @@ async def validate_image_format(image_url: str | None) -> bool:
     if not image_url.startswith("https"):
         logger.warning("URL %s is not HTTPS", image_url)
 
-    async with aiohttp.ClientSession() as session, session.head(image_url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.head(image_url) as response:
         if response.status >= 400:
             return False
 
@@ -621,32 +668,36 @@ class ExtendedValidationDepositionKeyPhotoSource(DepositionKeyPhotoSource):
 doi_cache = {}
 
 @alru_cache
+@retry_on_network_error()
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
     doi = doi.replace("doi:", "")
     url = f"https://api.crossref.org/works/{doi}"
-    async with aiohttp.ClientSession() as session, session.head(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.head(url) as response:
         logger.debug("Checking DOI %s at %s, status %s", doi, url, response.status)
         doi_cache[(doi,)] = response.status == 200
         return doi, response.status == 200
 
 
 @alru_cache
+@retry_on_network_error()
 async def lookup_empiar(empiar_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/empiar/api/entry/{empiar_id}/"
-    async with aiohttp.ClientSession() as session, session.head(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.head(url) as response:
         logger.debug("Checking EMPIAR ID %s at %s, status %s", empiar_id, url, response.status)
         return empiar_id, response.status == 200
 
 
 @alru_cache
+@retry_on_network_error()
 async def lookup_emdb(emdb_id: str) -> Tuple[str, bool]:
     url = f"https://www.ebi.ac.uk/emdb/api/entry/{emdb_id}"
-    async with aiohttp.ClientSession() as session, session.head(url) as response:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.head(url) as response:
         logger.debug("Checking EMDB ID %s at %s, status %s", emdb_id, url, response.status)
         return emdb_id, response.status == 200
 
 
 @alru_cache
+@retry_on_network_error()
 async def validate_pdb_id(id: str) -> Tuple[List[str], bool]:
     """
     Returns the name-like fields RCSB exposes for this PDB entry, plus a validity flag.
@@ -657,7 +708,7 @@ async def validate_pdb_id(id: str) -> Tuple[List[str], bool]:
     """
     stripped = id.replace("PDB-", "")
     entry_url = f"https://data.rcsb.org/rest/v1/core/entry/{stripped}"
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session:
         async with session.get(entry_url) as response:
             logger.debug("Checking PDB ID %s at %s, status %s", stripped, entry_url, response.status)
             if response.status != 200:
