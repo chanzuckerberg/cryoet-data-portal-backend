@@ -9,7 +9,14 @@
             "stellate",
             "MTD sleeve",
             "Dynein-1b",
-            "polaroplast"
+            "polaroplast",
+            "FabF (chain A)",
+            "FabF (chain B)",
+            "FabF (chain C)",
+            "FabF (chain D)",
+            "FabF (chain E)",
+            "RNA polymerase II elongation complex (EC+EC)",
+            "nuclear pore complex inner ring protomer"
         ]
     },
     "CellComponent": {
