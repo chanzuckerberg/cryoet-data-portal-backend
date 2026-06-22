@@ -500,7 +500,8 @@ def _substring_name_match(name: str, retrieved: str) -> bool:
     name (or vice versa) rather than an exact match.
     """
     def norm(s: str) -> str:
-        return re.sub(r"[^a-z0-9]+", " ", s.lower()).strip()
+        # remove separators (don't replace with space) so "CD40-L"/"CD40L" collapse
+        return re.sub(r"[^a-z0-9]+", "", s.lower())
     n, r = norm(name), norm(retrieved)
     if not n or not r:
         return False
