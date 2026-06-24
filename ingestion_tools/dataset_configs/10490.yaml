@@ -150,7 +150,7 @@ annotations:
         description: >-
           Bare DNA polymer filaments and RNA densities from transcription/translation complexes.
       annotation_method: *id_anno_method
-      annotation_software: cryo-TomoSim (CTS); PolymerCpp
+      annotation_software: cryo-TomoSim (CTS)
       annotation_publications: 10.1101/2025.11.11.687379, 10.1101/2023.04.28.538636
       method_type: simulated
       ground_truth_status: true
@@ -173,7 +173,7 @@ annotations:
         name: FabF (chain A)
         description: Chain A of PDB 5SOA - Pseudomonas aeruginosa FabF (beta-ketoacyl-ACP synthase II, C164Q mutant). Depositor split the homopentameric assembly into per-chain classes 2-6 (A-E).
       annotation_method: Simulated particles of FabF (chain A), PDB-5SOA.
-      annotation_software: &cs_software cryo-TomoSim (CTS, modified by the cryoSiam authors)
+      annotation_software: &cs_software cryo-TomoSim (CTS)
       annotation_publications: &cs_pub 10.1101/2025.11.11.687379, 10.1101/2023.04.28.538636
       method_type: &cs_method_type simulated
       ground_truth_status: &cs_gt_status true

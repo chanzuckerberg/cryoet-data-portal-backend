@@ -698,7 +698,7 @@ annotations:
         description: >-
           Bare DNA polymer filaments and RNA densities from transcription/translation complexes.
       annotation_method: *id_anno_method
-      annotation_software: cryo-TomoSim (CTS); PolymerCpp
+      annotation_software: cryo-TomoSim (CTS)
       annotation_publications: 10.1101/2025.11.11.687379, 10.1101/2023.04.28.538636
       method_type: simulated
       ground_truth_status: true
