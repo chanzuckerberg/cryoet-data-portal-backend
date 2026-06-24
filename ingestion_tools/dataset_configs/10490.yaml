@@ -173,13 +173,6 @@ annotations:
           rescale: false
           is_visualization_default: true
 
-  # Note: gts/semantic/{run_name}.mrc (the fine ~149-class semantic mask) is
-  # intentionally not ingested as a portal annotation. Without a per-class
-  # mask_label split it would render as a single lumped annotation, which is
-  # redundant with the per-class breakdown above (membrane / particles /
-  # microtubule / actin / dna-rna) plus the per-particle instance segmentation
-  # below.
-
   - metadata:
       annotation_ingest_id: cryosiam-instance-002-fabf-chain-a-1
       annotation_object:
