@@ -9,6 +9,7 @@ import pytest
 import trimesh
 from importers.annotation import (
     AnnotationCaptionAnnotation,
+    AnnotationImporter,
     GlobalCaptionAnnotation,
     InstanceSegmentationAnnotation,
     InstanceSegmentationMaskAnnotation,
@@ -1911,3 +1912,94 @@ def test_ingest_annotation_caption(
         input_data = json.load(fh)
     assert output_data == input_data
     assert len(output_data["objects"]) == 5
+
+
+# ---------------------------------------------------------------------------
+# AnnotationImporter.pre_import: stray-folder cleanup
+# ---------------------------------------------------------------------------
+
+
+def _anno_key_base(config: DepositionImportConfig, voxel_spacing: VoxelSpacingImporter) -> str:
+    """The `.../Annotations` key prefix (no bucket, no trailing `/*`), derived the same way
+    pre_import does so the test tracks the real (formatted) voxel-spacing path."""
+    anno_glob = config.resolve_output_path("annotation", voxel_spacing, {"annotation_id": "*"})
+    base = anno_glob[:-2] if anno_glob.endswith("/*") else anno_glob
+    return base.split("/", 1)[1]  # drop the bucket component
+
+
+def _put(s3_client: S3Client, bucket: str, key: str, body: bytes = b"x") -> None:
+    s3_client.put_object(Bucket=bucket, Key=key, Body=body)
+
+
+def _remaining_keys(s3_client: S3Client, bucket: str, base: str) -> set[str]:
+    resp = s3_client.list_objects_v2(Bucket=bucket, Prefix=base)
+    return {o["Key"] for o in resp.get("Contents", [])}
+
+
+def test_pre_import_deletes_stray_annotation_folders(
+    deposition_config_s3: DepositionImportConfig,
+    voxel_spacing_importer_s3: VoxelSpacingImporter,
+    s3_client: S3Client,
+    test_output_bucket: str,
+) -> None:
+    base = _anno_key_base(deposition_config_s3, voxel_spacing_importer_s3)
+    # complete folder (has metadata json) -- must survive
+    _put(s3_client, test_output_bucket, f"{base}/100/membrane-1.0.json")
+    _put(s3_client, test_output_bucket, f"{base}/100/membrane-1.0_segmentationmask.mrc")
+    _put(s3_client, test_output_bucket, f"{base}/100/membrane-1.0_segmentationmask.zarr/.zattrs")
+    # stray folder (zarr + mrc, NO metadata json) -- the interrupted-write signature -- must be deleted
+    _put(s3_client, test_output_bucket, f"{base}/123/fen1-1.0_instancesegmentationmask.zarr/.zgroup")
+    _put(s3_client, test_output_bucket, f"{base}/123/fen1-1.0_instancesegmentationmask.mrc")
+    # complete folder whose json happens to sort/glob next to the stray -- must survive
+    _put(s3_client, test_output_bucket, f"{base}/125/fen1-1.0.json")
+    # non-numeric child under Annotations/ -- never touched
+    _put(s3_client, test_output_bucket, f"{base}/notanid/something.json")
+
+    parents = {"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents}
+    AnnotationImporter.pre_import(deposition_config_s3, parents)
+
+    remaining = _remaining_keys(s3_client, test_output_bucket, base)
+    assert f"{base}/100/membrane-1.0.json" in remaining
+    assert f"{base}/100/membrane-1.0_segmentationmask.mrc" in remaining
+    assert f"{base}/125/fen1-1.0.json" in remaining
+    assert f"{base}/notanid/something.json" in remaining
+    # the entire stray folder is gone
+    assert not any(k.startswith(f"{base}/123/") for k in remaining)
+
+
+def test_pre_import_keeps_complete_folder_with_broken_zarr(
+    deposition_config_s3: DepositionImportConfig,
+    voxel_spacing_importer_s3: VoxelSpacingImporter,
+    s3_client: S3Client,
+    test_output_bucket: str,
+) -> None:
+    base = _anno_key_base(deposition_config_s3, voxel_spacing_importer_s3)
+    # A folder with a metadata json but a zarr missing .zattrs is "complete" by our rule
+    # (json present) and must NOT be deleted -- it will be overwritten on re-import instead.
+    _put(s3_client, test_output_bucket, f"{base}/100/membrane-1.0.json")
+    _put(s3_client, test_output_bucket, f"{base}/100/membrane-1.0_segmentationmask.zarr/.zgroup")
+
+    parents = {"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents}
+    AnnotationImporter.pre_import(deposition_config_s3, parents)
+
+    remaining = _remaining_keys(s3_client, test_output_bucket, base)
+    assert f"{base}/100/membrane-1.0.json" in remaining
+    assert f"{base}/100/membrane-1.0_segmentationmask.zarr/.zgroup" in remaining
+
+
+def test_pre_import_noop_when_all_complete(
+    deposition_config_s3: DepositionImportConfig,
+    voxel_spacing_importer_s3: VoxelSpacingImporter,
+    s3_client: S3Client,
+    test_output_bucket: str,
+) -> None:
+    base = _anno_key_base(deposition_config_s3, voxel_spacing_importer_s3)
+    for i in (100, 101, 102):
+        _put(s3_client, test_output_bucket, f"{base}/{i}/obj-1.0.json")
+        _put(s3_client, test_output_bucket, f"{base}/{i}/obj-1.0_segmentationmask.mrc")
+    before = _remaining_keys(s3_client, test_output_bucket, base)
+
+    parents = {"voxel_spacing": voxel_spacing_importer_s3, **voxel_spacing_importer_s3.parents}
+    AnnotationImporter.pre_import(deposition_config_s3, parents)
+
+    assert _remaining_keys(s3_client, test_output_bucket, base) == before

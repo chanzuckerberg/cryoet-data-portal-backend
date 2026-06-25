@@ -162,6 +162,35 @@ class AnnotationImporter(BaseImporter):
         }
         self.annotation_metadata = AnnotationMetadata(self.config.fs, self.get_deposition().name, self.metadata)
 
+    @classmethod
+    def pre_import(cls, config: DepositionImportConfig, parents: dict[str, Any]) -> None:
+        """Remove stray (incomplete) annotation folders before importing.
+
+        A completed annotation always writes its `<name>-<version>.json` metadata file last,
+        after the zarr and mrc (see import_item -> convert, then import_metadata). So any
+        annotation_id folder that has content but no `*[0-9].json` is a partial/orphaned write
+        left behind by an interrupted run: it is invisible to id-seeding (which globs the same
+        `*[0-9].json`), lingers forever as a dead folder, and can push the live annotation onto
+        a different id. Delete these before anything is written. Removals are recoverable on
+        versioned buckets. Complete folders (those with a metadata json) are never touched.
+        """
+        voxel_spacing = parents.get("voxel_spacing")
+        if voxel_spacing is None:
+            return
+        anno_glob = config.resolve_output_path("annotation", voxel_spacing, {"annotation_id": "*"})
+        all_folders = set(config.fs.glob(anno_glob))
+        if not all_folders:
+            return
+        complete = {
+            os.path.dirname(path) for path in config.fs.glob(os.path.join(anno_glob, "*[0-9].json"))
+        }
+        for folder in sorted(all_folders - complete):
+            # Only ever touch numeric annotation_id folders.
+            if not os.path.basename(folder).isdigit():
+                continue
+            print(f"Deleting stray annotation folder (no metadata json): {folder}")
+            config.fs.rm(folder, recursive=True)
+
     # Functions to support writing annotation data
     def import_item(self):
         if not self.is_import_allowed():
