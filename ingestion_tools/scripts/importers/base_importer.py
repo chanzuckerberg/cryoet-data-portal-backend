@@ -161,6 +161,14 @@ class BaseImporter:
         return self.allow_imports
 
     @classmethod
+    def pre_import(cls, config: DepositionImportConfig, parents: dict[str, "BaseImporter"]) -> None:
+        """Hook invoked once, before this importer's items are discovered or written for the
+        given parents -- i.e. before the finder runs and before any identifiers are assigned.
+        No-op by default; override to perform pre-import cleanup.
+        """
+        return None
+
+    @classmethod
     def finder(cls, config: DepositionImportConfig, **parents: dict[str, "BaseImporter"]) -> Iterator["BaseImporter"]:
         """
         Finds the importer entities based on the configuration source specified. If no items are found, but a default

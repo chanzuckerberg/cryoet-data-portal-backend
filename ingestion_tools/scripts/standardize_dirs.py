@@ -55,6 +55,12 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
         # all ancestors
         parent_args = dict(parents)
 
+        # Pre-import cleanup (e.g. remove stray/incomplete annotation folders left by an
+        # interrupted run) before any items are discovered or identifiers assigned. No-op for
+        # most importers. Only when we're actually (re)writing this entity's data.
+        if import_class in to_import:
+            import_class.pre_import(config, parent_args)
+
         items = import_class.finder(config, **parent_args)
         for item in items:
             print(f"Iterating {item.type_key}: {item.name}")

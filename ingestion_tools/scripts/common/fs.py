@@ -73,6 +73,10 @@ class FileSystemApi(ABC):
     def move(self, src_path: str, dest_path: str, **kwargs) -> None:
         pass
 
+    @abstractmethod
+    def rm(self, path: str, recursive: bool = False) -> None:
+        pass
+
 
 class S3Filesystem(FileSystemApi):
     def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None, **kwargs):
@@ -186,6 +190,28 @@ class S3Filesystem(FileSystemApi):
     def move(self, src_path: str, dest_path: str, **kwargs) -> None:
         self.s3fs.mv(src_path, dest_path, **kwargs)
 
+    @s3_retry_decorator
+    def rm(self, path: str, recursive: bool = False) -> None:
+        # Use boto3 delete_objects on explicitly-listed keys rather than s3fs.rm/glob so that
+        # keys containing glob metacharacters (e.g. "[]" -- see copy() above) are deleted as
+        # literals. On versioned buckets this writes delete-markers, so removals are recoverable.
+        bucket, _, key = path.partition("/")
+        s3 = boto3.client("s3", **self.client_kwargs)
+        if recursive:
+            paginator = s3.get_paginator("list_objects_v2")
+            batch: list[dict[str, str]] = []
+            for page in paginator.paginate(Bucket=bucket, Prefix=key.rstrip("/") + "/"):
+                for obj in page.get("Contents", []):
+                    batch.append({"Key": obj["Key"]})
+                    if len(batch) == 1000:  # delete_objects accepts at most 1000 keys per call
+                        s3.delete_objects(Bucket=bucket, Delete={"Objects": batch})
+                        batch = []
+            if batch:
+                s3.delete_objects(Bucket=bucket, Delete={"Objects": batch})
+        else:
+            s3.delete_object(Bucket=bucket, Key=key)
+        self.s3fs.invalidate_cache(path)
+
 
 class LocalFilesystem(FileSystemApi):
     def __init__(self, force_overwrite: bool):
@@ -224,3 +250,12 @@ class LocalFilesystem(FileSystemApi):
 
     def move(self, src_path: str, dest_path: str, **kwargs) -> None:
         shutil.move(src_path, dest_path)
+
+    def rm(self, path: str, recursive: bool = False) -> None:
+        if os.path.isdir(path):
+            if recursive:
+                shutil.rmtree(path, ignore_errors=True)
+            else:
+                os.rmdir(path)
+        elif os.path.exists(path):
+            os.remove(path)
