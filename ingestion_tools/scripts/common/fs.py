@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from hashlib import md5
 from io import TextIOBase
 from typing import Any
+from uuid import uuid4
 
 import boto3
 from s3fs import S3FileSystem
@@ -106,7 +107,11 @@ class S3Filesystem(FileSystemApi):
             if remote_checksum == local_checksum:
                 print(f"Skipping re-download of {path}")
                 return local_dest_file
-        self.s3fs.get(path, local_dest_file)
+        # Download to a unique temp file then atomically move it into place to prevent race conditions with half-written files.
+        os.makedirs(os.path.dirname(local_dest_file), exist_ok=True)
+        tmp_dest_file = f"{local_dest_file}.{os.getpid()}.{uuid4().hex}.part"
+        self.s3fs.get(path, tmp_dest_file)
+        os.replace(tmp_dest_file, local_dest_file)
         return local_dest_file
 
     def localwritable(self, path: str) -> str:
