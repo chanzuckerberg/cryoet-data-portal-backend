@@ -48,9 +48,9 @@ annotations:
           corresponding_author_status: true
           affiliation_name: European Molecular Biology Laboratory
       dates: &id_dates
-        deposition_date: "2026-05-01"
-        last_modified_date: "2026-05-01"
-        release_date: "2026-05-01"
+        deposition_date: "2026-06-24"
+        last_modified_date: "2026-06-24"
+        release_date: "2026-06-24"
       method_links: &id_method_links
         - link_type: source_code
           custom_name: cryoSiam
