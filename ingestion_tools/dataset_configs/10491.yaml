@@ -256,33 +256,6 @@ tiltseries:
       - source_glob:
           list_glob: tilts/clean/{run_name}.mrc
 
-  - metadata:
-      acceleration_voltage: 300000
-      binning_from_frames: 1
-      camera:
-        manufacturer: simulated
-        model: simulated
-      data_acquisition_software: CTS (cryo-TomoSim)
-      is_aligned: false
-      microscope:
-        manufacturer: SIMULATED
-        model: simulated
-      microscope_optical_setup:
-        energy_filter: none
-      pixel_spacing: 6.8
-      spherical_aberration_constant: 2.7
-      tilt_axis: 0.0
-      tilt_range:
-        max: 60
-        min: -60
-      tilt_series_quality: 5
-      tilt_step: 2.0
-      tilting_scheme: dose-symmetric
-      total_flux: 120.0
-    sources:
-      - source_glob:
-          list_glob: tilts/noisy/{run_name}.mrc
-
 tomograms:
   - metadata:
       affine_transformation_matrix:
