@@ -29,6 +29,7 @@ annotations:
           custom_name: MotorBench Kaggle overview
       authors: &authors
         - name: Stefano Maggi
+          ORCID: 0000-0003-4853-5840
           corresponding_author_status: true
           primary_author_status: true
         - name: Christopher Braxton Owens
