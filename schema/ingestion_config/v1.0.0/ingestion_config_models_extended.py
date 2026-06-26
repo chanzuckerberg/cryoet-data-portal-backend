@@ -409,8 +409,21 @@ async def validate_uniprot_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
-        name = data["proteinDescription"]["recommendedName"]["fullName"]["value"]
-        return [name], True
+        # pull all names fields from UniProt
+        protein_description = data.get("proteinDescription") or {}
+        names: List[str] = []
+        recommended_name = protein_description.get("recommendedName") or {}
+        if recommended_name.get("fullName", {}).get("value"):
+            names.append(recommended_name["fullName"]["value"])
+        for alt in protein_description.get("alternativeNames") or []:
+            if alt.get("fullName", {}).get("value"):
+                names.append(alt["fullName"]["value"])
+        for sub in protein_description.get("submissionNames") or []:
+            if sub.get("fullName", {}).get("value"):
+                names.append(sub["fullName"]["value"])
+        if not names:
+            return [], False
+        return names, True
 
 
 @alru_cache
@@ -477,6 +490,9 @@ def _strict_name_match(name: str, retrieved: str) -> bool:
     return name == retrieved
 
 
+_strict_name_match.match_description = "must match exactly"
+
+
 def _substring_name_match(name: str, retrieved: str) -> bool:
     """
     Case-insensitive, punctuation-tolerant substring match (either direction).
@@ -489,6 +505,9 @@ def _substring_name_match(name: str, retrieved: str) -> bool:
     if not n or not r:
         return False
     return n in r or r in n
+
+
+_substring_name_match.match_description = "must match as a case-insensitive, punctuation-tolerant substring (either direction)"
 
 
 def validate_id_name_object(
@@ -533,7 +552,10 @@ def validate_id_name_object(
     valid_name = retrieved_names == [] or any(name_match_function(name, rn) for rn in retrieved_names)
 
     if not valid_name:
-        raise ValueError(f"name '{name}' does not match id: {id}, retrieved names: {retrieved_names}")
+        # append the matcher's rule for better error messaging
+        rule = getattr(name_match_function, "match_description", None)
+        suffix = f" ({rule})" if rule else ""
+        raise ValueError(f"name '{name}' does not match id: {id}, retrieved names: {retrieved_names}{suffix}")
 
     if ancestor is None:
         return
