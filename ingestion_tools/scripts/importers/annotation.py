@@ -138,7 +138,13 @@ class AnnotationImporter(BaseImporter):
     has_metadata = True
     dir_path = "{dataset_name}/{run_name}/Reconstructions/VoxelSpacing{voxel_spacing_name}/Annotations/{annotation_id}"
     metadata_path = dir_path
-    written_metadata_files = []  # This is a *class* variable that helps us avoid writing metadata files multiple times.
+
+    # Multiple annotation sources can map to one logical annotation (same identifier -> same output
+    # path) and thus one metadata.json. We accumulate each source's metadata here, keyed by the
+    # fully-qualified output path. Keying by output path -- not the bare identifier, which only counts
+    # up from 100 *per run/voxel-spacing* -- groups sibling sources without colliding across runs or
+    # voxel spacings.
+    identifier_metadata_map: dict[str, dict[str, Any]] = {}
 
     def __init__(
         self,
@@ -170,39 +176,49 @@ class AnnotationImporter(BaseImporter):
         self.config.fs.makedirs(output_dir)
         return self.annotation_metadata.get_filename_prefix(output_dir)
 
+    def get_object_count(self, output_prefix: str) -> int:
+        # To be overridden by subclasses where necessary to return the number of objects in the annotation.
+        return 0
+
+    @abstractmethod
+    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        # To be overridden by subclasses to return the metadata for the "files" property of the
+        # annotation metadata, e.g.:
+        # [{"format": FORMAT, "path": OUTPUT_PATH, "shape": SHAPE, "is_visualization_default": BOOL}]
+        pass
+
     def import_metadata(self):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name} metadata")
             return
+
         dest_prefix = self.get_output_path()
         filename = f"{dest_prefix}.json"
-        if filename in self.written_metadata_files:
-            return  # We've already written this metadata file
+        path = os.path.relpath(dest_prefix, self.config.output_prefix)
 
-        anno_files = [
-            item
-            for item in AnnotationImporter.finder(self.config, **self.parents)
-            if item.identifier == self.identifier
-        ]
-
-        output_dir = self.get_output_path()
-        path = os.path.relpath(output_dir, self.config.output_prefix)
-        files = []
-        for source in anno_files:
-            files.extend(source.get_metadata(path))
+        # Several sources can belong to the same logical annotation (same identifier -> same output
+        # path); accumulate their files into one metadata doc as each source is imported, instead of
+        # re-discovering siblings via the finder. Re-running the finder here re-globbed and re-read
+        # every annotation source once per annotation -- O(annotations x sources).
+        meta = self.identifier_metadata_map.setdefault(
+            filename,
+            {
+                "object_count": 0,
+                "files": [],
+                "alignment_metadata_path": self.local_metadata["alignment_metadata_path"],
+            },
+        )
+        # Point this instance at the shared accumulator so local_metadata reflects the written doc.
+        self.local_metadata = meta
+        meta["files"].extend(self.get_metadata(path))
 
         try:
-            self.local_metadata["object_count"] = max(
-                [anno.get_object_count(output_dir) for anno in anno_files],
-                default=0,
-            )
-            self.local_metadata["files"] = files
+            object_count = self.get_object_count(dest_prefix)
         except FileNotFoundError:
-            print("Skipping metadata write since not all files have been written yet")
-            return
+            object_count = 0
+        meta["object_count"] = max(meta["object_count"], object_count)
 
-        self.written_metadata_files.append(filename)
-        self.annotation_metadata.write_metadata(filename, self.local_metadata)
+        self.annotation_metadata.write_metadata(filename, meta)
 
 
 class BaseAnnotationSource(AnnotationImporter):
@@ -232,19 +248,10 @@ class BaseAnnotationSource(AnnotationImporter):
         # To be overridden by subclasses to handle the import of the annotation.
         pass
 
-    def get_object_count(self, output_prefix: str) -> int:
-        # To be overridden by subclasses where necessary to return the number of objects in the annotation.
-        return 0
-
     def is_valid(self, *args, **kwargs) -> bool:
         # To be overridden by subclasses when additional check needed to validate if a source contains valid information
         # for this run.
         return True
-
-    @abstractmethod
-    def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
-        # To be overridden by subclasses to return the metadata for the files property of the metadata.
-        pass
 
     def get_output_filename(self, output_prefix: str, extension: str | None = None) -> str:
         filename = f"{output_prefix}_{self.shape.lower()}"
