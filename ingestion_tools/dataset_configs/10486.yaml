@@ -69,11 +69,6 @@ ctfs:
       - source_glob:
           list_glob: '{run_name}/*.defocus'
           match_regex: '.*\.defocus$'
-        parent_filters:
-          exclude:
-            run:
-              - 'sma2022\-09\-19\-6'
-
 datasets:
   - metadata:
       authors: *authors

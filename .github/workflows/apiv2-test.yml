@@ -12,7 +12,7 @@ on:
 
 jobs:
   py-test:
-    runs-on: xl-amd64-privileged
+    runs-on: lg-amd64-privileged
     name: "Run tests"
     steps:
       - uses: actions/checkout@v3
