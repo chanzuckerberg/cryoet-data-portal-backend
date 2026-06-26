@@ -1,0 +1,477 @@
+alignments:
+  - sources:
+      - destination_glob:
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
+          match_regex: .*
+          name_regex: (.*)
+annotations:
+  # cytoplasm (label 1)
+  - metadata:
+      annotation_ingest_id: 10350-cytoplasm-1
+      annotation_method: semi-manual annotation using napari-nnInteractive, followed by an agent-designed copick curation pipeline and manual correction
+      annotation_object:
+        id: GO:0005737
+        name: cytoplasm
+      annotation_publications: 10.1002/pro.70578
+      annotation_software: napari-nninteractive + copick-utils + copick-mcp
+      authors: &id_authors
+        - corresponding_author_status: true
+          name: Jonathan Schwartz
+          ORCID: 0000-0002-8063-6951
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Utz Heinrich Ermel
+          ORCID: 0000-0003-4685-037X
+          primary_author_status: true
+        - corresponding_author_status: false
+          email: cbraxtonowens@gmail.com
+          name: C. Braxton Owens
+          primary_author_status: false
+        - corresponding_author_status: false
+          name: Zhuowen Zhao
+          ORCID: 0000-0002-2355-2284
+          primary_author_status: false
+        - corresponding_author_status: false
+          name: Ariana Peck
+          ORCID: 0000-0002-5940-3897
+          primary_author_status: false
+        - corresponding_author_status: false
+          email: gushart@gmail.com
+          name: Gus L.W. Hart
+          ORCID: 0000-0002-6149-9234
+          primary_author_status: false
+        - corresponding_author_status: false
+          name: Grant J. Jensen
+          ORCID: 0000-0003-1556-4864
+          primary_author_status: false
+        - corresponding_author_status: false
+          name: Bridget Carragher
+          ORCID: 0000-0002-0624-5020
+          primary_author_status: false
+        - corresponding_author_status: true
+          name: Dari Kimanius
+          ORCID: 0000-0002-2662-6373
+          primary_author_status: false
+      dates: &id_dates
+        deposition_date: '2026-05-04'
+        last_modified_date: '2026-05-04'
+        release_date: '2026-05-04'
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Napari-nnInteractive on GitHub
+          link: https://github.com/MIC-DKFZ/napari-nninteractive
+          link_type: source_code
+        - custom_name: copick-utils on GitHub
+          link: https://github.com/copick/copick-utils/
+          link_type: source_code
+        - custom_name: copick-mcp on GitHub
+          link: https://github.com/copick/copick-mcp/
+          link_type: source_code
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: 'ExperimentRuns/{portal_run_id}/Segmentations/20.000_final_1_inspected-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 1
+  # flagellum (label 2)
+  - metadata:
+      annotation_ingest_id: 10350-bacterial-type-flagellum-1
+      annotation_method: semi-manual annotation using napari-nnInteractive, followed by an agent-designed copick curation pipeline and manual correction
+      annotation_object:
+        id: GO:0009288
+        name: bacterial-type flagellum
+      annotation_publications: 10.1002/pro.70578
+      annotation_software: napari-nninteractive + copick-utils + copick-mcp
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Napari-nnInteractive on GitHub
+          link: https://github.com/MIC-DKFZ/napari-nninteractive
+          link_type: source_code
+        - custom_name: copick-utils on GitHub
+          link: https://github.com/copick/copick-utils/
+          link_type: source_code
+        - custom_name: copick-mcp on GitHub
+          link: https://github.com/copick/copick-mcp/
+          link_type: source_code
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: 'ExperimentRuns/{portal_run_id}/Segmentations/20.000_final_1_inspected-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 2
+  # membrane (label 3)
+  - metadata:
+      annotation_ingest_id: 10350-membrane-1
+      annotation_method: semi-manual annotation using napari-nnInteractive, followed by an agent-designed copick curation pipeline and manual correction
+      annotation_object:
+        id: GO:0016020
+        name: membrane
+      annotation_publications: 10.1002/pro.70578
+      annotation_software: napari-nninteractive + copick-utils + copick-mcp
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Napari-nnInteractive on GitHub
+          link: https://github.com/MIC-DKFZ/napari-nninteractive
+          link_type: source_code
+        - custom_name: copick-utils on GitHub
+          link: https://github.com/copick/copick-utils/
+          link_type: source_code
+        - custom_name: copick-mcp on GitHub
+          link: https://github.com/copick/copick-mcp/
+          link_type: source_code
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: 'ExperimentRuns/{portal_run_id}/Segmentations/20.000_final_1_inspected-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 3
+  # dense body (label 4)
+  - metadata:
+      annotation_ingest_id: 10350-dense-body-1
+      annotation_method: semi-manual annotation using napari-nnInteractive, followed by an agent-designed copick curation pipeline and manual correction
+      annotation_object:
+        id: GO:0097433
+        name: dense body
+      annotation_publications: 10.1002/pro.70578
+      annotation_software: napari-nninteractive + copick-utils + copick-mcp
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Napari-nnInteractive on GitHub
+          link: https://github.com/MIC-DKFZ/napari-nninteractive
+          link_type: source_code
+        - custom_name: copick-utils on GitHub
+          link: https://github.com/copick/copick-utils/
+          link_type: source_code
+        - custom_name: copick-mcp on GitHub
+          link: https://github.com/copick/copick-mcp/
+          link_type: source_code
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: 'ExperimentRuns/{portal_run_id}/Segmentations/20.000_final_1_inspected-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 4
+  # intermembrane-space / periplasmic space (label 5)
+  - metadata:
+      annotation_ingest_id: 10350-periplasmic-space-1
+      annotation_method: semi-manual annotation using napari-nnInteractive, followed by an agent-designed copick curation pipeline and manual correction
+      annotation_object:
+        id: GO:0042597
+        name: periplasmic space
+      annotation_publications: 10.1002/pro.70578
+      annotation_software: napari-nninteractive + copick-utils + copick-mcp
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links:
+        - custom_name: Napari-nnInteractive on GitHub
+          link: https://github.com/MIC-DKFZ/napari-nninteractive
+          link_type: source_code
+        - custom_name: copick-utils on GitHub
+          link: https://github.com/copick/copick-utils/
+          link_type: source_code
+        - custom_name: copick-mcp on GitHub
+          link: https://github.com/copick/copick-mcp/
+          link_type: source_code
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: 'ExperimentRuns/{portal_run_id}/Segmentations/20.000_final_1_inspected-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 5
+datasets:
+  - sources:
+      - literal:
+          value:
+            - '10053'
+            - '10054'
+            - '10065'
+            - '10098'
+            - '10155'
+            - '10161'
+            - '10162'
+            - '10163'
+            - '10166'
+            - '10226'
+            - '10272'
+            - '10273'
+            - '10281'
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10350_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10350_thumbnail.png
+dataset_keyphotos:
+  - sources:
+      - destination_glob:
+          list_glob: '{dataset_output_path}/Images/*'
+          match_regex: '(snapshot|thumbnail)\.(png|jpg|jpeg)$'
+          name_regex: '(snapshot|thumbnail)'
+depositions:
+  - metadata:
+      authors: *id_authors
+      cross_references:
+        publications: 10.1002/pro.70578
+      dates: *id_dates
+      deposition_description: >-
+        The bacterial segmentation dataset of POPSICLE
+        (Particle/Object Picking & Segmentation In CryoET Learning &
+        Evaluation), a benchmark suite released to support reproducible evaluation of
+        machine-learning models for dense voxel-wise compartment segmentation
+        in bacterial cryo-ET. The deposition provides semantic segmentations
+        for five classes (cytoplasm, bacterial-type flagellum,
+        membrane, dense body, and periplasmic space / intermembrane
+        space) together with matching 20 Å re-binned WBP tomograms for 80
+        cryo-ET acquisitions of bacteria drawn from 13 datasets spanning
+        multiple species. Initial annotations were produced semi-manually
+        using napari-nnInteractive, then refined through an agent-designed
+        copick curation pipeline (copick-utils + copick-mcp), followed by
+        manual inspection and correction. Only the final curated
+        segmentation is ingested in this deposition. The accompanying
+        20 Å tomograms are the resampled volumes used for segmentation (WBP,
+        IMOD reconstruction pipeline; alignment via RAPTOR per the original
+        pipeline) and serve as the visualization base for the segmentations
+        at this voxel spacing.
+      deposition_identifier: 10350
+      deposition_title: >-
+        The POPSICLE Bacterial Segmentation Dataset: multi-class compartment
+        segmentations for bacterial cryo-ET data
+      deposition_types:
+        - annotation
+        - tomogram
+    sources:
+      - literal:
+          value:
+            - 10350
+runs:
+  - sources:
+      # dataset 10053
+      - literal:
+          value:
+            - dga2017-01-14-21
+        parent_filters:
+          include:
+            dataset:
+              - '^10053$'
+      # dataset 10054
+      - literal:
+          value:
+            - dga2016-09-09-26
+            - dga2016-09-09-32
+            - dga2016-09-09-33
+            - dga2016-09-09-35
+            - dga2016-09-09-42
+            - dga2016-09-09-51
+            - dga2016-09-09-6
+            - dga2016-09-09-78
+        parent_filters:
+          include:
+            dataset:
+              - '^10054$'
+      # dataset 10065
+      - literal:
+          value:
+            - dga2016-01-13-17
+            - dga2016-01-13-25
+            - dga2016-01-13-26
+            - dga2016-01-13-30
+            - dga2016-01-13-32
+        parent_filters:
+          include:
+            dataset:
+              - '^10065$'
+      # dataset 10098
+      - literal:
+          value:
+            - dga2015-10-29-11
+            - dga2015-10-29-31
+            - dga2015-10-29-39
+            - dga2015-10-29-43
+            - dga2015-10-29-60
+        parent_filters:
+          include:
+            dataset:
+              - '^10098$'
+      # dataset 10155
+      - literal:
+          value:
+            - ycw2012-11-14-20
+            - ycw2012-11-14-47
+            - ycw2012-11-14-59
+            - ycw2013-05-01-34
+            - ycw2013-08-20-24
+            - ycw2013-08-20-28
+            - ycw2013-08-20-43
+            - ycw2013-08-20-45
+            - ycw2013-08-20-59
+            - ycw2013-09-10-28
+            - ycw2013-09-10-36
+            - ycw2013-09-10-39
+            - ycw2013-09-10-43
+            - ycw2013-09-10-47
+            - ycw2013-09-10-48
+        parent_filters:
+          include:
+            dataset:
+              - '^10155$'
+      # dataset 10161
+      - literal:
+          value:
+            - ycw2012-09-23-21
+            - ycw2012-09-23-31
+            - ycw2012-09-23-39
+            - ycw2012-09-23-46
+            - ycw2012-09-23-55
+            - ycw2012-09-23-66
+            - ycw2012-09-23-67
+            - ycw2012-09-23-70
+        parent_filters:
+          include:
+            dataset:
+              - '^10161$'
+      # dataset 10162
+      - literal:
+          value:
+            - ycw2012-03-12-3
+        parent_filters:
+          include:
+            dataset:
+              - '^10162$'
+      # dataset 10163
+      - literal:
+          value:
+            - ycw2012-03-03-2
+            - ycw2012-03-03-3
+            - ycw2012-03-12-18
+            - ycw2012-03-12-7
+        parent_filters:
+          include:
+            dataset:
+              - '^10163$'
+      # dataset 10166
+      - literal:
+          value:
+            - ycw2012-09-07-23
+            - ycw2012-09-07-3
+            - ycw2012-10-08-1
+            - ycw2012-10-08-7
+        parent_filters:
+          include:
+            dataset:
+              - '^10166$'
+      # dataset 10226
+      - literal:
+          value:
+            - mba2011-11-23-1
+            - mba2011-11-23-15
+            - mba2011-11-23-16
+            - mba2011-11-23-20
+            - mba2011-11-23-21
+            - mba2011-11-23-22
+            - mba2011-11-23-25
+            - mba2011-11-23-26
+            - mba2011-11-23-35
+            - mba2011-11-23-7
+        parent_filters:
+          include:
+            dataset:
+              - '^10226$'
+      # dataset 10272
+      - literal:
+          value:
+            - aba2015-06-04-10
+            - aba2015-06-04-16
+            - aba2015-06-04-22
+            - aba2015-06-04-24
+            - aba2015-06-04-26
+            - aba2015-06-04-30
+            - aba2015-06-04-5
+            - aba2015-06-04-9
+        parent_filters:
+          include:
+            dataset:
+              - '^10272$'
+      # dataset 10273
+      - literal:
+          value:
+            - aba2015-07-07-10
+            - aba2015-07-07-17
+        parent_filters:
+          include:
+            dataset:
+              - '^10273$'
+      # dataset 10281
+      - literal:
+          value:
+            - aba2015-02-23-15
+            - aba2015-02-23-16
+            - aba2015-02-23-2
+            - aba2015-02-23-20
+            - aba2015-02-23-21
+            - aba2015-02-23-25
+            - aba2015-02-23-3
+            - aba2015-02-23-30
+            - aba2015-02-23-9
+        parent_filters:
+          include:
+            dataset:
+              - '^10281$'
+standardization_config:
+  deposition_id: 10350
+  run_data_map_file: run_to_data_map_v3.tsv
+  source_prefix: CZII/20260504_popsicle/bacteria_final/
+tomograms:
+  - metadata:
+      affine_transformation_matrix:
+        - [1, 0, 0, 0]
+        - [0, 1, 0, 0]
+        - [0, 0, 1, 0]
+        - [0, 0, 0, 1]
+      align_software: RAPTOR
+      authors: *id_authors
+      ctf_corrected: null
+      dates: *id_dates
+      fiducial_alignment_status: FIDUCIAL
+      is_visualization_default: true
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      processing: raw
+      processing_software: null
+      reconstruction_method: WBP
+      reconstruction_software: IMOD
+      tomogram_version: 1
+      voxel_spacing: 20.000
+    sources:
+      - source_glob:
+          list_glob: 'ExperimentRuns/{portal_run_id}/VoxelSpacing20.000/wbp.zarr'
+          match_regex: .*
+version: 1.3.0
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 20.000
