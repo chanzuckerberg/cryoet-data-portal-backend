@@ -162,6 +162,33 @@ class AnnotationImporter(BaseImporter):
         }
         self.annotation_metadata = AnnotationMetadata(self.config.fs, self.get_deposition().name, self.metadata)
 
+    @classmethod
+    def pre_import(cls, config: DepositionImportConfig, parents: dict[str, Any]) -> None:
+        """Remove incomplete annotation folders before importing.
+
+        A completed annotation always writes its `<name>-<version>.json` metadata file last
+        (see import_item -> convert, then import_metadata). So any annotation_id folder that
+        has content but no `*[0-9].json` is a partial write left behind by an interrupted run:
+        it is invisible to id-seeding (which globs the same `*[0-9].json`). Delete these before
+        anything is written.
+        """
+        voxel_spacing = parents.get("voxel_spacing")
+        if voxel_spacing is None:
+            return
+        anno_glob = config.resolve_output_path("annotation", voxel_spacing, {"annotation_id": "*"})
+        all_folders = set(config.fs.glob(anno_glob))
+        if not all_folders:
+            return
+        complete = {
+            os.path.dirname(path) for path in config.fs.glob(os.path.join(anno_glob, "*[0-9].json"))
+        }
+        for folder in sorted(all_folders - complete):
+            # Only ever touch numeric annotation_id folders.
+            if not os.path.basename(folder).isdigit():
+                continue
+            print(f"Deleting stray annotation folder (no metadata json): {folder}")
+            config.fs.rm(folder, recursive=True)
+
     # Functions to support writing annotation data
     def import_item(self):
         if not self.is_import_allowed():
@@ -197,9 +224,7 @@ class AnnotationImporter(BaseImporter):
         path = os.path.relpath(dest_prefix, self.config.output_prefix)
 
         # Several sources can belong to the same logical annotation (same identifier -> same output
-        # path); accumulate their files into one metadata doc as each source is imported, instead of
-        # re-discovering siblings via the finder. Re-running the finder here re-globbed and re-read
-        # every annotation source once per annotation -- O(annotations x sources).
+        # path); accumulate their files into one metadata doc as each source is imported.
         meta = self.identifier_metadata_map.setdefault(
             filename,
             {
@@ -208,7 +233,6 @@ class AnnotationImporter(BaseImporter):
                 "alignment_metadata_path": self.local_metadata["alignment_metadata_path"],
             },
         )
-        # Point this instance at the shared accumulator so local_metadata reflects the written doc.
         self.local_metadata = meta
         meta["files"].extend(self.get_metadata(path))
 

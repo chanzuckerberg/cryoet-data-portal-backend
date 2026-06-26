@@ -55,6 +55,9 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
         # all ancestors
         parent_args = dict(parents)
 
+        if import_class in to_import:
+            import_class.pre_import(config, parent_args)
+
         items = import_class.finder(config, **parent_args)
         for item in items:
             print(f"Iterating {item.type_key}: {item.name}")
