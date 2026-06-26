@@ -8,14 +8,14 @@ RUN apt-get update && \
 RUN python3 -m pip install --no-cache-dir --upgrade pip && \
     python3 -m pip install --no-cache-dir --upgrade --force-reinstall setuptools wheel packaging
 
-ENV POETRY_VERSION=1.8
+ENV POETRY_VERSION=2.2.1
 # Some base python dependencies to kickstart our container build.
 RUN python3 -m pip install --no-cache-dir poetry==$POETRY_VERSION supervisor
 
 # Install dev deps
 RUN poetry config virtualenvs.create false
 COPY pyproject.toml poetry.lock ./
-RUN poetry install
+RUN poetry install --no-root
 
 # Create an empty dir to mount our test app to.
 RUN mkdir -p /app
