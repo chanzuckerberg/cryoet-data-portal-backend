@@ -737,7 +737,7 @@ datasets:
   - metadata:
       dataset_identifier: 10492
       dataset_title: >-
-        CryoSiam minimal-bacterium training dataset - simulated cryo-electron tomograms of bacterial transcription/translation
+        CryoETSim minimal-bacterium subset - simulated cryo-electron tomograms of bacterial transcription/translation
       dataset_description: >-
         Synthetic cryo-electron tomography dataset of 50 simulated tomograms
         representing a minimal-bacterium cellular volume, generated for the CryoSiam

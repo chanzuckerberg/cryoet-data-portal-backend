@@ -120,7 +120,7 @@ datasets:
   - metadata:
       dataset_identifier: 10491
       dataset_title: >-
-        CryoSiam chromatin training dataset - simulated cryo-electron tomograms of nucleosome arrays and DNA filaments
+        CryoETSim chromatin subset - simulated cryo-electron tomograms of nucleosome arrays and DNA filaments
       dataset_description: >-
         Synthetic cryo-electron tomography dataset of 50 simulated tomograms of
         chromatin-like content, generated for the CryoSiam self-supervised

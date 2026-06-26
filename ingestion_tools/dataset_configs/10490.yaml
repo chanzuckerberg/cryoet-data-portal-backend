@@ -3697,7 +3697,7 @@ datasets:
   - metadata:
       dataset_identifier: 10490
       dataset_title: >-
-        CryoSiam general training dataset - simulated cryo-electron tomograms of cellular molecular crowding
+        CryoETSim general subset - simulated cryo-electron tomograms of cellular molecular crowding
       dataset_description: >-
         Synthetic cryo-electron tomography dataset of 300 simulated tomograms of
         generic cellular molecular crowding, generated for the CryoSiam
