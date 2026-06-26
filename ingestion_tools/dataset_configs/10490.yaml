@@ -3789,8 +3789,8 @@ deposition_keyphotos:
   - sources:
       - literal:
           value:
-            snapshot: null
-            thumbnail: null
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10348_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10348_thumbnail.png
 
 depositions:
   - metadata:

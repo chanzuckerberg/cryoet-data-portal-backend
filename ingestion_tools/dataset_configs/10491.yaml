@@ -191,13 +191,6 @@ datasets:
           value:
             - "10491"
 
-deposition_keyphotos:
-  - sources:
-      - literal:
-          value:
-            snapshot: null
-            thumbnail: null
-
 depositions:
   - sources:
       - literal:
