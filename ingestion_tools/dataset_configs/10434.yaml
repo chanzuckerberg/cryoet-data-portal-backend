@@ -1,17 +1,22 @@
 alignments:
 - metadata:
-    format: IMOD
+    format: ARETOMO3
+    is_portal_standard: true
     method_type: fiducial_based
   sources:
-  - source_multi_glob:
-      list_globs:
-      - alignmentfiles/{run_name}_bin8_align_fid.tlt
-      - alignmentfiles/{run_name}_bin8_align_fid.xf
+  - source_glob:
+      list_glob: reprocessed/{run_name}_*/{run_name}_*.aln
 annotations: []
 collection_metadata:
 - sources:
   - source_glob:
       list_glob: mdocs/{mdoc_name}
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: reprocessed/{run_name}_*/{run_name}_*_CTF.txt
 datasets:
 - metadata:
     assay:
@@ -119,7 +124,7 @@ standardization_config:
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    binning_from_frames: 8
+    binning_from_frames: 2
     camera:
       manufacturer: Gatan
       model: K3
@@ -130,7 +135,7 @@ tiltseries:
       model: TITAN KRIOS
     microscope_optical_setup:
       energy_filter: Gatan Quantum LS
-    pixel_spacing: 8.627
+    pixel_spacing: 2.157
     spherical_aberration_constant: 2.7
     tilt_axis: 96
     tilt_range:
@@ -142,8 +147,8 @@ tiltseries:
     total_flux: float {tilt_series_total_flux}
   sources:
   - source_glob:
-      list_glob: raw_tilt_series/{run_name}_bin8_align.st
-      match_regex: ^.*\.st$
+      list_glob: reprocessed/{run_name}_*/{run_name}_*.mrc
+      match_regex: ^.*_[0-9]+\.mrc$
 tomograms:
 - metadata:
     affine_transformation_matrix:
@@ -163,8 +168,12 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
-    ctf_corrected: false
+    authors:
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: true
+      name: Jonathan Schwartz
+      primary_author_status: true
+    ctf_corrected: true
     dates: *id002
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
@@ -172,15 +181,95 @@ tomograms:
       x: 0
       y: 0
       z: 0
-    processing: raw
-    reconstruction_method: SIRT
-    reconstruction_software: IMOD
+    processing: filtered
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.1.10
     tomogram_version: 1
     voxel_spacing: 8.627
   sources:
   - source_glob:
-      list_glob: tomograms_bin8/{run_name}_bin8_align.rec
-      match_regex: (.*)\.rec
+      list_glob: reprocessed/{run_name}_*/{run_name}_*_ts_Vol.mrc
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors:
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: true
+      name: Jonathan Schwartz
+      primary_author_status: true
+    ctf_corrected: false
+    dates: *id002
+    fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.1.10
+    tomogram_version: 1
+    voxel_spacing: 8.627
+  sources:
+  - source_glob:
+      list_glob: reprocessed/{run_name}_*/{run_name}_*_ts_2ND_Vol.mrc
+      match_regex: (.*)\.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors:
+    - ORCID: 0000-0002-8063-6951
+      corresponding_author_status: true
+      name: Jonathan Schwartz
+      primary_author_status: true
+    ctf_corrected: false
+    dates: *id002
+    fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: SART
+    reconstruction_software: AreTomo3 v2.1.10
+    tomogram_version: 1
+    voxel_spacing: 8.627
+  sources:
+  - source_glob:
+      list_glob: reprocessed/{run_name}_*/{run_name}_*_ts_3RD_Vol.mrc
+      match_regex: (.*)\.mrc
 version: 1.3.0
 voxel_spacings:
 - sources:
