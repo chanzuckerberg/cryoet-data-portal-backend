@@ -3,7 +3,7 @@ import logging
 import os.path
 import re
 import time
-from concurrent.futures import ProcessPoolExecutor, wait
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import partial
 from typing import Any
 
@@ -86,6 +86,19 @@ def cli(ctx):
     ctx.obj = {}
 
 
+def wait_for_futures(futures):
+    """Wait for all submitted jobs, re-raising any errors instead of swallowing them."""
+    errors = 0
+    for future in as_completed(futures):
+        try:
+            future.result()
+        except Exception:
+            errors += 1
+            logger.exception("Failed to submit job")
+    if errors:
+        raise RuntimeError(f"{errors} of {len(futures)} job submissions failed; see logs above.")
+
+
 def run_job(
     execution_name: str,
     wdl_args: dict[str, Any],
@@ -150,6 +163,29 @@ def get_aws_env(environment):
             swipe_wdl_bucket = bucket_name
         if "swipe-comms" in bucket_name and environment in bucket_name:
             swipe_comms_bucket = bucket_name
+    # Fail fast on missing infra, usually a wrong AWS_PROFILE for the environment.
+    missing_buckets = [
+        name
+        for name, value in (("swipe-comms", swipe_comms_bucket), ("swipe-wdl", swipe_wdl_bucket))
+        if value is None
+    ]
+    if missing_buckets:
+        raise RuntimeError(
+            f"Could not find {', '.join(missing_buckets)} bucket(s) for environment "
+            f"'{environment}' in AWS account {aws_account_id}. Are you using the right "
+            f"AWS_PROFILE for this environment?",
+        )
+
+    state_machine_arn = f"arn:aws:states:{aws_region}:{aws_account_id}:stateMachine:{sfn_name}"
+    try:
+        boto3.client("stepfunctions").describe_state_machine(stateMachineArn=state_machine_arn)
+    except Exception as err:
+        raise RuntimeError(
+            f"State machine '{sfn_name}' not found in AWS account {aws_account_id} "
+            f"(region {aws_region}). Are you using the right AWS_PROFILE for environment "
+            f"'{environment}'?",
+        ) from err
+
     aws_env = {
         "aws_region": aws_region,
         "aws_account_id": aws_account_id,
@@ -324,7 +360,7 @@ def db_import(
                     ),
                 ),
             )
-        wait(futures)
+        wait_for_futures(futures)
 
 
 @cli.command()
@@ -473,7 +509,7 @@ def queue(
                             ),
                         ),
                     )
-                wait(futures)
+                wait_for_futures(futures)
 
 
 class OrderedSyncFilters(click.Command):
@@ -522,7 +558,7 @@ def execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl
                     ),
                 ),
             )
-        wait(futures)
+        wait_for_futures(futures)
 
 
 @cli.command(name="sync", cls=OrderedSyncFilters)
@@ -691,7 +727,7 @@ def validate(
                 workerpool=workerpool,
             )
             futures.append(future)
-        wait(futures)
+        wait_for_futures(futures)
 
 
 @cli.command(name="source-validate")
@@ -737,7 +773,7 @@ def source_validate(
             workerpool=workerpool,
         )
         futures.append(future)
-        wait(futures)
+        wait_for_futures(futures)
 
 
 if __name__ == "__main__":

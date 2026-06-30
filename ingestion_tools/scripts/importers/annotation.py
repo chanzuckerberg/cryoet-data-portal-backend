@@ -164,15 +164,13 @@ class AnnotationImporter(BaseImporter):
 
     @classmethod
     def pre_import(cls, config: DepositionImportConfig, parents: dict[str, Any]) -> None:
-        """Remove stray (incomplete) annotation folders before importing.
+        """Remove incomplete annotation folders before importing.
 
-        A completed annotation always writes its `<name>-<version>.json` metadata file last,
-        after the zarr and mrc (see import_item -> convert, then import_metadata). So any
-        annotation_id folder that has content but no `*[0-9].json` is a partial/orphaned write
-        left behind by an interrupted run: it is invisible to id-seeding (which globs the same
-        `*[0-9].json`), lingers forever as a dead folder, and can push the live annotation onto
-        a different id. Delete these before anything is written. Removals are recoverable on
-        versioned buckets. Complete folders (those with a metadata json) are never touched.
+        A completed annotation always writes its `<name>-<version>.json` metadata file last
+        (see import_item -> convert, then import_metadata). So any annotation_id folder that
+        has content but no `*[0-9].json` is a partial write left behind by an interrupted run:
+        it is invisible to id-seeding (which globs the same `*[0-9].json`). Delete these before
+        anything is written.
         """
         voxel_spacing = parents.get("voxel_spacing")
         if voxel_spacing is None:
@@ -226,9 +224,7 @@ class AnnotationImporter(BaseImporter):
         path = os.path.relpath(dest_prefix, self.config.output_prefix)
 
         # Several sources can belong to the same logical annotation (same identifier -> same output
-        # path); accumulate their files into one metadata doc as each source is imported, instead of
-        # re-discovering siblings via the finder. Re-running the finder here re-globbed and re-read
-        # every annotation source once per annotation -- O(annotations x sources).
+        # path); accumulate their files into one metadata doc as each source is imported.
         meta = self.identifier_metadata_map.setdefault(
             filename,
             {
@@ -237,7 +233,6 @@ class AnnotationImporter(BaseImporter):
                 "alignment_metadata_path": self.local_metadata["alignment_metadata_path"],
             },
         )
-        # Point this instance at the shared accumulator so local_metadata reflects the written doc.
         self.local_metadata = meta
         meta["files"].extend(self.get_metadata(path))
 

@@ -163,8 +163,7 @@ class BaseImporter:
     @classmethod
     def pre_import(cls, config: DepositionImportConfig, parents: dict[str, "BaseImporter"]) -> None:
         """Hook invoked once, before this importer's items are discovered or written for the
-        given parents -- i.e. before the finder runs and before any identifiers are assigned.
-        No-op by default; override to perform pre-import cleanup.
+        given parents. No-op by default; override to perform pre-import work.
         """
         return None
 
