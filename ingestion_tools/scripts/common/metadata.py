@@ -82,7 +82,8 @@ class AnnotationMetadata(MergedMetadata):
         obj = None
         with contextlib.suppress(KeyError):
             obj = self.metadata["annotation_object"]["description"]
-        if not obj:
+        # Fall back to name when description is missing or too long for a filename component.
+        if not obj or len(obj) > 50:
             obj = self.metadata["annotation_object"]["name"]
         dest_filename = os.path.join(
             output_dir,
