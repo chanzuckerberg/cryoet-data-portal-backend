@@ -568,6 +568,10 @@ class AlignmentMethodTypeEnum(str, Enum):
     """
     alignment was done based on image projection
     """
+    simulated = "simulated"
+    """
+    alignment is derived from the known geometry of a simulated tilt series
+    """
     undefined = "undefined"
     """
     how alignment was done is unknown
@@ -3696,7 +3700,7 @@ class Alignment(ConfiguredBaseModel):
 
     @field_validator('method_type')
     def pattern_method_type(cls, v):
-        pattern=re.compile(r"(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)")
+        pattern=re.compile(r"(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^simulated$)|(^undefined$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):

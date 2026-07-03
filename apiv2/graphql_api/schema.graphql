@@ -7120,6 +7120,7 @@ enum alignment_method_type_enum {
   projection_matching
   patch_tracking
   fiducial_based
+  simulated
 }
 
 enum alignment_type_enum {

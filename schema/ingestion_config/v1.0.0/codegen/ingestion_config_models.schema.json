@@ -41,7 +41,7 @@
                 "method_type": {
                     "$ref": "#/$defs/AlignmentMethodTypeEnum",
                     "description": "The alignment method type.",
-                    "pattern": "(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)"
+                    "pattern": "(^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^simulated$)|(^undefined$)"
                 },
                 "tilt_offset": {
                     "description": "The tilt offset relative to the tomogram.",
@@ -139,6 +139,7 @@
                 "fiducial_based",
                 "patch_tracking",
                 "projection_matching",
+                "simulated",
                 "undefined"
             ],
             "title": "AlignmentMethodTypeEnum",

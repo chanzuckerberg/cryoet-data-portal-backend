@@ -501,6 +501,10 @@ enums:
       projection_matching:
         text: projection_matching
         description: alignment was done based on image projection
+      simulated:
+        text: simulated
+        description: alignment is derived from the known geometry of a simulated tilt
+          series
       undefined:
         text: undefined
         description: how alignment was done is unknown

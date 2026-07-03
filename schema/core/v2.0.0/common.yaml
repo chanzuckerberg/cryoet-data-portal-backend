@@ -1296,6 +1296,8 @@ enums:
         description: alignment was done based on patch tracking
       projection_matching:
         description: alignment was done based on image projection
+      simulated:
+        description: alignment is derived from the known geometry of a simulated tilt series
       undefined:
         description: how alignment was done is unknown
 
