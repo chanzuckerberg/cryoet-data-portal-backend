@@ -1,5 +1,16 @@
 version: 1.0.0
 
+alignments:
+  - metadata:
+      format: IMOD
+      alignment_type: GLOBAL
+      is_portal_standard: true
+    sources:
+      - source_multi_glob:
+          list_globs:
+            - generated_alignments/{run_name}.xf
+            - generated_alignments/{run_name}.tlt
+
 annotations:
   - metadata:
       annotation_ingest_id: cryosiam-semantic-general-particles-1
