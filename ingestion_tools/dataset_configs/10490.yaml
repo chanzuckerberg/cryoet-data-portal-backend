@@ -5,6 +5,7 @@ alignments:
       format: IMOD
       alignment_type: GLOBAL
       is_portal_standard: true
+      method_type: simulated
     sources:
       - source_multi_glob:
           list_globs:
