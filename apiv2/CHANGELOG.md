@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.25.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.24.0...apiv2-v1.25.0) (2026-07-06)
+
+
+### Features
+
+* add 'simulated' to alignment method type enum ([#732](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/732)) ([c9042ae](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/c9042ae683e4f33b0b7d1b253520942260e72dc6))
+
 ## [1.24.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.23.0...apiv2-v1.24.0) (2026-06-26)
 
 
