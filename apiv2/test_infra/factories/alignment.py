@@ -41,7 +41,7 @@ class AlignmentFactory(CommonFactory):
         RunFactory,
     )
     alignment_type = fuzzy.FuzzyChoice(["LOCAL", "GLOBAL"])
-    alignment_method = fuzzy.FuzzyChoice(["projection_matching", "patch_tracking", "fiducial_based"])
+    alignment_method = fuzzy.FuzzyChoice(["projection_matching", "patch_tracking", "fiducial_based", "simulated"])
     volume_x_dimension = fuzzy.FuzzyFloat(1, 100)
     volume_y_dimension = fuzzy.FuzzyFloat(1, 100)
     volume_z_dimension = fuzzy.FuzzyFloat(1, 100)

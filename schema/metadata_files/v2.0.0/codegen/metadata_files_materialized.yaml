@@ -516,6 +516,10 @@ enums:
       projection_matching:
         text: projection_matching
         description: alignment was done based on image projection
+      simulated:
+        text: simulated
+        description: alignment is derived from the known geometry of a simulated tilt
+          series
       undefined:
         text: undefined
         description: how alignment was done is unknown
@@ -1187,7 +1191,7 @@ classes:
         range: alignment_method_type_enum
         inlined: true
         inlined_as_list: true
-        pattern: (^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^undefined$)
+        pattern: (^fiducial_based$)|(^patch_tracking$)|(^projection_matching$)|(^simulated$)|(^undefined$)
   AnnotationFileMetadata:
     name: AnnotationFileMetadata
     description: Metadata relating to an annotation file.

@@ -22,6 +22,7 @@ class alignment_method_type_enum(enum.StrEnum):
     projection_matching = "projection_matching"
     patch_tracking = "patch_tracking"
     fiducial_based = "fiducial_based"
+    simulated = "simulated"
 
 
 @strawberry.enum

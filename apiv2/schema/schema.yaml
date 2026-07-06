@@ -245,6 +245,8 @@ enums:
         description: Alignment was generated via IMOD without fiducials
       fiducial_based:
         description: Alignment was generated based on fiducials
+      simulated:
+        description: Alignment is derived from the known geometry of a simulated tilt series
   annotation_method_type_enum:
     name: annotation_method_type_enum
     description: Describes how the annotations were generated.
