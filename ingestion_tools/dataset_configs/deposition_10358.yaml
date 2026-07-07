@@ -1,6 +1,6 @@
 # Deposition 10358 - Octopi/TopCup particle-pick annotations into existing datasets (single config, 11 datasets).
 # OrientedPoints carry per-object subtomogram-average glb meshes (maps/*.glb) via mesh_source_path.
-# Source bucket: cryoetportal-biohub-hpc-globus. V-ATPase (10453) attaches to VoxelSpacing10.000 (dep 10359). See FINAL_REPORT.md.
+# Source bucket: cryoetportal-biohub-hpc-globus. V-ATPase (10453) attaches to VoxelSpacing10.000 (dep 10359).
 version: 1.3.0
 alignments:
 - sources:
@@ -900,17 +900,16 @@ depositions:
 - metadata:
     authors: *id001
     dates: *id002
-    deposition_description: 'Particle-pick annotations produced by Octopi and TopCup, two deep-learning
+    deposition_description: 'Particle picks produced by Octopi and TopCup, two deep-learning
       particle-detection models from the self-configuring in situ cryoET structure-determination workflow
       (Octopi + py2rely). Octopi is a self-configuring 3D U-Net whose architecture/hyperparameters are
       selected per dataset by Bayesian optimization; TopCup is an open re-implementation of the top-ranked
       2024-2025 Kaggle CryoET Object Identification Challenge solution, used as a fixed-architecture baseline.
-      Picks are deposited for: GroEL in in-situ E. coli (10493); apo-ferritin, beta-amylase, beta-galactosidase,
+      Picks are deposited for: GroEL in in-situ E. coli; apo-ferritin, beta-amylase, beta-galactosidase,
       ribosome, thyroglobulin
-      and virus-like particle in the Phantom/ML-Challenge datasets (10440, 10445, 10446; both Octopi and
-      TopCup); cytosolic and membrane-bound ribosomes in unroofed cells (10426, 10427, 10431, 10432, 10433,
-      10435); and V-ATPase on isolated synaptic vesicles (10453). All picks are model predictions
-      validated by subtomogram averaging with py2rely (RELION-5).'
+      and virus-like particle in the Phantom/ML-Challenge datasets (both Octopi and
+      TopCup); cytosolic and membrane-bound ribosomes in unroofed cells; and V-ATPase on isolated synaptic vesicles.
+      All picks are model predictions validated by subtomogram averaging with py2rely (RELION-5).'
     deposition_identifier: 10358
     deposition_title: Octopi and TopCup particle picks for a self-configuring in situ cryoET structure-determination
       workflow
