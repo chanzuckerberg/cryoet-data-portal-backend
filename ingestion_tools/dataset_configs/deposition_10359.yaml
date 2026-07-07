@@ -19,9 +19,13 @@ annotations:
       name: membrane
     annotation_software: MemBrain-seg
     authors: &id001
+    - name: Rahel Woldeyes
+      ORCID: 0000-0003-0737-8383
+      primary_author_status: true
+      corresponding_author_status: false
     - name: Jonathan Schwartz
       ORCID: 0000-0002-8063-6951
-      primary_author_status: true
+      primary_author_status: false
       corresponding_author_status: false
     - name: Joshua Hutchings
       ORCID: 0000-0001-6841-8583
@@ -33,10 +37,6 @@ annotations:
       corresponding_author_status: false
     - name: Utz Heinrich Ermel
       ORCID: 0000-0003-4685-037X
-      primary_author_status: false
-      corresponding_author_status: false
-    - name: Rahel Woldeyes
-      ORCID: 0000-0003-0737-8383
       primary_author_status: false
       corresponding_author_status: false
     - name: Zhuowen Zhao

@@ -104,10 +104,18 @@ annotations:
       custom_name: Octopi on GitHub
       link: https://github.com/chanzuckerberg/octopi
       link_type: source_code
+    - &id009
+      custom_name: RELION on GitHub
+      link: https://github.com/3dem/relion
+      link_type: source_code
     - &id006
       custom_name: py2rely on GitHub
       link: https://github.com/chanzuckerberg/py2rely
       link_type: source_code
+    - &id011
+      custom_name: py2rely documentation
+      link: https://chanzuckerberg.github.io/py2rely/
+      link_type: documentation
     - &id007
       custom_name: copick on GitHub
       link: https://github.com/copick/copick
@@ -192,9 +200,11 @@ annotations:
     - custom_name: TopCup (czii_cryoet_mlchallenge_winning_models) on GitHub
       link: https://github.com/czimaginginstitute/czii_cryoet_mlchallenge_winning_models
       link_type: source_code
+    - *id009
     - custom_name: py2rely on GitHub
       link: https://github.com/chanzuckerberg/py2rely
       link_type: source_code
+    - *id011
     - custom_name: copick on GitHub
       link: https://github.com/copick/copick
       link_type: source_code
@@ -763,7 +773,9 @@ annotations:
     is_curator_recommended: true
     method_links: &id008
     - *id005
+    - *id009
     - *id006
+    - *id011
     - *id007
     - custom_name: MemBrain-seg on GitHub
       link: https://github.com/teamtomo/membrain-seg
