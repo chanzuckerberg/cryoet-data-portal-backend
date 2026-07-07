@@ -1,0 +1,984 @@
+# Deposition 10358 - Octopi/TopCup particle-pick annotations into existing datasets (single config, 11 datasets).
+# OrientedPoints carry per-object subtomogram-average glb meshes (maps/*.glb) via mesh_source_path.
+# Source bucket: cryoetportal-biohub-hpc-globus. V-ATPase (10453) attaches to VoxelSpacing10.000 (dep 10359). See FINAL_REPORT.md.
+version: 1.3.0
+alignments:
+- sources:
+  - destination_glob:
+      list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
+      match_regex: .*
+      name_regex: (.*)
+    parent_filters:
+      include:
+        dataset:
+          - '10426'
+          - '10427'
+          - '10431'
+          - '10432'
+          - '10433'
+          - '10435'
+          - '10440'
+          - '10445'
+          - '10446'
+          - '10493'
+  - destination_glob:
+      list_glob: '{run_output_path}/Alignments/101/alignment_metadata.json'
+      match_regex: .*
+      name_regex: (.*)
+    parent_filters:
+      include:
+        dataset:
+          - '10453'
+annotations:
+- metadata:
+    annotation_ingest_id: groel-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5).
+    annotation_object:
+      id: UniProtKB:P0A6F5
+      name: Chaperonin GroEL
+      description: Bacterial chaperonin GroEL (E. coli), picked as the tetradecameric barrel
+    annotation_software: Octopi
+    authors: &id001
+    - name: Jonathan Schwartz
+      ORCID: 0000-0002-8063-6951
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Joshua Hutchings
+      ORCID: 0000-0001-6841-8583
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Daniel Ji
+      ORCID: 0009-0003-2008-9583
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Utz Heinrich Ermel
+      ORCID: 0000-0003-4685-037X
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Rahel Woldeyes
+      ORCID: 0000-0003-0737-8383
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Zhuowen Zhao
+      ORCID: 0000-0002-2355-2284
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Christof Henkel
+      ORCID: 0000-0002-2913-3662
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Mallak Ali
+      ORCID: 0009-0007-8169-0996
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: David Agard
+      ORCID: 0000-0003-3512-695X
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Mohammadreza Paraan
+      ORCID: 0000-0002-8402-0134
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Bridget Carragher
+      ORCID: 0000-0002-0624-5020
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Dari Kimanius
+      ORCID: 0000-0002-2662-6373
+      primary_author_status: false
+      corresponding_author_status: true
+      email: dari.kimanius@biohub.org
+    dates: &id002
+      deposition_date: '2026-06-24'
+      last_modified_date: '2026-06-24'
+      release_date: '2026-06-24'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: &id003
+    - &id005
+      custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - &id006
+      custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - &id007
+      custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 4.995
+      order: xyz
+      file_format: copick
+      glob_string: ecoli/ExperimentRuns/{ecoli_pick_dir}/Picks/relion_99_GroEL.json
+      is_visualization_default: false
+      mesh_source_path: maps/ecoli/groel.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10493'
+- metadata:
+    annotation_ingest_id: apo-ferritin-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5).
+    annotation_object:
+      id: GO:0070288
+      name: ferritin complex
+      state: apo
+    annotation_publications: EMD-41923
+    annotation_software: Octopi
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_apo-ferritin.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/apo-ferritin.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_apo-ferritin.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/apo-ferritin.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: apo-ferritin-topcup-1
+    annotation_method: 'Automated particle detection with TopCup, an open re-implementation of the top-ranked
+      solution of the 2024-2025 Kaggle CryoET Object Identification Challenge: a 3D U-Net (MONAI FlexibleUNet
+      with a ResNet/EfficientNet encoder) with a segmentation head at each decoder level (deep supervision),
+      trained on binary-sphere targets with dense cross-entropy loss. Coordinates were validated by subtomogram
+      averaging with py2rely (RELION-5).'
+    annotation_object:
+      id: GO:0070288
+      name: ferritin complex
+      state: apo
+    annotation_publications: EMD-41923
+    annotation_software: TopCup
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: &id004
+    - custom_name: TopCup (czii_cryoet_mlchallenge_winning_models) on GitHub
+      link: https://github.com/czimaginginstitute/czii_cryoet_mlchallenge_winning_models
+      link_type: source_code
+    - custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_apo-ferritin.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/apo-ferritin.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_apo-ferritin.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/apo-ferritin.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: beta-amylase-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5).
+    annotation_object:
+      id: UniProtKB:P10537
+      name: Beta-amylase
+      state: tetrameric
+    annotation_publications: EMD-30405
+    annotation_software: Octopi
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_beta-amylase.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/beta-amylase.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_beta-amylase.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/beta-amylase.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: beta-amylase-topcup-1
+    annotation_method: 'Automated particle detection with TopCup, an open re-implementation of the top-ranked
+      solution of the 2024-2025 Kaggle CryoET Object Identification Challenge: a 3D U-Net (MONAI FlexibleUNet
+      with a ResNet/EfficientNet encoder) with a segmentation head at each decoder level (deep supervision),
+      trained on binary-sphere targets with dense cross-entropy loss. Coordinates were validated by subtomogram
+      averaging with py2rely (RELION-5).'
+    annotation_object:
+      id: UniProtKB:P10537
+      name: Beta-amylase
+      state: tetrameric
+    annotation_publications: EMD-30405
+    annotation_software: TopCup
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id004
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_beta-amylase.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/beta-amylase.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_beta-amylase.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/beta-amylase.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: beta-galactosidase-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5).
+    annotation_object:
+      id: UniProtKB:P00722
+      name: Beta-galactosidase
+      state: tetrameric
+    annotation_publications: EMD-0153
+    annotation_software: Octopi
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_beta-galactosidase.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/beta-galactosidase.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_beta-galactosidase.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/beta-galactosidase.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: beta-galactosidase-topcup-1
+    annotation_method: 'Automated particle detection with TopCup, an open re-implementation of the top-ranked
+      solution of the 2024-2025 Kaggle CryoET Object Identification Challenge: a 3D U-Net (MONAI FlexibleUNet
+      with a ResNet/EfficientNet encoder) with a segmentation head at each decoder level (deep supervision),
+      trained on binary-sphere targets with dense cross-entropy loss. Coordinates were validated by subtomogram
+      averaging with py2rely (RELION-5).'
+    annotation_object:
+      id: UniProtKB:P00722
+      name: Beta-galactosidase
+      state: tetrameric
+    annotation_publications: EMD-0153
+    annotation_software: TopCup
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id004
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_beta-galactosidase.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/beta-galactosidase.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_beta-galactosidase.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/beta-galactosidase.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: ribosome-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5).
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_publications: EMD-3883
+    annotation_software: Octopi
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_ribosome.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/ribosome.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_ribosome.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/ribosome.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: ribosome-topcup-1
+    annotation_method: 'Automated particle detection with TopCup, an open re-implementation of the top-ranked
+      solution of the 2024-2025 Kaggle CryoET Object Identification Challenge: a 3D U-Net (MONAI FlexibleUNet
+      with a ResNet/EfficientNet encoder) with a segmentation head at each decoder level (deep supervision),
+      trained on binary-sphere targets with dense cross-entropy loss. Coordinates were validated by subtomogram
+      averaging with py2rely (RELION-5).'
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_publications: EMD-3883
+    annotation_software: TopCup
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id004
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_ribosome.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/ribosome.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_ribosome.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/ribosome.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: thyroglobulin-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5).
+    annotation_object:
+      id: UniProtKB:P01267
+      name: Thyroglobulin
+      state: dimeric
+    annotation_publications: EMD-24181
+    annotation_software: Octopi
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_thyroglobulin.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/thyroglobulin.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_thyroglobulin.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/thyroglobulin.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: thyroglobulin-topcup-1
+    annotation_method: 'Automated particle detection with TopCup, an open re-implementation of the top-ranked
+      solution of the 2024-2025 Kaggle CryoET Object Identification Challenge: a 3D U-Net (MONAI FlexibleUNet
+      with a ResNet/EfficientNet encoder) with a segmentation head at each decoder level (deep supervision),
+      trained on binary-sphere targets with dense cross-entropy loss. Coordinates were validated by subtomogram
+      averaging with py2rely (RELION-5).'
+    annotation_object:
+      id: UniProtKB:P01267
+      name: Thyroglobulin
+      state: dimeric
+    annotation_publications: EMD-24181
+    annotation_software: TopCup
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id004
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_thyroglobulin.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/thyroglobulin.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_thyroglobulin.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/thyroglobulin.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: virus-like-particle-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5).
+    annotation_object:
+      id: GO:0170047
+      name: virus-like capsid
+      description: PP7 VLP
+    annotation_publications: EMD-41917
+    annotation_software: Octopi
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_virus-like-particle.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/virus-like-particle.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/octopi/ExperimentRuns/{run_name}/Picks/relion_99_virus-like-particle.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/octopi/virus-like-particle.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: virus-like-particle-topcup-1
+    annotation_method: 'Automated particle detection with TopCup, an open re-implementation of the top-ranked
+      solution of the 2024-2025 Kaggle CryoET Object Identification Challenge: a 3D U-Net (MONAI FlexibleUNet
+      with a ResNet/EfficientNet encoder) with a segmentation head at each decoder level (deep supervision),
+      trained on binary-sphere targets with dense cross-entropy loss. Coordinates were validated by subtomogram
+      averaging with py2rely (RELION-5).'
+    annotation_object:
+      id: GO:0170047
+      name: virus-like capsid
+      description: PP7 VLP
+    annotation_publications: EMD-41917
+    annotation_software: TopCup
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id004
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.012
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_virus-like-particle.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/virus-like-particle.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - OrientedPoint:
+      binning: 4.99
+      order: xyz
+      file_format: copick
+      glob_string: ml_challenge/topcup/ExperimentRuns/{run_name}/Picks/relion_1_virus-like-particle.json
+      is_visualization_default: false
+      mesh_source_path: maps/ml_challenge/topcup/virus-like-particle.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+- metadata:
+    annotation_ingest_id: cytosolic-ribosome-octopi-unroofed-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5).
+    annotation_object:
+      id: GO:0022626
+      name: cytosolic ribosome
+    annotation_software: Octopi
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 8.66
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10426/{run_name}_*/Picks/relion_1_ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10426'
+  - OrientedPoint:
+      binning: 8.627
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10427/{run_name}_*/Picks/relion_1_ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10427'
+  - OrientedPoint:
+      binning: 8.627
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10432/{run_name}_*/Picks/relion_1_ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10432'
+  - OrientedPoint:
+      binning: 8.627
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10433/{run_name}_*/Picks/relion_1_ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10433'
+  - OrientedPoint:
+      binning: 8.627
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10435/{run_name}_*/Picks/relion_1_ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10435'
+- metadata:
+    annotation_ingest_id: membrane-bound-ribosome-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5). For this membrane-associated target, membrane-proximal particles were separated
+      from distal ones by Euclidean distance to MemBrain-seg-segmented membranes, and each pick was assigned
+      an initial orientation from the local membrane normal.
+    annotation_object:
+      id: GO:0005840
+      name: membrane bound ribosome
+      description: Membrane-associated ribosome bound to the plasma membrane in unroofed cells
+    annotation_software: Octopi, MemBrain-seg
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: &id008
+    - *id005
+    - *id006
+    - *id007
+    - custom_name: MemBrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 8.66
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10426/{run_name}_*/Picks/relion_1_mb-ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/membrane_ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10426'
+  - OrientedPoint:
+      binning: 8.627
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10427/{run_name}_*/Picks/relion_1_mb-ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/membrane_ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10427'
+  - OrientedPoint:
+      binning: 8.464
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10431/{run_name}_*/Picks/relion_1_mb-ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/membrane_ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10431'
+  - OrientedPoint:
+      binning: 8.627
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10432/{run_name}_*/Picks/relion_1_mb-ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/membrane_ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10432'
+  - OrientedPoint:
+      binning: 8.627
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10433/{run_name}_*/Picks/relion_1_mb-ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/membrane_ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10433'
+  - OrientedPoint:
+      binning: 8.627
+      order: xyz
+      file_format: copick
+      glob_string: unroofing/10435/{run_name}_*/Picks/relion_1_mb-ribosome.json
+      is_visualization_default: true
+      mesh_source_path: maps/unroofing/membrane_ribo.glb
+    parent_filters:
+      include:
+        dataset:
+        - '10435'
+- metadata:
+    annotation_ingest_id: v-atpase-octopi-1
+    annotation_method: Automated particle detection with Octopi, a self-configuring supervised 3D U-Net
+      (built on MONAI primitives) whose architecture and training hyperparameters are selected per dataset
+      via Bayesian optimization (Optuna, TPE sampler). Particle coordinates were extracted from the predicted
+      per-class segmentation masks using a watershed-based peak detector, retaining candidates whose effective
+      radius is 50-100% of the specified particle radius. Coordinates were validated by subtomogram averaging
+      with py2rely (RELION-5). For this membrane-associated target, membrane-proximal particles were separated
+      from distal ones by Euclidean distance to MemBrain-seg-segmented membranes, and each pick was assigned
+      an initial orientation from the local membrane normal.
+    annotation_object:
+      id: GO:0033176
+      name: proton-transporting V-type ATPase complex
+    annotation_software: Octopi, MemBrain-seg
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id008
+    method_type: automated
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 10.0
+      order: xyz
+      file_format: copick
+      glob_string: vesicles/{vatpase_pick_path}/Picks/relion_99_vatpase.json
+      is_visualization_default: true
+    parent_filters:
+      include:
+        dataset:
+        - '10453'
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10426'
+      - '10427'
+      - '10431'
+      - '10432'
+      - '10433'
+      - '10435'
+      - '10440'
+      - '10445'
+      - '10446'
+      - '10453'
+      - '10493'
+depositions:
+- metadata:
+    authors: *id001
+    dates: *id002
+    deposition_description: 'Particle-pick annotations produced by Octopi and TopCup, two deep-learning
+      particle-detection models from the self-configuring in situ cryoET structure-determination workflow
+      (Octopi + py2rely). Octopi is a self-configuring 3D U-Net whose architecture/hyperparameters are
+      selected per dataset by Bayesian optimization; TopCup is an open re-implementation of the top-ranked
+      2024-2025 Kaggle CryoET Object Identification Challenge solution, used as a fixed-architecture baseline.
+      Picks are deposited for: GroEL in in-situ E. coli (10493); apo-ferritin, beta-amylase, beta-galactosidase,
+      ribosome, thyroglobulin
+      and virus-like particle in the Phantom/ML-Challenge datasets (10440, 10445, 10446; both Octopi and
+      TopCup); cytosolic and membrane-bound ribosomes in unroofed cells (10426, 10427, 10431, 10432, 10433,
+      10435); and V-ATPase on isolated synaptic vesicles (10453). All picks are model predictions
+      validated by subtomogram averaging with py2rely (RELION-5).'
+    deposition_identifier: 10358
+    deposition_title: Octopi and TopCup particle picks for a self-configuring in situ cryoET structure-determination
+      workflow
+    deposition_types:
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10358
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+runs:
+- sources:
+  - destination_glob:
+      list_glob: '{dataset_output_path}/*'
+      match_regex: .*
+      name_regex: (.*)
+    exclude:
+    - Images
+    - dataset_metadata.json
+standardization_config:
+  deposition_id: 10358
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: CZII/20260624_octopi_paper/
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 8.66
+    parent_filters:
+      include:
+        dataset:
+        - '10426'
+  - literal:
+      value:
+      - 8.627
+    parent_filters:
+      include:
+        dataset:
+        - '10427'
+        - '10432'
+        - '10433'
+        - '10435'
+  - literal:
+      value:
+      - 8.464
+    parent_filters:
+      include:
+        dataset:
+        - '10431'
+  - literal:
+      value:
+      - 10.012
+    parent_filters:
+      include:
+        dataset:
+        - '10440'
+  - literal:
+      value:
+      - 4.99
+    parent_filters:
+      include:
+        dataset:
+        - '10445'
+        - '10446'
+  - literal:
+      value:
+      - 10.0
+    parent_filters:
+      include:
+        dataset:
+        - '10453'
+  - literal:
+      value:
+      - 4.995
+    parent_filters:
+      include:
+        dataset:
+        - '10493'
