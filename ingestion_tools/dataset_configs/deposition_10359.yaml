@@ -28,6 +28,7 @@ annotations:
       primary_author_status: false
       corresponding_author_status: false
     - name: Daniel Ji
+      ORCID: 0009-0003-2008-9583
       primary_author_status: false
       corresponding_author_status: false
     - name: Utz Heinrich Ermel
