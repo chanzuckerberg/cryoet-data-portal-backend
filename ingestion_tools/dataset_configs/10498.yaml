@@ -1,0 +1,353 @@
+# CryoET Data Portal Ingestion Configuration — Dataset 10498 / Deposition 10355
+# EMPIAR-10985 (PACE-tomo of 70S ribosomes), CZII reprocessing benchmark.
+# Built from the pipeline stub (cryoet-data-portal-pipeline stage_upload) + pipeline_configs/10498.yaml.
+version: 1.1.0
+
+standardization_config:
+  deposition_id: 10355
+  source_prefix: EMPIAR/EMPIAR-10985/
+  run_data_map_file: run_to_data_map.tsv
+
+datasets:
+- metadata:
+    dataset_identifier: 10498
+    dataset_title: PACE-tomo of purified Escherichia coli 70S ribosomes
+    dataset_description: >-
+      Cryo-electron tomography of purified Escherichia coli 70S ribosomes, vitrified in vitro and
+      imaged with the parallel cryo electron tomography (PACE-tomo) acquisition scheme, which collects
+      many tilt series in parallel across an array of targets to greatly increase tomography
+      throughput. The dataset comprises 81 tilt series of the purified ribosome sample, acquired on a
+      Thermo Scientific Krios G4 operating at 300 kV with a Gatan K3 detector and a BioQuantum energy
+      filter, using a dose-symmetric scheme from -60 to +60 degrees in 3 degree increments. The raw
+      tilt series were originally deposited in EMPIAR-10985 and described by Eisenstein et al. (Nature
+      Methods, 2022), the study that introduced PACE-tomo. Tomograms were reconstructed from these tilt
+      series by the CryoET Data Portal team at a voxel size of about 10 angstroms.
+    authors: &authors
+    # Original PACE-tomo data authors (EMPIAR-10985 / Eisenstein et al., Nat Methods 2022).
+    # Shared by dataset + deposition. Tomograms are authored by the CZII reprocessor (see tomograms).
+    - name: Fabian Eisenstein
+      ORCID: 0000-0002-1261-7126
+      affiliation_name: University of Tokyo, Graduate School of Medicine
+      affiliation_address: Tokyo, Japan
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Haruaki Yanagisawa
+      ORCID: 0000-0003-0313-2343
+      affiliation_name: University of Tokyo, Graduate School of Medicine
+      affiliation_address: Tokyo, Japan
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Hiroka Kashihara
+      ORCID: 0000-0002-6204-1348
+      affiliation_name: Teikyo University, Advanced Comprehensive Research Organization (ACRO)
+      affiliation_address: Tokyo, Japan
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Masahide Kikkawa
+      ORCID: 0000-0001-7656-8194
+      affiliation_name: University of Tokyo, Graduate School of Medicine
+      affiliation_address: Tokyo, Japan
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Sachiko Tsukita
+      ORCID: 0000-0003-2916-0772
+      affiliation_name: Teikyo University, Advanced Comprehensive Research Organization (ACRO)
+      affiliation_address: Tokyo, Japan
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Radostin Danev
+      ORCID: 0000-0001-6406-8993
+      email: rado@m.u-tokyo.ac.jp
+      affiliation_name: University of Tokyo, Graduate School of Medicine
+      affiliation_address: Tokyo, Japan
+      primary_author_status: false
+      corresponding_author_status: true
+    dates: &dates
+      deposition_date: '2026-07-09'
+      release_date: '2026-07-09'
+      last_modified_date: '2026-07-09'
+    sample_type: in_vitro
+    organism:
+      name: Escherichia coli
+      taxonomy_id: 562
+    cell_strain:
+      name: Escherichia coli DH5alpha
+      id: NCBITaxon:668369
+    cell_component:
+      name: ribosome
+      id: GO:0005840
+    tissue:
+      name: anatomical structure
+      id: UBERON:0000061
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: normal
+      id: PATO:0000461
+    other_setup: PACE-tomo (parallel cryo electron tomography)
+    funding:
+    - funding_agency_name: Japan Agency for Medical Research and Development (AMED-BINDS)
+      grant_id: JP21am0101115j0005
+    - funding_agency_name: Japan Society for the Promotion of Science (JSPS)
+      grant_id: 21F20764
+    - funding_agency_name: Japan Society for the Promotion of Science (JSPS)
+      grant_id: 21H05248
+    - funding_agency_name: Japan Society for the Promotion of Science (JSPS)
+      grant_id: JP19H05468
+    - funding_agency_name: Takeda Science Foundation
+      grant_id: null
+    - funding_agency_name: Japan Science and Technology Agency (JST) PRESTO
+      grant_id: '18069571'
+    grid_preparation: >-
+      Quantifoil Cu 200 R1.2/1.3 and UltrAuFoil Au 300 R1.2/1.3 holey grids were acetone-washed and
+      glow-discharged prior to use. Ribosome sample was applied to the grid and plunge-frozen in a
+      liquid ethane-propane mixture using a Vitrobot Mark IV operated at 4 degrees Celsius and 100%
+      relative humidity, with a blot time of about 10 seconds.
+    sample_preparation: >-
+      His6-tagged Escherichia coli 70S ribosomes were purified following the method of Ederth et al.
+      in HEPES lysis buffer (30 mM HEPES-KOH pH 7.5, 10 mM MgCl2, 30 mM NH4Cl, 150 mM KCl,
+      supplemented with protease inhibitors), concentrated, flash-frozen and stored at -80 degrees
+      Celsius until vitrification.
+    cross_references: &cross_refs
+      publications: 10.1038/s41592-022-01690-1, 10.1101/2022.04.07.487557
+      related_database_entries: EMPIAR-10985, EMD-33115
+  sources:
+  - literal:
+      value:
+      - '10498'
+
+depositions:
+- metadata:
+    deposition_identifier: 10355
+    deposition_title: PACE-tomo of purified Escherichia coli 70S ribosomes
+    deposition_description: >-
+      Cryo-electron tomograms of purified Escherichia coli 70S ribosomes, vitrified and imaged in
+      vitro. The tilt series were acquired in parallel using the parallel cryo electron tomography
+      (PACE-tomo) scheme and reconstructed into tomograms at a voxel size of about 10 angstroms by the
+      CryoET Data Portal team.
+    deposition_types:
+    - dataset
+    authors: *authors
+    dates: *dates
+    cross_references: *cross_refs
+  sources:
+  - literal:
+      value:
+      - 10355
+
+runs:
+- sources:
+  - source_glob:
+      list_glob: tiltseries/*
+      match_regex: .*
+      name_regex: (.*)
+
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 10.005
+
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    pixel_spacing: 1.07
+    spherical_aberration_constant: 2.7
+    binning_from_frames: 1
+    is_aligned: false
+    related_empiar_entry: EMPIAR-10985
+    camera:
+      manufacturer: Gatan
+      model: K3
+      acquire_mode: counting
+    microscope:
+      manufacturer: TFS
+      model: Krios G4
+    microscope_optical_setup:
+      energy_filter: Gatan BioQuantum
+      image_corrector: null
+      phase_plate: null
+    data_acquisition_software: SerialEM (PACE-tomo)
+    tilt_axis: -184.0
+    tilt_range:
+      min: float {tilt_series_min_tilt}
+      max: float {tilt_series_max_tilt}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+    tilt_series_quality: int {tilt_series_quality}
+  sources:
+  - source_glob:
+      list_glob: tiltseries/{run_name}/*
+
+tomograms:
+# 1) AreTomo3 miss-aligned global, raw WBP (no CTF correction)
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: raw
+    ctf_corrected: false
+    fiducial_alignment_status: NON_FIDUCIAL
+    align_software: MissAlignment 0.2.0
+    tomogram_version: 1
+    offset: &offset
+      x: 0
+      y: 0
+      z: 0
+    affine_transformation_matrix: &affine
+    - [1, 0, 0, 0]
+    - [0, 1, 0, 0]
+    - [0, 0, 1, 0]
+    - [0, 0, 0, 1]
+    authors: &tomo_authors
+    - name: Utz Heinrich Ermel
+      ORCID: 0000-0003-4685-037X
+      affiliation_name: Biohub
+      affiliation_address: Redwood City, CA, USA
+      primary_author_status: true
+      corresponding_author_status: true
+    dates: *dates
+    voxel_spacing: 10.005
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/aretomo3-miss-aligned-global-wbp.zarr
+# 2) AreTomo3 miss-aligned global, CTF-deconvolved (filtered) — VISUALIZATION DEFAULT
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: filtered
+    processing_software: AreTomo3 v2.3.0
+    ctf_corrected: true
+    fiducial_alignment_status: NON_FIDUCIAL
+    align_software: MissAlignment 0.2.0
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *affine
+    authors: *tomo_authors
+    dates: *dates
+    voxel_spacing: 10.005
+    is_visualization_default: true
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/aretomo3-miss-aligned-global-ctf-deconvolved.zarr
+# 3) Warp miss-aligned global (filtered, Fourier-space)
+- metadata:
+    reconstruction_software: WarpTools
+    reconstruction_method: Fourier Space
+    processing: filtered
+    processing_software: WarpTools
+    ctf_corrected: true
+    fiducial_alignment_status: NON_FIDUCIAL
+    align_software: MissAlignment 0.2.0
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *affine
+    authors: *tomo_authors
+    dates: *dates
+    voxel_spacing: 10.005
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/warp-miss-aligned-global.zarr
+# 4) DeepDeWedge denoised (on AreTomo3 ctf-deconvolved base)
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: denoised
+    processing_software: DeepDeWedge
+    ctf_corrected: true
+    fiducial_alignment_status: NON_FIDUCIAL
+    align_software: MissAlignment 0.2.0
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *affine
+    authors: *tomo_authors
+    dates: *dates
+    voxel_spacing: 10.005
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/ddw-refined-global.zarr
+# 5) IsoNet2 corrected (denoised, on AreTomo3 ctf-deconvolved base)
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: denoised
+    processing_software: IsoNet2
+    ctf_corrected: true
+    fiducial_alignment_status: NON_FIDUCIAL
+    align_software: MissAlignment 0.2.0
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *affine
+    authors: *tomo_authors
+    dates: *dates
+    voxel_spacing: 10.005
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/isonet2-corrected-global.zarr
+# 6) ICECREAM refined (denoised, on AreTomo3 ctf-deconvolved base)
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: denoised
+    processing_software: ICECREAM
+    ctf_corrected: true
+    fiducial_alignment_status: NON_FIDUCIAL
+    align_software: MissAlignment 0.2.0
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *affine
+    authors: *tomo_authors
+    dates: *dates
+    voxel_spacing: 10.005
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/icecream-refined-global.zarr
+
+alignments:
+- metadata:
+    format: ARETOMO3
+    alignment_type: GLOBAL
+    method_type: projection_matching
+    is_portal_standard: true
+  sources:
+  - source_glob:
+      list_glob: alignment/{run_name}/*.aln
+
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/*
+
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: frames/{run_name}/*
+
+gains:
+- sources:
+  - source_glob:
+      list_glob: gain/*
+
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}/*
+
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: collection_metadata/{run_name}/*
