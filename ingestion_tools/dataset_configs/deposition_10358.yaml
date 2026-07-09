@@ -881,6 +881,41 @@ annotations:
       include:
         dataset:
         - '10453'
+- metadata:
+    annotation_ingest_id: membrane-boundary-clean-1
+    annotation_method: MemBrain-seg membrane segmentation at the native tomogram resolution, cleaned by
+      clipping to the sample boundaries.
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_software: MemBrain-seg, copick
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: MemBrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - *id007
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_strings:
+      - membranes/ExperimentRuns/{dataset_name}_{run_name}_*/Segmentations/*_boundary-clean_0_membrane.zarr
+      is_visualization_default: true
+      threshold: 0.5
+    parent_filters:
+      include:
+        dataset:
+        - '10426'
+        - '10427'
+        - '10431'
+        - '10432'
+        - '10433'
+        - '10435'
 datasets:
 - sources:
   - literal:
