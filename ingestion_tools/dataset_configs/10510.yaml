@@ -17,20 +17,20 @@ datasets:
       (PFIB) milling. A planar cryo-lift-out was used to excavate a lamella spanning CA1 strata (pyramidal
       layer through stratum lacunosum-moleculare / radiatum), providing a view of the apical dendrite
       network and synaptic organization not accessible by cellular cryo-ET. Tilt series were acquired
-      on a Titan Krios G4 (300 kV) with a Selectris energy filter and Falcon 4i detector, and tomograms
-      were reconstructed and segmented (e.g. membranes, microtubules, synaptic vesicles) to map the molecular
-      landscape of hippocampal architecture in native tissue.
+      on a Titan Krios G4 (300 kV) with a Selectris energy filter and Falcon 4i detector.
     authors: &id001
     - name: Calina Glynn
       ORCID: 0000-0002-2197-2357
       affiliation_name: The Rosalind Franklin Institute
       primary_author_status: true
     - name: Jake L.R. Smith
+      ORCID: 0000-0003-3234-6228
       affiliation_name: The Rosalind Franklin Institute
       primary_author_status: true
     - name: Matthew Case
       affiliation_name: The Rosalind Franklin Institute
     - name: Rebecca Csöndör
+      ORCID: 0000-0003-1015-8656
       affiliation_name: The Rosalind Franklin Institute
     - name: Ana Katsini
       ORCID: 0009-0008-2659-9230
@@ -109,11 +109,7 @@ depositions:
       and thinned to electron-transparent lamellae by xenon/argon plasma focused ion beam (PFIB) milling
       using perpendicular and planar cryo-lift-out geometries. This approach targeted sub-regions of the
       hippocampal CA1 field, spanning stratum pyramidale (CA1-sp) through stratum radiatum (CA1-sr) toward
-      stratum lacunosum-moleculare, across biopsies from several adult mice. Tilt series were collected
-      and reconstructed into tomograms (including CTF-deconvolved and missing-wedge post-processed variants),
-      revealing synapses, synaptic vesicles, mitochondria, microtubules, ribosomes, and the apical dendrite
-      cytoskeleton network. The deposition also includes membrane and cytoskeletal segmentations, together
-      forming a molecular atlas of hippocampal architecture in adult mice.
+      stratum lacunosum-moleculare, across biopsies from several adult mice.
     deposition_types:
     - dataset
     - tomogram
