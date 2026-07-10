@@ -5,7 +5,11 @@ import allure
 import numpy as np
 import pandas as pd
 import pytest
-from data_validation.shared.helper.tiltseries_helper import TILT_AXIS_ANGLE_REGEX
+from data_validation.shared.helper.tiltseries_helper import (
+    TILT_AXIS_ANGLE_REGEX,
+    angular_difference,
+    assert_angle_in_valid_range,
+)
 
 
 def matrix_to_angle(matrix: list[list[float]]) -> float:
@@ -100,8 +104,12 @@ class TestAlignments:
         per_section_alignment_parameters = alignment_metadata.get("per_section_alignment_parameters")
         if not per_section_alignment_parameters:
             pytest.skip("Alignment metadata missing per_section_alignment_parameters.")
-        # convert all in_plane_rotation matrices to angles and check against mdoc_tilt_axis_angle
+        # convert all in_plane_rotation matrices to angles and check against mdoc_tilt_axis_angle.
+        # Angles wrap around 360 (e.g. mdoc -184 deg == in_plane 175 deg), so compare circularly.
         in_plane_rotations = [matrix_to_angle(psap["in_plane_rotation"]) for psap in per_section_alignment_parameters]
-        assert all(in_plane_rotation == pytest.approx(mdoc_tilt_axis_angle, abs=10) for in_plane_rotation in in_plane_rotations), f"Mdoc tilt axis angle {mdoc_tilt_axis_angle} does not match all alignment metadata in_plane_rotation angles within +/- 10 degrees: {in_plane_rotations}"
+        assert_angle_in_valid_range(mdoc_tilt_axis_angle, "Mdoc tilt axis angle")
+        for in_plane_rotation in in_plane_rotations:
+            assert_angle_in_valid_range(in_plane_rotation, "Alignment in_plane_rotation angle")
+        assert all(angular_difference(in_plane_rotation, mdoc_tilt_axis_angle) <= 10 for in_plane_rotation in in_plane_rotations), f"Mdoc tilt axis angle {mdoc_tilt_axis_angle} does not match all alignment metadata in_plane_rotation angles within +/- 10 degrees: {in_plane_rotations}"
 
     ### END Tiltseries consistency tests ###
