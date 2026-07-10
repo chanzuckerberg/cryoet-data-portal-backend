@@ -1,4 +1,7 @@
 {
+    "Container": {
+        "collection_metadata": ["10006"]
+    },
     "AnnotationObject": {
         "id": ["GO:0160201", "GO:0160202", "GO:0160223"],
         "name": [
