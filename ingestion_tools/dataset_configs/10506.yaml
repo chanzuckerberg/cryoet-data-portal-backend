@@ -94,12 +94,20 @@ datasets:
         name: normal
         id: PATO:0000461
       grid_preparation: |
-        Holey-carbon grids (Quantifoil R2/1 200 mesh gold) were primed with poly-L-lysine; A549 host cells were grown
-        on the grids and infected with R. parkeri (MOI 1-10, 24 h at 33 C). Grids were permeabilized/fixed with Triton
-        X-100 + glutaraldehyde in cytoskeleton buffer, then phalloidin + glutaraldehyde. 10 nm gold beads were applied
-        as fiducials for tomogram reconstruction, and grids were plunge-frozen in liquid ethane on a Leica EM GP2 and
-        stored in liquid nitrogen. (Grid-prep details inferred from the infected-cell protocol; confirm for this older
-        2022 dataset.)
+        Holey-carbon grids (Quantifoil R2/1 200 mesh gold, SPI 4320G-FA) were cleaned with acetone (20 min),
+        blotted with Whatman No. 1 filter paper, then treated with 70% ethanol (20 min). For these ompBSTOP::tn mutant
+        samples, grids were placed into 6-well plates with A549 cell-culture medium and incubated overnight at 37 C;
+        no poly-L-lysine coating was used (poly-L-lysine priming was applied only to the wild-type-sample grids).
+        Fresh A549 medium was then added, A549 host cells were dripped onto the grids, and the seeded grids were
+        incubated overnight at 37 C, 5% CO2. The next day, R. parkeri ompBSTOP::tn (MOI 1-10) in culture medium
+        was added and the grids were centrifuged (300 x g, 5 min); infected cells were incubated 24 h at 33 C,
+        5% CO2. Grids were then permeabilized/fixed by transfer to 0.5% Triton X-100 + 0.25% glutaraldehyde in
+        cytoskeleton buffer (10 mM MES pH 6.8, 150 mM NaCl, 5 mM EGTA, 5 mM glucose, 5 mM MgCl2) for 30 s, then
+        moved to 1 ug/ml phalloidin (unlabeled or Alexa 568) + 2% glutaraldehyde in cytoskeleton buffer for >=15 min.
+        After fixation, 7 ul of 10 nm gold beads (EMS 25487, 6x concentrated) were applied, the grids were blotted with
+        Whatman No. 1 paper, and a further 3 ul of gold beads was added; the beads served as fiducials for tomogram
+        reconstruction. Grids were plunge-frozen in liquid ethane on a Leica EM GP2 (4-7 s blot) and stored in liquid
+        nitrogen.
       sample_preparation: |
         Rickettsia parkeri strain Portsmouth was obtained from C. Paddock (CDC). The ompBSTOP::tn transposon-insertion
         (ompB-null) mutant is from Engstrom et al. 2019. Bacteria were propagated by infecting confluent Vero cells
