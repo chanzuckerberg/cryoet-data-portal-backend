@@ -1236,6 +1236,7 @@ class ExtendedValidationDataset(Dataset):
         elif self.sample_type in {SampleTypeEnum.organelle, SampleTypeEnum.virus} and \
                 (self.cell_component is None or self.cell_component.id is None or self.cell_component.name is None):
             raise ValueError("Dataset cannot have invalid cell_component if 'sample_type' is 'organelle'")
+        return self
 
 
 
@@ -1493,6 +1494,37 @@ class ExtendedValidationContainer(Container):
             )
 
         return annotations
+
+    @model_validator(mode="after")
+    def validate_frames_present_with_collection_metadata(self) -> Self:
+        """When collection_metadata is present a frames block must exist. If no frame
+        files are deposited, use the literal [default] form.
+        """
+        if self.collection_metadata and not self.frames:
+            raise ValueError(
+                "collection_metadata is present but no frames block was found. Add a frames block; "
+                "if no frame files are deposited, use sources: [{ literal: { value: [default] } }].",
+            )
+        return self
+
+    @model_validator(mode="after")
+    def validate_collection_metadata_present_with_tiltseries(self) -> Self:
+        """A deposited tilt series also needs to provide acquisition metadata.
+        """
+        if not self.tiltseries or self.collection_metadata:
+            return self
+        excluded_dataset_ids = validation_exclusions.get("Container", {}).get("collection_metadata", [])
+        dataset_ids = [
+            str(dataset.metadata.dataset_identifier)
+            for dataset in self.datasets
+            if dataset.metadata is not None and dataset.metadata.dataset_identifier is not None
+        ]
+        if any(dataset_id in excluded_dataset_ids for dataset_id in dataset_ids):
+            return self
+        raise ValueError(
+            "tiltseries is present but no collection_metadata (mdoc) block was found. A deposited tilt "
+            "series should include its acquisition metadata via a collection_metadata block.",
+        )
 
     # Set global network_validation flag
     def __init__(self, **data):
