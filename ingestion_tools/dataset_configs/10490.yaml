@@ -3903,7 +3903,7 @@ tomograms:
         y: 0
         z: 0
       processing: raw
-      processing_software: IMOD WBP (clean / noise-free synthetic projections)
+      processing_software: IMOD
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
@@ -3928,7 +3928,7 @@ tomograms:
         y: 0
         z: 0
       processing: raw
-      processing_software: IMOD WBP (noisy / CTF-modulated, no CTF correction)
+      processing_software: IMOD
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
@@ -3953,7 +3953,7 @@ tomograms:
         y: 0
         z: 0
       processing: filtered
-      processing_software: IMOD WBP (noisy / CTF-corrected)
+      processing_software: IMOD
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
@@ -3978,7 +3978,7 @@ tomograms:
         y: 0
         z: 0
       processing: denoised
-      processing_software: "CryoSiam DenseSimSiam denoising network (input: noisy_ctf_corrected_phase_flip)"
+      processing_software: CryoSiam DenseSimSiam
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
