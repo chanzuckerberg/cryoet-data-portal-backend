@@ -1,0 +1,348 @@
+# CryoET Data Portal Ingestion Configuration — dataset 10497 / deposition 10354
+# EMPIAR-10304 (E. coli 70S ribosome, FISE) reprocessing / benchmark.
+# Finalized 2026-07-09 from the pipeline stub using cdp-ingestion-mcp 0.13.1.
+# All source globs are relative to source_prefix.
+
+
+version: 1.1.0
+standardization_config:
+  deposition_id: 10354
+  source_prefix: EMPIAR/EMPIAR-10304/
+datasets:
+- metadata:
+    dataset_identifier: 10497
+    dataset_title: Cryo-electron tomography of purified E. coli 70S ribosomes acquired
+      by fast-incremental single-exposure (FISE) tilt series
+    dataset_description: 'Purified 70S ribosomes from Escherichia coli strain DH5-alpha
+      were imaged by cryo-electron tomography using the fast-incremental single-exposure
+      (FISE) tilt-series acquisition method. Ribosomes were isolated from a cleared
+      cell lysate by sucrose-cushion ultracentrifugation, mixed with 10 nm colloidal-gold
+      fiducials, and plunge-frozen on Quantifoil grids. Twelve dose-symmetric FISE
+      tilt series (-60 to +60 degrees, 3 degree increments, 2.1 Angstrom per pixel)
+      were collected on a Titan Krios equipped with a Gatan K3 detector and energy
+      filter, and subtomogram averaging of the ribosome particles yields a sub-nanometre-resolution
+      map of the 70S ribosome. The raw tilt series were originally deposited as EMPIAR-10304;
+      the tomograms in this dataset were reconstructed from those tilt series by the
+      CryoET Data Portal team.'
+    authors: &dataset_authors
+    - name: Fabian Eisenstein
+      ORCID: 0000-0002-1261-7126
+      affiliation_name: ETH Zurich
+      affiliation_address: Institute of Molecular Biology and Biophysics, Department
+        of Biology, ETH Zurich, 8093 Zurich, Switzerland
+      affiliation_identifier: 05a28rw58
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Radostin Danev
+      ORCID: 0000-0001-6406-8993
+      affiliation_name: The University of Tokyo
+      affiliation_address: Graduate School of Medicine, The University of Tokyo, Bunkyo-ku,
+        Tokyo 113-0033, Japan
+      affiliation_identifier: 057zh3y96
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Martin Pilhofer
+      ORCID: 0000-0002-3649-3340
+      email: pilhofer@biol.ethz.ch
+      affiliation_name: ETH Zurich
+      affiliation_address: Institute of Molecular Biology and Biophysics, Department
+        of Biology, ETH Zurich, 8093 Zurich, Switzerland
+      affiliation_identifier: 05a28rw58
+      primary_author_status: false
+      corresponding_author_status: true
+    dates: &dataset_dates
+      deposition_date: '2026-07-09'
+      release_date: '2026-07-09'
+      last_modified_date: '2026-07-09'
+    sample_type: in_vitro
+    organism:
+      name: Escherichia coli
+      taxonomy_id: 562
+    cell_strain:
+      name: Escherichia coli DH5alpha
+      id: NCBITaxon:668369
+    cell_component:
+      name: cytosolic ribosome
+      id: GO:0022626
+    tissue:
+      name: anatomical structure
+      id: UBERON:0000061
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: normal
+      id: PATO:0000461
+    funding:
+    - funding_agency_name: ETH Zurich
+    - funding_agency_name: NOMIS Foundation
+    - funding_agency_name: Swiss National Science Foundation
+      grant_id: '164092'
+    - funding_agency_name: Swiss National Science Foundation
+      grant_id: '179255'
+    - funding_agency_name: Swiss National Science Foundation
+      grant_id: '170808'
+    - funding_agency_name: European Research Council
+      grant_id: '679209'
+    - funding_agency_name: Japan Society for the Promotion of Science
+      grant_id: 18H06043
+    - funding_agency_name: Japan Science and Technology Agency
+      grant_id: '18069571'
+    grid_preparation: '4 uL of the diluted ribosome sample was applied to a glow-discharged
+      Quantifoil Cu 200 R2/2 holey-carbon EM grid, blotted for 3 s, and vitrified
+      by plunging into liquid ethane using a Vitrobot Mark IV (Thermo Scientific).
+      10 nm colloidal gold fiducials (Aurion BSA tracer 10 nm) were added to the sample
+      prior to freezing.'
+    sample_preparation: 'Escherichia coli DH5-alpha was grown in Luria-Bertani (LB)
+      broth to an OD600 of about 0.6 and harvested by centrifugation. Cells were resuspended
+      in lysis buffer (20 mM Tris-HCl pH 7.5, 100 mM KOAc, 10 mM Mg(OAc)2, 0.5 mM
+      CaCl2, 1 mM DTT, chloramphenicol, lysozyme and DNase I), incubated, and freeze-thawed.
+      Cell debris was removed by centrifugation, and the cleared lysate was layered
+      over a 750 mM sucrose cushion and spun at ~417,000 x g for 1 h. The ribosome
+      pellet was washed and resuspended in buffer (20 mM Tris-HCl pH 7.5, 100 mM KOAc,
+      10 mM Mg(OAc)2, 1 mM DTT, chloramphenicol). The purified 70S ribosomes were
+      diluted 1:50 before grid preparation.'
+    cross_references:
+      publications: 10.1016/j.jsb.2019.08.006
+      related_database_entries: EMPIAR-10304, EMD-10211
+  sources:
+  - literal:
+      value:
+      - '10497'
+depositions:
+- metadata:
+    deposition_identifier: 10354
+    deposition_title: Cryo-electron tomography of purified E. coli 70S ribosomes acquired
+      by fast-incremental single-exposure (FISE) tilt series
+    deposition_description: 'Cryo-electron tomograms of purified Escherichia coli 70S
+      ribosomes, vitrified and imaged in vitro. The tilt series were acquired using
+      the fast-incremental single-exposure (FISE) scheme and reconstructed into tomograms
+      at a voxel size of about 10 angstroms by the CryoET Data Portal team.'
+    deposition_types:
+    - dataset
+    authors: *dataset_authors
+    dates: *dataset_dates
+    cross_references:
+      publications: 10.1016/j.jsb.2019.08.006
+      related_database_entries: EMPIAR-10304, EMD-10211
+  sources:
+  - literal:
+      value:
+      - 10354
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10354_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10354_thumbnail.png
+frames:
+- metadata:
+    dose_rate: 3.0
+    is_gain_corrected: true
+  sources:
+  - literal:
+      value:
+      - default
+runs:
+- sources:
+  - source_glob:
+      list_glob: tiltseries/*/*.mrc
+      match_regex: .*
+      name_regex: (.*)\.mrc
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 10.013
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    pixel_spacing: 2.1
+    spherical_aberration_constant: 2.7
+    is_aligned: false
+    camera:
+      manufacturer: Gatan
+      model: K3
+      acquire_mode: superresolution
+    microscope:
+      manufacturer: TFS
+      model: Titan Krios
+    microscope_optical_setup:
+      energy_filter: Quantum LS
+    data_acquisition_software: SerialEM
+    related_empiar_entry: EMPIAR-10304
+    tilt_alignment_software: AreTomo3
+    tilt_axis: -184.5
+    tilt_range:
+      min: -60.0
+      max: 60.0
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: 123.0
+    tilt_series_quality: 5
+  sources:
+  - source_glob:
+      list_glob: tiltseries/{run_name}/*
+tomograms:
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: &id001
+      x: 0
+      y: 0
+      z: 0
+    affine_transformation_matrix: &id002
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: &id003
+      - name: Utz Heinrich Ermel
+        ORCID: 0000-0003-4685-037X
+        affiliation_name: Biohub
+        affiliation_address: Redwood City, CA, USA
+        primary_author_status: true
+        corresponding_author_status: true
+    dates: &id004
+      deposition_date: '2026-07-09'
+      release_date: '2026-07-09'
+      last_modified_date: '2026-07-09'
+    voxel_spacing: 10.013
+    processing: raw
+    processing_software: AreTomo3 v2.3.0
+    ctf_corrected: false
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/aretomo3-miss-aligned-global-wbp.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id001
+    affine_transformation_matrix: *id002
+    authors: *id003
+    dates: *id004
+    voxel_spacing: 10.013
+    processing: filtered
+    processing_software: AreTomo3 v2.3.0
+    ctf_corrected: true
+    is_visualization_default: true
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/aretomo3-miss-aligned-global-ctf-deconvolved.zarr
+- metadata:
+    reconstruction_software: WarpTools
+    reconstruction_method: Fourier Space
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id001
+    affine_transformation_matrix: *id002
+    authors: *id003
+    dates: *id004
+    voxel_spacing: 10.013
+    processing: filtered
+    processing_software: Warp
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/warp-miss-aligned-global.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id001
+    affine_transformation_matrix: *id002
+    authors: *id003
+    dates: *id004
+    voxel_spacing: 10.013
+    processing: denoised
+    processing_software: DeepDeWedge
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/ddw-refined-global.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id001
+    affine_transformation_matrix: *id002
+    authors: *id003
+    dates: *id004
+    voxel_spacing: 10.013
+    processing: denoised
+    processing_software: IsoNet2
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/isonet2-corrected-global.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id001
+    affine_transformation_matrix: *id002
+    authors: *id003
+    dates: *id004
+    voxel_spacing: 10.013
+    processing: denoised
+    processing_software: ICECREAM
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/icecream-refined-global.zarr
+alignments:
+- metadata:
+    format: ARETOMO3
+    alignment_type: GLOBAL
+    method_type: projection_matching
+    is_portal_standard: true
+  sources:
+  - source_glob:
+      list_glob: alignment/{run_name}/*.aln
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/*
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}/*.rawtlt
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: collection_metadata/{run_name}/*
