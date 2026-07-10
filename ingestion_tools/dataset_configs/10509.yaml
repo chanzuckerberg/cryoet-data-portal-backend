@@ -73,6 +73,8 @@ datasets:
         degree increment and ~100 e/A2 total dose. Tomograms were aligned marker-free with AreTomo2 and
         reconstructed in RELION 5 (CTF-corrected, binned to ~10 A), resolving a repetitive slanted lattice-like
         S-layer located ~14 nm from the outer membrane.
+      cross_references:
+        publications: 10.17912/micropub.biology.002219
       assay:
         name: microscopy assay
         id: EFO:0002909

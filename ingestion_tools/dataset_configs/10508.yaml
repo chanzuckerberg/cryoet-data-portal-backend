@@ -84,6 +84,8 @@ datasets:
         degree increment and ~100 e/A2 total dose. Tomograms were reconstructed in RELION 5 with marker-free
         AreTomo2 alignment and CTF estimation (Fourier-space reconstruction), binned to 10 A voxel size. The
         paracrystalline S-layer is absent in the ompB mutant, in contrast to wild-type bacteria.
+      cross_references:
+        publications: 10.17912/micropub.biology.002219
       assay:
         name: microscopy assay
         id: EFO:0002909

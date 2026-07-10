@@ -66,6 +66,8 @@ datasets:
         filter (~3.36 A pixel, bidirectional tilt scheme), corresponding to the ompB-mutant infected-cell panel of
         the publication. Only tomograms are deposited for this dataset (no tilt series or mdoc files). The
         paracrystalline S-layer is absent in this ompB mutant.
+      cross_references:
+        publications: 10.17912/micropub.biology.002219
       assay:
         name: microscopy assay
         id: EFO:0002909

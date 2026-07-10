@@ -72,6 +72,8 @@ datasets:
         ~3.7 A pixel size, dose-symmetric tilt scheme with 3 degree increment and ~120 e/A2 total dose.
         Tomograms (IMOD weighted back-projection with a SIRT-like filter, binned and NAD-filtered) reveal
         the paracrystalline S-layer surrounding the bacterial outer membrane.
+      cross_references:
+        publications: 10.17912/micropub.biology.002219
       assay:
         name: microscopy assay
         id: EFO:0002909
@@ -139,11 +141,18 @@ depositions:
         comprises tilt series and tomograms across multiple magnifications and sample-preparation conditions.
       deposition_types:
         - dataset
+      cross_references:
+        publications: 10.17912/micropub.biology.002219
     sources:
       - literal:
           value:
             - 10353
-
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10353_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10353_thumbnail.png
 frames:
   - metadata:
       dose_rate: float {dose_rate}

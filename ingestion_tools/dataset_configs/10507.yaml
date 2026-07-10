@@ -73,6 +73,8 @@ datasets:
         Tomograms were reconstructed in RELION 5 with marker-free AreTomo2 alignment and CTF estimation
         (Fourier-space reconstruction), binned to ~15 A voxel size. This dataset images the intact cell surface
         (outer membrane and S-layer) of purified wild-type bacteria.
+      cross_references:
+        publications: 10.17912/micropub.biology.002219
       assay:
         name: microscopy assay
         id: EFO:0002909
