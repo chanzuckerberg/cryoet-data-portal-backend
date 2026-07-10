@@ -132,6 +132,12 @@ depositions:
   - literal:
       value:
       - 10354
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10354_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10354_thumbnail.png
 frames:
 - metadata:
     dose_rate: 3.0
