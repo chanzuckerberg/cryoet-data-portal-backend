@@ -278,7 +278,7 @@ tomograms:
         y: 0
         z: 0
       processing: raw
-      processing_software: IMOD
+      processing_software: IMOD (clean)
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
@@ -303,7 +303,7 @@ tomograms:
         y: 0
         z: 0
       processing: raw
-      processing_software: IMOD
+      processing_software: IMOD (noisy)
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
@@ -328,7 +328,7 @@ tomograms:
         y: 0
         z: 0
       processing: filtered
-      processing_software: IMOD
+      processing_software: IMOD (CTF-corrected)
       reconstruction_method: WBP
       reconstruction_software: IMOD
       tomogram_version: 1.0
