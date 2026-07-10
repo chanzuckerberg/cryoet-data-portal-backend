@@ -2,7 +2,7 @@ alignments:
 - metadata:
     alignment_type: GLOBAL
     format: IMOD
-    method_type: undefined
+    method_type: simulated
   sources:
   - source_multi_glob:
       list_globs:

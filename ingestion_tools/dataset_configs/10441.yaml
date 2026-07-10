@@ -3,7 +3,7 @@ alignments:
     alignment_type: GLOBAL
     format: IMOD
     is_portal_standard: true
-    method_type: undefined
+    method_type: simulated
   sources:
   - source_multi_glob:
       list_globs:
