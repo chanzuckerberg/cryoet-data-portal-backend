@@ -193,7 +193,13 @@ tomograms:
       - 0
       - 0
       - 1
-    authors: *id001
+    authors: &tomogram_authors
+      - name: Utz Heinrich Ermel
+        ORCID: 0000-0003-4685-037X
+        affiliation_name: Biohub
+        affiliation_address: Redwood City, CA, USA
+        primary_author_status: true
+        corresponding_author_status: true
     dates: *id002
     voxel_spacing: 10.012
     processing: raw
@@ -211,7 +217,7 @@ tomograms:
     tomogram_version: 1
     offset: *id003
     affine_transformation_matrix: *id004
-    authors: *id001
+    authors: *tomogram_authors
     dates: *id002
     voxel_spacing: 10.012
     processing: filtered
@@ -229,7 +235,7 @@ tomograms:
     tomogram_version: 1
     offset: *id003
     affine_transformation_matrix: *id004
-    authors: *id001
+    authors: *tomogram_authors
     dates: *id002
     voxel_spacing: 10.012
     processing: filtered
@@ -247,7 +253,7 @@ tomograms:
     tomogram_version: 1
     offset: *id003
     affine_transformation_matrix: *id004
-    authors: *id001
+    authors: *tomogram_authors
     dates: *id002
     voxel_spacing: 10.012
     processing: denoised
@@ -265,7 +271,7 @@ tomograms:
     tomogram_version: 1
     offset: *id003
     affine_transformation_matrix: *id004
-    authors: *id001
+    authors: *tomogram_authors
     dates: *id002
     voxel_spacing: 10.012
     processing: denoised
@@ -283,7 +289,7 @@ tomograms:
     tomogram_version: 1
     offset: *id003
     affine_transformation_matrix: *id004
-    authors: *id001
+    authors: *tomogram_authors
     dates: *id002
     voxel_spacing: 10.012
     processing: denoised
