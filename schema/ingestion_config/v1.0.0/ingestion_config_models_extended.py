@@ -694,11 +694,20 @@ doi_cache = {}
 @retry_on_network_error()
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
     doi = doi.replace("doi:", "")
-    url = f"https://api.crossref.org/works/{doi}"
-    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.head(url) as response:
-        logger.debug("Checking DOI %s at %s, status %s", doi, url, response.status)
-        doi_cache[(doi,)] = response.status == 200
-        return doi, response.status == 200
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session:
+        # CrossRef only indexes its own DOIs; fall back to doi.org for other registrars.
+        crossref_url = f"https://api.crossref.org/works/{doi}"
+        async with session.head(crossref_url) as response:
+            logger.debug("Checking DOI %s at %s, status %s", doi, crossref_url, response.status)
+            valid = response.status == 200
+        if not valid:
+            # doi.org resolver redirects (3xx) on a hit.
+            resolver_url = f"https://doi.org/{doi}"
+            async with session.head(resolver_url, allow_redirects=False) as response:
+                logger.debug("Checking DOI %s at %s, status %s", doi, resolver_url, response.status)
+                valid = response.status < 400
+        doi_cache[(doi,)] = valid
+        return doi, valid
 
 
 @alru_cache
