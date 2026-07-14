@@ -1,0 +1,371 @@
+# CryoET Data Portal Ingestion Configuration
+# Dataset 10511 / Deposition 10360 / EMPIAR-12894
+# Mitochondria under folding stress (in situ cryo-ET) — Jung et al., Sci. Adv. 2025 (10.1126/sciadv.adw6064)
+# Built from cryoet-data-portal-pipeline stub; metadata completed via cdp-ingestion-mcp workflow.
+# Fields marked PENDING_PAPER / PENDING_USER are filled from the paper doc-reader reports & user review.
+
+version: 1.1.0
+
+standardization_config:
+  deposition_id: 10360
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: EMPIAR/EMPIAR-12894/
+
+datasets:
+- metadata:
+    dataset_identifier: 10511
+    dataset_title: In situ cryo-electron tomography of mitochondria in HeLa cells under mitochondrial protein-folding stress
+    dataset_description: >-
+      Correlated in situ cryo-electron tomography of mitochondria in cultured human HeLa cells subjected to
+      mitochondrial protein-folding stress. Cells stably expressing Parkin-eGFP were grown directly on EM grids,
+      treated with gamitrinib-triphenylphosphonium (GTPP) to inhibit mitochondrial Hsp90 and trigger the
+      mitochondrial unfolded protein response, vitrified, and thinned by cryo-focused-ion-beam milling with
+      fluorescence-guided targeting. The tomograms capture mitochondrial ultrastructure and the intramitochondrial
+      Hsp60-Hsp10 (mtHsp60-Hsp10) chaperonin complex under folding stress, revealing amorphous protein aggregates
+      and increased abundance and clustering of the chaperonin, alongside untreated, CCCP-treated, and
+      Hsp60/Hsp10-knockdown conditions for comparison.
+    authors: &authors
+    - name: Mingyu Jung
+      ORCID: 0009-0003-0098-5460
+      affiliation_name: School of Biological Sciences, Seoul National University
+      affiliation_address: Seoul 08826, Republic of Korea
+      affiliation_identifier: https://ror.org/04h9pn542
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Minjung Kim
+      ORCID: 0000-0003-3519-8718
+      affiliation_name: School of Biological Sciences, Seoul National University
+      affiliation_address: Seoul 08826, Republic of Korea
+      affiliation_identifier: https://ror.org/04h9pn542
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Su Jin Ham
+      ORCID: 0000-0001-5230-3386
+      affiliation_name: School of Biological Sciences, Seoul National University; Institute of Molecular Biology and Genetics, Seoul National University
+      affiliation_address: Seoul 08826, Republic of Korea
+      affiliation_identifier: https://ror.org/04h9pn542
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Jongkyeong Chung
+      ORCID: 0000-0001-5894-7537
+      affiliation_name: School of Biological Sciences, Seoul National University; Institute of Molecular Biology and Genetics, Seoul National University
+      affiliation_address: Seoul 08826, Republic of Korea
+      affiliation_identifier: https://ror.org/04h9pn542
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Soung-Hun Roh
+      ORCID: 0000-0003-3851-7200
+      email: shroh@snu.ac.kr
+      affiliation_name: School of Biological Sciences, Seoul National University; Institute of Molecular Biology and Genetics, Seoul National University
+      affiliation_address: Seoul 08826, Republic of Korea
+      affiliation_identifier: https://ror.org/04h9pn542
+      primary_author_status: false
+      corresponding_author_status: true
+    dates: &dates
+      deposition_date: '2025-10-22'
+      release_date: '2026-07-10'
+      last_modified_date: '2026-07-10'
+    sample_type: cell_line
+    organism:
+      name: Homo sapiens
+      taxonomy_id: 9606
+    cell_strain:
+      name: HeLa
+      id: CVCL_0030
+    cell_type:
+      name: epithelial cell
+      id: CL:0000066
+    tissue:
+      name: uterine cervix
+      id: UBERON:0000002
+    cell_component:
+      name: mitochondrion
+      id: GO:0005739
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: unknown
+      id: unknown
+    disease:
+      name: normal
+      id: PATO:0000461
+    funding:
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: RS-2021-NR056571
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: RS-2020-NR049538
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: RS-2020-NF000307
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: RS-2024-00344154
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: RS-2025-00559184
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: 2020R1A5A1018081
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: RS-2024-00339984
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: RS-2023-00211029
+    - funding_agency_name: National Research Foundation of Korea
+      grant_id: RS-2025-02653992
+    - funding_agency_name: SUhF Foundation
+    grid_preparation: >-
+      Quantifoil 1/4 200-mesh Au grids (Quantifoil) were glow-discharged for 30 s and UV-sterilized for 1 h, then
+      coated with fibronectin (50 ug/ml) for 1 h, washed three times with PBS, and placed onto 35-mm imaging dishes
+      (MatTek). Approximately 150,000 cells were seeded onto the grids and allowed to adhere overnight, giving an
+      optimal confluency of ~300 cells per grid; cells were then treated with 10 uM GTPP for 4 h. Hoechst 33342
+      (Miltenyi Biotec) was applied before vitrification in all experiments. Five microliters of 1-um Dynabeads
+      (Thermo Fisher; diluted 1:100 in PBS with 10% glycerol) were added to the grids immediately before blotting.
+      Grids were single-side blotted for 5 s and vitrified using an EM GP2 (Leica Microsystems). Cryo-FIB/SEM
+      milling was performed on an Aquilos 2 Cryo-FIB (Thermo Fisher Scientific); for GTPP-treated cells, 3D
+      correlation targeting Parkin-eGFP puncta was achieved with the integrated fluorescence microscope of the
+      Aquilos 2 and Maps 3.20 software (Thermo Fisher). To minimize charging and curtaining, Pt sputter coating
+      (10 s at 10 mA) and a gas injection system (8 s per grid) were applied before milling. Lamellae were milled
+      to a final thickness of 120 nm with decreasing FIB currents (0.5, 0.3, and 0.1 nA, and 50 pA) using AutoTEM
+      2.4 software (Thermo Fisher).
+    sample_preparation: >-
+      HeLa cells stably expressing Parkin-eGFP were cultured in Dulbecco's modified Eagle's medium (Gibco)
+      supplemented with 10% fetal bovine serum (Gibco), 1% penicillin/streptomycin (Gibco), and puromycin
+      (1 ug/ml; Sigma-Aldrich) at 37C in a humidified 5% CO2 atmosphere; passage number was kept below 15 and
+      confluence below 80%. Mitochondrial protein-folding stress was induced by treating cells with 10 uM GTPP
+      (gamitrinib-triphenylphosphonium; HY-102007A, MedChemExpress) for 4 h, which inhibits mtHsp90 and triggers
+      the mitochondrial unfolded protein response. Additional experimental conditions included untreated controls,
+      CCCP treatment, and siRNA knockdown of Hsp60/Hsp10.
+    other_setup: Cryo-FIB milling
+    cross_references:
+      publications: 10.1126/sciadv.adw6064
+      related_database_entries: EMPIAR-12894, EMD-62702, EMD-62703, EMD-62704, EMD-62711,
+        EMD-62713, EMD-62714, EMD-62747, EMD-65492, EMD-65493, PDB-9L8P
+  sources:
+  - literal:
+      value:
+      - '10511'
+
+depositions:
+- metadata:
+    deposition_identifier: 10360
+    deposition_title: In situ cryo-ET of the mitochondrial Hsp60-Hsp10 chaperonin complex in HeLa cells under folding stress
+    deposition_description: >-
+      This deposition provides in situ cryo-electron tomography data of mitochondria in cultured human HeLa cells
+      under mitochondrial protein-folding stress, together with reconstructed tomograms.
+      Correlated cryo-fluorescence and cryo-FIB milling were used to target and image the intramitochondrial
+      Hsp60-Hsp10 chaperonin complex, characterizing its abundance, spatial clustering, and conformational states
+      (football, half-football, and bullet-like) and its engagement of unstructured substrates under folding stress
+      induced by gamitrinib-triphenylphosphonium.
+    deposition_types:
+    - dataset
+    authors: *authors
+    dates: *dates
+    cross_references:
+      publications: 10.1126/sciadv.adw6064
+      related_database_entries: EMPIAR-12894, EMD-62702, EMD-62703, EMD-62704, EMD-62711,
+        EMD-62713, EMD-62714, EMD-62747, EMD-65492, EMD-65493, PDB-9L8P
+  sources:
+  - literal:
+      value:
+      - 10360
+
+runs:
+- sources:
+  - source_glob:
+      list_glob: tiltseries/*/*_ts.st
+      match_regex: .*
+      name_regex: (.*)_ts\.st$
+    exclude:
+    - ^Position_15$      # excluded: one truncated/corrupt frame (per user decision)
+    - ^Position_45_2$    # excluded: one truncated/corrupt frame (per user decision)
+
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 10.036
+
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    spherical_aberration_constant: 2.7
+    pixel_spacing: 1.233
+    binning_from_frames: 1
+    is_aligned: false
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i          # paper: "Falcon 4i detector"
+      acquire_mode: counting
+    microscope:
+      manufacturer: TFS
+      model: TITAN KRIOS G4     # paper: Titan Krios G4
+    microscope_optical_setup:
+      energy_filter: Selectris X   # paper: Selectris X (TFS); slit width not stated
+    data_acquisition_software: Tomo5
+    tilt_alignment_software: AreTomo3 v2.3.0
+    related_empiar_entry: EMPIAR-12894
+    tilt_axis: -85.0            # CONFIRM w/ user: physical axis from RotationAngle-90 (=85), AreTomo3 negative -> -85; .aln refined ~-83.7; mdoc raw -95 off-convention
+    tilt_range:
+      min: float {tilt_series_min_tilt}
+      max: float {tilt_series_max_tilt}
+    tilt_step: 2.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+    tilt_series_quality: int {tilt_series_quality}
+  sources:
+  - source_glob:
+      list_glob: tiltseries/{run_name}/*
+
+tomograms:
+- metadata:   # 1. AreTomo3 WBP (raw, no CTF correction)
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: AreTomo3 v2.3.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: &offset
+      x: 0
+      y: 0
+      z: 0
+    affine_transformation_matrix: &idmatrix
+    - [1, 0, 0, 0]
+    - [0, 1, 0, 0]
+    - [0, 0, 1, 0]
+    - [0, 0, 0, 1]
+    authors: &curator_authors
+    - name: Utz Heinrich Ermel
+      ORCID: 0000-0003-4685-037X
+      affiliation_name: Chan Zuckerberg Imaging Institute
+      affiliation_address: San Francisco, CA, USA
+      primary_author_status: true
+      corresponding_author_status: true
+    dates: *dates
+    voxel_spacing: 10.036
+    processing: raw
+    ctf_corrected: false
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/aretomo3-miss-aligned-global-wbp.zarr
+- metadata:   # 2. AreTomo3 WBP + CTF deconvolution (filtered) — visualization default
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: AreTomo3 v2.3.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *idmatrix
+    authors: *curator_authors
+    dates: *dates
+    voxel_spacing: 10.036
+    processing: filtered
+    processing_software: AreTomo3 v2.3.0   # PENDING_USER: what performed CTF deconvolution
+    ctf_corrected: true
+    is_visualization_default: true
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/aretomo3-miss-aligned-global-ctf-deconvolved.zarr
+- metadata:   # 3. Warp reconstruction (filtered)
+    reconstruction_software: Warp
+    reconstruction_method: Fourier Space
+    align_software: AreTomo3 v2.3.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *idmatrix
+    authors: *curator_authors
+    dates: *dates
+    voxel_spacing: 10.036
+    processing: filtered
+    processing_software: Warp
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/warp-miss-aligned-global.zarr
+- metadata:   # 4. DeepDeWedge denoised
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: AreTomo3 v2.3.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *idmatrix
+    authors: *curator_authors
+    dates: *dates
+    voxel_spacing: 10.036
+    processing: denoised
+    processing_software: DeepDeWedge
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/ddw-refined-global.zarr
+- metadata:   # 5. IsoNet2 denoised / missing-wedge corrected
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: AreTomo3 v2.3.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *idmatrix
+    authors: *curator_authors
+    dates: *dates
+    voxel_spacing: 10.036
+    processing: denoised
+    processing_software: IsoNet2
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/isonet2-corrected-global.zarr
+- metadata:   # 6. ICECREAM denoised
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    align_software: AreTomo3 v2.3.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *offset
+    affine_transformation_matrix: *idmatrix
+    authors: *curator_authors
+    dates: *dates
+    voxel_spacing: 10.036
+    processing: denoised
+    processing_software: ICECREAM
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing*/**/icecream-refined-global.zarr
+
+alignments:
+- metadata:
+    format: ARETOMO3
+    alignment_type: GLOBAL
+    method_type: projection_matching
+    is_portal_standard: true
+  sources:
+  - source_glob:
+      list_glob: alignment/{run_name}/*.aln
+
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/*
+
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: true
+  sources:
+  - source_glob:
+      list_glob: frames/{run_name}/*
+
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}/*
+
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: collection_metadata/{run_name}/*
