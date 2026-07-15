@@ -160,7 +160,6 @@ tiltseries:
         manufacturer: Gatan
         model: K3
       data_acquisition_software: Leginon
-      frames_count: 20
       is_aligned: false
       microscope:
         additional_info: "Customized Krios G4 with additional transfer lens (x-lens); cold FEG."
@@ -177,7 +176,7 @@ tiltseries:
       tilt_range:
         max: 27.0
         min: -27.0
-      tilt_series_quality: 3
+      tilt_series_quality: 5
       tilt_step: 3.0
       tilting_scheme: bi-directional
       total_flux: 86.8
