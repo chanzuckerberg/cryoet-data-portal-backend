@@ -275,7 +275,7 @@ annotations:
 
 alignments:
 - metadata:
-    alignment_type: LOCAL
+    alignment_type: GLOBAL
     format: ARETOMO3
     is_portal_standard: true
     method_type: projection_matching
