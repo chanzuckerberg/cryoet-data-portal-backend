@@ -546,7 +546,8 @@ def _substring_name_match(name: str, retrieved: str) -> bool:
     name (or vice versa) rather than an exact match.
     """
     def norm(s: str) -> str:
-        return re.sub(r"[^a-z0-9]+", " ", s.lower()).strip()
+        # remove separators (don't replace with space) so "CD40-L"/"CD40L" collapse
+        return re.sub(r"[^a-z0-9]+", "", s.lower())
     n, r = norm(name), norm(retrieved)
     if not n or not r:
         return False
@@ -693,11 +694,20 @@ doi_cache = {}
 @retry_on_network_error()
 async def lookup_doi(doi: str) -> Tuple[str, bool]:
     doi = doi.replace("doi:", "")
-    url = f"https://api.crossref.org/works/{doi}"
-    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.head(url) as response:
-        logger.debug("Checking DOI %s at %s, status %s", doi, url, response.status)
-        doi_cache[(doi,)] = response.status == 200
-        return doi, response.status == 200
+    async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session:
+        # CrossRef only indexes its own DOIs; fall back to doi.org for other registrars.
+        crossref_url = f"https://api.crossref.org/works/{doi}"
+        async with session.head(crossref_url) as response:
+            logger.debug("Checking DOI %s at %s, status %s", doi, crossref_url, response.status)
+            valid = response.status == 200
+        if not valid:
+            # doi.org resolver redirects (3xx) on a hit.
+            resolver_url = f"https://doi.org/{doi}"
+            async with session.head(resolver_url, allow_redirects=False) as response:
+                logger.debug("Checking DOI %s at %s, status %s", doi, resolver_url, response.status)
+                valid = response.status < 400
+        doi_cache[(doi,)] = valid
+        return doi, valid
 
 
 @alru_cache
@@ -1235,6 +1245,7 @@ class ExtendedValidationDataset(Dataset):
         elif self.sample_type in {SampleTypeEnum.organelle, SampleTypeEnum.virus} and \
                 (self.cell_component is None or self.cell_component.id is None or self.cell_component.name is None):
             raise ValueError("Dataset cannot have invalid cell_component if 'sample_type' is 'organelle'")
+        return self
 
 
 
@@ -1492,6 +1503,37 @@ class ExtendedValidationContainer(Container):
             )
 
         return annotations
+
+    @model_validator(mode="after")
+    def validate_frames_present_with_collection_metadata(self) -> Self:
+        """When collection_metadata is present a frames block must exist. If no frame
+        files are deposited, use the literal [default] form.
+        """
+        if self.collection_metadata and not self.frames:
+            raise ValueError(
+                "collection_metadata is present but no frames block was found. Add a frames block; "
+                "if no frame files are deposited, use sources: [{ literal: { value: [default] } }].",
+            )
+        return self
+
+    @model_validator(mode="after")
+    def validate_collection_metadata_present_with_tiltseries(self) -> Self:
+        """A deposited tilt series also needs to provide acquisition metadata.
+        """
+        if not self.tiltseries or self.collection_metadata:
+            return self
+        excluded_dataset_ids = validation_exclusions.get("Container", {}).get("collection_metadata", [])
+        dataset_ids = [
+            str(dataset.metadata.dataset_identifier)
+            for dataset in self.datasets
+            if dataset.metadata is not None and dataset.metadata.dataset_identifier is not None
+        ]
+        if any(dataset_id in excluded_dataset_ids for dataset_id in dataset_ids):
+            return self
+        raise ValueError(
+            "tiltseries is present but no collection_metadata (mdoc) block was found. A deposited tilt "
+            "series should include its acquisition metadata via a collection_metadata block.",
+        )
 
     # Set global network_validation flag
     def __init__(self, **data):

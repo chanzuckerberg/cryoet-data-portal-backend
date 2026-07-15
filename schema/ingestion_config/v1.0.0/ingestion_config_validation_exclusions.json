@@ -1,4 +1,7 @@
 {
+    "Container": {
+        "collection_metadata": ["10006"]
+    },
     "AnnotationObject": {
         "id": ["GO:0160201", "GO:0160202", "GO:0160223"],
         "name": [
@@ -9,7 +12,14 @@
             "stellate",
             "MTD sleeve",
             "Dynein-1b",
-            "polaroplast"
+            "polaroplast",
+            "FabF (chain A)",
+            "FabF (chain B)",
+            "FabF (chain C)",
+            "FabF (chain D)",
+            "FabF (chain E)",
+            "RNA polymerase II elongation complex (EC+EC)",
+            "nuclear pore complex inner ring protomer"
         ]
     },
     "CellComponent": {

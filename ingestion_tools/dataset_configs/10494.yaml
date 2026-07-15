@@ -282,7 +282,7 @@ tomograms:
     processing: denoised
     processing_software: DenoisET
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 version 2.3.0, built on Mar. 21, 2026
+    reconstruction_software: AreTomo3 2.3.0
     tomogram_version: 1
     voxel_spacing: 4.995
   sources:
@@ -317,9 +317,9 @@ tomograms:
       y: 0
       z: 0
     processing: filtered
-    processing_software: AreTomo3 version 2.3.0, built on Mar. 21, 2026
+    processing_software: AreTomo3 2.3.0
     reconstruction_method: WBP
-    reconstruction_software: AreTomo3 version 2.3.0, built on Mar. 21, 2026
+    reconstruction_software: AreTomo3 2.3.0
     tomogram_version: 1
     voxel_spacing: 4.995
   sources:
