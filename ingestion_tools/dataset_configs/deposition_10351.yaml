@@ -1,0 +1,313 @@
+alignments:
+  - sources:
+      - destination_glob:
+          list_glob: '{run_output_path}/Alignments/100/alignment_metadata.json'
+          match_regex: .*
+          name_regex: (.*)
+
+annotations:
+  # cytoplasm (label 1)
+  - metadata:
+      annotation_ingest_id: 10351-cytoplasm-1
+      annotation_method: >-
+        spectrum equalization + 2D CNN prediction + manual correction (10000) +
+        manual segmentation (10001) + copick consolidation
+      annotation_object:
+        id: GO:0005737
+        name: cytoplasm
+      annotation_publications: 10.1101/2022.04.12.488077, 10.1038/s41592-022-01746-2, EMPIAR-10988
+      annotation_software: Keras + AMIRA + copick
+      authors: &id_authors
+        - corresponding_author_status: true
+          name: Jonathan Schwartz
+          ORCID: 0000-0002-8063-6951
+          primary_author_status: true
+        - corresponding_author_status: true
+          name: Utz Heinrich Ermel
+          ORCID: 0000-0003-4685-037X
+          primary_author_status: true
+        - corresponding_author_status: false
+          email: cbraxtonowens@gmail.com
+          name: C. Braxton Owens
+          primary_author_status: false
+        - corresponding_author_status: false
+          name: Zhuowen Zhao
+          ORCID: 0000-0002-2355-2284
+          primary_author_status: false
+        - corresponding_author_status: false
+          name: Ariana Peck
+          ORCID: 0000-0002-5940-3897
+          primary_author_status: false
+        - corresponding_author_status: false
+          email: gushart@gmail.com
+          name: Gus L.W. Hart
+          ORCID: 0000-0002-6149-9234
+          primary_author_status: false
+        - corresponding_author_status: false
+          name: Grant J. Jensen
+          ORCID: 0000-0003-1556-4864
+          primary_author_status: false
+        - corresponding_author_status: false
+          name: Bridget Carragher
+          ORCID: 0000-0002-0624-5020
+          primary_author_status: false
+        - corresponding_author_status: true
+          name: Dari Kimanius
+          ORCID: 0000-0002-2662-6373
+          primary_author_status: false
+      dates: &id_dates
+        deposition_date: '2026-05-04'
+        last_modified_date: '2026-05-04'
+        release_date: '2026-05-04'
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: &id_method_links
+        - custom_name: DeePiCt on GitHub
+          link: https://github.com/ZauggGroup/DeePiCt
+          link_type: source_code
+        - custom_name: copick on GitHub
+          link: https://github.com/copick/copick
+          link_type: source_code
+        - custom_name: copick documentation
+          link: https://copick.github.io/copick/
+          link_type: documentation
+        - custom_name: copick-utils on GitHub
+          link: https://github.com/copick/copick-utils
+          link_type: source_code
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{copick_id}/Segmentations/13.480_manual_1_targets-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 1
+          rescale: true
+  # nucleus (label 2)
+  - metadata:
+      annotation_ingest_id: 10351-nucleus-1
+      annotation_method: >-
+        spectrum equalization + 2D CNN prediction + manual correction (10000) +
+        manual segmentation (10001) + copick consolidation
+      annotation_object:
+        id: GO:0005634
+        name: nucleus
+      annotation_publications: 10.1101/2022.04.12.488077, 10.1038/s41592-022-01746-2, EMPIAR-10988
+      annotation_software: Keras + AMIRA + copick
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id_method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{copick_id}/Segmentations/13.480_manual_1_targets-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 2
+          rescale: true
+  # nuclear envelope (label 3)
+  - metadata:
+      annotation_ingest_id: 10351-nuclear-envelope-1
+      annotation_method: >-
+        spectrum equalization + 2D CNN prediction + manual correction (10000) +
+        manual segmentation (10001) + copick consolidation
+      annotation_object:
+        id: GO:0005635
+        name: nuclear envelope
+      annotation_publications: 10.1101/2022.04.12.488077, 10.1038/s41592-022-01746-2, EMPIAR-10988
+      annotation_software: Keras + AMIRA + copick
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id_method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{copick_id}/Segmentations/13.480_manual_1_targets-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 3
+          rescale: true
+  # vesicle (label 4)
+  - metadata:
+      annotation_ingest_id: 10351-vesicle-1
+      annotation_method: >-
+        spectrum equalization + 2D CNN prediction + manual correction (10000) +
+        manual segmentation (10001) + copick consolidation
+      annotation_object:
+        id: GO:0031982
+        name: vesicle
+      annotation_publications: 10.1101/2022.04.12.488077, 10.1038/s41592-022-01746-2, EMPIAR-10988
+      annotation_software: Keras + AMIRA + copick
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id_method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{copick_id}/Segmentations/13.480_manual_1_targets-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 4
+          rescale: true
+  # membrane-enclosed lumen (label 5)
+  - metadata:
+      annotation_ingest_id: 10351-membrane-enclosed-lumen-1
+      annotation_method: >-
+        spectrum equalization + 2D CNN prediction + manual correction (10000) +
+        manual segmentation (10001) + copick consolidation
+      annotation_object:
+        id: GO:0031974
+        name: membrane-enclosed lumen
+      annotation_publications: 10.1101/2022.04.12.488077, 10.1038/s41592-022-01746-2, EMPIAR-10988
+      annotation_software: Keras + AMIRA + copick
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id_method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{copick_id}/Segmentations/13.480_manual_1_targets-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 5
+          rescale: true
+  # mitochondrion (label 6)
+  - metadata:
+      annotation_ingest_id: 10351-mitochondrion-1
+      annotation_method: >-
+        spectrum equalization + 2D CNN prediction + manual correction (10000) +
+        manual segmentation (10001) + copick consolidation
+      annotation_object:
+        id: GO:0005739
+        name: mitochondrion
+      annotation_publications: 10.1101/2022.04.12.488077, 10.1038/s41592-022-01746-2, EMPIAR-10988
+      annotation_software: Keras + AMIRA + copick
+      authors: *id_authors
+      dates: *id_dates
+      ground_truth_status: true
+      is_curator_recommended: true
+      method_links: *id_method_links
+      method_type: hybrid
+      version: 1.0
+    sources:
+      - SemanticSegmentationMask:
+          file_format: zarr
+          glob_string: '{copick_id}/Segmentations/13.480_manual_1_targets-multilabel.zarr'
+          is_visualization_default: true
+          mask_label: 6
+          rescale: true
+
+datasets:
+  - sources:
+      - literal:
+          value:
+            - '10000'
+            - '10001'
+
+deposition_keyphotos:
+  - sources:
+      - literal:
+          value:
+            snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10351_snapshot.png
+            thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10351_thumbnail.png
+
+dataset_keyphotos:
+  - sources:
+      - destination_glob:
+          list_glob: '{dataset_output_path}/Images/*'
+          match_regex: '(snapshot|thumbnail)\.(png|jpg|jpeg)$'
+          name_regex: '(snapshot|thumbnail)'
+
+depositions:
+  - metadata:
+      authors: *id_authors
+      cross_references:
+        publications: doi:10.1101/2022.04.12.488077, doi:10.1038/s41592-022-01746-2
+        related_database_entries: EMPIAR-10988, EMD-14404, EMD-14405, EMD-14406,
+          EMD-14408, EMD-14409, EMD-14410, EMD-14411, EMD-14412, EMD-14413, EMD-14415,
+          EMD-14417, EMD-14418, EMD-14419, EMD-14420
+      dates: *id_dates
+      deposition_description: >-
+        The yeast segmentation dataset of POPSICLE (Particle/Object Picking &
+        Segmentation In CryoET Learning & Evaluation), a benchmark suite
+        released to support
+        reproducible evaluation of machine-learning models for dense
+        voxel-wise compartment segmentation in eukaryotic cellular cryo-ET.
+        This deposition is a consolidated re-release of manually-curated
+        semantic segmentations covering six organelle classes (cytoplasm,
+        nucleus, nuclear envelope, vesicle, membrane-enclosed lumen, mitochondrion)
+        across 19 cryo-electron tomograms of Schizosaccharomyces pombe drawn
+        from CryoET Data Portal datasets 10000 (defocus) and 10001 (Volta
+        phase plate). Annotations were assembled with the copick toolkit at
+        13.48 Å voxel spacing and serve as a low-data, high-variance
+        organelle-segmentation regime that complements the bacterial
+        deposition (10350) within the POPSICLE benchmark suite.
+      deposition_identifier: 10351
+      deposition_title: >-
+        The POPSICLE Yeast Segmentation Dataset: consolidated multi-class
+        organelle segmentations for S. pombe cryo-ET tomograms
+      deposition_types:
+        - annotation
+    sources:
+      - literal:
+          value:
+            - 10351
+
+runs:
+  - sources:
+      - literal:
+          value:
+            - TS_026
+            - TS_027
+            - TS_028
+            - TS_029
+            - TS_030
+            - TS_034
+            - TS_037
+            - TS_041
+            - TS_043
+            - TS_045
+        parent_filters:
+          include:
+            dataset:
+              - '^10000$'
+      - literal:
+          value:
+            - TS_0001
+            - TS_0002
+            - TS_0003
+            - TS_0004
+            - TS_0005
+            - TS_0006
+            - TS_0007
+            - TS_0008
+            - TS_0009
+        parent_filters:
+          include:
+            dataset:
+              - '^10001$'
+
+standardization_config:
+  deposition_id: 10351
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: CZII/20260504_popsicle/yeast_summarized/
+
+version: 1.3.0
+
+voxel_spacings:
+  - sources:
+      - literal:
+          value:
+            - 13.480
