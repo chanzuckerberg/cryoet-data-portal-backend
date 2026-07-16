@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.25.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.0...apiv2-v1.25.1) (2026-07-16)
+
+
+### Miscellaneous Chores
+
+* **deps:** consolidate apiv2 dependency bumps ([#749](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/749)) ([d31d26f](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/d31d26fc3db78c1cb4370a70eefece2ea3b5cf44))
+
 ## [1.25.0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.24.0...apiv2-v1.25.0) (2026-07-06)
 
 
