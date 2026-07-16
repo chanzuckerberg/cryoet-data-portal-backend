@@ -19,7 +19,6 @@ from pydantic import (
     model_serializer,
 )
 
-
 metamodel_version = "None"
 version = "1.1.0"
 
