@@ -520,13 +520,11 @@ datasets:
       were collected from -51 to +51 degrees in 3 degree increments on a Titan Krios operated at 300 kV,
       equipped with a Gatan energy filter and a K2 Summit direct electron detector. Tomograms were reconstructed
       by weighted back-projection in IMOD and denoised by IsoNet deconvolution. This dataset holds 19
-      tomograms from the 2-4 June 2025 acquisition session, 19 of which carry a manually curated multi-class
+      tomograms, all of which carry a manually curated multi-class
       organelle segmentation covering the plasma membrane, microtubules, mitochondrial outer and inner
       membranes, endoplasmic reticulum and vesicles enclosed within it, multivesicular bodies, multilamellar
       vesicles, endosomes and free cytoplasmic vesicles. The study uses these to ask how the spatial confinement
-      of an axon constrains organelle architecture. Across the whole study 192 tomograms were reconstructed
-      and the 107 highest in quality were segmented; this deposition carries that segmented subset, split
-      by acquisition session.
+      of an axon constrains organelle architecture.
     dataset_identifier: 10515
     dataset_title: Cryo-electron tomography of axons and varicosities in cultured primary mouse dorsal
       root ganglion neurons (Titan Krios, 2-4 June 2025)

@@ -588,13 +588,11 @@ datasets:
       were collected from -51 to +51 degrees in 3 degree increments on a Titan Krios operated at 300 kV,
       equipped with a Gatan energy filter and a K2 Summit direct electron detector. Tomograms were reconstructed
       by weighted back-projection in IMOD and denoised by IsoNet deconvolution. This dataset holds 31
-      tomograms from the 30-31 July 2025 acquisition session, 29 of which carry a manually curated multi-class
+      tomograms, 29 of which carry a manually curated multi-class
       organelle segmentation covering the plasma membrane, microtubules, mitochondrial outer and inner
       membranes, endoplasmic reticulum and vesicles enclosed within it, multivesicular bodies, multilamellar
       vesicles, endosomes, phagophores and free cytoplasmic vesicles. The study uses these to ask how
-      the spatial confinement of an axon constrains organelle architecture. Across the whole study 192
-      tomograms were reconstructed and the 107 highest in quality were segmented; this deposition carries
-      that segmented subset, split by acquisition session.
+      the spatial confinement of an axon constrains organelle architecture.
     dataset_identifier: 10512
     dataset_title: Cryo-electron tomography of axons and varicosities in cultured primary mouse dorsal
       root ganglion neurons (Titan Krios, 30-31 July 2025)
@@ -666,9 +664,9 @@ depositions:
     dates: *id002
     deposition_description: Cryo-electron tomography of intact, unmilled peripheral axons and their varicosities
       in primary dorsal root ganglion neurons dissociated from 3-month-old mice and cultured for 48 h
-      on gold Quantifoil grids. Neurons were plunge-frozen alive, without fixation or staining, and the
-      thin axonal processes growing over the grid were imaged directly, avoiding both cryo-sectioning
-      and focused-ion-beam milling. Most tilt series were collected on a Titan Krios at 300 kV with a
+      on gold Quantifoil grids. Neurons were plunge-frozen without fixation or staining, and the
+      thin axonal processes growing over the grid were imaged directly. Most tilt series were collected on a Titan Krios
+      at 300 kV with a
       Gatan energy filter and a K2 Summit detector; a comparative subset was collected on a Glacios at
       200 kV with a Selectris energy filter and a Falcon 4i detector. No differences in structural information
       were noted between the two instruments and the data were pooled for analysis. Tomograms were reconstructed
