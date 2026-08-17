@@ -122,7 +122,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 1
       rescale: false
@@ -151,7 +151,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 2
       rescale: false
@@ -180,7 +180,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 3
       rescale: false
@@ -209,7 +209,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 4
       rescale: false
@@ -238,7 +238,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 5
       rescale: false
@@ -270,7 +270,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 6
       rescale: false
@@ -300,7 +300,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 7
       rescale: false
@@ -329,7 +329,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 8
       rescale: false
@@ -361,7 +361,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 9
       rescale: false
@@ -393,7 +393,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 10
       rescale: false
@@ -424,7 +424,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 11
       rescale: false
@@ -456,7 +456,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 12
       rescale: false
@@ -492,7 +492,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 13
       rescale: false
@@ -522,7 +522,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 14
       rescale: false
@@ -551,7 +551,7 @@ annotations:
   sources:
   - SemanticSegmentationMask:
       file_format: mrc
-      glob_string: segmentations/{seg_name}_dataset_2_segmentation.mrc
+      glob_string: segmentations/{run_name}_dataset_2_segmentation.mrc
       is_visualization_default: true
       mask_label: 15
       rescale: false
@@ -587,12 +587,12 @@ datasets:
       across) and the much narrower shafts connecting them are captured in a near-native state. Tilt series
       were collected from -51 to +51 degrees in 3 degree increments on a Glacios operated at 200 kV, equipped
       with a Selectris energy filter and a Falcon 4i direct electron detector. Tomograms were reconstructed
-      by weighted back-projection in IMOD and denoised by IsoNet deconvolution. This dataset holds 18
-      tomograms, all of which carry a manually curated multi-class
-      organelle segmentation covering the plasma membrane, microtubules, mitochondrial outer and inner
-      membranes, endoplasmic reticulum and vesicles enclosed within it, multivesicular bodies, multilamellar
-      vesicles, endosomes, phagophores and free cytoplasmic vesicles. The study uses these to ask how
-      the spatial confinement of an axon constrains organelle architecture.
+      by weighted back-projection in IMOD and denoised by IsoNet deconvolution. This dataset holds 20
+      tomograms, all of which carry a manually curated multi-class organelle segmentation covering the
+      plasma membrane, microtubules, mitochondrial outer and inner membranes, endoplasmic reticulum and
+      vesicles enclosed within it, multivesicular bodies, multilamellar vesicles, endosomes, phagophores
+      and free cytoplasmic vesicles. The study uses these to ask how the spatial confinement of an axon
+      constrains organelle architecture.
     dataset_identifier: 10513
     dataset_title: Cryo-electron tomography of axons and varicosities in cultured primary mouse dorsal
       root ganglion neurons (Glacios 200 kV comparative subset, 6-7 February 2025)
@@ -678,7 +678,7 @@ runs:
       name_regex: (.*)_dataset_2_tiltseries\.mrc$
 standardization_config:
   deposition_id: 10362
-  run_data_map_file: run_to_data_map_10513.tsv
+  run_data_map_file: run_to_data_map_10513_v3.tsv
   source_prefix: neal_waxham_08_2026/
 tiltseries:
 - metadata:
