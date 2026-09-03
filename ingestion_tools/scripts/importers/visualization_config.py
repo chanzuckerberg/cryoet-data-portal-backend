@@ -20,6 +20,10 @@ if TYPE_CHECKING:
 else:
     TomogramImporter = "TomogramImporter"
 
+# One angstrom, in metres. Neuroglancer expresses every dimension in metres, while voxel
+# spacings and mesh vertex coordinates are both in angstrom.
+ANGSTROM_IN_METRES = 1e-10
+
 
 class VisualizationConfigImporter(BaseImporter):
     type_key = "viz_config"
@@ -175,7 +179,12 @@ class VisualizationConfigImporter(BaseImporter):
             name=f"{name_prefix} mesh",
             url=self.config.https_prefix,
             color=color,
-            scale=resolution,
+            # Mesh vertices are stored in angstrom, not in voxels: the precompute writes them
+            # through unscaled (identity transform, resolution 1,1,1) and the glb keeps whatever
+            # `scale_factor` produced. Declaring the voxel spacing here would tell neuroglancer to
+            # read each vertex coordinate as a voxel index and render the mesh
+            # `voxel_spacing`-times too large.
+            scale=(ANGSTROM_IN_METRES,) * 3,
             is_visible=file_metadata.get("is_visualization_default"),
             output_scale=output_resolution,
         )
@@ -282,7 +291,7 @@ class VisualizationConfigImporter(BaseImporter):
                     "name_prefix": name_prefix,
                     "color": hex_colors[0],
                     "shape": shape,
-                    "resolution": (voxel_spacing * 1e-10,) * 3,
+                    "resolution": (voxel_spacing * ANGSTROM_IN_METRES,) * 3,
                 }
 
                 if shape == "InstanceSegmentationMask":
@@ -344,7 +353,7 @@ class VisualizationConfigImporter(BaseImporter):
         tomogram = self.get_tomogram()
         volume_info = tomogram.get_output_volume_info()
         voxel_size = round(volume_info.voxel_size, 3)
-        resolution = cast(tuple[float, float, float], (voxel_size * 1e-10,) * 3)
+        resolution = cast(tuple[float, float, float], (voxel_size * ANGSTROM_IN_METRES,) * 3)
         # we display information about when the contrast limit computation starts and finishes
         # to give feedback to the user why the script is hanging as the computation limit might
         # take time depending on use pyramid level as well as the used computation method.
