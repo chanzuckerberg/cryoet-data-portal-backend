@@ -239,8 +239,7 @@ class VisualizationConfigImporter(BaseImporter):
                     "Point",
                     "OrientedPoint",
                     "InstanceSegmentation",
-                    "TriangularMesh",
-                    "TriangularMeshGroup",
+                    "Mesh",
                     "InstanceSegmentationMask",
                 }:
                     print(f"Skipping file with unknown shape {shape}")
@@ -374,7 +373,7 @@ class VisualizationConfigImporter(BaseImporter):
                         )
                         args = {**args, "visible": False}
                 layers.append(self._to_point_layer(**args))
-            elif info["shape"] in {"TriangularMesh", "TriangularMeshGroup"}:
+            elif shape == "Mesh":
                 layers.append(self._to_triangular_mesh_layer(**args))
 
             largest_ratio = max(largest_ratio, info.get("voxel_spacing_ratio", 1.0))

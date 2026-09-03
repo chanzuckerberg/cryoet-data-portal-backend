@@ -631,7 +631,7 @@
                 "shape": {
                     "$ref": "#/$defs/AnnotationFileShapeTypeEnum",
                     "description": "The shape type of the annotation file.",
-                    "pattern": "(^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^GlobalCaption$)|(^AnnotationCaption$)"
+                    "pattern": "(^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^InstanceSegmentationMask$)|(^Mesh$)|(^GlobalCaption$)|(^AnnotationCaption$)"
                 }
             },
             "required": [
@@ -650,6 +650,8 @@
                 "OrientedPoint",
                 "Point",
                 "InstanceSegmentation",
+                "InstanceSegmentationMask",
+                "Mesh",
                 "GlobalCaption",
                 "AnnotationCaption"
             ],

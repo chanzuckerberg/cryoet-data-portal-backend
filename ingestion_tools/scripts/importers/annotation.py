@@ -643,7 +643,7 @@ class InstanceSegmentationAnnotation(OrientedPointAnnotation):
 
 
 class AbstractTriangularMeshAnnotation(BaseAnnotationSource):
-    shape = "TriangularMesh"
+    shape = "Mesh"  # Don't expose TriangularMesh/TriangularMeshGroup to the public portal.
     map_functions: dict[str, Callable]
     valid_file_formats: list[str]
     output_format: str = "glb"

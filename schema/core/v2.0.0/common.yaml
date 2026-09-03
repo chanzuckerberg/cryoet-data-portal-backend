@@ -1333,6 +1333,10 @@ enums:
         description: A series of coordinates
       InstanceSegmentation:
         description: A volume with labels for multiple instances
+      InstanceSegmentationMask:
+        description: A mask with labels for multiple instances
+      Mesh:
+        description: A triangular surface mesh
       GlobalCaption:
         description: A set of text captions describing the entire tomogram
       AnnotationCaption:

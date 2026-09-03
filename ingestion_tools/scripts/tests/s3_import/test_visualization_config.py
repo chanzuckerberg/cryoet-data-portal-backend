@@ -207,6 +207,10 @@ def annotation_usecases(
         input_args["visible_segments"] = (1, 2, 3)
         input_args["color"] = {1: "#51508b", 2: "#ffff00", 3: "#00ffff"}
         return_value = {"key": generator_method, "random": "value"}
+    elif shape == "Mesh" and format == "glb":
+        generator_method = "generate_mesh_layer"
+        input_args["name"] += "mesh"
+        return_value = {"key": generator_method, "random": "value"}
 
     args = {
         "shape": shape,

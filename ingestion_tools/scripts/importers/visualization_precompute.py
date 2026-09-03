@@ -80,7 +80,7 @@ class AnnotationPrecomputeFactory:
             return SegmentationMaskAnnotationPrecompute(**params)
         elif shape == "InstanceSegmentationMask":
             return InstanceSegmentationMaskAnnotationPrecompute(**params)
-        elif shape == "TriangularMesh":
+        elif shape == "Mesh":
             return MeshAnnotatationPrecompute(**params)
 
         print(f"No precompute for {shape} shape")

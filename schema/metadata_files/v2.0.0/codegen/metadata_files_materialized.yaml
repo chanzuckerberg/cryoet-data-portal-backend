@@ -573,6 +573,12 @@ enums:
       InstanceSegmentation:
         text: InstanceSegmentation
         description: A volume with labels for multiple instances
+      InstanceSegmentationMask:
+        text: InstanceSegmentationMask
+        description: A mask with labels for multiple instances
+      Mesh:
+        text: Mesh
+        description: A triangular surface mesh
       GlobalCaption:
         text: GlobalCaption
         description: A set of text captions describing the entire tomogram
@@ -1244,7 +1250,7 @@ classes:
         required: true
         inlined: true
         inlined_as_list: true
-        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^GlobalCaption$)|(^AnnotationCaption$)
+        pattern: (^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^InstanceSegmentationMask$)|(^Mesh$)|(^GlobalCaption$)|(^AnnotationCaption$)
       is_visualization_default:
         name: is_visualization_default
         description: Whether the annotation file is selected for visualization by
