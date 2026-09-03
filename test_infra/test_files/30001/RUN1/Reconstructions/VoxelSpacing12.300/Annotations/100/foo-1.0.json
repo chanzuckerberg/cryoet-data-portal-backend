@@ -68,6 +68,12 @@
       "is_visualization_default": false
     },
     {
+      "format": "glb",
+      "path": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100-foo-1.0_mesh.glb",
+      "shape": "Mesh",
+      "is_visualization_default": false
+    },
+    {
       "format": "saber",
       "path": "30001/RUN1/Reconstructions/VoxelSpacing12.300/Annotations/100-foo-1.0_globalcaption.json",
       "shape": "GlobalCaption",

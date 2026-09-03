@@ -87,7 +87,7 @@ def test_mesh_annotation_precompute(
     precompute_path = get_annotation_neuroglancer_precompute_path(
         mesh_annotation.get_output_path(),
         viz.get_output_path(),
-        "TriangularMesh",
+        "Mesh",
     )
     prefix = precompute_path.split("/", 1)[1]
     files = {os.path.relpath(item, prefix) for item in list_dir(s3_client, test_output_bucket, prefix)}
