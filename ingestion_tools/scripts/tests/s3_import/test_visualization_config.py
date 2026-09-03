@@ -186,6 +186,9 @@ def annotation_usecases(
         "is_visible": is_visualization_default,
     }
     return_value = None
+    # The scale a layer declares for its *source* data. Defaults to the tomogram voxel spacing;
+    # meshes override it because their vertices are in angstrom rather than voxels.
+    input_scale = None
     if format == "ndjson":
         if shape in {"Point", "InstanceSegmentation"}:
             generator_method = "generate_point_layer"
@@ -210,6 +213,7 @@ def annotation_usecases(
     elif shape == "Mesh" and format == "glb":
         generator_method = "generate_mesh_layer"
         input_args["name"] += "mesh"
+        input_scale = (1e-10,) * 3
         return_value = {"key": generator_method, "random": "value"}
 
     args = {
@@ -218,6 +222,7 @@ def annotation_usecases(
         "generator_method": generator_method,
         "generator_args": input_args,
         "generator_return_value": return_value,
+        "input_scale": input_scale,
     }
     if has_mesh:
         args["mesh_source_path"] = "output/dummy_mesh.glb"
@@ -349,7 +354,7 @@ def test_viz_config_with_tomogram_and_annotation(
         args = {
             **annotation_usecases["generator_args"],
             "source": os.path.relpath(precompute_path, "output"),
-            "scale": scale,
+            "scale": annotation_usecases["input_scale"] or scale,
             "output_scale": scale,
         }
         if oriented_point_mesh:
