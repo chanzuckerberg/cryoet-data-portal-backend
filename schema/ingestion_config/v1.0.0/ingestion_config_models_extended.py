@@ -111,6 +111,17 @@ _NETWORK_MAX_ATTEMPTS = 4
 _NETWORK_RETRY_BASE_DELAY = 0.5  # seconds; exponential backoff
 
 
+class WormBaseUnreachableError(Exception):
+    """rest.wormbase.org refused the request, so a WBStrain ID could not be checked.
+
+    Cloudflare sits in front of rest.wormbase.org and blocks datacenter IP ranges outright:
+    from a GitHub-hosted runner every request returns 403 with a Cloudflare "Attention
+    Required!" page, before any redirect and regardless of scheme, User-Agent, Accept, or
+    the documented ?content-type parameter. The same request succeeds from a normal client,
+    so this says nothing about the ID.
+    """
+
+
 def retry_on_network_error(
     attempts: int = _NETWORK_MAX_ATTEMPTS,
     base_delay: float = _NETWORK_RETRY_BASE_DELAY,
@@ -396,8 +407,10 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     names = []
     async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(url) as response:
         logger.debug("Getting ID %s at %s, status %s", id, url, response.status)
-        if response.status >= 400:
+        if response.status == 404:
             return [], False
+        if response.status >= 400:
+            raise WormBaseUnreachableError(f"HTTP {response.status} from {url}")
         data = await response.json()
         if label := data["name"]["data"]["label"]:
             names.append(label)
@@ -621,7 +634,15 @@ def validate_cell_strain_object(self: CellStrain) -> CellStrain:
         return self
 
     if self.id.startswith("WBStrain"):
-        validate_id_name_object(self, self.id, self.name, validate_id_function=validate_wormbase_id)
+        try:
+            validate_id_name_object(self, self.id, self.name, validate_id_function=validate_wormbase_id)
+        except WormBaseUnreachableError as error:
+            logger.warning(
+                "Skipping WormBase validation of cell strain %s (%s). This check cannot run from "
+                "a blocked network such as CI; it still runs wherever rest.wormbase.org is reachable.",
+                self.id,
+                error,
+            )
     elif self.id.startswith("CVCL_"):
         validate_id_name_object(self, self.id, self.name, validate_id_function=validate_cellosaurus_id)
     elif self.id.startswith("CC-"):
