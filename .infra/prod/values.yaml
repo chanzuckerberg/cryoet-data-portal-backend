@@ -6,7 +6,7 @@ stack:
       ingress:
         enabled: true
       gateway:
-        dnsOwner: ingress
+        dnsOwner: gateway
       initContainers:
         # Install cerbos policies where the cerbos sidecar can grab them.
         - name: install-cerbos-policies
