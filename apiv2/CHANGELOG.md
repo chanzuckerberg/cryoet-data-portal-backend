@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.25.2](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.1...apiv2-v1.25.2) (2026-09-03)
+
+
+### Miscellaneous Chores
+
+* **deps:** bump aiohttp from 3.14.1 to 3.14.3 in /apiv2 ([#763](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/763)) ([528b6f3](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/528b6f3e5c5441b5db0c1554ffcc3ff1b5058a87))
+* **deps:** bump cryptography from 49.0.0 to 50.0.0 in /apiv2 ([#764](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/764)) ([7a16be4](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/7a16be453bdde11a246b8911111d05e987b720fa))
+
 ## [1.25.1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.0...apiv2-v1.25.1) (2026-07-28)
 
 
