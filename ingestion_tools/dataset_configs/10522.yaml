@@ -132,7 +132,7 @@ tiltseries:
       image_corrector: null
       phase_plate: null
     data_acquisition_software: SerialEM
-    tilt_alignment_software: AreTomo3 v2.3.0
+    tilt_alignment_software: MissAlignment v0.2.0
     is_aligned: false
     tilt_axis: -95.2774
     tilt_range:
@@ -186,7 +186,7 @@ tomograms:
     processing: raw
     processing_software: AreTomo3 v2.3.0
     ctf_corrected: false
-    align_software: AreTomo3 v2.3.0
+    align_software: MissAlignment v0.2.0
     fiducial_alignment_status: NON_FIDUCIAL
     tomogram_version: 1.0
     voxel_spacing: 10.005
@@ -214,8 +214,6 @@ tomograms:
     is_visualization_default: false
     authors: *id001
     dates: *id002
-    cross_references:
-      publications: 10.1073/pnas.2426449122, 10.1101/2024.12.01.626131
   sources:
   - source_glob:
       list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.005/aretomo3-miss-aligned-global-wbp.zarr
@@ -225,7 +223,7 @@ tomograms:
     processing: filtered
     processing_software: AreTomo3 v2.3.0
     ctf_corrected: true
-    align_software: AreTomo3 v2.3.0
+    align_software: MissAlignment v0.2.0
     fiducial_alignment_status: NON_FIDUCIAL
     tomogram_version: 1.0
     voxel_spacing: 10.005
@@ -234,8 +232,6 @@ tomograms:
     is_visualization_default: false
     authors: *id001
     dates: *id002
-    cross_references:
-      publications: 10.1073/pnas.2426449122, 10.1101/2024.12.01.626131
   sources:
   - source_glob:
       list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.005/aretomo3-miss-aligned-global-ctf-deconvolved.zarr
@@ -245,7 +241,7 @@ tomograms:
     processing: denoised
     processing_software: DeepDeWedge
     ctf_corrected: true
-    align_software: AreTomo3 v2.3.0
+    align_software: MissAlignment v0.2.0
     fiducial_alignment_status: NON_FIDUCIAL
     tomogram_version: 1.0
     voxel_spacing: 10.005
@@ -254,8 +250,6 @@ tomograms:
     is_visualization_default: false
     authors: *id001
     dates: *id002
-    cross_references:
-      publications: 10.1073/pnas.2426449122, 10.1101/2024.12.01.626131
   sources:
   - source_glob:
       list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.005/ddw-refined-global.zarr
@@ -265,7 +259,7 @@ tomograms:
     processing: denoised
     processing_software: IsoNet2
     ctf_corrected: true
-    align_software: AreTomo3 v2.3.0
+    align_software: MissAlignment v0.2.0
     fiducial_alignment_status: NON_FIDUCIAL
     tomogram_version: 1.0
     voxel_spacing: 10.005
@@ -274,8 +268,6 @@ tomograms:
     is_visualization_default: true
     authors: *id001
     dates: *id002
-    cross_references:
-      publications: 10.1073/pnas.2426449122, 10.1101/2024.12.01.626131
   sources:
   - source_glob:
       list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.005/isonet2-corrected-global.zarr
