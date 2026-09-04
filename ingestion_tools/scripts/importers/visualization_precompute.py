@@ -80,7 +80,7 @@ class AnnotationPrecomputeFactory:
             return SegmentationMaskAnnotationPrecompute(**params)
         elif shape == "InstanceSegmentationMask":
             return InstanceSegmentationMaskAnnotationPrecompute(**params)
-        elif shape == "TriangularMesh":
+        elif shape == "Mesh":
             return MeshAnnotatationPrecompute(**params)
 
         print(f"No precompute for {shape} shape")
@@ -259,14 +259,16 @@ class MeshAnnotatationPrecompute(BaseAnnotationPrecompute):
         # But the docstring suggets it can output multiple glb files
         precompute_path = self._get_neuroglancer_precompute_path(annotation_path, output_prefix)
         tmp_path = fs.localwritable(precompute_path)
-        glb_file_path = fs.destformat(self.annotation.get_output_filename(annotation_path, "glb"))
+        # trimesh (used by load_glb_file) can only read local files, so the glb has to be
+        # downloaded first instead of being handed a remote path like the zarr precomputes are.
+        glb_file_path = fs.localreadable(self.annotation.get_output_filename(annotation_path, "glb"))
         print(f"Precomputing mesh annotation {annotation_path} to {tmp_path}")
         # Importing this at runtime instead of compile time since zfpy (a dependency of this
         # module) cannot be imported successfully on darwin/ARM machines.
         from cryoet_data_portal_neuroglancer.io import load_glb_file
         from cryoet_data_portal_neuroglancer.precompute import mesh
 
-        scene = load_glb_file(glb_file_path)
+        scene = load_glb_file(Path(glb_file_path))
         mesh.generate_multiresolution_mesh(
             scene,
             tmp_path,

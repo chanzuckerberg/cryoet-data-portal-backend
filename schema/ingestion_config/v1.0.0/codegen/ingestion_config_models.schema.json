@@ -640,6 +640,8 @@
                 "OrientedPoint",
                 "Point",
                 "InstanceSegmentation",
+                "InstanceSegmentationMask",
+                "Mesh",
                 "GlobalCaption",
                 "AnnotationCaption"
             ],

@@ -638,6 +638,14 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     """
     A volume with labels for multiple instances
     """
+    InstanceSegmentationMask = "InstanceSegmentationMask"
+    """
+    A mask with labels for multiple instances
+    """
+    Mesh = "Mesh"
+    """
+    A triangular surface mesh
+    """
     GlobalCaption = "GlobalCaption"
     """
     A set of text captions describing the entire tomogram

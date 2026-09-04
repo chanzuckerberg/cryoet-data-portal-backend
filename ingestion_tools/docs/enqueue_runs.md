@@ -112,7 +112,15 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 
 ## S3 File Sync (`sync` subcommand)
 
-The `enqueue_runs.py sync` command queues up jobs to sync data from the staging s3 bucket to the production s3 bucket. It launches one task per **dataset** and by default it will sync **all datasets** unless filters or a list of specific datasets to sync are provided.
+The `enqueue_runs.py sync` command copies data between two S3 locations, normally staging to production. It deliberately mirrors `aws s3 sync`: it takes a **SOURCE** and a **DEST** as `s3://` URIs and passes AWS's own flags straight through, so the [aws s3 sync docs](https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html) apply.
+
+```
+python3 enqueue_runs.py sync [OPTIONS] SOURCE DEST
+```
+
+Syncs always run on the staging deployment and always go staging → public, so `sync` takes no `--environment`.
+
+Real syncs run remotely on AWS Batch (spot, falling back to on-demand). **`--dryrun` runs locally** and prints straight to your terminal — a dry run copies nothing, so it only needs read access to both buckets, and it takes seconds instead of waiting for a spot instance and then reading CloudWatch.
 
 ### tl;dr:
 ```bash
@@ -122,36 +130,59 @@ cd ingestion_tools/scripts
 source ../.venv/bin/activate
 
 # Set up any required AWS env vars
-EXPORT AWS_PROFILE=cryoet-dev
+export AWS_PROFILE=cryoet-dev
 
-# Main args
-# python3 enqueue_runs.py sync [--include|--exclude]
+# See what would be copied, printed here in your terminal
+python3 enqueue_runs.py sync --dryrun \
+    s3://cryoet-data-portal-staging/10002 s3://cryoet-data-portal-public/10002
 
-# Get information on what types of stuff we can import
-python3 enqueue_runs.py sync --help
+# Do it for real (submits one Batch job)
+python3 enqueue_runs.py sync \
+    s3://cryoet-data-portal-staging/10002 s3://cryoet-data-portal-public/10002
 
-# Example
-python3 enqueue_runs.py sync --exclude '*' --include 'Annotations/*.json' --s3-prefix 10002 --dryrun
+# Only the annotation JSON, and delete anything in prod that is gone from staging
+python3 enqueue_runs.py sync --delete --exclude '*' --include 'Annotations/*.json' \
+    s3://cryoet-data-portal-staging/10002 s3://cryoet-data-portal-public/10002
 
+# A few named datasets, one job each, without writing out every path
+python3 enqueue_runs.py sync --dataset 10521 --dataset 10522 \
+    s3://cryoet-data-portal-staging s3://cryoet-data-portal-public
+
+# Every dataset, one job each
+python3 enqueue_runs.py sync --per-dataset \
+    s3://cryoet-data-portal-staging s3://cryoet-data-portal-public
+
+# Just show me the aws command, do not run anything
+python3 enqueue_runs.py sync --print-command \
+    s3://cryoet-data-portal-staging/10002 s3://cryoet-data-portal-public/10002
 ```
 
-### Commonly used options
+### Options passed through to `aws s3 sync`
 | Option | Default | Explanation |
-| --- | --- |  --- |
-| --include | `*` | Which filenames should be sync'd. The order of `--include/--exclude` flags matters, please [see the AWS docs on this topic](https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters) for more information. |
-| --exclude | | Which filenames should not be sync'd. The order of `--include/--exclude` flags matters, please [see the AWS docs on this topic](https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters) for more information. |
-| --dryrun | False | Only print files that *would* be modified, but don't actually copy or delete data |
-| --delete-files | False | Use this flag to delete files from the destination that don't exist in the source |
+| --- | --- | --- |
+| --include | `*` | Which filenames should be sync'd. The order of `--include/--exclude` matters; see the [AWS docs](https://docs.aws.amazon.com/cli/latest/reference/s3/#use-of-exclude-and-include-filters). Quote your patterns so your shell does not expand them. |
+| --exclude | | Which filenames should not be sync'd. Order matters, as above. |
+| --delete | False | Delete files in DEST that do not exist in SOURCE. |
+| --dryrun | False | Print what *would* change without changing it. Runs locally. |
+| --exact-timestamps | False | Passed through to `aws s3 sync`. |
+| --size-only | False | Passed through to `aws s3 sync`. |
 
-### Other interesting options to be aware of
-| Option | Default | Explanation                                                                                                                                                                                        |
-| --- |---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| --filter-datasets | null    | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
-| --include-dataset | null    | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's                                                                                        |
-| --exclude-dataset | null    | Supply a regular expression to exclude a list of dataset ID's the import. This option can be specified multiple times with multiple regular expressions.                                           |
-| --s3-prefix | null    | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset                                                               |
-| --include-deposition | null    | Look for deposition metadata  with the deposition ids passed here. This helps sync the deposition data.                                                                                            |
-| --no-sync-dataset | False   | Skip syncing datasets. This is useful when we want to only update deposition data                                                                                                                  |
+### Options specific to this wrapper
+| Option | Default | Explanation |
+| --- | --- | --- |
+| --per-dataset / --single-job | per-dataset when SOURCE is a bucket root | Submit one job per dataset instead of a single job for the whole SOURCE prefix. Per-dataset is how you get parallelism across a large sync. Fanning out requires SOURCE and DEST to be bucket roots, because ids are resolved from the bucket root; `--single-job` cannot be combined with `--dataset`. |
+| --dataset | null | Only sync these datasets, named by **exact** id — `10521`, not `1052`. Repeatable, and an id matching no dataset is an error rather than a silent no-op. Implies `--per-dataset`. |
+| --exclude-dataset | null | Skip datasets whose id matches this regex. Repeatable. |
+| --include-deposition | null | Also sync `depositions_metadata` for these depositions, named by **exact** id. Repeatable, and an unmatched id is an error. |
+| --no-sync-dataset | False | Skip datasets entirely; useful with `--include-deposition`. |
+| --print-command | False | Print the `aws s3 sync` command(s) that would run, then exit. |
+| --vcpu | 4 for `sync` | vCPUs per job. `aws s3 sync` between buckets is a server-side copy, so throughput is bound by request concurrency rather than bandwidth — more vCPUs, not more memory, is what makes it faster. |
+| --memory | 4000 for `sync` | Memory per job. Rarely the bottleneck for sync. |
+| --parallelism | 20 | How many jobs are *submitted* concurrently. This does not affect the speed of any individual transfer. |
+
+### Note on performance
+
+A single dataset can be tens of thousands of objects (zarr pyramids), and each object is one `CopyObject` request. Throughput therefore depends on how many requests are in flight, which is why jobs run with several vCPUs and a raised `max_concurrent_requests`. If a sync feels slow, raise `--vcpu` before reaching for `--memory` or `--parallelism`.
 
 ## Source S3 File validation (`source-validate` subcommand)
 

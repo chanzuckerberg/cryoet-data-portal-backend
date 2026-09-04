@@ -62,6 +62,11 @@ stack:
     apiv2:
       image:
         repository: 533267185808.dkr.ecr.us-west-2.amazonaws.com/core-platform/cryoet-data-portal-backend/apiv2/apiv2
+      gateway:
+        enabled: true
+        paths:
+          - path: /
+            pathType: Prefix
       resources:
         limits:
           cpu: "3"

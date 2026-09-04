@@ -1549,7 +1549,7 @@ def test_ingest_triangular_mesh(
 
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Reconstructions/VoxelSpacing1.123/Annotations/100/some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing1.123/Annotations/100/some_protein-1.0_mesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "alignment_metadata_path": "foo",
@@ -1557,7 +1557,7 @@ def test_ingest_triangular_mesh(
             {
                 "format": "glb",
                 "path": path,
-                "shape": "TriangularMesh",
+                "shape": "Mesh",
                 "is_visualization_default": False,
             },
         ],
@@ -1618,7 +1618,7 @@ def test_ingest_triangular_mesh_hff(
     anno.import_metadata()
     # Assert
     # verify local_metadata
-    path = "dataset1/run1/Reconstructions/VoxelSpacing1.123/Annotations/100/some_protein-1.0_triangularmesh.glb"
+    path = "dataset1/run1/Reconstructions/VoxelSpacing1.123/Annotations/100/some_protein-1.0_mesh.glb"
     expected_local_metadata = {
         "object_count": 1,
         "alignment_metadata_path": "foo",
@@ -1626,7 +1626,7 @@ def test_ingest_triangular_mesh_hff(
             {
                 "format": "glb",
                 "path": path,
-                "shape": "TriangularMesh",
+                "shape": "Mesh",
                 "is_visualization_default": False,
             },
         ],

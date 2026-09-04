@@ -648,6 +648,14 @@ class AnnotationFileShapeTypeEnum(str, Enum):
     """
     A volume with labels for multiple instances
     """
+    InstanceSegmentationMask = "InstanceSegmentationMask"
+    """
+    A mask with labels for multiple instances
+    """
+    Mesh = "Mesh"
+    """
+    A triangular surface mesh
+    """
     GlobalCaption = "GlobalCaption"
     """
     A set of text captions describing the entire tomogram
@@ -4294,7 +4302,7 @@ class AnnotationFileMetadata(ConfiguredBaseModel):
 
     @field_validator('shape')
     def pattern_shape(cls, v):
-        pattern=re.compile(r"(^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^GlobalCaption$)|(^AnnotationCaption$)")
+        pattern=re.compile(r"(^SegmentationMask$)|(^OrientedPoint$)|(^Point$)|(^InstanceSegmentation$)|(^InstanceSegmentationMask$)|(^Mesh$)|(^GlobalCaption$)|(^AnnotationCaption$)")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
