@@ -1,0 +1,365 @@
+# CryoET Data Portal ingestion config -- dataset 10521 (dataset_0317), deposition 10364
+version: 1.1.0
+standardization_config:
+  deposition_id: 10364
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: joshua_hutchings_07_2026/dataset_0317/
+datasets:
+- metadata:
+    dataset_identifier: 10521
+    dataset_title: Cryo-FIB-milled NIH/3T3 mouse fibroblasts (dataset 1)
+    dataset_description: Cryo-electron tomograms of cryo-FIB-milled lamellae through intact, plunge-frozen
+      NIH/3T3 mouse embryonic fibroblasts, targeting the nucleus and nuclear periphery. Tomograms from
+      this session were used to assign individual nucleosomes in native chromatin, to determine two classes
+      of in-cell nucleosome structure, and to map the higher-order nucleosome interaction network.
+    authors: &id001
+    - name: Joshua Hutchings
+      ORCID: 0000-0001-6841-8583
+      affiliation_name: School of Biological Sciences, University of California San Diego
+      affiliation_address: La Jolla, CA 92093, USA
+      affiliation_identifier: https://ror.org/0168r3w48
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Farhaz Shaikh
+      ORCID: 0009-0002-0452-5675
+      affiliation_name: School of Biological Sciences, University of California San Diego
+      affiliation_address: La Jolla, CA 92093, USA
+      affiliation_identifier: https://ror.org/0168r3w48
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Anna Theodora Tifrea
+      ORCID: 0000-0002-5429-3131
+      affiliation_name: School of Biological Sciences, University of California San Diego
+      affiliation_address: La Jolla, CA 92093, USA
+      affiliation_identifier: https://ror.org/0168r3w48
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Elizabeth Villa
+      ORCID: 0000-0003-4677-9809
+      email: evilla@ucsd.edu
+      affiliation_name: School of Biological Sciences, University of California San Diego
+      affiliation_address: La Jolla, CA 92093, USA
+      affiliation_identifier: https://ror.org/0168r3w48
+      primary_author_status: false
+      corresponding_author_status: true
+    dates: &id002
+      deposition_date: '2026-08-31'
+      release_date: '2026-08-31'
+      last_modified_date: '2026-08-31'
+    sample_type: cell_line
+    organism:
+      name: Mus musculus
+      taxonomy_id: 10090
+    cell_strain:
+      id: CVCL_0594
+      name: NIH 3T3
+    cell_type:
+      id: CL:2000042
+      name: embryonic fibroblast
+    tissue:
+      id: CL:2000042
+      name: embryonic fibroblast
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
+    cross_references:
+      publications: 10.1073/pnas.2426449122, 10.1101/2024.12.01.626131
+      related_database_entries: EMD-53275, EMD-49929
+    funding:
+    - funding_agency_name: Howard Hughes Medical Institute
+    - funding_agency_name: Paul G. Allen Frontiers Group
+    - funding_agency_name: Welch Foundation
+      grant_id: I-1544
+    - funding_agency_name: National Institute of General Medical Sciences
+      grant_id: R35GM141736
+    - funding_agency_name: European Molecular Biology Organization
+      grant_id: ALTF 871-2020
+    - funding_agency_name: Cancer Prevention and Research Institute of Texas
+      grant_id: RP220582
+    - funding_agency_name: National Institute of General Medical Sciences
+      grant_id: U24 GM129539
+    grid_preparation: Cells were seeded on glow-discharged carbon-coated Quantifoil R1/4 gold 200-mesh
+      grids, manually blotted with filter paper and plunge-frozen in a liquid ethane/propane mixture using
+      a custom-built vitrification device. Lamellae were prepared on an Aquilos 2 cryo-FIB/SEM by automated
+      rough-to-fine milling followed by manual polishing with a 0.5 degree overtilt, targeting a nominal
+      thickness of 150 nm.
+    sample_preparation: NIH/3T3 mouse embryonic fibroblasts (ATCC CRL-1658) were grown at 37 C in 5% CO2
+      in Dulbecco's Modified Eagle Medium with fetal calf serum, then seeded onto EM grids and cultured
+      for a further two hours so the cells adhered stably to the support film. The line carries a modified
+      nesprin protein tagged with mNeonGreen2, introduced by lentiviral insertion. Cells were treated
+      with 100 nM jasplakinolide for a further two hours before vitrification.
+    other_setup: 'Cryo-FIB milling, Cell strain: NIH3T3-mN2G, jasplakinolide treatment'
+  sources:
+  - literal:
+      value:
+      - '10521'
+depositions:
+- metadata:
+    deposition_identifier: 10364
+    deposition_title: In situ cryo-electron tomography of NIH/3T3 mouse fibroblast nuclei
+    deposition_description: Cryo-electron tomograms of cryo-FIB-milled lamellae through intact, plunge-frozen
+      NIH/3T3 mouse fibroblasts, collected across three acquisition sessions and targeting the nucleus
+      and nuclear periphery. The tomograms resolve the nuclear envelope, ribosomes and densely packed
+      native chromatin, and supported the determination of in-cell nucleosome structure and the mapping
+      of higher-order nucleosome interaction networks.
+    deposition_types:
+    - dataset
+    - annotation
+    authors: *id001
+    dates: *id002
+    cross_references:
+      publications: 10.1073/pnas.2426449122, 10.1101/2024.12.01.626131
+      related_database_entries: EMD-53275, EMD-49929
+  sources:
+  - literal:
+      value:
+      - 10364
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10364_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10364_thumbnail.png
+runs:
+- sources:
+  - source_glob:
+      list_glob: tiltseries/*.mrc.st
+      name_regex: (.*)\.mrc\.st
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 10.005
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    spherical_aberration_constant: 2.7
+    pixel_spacing: 1.341
+    binning_from_frames: 1
+    camera:
+      manufacturer: Gatan
+      model: K3
+      acquire_mode: counting
+    microscope:
+      manufacturer: TFS
+      model: Titan Krios G3
+      additional_info: Referred to as UCSD Krios 1 in the acquisition metadata; energy filter slit width
+        15 eV
+    microscope_optical_setup:
+      energy_filter: BioContinuum
+      image_corrector: null
+      phase_plate: null
+    data_acquisition_software: SerialEM
+    tilt_alignment_software: MissAlignment v0.2.0
+    is_aligned: false
+    tilt_axis: -95.2774
+    tilt_range:
+      min: float {tilt_series_min_tilt}
+      max: float {tilt_series_max_tilt}
+    tilt_step: 3.0
+    tilt_series_quality: int {tilt_series_quality}
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: tiltseries/{run_name}/{run_name}_ts.st
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: frames/{run_name}_*.tif
+gains:
+- sources:
+  - source_glob:
+      list_glob: frames/{gain_file}
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: collection_metadata/{run_name}/*.mdoc
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}/*.rawtlt
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/*_CTF.txt
+alignments:
+- metadata:
+    format: ARETOMO3
+    alignment_type: GLOBAL
+    method_type: projection_matching
+    is_portal_standard: true
+  sources:
+  - source_glob:
+      list_glob: alignment/{run_name}/*.aln
+tomograms:
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: raw
+    processing_software: AreTomo3 v2.3.0
+    ctf_corrected: false
+    align_software: MissAlignment v0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1.0
+    voxel_spacing: 10.005
+    offset: &id003
+      x: 0
+      y: 0
+      z: 0
+    affine_transformation_matrix: &id004
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    is_visualization_default: false
+    authors: *id001
+    dates: *id002
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.005/aretomo3-miss-aligned-global-wbp.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: filtered
+    processing_software: AreTomo3 v2.3.0
+    ctf_corrected: true
+    align_software: MissAlignment v0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1.0
+    voxel_spacing: 10.005
+    offset: *id003
+    affine_transformation_matrix: *id004
+    is_visualization_default: false
+    authors: *id001
+    dates: *id002
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.005/aretomo3-miss-aligned-global-ctf-deconvolved.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: denoised
+    processing_software: DeepDeWedge
+    ctf_corrected: true
+    align_software: MissAlignment v0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1.0
+    voxel_spacing: 10.005
+    offset: *id003
+    affine_transformation_matrix: *id004
+    is_visualization_default: false
+    authors: *id001
+    dates: *id002
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.005/ddw-refined-global.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    processing: denoised
+    processing_software: IsoNet2
+    ctf_corrected: true
+    align_software: MissAlignment v0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1.0
+    voxel_spacing: 10.005
+    offset: *id003
+    affine_transformation_matrix: *id004
+    is_visualization_default: true
+    authors: *id001
+    dates: *id002
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.005/isonet2-corrected-global.zarr
+annotations:
+- metadata:
+    annotation_ingest_id: membrane-1
+    annotation_method: Prediction using membrain-seg without rescaling and weights
+      MemBrain_seg_v10_alpha.ckpt
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_software: MemBrain-seg, IsoNet2, copick
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: MemBrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: MemBrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    - custom_name: IsoNet2 on GitHub
+      link: https://github.com/IsoNet-cryoET/IsoNet2
+      link_type: source_code
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    - custom_name: copick documentation
+      link: https://copick.github.io/copick/
+      link_type: documentation
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_string: copick/ExperimentRuns/{run_name}/Segmentations/10.005_membrain-seg_0_membrane.zarr
+      is_visualization_default: true
+      rescale: false
+      threshold: 0.5
+- metadata:
+    annotation_ingest_id: sample-1
+    annotation_method: A mesh marking the valid sample region of each lamella. A sample/vacuum boundary
+      was predicted with octopi on a downsampled reconstruction, and a spline slab was fitted to that
+      boundary and intersected with the tomogram's valid-area box to give the enclosing surface.
+    annotation_object:
+      id: CDPO:0000001
+      name: sample
+    annotation_software: octopi, copick-dag, copick
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    - custom_name: copick documentation
+      link: https://copick.github.io/copick/
+      link_type: documentation
+    method_type: automated
+    version: 1.0
+  sources:
+  - TriangularMesh:
+      file_format: glb
+      glob_string: copick/ExperimentRuns/{run_name}/Meshes/boundary-clean_0_valid-sample.glb
+      is_visualization_default: false
