@@ -2,6 +2,8 @@ import json
 import logging
 import os.path
 import re
+import shlex
+import subprocess
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from functools import partial
@@ -59,6 +61,15 @@ def enqueue_common_options(func):
         ),
     )
     options.append(click.option("--memory", type=int, default=None, help="Specify memory allocation override"))
+    options.append(
+        click.option(
+            "--vcpu",
+            type=int,
+            default=None,
+            help="Specify vCPU allocation override. Jobs default to 1 vCPU; `sync` defaults to 4 "
+            "because `aws s3 sync` is bottlenecked on request concurrency, not bandwidth.",
+        ),
+    )
     options.append(click.option("--parallelism", required=True, type=int, default=20))
     for option in options:
         func = option(func)
@@ -71,10 +82,11 @@ def handle_common_options(ctx, kwargs):
         "ecr_repo": kwargs["ecr_repo"],
         "ecr_tag": kwargs["ecr_tag"],
         "memory": kwargs["memory"],
+        "vcpu": kwargs["vcpu"],
         "parallelism": kwargs["parallelism"],
         **get_aws_env(kwargs["environment"]),
     }
-    enqueue_common_keys = ["environment", "ecr_repo", "ecr_tag", "memory", "parallelism"]
+    enqueue_common_keys = ["environment", "ecr_repo", "ecr_tag", "memory", "vcpu", "parallelism"]
     # Make sure to remove these common options from the list of args processed by commands.
     for opt in enqueue_common_keys:
         del kwargs[opt]
@@ -111,10 +123,13 @@ def run_job(
     ecr_repo: str,
     ecr_tag: str,
     memory: int | None = None,
+    vcpu: int | None = None,
     **kwargs,  # Ignore any the extra vars this method doesn't need.
 ):
     if not memory:
         memory = 24000
+    if not vcpu:
+        vcpu = 1
 
     state_machine_arn = f"arn:aws:states:{aws_region}:{aws_account_id}:stateMachine:{sfn_name}"
 
@@ -130,9 +145,9 @@ def run_job(
         "OutputPrefix": f"s3://{swipe_comms_bucket}/swipe/swipe-job-output/{execution_name}/results",
         "RUN_WDL_URI": f"s3://{swipe_wdl_bucket}/{swipe_wdl_key}",
         "RunEC2Memory": memory,
-        "RunEC2Vcpu": 1,
+        "RunEC2Vcpu": vcpu,
         "RunSPOTMemory": memory,
-        "RunSPOTVcpu": 1,
+        "RunSPOTVcpu": vcpu,
         "StateMachineArn": state_machine_arn,
     }
 
@@ -232,7 +247,7 @@ def get_datasets(
 def get_depositions(s3_bucket, include_depositions, anonymous: bool):
     s3_config = Config(signature_version=UNSIGNED) if anonymous else None
     s3_client = boto3.client("s3", config=s3_config)
-    config = DBImportConfig(s3_client, None, s3_bucket, "")
+    config = DBImportConfig(s3_client, None, s3_bucket, "", None)
     for dep in include_depositions:
         for deposition in DepositionDBImporter.get_items(config, dep):
             deposition_id = os.path.basename(deposition.dir_prefix.strip("/"))
@@ -513,130 +528,221 @@ def queue(
 
 
 class OrderedSyncFilters(click.Command):
-    _options = []
+    """Preserves the relative order of --include/--exclude, which `aws s3 sync` is sensitive to."""
 
     def parse_args(self, ctx, args):
         parser = self.make_parser(ctx)
         opts, _, param_order = parser.parse_args(args=list(args))
+        # Instance-level, not class-level: a class attribute accumulates filters across
+        # invocations and makes the command non-reentrant.
+        self.ordered_filters = []
         for param in param_order:
             if param.name not in ["include", "exclude"]:
                 continue
-            type(self)._options.append((param, opts[param.name].pop(0)))
+            self.ordered_filters.append((param.name, opts[param.name].pop(0)))
 
         return super().parse_args(ctx, args)
 
 
-def execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl_key, path_prefix):
+def parse_s3_uri(uri: str, param_hint: str) -> tuple[str, str]:
+    """Split an ``s3://bucket/prefix`` URI into ``(bucket, prefix)``."""
+    if not uri.startswith("s3://"):
+        raise click.BadParameter(f"must be an s3:// URI, got {uri!r}", param_hint=param_hint)
+    remainder = uri[len("s3://") :].strip("/")
+    if not remainder:
+        raise click.BadParameter("must name a bucket", param_hint=param_hint)
+    bucket, _, prefix = remainder.partition("/")
+    return bucket, prefix
+
+
+def build_aws_sync_flags(ctx, delete, dryrun, exact_timestamps, size_only) -> list[str]:
+    """The `aws s3 sync` flags, as an argv list. Filters keep their command-line order."""
+    flags = []
+    if delete:
+        flags.append("--delete")
+    if dryrun:
+        flags.append("--dryrun")
+    if exact_timestamps:
+        flags.append("--exact-timestamps")
+    if size_only:
+        flags.append("--size-only")
+    for name, value in getattr(ctx.command, "ordered_filters", []):
+        flags.extend([f"--{name}", value])
+    return flags
+
+
+def aws_sync_argv(src_bucket, src_path, dest_bucket, dest_path, flags) -> list[str]:
+    return [
+        "aws",
+        "s3",
+        "sync",
+        *flags,
+        f"s3://{os.path.join(src_bucket, src_path)}",
+        f"s3://{os.path.join(dest_bucket, dest_path)}",
+    ]
+
+
+def execute_sync(ctx, jobs, src_bucket, dest_bucket, flags, swipe_wdl_key):
+    """Submit one SWIPE job per entry in `jobs`. Real syncs need write access to the
+    destination bucket, so they always run remotely rather than locally."""
+    # The container shell re-parses this string, so quote each token exactly once.
+    shell_flags = " ".join(shlex.quote(flag) for flag in flags)
+    comms_bucket = ctx.obj.get("swipe_comms_bucket")
     futures = []
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
-        for entity_id, _ in entities:
-            print(f"Processing {path_prefix} {entity_id}...")
-
-            name_prefix = "dep" if path_prefix == "depositions_metadata" else "ds"
-            execution_name = f"{int(time.time())}-sync-{name_prefix}-{entity_id}"
-
-            # execution name greater than 80 chars causes boto ValidationException
-            if len(execution_name) > 80:
-                execution_name = execution_name[-80:]
-            sync_path = os.path.join(path_prefix, entity_id)
-
+        for label, src_path, dest_path in jobs:
+            # Match run_job's own sanitisation so the name we print is the name it uses.
+            execution_name = re.sub(r"[^0-9a-zA-Z-]", r"-", f"{int(time.time())}-sync-{label}")[-80:]
             wdl_args = {
-                "input_bucket": input_bucket,
-                "input_path": sync_path,
-                "output_bucket": output_bucket,
-                "output_path": sync_path,
-                "flags": " ".join(new_args),
+                "input_bucket": src_bucket,
+                "input_path": src_path,
+                "output_bucket": dest_bucket,
+                "output_path": dest_path,
+                "flags": shell_flags,
             }
             futures.append(
                 workerpool.submit(
-                    partial(
-                        run_job,
-                        execution_name,
-                        wdl_args,
-                        swipe_wdl_key=swipe_wdl_key,
-                        **ctx.obj,
-                    ),
+                    partial(run_job, execution_name, wdl_args, swipe_wdl_key=swipe_wdl_key, **ctx.obj),
                 ),
+            )
+            print(f"submitted {execution_name}")
+            print(
+                f"  aws s3 cp s3://{comms_bucket}/swipe/swipe-job-output/"
+                f"{execution_name}/results/output.txt -",
             )
         wait_for_futures(futures)
 
 
+def run_local_dryrun(jobs, src_bucket, dest_bucket, flags) -> None:
+    """Run the dry run locally and stream it to this terminal.
+
+    A dry run only lists and compares, so it needs read access to both buckets and nothing
+    else -- unlike a real sync, which needs write access to the destination and therefore a
+    different role. Running it here avoids waiting for a spot instance and then digging the
+    result out of CloudWatch.
+    """
+    failures = 0
+    for label, src_path, dest_path in jobs:
+        if len(jobs) > 1:
+            print(f"\n=== {label} ===", flush=True)
+        argv = aws_sync_argv(src_bucket, src_path, dest_bucket, dest_path, flags)
+        result = subprocess.run(argv, check=False)  # noqa: S603 - argv is built from validated input
+        if result.returncode != 0:
+            failures += 1
+            logger.error("dry run failed for %s (exit %s)", label, result.returncode)
+    if failures:
+        raise RuntimeError(f"{failures} of {len(jobs)} dry runs failed; see errors above.")
+
+
 @cli.command(name="sync", cls=OrderedSyncFilters)
-@click.option("--input-bucket", required=True, type=str, default="cryoet-data-portal-staging")
-@click.option("--output-bucket", required=True, type=str, default="cryoet-data-portal-public")
-@click.option("--include", type=str, default=None, multiple=True, help="--include option to send to `aws s3 sync`")
-@click.option("--exclude", type=str, default=None, multiple=True, help="--exclude option to send to `aws s3 sync`")
-@click.option("--delete-files", is_flag=True, default=False)
-@click.option("--dryrun", is_flag=True, default=False)
-@click.option("--s3-prefix", required=True, default="", type=str)
-@click.option("--filter-datasets", type=str, default=None, multiple=True)
-@click.option("--include-dataset", type=str, default=None, multiple=True)
-@click.option("--exclude-dataset", type=str, default=None, multiple=True)
-@click.option("--include-deposition", type=str, default=None, multiple=True)
-@click.option("--sync-dataset/--no-sync-dataset", default=True)
+@click.argument("source", required=True, type=str)
+@click.argument("dest", required=True, type=str)
+# Options below mirror `aws s3 sync` and are passed straight through to it.
+@click.option("--include", type=str, default=None, multiple=True, help="Path pattern to include. Order relative to --exclude matters; see the aws s3 sync docs.")
+@click.option("--exclude", type=str, default=None, multiple=True, help="Path pattern to exclude. Order relative to --include matters; see the aws s3 sync docs.")
+@click.option("--delete", is_flag=True, default=False, help="Delete files in DEST that are not in SOURCE.")
+@click.option("--dryrun", is_flag=True, default=False, help="Show what would be copied without copying it. Runs locally and prints to this terminal.")
+@click.option("--exact-timestamps", is_flag=True, default=False, help="Passed through to aws s3 sync.")
+@click.option("--size-only", is_flag=True, default=False, help="Passed through to aws s3 sync.")
+# Options below are specific to this wrapper.
+@click.option("--per-dataset/--single-job", default=None, help="Submit one job per dataset rather than one job for the whole SOURCE prefix. Defaults to per-dataset when SOURCE is a bucket root.")
+@click.option("--dataset", type=str, default=None, multiple=True, help="Only sync these dataset ids (repeatable). Implies --per-dataset.")
+@click.option("--exclude-dataset", type=str, default=None, multiple=True, help="Skip datasets whose id matches this regex (repeatable).")
+@click.option("--include-deposition", type=str, default=None, multiple=True, help="Also sync depositions_metadata for these deposition ids (repeatable).")
+@click.option("--no-sync-dataset", is_flag=True, default=False, help="Skip dataset syncing; useful with --include-deposition.")
+@click.option("--print-command", is_flag=True, default=False, help="Print the aws s3 sync command(s) that would run, then exit.")
 @click.option(
     "--swipe-wdl-key",
     type=str,
     required=True,
-    default="sync-v0.0.1.wdl",
+    default="sync-v0.0.2.wdl",
     help="Specify wdl key for custom workload",
 )
 @enqueue_common_options
 @click.pass_context
 def sync(
     ctx,
-    input_bucket: str,
-    output_bucket: str,
-    delete_files: bool,
+    source: str,
+    dest: str,
+    delete: bool,
     dryrun: bool,
-    s3_prefix: str | None,
-    filter_datasets: list[str],
-    include_dataset: list[str],
+    exact_timestamps: bool,
+    size_only: bool,
+    per_dataset: bool | None,
+    dataset: list[str],
     exclude_dataset: list[str],
     include_deposition: list[str],
-    sync_dataset: bool,
+    no_sync_dataset: bool,
+    print_command: bool,
     swipe_wdl_key: str,
     **kwargs,
 ):
-    handle_common_options(ctx, kwargs)
-    # Sync data from staging to prod s3 bucket
+    """Sync data between two S3 locations, e.g.
 
-    # Default to using a lot less memory than the ingestion job.
+        enqueue_runs.py sync s3://cryoet-data-portal-staging/10001 s3://cryoet-data-portal-public/10001
+
+    SOURCE and DEST are s3:// URIs, as with `aws s3 sync`.
+    """
+    src_bucket, src_prefix = parse_s3_uri(source, "SOURCE")
+    dest_bucket, dest_prefix = parse_s3_uri(dest, "DEST")
+    flags = build_aws_sync_flags(ctx, delete, dryrun, exact_timestamps, size_only)
+
+    # Fanning out per dataset is the useful default for a whole-bucket sync, and the wrong
+    # one when the caller already named a single prefix.
+    if per_dataset is None:
+        per_dataset = not src_prefix
+    if dataset:
+        per_dataset = True
+
+    jobs = []
+    if not no_sync_dataset:
+        if per_dataset:
+            entities = get_datasets(src_bucket, "", (), dataset, exclude_dataset, src_prefix, False)
+            for entity_id, _ in entities:
+                jobs.append(
+                    (
+                        f"ds-{entity_id}",
+                        os.path.join(src_prefix, entity_id),
+                        os.path.join(dest_prefix, entity_id),
+                    ),
+                )
+        else:
+            jobs.append((f"ds-{src_prefix or src_bucket}", src_prefix, dest_prefix))
+
+    for deposition_id, _ in get_depositions(src_bucket, include_deposition, False) if include_deposition else []:
+        jobs.append(
+            (
+                f"dep-{deposition_id}",
+                os.path.join(src_prefix, "depositions_metadata", deposition_id),
+                os.path.join(dest_prefix, "depositions_metadata", deposition_id),
+            ),
+        )
+
+    if not jobs:
+        print("Nothing to sync.")
+        return
+
+    if print_command:
+        for _, src_path, dest_path in jobs:
+            print(shlex.join(aws_sync_argv(src_bucket, src_path, dest_bucket, dest_path, flags)))
+        return
+
+    if dryrun:
+        # A dry run copies nothing, so run it here rather than paying for a spot instance
+        # and then having to read the result out of CloudWatch.
+        run_local_dryrun(jobs, src_bucket, dest_bucket, flags)
+        return
+
+    # Only a real sync needs the SWIPE environment, so resolve it lazily.
+    handle_common_options(ctx, kwargs)
     if not ctx.obj.get("memory"):
         ctx.obj["memory"] = 4000
+    if not ctx.obj.get("vcpu"):
+        # aws s3 sync is bound by request concurrency; 1 vCPU cannot keep 100 requests busy.
+        ctx.obj["vcpu"] = 4
 
-    new_args = []
-    if delete_files:
-        new_args.append("--delete")
-    if dryrun:
-        new_args.append("--dryrun")
-
-    for param, value in OrderedSyncFilters._options:
-        new_args.append(f"--{param.name} '{value}'")
-
-    if sync_dataset:
-        entities = get_datasets(
-            input_bucket,
-            "",
-            filter_datasets,
-            include_dataset,
-            exclude_dataset,
-            s3_prefix,
-            False,
-        )
-        execute_sync(ctx, input_bucket, output_bucket, new_args, entities, swipe_wdl_key, "")
-
-    if include_deposition:
-        deposition_entities = get_depositions(input_bucket, include_deposition, False)
-        execute_sync(
-            ctx,
-            input_bucket,
-            output_bucket,
-            new_args,
-            deposition_entities,
-            swipe_wdl_key,
-            "depositions_metadata",
-        )
+    print(f"Submitting {len(jobs)} job(s)...")
+    execute_sync(ctx, jobs, src_bucket, dest_bucket, flags, swipe_wdl_key)
 
 
 def execute_validate(
