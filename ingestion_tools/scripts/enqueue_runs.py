@@ -31,17 +31,24 @@ logger = logging.getLogger("db_import")
 logging.basicConfig(level=logging.INFO)
 
 
+def environment_option(func):
+    """Kept out of `enqueue_common_options` because `sync` has no environment to select: it
+    always runs on the staging deployment, and always syncs staging -> public.
+
+    Apply it *below* `enqueue_common_options` so it is evaluated first and `--environment`
+    keeps its position in `--help`.
+    """
+    return click.option(
+        "--environment",
+        type=str,
+        required=True,
+        default="staging",
+        help="Specify environment, defaults to staging",
+    )(func)
+
+
 def enqueue_common_options(func):
     options = []
-    options.append(
-        click.option(
-            "--environment",
-            type=str,
-            required=True,
-            default="staging",
-            help="Specify environment, defaults to staging",
-        ),
-    )
     options.append(
         click.option(
             "--ecr-repo",
@@ -98,8 +105,13 @@ def cli(ctx):
     ctx.obj = {}
 
 
-def wait_for_futures(futures):
-    """Wait for all submitted jobs, re-raising any errors instead of swallowing them."""
+def wait_for_futures(futures, on_success=None):
+    """Wait for all submitted jobs, re-raising any errors instead of swallowing them.
+
+    `futures` may be a mapping of future -> label, in which case `on_success` is called with
+    the label of each submission that actually succeeded -- so nothing is announced before
+    the submission it describes has resolved.
+    """
     errors = 0
     for future in as_completed(futures):
         try:
@@ -107,6 +119,9 @@ def wait_for_futures(futures):
         except Exception:
             errors += 1
             logger.exception("Failed to submit job")
+            continue
+        if on_success:
+            on_success(futures[future])
     if errors:
         raise RuntimeError(f"{errors} of {len(futures)} job submissions failed; see logs above.")
 
@@ -295,6 +310,7 @@ def to_args(**kwargs) -> list[str]:
 )
 @db_import_options
 @enqueue_common_options
+@environment_option
 @click.pass_context
 def db_import(
     ctx,
@@ -410,6 +426,7 @@ def db_import(
 )
 @ingest_common_options
 @enqueue_common_options
+@environment_option
 @click.pass_context
 def queue(
     ctx,
@@ -555,6 +572,26 @@ def parse_s3_uri(uri: str, param_hint: str) -> tuple[str, str]:
     return bucket, prefix
 
 
+def resolve_exact_ids(found, requested, bucket, entity, param_hint, note="") -> list[str]:
+    """Keep only the ids matching `requested` exactly, in the order they were requested.
+
+    The listing helpers select by S3 key prefix -- `db-import` relies on that -- so without
+    this `--dataset 1052` would quietly sync 10521 through 10526, and a typo would fall
+    through to "Nothing to sync." and exit 0. Repeats are collapsed too: two jobs for one id
+    generate the same execution name, and the second submission is rejected.
+    """
+    available = set(found)
+    ordered = list(dict.fromkeys(requested))
+    missing = [item for item in ordered if item not in available]
+    if missing:
+        raise click.BadParameter(
+            f"must name a {entity} exactly, and these matched nothing in "
+            f"s3://{bucket}: {', '.join(missing)}.{note}",
+            param_hint=param_hint,
+        )
+    return ordered
+
+
 def build_aws_sync_flags(ctx, delete, dryrun, exact_timestamps, size_only) -> list[str]:
     """The `aws s3 sync` flags, as an argv list. Filters keep their command-line order."""
     flags = []
@@ -588,7 +625,16 @@ def execute_sync(ctx, jobs, src_bucket, dest_bucket, flags, swipe_wdl_key):
     # The container shell re-parses this string, so quote each token exactly once.
     shell_flags = " ".join(shlex.quote(flag) for flag in flags)
     comms_bucket = ctx.obj.get("swipe_comms_bucket")
-    futures = []
+
+    def print_submitted(execution_name):
+        """Called once a submission has resolved, so a failed one is never announced."""
+        print(f"submitted {execution_name}")
+        print(
+            f"  aws s3 cp s3://{comms_bucket}/swipe/swipe-job-output/"
+            f"{execution_name}/results/output.txt -",
+        )
+
+    futures = {}
     with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
         for label, src_path, dest_path in jobs:
             # Match run_job's own sanitisation so the name we print is the name it uses.
@@ -600,17 +646,11 @@ def execute_sync(ctx, jobs, src_bucket, dest_bucket, flags, swipe_wdl_key):
                 "output_path": dest_path,
                 "flags": shell_flags,
             }
-            futures.append(
-                workerpool.submit(
-                    partial(run_job, execution_name, wdl_args, swipe_wdl_key=swipe_wdl_key, **ctx.obj),
-                ),
+            future = workerpool.submit(
+                partial(run_job, execution_name, wdl_args, swipe_wdl_key=swipe_wdl_key, **ctx.obj),
             )
-            print(f"submitted {execution_name}")
-            print(
-                f"  aws s3 cp s3://{comms_bucket}/swipe/swipe-job-output/"
-                f"{execution_name}/results/output.txt -",
-            )
-        wait_for_futures(futures)
+            futures[future] = execution_name
+        wait_for_futures(futures, on_success=print_submitted)
 
 
 def run_local_dryrun(jobs, src_bucket, dest_bucket, flags) -> None:
@@ -645,10 +685,10 @@ def run_local_dryrun(jobs, src_bucket, dest_bucket, flags) -> None:
 @click.option("--exact-timestamps", is_flag=True, default=False, help="Passed through to aws s3 sync.")
 @click.option("--size-only", is_flag=True, default=False, help="Passed through to aws s3 sync.")
 # Options below are specific to this wrapper.
-@click.option("--per-dataset/--single-job", default=None, help="Submit one job per dataset rather than one job for the whole SOURCE prefix. Defaults to per-dataset when SOURCE is a bucket root.")
-@click.option("--dataset", type=str, default=None, multiple=True, help="Only sync these dataset ids (repeatable). Implies --per-dataset.")
+@click.option("--per-dataset/--single-job", default=None, help="Submit one job per dataset rather than one job for the whole SOURCE prefix. Requires SOURCE and DEST to be bucket roots. Defaults to per-dataset when SOURCE is a bucket root.")
+@click.option("--dataset", type=str, default=None, multiple=True, help="Only sync these datasets, named by exact id (repeatable). Implies --per-dataset; an id matching no dataset is an error.")
 @click.option("--exclude-dataset", type=str, default=None, multiple=True, help="Skip datasets whose id matches this regex (repeatable).")
-@click.option("--include-deposition", type=str, default=None, multiple=True, help="Also sync depositions_metadata for these deposition ids (repeatable).")
+@click.option("--include-deposition", type=str, default=None, multiple=True, help="Also sync depositions_metadata for these depositions, named by exact id (repeatable).")
 @click.option("--no-sync-dataset", is_flag=True, default=False, help="Skip dataset syncing; useful with --include-deposition.")
 @click.option("--print-command", is_flag=True, default=False, help="Print the aws s3 sync command(s) that would run, then exit.")
 @click.option(
@@ -687,6 +727,15 @@ def sync(
     dest_bucket, dest_prefix = parse_s3_uri(dest, "DEST")
     flags = build_aws_sync_flags(ctx, delete, dryrun, exact_timestamps, size_only)
 
+    # A single job runs a single `aws s3 sync`, which takes a single source, so this asks for
+    # something that cannot exist -- an explicit choice to discard rather than to resolve.
+    if dataset and per_dataset is False:
+        raise click.BadParameter(
+            "--single-job syncs one prefix, so it cannot be combined with --dataset. Drop "
+            "--single-job, or name the dataset in SOURCE and DEST instead.",
+            param_hint="--dataset",
+        )
+
     # Fanning out per dataset is the useful default for a whole-bucket sync, and the wrong
     # one when the caller already named a single prefix.
     if per_dataset is None:
@@ -694,29 +743,41 @@ def sync(
     if dataset:
         per_dataset = True
 
+    # Dataset and deposition ids are resolved from the bucket root, so a prefix here would be
+    # applied a second time: `--dataset 10002 s3://stg/10002` would sync s3://stg/10002/10002,
+    # which holds nothing, onto the real dataset under DEST -- emptying it under --delete.
+    if per_dataset or include_deposition:
+        for hint, uri, bucket, prefix in (
+            ("SOURCE", source, src_bucket, src_prefix),
+            ("DEST", dest, dest_bucket, dest_prefix),
+        ):
+            if prefix:
+                raise click.BadParameter(
+                    f"must be a bucket root when syncing whole datasets or depositions, got "
+                    f"{uri!r}. Use s3://{bucket} and select with --dataset / --include-deposition.",
+                    param_hint=hint,
+                )
+
     jobs = []
     if not no_sync_dataset:
         if per_dataset:
-            entities = get_datasets(src_bucket, "", (), dataset, exclude_dataset, src_prefix, False)
-            for entity_id, _ in entities:
-                jobs.append(
-                    (
-                        f"ds-{entity_id}",
-                        os.path.join(src_prefix, entity_id),
-                        os.path.join(dest_prefix, entity_id),
-                    ),
-                )
+            found = [entity_id for entity_id, _ in get_datasets(src_bucket, "", (), dataset, exclude_dataset, "", False)]
+            if dataset:
+                note = " (--exclude-dataset is applied first.)" if exclude_dataset else ""
+                found = resolve_exact_ids(found, dataset, src_bucket, "dataset", "--dataset", note)
+            # SOURCE and DEST are bucket roots here, so an id is already the whole path.
+            jobs.extend((f"ds-{entity_id}", entity_id, entity_id) for entity_id in found)
         else:
             jobs.append((f"ds-{src_prefix or src_bucket}", src_prefix, dest_prefix))
 
-    for deposition_id, _ in get_depositions(src_bucket, include_deposition, False) if include_deposition else []:
-        jobs.append(
-            (
-                f"dep-{deposition_id}",
-                os.path.join(src_prefix, "depositions_metadata", deposition_id),
-                os.path.join(dest_prefix, "depositions_metadata", deposition_id),
-            ),
+    if include_deposition:
+        found = [dep_id for dep_id, _ in get_depositions(src_bucket, include_deposition, False)]
+        deposition_ids = resolve_exact_ids(
+            found, include_deposition, src_bucket, "deposition", "--include-deposition",
         )
+        for deposition_id in deposition_ids:
+            path = os.path.join("depositions_metadata", deposition_id)
+            jobs.append((f"dep-{deposition_id}", path, path))
 
     if not jobs:
         print("Nothing to sync.")
@@ -733,7 +794,10 @@ def sync(
         run_local_dryrun(jobs, src_bucket, dest_bucket, flags)
         return
 
-    # Only a real sync needs the SWIPE environment, so resolve it lazily.
+    # Syncs always run on the staging SWIPE deployment -- the direction is always
+    # staging -> public -- so there is no environment to select, and `sync` does not take
+    # the flag. Only a real sync needs the environment resolved, so it stays lazy.
+    kwargs["environment"] = "staging"
     handle_common_options(ctx, kwargs)
     if not ctx.obj.get("memory"):
         ctx.obj["memory"] = 4000
@@ -795,6 +859,7 @@ def execute_validate(
     help="Specify wdl key for custom workload",
 )
 @enqueue_common_options
+@environment_option
 @click.pass_context
 def validate(
     ctx,
@@ -847,6 +912,7 @@ def validate(
     help="Specify wdl key for custom workload",
 )
 @enqueue_common_options
+@environment_option
 @click.pass_context
 def source_validate(
     ctx,

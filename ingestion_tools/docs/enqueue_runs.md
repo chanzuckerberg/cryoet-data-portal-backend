@@ -118,6 +118,8 @@ The `enqueue_runs.py sync` command copies data between two S3 locations, normall
 python3 enqueue_runs.py sync [OPTIONS] SOURCE DEST
 ```
 
+Syncs always run on the staging deployment and always go staging → public, so `sync` takes no `--environment`.
+
 Real syncs run remotely on AWS Batch (spot, falling back to on-demand). **`--dryrun` runs locally** and prints straight to your terminal — a dry run copies nothing, so it only needs read access to both buckets, and it takes seconds instead of waiting for a spot instance and then reading CloudWatch.
 
 ### tl;dr:
@@ -142,6 +144,10 @@ python3 enqueue_runs.py sync \
 python3 enqueue_runs.py sync --delete --exclude '*' --include 'Annotations/*.json' \
     s3://cryoet-data-portal-staging/10002 s3://cryoet-data-portal-public/10002
 
+# A few named datasets, one job each, without writing out every path
+python3 enqueue_runs.py sync --dataset 10521 --dataset 10522 \
+    s3://cryoet-data-portal-staging s3://cryoet-data-portal-public
+
 # Every dataset, one job each
 python3 enqueue_runs.py sync --per-dataset \
     s3://cryoet-data-portal-staging s3://cryoet-data-portal-public
@@ -164,10 +170,10 @@ python3 enqueue_runs.py sync --print-command \
 ### Options specific to this wrapper
 | Option | Default | Explanation |
 | --- | --- | --- |
-| --per-dataset / --single-job | per-dataset when SOURCE is a bucket root | Submit one job per dataset instead of a single job for the whole SOURCE prefix. Per-dataset is how you get parallelism across a large sync. |
-| --dataset | null | Only sync these dataset ids. Repeatable. Implies `--per-dataset`. |
+| --per-dataset / --single-job | per-dataset when SOURCE is a bucket root | Submit one job per dataset instead of a single job for the whole SOURCE prefix. Per-dataset is how you get parallelism across a large sync. Fanning out requires SOURCE and DEST to be bucket roots, because ids are resolved from the bucket root; `--single-job` cannot be combined with `--dataset`. |
+| --dataset | null | Only sync these datasets, named by **exact** id — `10521`, not `1052`. Repeatable, and an id matching no dataset is an error rather than a silent no-op. Implies `--per-dataset`. |
 | --exclude-dataset | null | Skip datasets whose id matches this regex. Repeatable. |
-| --include-deposition | null | Also sync `depositions_metadata` for these deposition ids. Repeatable. |
+| --include-deposition | null | Also sync `depositions_metadata` for these depositions, named by **exact** id. Repeatable, and an unmatched id is an error. |
 | --no-sync-dataset | False | Skip datasets entirely; useful with `--include-deposition`. |
 | --print-command | False | Print the `aws s3 sync` command(s) that would run, then exit. |
 | --vcpu | 4 for `sync` | vCPUs per job. `aws s3 sync` between buckets is a server-side copy, so throughput is bound by request concurrency rather than bandwidth — more vCPUs, not more memory, is what makes it faster. |
