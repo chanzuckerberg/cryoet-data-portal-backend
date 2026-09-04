@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.25.3](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.2...apiv2-v1.25.3) (2026-09-04)
+
+
+### Bug Fixes
+
+* **apiv2:** make the README anchor the release PR footer links to resolve ([663fada](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/663fada6b070e7e95b83b184dab961d38562d4cc))
+* emit portal shape "Mesh" for triangular mesh annotations ([#775](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/775)) ([3288ec1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/3288ec1f47264bcdda6a48531accc2eadb0a9e8f))
+* make the README anchor the release PR footer links to resolve ([#780](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/780)) ([663fada](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/663fada6b070e7e95b83b184dab961d38562d4cc))
+
 ## [1.25.2](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.1...apiv2-v1.25.2) (2026-09-03)
 
 
