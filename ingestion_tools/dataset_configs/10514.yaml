@@ -1,0 +1,622 @@
+annotations:
+- metadata:
+    annotation_ingest_id: mitochondrial-outer-membrane-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label OMM.
+      id: GO:0005741
+      name: mitochondrial outer membrane
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: &id001
+    - ORCID: 0000-0003-0100-6589
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: mrelan1@jh.edu
+      name: Mihir Relan
+      primary_author_status: true
+    - ORCID: 0009-0004-2006-1721
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: Venkata.Mallampalli@uth.tmc.edu
+      name: Venkata Mallampalli
+      primary_author_status: false
+    - ORCID: 0000-0002-1016-862X
+      affiliation_address: Department of Chemical Physiology and Biochemistry, School of Medicine, Portland,
+        OR, USA
+      affiliation_identifier: https://ror.org/009avj582
+      affiliation_name: Oregon Health & Science University
+      corresponding_author_status: false
+      email: barad@ohsu.edu
+      name: Benjamin A. Barad
+      primary_author_status: false
+    - ORCID: 0000-0002-4073-4565
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: andrea.k.stavoe@uth.tmc.edu
+      name: Andrea K.H. Stavoe
+      primary_author_status: false
+    - ORCID: 0000-0003-4801-1190
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: m.n.waxham@uth.tmc.edu
+      name: M. Neal Waxham
+      primary_author_status: false
+    dates: &id002
+      deposition_date: '2026-08-14'
+      last_modified_date: '2026-08-14'
+      release_date: '2026-08-14'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: &id003
+    - custom_name: MemBrain-seg source code
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: MemBrain-seg documentation
+      link: https://teamtomo.org/membrain-seg/
+      link_type: documentation
+    - custom_name: MemBrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: source_code
+    - custom_name: MemBrain v2
+      link: https://github.com/CellArchLab/MemBrain-v2
+      link_type: source_code
+    - custom_name: TARDIS source code
+      link: https://github.com/SMLC-NYSBC/TARDIS
+      link_type: source_code
+    - custom_name: tardis-em on PyPI
+      link: https://pypi.org/project/tardis-em/
+      link_type: source_code
+    - custom_name: napari-TARDIS-em plugin
+      link: https://github.com/SMLC-NYSBC/napari-tardis_em
+      link_type: source_code
+    - custom_name: IsoNet source code
+      link: https://github.com/IsoNet-cryoET/IsoNet
+      link_type: source_code
+    - custom_name: Amira Software (Thermo Fisher Scientific)
+      link: https://www.thermofisher.com/us/en/home/electron-microscopy/products/software-em-3d-vis/amira-software.html
+      link_type: website
+    - custom_name: IMOD
+      link: https://bio3d.colorado.edu/imod/
+      link_type: website
+    - custom_name: Surface Morphometrics pipeline
+      link: https://github.com/GrotjahnLab/surface_morphometrics
+      link_type: source_code
+    - custom_name: pycurv
+      link: https://github.com/kalemaria/pycurv
+      link_type: source_code
+    - custom_name: graph-tool
+      link: https://graph-tool.skewed.de/
+      link_type: website
+    - custom_name: VTK
+      link: https://vtk.org/
+      link_type: website
+    - custom_name: ParaView
+      link: https://www.paraview.org/
+      link_type: website
+    - custom_name: scikit-learn
+      link: https://scikit-learn.org/
+      link_type: website
+    - custom_name: Dragonfly (Comet Technologies)
+      link: https://dragonfly.comet.tech/
+      link_type: website
+    - custom_name: Processing scripts for this study (Zenodo)
+      link: https://doi.org/10.5281/zenodo.16927937
+      link_type: other
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 1
+      rescale: false
+- metadata:
+    annotation_ingest_id: mitochondrial-inner-membrane-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label IMM.
+      id: GO:0005743
+      name: mitochondrial inner membrane
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 2
+      rescale: false
+- metadata:
+    annotation_ingest_id: plasma-membrane-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label PM.
+      id: GO:0005886
+      name: plasma membrane
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 3
+      rescale: false
+- metadata:
+    annotation_ingest_id: microtubule-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label MT.
+      id: GO:0005874
+      name: microtubule
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 4
+      rescale: false
+- metadata:
+    annotation_ingest_id: endoplasmic-reticulum-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label ER.
+      id: GO:0005783
+      name: endoplasmic reticulum
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 5
+      rescale: false
+- metadata:
+    annotation_ingest_id: endoplasmic-reticulum-vesicle-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label ER_VES. Vesicle fully enclosed by the ER lumen.
+      id: GO:0031982
+      name: vesicle
+      state: enclosed within the endoplasmic reticulum lumen
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 6
+      rescale: false
+- metadata:
+    annotation_ingest_id: multivesicular-body-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label MVB.
+      id: GO:0005771
+      name: multivesicular body
+      state: limiting membrane
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 7
+      rescale: false
+- metadata:
+    annotation_ingest_id: multivesicular-body-internal-vesicle-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label MVB_VES.
+      id: GO:0097487
+      name: multivesicular body, internal vesicle
+      state: intralumenal
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 8
+      rescale: false
+- metadata:
+    annotation_ingest_id: cytoplasmic-vesicle-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label FREE_VES. Vesicle in the axoplasm, not enclosed by any larger compartment.
+      id: GO:0031410
+      name: cytoplasmic vesicle
+      state: free
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 9
+      rescale: false
+- metadata:
+    annotation_ingest_id: lamellar-body-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label MLV. A multilamellar vesicle.
+      id: GO:0042599
+      name: lamellar body
+      state: limiting membrane
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 10
+      rescale: false
+- metadata:
+    annotation_ingest_id: lamellar-body-internal-vesicle-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label MLV_VES. Vesicle enclosed by a multilamellar vesicle.
+      id: GO:0031982
+      name: vesicle
+      state: enclosed within a multilamellar vesicle
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 11
+      rescale: false
+- metadata:
+    annotation_ingest_id: endosome-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label ENDO.
+      id: GO:0005768
+      name: endosome
+      state: limiting membrane
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 14
+      rescale: false
+- metadata:
+    annotation_ingest_id: endosomal-intralumenal-vesicle-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
+    annotation_object:
+      description: Source label ENDO_VES.
+      id: GO:0160313
+      name: endosomal intralumenal vesicle
+      state: intralumenal
+    annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
+    annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
+    authors: *id001
+    dates: *id002
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links: *id003
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_3_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 15
+      rescale: false
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: mdoc_files/{run_name}_dataset_3.mdoc
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+datasets:
+- metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
+    authors: *id001
+    cell_component:
+      id: GO:0043196
+      name: varicosity
+    cell_type:
+      id: CL:1001451
+      name: sensory neuron of dorsal root ganglion
+    cross_references:
+      publications: 10.64898/2026.07.07.737043
+      related_database_links: https://doi.org/10.5281/zenodo.16927937
+    dataset_description: Cryo-electron tomography of intact, unmilled peripheral axons and their varicosities
+      in primary dorsal root ganglion neurons dissociated from 3-month-old mice and cultured for 48 h
+      on gold Quantifoil grids. The axons grow thin enough over the grid surface to be imaged directly,
+      with no cryo-sectioning and no focused-ion-beam milling, so the varicosities (roughly 0.6-1.9 microns
+      across) and the much narrower shafts connecting them are captured in a near-native state. Tilt series
+      were collected from -52 to +52 degrees in 3 degree increments on a Titan Krios operated at 300 kV,
+      equipped with a Gatan energy filter and a K2 Summit direct electron detector. Tomograms were reconstructed
+      by weighted back-projection in IMOD and denoised by IsoNet deconvolution. This dataset holds 13
+      tomograms, all of which carry a manually curated multi-class organelle segmentation covering the
+      plasma membrane, microtubules, mitochondrial outer and inner membranes, endoplasmic reticulum and
+      vesicles enclosed within it, multivesicular bodies, multilamellar vesicles, endosomes and free cytoplasmic
+      vesicles. The study uses these to ask how the spatial confinement of an axon constrains organelle
+      architecture.
+    dataset_identifier: 10514
+    dataset_title: Cryo-electron tomography of axons and varicosities in cultured primary mouse dorsal
+      root ganglion neurons (Titan Krios, 21-22 February 2025)
+    dates: *id002
+    development_stage:
+      id: MmusDv:0000063
+      name: 3-month-old stage
+    disease:
+      id: PATO:0000461
+      name: normal
+    funding:
+    - funding_agency_name: National Institutes of Health (NIH)
+      grant_id: R21AG090967
+    - funding_agency_name: National Institutes of Health (NIH) Office of the Director
+      grant_id: 1S10OD032204
+    - funding_agency_name: Collins Medical Trust
+      grant_id: null
+    - funding_agency_name: William Wheless III Professorship
+      grant_id: null
+    grid_preparation: Gold Quantifoil 2/2 grids (2 micron holes spaced 2 microns apart), with either a
+      silicon dioxide or a carbon support film, were glow discharged and then coated overnight at 4 degrees
+      C with poly-L-lysine in 35 mm MatTek dishes, four grids per dish, resting on the plastic surrounding
+      the coverslip depression so they could later be lifted by their edge with forceps. Grids were washed
+      with sterile water, briefly air dried, coated with laminin for 2 h at 4 degrees C, and transferred
+      into complete F-12 medium before neurons were plated. After 48 h in culture the grids were vitrified
+      on a manual blotter kept at room temperature immediately beside the incubator, so that each grid
+      spent as little time as possible below 37 degrees C; the four grids in a dish were processed sequentially
+      over about two minutes. Each grid received 4 microlitres of BSA-coated 10 nm colloidal gold fiducials
+      in F-12 medium, was blotted from behind with Whatman 1M filter paper for 3-5 s, and was plunged
+      into liquid ethane cooled by liquid nitrogen. Grids were stored under liquid nitrogen and clipped
+      into cartridges immediately before imaging.
+    organism:
+      name: Mus musculus
+      taxonomy_id: 10090
+    other_setup: Plunge freezing of intact cultured neurons on EM grids
+    sample_preparation: Dorsal root ganglia were dissected from the cervical to thoracic spinal levels
+      of three separate 3-month-old mice, euthanized by decapitation following terminal anesthesia under
+      protocols approved by the Animal Care Committee at UTHealth Houston. Ganglia were digested with
+      papain for 20 min at 37 degrees C, collected by centrifugation, then digested with collagenase/dispase
+      for a further 20 min at 37 degrees C. The pellet was triturated with a fire-polished glass pipette
+      pre-coated with complete F-12 medium containing serum, and the dissociated cells were purified by
+      centrifugation through a 20 percent Percoll cushion. Cells were resuspended in complete F-12 medium,
+      counted, and re-concentrated so that approximately 5,000 live neurons were delivered onto each EM
+      grid. Neurons were plated directly onto grids incubating in complete F-12 medium and grown for 48
+      h at 37 degrees C in 5 percent CO2, by which time thin peripheral axons and their varicosities had
+      extended across the grid surface. Cells were vitrified alive and intact, with no fixation, staining,
+      cryo-sectioning or focused-ion-beam milling at any stage. Mouse strain and sex are not reported
+      in the source publication.
+    sample_type: primary_cell_culture
+    tissue:
+      id: UBERON:0000044
+      name: dorsal root ganglion
+  sources:
+  - literal:
+      value:
+      - '10514'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+depositions:
+- sources:
+  - literal:
+      value:
+      - 10362
+frames:
+- metadata:
+    dose_rate: 0.8108
+    is_gain_corrected: true
+  sources:
+  - source_glob:
+      list_glob: raw_frames/{run_name}/{run_name}_*_{frame_date}_*_Fractions.mrc
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}_dataset_3.rawtlt
+runs:
+- sources:
+  - source_glob:
+      list_glob: Tilt Series/*_dataset_3_tiltseries.mrc
+      name_regex: (.*)_dataset_3_tiltseries\.mrc$
+standardization_config:
+  deposition_id: 10362
+  run_data_map_file: run_to_data_map_10514_v3.tsv
+  source_prefix: neal_waxham_08_2026/
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 1
+    camera:
+      acquire_mode: counting
+      manufacturer: Gatan
+      model: K2 SUMMIT
+    data_acquisition_software: Tomo5
+    is_aligned: false
+    microscope:
+      manufacturer: TFS
+      model: TITAN KRIOS
+    microscope_optical_setup:
+      energy_filter: Gatan Quantum
+      image_corrector: null
+      phase_plate: null
+    pixel_spacing: 5.4
+    spherical_aberration_constant: 2.7
+    tilt_alignment_software: IMOD
+    tilt_axis: -175.7
+    tilt_range:
+      max: 51.99
+      min: float {ts_tilt_min}
+    tilt_series_quality: 5
+    tilt_step: 3.0
+    tilting_scheme: '{tilting_scheme}'
+    total_flux: 150.0
+  sources:
+  - source_glob:
+      list_glob: Tilt Series/{run_name}_dataset_3_tiltseries.mrc
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: IMOD
+    authors: *id001
+    ctf_corrected: true
+    dates: *id002
+    fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
+    tomogram_version: 1.0
+    voxel_spacing: 21.6
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '21.600'
+    source_glob:
+      list_glob: AuthorprovidedTomogram/{run_name}_dataset_3_tomo.mrc
+version: 1.3.0
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 21.6
