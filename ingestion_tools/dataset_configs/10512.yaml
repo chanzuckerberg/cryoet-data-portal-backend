@@ -1,15 +1,10 @@
 annotations:
 - metadata:
     annotation_ingest_id: mitochondrial-outer-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label OMM.
       id: GO:0005741
       name: mitochondrial outer membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -126,17 +121,34 @@ annotations:
       is_visualization_default: true
       mask_label: 1
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 1
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: mitochondrial-inner-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label IMM.
       id: GO:0005743
       name: mitochondrial inner membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -155,17 +167,34 @@ annotations:
       is_visualization_default: true
       mask_label: 2
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 2
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: plasma-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label PM.
       id: GO:0005886
       name: plasma membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -184,17 +213,34 @@ annotations:
       is_visualization_default: true
       mask_label: 3
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 3
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: microtubule-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label MT.
       id: GO:0005874
       name: microtubule
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -213,19 +259,36 @@ annotations:
       is_visualization_default: true
       mask_label: 4
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 4
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
-    annotation_ingest_id: endoplasmic-reticulum-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_ingest_id: endoplasmic-reticulum-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      id: GO:0005789
-      name: endoplasmic reticulum membrane
+      description: Source label ER.
+      id: GO:0005783
+      name: endoplasmic reticulum
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
     annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
     authors: *id001
@@ -242,19 +305,34 @@ annotations:
       is_visualization_default: true
       mask_label: 5
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 5
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: endoplasmic-reticulum-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: Membrane-bound vesicles found fully enclosed inside the lumen of the endoplasmic reticulum,
-        reported as a previously undescribed feature of these axons.
+      description: Source label ER_VES. Vesicle fully enclosed by the ER lumen.
       id: GO:0031982
       name: vesicle
       state: enclosed within the endoplasmic reticulum lumen
@@ -274,17 +352,34 @@ annotations:
       is_visualization_default: true
       mask_label: 6
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 6
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: multivesicular-body-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label MVB.
       id: GO:0005771
       name: multivesicular body
       state: limiting membrane
@@ -304,19 +399,37 @@ annotations:
       is_visualization_default: true
       mask_label: 7
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 7
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: multivesicular-body-internal-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label MVB_VES.
       id: GO:0097487
       name: multivesicular body, internal vesicle
+      state: intralumenal
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
     annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
     authors: *id001
@@ -333,19 +446,34 @@ annotations:
       is_visualization_default: true
       mask_label: 8
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 8
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: cytoplasmic-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: Free vesicles in the axoplasm, not enclosed by or continuous with any larger membrane
-        compartment.
+      description: Source label FREE_VES. Vesicle in the axoplasm, not enclosed by any larger compartment.
       id: GO:0031410
       name: cytoplasmic vesicle
       state: free
@@ -365,19 +493,34 @@ annotations:
       is_visualization_default: true
       mask_label: 9
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 9
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: lamellar-body-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: 'Multilamellar vesicles: compartments filled with tightly packed concentric membrane
-        sheets.'
+      description: Source label MLV. A multilamellar vesicle.
       id: GO:0042599
       name: lamellar body
       state: limiting membrane
@@ -397,18 +540,34 @@ annotations:
       is_visualization_default: true
       mask_label: 10
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 10
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: lamellar-body-internal-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: Internal vesicles and membrane stacks contained within a multilamellar vesicle.
+      description: Source label MLV_VES. Vesicle enclosed by a multilamellar vesicle.
       id: GO:0031982
       name: vesicle
       state: enclosed within a multilamellar vesicle
@@ -428,22 +587,38 @@ annotations:
       is_visualization_default: true
       mask_label: 11
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 11
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: phagophore-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: The source label PHAG. In most annotated volumes this class appears to capture both
-        bounding membranes of the cup-shaped phagophore, but in at least one volume an inner membrane
-        is labelled separately, so which membranes it covers varies between runs.
+      description: Source label PHAG. Phagophore membrane; in this iteration it may cover both bounding
+        faces.
       id: GO:0061908
       name: phagophore
+      state: outer membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
     annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
     authors: *id001
@@ -460,23 +635,35 @@ annotations:
       is_visualization_default: true
       mask_label: 12
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 12
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: phagophore-inner-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: 'The source label PHAG_VES, defined by the authors as the inner membrane of the phagophore.
-        The deposited content of this class is not uniform: in most annotated volumes it consists of detached
-        rounded objects roughly 40-140 nm across that sit well inside the phagophore lumen, matching the
-        separate internal-vesicle class described by the authors, while in one volume it is dominated
-        by extended sheets that follow the phagophore membrane at a spacing of about 11-15 nm. Treat the
-        distinction between inner membrane and captured vesicle as unresolved for this class.'
+      description: Source label PHAG_VES. Phagophore internal face; its content varies between runs in
+        this iteration.
       id: GO:0061908
       name: phagophore
       state: inner membrane
@@ -496,17 +683,34 @@ annotations:
       is_visualization_default: true
       mask_label: 13
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 13
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: endosome-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label ENDO.
       id: GO:0005768
       name: endosome
       state: limiting membrane
@@ -526,19 +730,37 @@ annotations:
       is_visualization_default: true
       mask_label: 14
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 14
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 - metadata:
     annotation_ingest_id: endosomal-intralumenal-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label ENDO_VES.
       id: GO:0160313
       name: endosomal intralumenal vesicle
+      state: intralumenal
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
     annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
     authors: *id001
@@ -555,6 +777,28 @@ annotations:
       is_visualization_default: true
       mask_label: 15
       rescale: true
+    parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+      include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: true
+      mask_label: 15
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        - ^Position_30$
+        voxel_spacing:
+        - '10.800'
 collection_metadata:
 - sources:
   - source_glob:
@@ -690,8 +934,18 @@ frames:
     dose_rate: 0.8571
     is_gain_corrected: true
   sources:
-  - source_glob:
+  - parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+    source_glob:
       list_glob: raw_frames/{run_name}/{run_name}_*_{frame_date}_*_fractions.mrc
+  - parent_filters:
+      include:
+        run:
+        - ^Position_20$
+    source_glob:
+      list_glob: cleanup/raw_frames/{run_name}_dataset_1_rawframes/{run_name}_*_{frame_date}_*_fractions.mrc
 rawtilts:
 - sources:
   - source_glob:
@@ -701,9 +955,12 @@ runs:
   - source_glob:
       list_glob: TiltSeries/*_dataset_1_tiltseries.mrc
       name_regex: (.*)_dataset_1_tiltseries\.mrc$
+  - source_glob:
+      list_glob: cleanup/TiltSeries/Position_20_dataset_1_tiltseries.mrc
+      name_regex: (.*)_dataset_1_tiltseries\.mrc$
 standardization_config:
   deposition_id: 10362
-  run_data_map_file: run_to_data_map_10512_v3.tsv
+  run_data_map_file: run_to_data_map_10512_v4.tsv
   source_prefix: neal_waxham_08_2026/
 tiltseries:
 - metadata:
@@ -734,11 +991,21 @@ tiltseries:
     tilting_scheme: bi-directional
     total_flux: 150.0
   sources:
-  - source_glob:
+  - parent_filters:
+      exclude:
+        run:
+        - ^Position_20$
+    source_glob:
       list_glob: TiltSeries/{run_name}_dataset_1_tiltseries.mrc
+  - parent_filters:
+      include:
+        run:
+        - ^Position_20$
+    source_glob:
+      list_glob: cleanup/TiltSeries/{run_name}_dataset_1_tiltseries.mrc
 tomograms:
 - metadata:
-    affine_transformation_matrix: &id004
+    affine_transformation_matrix:
     - - 1
       - 0
       - 0
@@ -756,17 +1023,150 @@ tomograms:
       - 0
       - 1
     align_software: IMOD
-    authors: *id001
+    authors:
+    - ORCID: 0000-0003-0100-6589
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: mrelan1@jh.edu
+      name: Mihir Relan
+      primary_author_status: true
+    - ORCID: 0009-0004-2006-1721
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: Venkata.Mallampalli@uth.tmc.edu
+      name: Venkata Mallampalli
+      primary_author_status: false
+    - ORCID: 0000-0002-1016-862X
+      affiliation_address: Department of Chemical Physiology and Biochemistry, School of Medicine, Portland,
+        OR, USA
+      affiliation_identifier: https://ror.org/009avj582
+      affiliation_name: Oregon Health & Science University
+      corresponding_author_status: false
+      email: barad@ohsu.edu
+      name: Benjamin A. Barad
+      primary_author_status: false
+    - ORCID: 0000-0002-4073-4565
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: andrea.k.stavoe@uth.tmc.edu
+      name: Andrea K.H. Stavoe
+      primary_author_status: false
+    - ORCID: 0000-0003-4801-1190
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: m.n.waxham@uth.tmc.edu
+      name: M. Neal Waxham
+      primary_author_status: false
     ctf_corrected: true
-    dates: *id002
+    dates:
+      deposition_date: '2026-08-14'
+      last_modified_date: '2026-08-14'
+      release_date: '2026-08-14'
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
       x: 0
       y: 0
       z: 0
-    processing: denoised
-    processing_software: IsoNet
+    processing: raw
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
+    tomogram_version: 1.0
+    voxel_spacing: 21.6
+  sources:
+  - parent_filters:
+      exclude:
+        run:
+        - ^Position_2$
+        - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
+      include:
+        voxel_spacing:
+        - '21.600'
+    source_glob:
+      list_glob: AuthorprovidedTomogram/{run_name}_dataset_1_tomo.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: IMOD
+    authors:
+    - ORCID: 0000-0003-0100-6589
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: mrelan1@jh.edu
+      name: Mihir Relan
+      primary_author_status: true
+    - ORCID: 0009-0004-2006-1721
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: Venkata.Mallampalli@uth.tmc.edu
+      name: Venkata Mallampalli
+      primary_author_status: false
+    - ORCID: 0000-0002-1016-862X
+      affiliation_address: Department of Chemical Physiology and Biochemistry, School of Medicine, Portland,
+        OR, USA
+      affiliation_identifier: https://ror.org/009avj582
+      affiliation_name: Oregon Health & Science University
+      corresponding_author_status: false
+      email: barad@ohsu.edu
+      name: Benjamin A. Barad
+      primary_author_status: false
+    - ORCID: 0000-0002-4073-4565
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: andrea.k.stavoe@uth.tmc.edu
+      name: Andrea K.H. Stavoe
+      primary_author_status: false
+    - ORCID: 0000-0003-4801-1190
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: m.n.waxham@uth.tmc.edu
+      name: M. Neal Waxham
+      primary_author_status: false
+    ctf_corrected: true
+    dates:
+      deposition_date: '2026-08-14'
+      last_modified_date: '2026-08-14'
+      release_date: '2026-08-14'
+    fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
     reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1.0
@@ -774,16 +1174,258 @@ tomograms:
   sources:
   - parent_filters:
       include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
     source_glob:
       list_glob: AuthorprovidedTomogram/{run_name}_dataset_1_tomo.mrc
 - metadata:
-    affine_transformation_matrix: *id004
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
     align_software: IMOD
-    authors: *id001
+    authors:
+    - ORCID: 0000-0003-0100-6589
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: mrelan1@jh.edu
+      name: Mihir Relan
+      primary_author_status: true
+    - ORCID: 0009-0004-2006-1721
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: Venkata.Mallampalli@uth.tmc.edu
+      name: Venkata Mallampalli
+      primary_author_status: false
+    - ORCID: 0000-0002-1016-862X
+      affiliation_address: Department of Chemical Physiology and Biochemistry, School of Medicine, Portland,
+        OR, USA
+      affiliation_identifier: https://ror.org/009avj582
+      affiliation_name: Oregon Health & Science University
+      corresponding_author_status: false
+      email: barad@ohsu.edu
+      name: Benjamin A. Barad
+      primary_author_status: false
+    - ORCID: 0000-0002-4073-4565
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: andrea.k.stavoe@uth.tmc.edu
+      name: Andrea K.H. Stavoe
+      primary_author_status: false
+    - ORCID: 0000-0003-4801-1190
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: m.n.waxham@uth.tmc.edu
+      name: M. Neal Waxham
+      primary_author_status: false
     ctf_corrected: true
-    dates: *id002
+    dates:
+      deposition_date: '2026-08-14'
+      last_modified_date: '2026-08-14'
+      release_date: '2026-08-14'
+    fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
+    tomogram_version: 1.0
+    voxel_spacing: 10.8
+  sources:
+  - parent_filters:
+      include:
+        run:
+        - ^Position_12$
+        - ^Position_18$
+        - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+    source_glob:
+      list_glob: AuthorprovidedTomogram/{run_name}_dataset_1_tomo.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: IMOD
+    authors:
+    - ORCID: 0000-0003-0100-6589
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: mrelan1@jh.edu
+      name: Mihir Relan
+      primary_author_status: true
+    - ORCID: 0009-0004-2006-1721
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: Venkata.Mallampalli@uth.tmc.edu
+      name: Venkata Mallampalli
+      primary_author_status: false
+    - ORCID: 0000-0002-1016-862X
+      affiliation_address: Department of Chemical Physiology and Biochemistry, School of Medicine, Portland,
+        OR, USA
+      affiliation_identifier: https://ror.org/009avj582
+      affiliation_name: Oregon Health & Science University
+      corresponding_author_status: false
+      email: barad@ohsu.edu
+      name: Benjamin A. Barad
+      primary_author_status: false
+    - ORCID: 0000-0002-4073-4565
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: andrea.k.stavoe@uth.tmc.edu
+      name: Andrea K.H. Stavoe
+      primary_author_status: false
+    - ORCID: 0000-0003-4801-1190
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: m.n.waxham@uth.tmc.edu
+      name: M. Neal Waxham
+      primary_author_status: false
+    ctf_corrected: true
+    dates:
+      deposition_date: '2026-08-14'
+      last_modified_date: '2026-08-14'
+      release_date: '2026-08-14'
+    fiducial_alignment_status: FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    reconstruction_method: WBP
+    reconstruction_software: IMOD
+    tomogram_version: 1.0
+    voxel_spacing: 10.8
+  sources:
+  - parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_20$
+        - ^Position_30$
+        - ^Position_32$
+        - ^Position_42$
+        voxel_spacing:
+        - '10.800'
+    source_glob:
+      list_glob: cleanup/AuthorprovidedTomograms/{run_name}_dataset_1_tomo.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: IMOD
+    authors:
+    - ORCID: 0000-0003-0100-6589
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: mrelan1@jh.edu
+      name: Mihir Relan
+      primary_author_status: true
+    - ORCID: 0009-0004-2006-1721
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: false
+      email: Venkata.Mallampalli@uth.tmc.edu
+      name: Venkata Mallampalli
+      primary_author_status: false
+    - ORCID: 0000-0002-1016-862X
+      affiliation_address: Department of Chemical Physiology and Biochemistry, School of Medicine, Portland,
+        OR, USA
+      affiliation_identifier: https://ror.org/009avj582
+      affiliation_name: Oregon Health & Science University
+      corresponding_author_status: false
+      email: barad@ohsu.edu
+      name: Benjamin A. Barad
+      primary_author_status: false
+    - ORCID: 0000-0002-4073-4565
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: andrea.k.stavoe@uth.tmc.edu
+      name: Andrea K.H. Stavoe
+      primary_author_status: false
+    - ORCID: 0000-0003-4801-1190
+      affiliation_address: Department of Neurobiology and Anatomy, Houston, TX 77030, USA
+      affiliation_identifier: https://ror.org/03gds6c39
+      affiliation_name: University of Texas Health Science Center at Houston
+      corresponding_author_status: true
+      email: m.n.waxham@uth.tmc.edu
+      name: M. Neal Waxham
+      primary_author_status: false
+    ctf_corrected: true
+    dates:
+      deposition_date: '2026-08-14'
+      last_modified_date: '2026-08-14'
+      release_date: '2026-08-14'
     fiducial_alignment_status: FIDUCIAL
     is_visualization_default: true
     offset:
@@ -799,10 +1441,16 @@ tomograms:
   sources:
   - parent_filters:
       include:
+        run:
+        - ^Position_2$
+        - ^Position_20$
+        - ^Position_30$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '10.800'
     source_glob:
-      list_glob: AuthorprovidedTomogram/{run_name}_dataset_1_tomo.mrc
+      list_glob: cleanup/Denoised/{run_name}_dataset_1_denoised.mrc
 version: 1.3.0
 voxel_spacings:
 - sources:
@@ -814,6 +1462,7 @@ voxel_spacings:
         run:
         - ^Position_12$
         - ^Position_18$
+        - ^Position_20$
         - ^Position_27$
         - ^Position_30$
   - literal:
@@ -824,5 +1473,9 @@ voxel_spacings:
         run:
         - ^Position_12$
         - ^Position_18$
+        - ^Position_2$
+        - ^Position_20$
         - ^Position_27$
         - ^Position_30$
+        - ^Position_32$
+        - ^Position_42$

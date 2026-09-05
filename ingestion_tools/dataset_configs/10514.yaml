@@ -1,15 +1,10 @@
 annotations:
 - metadata:
     annotation_ingest_id: mitochondrial-outer-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label OMM.
       id: GO:0005741
       name: mitochondrial outer membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -128,15 +123,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: mitochondrial-inner-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label IMM.
       id: GO:0005743
       name: mitochondrial inner membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -157,15 +147,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: plasma-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label PM.
       id: GO:0005886
       name: plasma membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -186,15 +171,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: microtubule-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label MT.
       id: GO:0005874
       name: microtubule
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -214,18 +194,13 @@ annotations:
       mask_label: 4
       rescale: false
 - metadata:
-    annotation_ingest_id: endoplasmic-reticulum-membrane-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_ingest_id: endoplasmic-reticulum-1
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      id: GO:0005789
-      name: endoplasmic reticulum membrane
+      description: Source label ER.
+      id: GO:0005783
+      name: endoplasmic reticulum
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
     annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
     authors: *id001
@@ -244,17 +219,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: endoplasmic-reticulum-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: Membrane-bound vesicles found fully enclosed inside the lumen of the endoplasmic reticulum,
-        reported as a previously undescribed feature of these axons.
+      description: Source label ER_VES. Vesicle fully enclosed by the ER lumen.
       id: GO:0031982
       name: vesicle
       state: enclosed within the endoplasmic reticulum lumen
@@ -276,15 +244,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: multivesicular-body-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label MVB.
       id: GO:0005771
       name: multivesicular body
       state: limiting membrane
@@ -306,17 +269,13 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: multivesicular-body-internal-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label MVB_VES.
       id: GO:0097487
       name: multivesicular body, internal vesicle
+      state: intralumenal
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
     annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
     authors: *id001
@@ -335,17 +294,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: cytoplasmic-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: Free vesicles in the axoplasm, not enclosed by or continuous with any larger membrane
-        compartment.
+      description: Source label FREE_VES. Vesicle in the axoplasm, not enclosed by any larger compartment.
       id: GO:0031410
       name: cytoplasmic vesicle
       state: free
@@ -367,17 +319,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: lamellar-body-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: 'Multilamellar vesicles: compartments filled with tightly packed concentric membrane
-        sheets.'
+      description: Source label MLV. A multilamellar vesicle.
       id: GO:0042599
       name: lamellar body
       state: limiting membrane
@@ -399,16 +344,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: lamellar-body-internal-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
-      description: Internal vesicles and membrane stacks contained within a multilamellar vesicle.
+      description: Source label MLV_VES. Vesicle enclosed by a multilamellar vesicle.
       id: GO:0031982
       name: vesicle
       state: enclosed within a multilamellar vesicle
@@ -430,15 +369,10 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: endosome-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label ENDO.
       id: GO:0005768
       name: endosome
       state: limiting membrane
@@ -460,17 +394,13 @@ annotations:
       rescale: false
 - metadata:
     annotation_ingest_id: endosomal-intralumenal-vesicle-1
-    annotation_method: Membrane voxels were pre-segmented with the deep-learning tool MemBrain-seg using
-      its default parameters, and microtubule voxels with the deep-learning model TARDIS-MT. Both outputs
-      were imported as separate label fields into Amira, where they were manually curated and assigned
-      to semantic organelle classes using threshold-based selection and the 3D magic-wand tool. Conservative
-      morphological criteria were defined for each class and applied consistently across every tomogram.
-      Segmentation was carried out on the 4x-binned tomograms after denoising by IsoNet deconvolution,
-      and the 107 tomograms judged highest in quality out of 192 reconstructions were segmented. Completed
-      segmentations were exported as multi-label MRC2014 volumes.
+    annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
+      curated into organelle classes in Amira on 4x-binned, IsoNet-deconvolved tomograms.
     annotation_object:
+      description: Source label ENDO_VES.
       id: GO:0160313
       name: endosomal intralumenal vesicle
+      state: intralumenal
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
     annotation_software: MemBrain-seg, TARDIS-MT, IsoNet, Amira
     authors: *id001
@@ -672,8 +602,7 @@ tomograms:
       x: 0
       y: 0
       z: 0
-    processing: denoised
-    processing_software: IsoNet
+    processing: raw
     reconstruction_method: WBP
     reconstruction_software: IMOD
     tomogram_version: 1.0
