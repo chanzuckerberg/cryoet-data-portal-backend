@@ -124,8 +124,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 1
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -140,6 +157,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 1
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -170,8 +198,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 2
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -186,6 +231,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 2
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -216,8 +272,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 3
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -232,6 +305,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 3
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -262,8 +346,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 4
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -278,6 +379,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 4
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -308,8 +420,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 5
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -324,6 +453,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 5
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -355,8 +495,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 6
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -371,6 +528,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 6
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -402,8 +570,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 7
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -418,6 +603,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 7
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -449,8 +645,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 8
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -465,6 +678,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 8
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -496,8 +720,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 9
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -512,6 +753,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 9
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -543,8 +795,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 10
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -559,6 +828,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 10
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -590,8 +870,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 11
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -606,6 +903,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 11
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -638,8 +946,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 12
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -654,6 +979,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 12
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -686,8 +1022,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 13
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -702,6 +1055,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 13
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -733,8 +1097,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 14
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -749,6 +1130,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 14
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -780,8 +1172,25 @@ annotations:
     parent_filters:
       exclude:
         run:
+        - ^Position_2$
         - ^Position_20$
+        - ^Position_32$
+        - ^Position_42$
       include:
+        voxel_spacing:
+        - '21.600'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 15
+      rescale: true
+    parent_filters:
+      include:
+        run:
+        - ^Position_2$
+        - ^Position_32$
+        - ^Position_42$
         voxel_spacing:
         - '21.600'
   - SemanticSegmentationMask:
@@ -796,6 +1205,17 @@ annotations:
         - ^Position_12$
         - ^Position_18$
         - ^Position_27$
+        voxel_spacing:
+        - '10.800'
+  - SemanticSegmentationMask:
+      file_format: mrc
+      glob_string: segmentations/{run_name}_dataset_1_segmentation.mrc
+      is_visualization_default: false
+      mask_label: 15
+      rescale: true
+    parent_filters:
+      include:
+        run:
         - ^Position_30$
         voxel_spacing:
         - '10.800'
@@ -823,7 +1243,6 @@ datasets:
       name: sensory neuron of dorsal root ganglion
     cross_references:
       publications: 10.64898/2026.07.07.737043
-      related_database_links: https://doi.org/10.5281/zenodo.16927937
     dataset_description: Cryo-electron tomography of intact, unmilled peripheral axons and their varicosities
       in primary dorsal root ganglion neurons dissociated from 3-month-old mice and cultured for 48 h
       on gold Quantifoil grids. The axons grow thin enough over the grid surface to be imaged directly,
@@ -904,7 +1323,6 @@ depositions:
     authors: *id001
     cross_references:
       publications: 10.64898/2026.07.07.737043
-      related_database_links: https://doi.org/10.5281/zenodo.16927937
     dates: *id002
     deposition_description: Cryo-electron tomography of intact, unmilled peripheral axons and their varicosities
       in primary dorsal root ganglion neurons dissociated from 3-month-old mice and cultured for 48 h
@@ -922,7 +1340,7 @@ depositions:
       and tilt series; all of them carry a segmentation.
     deposition_identifier: 10362
     deposition_title: Cryo-electron tomography of axons and varicosities in cultured primary mouse dorsal
-      root ganglion neurons
+      root ganglion neurons (baseline data and annotations)
     deposition_types:
     - dataset
   sources:

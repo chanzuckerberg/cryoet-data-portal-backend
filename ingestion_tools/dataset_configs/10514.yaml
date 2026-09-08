@@ -441,7 +441,6 @@ datasets:
       name: sensory neuron of dorsal root ganglion
     cross_references:
       publications: 10.64898/2026.07.07.737043
-      related_database_links: https://doi.org/10.5281/zenodo.16927937
     dataset_description: Cryo-electron tomography of intact, unmilled peripheral axons and their varicosities
       in primary dorsal root ganglion neurons dissociated from 3-month-old mice and cultured for 48 h
       on gold Quantifoil grids. The axons grow thin enough over the grid surface to be imaged directly,
