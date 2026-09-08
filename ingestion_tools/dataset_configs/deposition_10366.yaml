@@ -1002,19 +1002,21 @@ depositions:
       carried forward into the manuscript. Fifteen tomograms were re-reconstructed at 2x binning (10.8
       A/voxel) and IsoNet-denoised, then re-annotated in Amira into the 16-class scheme described in the
       manuscript, following MemBrain-seg and TARDIS-MT pre-segmentation. Eleven of the fifteen are re-annotations
-      of tomograms already present in deposition 10362 under its earlier 15-class iteration; the remaining
-      four are tomograms from the same acquisition sessions that were not previously deposited. The tomograms
-      and denoised volumes themselves belong to deposition 10362; this deposition carries only the refined
-      annotations, which supersede the baseline set wherever the two cover the same run.
+      of tomograms already present in the baseline deposition 10362 under its earlier 15-class iteration.
     deposition_identifier: 10366
-    deposition_title: Refined organelle segmentations of axonal varicosity tomograms following the manuscript
-      class scheme
+    deposition_title: Refined organelle segmentations of axonal varicosity tomograms
     deposition_types:
     - annotation
   sources:
   - literal:
       value:
       - 10366
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10366_snapshot.png
+        thumbnail: cryoetportal-rawdatasets-dev/deposition_key_photos/deposition_10366_thumbnail.png
 runs:
 - sources:
   - literal:
