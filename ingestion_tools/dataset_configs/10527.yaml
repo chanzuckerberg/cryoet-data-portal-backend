@@ -1,0 +1,406 @@
+# CryoET Data Portal Ingestion Configuration - Dataset 10527 / Deposition 10357
+# EMPIAR-13301; paper DOI 10.1016/j.crmeth.2025.101080
+version: 1.3.0
+alignments:
+- metadata:
+    format: ARETOMO3
+    alignment_type: GLOBAL
+    method_type: projection_matching
+    is_portal_standard: true
+  sources:
+  - source_glob:
+      list_glob: alignment/{run_name}/*.aln
+annotations:
+- metadata:
+    annotation_ingest_id: membrane-1
+    annotation_method: Automated membrane segmentation of the reconstructed tomograms using membrain-seg,
+      a deep-learning membrane segmentation model. The output is a single binary membrane mask per tomogram,
+      with no manual correction step.
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1016/j.crmeth.2025.101080, 10.1101/2024.10.14.617844, 10.1101/2024.01.05.574336
+    annotation_software: membrain-seg
+    method_type: automated
+    ground_truth_status: false
+    is_curator_recommended: true
+    version: 1.0
+    authors: &id001
+    - name: Utz Heinrich Ermel
+      ORCID: 0000-0003-4685-037X
+      affiliation_name: Biohub
+      affiliation_address: Redwood City, CA, USA
+      primary_author_status: true
+      corresponding_author_status: true
+    dates: &id002
+      deposition_date: '2026-03-12'
+      release_date: '2026-09-04'
+      last_modified_date: '2026-09-04'
+    method_links:
+    - custom_name: membrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: membrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    - custom_name: membrain-seg documentation
+      link: https://teamtomo.org/membrain-seg/
+      link_type: documentation
+    - custom_name: MemBrain v2 on GitHub
+      link: https://github.com/CellArchLab/MemBrain-v2
+      link_type: source_code
+    - custom_name: MemBrain on GitHub
+      link: https://github.com/CellArchLab/MemBrain
+      link_type: source_code
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_strings:
+      - copick/ExperimentRuns/{run_name}/Segmentations/10.012_membrain-seg_0_membrane.zarr
+      is_visualization_default: true
+- metadata:
+    annotation_ingest_id: valid-sample-1
+    annotation_method: Boundary of the valid specimen volume within each tomogram. A 3D U-Net (octopi)
+      predicts the sample region; the prediction is cleaned to its largest connected component and a slab
+      mesh with smooth parallel top and bottom surfaces is fitted to it, then intersected with the tomogram's
+      valid reconstruction area to yield a closed mesh enclosing the usable specimen volume.
+    annotation_object:
+      id: CDPO:0000001
+      name: sample
+      description: 'The valid-sample region: the specimen volume within the tomogram, restricted to the
+        area of valid reconstruction.'
+    annotation_publications: 10.1016/j.crmeth.2025.101080, 10.1101/2024.10.14.617844, 10.1002/pro.70578,
+      10.21203/rs.3.rs-10374846/v1
+    annotation_software: copick, octopi
+    method_type: automated
+    ground_truth_status: false
+    is_curator_recommended: true
+    version: 1.0
+    authors: *id001
+    dates: *id002
+    method_links:
+    - custom_name: octopi on GitHub
+      link: https://github.com/Biohub/octopi
+      link_type: source_code
+    - custom_name: octopi on PyPI
+      link: https://pypi.org/project/octopi/
+      link_type: other
+    - custom_name: octopi documentation
+      link: https://biohub.github.io/octopi/
+      link_type: documentation
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    - custom_name: copick on PyPI
+      link: https://pypi.org/project/copick/
+      link_type: other
+    - custom_name: copick documentation
+      link: https://copick.github.io/copick/
+      link_type: documentation
+    - custom_name: copick seg2slab documentation
+      link: https://copick.github.io/copick/cli/convert/seg2slab/
+      link_type: documentation
+  sources:
+  - TriangularMesh:
+      file_format: glb
+      glob_string: copick/ExperimentRuns/{run_name}/Meshes/boundary-clean_0_valid-sample.glb
+      is_visualization_default: true
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: collection_metadata/{run_name}/*
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/*
+datasets:
+- metadata:
+    dataset_identifier: 10527
+    dataset_title: Cryo-electron tomography of a cryo-FIB lift-out from adult mouse hippocampal CA1 stratum
+      radiatum (dataset 5)
+    dataset_description: This dataset contains in situ cryo-electron tomography of vitreous adult mouse
+      (C57BL/6J) hippocampal tissue targeting the stratum radiatum of the CA1 field. A 100 um sagittal
+      slice from the left hemisphere of a 184-day-old male mouse was high-pressure frozen after a 20 min
+      incubation with a dextran/sucrose cryoprotectant, screened by cryo-fluorescence/cryo-confocal microscopy,
+      and the CA1 stratum radiatum was targeted by plasma focused-ion-beam (PFIB) milling using the fluorescence
+      of the neighbouring pyramidal cell layer as a landmark. Serial cryo-lift-out sections were welded
+      onto TEM support grids and thinned to ~150-300 nm lamellae, sampling the synapse-rich neuropil between
+      stratum pyramidale and stratum lacunosum-moleculare where Schaffer collateral synapses, apical dendrites
+      and their cytoskeleton are found. Tilt series were acquired on a Titan Krios G4 (300 kV) with a
+      Selectris energy filter and Falcon 4i detector.
+    authors:
+    - name: Calina Glynn
+      ORCID: 0000-0002-2197-2357
+      affiliation_name: The Rosalind Franklin Institute
+      primary_author_status: true
+    - name: Jake L.R. Smith
+      ORCID: 0000-0003-3234-6228
+      affiliation_name: The Rosalind Franklin Institute
+      primary_author_status: true
+    - name: Matthew Case
+      ORCID: 0000-0002-4635-6454
+      affiliation_name: The Rosalind Franklin Institute
+    - name: Rebecca Csöndör
+      ORCID: 0000-0003-1015-8656
+      affiliation_name: The Rosalind Franklin Institute
+    - name: Ana Katsini
+      ORCID: 0009-0008-2659-9230
+      affiliation_name: The Rosalind Franklin Institute
+    - name: Maria E. Sanita
+      ORCID: 0009-0002-0520-5606
+      affiliation_name: The Rosalind Franklin Institute
+    - name: Thomas S. Glen
+      ORCID: 0000-0001-9357-1256
+      affiliation_name: The Rosalind Franklin Institute
+    - name: Avery Pennington
+      ORCID: 0000-0002-1179-4243
+      affiliation_name: The Rosalind Franklin Institute
+    - name: Michael Grange
+      ORCID: 0000-0003-2580-2299
+      affiliation_name: The Rosalind Franklin Institute
+      email: michael.grange@rfi.ac.uk
+      corresponding_author_status: true
+    dates: *id002
+    sample_type: tissue
+    organism:
+      name: Mus musculus
+      taxonomy_id: 10090
+    tissue:
+      name: CA1 stratum radiatum
+      id: UBERON:0014554
+    cell_strain:
+      name: C57BL/6J
+    assay:
+      name: microscopy assay
+      id: EFO:0002909
+    development_stage:
+      name: prime adult stage
+      id: MmusDv:0000136
+    disease:
+      name: normal
+      id: PATO:0000461
+    funding:
+    - funding_agency_name: Wellcome Trust
+      grant_id: 225902/Z/22/Z
+    - funding_agency_name: Wellcome Trust
+      grant_id: 226810/Z/22/Z
+    - funding_agency_name: Wellcome Trust
+      grant_id: 220526/Z/20/Z
+    - funding_agency_name: Engineering and Physical Sciences Research Council
+    - funding_agency_name: UK Research and Innovation
+    grid_preparation: Cryogenic serial lift-out in a perpendicular geometry by plasma focused-ion-beam
+      (PFIB) milling. High-pressure-frozen tissue carriers were screened by cryo-confocal fluorescence
+      microscopy (Leica Stellaris 8, HC PL APO 50x/0.9-NA, LAS X) and loaded orientation-consciously into
+      a Thermo Fisher Helios Hydra CX PFIB/SEM on a 27 degree pre-tilted shuttle. Five milled fiducial
+      markers (75 x 4 x 3 um, 60 nA Xe plasma) enabled correlation with fluorescence tilesets acquired
+      on an integrated Meteor (Delmic) microscope (20x/0.45, Odemis); CA1 stratum radiatum targets were
+      placed up to halfway between CA1-sp and the visible CA1-slm, 50-150 um from the pyramidal cell layer
+      nuclei fluorescence. A perpendicular lift-out (60 um X x 30 um Y target) was excavated at 25 degree
+      stage tilt with a long rear trench (60 x 150-200 x 5-6 um) and a shorter, deeper front trench (60
+      x 40-60 x 6-11 um); side cuts (15 nA, 4 um patterns) and undercuts (6-8 um tall) were made at 8-15
+      degree stage rotation, and the chunk was attached to an EasyLift copper-block adapter by redeposition
+      welding. Serial 3-5 um sections (1-4 nA line patterns, 1 nA preferred) were deposited onto 400 x
+      100 mesh TEM support grids and welded (3 x 0.8 um patterns, ~4 um periodicity, 6-8 welds per section)
+      before a ~70 s GIS protective layer. Lamellae were fine-milled on an Arctis PFIB (AutoTEM Cryo)
+      with Xe plasma - 15-18 um wide, rough 4 nA to ~4-6 um, medium 1 nA to ~1.4-2 um, fine 0.1 nA to
+      400-600 nm - and manually polished with argon plasma at 60 pA / 20 pA to ~150-300 nm final thickness.
+    sample_preparation: Native brain tissue from an adult C57BL/6J mouse (Jackson Labs; 184 days old,
+      male). After Schedule 1 euthanasia by intraperitoneal pentobarbital overdose, the cerebellum was
+      removed, the hemispheres separated at the longitudinal fissure, and the left hemisphere was cut
+      into 100 um sagittal slices on a Leica VT1200S vibratome (0.7 mm/s, 1 mm amplitude) in ice-cold
+      dissection medium (99% HBSS, 0.035% ascorbic acid, 0.002% ATP, 1% penicillin/streptomycin, pH 7.1).
+      Each hippocampus was isolated with curved teasing needles and held in Hibernate-A with 2% B-27 on
+      ice. Slices were stained with Hoechst 33342 for 5 min, excised with a 2 mm biopsy punch, incubated
+      for 20 min at room temperature in 10% dextran / 10% sucrose in artificial CSF (pH 7.4), mounted
+      in the 0.1 mm recess of a 3 mm type A gold-plated copper carrier, and vitrified by high-pressure
+      freezing within a 1.5-4 h postmortem window.
+    other_setup: Cryo-FIB serial lift-out; cryo-CLEM; high-pressure freezing
+    cross_references:
+      publications: 10.1016/j.crmeth.2025.101080, 10.1101/2024.10.14.617844
+      related_database_entries: EMPIAR-13301
+  sources:
+  - literal:
+      value:
+      - '10527'
+depositions:
+- sources:
+  - literal:
+      value:
+      - 10357
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: frames/{run_name}/*
+gains:
+- sources:
+  - source_glob:
+      list_glob: gain/{gain_file}
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}/*
+runs:
+- sources:
+  - source_glob:
+      list_glob: tiltseries/*/*_ts.st
+      name_regex: (.*)_ts\.st$
+standardization_config:
+  deposition_id: 10357
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: EMPIAR/EMPIAR-13301/
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    pixel_spacing: 1.98
+    binning_from_frames: 1
+    spherical_aberration_constant: 2.7
+    is_aligned: false
+    camera:
+      manufacturer: TFS
+      model: FALCON 4i
+      acquire_mode: counting
+    microscope:
+      manufacturer: TFS
+      model: Krios G4
+    microscope_optical_setup:
+      energy_filter: Selectris, 10 eV slit
+    data_acquisition_software: Tomography 5 (v5.17.0.6390)
+    related_empiar_entry: EMPIAR-13301
+    tilt_alignment_software: AreTomo3 v2.3.1
+    tilt_axis: -95.89
+    tilt_range:
+      min: float {tilt_series_min_tilt}
+      max: float {tilt_series_max_tilt}
+    tilt_step: 3.0
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+    tilt_series_quality: int {tilt_series_quality}
+  sources:
+  - source_glob:
+      list_glob: tiltseries/{run_name}/*
+tomograms:
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.1
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: &id003
+      x: 0
+      y: 0
+      z: 0
+    affine_transformation_matrix: &id004
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    authors: *id001
+    dates: *id002
+    voxel_spacing: 10.012
+    processing: raw
+    processing_software: AreTomo3 v2.3.1
+    ctf_corrected: false
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/aretomo3-miss-aligned-global-wbp.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.1
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id003
+    affine_transformation_matrix: *id004
+    authors: *id001
+    dates: *id002
+    voxel_spacing: 10.012
+    processing: filtered
+    processing_software: AreTomo3 v2.3.1
+    ctf_corrected: true
+    is_visualization_default: true
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/aretomo3-miss-aligned-global-ctf-deconvolved.zarr
+- metadata:
+    reconstruction_software: WarpTools
+    reconstruction_method: Fourier Space
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id003
+    affine_transformation_matrix: *id004
+    authors: *id001
+    dates: *id002
+    voxel_spacing: 10.012
+    processing: filtered
+    processing_software: WarpTools
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/warp-miss-aligned-global.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.1
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id003
+    affine_transformation_matrix: *id004
+    authors: *id001
+    dates: *id002
+    voxel_spacing: 10.012
+    processing: denoised
+    processing_software: DeepDeWedge
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/ddw-refined-global.zarr
+- metadata:
+    reconstruction_software: AreTomo3 v2.3.1
+    reconstruction_method: WBP
+    align_software: MissAlignment 0.2.0
+    fiducial_alignment_status: NON_FIDUCIAL
+    tomogram_version: 1
+    offset: *id003
+    affine_transformation_matrix: *id004
+    authors: *id001
+    dates: *id002
+    voxel_spacing: 10.012
+    processing: denoised
+    processing_software: IsoNet2
+    ctf_corrected: true
+    is_visualization_default: false
+  sources:
+  - source_glob:
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/isonet2-corrected-global.zarr
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 10.012
