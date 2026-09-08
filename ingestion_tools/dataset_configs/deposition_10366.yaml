@@ -10,7 +10,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label OMM.
+      description: Source label OMM; manuscript class "outer mitochondrial membrane".
       id: GO:0005741
       name: mitochondrial outer membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -162,7 +162,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label IMM.
+      description: Source label IMM; manuscript class "inner mitochondrial membrane".
       id: GO:0005743
       name: mitochondrial inner membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -216,7 +216,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label PM.
+      description: Source label PM; manuscript class "plasma membrane".
       id: GO:0005886
       name: plasma membrane
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -270,7 +270,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label MT.
+      description: Source label MT; manuscript class "microtubule".
       id: GO:0005874
       name: microtubule
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -324,7 +324,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label ER.
+      description: Source label ER; manuscript class "endoplasmic reticulum".
       id: GO:0005783
       name: endoplasmic reticulum
     annotation_publications: 10.64898/2026.07.07.737043, 10.1101/2024.01.05.574336, 10.1101/2024.12.19.629196
@@ -378,7 +378,8 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label ER_VES. Vesicle fully enclosed by the ER lumen.
+      description: Source label ER_VES; manuscript class "ER-vesicles". Vesicle fully enclosed by the
+        ER lumen.
       id: GO:0031982
       name: vesicle
       state: enclosed within the endoplasmic reticulum lumen
@@ -433,7 +434,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label MVB.
+      description: Source label MVB; manuscript class "multi-vesicular body".
       id: GO:0005771
       name: multivesicular body
       state: limiting membrane
@@ -488,7 +489,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label MVB_VES.
+      description: Source label MVB_VES; manuscript class "MVB-vesicles".
       id: GO:0097487
       name: multivesicular body, internal vesicle
       state: intralumenal
@@ -543,7 +544,8 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label FREE_VES. Vesicle in the axoplasm, not enclosed by any larger compartment.
+      description: Source label FREE_VES; manuscript class "free vesicles". Vesicle in the axoplasm, not
+        enclosed by any larger compartment.
       id: GO:0031410
       name: cytoplasmic vesicle
       state: free
@@ -598,7 +600,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label MLV. A multilamellar vesicle.
+      description: Source label MLV; manuscript class "multilamellar vesicle". A multilamellar vesicle.
       id: GO:0042599
       name: lamellar body
       state: limiting membrane
@@ -653,7 +655,8 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label MLV_VES. Vesicle enclosed by a multilamellar vesicle.
+      description: Source label MLV_VES; manuscript class "MLV-vesicles". Vesicle enclosed by a multilamellar
+        vesicle.
       id: GO:0031982
       name: vesicle
       state: enclosed within a multilamellar vesicle
@@ -708,7 +711,8 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label PHAG. Outer face of the phagophore double membrane.
+      description: Source label PHAG; manuscript class "phagophore". Outer face of the phagophore double
+        membrane.
       id: GO:0061908
       name: phagophore
       state: outer membrane
@@ -763,8 +767,8 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label PHAG_VES. Internal face of the phagophore double membrane; a membrane,
-        not a vesicle.
+      description: Source label PHAG_VES; manuscript class "PHAG-vesicle". Internal face of the phagophore
+        double membrane; a membrane, not a vesicle.
       id: GO:0061908
       name: phagophore
       state: inner membrane
@@ -819,7 +823,8 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label PHAG_VES_INT. Cargo vesicle enclosed by the phagophore.
+      description: Source label PHAG_VES_INT; manuscript class "PHAG-internal vesicle". Cargo vesicle
+        enclosed by the phagophore.
       id: GO:0031982
       name: vesicle
       state: enclosed within a phagophore
@@ -874,7 +879,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label ENDO.
+      description: Source label ENDO; manuscript class "endosome".
       id: GO:0005768
       name: endosome
       state: limiting membrane
@@ -929,7 +934,7 @@ annotations:
     annotation_method: MemBrain-seg (membranes) and TARDIS-MT (microtubules) pre-segmentation, manually
       curated in Amira into the manuscript 16-class scheme on 2x-binned, IsoNet-denoised tomograms.
     annotation_object:
-      description: Source label ENDO_VES.
+      description: Source label ENDO_VES; manuscript class "ENDO-vesicle".
       id: GO:0160313
       name: endosomal intralumenal vesicle
       state: intralumenal
