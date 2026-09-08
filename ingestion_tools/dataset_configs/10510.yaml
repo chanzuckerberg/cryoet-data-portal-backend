@@ -82,7 +82,7 @@ datasets:
     - funding_agency_name: UK Research and Innovation
     grid_preparation: Cryogenic planar lift-out by plasma focused-ion-beam (PFIB) milling. High-pressure-frozen
       tissue carriers were screened by cryo-confocal fluorescence microscopy (Leica Stellaris 8) and CA1
-      sub-regions were targeted in a Thermo Fisher Helios Hydra CX PFIB/SEM using an integrated Meteor
+      sub-regions were targeted in a Thermo Fisher Helios G5 Hydra CX PFIB/SEM using an integrated Meteor
       (Delmic) fluorescence microscope. A planar cryo-lift-out (~60 x 350-400 um target) was excavated
       with Xe plasma, welded to an EasyLift copper-block adapter, and serial 3-5 um sections were deposited
       and welded onto 400x100 mesh TEM support grids. Lamellae were then fine-milled on an Arctis PFIB
@@ -120,7 +120,8 @@ depositions:
     dates: *id002
     cross_references:
       publications: 10.1016/j.crmeth.2025.101080
-      related_database_entries: EMPIAR-13314, EMPIAR-13301, EMPIAR-13304, EMD-55442
+      related_database_entries: EMPIAR-13301, EMPIAR-13302, EMPIAR-13303, EMPIAR-13304,
+        EMPIAR-13314, EMD-55442
   sources:
   - literal:
       value:
