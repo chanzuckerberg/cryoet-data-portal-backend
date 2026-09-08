@@ -104,7 +104,7 @@ annotations:
   - TriangularMesh:
       file_format: glb
       glob_string: copick/ExperimentRuns/{run_name}/Meshes/boundary-clean_0_valid-sample.glb
-      is_visualization_default: true
+      is_visualization_default: false
 collection_metadata:
 - sources:
   - source_glob:
