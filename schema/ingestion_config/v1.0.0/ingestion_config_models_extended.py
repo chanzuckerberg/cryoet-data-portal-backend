@@ -395,6 +395,26 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> tuple[bool, List[str]]:
         return response.status == 200 and id_ancestor in ancestor_ids, ancestor_ids
 
 
+async def _wormbase_names_via_alliance(id: str) -> List[str] | None:
+    """Strain names from Alliance, for when rest.wormbase.org is unreachable. Alliance does not
+    index a bare WBStrain id; the WB:-prefixed CURIE matches the record exactly."""
+    url = "https://www.alliancegenome.org/api/search"
+    params = {"q": f"WB:{id}", "category": "model_search_result", "limit": 1}
+    try:
+        async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(
+            url, params=params,
+        ) as response:
+            if response.status >= 400:
+                return None
+            data = await response.json()
+    except aiohttp.ClientError:
+        return None
+    for hit in data.get("results") or []:
+        if (hit.get("primaryKey") or "").split(":")[-1] == id and hit.get("name"):
+            return [hit["name"]]
+    return None
+
+
 @alru_cache
 @retry_on_network_error()
 async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
@@ -410,6 +430,9 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
         if response.status == 404:
             return [], False
         if response.status >= 400:
+            alliance = await _wormbase_names_via_alliance(id)
+            if alliance is not None:
+                return alliance, True
             raise WormBaseUnreachableError(f"HTTP {response.status} from {url}")
         data = await response.json()
         if label := data["name"]["data"]["label"]:
