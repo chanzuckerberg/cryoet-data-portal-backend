@@ -365,8 +365,13 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
+        terms = data.get("_embedded", {}).get("terms", [])
+        # OLS answers 200 with an empty _embedded for an IRI it does not know, so a
+        # nonexistent term is only distinguishable by the term list being empty.
+        if not terms:
+            return [], False
         names = []
-        for entry in data.get("_embedded", {}).get("terms", []):
+        for entry in terms:
             names.append(entry["label"])
             names += entry["synonyms"]
         return names, True
