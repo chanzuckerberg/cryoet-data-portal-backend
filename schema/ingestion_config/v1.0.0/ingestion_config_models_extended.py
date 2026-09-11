@@ -642,10 +642,15 @@ def validate_id_name_object(
 
     logger.debug("Valid ID, now checking if name '%s' matches ID: %s", name, id)
 
-    # if retrieved_names is empty, we can assume the name is valid
-    valid_name = retrieved_names == [] or any(name_match_function(name, rn) for rn in retrieved_names)
+    # An empty list means the registry resolved the id but gave nothing to compare against.
+    # Treating that as a pass is how the OLS and Cellosaurus checks went dead without anyone
+    # noticing, so fail instead. A validator with a real reason to return no names should
+    # return False for the id rather than an empty list.
+    valid_name = bool(retrieved_names) and any(name_match_function(name, rn) for rn in retrieved_names)
 
     if not valid_name:
+        if not retrieved_names:
+            raise ValueError(f"no names returned for id {id}, so name '{name}' could not be checked")
         # append the matcher's rule for better error messaging
         rule = getattr(name_match_function, "match_description", None)
         suffix = f" ({rule})" if rule else ""
