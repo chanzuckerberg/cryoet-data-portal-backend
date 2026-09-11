@@ -20,6 +20,9 @@ accesslog = "-"
 graceful_timeout = int(os.getenv("GRACEFUL_TIMEOUT", "120"))
 timeout = int(os.getenv("TIMEOUT", "120"))
 keepalive = int(os.getenv("KEEP_ALIVE", "5"))
+# Recycle workers periodically so memory from large responses is returned to the OS.
+max_requests = int(os.getenv("MAX_REQUESTS", "200"))
+max_requests_jitter = int(os.getenv("MAX_REQUESTS_JITTER", "20"))
 # TODO - this is broken, per https://github.com/encode/uvicorn/issues/527
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
@@ -32,6 +35,8 @@ log_data = {
     "graceful_timeout": graceful_timeout,
     "timeout": timeout,
     "keepalive": keepalive,
+    "max_requests": max_requests,
+    "max_requests_jitter": max_requests_jitter,
     "errorlog": errorlog,
     "accesslog": accesslog,
 }
