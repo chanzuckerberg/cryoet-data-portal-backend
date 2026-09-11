@@ -23,7 +23,7 @@ datasets:
       name: Grant Jensen
       primary_author_status: false
     cell_strain:
-      id: CVCL_2966
+      id: CVCL_2959
       name: HUVEC-C
     cell_type:
       id: CL:0002618
