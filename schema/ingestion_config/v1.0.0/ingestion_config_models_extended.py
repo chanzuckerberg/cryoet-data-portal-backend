@@ -448,11 +448,15 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(names_url) as response:
         logger.debug("Getting other names for ID %s at %s, status %s", id, names_url, response.status)
         if response.status >= 400:
-            return [], True
+            # Keep the label from the first call: returning [] here would leave the name
+            # check with nothing to compare against, which it treats as a pass.
+            return names, True
         data = await response.json()
         if other_names := data.get("other_names", {}).get("data", []):
             names += other_names
 
+    if not names:
+        return [], False
     return names, True
 
 
