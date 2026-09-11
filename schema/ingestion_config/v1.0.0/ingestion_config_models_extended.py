@@ -469,12 +469,18 @@ async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
+        # The guard belongs on the name entry, not the cell-line record: a cell-line dict
+        # only carries list fields, so filtering it for "value" emptied every result.
         names = [
-            names.get("value")
+            name.get("value")
             for cll in data["Cellosaurus"]["cell-line-list"]
-            for names in cll["name-list"]
-            if "value" in cll
+            for name in cll.get("name-list", [])
+            if "value" in name
         ]
+        # An accession that resolves but yields no names would pass the name check
+        # vacuously, so treat it as unresolved.
+        if not names:
+            return [], False
         return names, True
 
 
