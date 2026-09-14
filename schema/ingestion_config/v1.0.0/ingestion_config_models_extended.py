@@ -365,8 +365,13 @@ async def validate_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
+        terms = data.get("_embedded", {}).get("terms", [])
+        # OLS answers 200 with an empty _embedded for an IRI it does not know, so a
+        # nonexistent term is only distinguishable by the term list being empty.
+        if not terms:
+            return [], False
         names = []
-        for entry in data.get("_embedded", {}).get("terms", []):
+        for entry in terms:
             names.append(entry["label"])
             names += entry["synonyms"]
         return names, True
@@ -395,6 +400,26 @@ async def is_id_ancestor(id_ancestor: str, id: str) -> tuple[bool, List[str]]:
         return response.status == 200 and id_ancestor in ancestor_ids, ancestor_ids
 
 
+async def _wormbase_names_via_alliance(id: str) -> List[str] | None:
+    """Strain names from Alliance, for when rest.wormbase.org is unreachable. Alliance does not
+    index a bare WBStrain id; the WB:-prefixed CURIE matches the record exactly."""
+    url = "https://www.alliancegenome.org/api/search"
+    params = {"q": f"WB:{id}", "category": "model_search_result", "limit": 1}
+    try:
+        async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(
+            url, params=params,
+        ) as response:
+            if response.status >= 400:
+                return None
+            data = await response.json()
+    except aiohttp.ClientError:
+        return None
+    for hit in data.get("results") or []:
+        if (hit.get("primaryKey") or "").split(":")[-1] == id and hit.get("name"):
+            return [hit["name"]]
+    return None
+
+
 @alru_cache
 @retry_on_network_error()
 async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
@@ -410,6 +435,9 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
         if response.status == 404:
             return [], False
         if response.status >= 400:
+            alliance = await _wormbase_names_via_alliance(id)
+            if alliance is not None:
+                return alliance, True
             raise WormBaseUnreachableError(f"HTTP {response.status} from {url}")
         data = await response.json()
         if label := data["name"]["data"]["label"]:
@@ -420,11 +448,15 @@ async def validate_wormbase_id(id: str) -> Tuple[List[str], bool]:
     async with aiohttp.ClientSession(timeout=NETWORK_REQUEST_TIMEOUT) as session, session.get(names_url) as response:
         logger.debug("Getting other names for ID %s at %s, status %s", id, names_url, response.status)
         if response.status >= 400:
-            return [], True
+            # Keep the label from the first call: returning [] here would leave the name
+            # check with nothing to compare against, which it treats as a pass.
+            return names, True
         data = await response.json()
         if other_names := data.get("other_names", {}).get("data", []):
             names += other_names
 
+    if not names:
+        return [], False
     return names, True
 
 
@@ -441,12 +473,18 @@ async def validate_cellosaurus_id(id: str) -> Tuple[List[str], bool]:
         if response.status >= 400:
             return [], False
         data = await response.json()
+        # The guard belongs on the name entry, not the cell-line record: a cell-line dict
+        # only carries list fields, so filtering it for "value" emptied every result.
         names = [
-            names.get("value")
+            name.get("value")
             for cll in data["Cellosaurus"]["cell-line-list"]
-            for names in cll["name-list"]
-            if "value" in cll
+            for name in cll.get("name-list", [])
+            if "value" in name
         ]
+        # An accession that resolves but yields no names would pass the name check
+        # vacuously, so treat it as unresolved.
+        if not names:
+            return [], False
         return names, True
 
 
@@ -608,10 +646,15 @@ def validate_id_name_object(
 
     logger.debug("Valid ID, now checking if name '%s' matches ID: %s", name, id)
 
-    # if retrieved_names is empty, we can assume the name is valid
-    valid_name = retrieved_names == [] or any(name_match_function(name, rn) for rn in retrieved_names)
+    # An empty list means the registry resolved the id but gave nothing to compare against.
+    # Treating that as a pass is how the OLS and Cellosaurus checks went dead without anyone
+    # noticing, so fail instead. A validator with a real reason to return no names should
+    # return False for the id rather than an empty list.
+    valid_name = bool(retrieved_names) and any(name_match_function(name, rn) for rn in retrieved_names)
 
     if not valid_name:
+        if not retrieved_names:
+            raise ValueError(f"no names returned for id {id}, so name '{name}' could not be checked")
         # append the matcher's rule for better error messaging
         rule = getattr(name_match_function, "match_description", None)
         suffix = f" ({rule})" if rule else ""
