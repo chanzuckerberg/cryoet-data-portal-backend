@@ -13,14 +13,17 @@ alignments:
 annotations:
 - metadata:
     annotation_ingest_id: membrane-1
-    annotation_method: Automated membrane segmentation of the reconstructed tomograms using membrain-seg,
-      a deep-learning membrane segmentation model. The output is a single binary membrane mask per tomogram,
-      with no manual correction step.
+    annotation_method: 'Automated membrane segmentation of the reconstructed tomograms using membrain-seg,
+      a deep-learning membrane segmentation model, restricted to the valid-sample volume: the valid-sample
+      mesh was filled into a mask (copick convert mesh2seg) and only membrane voxels inside it were kept
+      (copick logical clipseg). The output is a single binary membrane mask per tomogram, with no manual
+      correction step.'
     annotation_object:
       id: GO:0016020
       name: membrane
-    annotation_publications: 10.1016/j.crmeth.2025.101080, 10.1101/2024.10.14.617844, 10.1101/2024.01.05.574336
-    annotation_software: membrain-seg
+    annotation_publications: 10.1016/j.crmeth.2025.101080, 10.1101/2024.10.14.617844, 10.1101/2024.01.05.574336,
+      10.1038/s41592-026-03178-8, 10.1002/pro.70578
+    annotation_software: membrain-seg, copick
     method_type: automated
     ground_truth_status: false
     is_curator_recommended: true
@@ -52,6 +55,15 @@ annotations:
     - custom_name: MemBrain on GitHub
       link: https://github.com/CellArchLab/MemBrain
       link_type: source_code
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    - custom_name: copick mesh2seg documentation
+      link: https://copick.github.io/copick/cli/convert/mesh2seg/
+      link_type: documentation
+    - custom_name: copick clipseg documentation
+      link: https://copick.github.io/copick/cli/logical/clipseg/
+      link_type: documentation
   sources:
   - SemanticSegmentationMask:
       file_format: zarr
@@ -104,7 +116,7 @@ annotations:
   - TriangularMesh:
       file_format: glb
       glob_string: copick/ExperimentRuns/{run_name}/Meshes/boundary-clean_0_valid-sample.glb
-      is_visualization_default: false
+      is_visualization_default: true
 collection_metadata:
 - sources:
   - source_glob:
@@ -176,8 +188,8 @@ datasets:
       name: microscopy assay
       id: EFO:0002909
     development_stage:
-      name: prime adult stage
-      id: MmusDv:0000136
+      name: young adult stage
+      id: MmusDv:0000153
     disease:
       name: normal
       id: PATO:0000461
@@ -193,7 +205,7 @@ datasets:
     grid_preparation: Cryogenic serial lift-out in a perpendicular geometry by plasma focused-ion-beam
       (PFIB) milling. High-pressure-frozen tissue carriers were screened by cryo-confocal fluorescence
       microscopy (Leica Stellaris 8, HC PL APO 50x/0.9-NA, LAS X) and loaded orientation-consciously into
-      a Thermo Fisher Helios Hydra CX PFIB/SEM on a 27 degree pre-tilted shuttle. Five milled fiducial
+      a Thermo Fisher Helios G5 Hydra CX PFIB/SEM on a 27 degree pre-tilted shuttle. Five milled fiducial
       markers (75 x 4 x 3 um, 60 nA Xe plasma) enabled correlation with fluorescence tilesets acquired
       on an integrated Meteor (Delmic) microscope (20x/0.45, Odemis); CA1 stratum radiatum targets were
       placed up to halfway between CA1-sp and the visible CA1-slm, 50-150 um from the pyramidal cell layer

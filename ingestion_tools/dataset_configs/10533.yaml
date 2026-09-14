@@ -1,5 +1,5 @@
-# CryoET Data Portal Ingestion Configuration - Dataset 10528 / Deposition 10357
-# EMPIAR-13304; paper DOI 10.1016/j.crmeth.2025.101080
+# CryoET Data Portal Ingestion Configuration - Dataset 10533 / Deposition 10357
+# EMPIAR-13289; paper DOI 10.1016/j.crmeth.2025.101080
 version: 1.3.0
 alignments:
 - metadata:
@@ -68,7 +68,7 @@ annotations:
   - SemanticSegmentationMask:
       file_format: zarr
       glob_strings:
-      - copick/ExperimentRuns/{run_name}/Segmentations/10.012_membrain-seg_0_membrane.zarr
+      - copick/ExperimentRuns/{run_name}/Segmentations/10.010_membrain-seg_0_membrane.zarr
       is_visualization_default: true
 - metadata:
     annotation_ingest_id: valid-sample-1
@@ -129,17 +129,19 @@ ctfs:
       list_glob: ctf/{run_name}/*
 datasets:
 - metadata:
-    dataset_identifier: 10528
-    dataset_title: Cryo-electron tomography of a cryo-FIB lift-out from adult mouse cortex
+    dataset_identifier: 10533
+    dataset_title: Cryo-electron tomography of a cryo-FIB lift-out from adult mouse hippocampal CA1 stratum
+      radiatum (dataset 1)
     dataset_description: This dataset contains in situ cryo-electron tomography of vitreous adult mouse
-      (C57BL/6J) cortical tissue, acquired to assess the quality of brain cryo-fixation achieved by a
-      targeted molecular-biopsy workflow. A 200 um sagittal slice from a 144-day-old female mouse was
-      biopsy-punched directly from the cortex, incubated for 30 min with a dextran/sucrose cryoprotectant,
-      and vitrified by high-pressure freezing. Serial cryo-lift-out sections were excavated by xenon plasma
-      focused-ion-beam (PFIB) milling, welded onto TEM support grids and thinned to ~150-300 nm lamellae
-      with a final argon polish, revealing myelin, synaptic vesicles, mitochondria, membranes, ribosomes
-      and microtubules together with the extracellular space preserved by vitrification. Tilt series were
-      acquired on a Titan Krios G4 (300 kV) with a Selectris energy filter and Falcon 4i detector.
+      (C57BL/6J) hippocampal tissue targeting the stratum radiatum of the CA1 field. A 100 um sagittal
+      slice from a 184-day-old male mouse was high-pressure frozen after a 15 min incubation with a dextran/sucrose
+      cryoprotectant in an NMDG-based buffer, screened by cryo-fluorescence/cryo-confocal microscopy,
+      and the CA1 stratum radiatum was targeted by plasma focused-ion-beam (PFIB) milling using the fluorescence
+      of the neighbouring pyramidal cell layer as a landmark. Serial cryo-lift-out sections were welded
+      onto TEM support grids and thinned to ~150-300 nm lamellae, sampling the synapse-rich neuropil between
+      stratum pyramidale and stratum lacunosum-moleculare where Schaffer collateral synapses, apical dendrites
+      and their cytoskeleton are found. Tilt series were acquired on a Titan Krios G4 (300 kV) with a
+      Selectris energy filter and Falcon 4i detector at a nominal magnification of 42,000x (3.05 A/pixel).
     authors:
     - name: Calina Glynn
       ORCID: 0000-0002-2197-2357
@@ -178,8 +180,8 @@ datasets:
       name: Mus musculus
       taxonomy_id: 10090
     tissue:
-      name: cerebral cortex
-      id: UBERON:0000956
+      name: CA1 stratum radiatum
+      id: UBERON:0014554
     cell_strain:
       name: C57BL/6J
     assay:
@@ -200,35 +202,40 @@ datasets:
       grant_id: 220526/Z/20/Z
     - funding_agency_name: Engineering and Physical Sciences Research Council
     - funding_agency_name: UK Research and Innovation
-    grid_preparation: Cryogenic serial lift-out by plasma focused-ion-beam (PFIB) milling. High-pressure-frozen
-      tissue carriers were screened by cryo-confocal fluorescence microscopy (Leica Stellaris 8, HC PL
-      APO 50x/0.9-NA, LAS X) in fluorescence and reflection modes, then loaded orientation-consciously
-      into a Thermo Fisher Helios G5 Hydra CX PFIB/SEM on a 27 degree pre-tilted shuttle. A tissue chunk
-      was excavated with Xe plasma, attached to an EasyLift copper-block adapter by redeposition welding
-      and retracted, and serial 3-5 um sections were milled off (1-4 nA line patterns, 1 nA preferred
-      for a smoother surface), deposited onto 400 x 100 mesh TEM support grids and welded in place (3
-      x 0.8 um patterns, ~4 um periodicity, 6-8 welds per section) before a ~70 s GIS protective layer.
-      Lamellae were fine-milled on an Arctis PFIB (AutoTEM Cryo) with Xe plasma - 15-18 um wide, rough
-      4 nA to ~4-6 um, medium 1 nA to ~1.4-2 um, fine 0.1 nA to 400-600 nm - and manually polished with
-      argon plasma at 60 pA / 20 pA to ~150-300 nm final thickness.
-    sample_preparation: Native brain tissue from an adult C57BL/6J mouse (Jackson Labs; 144 days old,
-      female). After Schedule 1 euthanasia by intraperitoneal pentobarbital overdose, the cerebellum was
-      removed, the hemispheres separated at the longitudinal fissure, and the brain was cut into 200 um
+    grid_preparation: Cryogenic serial lift-out in a perpendicular geometry by plasma focused-ion-beam
+      (PFIB) milling. High-pressure-frozen tissue carriers were screened by cryo-confocal fluorescence
+      microscopy (Leica Stellaris 8, HC PL APO 50x/0.9-NA, LAS X) and loaded orientation-consciously into
+      a Thermo Fisher Helios G5 Hydra CX PFIB/SEM on a 27 degree pre-tilted shuttle. Five milled fiducial
+      markers (75 x 4 x 3 um, 60 nA Xe plasma) enabled correlation with fluorescence tilesets acquired
+      on an integrated Meteor (Delmic) microscope (20x/0.45, Odemis); CA1 stratum radiatum targets were
+      placed up to halfway between CA1-sp and the visible CA1-slm, 50-150 um from the pyramidal cell layer
+      nuclei fluorescence. A perpendicular lift-out (60 um X x 30 um Y target) was excavated at 25 degree
+      stage tilt with a long rear trench (60 x 150-200 x 5-6 um) and a shorter, deeper front trench (60
+      x 40-60 x 6-11 um); side cuts (15 nA, 4 um patterns) and undercuts (6-8 um tall) were made at 8-15
+      degree stage rotation, and the chunk was attached to an EasyLift copper-block adapter by redeposition
+      welding. Serial 3-5 um sections (1-4 nA line patterns, 1 nA preferred) were deposited onto 400 x
+      100 mesh TEM support grids and welded (3 x 0.8 um patterns, ~4 um periodicity, 6-8 welds per section)
+      before a ~70 s GIS protective layer. Lamellae were fine-milled on an Arctis PFIB (AutoTEM Cryo)
+      with Xe plasma - 15-18 um wide, rough 4 nA to ~4-6 um, medium 1 nA to ~1.4-2 um, fine 0.1 nA to
+      400-600 nm - and manually polished with argon plasma at 60 pA / 20 pA to ~150-300 nm final thickness.
+    sample_preparation: Native brain tissue from an adult C57BL/6J mouse (Jackson Labs; 184 days old,
+      male). After Schedule 1 euthanasia by intraperitoneal pentobarbital overdose, the cerebellum was
+      removed, the hemispheres separated at the longitudinal fissure, and the brain was cut into 100 um
       sagittal slices on a Leica VT1200S vibratome (0.7 mm/s, 1 mm amplitude) in ice-cold dissection medium
-      (99% HBSS, 0.035% ascorbic acid, 0.002% ATP, 1% penicillin/streptomycin, pH 7.1) bubbled with carbogen
-      (95% O2 / 5% CO2). Slices were stained with Hoechst 33342 for 5 min and cortical biopsies were punched
-      directly from the sagittal sections with a 2 mm biopsy punch, then incubated for 30 min at room
-      temperature in 10% dextran / 10% sucrose in NMDG-based buffer (pH 7.4), mounted in the 0.2 mm recess
-      of a 3 mm type A gold-plated copper carrier, and vitrified by high-pressure freezing within a 1.5-4
-      h postmortem window.
+      (99% HBSS, 0.035% ascorbic acid, 0.002% ATP, 1% penicillin/streptomycin, pH 7.1). Each hippocampus
+      was isolated with curved teasing needles and held in Hibernate-A with 2% B-27 on ice. Slices were
+      stained with Hoechst 33342 for 5 min, excised with a 2 mm biopsy punch, incubated for 15 min at
+      room temperature in 10% dextran / 10% sucrose in NMDG-based buffer (pH 7.4), mounted in the 0.1
+      mm recess of a 3 mm type A gold-plated copper carrier, and vitrified by high-pressure freezing within
+      a 1.5-4 h postmortem window.
     other_setup: Cryo-FIB serial lift-out; cryo-CLEM; high-pressure freezing
     cross_references:
       publications: 10.1016/j.crmeth.2025.101080, 10.1101/2024.10.14.617844
-      related_database_entries: EMPIAR-13304
+      related_database_entries: EMPIAR-13289
   sources:
   - literal:
       value:
-      - '10528'
+      - '10533'
 depositions:
 - sources:
   - literal:
@@ -263,11 +270,11 @@ runs:
 standardization_config:
   deposition_id: 10357
   run_data_map_file: run_to_data_map.tsv
-  source_prefix: EMPIAR/EMPIAR-13304/
+  source_prefix: EMPIAR/EMPIAR-13289/
 tiltseries:
 - metadata:
     acceleration_voltage: 300000
-    pixel_spacing: 1.98
+    pixel_spacing: 3.05
     binning_from_frames: 1
     spherical_aberration_constant: 2.7
     is_aligned: false
@@ -281,9 +288,9 @@ tiltseries:
     microscope_optical_setup:
       energy_filter: Selectris, 10 eV slit
     data_acquisition_software: Tomography 5 (v5.17.0.6390)
-    related_empiar_entry: EMPIAR-13304
+    related_empiar_entry: EMPIAR-13289
     tilt_alignment_software: AreTomo3 v2.3.1
-    tilt_axis: -95.89
+    tilt_axis: -95.98
     tilt_range:
       min: float {tilt_series_min_tilt}
       max: float {tilt_series_max_tilt}
@@ -324,14 +331,14 @@ tomograms:
       - 1
     authors: *id001
     dates: *id002
-    voxel_spacing: 10.012
+    voxel_spacing: 10.01
     processing: raw
     processing_software: AreTomo3 v2.3.1
     ctf_corrected: false
     is_visualization_default: false
   sources:
   - source_glob:
-      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/aretomo3-miss-aligned-global-wbp.zarr
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.010/aretomo3-miss-aligned-global-wbp.zarr
 - metadata:
     reconstruction_software: AreTomo3 v2.3.1
     reconstruction_method: WBP
@@ -342,14 +349,14 @@ tomograms:
     affine_transformation_matrix: *id004
     authors: *id001
     dates: *id002
-    voxel_spacing: 10.012
+    voxel_spacing: 10.01
     processing: filtered
     processing_software: AreTomo3 v2.3.1
     ctf_corrected: true
     is_visualization_default: true
   sources:
   - source_glob:
-      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/aretomo3-miss-aligned-global-ctf-deconvolved.zarr
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.010/aretomo3-miss-aligned-global-ctf-deconvolved.zarr
 - metadata:
     reconstruction_software: WarpTools
     reconstruction_method: Fourier Space
@@ -360,14 +367,14 @@ tomograms:
     affine_transformation_matrix: *id004
     authors: *id001
     dates: *id002
-    voxel_spacing: 10.012
+    voxel_spacing: 10.01
     processing: filtered
     processing_software: WarpTools
     ctf_corrected: true
     is_visualization_default: false
   sources:
   - source_glob:
-      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/warp-miss-aligned-global.zarr
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.010/warp-miss-aligned-global.zarr
 - metadata:
     reconstruction_software: AreTomo3 v2.3.1
     reconstruction_method: WBP
@@ -378,14 +385,14 @@ tomograms:
     affine_transformation_matrix: *id004
     authors: *id001
     dates: *id002
-    voxel_spacing: 10.012
+    voxel_spacing: 10.01
     processing: denoised
     processing_software: DeepDeWedge
     ctf_corrected: true
     is_visualization_default: false
   sources:
   - source_glob:
-      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/ddw-refined-global.zarr
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.010/ddw-refined-global.zarr
 - metadata:
     reconstruction_software: AreTomo3 v2.3.1
     reconstruction_method: WBP
@@ -396,16 +403,16 @@ tomograms:
     affine_transformation_matrix: *id004
     authors: *id001
     dates: *id002
-    voxel_spacing: 10.012
+    voxel_spacing: 10.01
     processing: denoised
     processing_software: IsoNet2
     ctf_corrected: true
     is_visualization_default: false
   sources:
   - source_glob:
-      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.012/isonet2-corrected-global.zarr
+      list_glob: copick/ExperimentRuns/{run_name}/VoxelSpacing10.010/isonet2-corrected-global.zarr
 voxel_spacings:
 - sources:
   - literal:
       value:
-      - 10.012
+      - 10.01

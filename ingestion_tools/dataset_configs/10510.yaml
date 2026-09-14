@@ -66,8 +66,8 @@ datasets:
       name: microscopy assay
       id: EFO:0002909
     development_stage:
-      name: prime adult stage
-      id: MmusDv:0000136
+      name: young adult stage
+      id: MmusDv:0000153
     disease:
       name: normal
       id: PATO:0000461
@@ -94,7 +94,7 @@ datasets:
       biopsy punch, incubated with cryoprotectant, mounted in 3 mm gold-plated copper carriers, and vitrified
       by high-pressure freezing within ~1.5-4 h postmortem.
     cross_references:
-      publications: 10.1016/j.crmeth.2025.101080
+      publications: 10.1016/j.crmeth.2025.101080, 10.1101/2024.10.14.617844
       related_database_entries: EMPIAR-13314, EMD-55442
   sources:
   - literal:
@@ -119,9 +119,9 @@ depositions:
     authors: *id001
     dates: *id002
     cross_references:
-      publications: 10.1016/j.crmeth.2025.101080
-      related_database_entries: EMPIAR-13301, EMPIAR-13302, EMPIAR-13303, EMPIAR-13304,
-        EMPIAR-13314, EMD-55442
+      publications: 10.1016/j.crmeth.2025.101080, 10.1101/2024.10.14.617844
+      related_database_entries: EMPIAR-13281, EMPIAR-13287, EMPIAR-13288, EMPIAR-13289,
+        EMPIAR-13301, EMPIAR-13302, EMPIAR-13303, EMPIAR-13304, EMPIAR-13314, EMD-55442
   sources:
   - literal:
       value:
