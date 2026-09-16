@@ -3,10 +3,6 @@ stack:
     apiv2:
       image:
         tag: sha-19a06e4
-      ingress:
-        enabled: true
-      gateway:
-        dnsOwner: gateway
       initContainers:
         # Install cerbos policies where the cerbos sidecar can grab them.
         - name: install-cerbos-policies
