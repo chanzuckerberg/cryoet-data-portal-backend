@@ -790,6 +790,9 @@ enums:
     description: Camera model for Gatan cameras
     from_schema: cdp-ingestion-config
     permissible_values:
+      CELTIC:
+        text: CELTIC
+        description: CELTIC
       K2:
         text: K2
         description: K2

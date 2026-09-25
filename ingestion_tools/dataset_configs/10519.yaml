@@ -1,0 +1,485 @@
+# CryoET Data Portal ingestion config - dataset 10519 (session p26aug11a), baseline AreTomo3 deposition 10363
+alignments:
+- metadata:
+    alignment_type: LOCAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_glob:
+      list_glob: alignment/{run_name}/{run_name}.aln
+annotations:
+- metadata:
+    annotation_ingest_id: virus-like-capsid-refined-10519
+    annotation_method: Oriented PP7 VLP positions from RELION 5 subtomogram averaging with I2 symmetry, run with the py2rely STA pipeline. A random subset of 13,604 of the 15,411 curated candidates on ice was aligned to a PP7 VLP reference map at 9.6 and 3.2 Å/px, duplicates closer than 90 Å were removed, and refinement continued at 1.6 Å/px with repeated rounds of CTF refinement, Bayesian polishing, re-extraction and 3D auto-refinement. Deposited values are those of the particle set that gave the best map (3.6 Å at FSC 0.143), reached after the third refinement round. Orientations are relative to the I2 reference and are defined up to the icosahedral symmetry. Averaging included three tomograms that are not part of this dataset, so 13,093 of the 13,247 refined particles are deposited. Six particles whose refined centre lies outside the reconstructed volume were omitted.
+    annotation_object:
+      id: GO:0170047
+      name: virus-like capsid
+      description: PP7 bacteriophage virus-like particle (VLP) capsid overexpressed in E. coli
+    annotation_software: Octopi, slabpick, RELION 5.0.0, py2rely 0.7.0, DenoisET, copick
+    authors: &authors
+    - name: Mohammadreza Paraan
+      ORCID: 0000-0002-8402-0134
+      email: reza.paraan@czii.org
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Anchi Cheng
+      ORCID: 0000-0003-0466-4376
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Eric Cooper
+      ORCID: 0000-0002-8620-4252
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Joshua Dickerson
+      ORCID: 0000-0001-5049-4000
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Pavel Olshin
+      ORCID: 0000-0002-0107-3258
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Elizabeth Montabana
+      ORCID: 0000-0002-6731-5854
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Mykhailo Kopylov
+      ORCID: 0000-0003-0188-9799
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Mallak Ali
+      ORCID: 0009-0007-8169-0996
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Utz Heinrich Ermel
+      ORCID: 0000-0003-4685-037X
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Ariana Peck
+      ORCID: 0000-0002-5940-3897
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Yue Yu
+      ORCID: 0000-0002-3248-9678
+      email: yue.yu@czii.org
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Bronwyn Lucas
+      ORCID: 0000-0001-9162-0421
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Holger Müller
+      ORCID: 0000-0003-0636-5951
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Bridget Carragher
+      ORCID: 0000-0002-0624-5020
+      email: bridget.carragher@czii.org
+      primary_author_status: false
+      corresponding_author_status: true
+    - name: David Agard
+      ORCID: 0000-0003-3512-695X
+      email: david.agard@czii.org
+      primary_author_status: false
+      corresponding_author_status: true
+    dates: &dates
+      deposition_date: '2026-09-11'
+      last_modified_date: '2026-09-11'
+      release_date: '2026-09-11'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    - custom_name: slabpick on GitHub
+      link: https://github.com/apeck12/slabpick
+      link_type: source_code
+    - custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - custom_name: py2rely documentation
+      link: https://chanzuckerberg.github.io/py2rely/
+      link_type: documentation
+    - custom_name: RELION on GitHub
+      link: https://github.com/3dem/relion
+      link_type: source_code
+    - custom_name: DenoisET on GitHub
+      link: https://github.com/apeck12/denoiset
+      link_type: source_code
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - OrientedPoint:
+      binning: 5.003
+      file_format: copick
+      glob_string: annotations/{run_name}/relionrefine_1_VLP.json
+      is_visualization_default: true
+    parent_filters:
+      include:
+        voxel_spacing:
+        - '5.003'
+- metadata:
+    annotation_ingest_id: virus-like-capsid-curated-10519
+    annotation_method: PP7 VLP candidates predicted with Octopi (3D U-Net segmentation with watershed localization) on DenoisET-denoised tomograms at 10 Å; 2D minislab projections of every candidate were extracted with slabpick, classified into 50 2D classes in RELION 5 via py2rely, classes showing intact VLPs were selected interactively and the retained candidates mapped back to the tomograms; subtomogram averaging started from this curated set (see the RELION-refined annotation).
+    annotation_object:
+      id: GO:0170047
+      name: virus-like capsid
+      description: PP7 bacteriophage virus-like particle (VLP) capsid overexpressed in E. coli
+    annotation_software: Octopi, slabpick, RELION 5, py2rely, DenoisET, copick
+    authors: *authors
+    dates: *dates
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    - custom_name: slabpick on GitHub
+      link: https://github.com/apeck12/slabpick
+      link_type: source_code
+    - custom_name: py2rely on GitHub
+      link: https://github.com/chanzuckerberg/py2rely
+      link_type: source_code
+    - custom_name: py2rely documentation
+      link: https://chanzuckerberg.github.io/py2rely/
+      link_type: documentation
+    - custom_name: RELION on GitHub
+      link: https://github.com/3dem/relion
+      link_type: source_code
+    - custom_name: DenoisET on GitHub
+      link: https://github.com/apeck12/denoiset
+      link_type: source_code
+    method_type: hybrid
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5.003
+      columns: xyz
+      file_format: copick
+      glob_string: copick/ExperimentRuns/{run_name}/Picks/2dclass_1_VLP.json
+      is_visualization_default: false
+    parent_filters:
+      include:
+        voxel_spacing:
+        - '5.003'
+- metadata:
+    annotation_ingest_id: virus-like-capsid-octopi-10519
+    annotation_method: Automated PP7 VLP prediction with Octopi (3D U-Net segmentation with watershed localization) on DenoisET-denoised tomograms at 10 Å, before curation.
+    annotation_object:
+      id: GO:0170047
+      name: virus-like capsid
+      description: PP7 bacteriophage virus-like particle (VLP) capsid overexpressed in E. coli
+    annotation_software: Octopi, DenoisET, copick
+    authors: *authors
+    dates: *dates
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: Octopi on GitHub
+      link: https://github.com/chanzuckerberg/octopi
+      link_type: source_code
+    - custom_name: Octopi documentation
+      link: https://chanzuckerberg.github.io/octopi/
+      link_type: documentation
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    - custom_name: DenoisET on GitHub
+      link: https://github.com/apeck12/denoiset
+      link_type: source_code
+    method_type: automated
+    version: 1.0
+  sources:
+  - Point:
+      binning: 5.003
+      columns: xyz
+      file_format: copick
+      glob_string: copick/ExperimentRuns/{run_name}/Picks/octopi_1_VLP.json
+      is_visualization_default: false
+    parent_filters:
+      include:
+        voxel_spacing:
+        - '5.003'
+collection_metadata:
+- sources:
+  - source_glob:
+      list_glob: collection_metadata/{run_name}/{run_name}.mdoc
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}/{run_name}_CTF.txt
+dataset_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+datasets:
+- metadata:
+    assay:
+      id: EFO:0002909
+      name: microscopy assay
+    authors: *authors
+    cell_component:
+      id: GO:0170047
+      name: virus-like capsid
+    cell_strain:
+      id: NCBITaxon:469008
+      name: Escherichia coli BL21(DE3)
+    cell_type:
+      id: CL:0000520
+      name: prokaryotic cell
+    cross_references:
+      publications: 10.64898/2026.06.05.730245
+    dataset_description:
+      "Escherichia coli cells overexpressing PP7 virus-like particles imaged on a Titan Krios G4 with the crossed laser
+       phase plate (xLPP) switched on, at 2-3 µm target defocus, as part of a matched-grid comparison with conventional
+       defocus phase contrast. Dose-symmetric tilt series (nominally ±45°, 3° steps, ~126 e/Å² total; a few series
+       stopped early) were collected with PACEtomo in SerialEM on a Gatan Celtic detector and processed with AreTomo3
+       (motion correction, CTF estimation with additional phase shift, patch-based alignment, SART and WBP
+       reconstruction); PP7 VLP and ATP synthase positions were picked with Octopi, curated by 2D classification
+       or picked manually."
+    dataset_identifier: 10519
+    dataset_title: "PP7 virus-like particles in E. coli imaged with the crossed laser phase plate (xLPP) at 2-3 µm
+     defocus"
+    dates: *dates
+    development_stage:
+      id: unknown
+      name: unknown
+    disease:
+      id: PATO:0000461
+      name: normal
+    funding:
+    - funding_agency_name: Chan Zuckerberg Initiative
+      grant_id: CZII-2023-327779
+    grid_preparation: "Quantifoil R 2/1 Au 200 mesh grids glow discharged in a Pelco easiGlow (15 mA, 45 s); 4 µL of
+     cell suspension applied, blotted for 4 s and plunge frozen in liquid ethane with a Leica GP2 (90% humidity,
+     4 °C chamber). All three datasets of this deposition were collected from the same grid."
+    organism:
+      name: Escherichia coli
+      taxonomy_id: 562
+    other_setup: Crossed laser phase plate (xLPP)
+    sample_preparation: "E. coli BL21(DE3) carrying PP7-dimer expression plasmids grown in LB broth to OD600 0.6 and
+     induced with IPTG to overexpress PP7 virus-like particles; cell pellets collected by centrifugation and stored;
+     before freezing a pellet was resuspended in LB broth and adjusted to OD600 0.6, a concentration that yields a thin
+     cell monolayer imageable without focused-ion-beam milling."
+    sample_type: primary_cell_culture
+    tissue:
+      id: CL:0000520
+      name: prokaryotic cell
+  sources:
+  - literal:
+      value:
+      - '10519'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+depositions:
+- sources:
+  - literal:
+      value:
+      - 10363
+frames:
+- metadata:
+    dose_rate: float {dose_rate}
+    is_gain_corrected: false
+  sources:
+  - source_glob:
+      list_glob: frames/{run_name}/*.tif
+gains:
+- sources:
+  - source_glob:
+      list_glob: gain/gain.mrc
+rawtilts:
+- sources:
+  - source_glob:
+      list_glob: rawtlt/{run_name}/{run_name}.rawtlt
+runs:
+- sources:
+  - source_glob:
+      list_glob: tiltseries/*
+standardization_config:
+  deposition_id: 10363
+  run_data_map_file: run_to_data_map.tsv
+  source_prefix: CZII/20260911_xLPP_ecoli/baseline/10519/
+tiltseries:
+- metadata:
+    acceleration_voltage: 300000
+    binning_from_frames: 2
+    camera:
+      acquire_mode: superresolution
+      manufacturer: Gatan
+      model: CELTIC
+    data_acquisition_software: SerialEM (PACEtomo)
+    is_aligned: false
+    microscope:
+      additional_info: Krios G4 with XL module; crossed laser phase plate (xLPP) switched on
+      manufacturer: TFS
+      model: TITAN KRIOS G4
+    microscope_optical_setup:
+      energy_filter: Gatan GIF
+      image_corrector: null
+      phase_plate: crossed laser phase plate
+    pixel_spacing: 1.6
+    spherical_aberration_constant: 2.7
+    tilt_alignment_software: AreTomo3 v2.3.1
+    tilt_axis: 160
+    tilt_range:
+      max: float {tilt_series_max_tilt}
+      min: float {tilt_series_min_tilt}
+    tilt_series_quality: int {tilt_series_quality}
+    tilt_step: 3
+    tilting_scheme: dose-symmetric
+    total_flux: float {tilt_series_total_flux}
+  sources:
+  - source_glob:
+      list_glob: tiltseries/{run_name}/{run_name}.mrc
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: AreTomo3 v2.3.1
+    authors: *authors
+    ctf_corrected: true
+    dates: *dates
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    processing_software: AreTomo3 v2.3.1
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.3.1
+    tomogram_version: 1
+    voxel_spacing: 5.003
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '5.003'
+    source_glob:
+      list_glob: tomograms/{run_name}/{run_name}_Vol.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: AreTomo3 v2.3.1
+    authors: *authors
+    ctf_corrected: false
+    dates: *dates
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: AreTomo3 v2.3.1
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.3.1
+    tomogram_version: 1
+    voxel_spacing: 10.403
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '10.403'
+    source_glob:
+      list_glob: tomograms/{run_name}/{run_name}_2ND_Vol.mrc
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: AreTomo3 v2.3.1
+    authors: *authors
+    ctf_corrected: false
+    dates: *dates
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: AreTomo3 v2.3.1
+    reconstruction_method: SART
+    reconstruction_software: AreTomo3 v2.3.1
+    tomogram_version: 1
+    voxel_spacing: 10.403
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '10.403'
+    source_glob:
+      list_glob: tomograms/{run_name}/{run_name}_3RD_Vol.mrc
+version: 1.3.0
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 5.003
+      - 10.403

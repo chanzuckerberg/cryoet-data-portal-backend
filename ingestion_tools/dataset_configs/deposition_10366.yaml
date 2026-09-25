@@ -1,0 +1,376 @@
+# CryoET Data Portal ingestion config - deposition 10366: refined (miss-alignment) alignments, post-processed tomograms
+# and membrane segmentations for datasets 10518, 10519 and 10520 (xLPP E. coli PP7 VLP).
+alignments:
+- metadata:
+    alignment_type: GLOBAL
+    format: ARETOMO3
+    is_portal_standard: true
+    method_type: projection_matching
+  sources:
+  - source_glob:
+      list_glob: '{dataset_name}/alignment/{run_name}/{run_name}_ts.aln'
+annotations:
+- metadata:
+    annotation_ingest_id: membrane-membrain-seg-10366
+    annotation_method: Automated membrane segmentation with MemBrain-seg applied to the IsoNet2-denoised, miss-alignment-refined tomograms at 10.4 Å; probability maps thresholded at 0.5.
+    annotation_object:
+      id: GO:0016020
+      name: membrane
+    annotation_publications: 10.1101/2024.01.05.574336
+    annotation_software: MemBrain-seg, IsoNet2, miss-alignment, copick
+    authors: &authors
+    - name: Mohammadreza Paraan
+      ORCID: 0000-0002-8402-0134
+      email: reza.paraan@czii.org
+      primary_author_status: true
+      corresponding_author_status: false
+    - name: Anchi Cheng
+      ORCID: 0000-0003-0466-4376
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Eric Cooper
+      ORCID: 0000-0002-8620-4252
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Joshua Dickerson
+      ORCID: 0000-0001-5049-4000
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Pavel Olshin
+      ORCID: 0000-0002-0107-3258
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Elizabeth Montabana
+      ORCID: 0000-0002-6731-5854
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Mykhailo Kopylov
+      ORCID: 0000-0003-0188-9799
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Mallak Ali
+      ORCID: 0009-0007-8169-0996
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Utz Heinrich Ermel
+      ORCID: 0000-0003-4685-037X
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Ariana Peck
+      ORCID: 0000-0002-5940-3897
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Yue Yu
+      ORCID: 0000-0002-3248-9678
+      email: yue.yu@czii.org
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Bronwyn Lucas
+      ORCID: 0000-0001-9162-0421
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Holger Müller
+      ORCID: 0000-0003-0636-5951
+      primary_author_status: false
+      corresponding_author_status: false
+    - name: Bridget Carragher
+      ORCID: 0000-0002-0624-5020
+      email: bridget.carragher@czii.org
+      primary_author_status: false
+      corresponding_author_status: true
+    - name: David Agard
+      ORCID: 0000-0003-3512-695X
+      email: david.agard@czii.org
+      primary_author_status: false
+      corresponding_author_status: true
+    dates: &dates
+      deposition_date: '2026-09-11'
+      last_modified_date: '2026-09-11'
+      release_date: '2026-09-11'
+    ground_truth_status: false
+    is_curator_recommended: true
+    method_links:
+    - custom_name: MemBrain-seg on GitHub
+      link: https://github.com/teamtomo/membrain-seg
+      link_type: source_code
+    - custom_name: MemBrain-seg on PyPI
+      link: https://pypi.org/project/membrain-seg/
+      link_type: other
+    - custom_name: MemBrain-seg documentation
+      link: https://teamtomo.org/membrain-seg/
+      link_type: documentation
+    - custom_name: IsoNet2 on GitHub
+      link: https://github.com/IsoNet-cryoET/IsoNet2
+      link_type: source_code
+    - custom_name: miss-alignment on GitHub
+      link: https://github.com/warpem/miss-alignment
+      link_type: source_code
+    - custom_name: copick on GitHub
+      link: https://github.com/copick/copick
+      link_type: source_code
+    method_type: automated
+    version: 1.0
+  sources:
+  - SemanticSegmentationMask:
+      file_format: zarr
+      glob_strings:
+      - '{dataset_name}/copick/ExperimentRuns/{run_name}/Segmentations/*_membrain-seg_0_membrane.zarr'
+      is_visualization_default: true
+      mask_label: 1
+    parent_filters:
+      include:
+        voxel_spacing:
+        - '10.403'
+datasets:
+- sources:
+  - literal:
+      value:
+      - '10518'
+      - '10519'
+      - '10520'
+deposition_keyphotos:
+- sources:
+  - literal:
+      value:
+        snapshot: null
+        thumbnail: null
+depositions:
+- metadata:
+    authors: *authors
+    cross_references:
+      publications: 10.64898/2026.06.05.730245
+    dates: *dates
+    deposition_description: "Refined tilt-series alignments and post-processed tomograms for the three matched-grid crossed laser phase plate (xLPP) datasets of Escherichia coli overexpressing PP7 virus-like particles. Starting from the AreTomo3 baseline alignments, per-tilt alignment parameters were refined with miss-alignment, a deep-learning alignment refiner that scores reconstruction quality, and the refined global alignments were used to reconstruct 10.4 Å tomograms with AreTomo3 (weighted back projection, with and without CTF deconvolution) and Warp (Fourier-space reconstruction). The CTF-deconvolved tomograms were denoised with DeepDeWedge and IsoNet2, and membranes were segmented with MemBrain-seg on the IsoNet2 output. Because these alignments differ from the baseline alignments, particle positions from the baseline deposition do not transfer to these tomograms."
+    deposition_identifier: 10366
+    deposition_title: "Refined tilt-series alignments and post-processed tomograms for xLPP cryoET of PP7 virus-like particles in E. coli"
+    deposition_types:
+    - tomogram
+    - annotation
+  sources:
+  - literal:
+      value:
+      - 10366
+runs:
+- sources:
+  - exclude:
+    # 10519: baseline alignment covers only 13/16/7 of 31 tilts; no gain-corrected reconstruction -> not ingested
+    - ^pt585_ts_002$
+    - ^pt587_ts_002$
+    - ^pt588_ts_002$
+    source_glob:
+      list_glob: '{dataset_name}/alignment/*'
+standardization_config:
+  deposition_id: 10366
+  source_prefix: CZII/20260911_xLPP_ecoli/
+tomograms:
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: miss-alignment (refined from AreTomo3 v2.3.1 baseline alignments)
+    authors: *authors
+    ctf_corrected: false
+    dates: *dates
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: raw
+    processing_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.3.0
+    tomogram_version: 1
+    voxel_spacing: 10.403
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '10.403'
+    source_glob:
+      list_glob: '{dataset_name}/copick/ExperimentRuns/{run_name}/VoxelSpacing*/aretomo3-miss-aligned-global-wbp.zarr'
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: miss-alignment (refined from AreTomo3 v2.3.1 baseline alignments)
+    authors: *authors
+    ctf_corrected: true
+    dates: *dates
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: true
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    processing_software: AreTomo3 v2.3.0
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.3.0
+    tomogram_version: 1
+    voxel_spacing: 10.403
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '10.403'
+    source_glob:
+      list_glob: '{dataset_name}/copick/ExperimentRuns/{run_name}/VoxelSpacing*/aretomo3-miss-aligned-global-ctf-deconvolved.zarr'
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: miss-alignment (refined from AreTomo3 v2.3.1 baseline alignments)
+    authors: *authors
+    ctf_corrected: true
+    dates: *dates
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: filtered
+    processing_software: Warp 2.0.0
+    reconstruction_method: Fourier Space
+    reconstruction_software: Warp 2.0.0
+    tomogram_version: 1
+    voxel_spacing: 10.403
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '10.403'
+    source_glob:
+      list_glob: '{dataset_name}/copick/ExperimentRuns/{run_name}/VoxelSpacing*/warp-miss-aligned-global.zarr'
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: miss-alignment (refined from AreTomo3 v2.3.1 baseline alignments)
+    authors: *authors
+    ctf_corrected: true
+    dates: *dates
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    processing_software: DeepDeWedge
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.3.0
+    tomogram_version: 1
+    voxel_spacing: 10.403
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '10.403'
+    source_glob:
+      list_glob: '{dataset_name}/copick/ExperimentRuns/{run_name}/VoxelSpacing*/ddw-refined-global.zarr'
+- metadata:
+    affine_transformation_matrix:
+    - - 1
+      - 0
+      - 0
+      - 0
+    - - 0
+      - 1
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 1
+      - 0
+    - - 0
+      - 0
+      - 0
+      - 1
+    align_software: miss-alignment (refined from AreTomo3 v2.3.1 baseline alignments)
+    authors: *authors
+    ctf_corrected: true
+    dates: *dates
+    fiducial_alignment_status: NON_FIDUCIAL
+    is_visualization_default: false
+    offset:
+      x: 0
+      y: 0
+      z: 0
+    processing: denoised
+    processing_software: IsoNet2
+    reconstruction_method: WBP
+    reconstruction_software: AreTomo3 v2.3.0
+    tomogram_version: 1
+    voxel_spacing: 10.403
+  sources:
+  - parent_filters:
+      include:
+        voxel_spacing:
+        - '10.403'
+    source_glob:
+      list_glob: '{dataset_name}/copick/ExperimentRuns/{run_name}/VoxelSpacing*/isonet2-corrected-global.zarr'
+version: 1.3.0
+voxel_spacings:
+- sources:
+  - literal:
+      value:
+      - 10.403
