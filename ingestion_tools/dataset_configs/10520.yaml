@@ -244,8 +244,6 @@ datasets:
     cell_type:
       id: CL:0000520
       name: prokaryotic cell
-    cross_references:
-      publications: 10.64898/2026.06.05.730245
     dataset_description:
       "Escherichia coli cells overexpressing PP7 virus-like particles imaged on a Titan Krios G4 with the crossed laser
        phase plate (xLPP) switched on, close to focus at 0.5-1.5 µm target defocus, as part of a matched-grid comparison

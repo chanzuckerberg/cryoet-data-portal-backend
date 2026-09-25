@@ -1,4 +1,4 @@
-# CryoET Data Portal ingestion config - deposition 10366: refined (miss-alignment) alignments, post-processed tomograms
+# CryoET Data Portal ingestion config - deposition 10367: refined (miss-alignment) alignments, post-processed tomograms
 # and membrane segmentations for datasets 10518, 10519 and 10520 (xLPP E. coli PP7 VLP).
 alignments:
 - metadata:
@@ -11,7 +11,7 @@ alignments:
       list_glob: '{dataset_name}/alignment/{run_name}/{run_name}_ts.aln'
 annotations:
 - metadata:
-    annotation_ingest_id: membrane-membrain-seg-10366
+    annotation_ingest_id: membrane-membrain-seg-10367
     annotation_method: Automated membrane segmentation with MemBrain-seg applied to the IsoNet2-denoised, miss-alignment-refined tomograms at 10.4 Å; probability maps thresholded at 0.5.
     annotation_object:
       id: GO:0016020
@@ -141,7 +141,7 @@ depositions:
       publications: 10.64898/2026.06.05.730245
     dates: *dates
     deposition_description: "Refined tilt-series alignments and post-processed tomograms for the three matched-grid crossed laser phase plate (xLPP) datasets of Escherichia coli overexpressing PP7 virus-like particles. Starting from the AreTomo3 baseline alignments, per-tilt alignment parameters were refined with miss-alignment, a deep-learning alignment refiner that scores reconstruction quality, and the refined global alignments were used to reconstruct 10.4 Å tomograms with AreTomo3 (weighted back projection, with and without CTF deconvolution) and Warp (Fourier-space reconstruction). The CTF-deconvolved tomograms were denoised with DeepDeWedge and IsoNet2, and membranes were segmented with MemBrain-seg on the IsoNet2 output. Because these alignments differ from the baseline alignments, particle positions from the baseline deposition do not transfer to these tomograms."
-    deposition_identifier: 10366
+    deposition_identifier: 10367
     deposition_title: "Refined tilt-series alignments and post-processed tomograms for xLPP cryoET of PP7 virus-like particles in E. coli"
     deposition_types:
     - tomogram
@@ -149,7 +149,7 @@ depositions:
   sources:
   - literal:
       value:
-      - 10366
+      - 10367
 runs:
 - sources:
   - exclude:
@@ -160,7 +160,7 @@ runs:
     source_glob:
       list_glob: '{dataset_name}/alignment/*'
 standardization_config:
-  deposition_id: 10366
+  deposition_id: 10367
   source_prefix: CZII/20260911_xLPP_ecoli/
 tomograms:
 - metadata:

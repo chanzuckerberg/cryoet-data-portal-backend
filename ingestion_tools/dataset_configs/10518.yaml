@@ -244,8 +244,6 @@ datasets:
     cell_type:
       id: CL:0000520
       name: prokaryotic cell
-    cross_references:
-      publications: 10.64898/2026.06.05.730245
     dataset_description:
       "Control dataset of the matched-grid crossed laser phase plate (xLPP) comparison: Escherichia coli cells
       overexpressing PP7 virus-like particles were imaged on the xLPP-equipped Titan Krios G4 with the laser
@@ -293,8 +291,6 @@ deposition_keyphotos:
 depositions:
 - metadata:
     authors: *authors
-    cross_references:
-      publications: 10.64898/2026.06.05.730245
     dates: *dates
     deposition_description: "This deposition contains three cryoET datasets collected back-to-back on a single grid of
       Escherichia coli overexpressing PP7 virus-like particles (VLPs). The datasets compare conventional defocus-based
