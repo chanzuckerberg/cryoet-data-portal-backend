@@ -137,8 +137,6 @@ deposition_keyphotos:
 depositions:
 - metadata:
     authors: *authors
-    cross_references:
-      publications: 10.64898/2026.06.05.730245
     dates: *dates
     deposition_description: "Refined tilt-series alignments and post-processed tomograms for the three matched-grid crossed laser phase plate (xLPP) datasets of Escherichia coli overexpressing PP7 virus-like particles. Starting from the AreTomo3 baseline alignments, per-tilt alignment parameters were refined with miss-alignment, a deep-learning alignment refiner that scores reconstruction quality, and the refined global alignments were used to reconstruct 10.4 Å tomograms with AreTomo3 (weighted back projection, with and without CTF deconvolution) and Warp (Fourier-space reconstruction). The CTF-deconvolved tomograms were denoised with DeepDeWedge and IsoNet2, and membranes were segmented with MemBrain-seg on the IsoNet2 output. Because these alignments differ from the baseline alignments, particle positions from the baseline deposition do not transfer to these tomograms."
     deposition_identifier: 10367
