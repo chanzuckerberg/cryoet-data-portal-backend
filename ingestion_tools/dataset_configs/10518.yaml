@@ -11,7 +11,7 @@ alignments:
 annotations:
 - metadata:
     annotation_ingest_id: virus-like-capsid-refined-10518
-    annotation_method: Oriented PP7 VLP positions from RELION 5 subtomogram averaging with I2 symmetry, run with the py2rely STA pipeline. A random subset of 13,604 of the 17,322 curated candidates (see the curated annotation) was aligned to a PP7 VLP reference map at 9.6 and 3.2 Å/px, duplicates closer than 90 Å were removed, and refinement continued at 1.6 Å/px with repeated rounds of CTF refinement, Bayesian polishing, re-extraction and 3D auto-refinement. Deposited values are those of the particle set that gave the best map (3.4 Å at FSC 0.143), reached after the third polishing round. Orientations are relative to the I2 reference and are defined up to the icosahedral symmetry. Forty particles whose refined centre lies outside the reconstructed volume were omitted.
+    annotation_method: Oriented PP7 VLP positions from RELION 5 subtomogram averaging with I2 symmetry, run with the py2rely STA pipeline. To balance the number of particles across three sessions, a random subset of 13,604 of the 17,322 curated candidates (see the curated annotation) were selected and then aligned to a PP7 VLP reference map at 9.6, 3.2, and 1.6 Å/px with repeated rounds of CTF refinement, Bayesian polishing, re-extraction and 3D auto-refinement. Deposited values are those of the particle set that gave the best map (3.4 Å at FSC 0.143), reached after the third polishing round. Orientations are relative to the I2 reference and are defined up to the icosahedral symmetry. Forty particles whose refined centre lies outside the reconstructed volume were omitted.
     annotation_object:
       id: GO:0170047
       name: virus-like capsid

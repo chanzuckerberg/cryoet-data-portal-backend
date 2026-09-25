@@ -11,7 +11,7 @@ alignments:
 annotations:
 - metadata:
     annotation_ingest_id: virus-like-capsid-refined-10520
-    annotation_method: Oriented PP7 VLP positions from RELION 5 subtomogram averaging with I2 symmetry, run with the py2rely STA pipeline. All 13,604 curated candidates on ice were aligned to a PP7 VLP reference map at 9.6 and 3.2 Å/px, duplicates closer than 90 Å were removed, and refinement continued at 1.6 Å/px with repeated rounds of CTF refinement, Bayesian polishing, re-extraction and 3D auto-refinement. Deposited values are those of the particle set that gave the best map (3.5 Å at FSC 0.143), reached after the fourth refinement round. Orientations are relative to the I2 reference and are defined up to the icosahedral symmetry. Averaging included two tomograms that are not part of this dataset, so 11,894 of the 13,211 refined particles are deposited. Two particles whose refined centre lies outside the reconstructed volume were omitted.
+    annotation_method: Oriented PP7 VLP positions from RELION 5 subtomogram averaging with I2 symmetry, run with the py2rely STA pipeline. To balance the number of particles across three sessions, all 13,604 curated candidates on ice (the smallest set of the three sessions) were aligned to a PP7 VLP reference map at 9.6, 3.2, and 1.6 Å/px with repeated rounds of CTF refinement, Bayesian polishing, re-extraction and 3D auto-refinement. Deposited values are those of the particle set that gave the best map (3.5 Å at FSC 0.143), reached after 3D refinement after the fourth polishing round. Orientations are relative to the I2 reference and are defined up to the icosahedral symmetry. Averaging included two tomograms that are not part of this dataset, so 11,894 of the 13,211 refined particles are deposited. Two particles whose refined centre lies outside the reconstructed volume were omitted.
     annotation_object:
       id: GO:0170047
       name: virus-like capsid
@@ -248,9 +248,10 @@ datasets:
       "Escherichia coli cells overexpressing PP7 virus-like particles imaged on a Titan Krios G4 with the crossed laser
        phase plate (xLPP) switched on, close to focus at 0.5-1.5 µm target defocus, as part of a matched-grid comparison
        with conventional defocus phase contrast. Dose-symmetric tilt series (nominally ±45°, 3° steps, ~126 e/Å² total;
-       one series stopped early) were collected with PACEtomo in SerialEM on a Gatan Celtic detector and processed with
+       one series stopped early) were collected using PACEtomo-based SerialEM scripts with electron-to-laser
+       alignments for each tilt on a Gatan Celtic detector and processed with
        AreTomo3 (motion correction, CTF estimation with additional phase shift, patch-based alignment, SART and WBP
-       reconstruction); PP7 VLP and ATP synthase positions were picked with Octopi, curated by 2D classification
+       reconstruction); PP7 VLP positions were picked with Octopi, curated by 2D classification
        or picked manually."
     dataset_identifier: 10520
     dataset_title: "PP7 virus-like particles in E. coli imaged with the crossed laser phase plate (xLPP) at 0.5-1.5 µm
