@@ -15,6 +15,7 @@ from test_infra.factories.dataset import DatasetFactory
 from test_infra.factories.dataset_author import DatasetAuthorFactory
 from test_infra.factories.deposition import DepositionFactory
 from test_infra.factories.run import RunFactory
+from test_infra.factories.tiltseries import TiltseriesFactory
 from test_infra.factories.tomogram_voxel_spacing import TomogramVoxelSpacingFactory
 
 date_now = datetime.datetime.now()
@@ -323,3 +324,40 @@ async def test_group_by_custom_relationship_field_names(
         key=lambda x: x["groupBy"]["authors"]["name"],
     )
     assert deep_eq(sorted_output, expected)
+
+
+@pytest.mark.asyncio
+async def test_avg_of_int_and_float_columns(
+    sync_db: SyncDB,
+    gql_client,
+) -> None:
+    """
+    Postgres returns avg/stddev/variance of integer columns as numeric (Decimal), which graphql-core >= 3.3
+    can't serialize as Int; make sure those come back as numbers of the column's type.
+    """
+    with sync_db.session() as session:
+        SessionStorage.set_session(session)
+        run = RunFactory.create()
+        TiltseriesFactory.create(run=run, tilt_series_quality=4, tilt_axis=1.0)
+        TiltseriesFactory.create(run=run, tilt_series_quality=5, tilt_axis=2.0)
+
+    query = """
+        query MyQuery {
+            tiltseriesAggregate {
+                aggregate {
+                    avg { tiltSeriesQuality tiltAxis }
+                    stddev { tiltSeriesQuality }
+                    variance { tiltSeriesQuality }
+                    sum { tiltSeriesQuality }
+                }
+            }
+        }
+    """
+    output = await gql_client.query(query)
+    assert "errors" not in output, output.get("errors")
+    aggregate = output["data"]["tiltseriesAggregate"]["aggregate"][0]
+    # avg of 4 and 5 is 4.5; casting to integer rounds it in postgres
+    assert aggregate["avg"] == {"tiltSeriesQuality": 5, "tiltAxis": 1.5}
+    assert aggregate["stddev"] == {"tiltSeriesQuality": 1}
+    assert aggregate["variance"] == {"tiltSeriesQuality": 1}
+    assert aggregate["sum"] == {"tiltSeriesQuality": 9}
