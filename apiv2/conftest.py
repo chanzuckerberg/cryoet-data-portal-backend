@@ -229,7 +229,7 @@ async def api_test_schema(async_db: AsyncDB) -> FastAPI:
     """
     settings = APISettings.model_validate({})  # Workaround for https://github.com/pydantic/pydantic/issues/3753
     strawberry_config = get_strawberry_config()
-    schema = strawberry.Schema(query=MyQuery, mutation=Mutation, config=strawberry_config, extensions=[HandleErrors()])
+    schema = strawberry.Schema(query=MyQuery, mutation=Mutation, config=strawberry_config, extensions=[HandleErrors])
     api = get_app(settings, schema)
     overwrite_api(api, async_db)
     return api

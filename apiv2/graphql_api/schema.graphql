@@ -1,7 +1,7 @@
 """Tiltseries Alignment"""
 type Alignment implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -403,7 +403,7 @@ input Alignment_type_enumEnumComparators {
 """Metadata for an annotation"""
 type Annotation implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -573,7 +573,7 @@ input AnnotationAggregateWhereClauseCount {
 """Metadata for an annotation's authors"""
 type AnnotationAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -964,7 +964,7 @@ type AnnotationEdge {
 """Metadata for files associated with an annotation"""
 type AnnotationFile implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -1218,7 +1218,7 @@ A set of links to models, source code, documentation, etc referenced by annotati
 """
 type AnnotationMethodLink implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -1417,7 +1417,7 @@ input AnnotationOrderByClause {
 """Shapes associated with an annotation"""
 type AnnotationShape implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -1744,7 +1744,7 @@ input BoolComparators {
 """A collection of imaging experiments on the same organism"""
 type Dataset implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """
   An identifier for a CryoET dataset, assigned by the Data Portal. Used to identify the dataset as the directory name in data tree
@@ -1958,7 +1958,7 @@ input DatasetAggregateWhereClauseCount {
 """An author of a dataset"""
 type DatasetAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -2400,7 +2400,7 @@ type DatasetEdge {
 """Metadata for a dataset's funding sources"""
 type DatasetFunding implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -2846,7 +2846,7 @@ input DatetimeComparators {
 """Deposition metadata"""
 type Deposition implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -3036,7 +3036,7 @@ type DepositionAggregateFunctions {
 """Authors for a deposition"""
 type DepositionAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -3384,7 +3384,7 @@ input DepositionOrderByClause {
 
 type DepositionType implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -3584,7 +3584,7 @@ input Deposition_types_enumEnumComparators {
 
 interface EntityInterface implements Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 }
 
 input Fiducial_alignment_status_enumEnumComparators {
@@ -3613,7 +3613,7 @@ input FloatComparators {
 
 type Frame implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -3666,7 +3666,7 @@ References to files containing more information about frame acquisition
 """
 type FrameAcquisitionFile implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -3974,7 +3974,7 @@ input FrameWhereClauseMutations {
 """Gain values for frames in this run"""
 type GainFile implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -4101,16 +4101,11 @@ input GainFileWhereClauseMutations {
 }
 
 """
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-"""
-scalar GlobalID @specifiedBy(url: "https://relay.dev/graphql/objectidentification.htm")
-
-"""
 An ontology term/ID or accession code, state and description associated with a Run, describing cellular components that were visually identified, but not labeled, in a tomogram associated with the Run
 """
 type IdentifiedObject implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -4370,7 +4365,7 @@ type Mutation {
 """An object with a Globally Unique ID"""
 interface Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 }
 
 """Information to aid in pagination."""
@@ -4391,7 +4386,7 @@ type PageInfo {
 """Map alignment parameters to tilt series frames"""
 type PerSectionAlignmentParameters implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -4581,7 +4576,7 @@ input PerSectionAlignmentParametersWhereClauseMutations {
 """Map individual Frames to a Tiltseries"""
 type PerSectionParameters implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -4879,7 +4874,7 @@ type Query {
 
 type Run implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -5255,7 +5250,7 @@ input StrComparators {
 
 type Tiltseries implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -5945,7 +5940,7 @@ input Tiltseries_microscope_manufacturer_enumEnumComparators {
 """Metadata describing a tomogram."""
 type Tomogram implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -6122,7 +6117,7 @@ input TomogramAggregateWhereClauseCount {
 """Author of a tomogram"""
 type TomogramAuthor implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
@@ -6824,7 +6819,7 @@ input TomogramUpdateInput {
 """Voxel spacings for a run"""
 type TomogramVoxelSpacing implements EntityInterface & Node {
   """The Globally Unique ID of this object"""
-  _id: GlobalID!
+  _id: ID!
 
   """Numeric identifier (May change!)"""
   id: Int!
