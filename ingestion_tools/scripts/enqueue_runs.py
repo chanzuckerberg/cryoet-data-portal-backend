@@ -305,7 +305,7 @@ def to_args(**kwargs) -> list[str]:
     "--swipe-wdl-key",
     type=str,
     required=True,
-    default="db_import-v0.0.3.wdl",
+    default="db_import-v0.0.4.wdl",
     help="Specify wdl key for custom workload",
 )
 @db_import_options
