@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.25.3](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.2...apiv2-v1.25.3) (2026-10-02)
+
+
+### Bug Fixes
+
+* **apiv2:** cast avg/stddev/variance aggregates back to the column type ([734eb92](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/734eb929750ff06aeb7890adf74c551e107f97c7))
+* **apiv2:** make the README anchor the release PR footer links to resolve ([663fada](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/663fada6b070e7e95b83b184dab961d38562d4cc))
+* cast avg/stddev/variance aggregates back to the column type ([#812](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/812)) ([734eb92](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/734eb929750ff06aeb7890adf74c551e107f97c7))
+* emit portal shape "Mesh" for triangular mesh annotations ([#775](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/775)) ([3288ec1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/3288ec1f47264bcdda6a48531accc2eadb0a9e8f))
+* **ingestion:** stop pip-installing unlocked deps in the db_import WDL ([#808](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/808)) ([6b07b1c](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/6b07b1c9a321f8652c4a689e0deeb951315628c9))
+* make the README anchor the release PR footer links to resolve ([#780](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/780)) ([663fada](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/663fada6b070e7e95b83b184dab961d38562d4cc))
+* recycle gunicorn workers to bound apiv2 memory growth ([#783](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/783)) ([3c381a6](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/3c381a6ceb9c0e11cb11a742a4f83ec44fb7e3a8))
+
+
+### Miscellaneous Chores
+
+* **deps:** bump anyio from 4.12.1 to 4.14.2 in /apiv2 ([#804](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/804)) ([89d1dd0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/89d1dd04a4c85cc4939e4dd0db9ddcd3e1522320))
+* **deps:** bump h2 from 4.3.0 to 4.4.1 in /apiv2 ([#765](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/765)) ([947b304](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/947b304ab80b5a05cdb598526633d36204a10485))
+* **deps:** bump hpack from 4.1.0 to 4.2.0 in /apiv2 ([#806](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/806)) ([a7ca38a](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a7ca38a39e1eb2563818b09ba61519531eee8b7c))
+* **deps:** bump strawberry-graphql to 0.328.0 for graphql-core 3.3 ([#807](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/807)) ([17ea79d](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/17ea79d36ebd183ba008e2a9bc104c5e08bfd793))
+
 ## [1.25.2](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.1...apiv2-v1.25.2) (2026-09-03)
 
 
