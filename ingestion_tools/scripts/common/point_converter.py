@@ -5,6 +5,7 @@ Various conversion of euler angle to rotation matrix
 import contextlib
 import csv
 import json
+import logging
 import os
 from dataclasses import dataclass
 from typing import List, Tuple, Union
@@ -13,6 +14,8 @@ import imodmodel
 import numpy as np
 import starfile
 from scipy.spatial.transform import Rotation
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -494,14 +497,7 @@ def _from_copick(
 ) -> List[Union[OrientedPoint, Point]]:
     """copick format conversion to position and rotation matrix."""
 
-    with open(file_path, "r") as f:
-        data = json.load(f)
-
-    copick_points = data.get("points", None)
-
-    if copick_points is None:
-        return []
-
+    copick_points = _read_copick_points(file_path)
     points = []
 
     for p in copick_points:
@@ -524,6 +520,12 @@ def _from_copick(
             )
 
     return points
+
+def _read_copick_points(file_path: Union[str, os.PathLike]) -> List[dict]:
+    """The point records of a copick picks file (empty when it has none)."""
+    with open(file_path, "r") as f:
+        data = json.load(f)
+    return data.get("points", None) or []
 
 def from_copick(
     file_path: Union[str, os.PathLike],
@@ -549,6 +551,24 @@ def instance_from_copick(
     order: str = "",
     delimiter: str = None,
 ) -> List[InstancePoint]:
-    """copick format conversion to instance point."""
+    """copick format conversion to instance point.
+
+    Points keep copick's instance_id, so points sharing one are one instance (e.g. the points along one filament).
+    A file whose points are all unassigned (instance_id 0 or absent) keeps one instance per point. Unassigned points
+    in a file that also has assigned ones are grouped together as instance 0.
+    """
     points = _from_copick(file_path, filter_value, binning, order, keep_orientation=False)
-    return [InstancePoint(x_coord=p.x_coord, y_coord=p.y_coord, z_coord=p.z_coord, ID=i) for i, p in enumerate(points)]
+    instance_ids = [int(p.get("instance_id") or 0) for p in _read_copick_points(file_path)]
+    if not any(instance_ids):
+        instance_ids = list(range(len(points)))
+    elif 0 in instance_ids:
+        logger.warning(
+            "%s: %d of %d points have no instance_id; they are grouped as instance 0",
+            file_path,
+            instance_ids.count(0),
+            len(instance_ids),
+        )
+    return [
+        InstancePoint(x_coord=p.x_coord, y_coord=p.y_coord, z_coord=p.z_coord, ID=instance_id)
+        for instance_id, p in zip(instance_ids, points)
+    ]

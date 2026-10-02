@@ -1230,6 +1230,52 @@ ingest_instance_points_test_cases = [
             },
         ],
     },
+    # copick instance ids are kept: points along one filament are one instance; unassigned points are instance 0
+    {
+        "case": "copick, instance ids kept",
+        "source_cfg": {
+            "InstanceSegmentation": {
+                "order": "xyz",
+                "file_format": "copick",
+                "glob_string": "annotations/copick_filament.json",
+                "is_visualization_default": False,
+                "binning": 5,
+            },
+        },
+        "count": 6,
+        "out_data": [
+            {
+                "type": "instancePoint",
+                "location": {"x": 2, "y": 4, "z": 6},
+                "instance_id": 1,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 3, "y": 4, "z": 6},
+                "instance_id": 1,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 4, "y": 4, "z": 6},
+                "instance_id": 1,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 10, "y": 10, "z": 10},
+                "instance_id": 2,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 11, "y": 10, "z": 10},
+                "instance_id": 2,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 20, "y": 20, "z": 20},
+                "instance_id": 0,
+            },
+        ],
+    },
 ]
 
 
