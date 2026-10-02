@@ -512,6 +512,30 @@ ingest_points_test_cases = [
             },
         ],
     },
+    # copick: a point's position is its location plus the translation of its transformation
+    {
+        "case": "copick, location plus translation",
+        "source_cfg": {
+            "Point": {
+                "columns": "xyz",
+                "file_format": "copick",
+                "glob_string": "annotations/copick_shifted.json",
+                "is_visualization_default": False,
+                "binning": 10,
+            },
+        },
+        "count": 2,
+        "out_data": [
+            {
+                "type": "point",
+                "location": {"x": 4.0, "y": 4.0, "z": 4.0},
+            },
+            {
+                "type": "point",
+                "location": {"x": 10.0, "y": 4.0, "z": 5.0},
+            },
+        ],
+    },
 ]
 
 

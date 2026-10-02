@@ -495,27 +495,34 @@ def _from_copick(
     order: str = "",
     keep_orientation = True,
 ) -> List[Union[OrientedPoint, Point]]:
-    """copick format conversion to position and rotation matrix."""
+    """copick format conversion to position and rotation matrix.
+
+    A copick point's particle centre is its location plus the translation of its transformation_ (both in the
+    tomogram frame, angstrom), so that sum is the position.
+    """
 
     copick_points = _read_copick_points(file_path)
     points = []
 
     for p in copick_points:
+        transformation = np.array(p.get("transformation_") or np.eye(4), dtype=float)
+        location = np.array([p["location"]["x"], p["location"]["y"], p["location"]["z"]], dtype=float)
+        x, y, z = (float(c) for c in (location + transformation[0:3, 3]) / binning)
         if keep_orientation:
             points.append(
                 OrientedPoint(
-                    x_coord=p["location"]["x"] / binning,
-                    y_coord=p["location"]["y"] / binning,
-                    z_coord=p["location"]["z"] / binning,
-                    rot_matrix=np.array(p["transformation_"])[0:3, 0:3],
+                    x_coord=x,
+                    y_coord=y,
+                    z_coord=z,
+                    rot_matrix=transformation[0:3, 0:3],
                 ),
             )
         else:
             points.append(
                 Point(
-                    x_coord=p["location"]["x"] / binning,
-                    y_coord=p["location"]["y"] / binning,
-                    z_coord=p["location"]["z"] / binning,
+                    x_coord=x,
+                    y_coord=y,
+                    z_coord=z,
                 ),
             )
 

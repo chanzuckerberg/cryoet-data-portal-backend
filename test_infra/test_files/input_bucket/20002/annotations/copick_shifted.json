@@ -1,0 +1,80 @@
+{
+    "pickable_object_name": "testobject",
+    "user_id": "test",
+    "session_id": "1",
+    "run_name": "Position_94_Vol",
+    "voxel_spacing": null,
+    "unit": "angstrom",
+    "points": [
+        {
+            "location": {
+                "x": 30.0,
+                "y": 20.0,
+                "z": 10.0
+            },
+            "transformation_": [
+                [
+                    1.0,
+                    0.0,
+                    0.0,
+                    10.0
+                ],
+                [
+                    0.0,
+                    1.0,
+                    0.0,
+                    20.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    1.0,
+                    30.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            ],
+            "instance_id": 0,
+            "score": 1.0
+        },
+        {
+            "location": {
+                "x": 90.0,
+                "y": 60.0,
+                "z": 45.0
+            },
+            "transformation_": [
+                [
+                    0.0,
+                    -1.0,
+                    0.0,
+                    10.0
+                ],
+                [
+                    1.0,
+                    0.0,
+                    0.0,
+                    -20.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    1.0,
+                    5.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            ],
+            "instance_id": 0,
+            "score": 1.0
+        }
+    ]
+}
