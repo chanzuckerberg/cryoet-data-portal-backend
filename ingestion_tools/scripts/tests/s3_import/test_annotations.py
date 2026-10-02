@@ -512,6 +512,30 @@ ingest_points_test_cases = [
             },
         ],
     },
+    # copick: a point's position is its location plus the translation of its transformation
+    {
+        "case": "copick, location plus translation",
+        "source_cfg": {
+            "Point": {
+                "columns": "xyz",
+                "file_format": "copick",
+                "glob_string": "annotations/copick_shifted.json",
+                "is_visualization_default": False,
+                "binning": 10,
+            },
+        },
+        "count": 2,
+        "out_data": [
+            {
+                "type": "point",
+                "location": {"x": 4.0, "y": 4.0, "z": 4.0},
+            },
+            {
+                "type": "point",
+                "location": {"x": 10.0, "y": 4.0, "z": 5.0},
+            },
+        ],
+    },
 ]
 
 
@@ -1227,6 +1251,52 @@ ingest_instance_points_test_cases = [
                 "type": "instancePoint",
                 "location": {"x": 1.5, "y": 1, "z": 0.5},
                 "instance_id": 5,
+            },
+        ],
+    },
+    # copick instance ids are kept: points along one filament are one instance; unassigned points are instance 0
+    {
+        "case": "copick, instance ids kept",
+        "source_cfg": {
+            "InstanceSegmentation": {
+                "order": "xyz",
+                "file_format": "copick",
+                "glob_string": "annotations/copick_filament.json",
+                "is_visualization_default": False,
+                "binning": 5,
+            },
+        },
+        "count": 6,
+        "out_data": [
+            {
+                "type": "instancePoint",
+                "location": {"x": 2, "y": 4, "z": 6},
+                "instance_id": 1,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 3, "y": 4, "z": 6},
+                "instance_id": 1,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 4, "y": 4, "z": 6},
+                "instance_id": 1,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 10, "y": 10, "z": 10},
+                "instance_id": 2,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 11, "y": 10, "z": 10},
+                "instance_id": 2,
+            },
+            {
+                "type": "instancePoint",
+                "location": {"x": 20, "y": 20, "z": 20},
+                "instance_id": 0,
             },
         ],
     },
