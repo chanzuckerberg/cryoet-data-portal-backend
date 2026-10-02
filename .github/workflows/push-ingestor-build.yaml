@@ -33,7 +33,7 @@ jobs:
         with:
           mask-aws-account-id: true
           aws-region: ${{ secrets.AWS_REGION }}
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-to-assume: arn:aws:iam::908710317728:role/gh_actions_argus_infra_stacks_staging_cryoet_eks
           role-duration-seconds: 1200
       - name: Login to Amazon ECR
         id: login-ecr
