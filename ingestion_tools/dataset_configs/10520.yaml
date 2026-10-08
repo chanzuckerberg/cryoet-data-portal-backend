@@ -246,8 +246,8 @@ datasets:
       name: prokaryotic cell
     dataset_description:
       "Escherichia coli cells overexpressing PP7 virus-like particles imaged on a Titan Krios G4 with the crossed laser
-       phase plate (xLPP) switched on, close to focus at 0.5-1.5 µm target defocus, as part of a matched-grid comparison
-       with conventional defocus phase contrast. Dose-symmetric tilt series (nominally ±45°, 3° steps, ~126 e/Å² total;
+       phase plate (xLPP) switched on, close to focus at 0.5-1.5 µm target underfocus, as part of a matched-grid comparison
+       with conventional underfocus phase contrast. Dose-symmetric tilt series (nominally ±45°, 3° steps, ~126 e/Å² total;
        one series stopped early) were collected using PACEtomo-based SerialEM scripts with electron-to-laser
        alignments for each tilt on a Gatan Celtic detector and processed with
        AreTomo3 (motion correction, CTF estimation with additional phase shift, patch-based alignment, SART and WBP
@@ -255,7 +255,7 @@ datasets:
        or picked manually."
     dataset_identifier: 10520
     dataset_title: "PP7 virus-like particles in E. coli imaged with the crossed laser phase plate (xLPP) at 0.5-1.5 µm
-     defocus"
+     underfocus"
     dates: *dates
     development_stage:
       id: unknown
