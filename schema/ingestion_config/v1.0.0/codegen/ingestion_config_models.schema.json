@@ -1733,7 +1733,7 @@
                         }
                     ],
                     "description": "Camera model name",
-                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^FALCON IV$)|(^FALCON 4i$))|((^K2$)|(^K2 SUMMIT$)|(^K3$)|(^K3 BIOQUANTUM$)|(^UltraCam$)|(^UltraScan$))|(^simulated$)"
+                    "pattern": "(^[ ]*\\{[a-zA-Z0-9_-]+\\}[ ]*$)|((^FALCON IV$)|(^FALCON 4i$))|((^CELTIC$)|(^K2$)|(^K2 SUMMIT$)|(^K3$)|(^K3 BIOQUANTUM$)|(^UltraCam$)|(^UltraScan$))|(^simulated$)"
                 }
             },
             "required": [
@@ -5675,6 +5675,7 @@
         "TiltseriesCameraModelGatanEnum": {
             "description": "Camera model for Gatan cameras",
             "enum": [
+                "CELTIC",
                 "K2",
                 "K2 SUMMIT",
                 "K3",

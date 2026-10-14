@@ -92,7 +92,7 @@ VALID_IMAGE_FORMATS = ("image/png", "image/jpeg", "image/jpg", "image/gif")
 # Note that model names should all be uppercase or pascal case
 CAMERA_MANUFACTURER_TO_MODEL = {
     ("FEI", "TFS"): ["FALCON IV", "FALCON 4i"],
-    ("Gatan"): ["K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
+    ("Gatan"): ["CELTIC", "K2", "K2 SUMMIT", "K3", "K3 BIOQUANTUM", "UltraCam", "UltraScan"],
     ("simulated"): ["simulated"],
 }
 SOURCE_FILTER_FIELDS = {"parent_filters", "exclude"}
