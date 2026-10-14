@@ -29,6 +29,7 @@ from db_import.importers.tiltseries import (
 from db_import.importers.tomogram import TomogramAuthorImporter, TomogramImporter
 from db_import.importers.voxel_spacing import StaleVoxelSpacingDeletionDBImporter, TomogramVoxelSpacingDBImporter
 from s3fs import S3FileSystem
+from sqlalchemy.engine import make_url
 
 from platformics.database.connect import init_sync_db
 
@@ -171,6 +172,9 @@ def load_func(
 ):
     if not postgres_url:
         postgres_url = f"postgresql+psycopg://{os.environ['PLATFORMICS_DATABASE_USER']}:{os.environ['PLATFORMICS_DATABASE_PASSWORD']}@{os.environ['PLATFORMICS_DATABASE_HOST']}:{os.environ['PLATFORMICS_DATABASE_PORT']}/{os.environ['PLATFORMICS_DATABASE_NAME']}"
+    # Always use psycopg 3, like the API does. A bare postgresql:// URL (e.g. from the
+    # <env>/v2_db_uri secret) would otherwise make SQLAlchemy fall back to psycopg2.
+    postgres_url = make_url(postgres_url).set(drivername="postgresql+psycopg").render_as_string(hide_password=False)
     db = init_sync_db(postgres_url)
     session = db.session()
 

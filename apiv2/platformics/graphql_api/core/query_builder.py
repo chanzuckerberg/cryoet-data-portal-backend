@@ -7,7 +7,7 @@ from collections import defaultdict
 from typing import Any, Optional, Sequence, Tuple
 
 import strcase
-from sqlalchemy import ColumnElement, and_, distinct, inspect
+from sqlalchemy import ColumnElement, and_, cast, distinct, inspect
 from sqlalchemy.engine.row import RowMapping
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import aliased
@@ -350,9 +350,13 @@ def get_aggregate_db_query(
         else:
             for col in filter_meta_fields(aggregator.selections):
                 col_name = strcase.to_snake(col.name)
-                aggregate_query_fields.append(
-                    agg_fn(getattr(model_cls, col_name)).label(f"{aggregator.name}_{col_name}"),  # type: ignore
-                )
+                column = getattr(model_cls, col_name)
+                agg_expr = agg_fn(column)  # type: ignore
+                # Postgres returns numeric (a Python Decimal) for avg/stddev/variance of integer
+                # columns, which graphql-core >= 3.3 refuses to serialize. Cast back to the column's type.
+                if aggregator.name in ("avg", "stddev", "variance"):
+                    agg_expr = cast(agg_expr, column.type)
+                aggregate_query_fields.append(agg_expr.label(f"{aggregator.name}_{col_name}"))
     query = query.with_only_columns(*aggregate_query_fields)
     query, _order_by, group_by = convert_where_clauses_to_sql(
         principal,
