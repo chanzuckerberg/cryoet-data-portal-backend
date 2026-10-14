@@ -52,6 +52,14 @@ annotations:
       ORCID: 0009-0007-8169-0996
       primary_author_status: false
       corresponding_author_status: false
+    - name: M.G. Finn
+      ORCID: 0000-0001-8247-3108
+      corresponding_author_status: false
+      primary_author_status: false
+    - name: Tahiti Dutta
+      ORCID: 0000-0001-7620-2213
+      corresponding_author_status: false
+      primary_author_status: false
     - name: Utz Heinrich Ermel
       ORCID: 0000-0003-4685-037X
       primary_author_status: false
