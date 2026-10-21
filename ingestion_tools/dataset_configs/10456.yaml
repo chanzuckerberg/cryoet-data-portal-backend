@@ -312,7 +312,7 @@ datasets:
       Multiple Cellular Features
     dates:
       deposition_date: '2025-11-24'
-      last_modified_date: '2025-11-24'
+      last_modified_date: '2026-10-21'
       release_date: '2025-11-24'
     development_stage:
       id: unknown
@@ -414,7 +414,6 @@ tiltseries:
       model: TITAN KRIOS G4
     microscope_optical_setup:
       energy_filter: Selectris X
-      phase_plate: Volta phase plate
     pixel_spacing: 3.7
     spherical_aberration_constant: 2.7
     tilt_axis: -96
