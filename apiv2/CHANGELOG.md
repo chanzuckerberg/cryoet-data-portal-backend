@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.25.3](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.2...apiv2-v1.25.3) (2026-10-27)
+
+
+### Bug Fixes
+
+* **apiv2:** cast avg/stddev/variance aggregates back to the column type ([734eb92](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/734eb929750ff06aeb7890adf74c551e107f97c7))
+* **apiv2:** make the README anchor the release PR footer links to resolve ([663fada](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/663fada6b070e7e95b83b184dab961d38562d4cc))
+* **apiv2:** release per-field DB sessions with FastAPI &gt;= 0.121 ([57cf8e1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/57cf8e1739750a7bfb3fcfee26c31a7e80854b07))
+* cast avg/stddev/variance aggregates back to the column type ([#812](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/812)) ([734eb92](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/734eb929750ff06aeb7890adf74c551e107f97c7))
+* emit portal shape "Mesh" for triangular mesh annotations ([#775](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/775)) ([3288ec1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/3288ec1f47264bcdda6a48531accc2eadb0a9e8f))
+* **ingestion:** stop pip-installing unlocked deps in the db_import WDL ([#808](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/808)) ([6b07b1c](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/6b07b1c9a321f8652c4a689e0deeb951315628c9))
+* make the README anchor the release PR footer links to resolve ([#780](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/780)) ([663fada](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/663fada6b070e7e95b83b184dab961d38562d4cc))
+* recycle gunicorn workers to bound apiv2 memory growth ([#783](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/783)) ([3c381a6](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/3c381a6ceb9c0e11cb11a742a4f83ec44fb7e3a8))
+* release per-field DB sessions with FastAPI &gt;= 0.121 ([#843](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/843)) ([57cf8e1](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/57cf8e1739750a7bfb3fcfee26c31a7e80854b07))
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump werkzeug from 3.1.8 to 3.1.9 in /apiv2 ([5c8e704](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/5c8e7044c4ab956d733f7e1b0617ffbc554f8092))
+* **deps:** bump anyio from 4.12.1 to 4.14.2 in /apiv2 ([#804](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/804)) ([89d1dd0](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/89d1dd04a4c85cc4939e4dd0db9ddcd3e1522320))
+* **deps:** bump certifi from 2026.1.4 to 2026.10.18 in /apiv2 ([#840](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/840)) ([019c4b9](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/019c4b9c425776507a8aca1f04a63533fba52dca))
+* **deps:** bump h2 from 4.3.0 to 4.4.1 in /apiv2 ([#765](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/765)) ([947b304](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/947b304ab80b5a05cdb598526633d36204a10485))
+* **deps:** bump hpack from 4.1.0 to 4.2.0 in /apiv2 ([#806](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/806)) ([a7ca38a](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/a7ca38a39e1eb2563818b09ba61519531eee8b7c))
+* **deps:** bump strawberry-graphql to 0.328.0 for graphql-core 3.3 ([#807](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/807)) ([17ea79d](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/17ea79d36ebd183ba008e2a9bc104c5e08bfd793))
+* **deps:** bump werkzeug from 3.1.8 to 3.1.9 in /apiv2 ([#819](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/819)) ([5c8e704](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/5c8e7044c4ab956d733f7e1b0617ffbc554f8092))
+* **deps:** consolidate dependabot security updates in /apiv2 ([#839](https://github.com/chanzuckerberg/cryoet-data-portal-backend/issues/839)) ([4cfdc79](https://github.com/chanzuckerberg/cryoet-data-portal-backend/commit/4cfdc793b40d05b8f4418a1449e2e630a01e8416))
+
 ## [1.25.2](https://github.com/chanzuckerberg/cryoet-data-portal-backend/compare/apiv2-v1.25.1...apiv2-v1.25.2) (2026-09-03)
 
 
