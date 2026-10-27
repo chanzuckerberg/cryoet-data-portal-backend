@@ -7,6 +7,7 @@ from contextlib import AsyncExitStack
 from fastapi.dependencies import utils as deputils
 from fastapi.dependencies.models import Dependant
 from fastapi.params import Depends as DependsClass
+from starlette.requests import Request
 from strawberry.extensions import FieldExtension
 from strawberry.types import Info
 from strawberry.types.field import StrawberryField
@@ -64,8 +65,17 @@ class DependencyExtension(FieldExtension):
         async with AsyncExitStack() as async_exit_stack:
             request.scope["sberrystack"] = AsyncExitStack()
 
+            # FastAPI registers teardown of generator dependencies (e.g. DB sessions) on exit stacks stored in the
+            # request scope rather than on `async_exit_stack`. Those only close when the whole GraphQL request ends,
+            # so every field would hold its DB connection until then. Point them at this field's stack instead, on a
+            # copy of the scope since sibling fields resolve concurrently against the same request.
+            field_request = Request(
+                {**request.scope, "fastapi_inner_astack": async_exit_stack, "fastapi_function_astack": async_exit_stack},
+                request.receive,
+            )
+
             solved_result = await deputils.solve_dependencies(
-                request=request,
+                request=field_request,
                 dependant=self.dependant,
                 body={},
                 dependency_overrides_provider=request.app,
