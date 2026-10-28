@@ -1,13 +1,22 @@
+import copy
 import json
+import os
 import re
 import time
 import urllib.request
 from datetime import datetime, timezone
+
 import boto3
 
-S3_BUCKET = "cryoetportal-biohub-hpc-globus"
-S3_KEY = "SUBMISSION_METADATA/reservations.json"
-GITHUB_API_URL = "https://api.github.com/repos/chanzuckerberg/cryoet-data-portal-backend/contents/ingestion_tools/dataset_configs"
+# AWS paths are injected as env vars (set via Terraform / GH secrets). S3_KEY and the GitHub URL are non-sensitive path.
+S3_BUCKET = os.getenv("RESERVATIONS_BUCKET")
+S3_KEY = os.getenv("RESERVATIONS_KEY", "SUBMISSION_METADATA/reservations.json")
+GITHUB_API_URL = os.getenv(
+    "DATASET_CONFIGS_API_URL",
+    "https://api.github.com/repos/chanzuckerberg/cryoet-data-portal-backend/contents/ingestion_tools/dataset_configs",
+)
+# Optional; if set, authenticates the GitHub API call (60 -> 5000 req/hr).
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 CACHE_TTL_SECONDS = 10
 
 s3 = boto3.client("s3")
@@ -27,10 +36,10 @@ def load_reservations():
         obj = s3.get_object(Bucket=S3_BUCKET, Key=S3_KEY)
         return json.loads(obj["Body"].read())
     except s3.exceptions.NoSuchKey:
-        return {**EMPTY_DATA}
+        return copy.deepcopy(EMPTY_DATA)
     except s3.exceptions.ClientError as e:
         if e.response["Error"]["Code"] == "NoSuchKey":
-            return {**EMPTY_DATA}
+            return copy.deepcopy(EMPTY_DATA)
         raise
 
 def save_reservations(data):
@@ -41,11 +50,15 @@ def save_reservations(data):
         ContentType="application/json",
     )
 
-def fetch_git_ids():
-    DATASET_RE = re.compile(r"^(\d+)(?:_draft)?\.yaml$")
-    DEPOSITION_RE = re.compile(r"^deposition_(\d+)\.yaml$")
+DATASET_RE = re.compile(r"^(\d+)(?:_draft)?\.yaml$")
+DEPOSITION_RE = re.compile(r"^deposition_(\d+)\.yaml$")
 
-    req = urllib.request.Request(GITHUB_API_URL, headers={"Accept": "application/vnd.github.v3+json"})
+
+def fetch_git_ids():
+    headers = {"Accept": "application/vnd.github.v3+json"}
+    if GITHUB_TOKEN:
+        headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
+    req = urllib.request.Request(GITHUB_API_URL, headers=headers)
     with urllib.request.urlopen(req) as resp:
         items = json.loads(resp.read())
     dataset_ids = set()
@@ -151,8 +164,8 @@ def handler(event, context):
         return respond(200, {"deposition_id": dep_id, "instantiated": bool(entry and entry.get("instantiated")), "reservation": entry})
 
 
-    # GET /reservations/dataset/new — reserve a new dataset_id
-    if path == "/reservations/dataset/new" and method == "GET":
+    # POST /reservations/dataset/new — reserve a new dataset_id
+    if path == "/reservations/dataset/new" and method == "POST":
         new_did = data["next_dataset_id"]
         now = datetime.now(timezone.utc).isoformat()
         data["datasets"][str(new_did)] = {"instantiated": False, "reserved_at": now}
@@ -162,8 +175,8 @@ def handler(event, context):
         _cache["timestamp"] = time.monotonic()
         return respond(200, {"dataset_id": new_did})
 
-    # GET /reservations/deposition/new — reserve a new deposition_id
-    if path == "/reservations/deposition/new" and method == "GET":
+    # POST /reservations/deposition/new — reserve a new deposition_id
+    if path == "/reservations/deposition/new" and method == "POST":
         new_dep = data["next_deposition_id"]
         now = datetime.now(timezone.utc).isoformat()
         data["depositions"][str(new_dep)] = {"instantiated": False, "reserved_at": now}

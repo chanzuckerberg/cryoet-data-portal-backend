@@ -3,13 +3,19 @@
 Uses the moto-backed s3_client from conftest. Only the GitHub API is mocked.
 """
 
+import contextlib
 import json
+import os
 import sys
 import time
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+
 import pytest
 from mypy_boto3_s3 import S3Client
+
+# The Lambda reads its bucket from the env at import time.
+os.environ.setdefault("RESERVATIONS_BUCKET", "test-reservations-bucket")
 
 # Mutilating path here as the lambda function code isn't actually part of this library.
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "reservation"))
@@ -64,13 +70,11 @@ def mock_github():
 def reservation_bucket(s3_client: S3Client, region_name: str) -> str:
     """Create the S3 bucket the Lambda uses."""
     bucket = lf.S3_BUCKET
-    try:
+    with contextlib.suppress(s3_client.exceptions.BucketAlreadyOwnedByYou):
         s3_client.create_bucket(
             Bucket=bucket,
             CreateBucketConfiguration={"LocationConstraint": region_name},
         )
-    except s3_client.exceptions.BucketAlreadyOwnedByYou:
-        pass
     return bucket
 
 
@@ -80,10 +84,8 @@ def reservation_env(s3_client: S3Client, reservation_bucket: str):
     lf.s3 = s3_client
     lf._cache["data"] = None
     lf._cache["timestamp"] = 0
-    try:
+    with contextlib.suppress(Exception):
         s3_client.delete_object(Bucket=reservation_bucket, Key=lf.S3_KEY)
-    except Exception:
-        pass
     with patch("lambda_function.urllib.request.urlopen", return_value=mock_github()):
         yield
 
@@ -221,24 +223,24 @@ def test_unknown_route_404(seed_reservations):
 # --- New reservations ---
 
 def test_new_dataset(seed_reservations):
-    _, body = parse(lf.handler(make_event("GET", "/reservations/dataset/new"), None))
+    _, body = parse(lf.handler(make_event("POST", "/reservations/dataset/new"), None))
     assert body["dataset_id"] == 10005
 
 
 def test_new_deposition(seed_reservations):
-    _, body = parse(lf.handler(make_event("GET", "/reservations/deposition/new"), None))
+    _, body = parse(lf.handler(make_event("POST", "/reservations/deposition/new"), None))
     assert body["deposition_id"] == 10004
 
 
 def test_dataset_sequential(seed_reservations):
-    _, body1 = parse(lf.handler(make_event("GET", "/reservations/dataset/new"), None))
-    _, body2 = parse(lf.handler(make_event("GET", "/reservations/dataset/new"), None))
+    _, body1 = parse(lf.handler(make_event("POST", "/reservations/dataset/new"), None))
+    _, body2 = parse(lf.handler(make_event("POST", "/reservations/dataset/new"), None))
     assert body2["dataset_id"] == body1["dataset_id"] + 1
 
 
 def test_deposition_sequential(seed_reservations):
-    _, body1 = parse(lf.handler(make_event("GET", "/reservations/deposition/new"), None))
-    _, body2 = parse(lf.handler(make_event("GET", "/reservations/deposition/new"), None))
+    _, body1 = parse(lf.handler(make_event("POST", "/reservations/deposition/new"), None))
+    _, body2 = parse(lf.handler(make_event("POST", "/reservations/deposition/new"), None))
     assert body2["deposition_id"] == body1["deposition_id"] + 1
 
 
@@ -265,5 +267,5 @@ def test_new_bypasses_cache(seed_reservations):
     lf.handler(make_event("GET", "/reservations"), None)
     lf._cache["timestamp"] = time.monotonic()
 
-    _, body = parse(lf.handler(make_event("GET", "/reservations/dataset/new"), None))
+    _, body = parse(lf.handler(make_event("POST", "/reservations/dataset/new"), None))
     assert "dataset_id" in body

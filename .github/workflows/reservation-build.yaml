@@ -1,0 +1,47 @@
+name: Build and push reservation lambda
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ingestion_tools/scripts/reservation/**"
+      - ".github/workflows/reservation-build.yaml"
+
+# https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  push-image:
+    name: build and push reservation lambda to ECR
+    runs-on: ubuntu-latest
+    environment: staging
+    if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend'
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          mask-aws-account-id: true
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-duration-seconds: 1200
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: 'true'
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Docker build & Push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./ingestion_tools/scripts/reservation
+          file: ./ingestion_tools/scripts/reservation/Dockerfile
+          # Immutable SHA tag for Terraform to pin; branch tag for convenience.
+          tags: |
+            ${{ secrets.ECR_REPO_RESERVATION }}:${{ github.sha }}
+            ${{ secrets.ECR_REPO_RESERVATION }}:${{ github.head_ref || github.ref_name }}
+          push: true
+          provenance: false
