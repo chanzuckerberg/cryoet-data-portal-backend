@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "ingestion_tools/scripts/reservation/**"
+      - "ingestion_tools/scripts/reservation/*"
       - ".github/workflows/reservation-build.yaml"
 
 # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
