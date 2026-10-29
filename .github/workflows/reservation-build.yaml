@@ -14,11 +14,15 @@ permissions:
   id-token: write
   contents: read
 
+# Don't let two deploys upload at once.
+concurrency:
+  group: reservation-lambda-deploy
+  cancel-in-progress: false
+
 jobs:
   upload-zip:
     name: build and upload reservation lambda zip to S3
     runs-on: ubuntu-latest
-    environment: staging
     if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
@@ -27,16 +31,18 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           mask-aws-account-id: true
-          aws-region: ${{ secrets.AWS_REGION }}
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: us-west-2
+          role-to-assume: arn:aws:iam::908710317728:role/cryoetportal-reservation-lambda-deploy
           role-duration-seconds: 1200
       - name: Package and upload lambda zip
         working-directory: ingestion_tools/scripts/reservation
         env:
-          S3_BUCKET: ${{ secrets.RESERVATION_LAMBDA_S3_BUCKET }}
+          S3_BUCKET: cryoetportal-biohub-hpc-globus
         run: |
+          python3 -m py_compile lambda_function.py
           zip -X reservation_lambda.zip lambda_function.py
-          key="LAMBDA/reservation_lambda-${GITHUB_SHA}.zip"
+          zip -T reservation_lambda.zip
+          key="SUBMISSION_METADATA/lambda/reservation_lambda-${GITHUB_SHA}.zip"
           aws s3 cp reservation_lambda.zip "s3://${S3_BUCKET}/${key}"
           {
             echo "Uploaded reservation lambda zip. In cryoet-infra \`reservation.tf\`, set and apply:"

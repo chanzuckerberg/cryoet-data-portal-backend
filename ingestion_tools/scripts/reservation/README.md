@@ -17,7 +17,7 @@ Reserves dataset and deposition IDs for in-progress data submissions.
 
 ## Deploy
 
-1. Merge to `main`. CI ([workflow](../../../.github/workflows/reservation-build.yaml)) uploads `LAMBDA/reservation_lambda-<sha>.zip` to S3.
+1. Merge to `main`. CI ([workflow](../../../.github/workflows/reservation-build.yaml)) uploads `SUBMISSION_METADATA/lambda/reservation_lambda-<sha>.zip` to S3.
 2. Copy the `lambda_zip_key` from the CI run summary.
 3. Set it in [`cryoet-infra`](https://github.com/chanzuckerberg/cryoet-infra) and apply.
 
