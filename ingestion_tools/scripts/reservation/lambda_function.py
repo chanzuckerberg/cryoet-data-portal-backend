@@ -3,6 +3,7 @@ import json
 import os
 import re
 import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 
@@ -59,7 +60,7 @@ def fetch_git_ids():
     if GITHUB_TOKEN:
         headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
     req = urllib.request.Request(GITHUB_API_URL, headers=headers)
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=10) as resp:
         items = json.loads(resp.read())
     dataset_ids = set()
     deposition_ids = set()
@@ -130,9 +131,13 @@ def handler(event, context):
     method = event.get("requestContext", {}).get("http", {}).get("method", "GET")
     query = event.get("queryStringParameters") or {}
 
-    # /reservations/dataset/new or /reservations/deposition/new force a fresh sync
-    is_new = path in ("/reservations/dataset/new", "/reservations/deposition/new")
-    data = get_synced_data(force_refresh=is_new)
+    # GET /reservations/{dataset,deposition}/new forces a fresh sync (gated on GET)
+    is_new = method == "GET" and path in ("/reservations/dataset/new", "/reservations/deposition/new")
+    try:
+        data = get_synced_data(force_refresh=is_new)
+    except (urllib.error.URLError, TimeoutError, ValueError) as e:
+        print(f"reservation sync failed: {e!r}")
+        return respond(502, {"error": "reservation sync failed"})
 
     # GET /reservations
     if path == "/reservations" and method == "GET":
@@ -164,8 +169,8 @@ def handler(event, context):
         return respond(200, {"deposition_id": dep_id, "instantiated": bool(entry and entry.get("instantiated")), "reservation": entry})
 
 
-    # POST /reservations/dataset/new — reserve a new dataset_id
-    if path == "/reservations/dataset/new" and method == "POST":
+    # GET /reservations/dataset/new — reserve a new dataset_id
+    if path == "/reservations/dataset/new" and method == "GET":
         new_did = data["next_dataset_id"]
         now = datetime.now(timezone.utc).isoformat()
         data["datasets"][str(new_did)] = {"instantiated": False, "reserved_at": now}
@@ -175,8 +180,8 @@ def handler(event, context):
         _cache["timestamp"] = time.monotonic()
         return respond(200, {"dataset_id": new_did})
 
-    # POST /reservations/deposition/new — reserve a new deposition_id
-    if path == "/reservations/deposition/new" and method == "POST":
+    # GET /reservations/deposition/new — reserve a new deposition_id
+    if path == "/reservations/deposition/new" and method == "GET":
         new_dep = data["next_deposition_id"]
         now = datetime.now(timezone.utc).isoformat()
         data["depositions"][str(new_dep)] = {"instantiated": False, "reserved_at": now}

@@ -8,6 +8,7 @@ import json
 import os
 import sys
 import time
+import urllib.error
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -223,24 +224,48 @@ def test_unknown_route_404(seed_reservations):
 # --- New reservations ---
 
 def test_new_dataset(seed_reservations):
-    _, body = parse(lf.handler(make_event("POST", "/reservations/dataset/new"), None))
+    _, body = parse(lf.handler(make_event("GET", "/reservations/dataset/new"), None))
     assert body["dataset_id"] == 10005
 
 
 def test_new_deposition(seed_reservations):
-    _, body = parse(lf.handler(make_event("POST", "/reservations/deposition/new"), None))
+    _, body = parse(lf.handler(make_event("GET", "/reservations/deposition/new"), None))
     assert body["deposition_id"] == 10004
 
 
+def test_new_rejects_non_get_methods(seed_reservations):
+    for path in ("/reservations/dataset/new", "/reservations/deposition/new"):
+        for method in ("POST", "PUT"):
+            status, _ = parse(lf.handler(make_event(method, path), None))
+            assert status == 404
+
+
+def test_github_failure_returns_502(seed_reservations):
+    lf._cache["data"] = None
+    lf._cache["timestamp"] = 0
+    with patch("lambda_function.urllib.request.urlopen", side_effect=urllib.error.URLError("boom")):
+        status, body = parse(lf.handler(make_event("GET", "/reservations", {"detail": "true"}), None))
+    assert status == 502
+    assert "error" in body
+
+
+def test_github_timeout_returns_502(seed_reservations):
+    lf._cache["data"] = None
+    lf._cache["timestamp"] = 0
+    with patch("lambda_function.urllib.request.urlopen", side_effect=TimeoutError("slow")):
+        status, _ = parse(lf.handler(make_event("GET", "/reservations", {"detail": "true"}), None))
+    assert status == 502
+
+
 def test_dataset_sequential(seed_reservations):
-    _, body1 = parse(lf.handler(make_event("POST", "/reservations/dataset/new"), None))
-    _, body2 = parse(lf.handler(make_event("POST", "/reservations/dataset/new"), None))
+    _, body1 = parse(lf.handler(make_event("GET", "/reservations/dataset/new"), None))
+    _, body2 = parse(lf.handler(make_event("GET", "/reservations/dataset/new"), None))
     assert body2["dataset_id"] == body1["dataset_id"] + 1
 
 
 def test_deposition_sequential(seed_reservations):
-    _, body1 = parse(lf.handler(make_event("POST", "/reservations/deposition/new"), None))
-    _, body2 = parse(lf.handler(make_event("POST", "/reservations/deposition/new"), None))
+    _, body1 = parse(lf.handler(make_event("GET", "/reservations/deposition/new"), None))
+    _, body2 = parse(lf.handler(make_event("GET", "/reservations/deposition/new"), None))
     assert body2["deposition_id"] == body1["deposition_id"] + 1
 
 
@@ -267,5 +292,5 @@ def test_new_bypasses_cache(seed_reservations):
     lf.handler(make_event("GET", "/reservations"), None)
     lf._cache["timestamp"] = time.monotonic()
 
-    _, body = parse(lf.handler(make_event("POST", "/reservations/dataset/new"), None))
+    _, body = parse(lf.handler(make_event("GET", "/reservations/dataset/new"), None))
     assert "dataset_id" in body

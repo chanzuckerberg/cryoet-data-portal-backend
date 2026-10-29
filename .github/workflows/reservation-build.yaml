@@ -1,12 +1,13 @@
-name: Build and push reservation lambda
+name: Build and upload reservation lambda
 
 on:
   push:
     branches:
       - main
     paths:
-      - "ingestion_tools/scripts/reservation/*"
+      - "ingestion_tools/scripts/reservation/lambda_function.py"
       - ".github/workflows/reservation-build.yaml"
+  workflow_dispatch:
 
 # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
 permissions:
@@ -14,12 +15,14 @@ permissions:
   contents: read
 
 jobs:
-  push-image:
-    name: build and push reservation lambda to ECR
+  upload-zip:
+    name: build and upload reservation lambda zip to S3
     runs-on: ubuntu-latest
     environment: staging
-    if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend'
+    if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend' && github.ref == 'refs/heads/main'
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -27,21 +30,17 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-duration-seconds: 1200
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-        with:
-          mask-password: 'true'
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Docker build & Push
-        uses: docker/build-push-action@v4
-        with:
-          context: ./ingestion_tools/scripts/reservation
-          file: ./ingestion_tools/scripts/reservation/Dockerfile
-          # Immutable SHA tag for Terraform to pin; branch tag for convenience.
-          tags: |
-            ${{ secrets.ECR_REPO_RESERVATION }}:${{ github.sha }}
-            ${{ secrets.ECR_REPO_RESERVATION }}:${{ github.head_ref || github.ref_name }}
-          push: true
-          provenance: false
+      - name: Package and upload lambda zip
+        working-directory: ingestion_tools/scripts/reservation
+        env:
+          S3_BUCKET: ${{ secrets.RESERVATION_LAMBDA_S3_BUCKET }}
+        run: |
+          zip -X reservation_lambda.zip lambda_function.py
+          key="LAMBDA/reservation_lambda-${GITHUB_SHA}.zip"
+          aws s3 cp reservation_lambda.zip "s3://${S3_BUCKET}/${key}"
+          {
+            echo "Uploaded reservation lambda zip. In cryoet-infra \`reservation.tf\`, set and apply:"
+            echo '```'
+            echo "lambda_zip_key = \"${key}\""
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
