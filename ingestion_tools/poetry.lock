@@ -1975,7 +1975,7 @@ tqdm = ">=4.67,<5.0"
 
 [[package]]
 name = "cryoet-data-portal-neuroglancer"
-version = "1.7.1"
+version = "1.7.2"
 description = "Utility package for working with Neuroglancer data in the CZI Cryo-ET Data Portal"
 optional = false
 python-versions = "^3.11"
@@ -1999,8 +1999,8 @@ zarr = "^2.18.2"
 [package.source]
 type = "git"
 url = "https://github.com/chanzuckerberg/cryoet-data-portal-neuroglancer.git"
-reference = "v1.7.1"
-resolved_reference = "75b3d8c6427b6924a3e7cb96c40584eb15f36199"
+reference = "v1.7.2"
+resolved_reference = "5208f531997cd3e212600a854d72af657e3c2e52"
 
 [[package]]
 name = "cycler"
@@ -9076,4 +9076,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "2779bf2f28bd29b72a68ea76a73cf0a4a959d8587275559c5a35661dfa9af521"
+content-hash = "f2240696d32c4ec4985989a16d8cfd3e60bdc252a89b0a179937ecc5b95333d0"
