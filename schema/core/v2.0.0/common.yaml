@@ -1486,6 +1486,8 @@ enums:
   tiltseries_camera_model_gatan_enum:
     description: Camera model for Gatan cameras
     permissible_values:
+      CELTIC:
+        description: CELTIC
       K2:
         description: K2
       "K2 SUMMIT":
