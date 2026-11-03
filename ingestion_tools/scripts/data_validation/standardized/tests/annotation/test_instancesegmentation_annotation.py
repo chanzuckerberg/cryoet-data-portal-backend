@@ -17,11 +17,12 @@ class TestInstanceSegmentationAnnotations:
         annotation_metadata: Dict[str, Dict],
         instance_seg_annotation_files_to_metadata_files: Dict[str, str],
     ):
-        unique_instance_ids = set()
         for filename, points in instance_seg_annotations.items():
             print(f"\tFile: {filename}")
             metadata_file = instance_seg_annotation_files_to_metadata_files[filename]
             metadata = annotation_metadata[metadata_file]
+            # Per file: object_count is the number of distinct instance ids in that file.
+            unique_instance_ids = set()
             for ann in points:
                 unique_instance_ids.add(ann["instance_id"])
             assert len(unique_instance_ids) == metadata["object_count"]
