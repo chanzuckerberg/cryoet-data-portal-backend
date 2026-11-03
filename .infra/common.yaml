@@ -70,10 +70,10 @@ stack:
       resources:
         limits:
           cpu: "3"
-          memory: "3Gi"
+          memory: "8Gi"
         requests:
           cpu: "500m"
-          memory: "512Mi"
+          memory: "2Gi"
       sidecars:
         - name: cerbos
           image: ghcr.io/cerbos/cerbos:0.29.0
