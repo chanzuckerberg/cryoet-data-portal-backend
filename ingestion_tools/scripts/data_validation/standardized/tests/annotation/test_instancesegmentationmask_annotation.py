@@ -7,6 +7,12 @@ from data_validation.shared.helper.helper_mrc_zarr import HelperTestMRCZarrHeade
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 
+def image_label_metadata(ome: Dict) -> Dict | None:
+    """The image-label metadata of a mask: ``ome["image-label"]`` (Zarr v3 / OME-NGFF 0.5), or
+    ``multiscales[0].metadata["image-label"]`` where masks written before the switch kept it."""
+    return ome.get("image-label") or ome.get("multiscales", [{}])[0].get("metadata", {}).get("image-label")
+
+
 # By setting this scope to session, scope="session" fixtures will be reinitialized for each run + voxel_spacing combination
 @pytest.mark.annotation
 @pytest.mark.parametrize("dataset, run_name, voxel_spacing", pytest.cryoet.dataset_run_spacing_combinations, scope="session")
@@ -59,11 +65,9 @@ class TestInstanceSegmentationMask(HelperTestMRCZarrHeader):
     )
     def test_zarr_image_label_metadata(self):
         def check_image_label_metadata(header_data, zarr_filename):
-            zattrs = header_data["zattrs"]
-            multiscales_metadata = zattrs.get("multiscales", [{}])[0].get("metadata", {})
-            image_label = multiscales_metadata.get("image-label")
+            image_label = image_label_metadata(header_data["zattrs"])
             assert image_label is not None, (
-                f"{zarr_filename}: missing 'image-label' in zarr multiscales metadata"
+                f"{zarr_filename}: missing 'image-label' in the zarr OME metadata"
             )
             assert "colors" in image_label, (
                 f"{zarr_filename}: 'image-label' metadata missing 'colors' field"
@@ -90,9 +94,7 @@ class TestInstanceSegmentationMask(HelperTestMRCZarrHeader):
     )
     def test_zarr_labels_unique(self):
         def check_labels_unique(header_data, zarr_filename):
-            zattrs = header_data["zattrs"]
-            multiscales_metadata = zattrs.get("multiscales", [{}])[0].get("metadata", {})
-            image_label = multiscales_metadata.get("image-label")
+            image_label = image_label_metadata(header_data["zattrs"])
             if image_label is None:
                 return
 
@@ -110,9 +112,7 @@ class TestInstanceSegmentationMask(HelperTestMRCZarrHeader):
     )
     def test_label_count_matches_metadata(self, instance_seg_mask_annotation_files_to_metadata: Dict):
         for zarr_filename, header_data in self.zarr_headers.items():
-            zattrs = header_data["zattrs"]
-            multiscales_metadata = zattrs.get("multiscales", [{}])[0].get("metadata", {})
-            image_label = multiscales_metadata.get("image-label")
+            image_label = image_label_metadata(header_data["zattrs"])
             if image_label is None:
                 continue
 

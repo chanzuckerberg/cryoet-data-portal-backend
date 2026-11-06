@@ -37,13 +37,13 @@ Metadata file and directory layout specs:
 │   │   │           └── [tomogram_id]/
 │   │   │               ├── tomogram-metadata.json
 │   │   │               ├── [run_name].zarr/
-│   │   │               │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale
+│   │   │               │   └── Zarr v3 / <a href="https://ngff.openmicroscopy.org/0.5/">OME-NGFF 0.5</a> image (cryoET storage profile): int16 codes, levels 0..K at 100%, 50%, 25%, ...
 │   │   │               └── [run_name].mrc
 │   │   ├── TiltSeries/
 │   │   │   └── [tiltseries_id]/
 │   │   │       ├── [run_name].mrc
 │   │   │       ├── [run_name].zarr/
-│   │   │       │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale
+│   │   │       │   └── Zarr v3 / <a href="https://ngff.openmicroscopy.org/0.5/">OME-NGFF 0.5</a> image (cryoET storage profile): float32, Fourier-cropped levels 0..K in y, x
 │   │   │       ├── tiltseries_metadata.json
 │   │   │       └── [name_in_source].rawtlt
 │   │   └── run_metadata.json

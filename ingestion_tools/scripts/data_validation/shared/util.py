@@ -10,7 +10,6 @@ from tifffile import TiffFile, TiffPage
 
 from common.fs import FileSystemApi
 
-BINNING_FACTORS = [0, 1, 2]
 # block sizes are experimentally tested to be the fastest
 MRC_HEADER_BLOCK_SIZE = 2 * 2**10
 MRC_BZ2_HEADER_BLOCK_SIZE = 500 * 2**10
@@ -43,22 +42,41 @@ def get_mrc_header(mrc_file_path: str, fs: FileSystemApi, fail_test: bool = True
 
 
 def get_zarr_metadata(zarrfile: str, fs: FileSystemApi, fail_test: bool = True) -> dict[str, dict] | None:
-    """Get the zattrs and zarray data for a zarr volume file."""
+    """Get the metadata of a Zarr v3 / OME-NGFF 0.5 image written by the Portal.
+
+    Returns ``{"zattrs": <OME metadata: attributes.ome>, "zarrays": {level: <the level's zarr.json>},
+    "group": <the group's zarr.json>, "image_type": <dca.image_type or None>}``; ``zarrays`` is keyed by the integer
+    level, 0, 1, ..., K.
+    """
+
+    def fail(message: str) -> None:
+        if fail_test:
+            pytest.fail(message)
+
     file_paths = fs.glob(os.path.join(zarrfile, "*"))
     fsstore_children = {os.path.basename(file) for file in file_paths}
-    expected_fsstore_children = {"0", "1", "2", ".zattrs", ".zgroup"}
-    if expected_fsstore_children != fsstore_children:
-        if fail_test:
-            pytest.fail(f"Expected zarr children: {expected_fsstore_children}, Actual children: {fsstore_children}")
-        else:
-            return None
+    if "zarr.json" not in fsstore_children or fsstore_children & {".zgroup", ".zattrs", ".zarray"}:
+        fail(f"Expected a Zarr v3 group (zarr.json and no Zarr v2 metadata), Actual children: {fsstore_children}")
+        return None
+    with fs.open(os.path.join(zarrfile, "zarr.json"), "r") as f:
+        group = json.load(f)
+    ome = group.get("attributes", {}).get("ome", {})
+    levels = [d["path"] for d in ome.get("multiscales", [{}])[0].get("datasets", [])]
+    expected_children = {"zarr.json", *levels}
+    if expected_children != fsstore_children:
+        fail(f"Expected zarr children: {expected_children}, Actual children: {fsstore_children}")
+        return None
 
     zarrays = {}
-    for binning in BINNING_FACTORS:
-        with fs.open(os.path.join(zarrfile, str(binning), ".zarray"), "r") as f:
-            zarrays[binning] = json.load(f)
-    with fs.open(os.path.join(zarrfile, ".zattrs"), "r") as f:
-        return {"zattrs": json.load(f), "zarrays": zarrays}
+    for level in levels:
+        with fs.open(os.path.join(zarrfile, level, "zarr.json"), "r") as f:
+            zarrays[int(level)] = json.load(f)
+    return {
+        "zattrs": ome,
+        "zarrays": zarrays,
+        "group": group,
+        "image_type": group.get("attributes", {}).get("dca", {}).get("image_type"),
+    }
 
 
 def get_mrc_bz2_header(mrcbz2file: str, fs: FileSystemApi, fail_test: bool = True) -> MrcInterpreter:

@@ -217,6 +217,7 @@ class SegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
             resolution=(resolution_in_nm,) * 3,
             delete_existing=True,
             include_mesh=True,
+            storage_options=fs.zarr_storage_options(),
         )
         fs.push(tmp_path)
 
@@ -244,6 +245,7 @@ class InstanceSegmentationMaskAnnotationPrecompute(BaseAnnotationPrecompute):
             resolution=(resolution_in_nm,) * 3,
             delete_existing=True,
             include_mesh=True,
+            storage_options=fs.zarr_storage_options(),
         )
         fs.push(tmp_path)
 

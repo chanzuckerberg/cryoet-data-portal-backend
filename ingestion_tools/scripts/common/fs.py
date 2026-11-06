@@ -6,13 +6,16 @@ import shutil
 from abc import ABC, abstractmethod
 from hashlib import md5
 from io import TextIOBase
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from uuid import uuid4
 
 import boto3
 from s3fs import S3FileSystem
 
 from common.retry import s3_retry_decorator
+
+if TYPE_CHECKING:
+    from zarr.abc.store import Store
 
 
 class FileSystemApi(ABC):
@@ -78,13 +81,33 @@ class FileSystemApi(ABC):
     def rm(self, path: str, recursive: bool = False) -> None:
         pass
 
+    @abstractmethod
+    def zarr_store(self, path: str, read_only: bool = True) -> "Store":
+        """A zarr-python 3 store rooted at ``path`` (a Zarr v2 or v3 hierarchy)."""
+
+    def zarr_storage_options(self) -> dict[str, Any] | None:
+        """fsspec options for libraries that open ``destformat`` paths themselves (None for local paths)."""
+        return None
+
 
 class S3Filesystem(FileSystemApi):
     def __init__(self, force_overwrite: bool, client_kwargs: None | dict[str, str] = None, **kwargs):
         self.client_kwargs = client_kwargs or {}
+        self.s3fs_kwargs = kwargs
         self.s3fs = S3FileSystem(anon=False, client_kwargs=client_kwargs, **kwargs)
         self.tmpdir = "/tmp"
         self.force_overwrite = force_overwrite
+
+    def zarr_storage_options(self) -> dict[str, Any]:
+        # zarr-python 3 needs its own (asynchronous) s3fs instance; listings must not be cached, since stores are
+        # read right after they are written.
+        return {"anon": False, "client_kwargs": self.client_kwargs, "use_listings_cache": False, **self.s3fs_kwargs}
+
+    def zarr_store(self, path: str, read_only: bool = True) -> "Store":
+        from zarr.storage import FsspecStore
+
+        url = path if path.startswith("s3://") else self.destformat(path)
+        return FsspecStore.from_url(url, storage_options=self.zarr_storage_options(), read_only=read_only)
 
     def _calc_etag(self, inputfile: str, partsize: int = 8388608) -> bytes:
         md5_digests = []
@@ -264,3 +287,10 @@ class LocalFilesystem(FileSystemApi):
                 os.rmdir(path)
         elif os.path.exists(path):
             os.remove(path)
+
+    def zarr_store(self, path: str, read_only: bool = True) -> "Store":
+        from zarr.storage import LocalStore
+
+        if not read_only:
+            os.makedirs(path, exist_ok=True)
+        return LocalStore(path, read_only=read_only)

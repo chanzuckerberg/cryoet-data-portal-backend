@@ -98,6 +98,7 @@ class TomogramImporter(VolumeImporter):
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
+            image_type="volume",
         )
 
     def get_identifier(self) -> int:

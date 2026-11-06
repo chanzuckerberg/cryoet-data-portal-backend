@@ -102,8 +102,9 @@ class TomogramItem(ItemDBImporter):
             extra_data["key_photo_url"] = os.path.join(https_prefix, key_photos.get("snapshot"))
             extra_data["key_photo_thumbnail_url"] = os.path.join(https_prefix, key_photos.get("thumbnail"))
 
-        for i in range(0, 3):
-            scale = self.input_data["scales"][i]
+        # The DB keeps the first three levels; tomograms written under the cryoET storage profile have K + 1 >= 3 levels
+        # (more for volumes with an axis above 8192 voxels).
+        for i, scale in enumerate(self.input_data["scales"][:3]):
             extra_data[f"scale{i}_dimensions"] = ",".join([str(scale[p]) for p in "xyz"])
 
         self.model_args.update(extra_data)
