@@ -1,4 +1,3 @@
-import math
 import os
 from typing import Any, Dict
 
@@ -8,9 +7,10 @@ import pandas as pd
 import pytest
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
 from data_validation.shared.helper.tiltseries_helper import TiltSeriesHelper
-from data_validation.shared.util import BINNING_FACTORS
 from data_validation.standardized.tests.test_deposition import HelperTestDeposition
 from mrcfile.mrcinterpreter import MrcInterpreter
+
+from common.cryoet_profile import fourier_plan
 
 MAX_DEVIATING_INCREMENTS = 4
 MDOC_TILT_RANGE_DECIMAL_PLACE = 1
@@ -57,11 +57,11 @@ class TestTiltseries(TiltSeriesHelper):
         # z size is not scaled, stays consistent
         assert len({scale["z"] for scale in tiltseries_metadata["scales"]}) == 1
 
-        curr_scale = tiltseries_metadata["scales"][0]
-        for scale in tiltseries_metadata["scales"][1:]:
-            assert math.ceil(curr_scale["y"] / 2) == scale["y"]
-            assert math.ceil(curr_scale["x"] / 2) == scale["x"]
-            curr_scale = scale
+        # levels are Fourier-cropped from level 0 by 2^k (cryoET storage profile)
+        base = tiltseries_metadata["scales"][0]
+        for level, scale in enumerate(tiltseries_metadata["scales"][1:], start=1):
+            assert fourier_plan(base["y"], 2**level).m == scale["y"]
+            assert fourier_plan(base["x"], 2**level).m == scale["x"]
 
     ### END metadata self-consistency tests ###
 
@@ -80,11 +80,12 @@ class TestTiltseries(TiltSeriesHelper):
     def test_scales_in_zarr(self, tiltseries_metadata: Dict):
         def check_size_in_zarr(header_data, _zarr_filename, tiltseries_metadata):
             del _zarr_filename
-            for binning_factor in BINNING_FACTORS:  # Check all binning factors
-                assert header_data["zarrays"][binning_factor]["shape"] == [
-                    tiltseries_metadata["scales"][binning_factor]["z"],
-                    tiltseries_metadata["scales"][binning_factor]["y"],
-                    tiltseries_metadata["scales"][binning_factor]["x"],
+            assert len(header_data["zarrays"]) == len(tiltseries_metadata["scales"])
+            for level, zarray in header_data["zarrays"].items():  # Check all levels
+                assert zarray["shape"] == [
+                    tiltseries_metadata["scales"][level]["z"],
+                    tiltseries_metadata["scales"][level]["y"],
+                    tiltseries_metadata["scales"][level]["x"],
                 ]
 
         self.zarr_header_helper(check_size_in_zarr, tiltseries_metadata=tiltseries_metadata)
