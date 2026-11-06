@@ -123,7 +123,8 @@ def test_tiltseries_import_metadata(
         "omezarr_dir": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.zarr",
         "mrc_file": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.mrc",
         "pixel_spacing": expected_pixel_spacing,
-        "scales": [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 5, "x": 10}, {"z": 4, "y": 3, "x": 5}],
+        # Fourier-cropped levels (cryoET storage profile): m = 2 * round(n / 2s), rounding half to even
+        "scales": [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 4, "x": 10}, {"z": 4, "y": 2, "x": 4}],
         "size": {"z": 4, "y": 10, "x": 20},
         "raw_tlt_path": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/TS_run1.rawtlt",
         "ctf_path": expected_ctf_path,

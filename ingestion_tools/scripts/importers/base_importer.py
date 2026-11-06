@@ -275,6 +275,7 @@ class VolumeImporter(BaseImporter):
         write_mrc: bool = True,
         voxel_spacing: float | None = None,
         chunk_size: tuple[int, int, int] = (256, 256, 256),
+        image_type: str | None = None,
     ) -> dict[str, Any]:
         """
         Scales the MRC file into a pyramid volume and optionally writes it to MRC and Zarr formats.
@@ -286,6 +287,8 @@ class VolumeImporter(BaseImporter):
             write_mrc (bool): Whether to write the mrc file.
             voxel_spacing (float): The voxel spacing of the volume.
             chunk_size (tuple[int, int, int]): The chunk size of the output volume.
+            image_type (str): "volume" or "tilt_series" to write the zarr under the cryoET storage profile
+                (which fixes the levels, chunks and z scaling), None for other volumes.
         """
         output_prefix = self.get_output_path()
         return make_pyramids(
@@ -298,6 +301,7 @@ class VolumeImporter(BaseImporter):
             header_mapper=self.mrc_header_mapper,
             voxel_spacing=voxel_spacing,
             chunk_size=chunk_size,
+            image_type=image_type,
         )
 
     def get_output_path(self) -> str:

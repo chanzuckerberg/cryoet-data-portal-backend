@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/chanzuckerberg/dynamic-cell-atlas-specs/main/docs/cryoet/v0.1/schema.json",
+  "title": "DCA cryoET Profile Metadata Schema",
+  "description": "Schema for the fields the cryoET profile defines in the DCA namespace of an image group's zarr.json: the profile declaration, the image type and the image statistics. Rules that span the metadata and the arrays (one section entry per tilt image, one level entry per downsampled level, statistics computed from the stored values) are stated in the profile's documentation.",
+  "type": "object",
+  "properties": {
+    "dca": {
+      "type": "object",
+      "description": "Top-level DCA namespace in zarr.json.",
+      "required": ["version", "url", "profile", "image_type", "normalization_statistics"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Version of the DCA specification the profile builds on.",
+          "const": "0.3"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "JSON Schema URL of that DCA version."
+        },
+        "profile": {
+          "$ref": "#/$defs/Profile"
+        },
+        "image_type": {
+          "type": "string",
+          "enum": ["volume", "tilt_series"],
+          "description": "Which image type's rules apply."
+        },
+        "normalization_statistics": {
+          "$ref": "#/$defs/NormalizationStatistics"
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"image_type": {"const": "tilt_series"}}, "required": ["image_type"]},
+          "then": {"properties": {"normalization_statistics": {"properties": {"0": {
+            "required": ["section_statistics"],
+            "properties": {"level_statistics": {"additionalProperties": {"required": ["section_statistics"]}}}
+          }}}}}
+        },
+        {
+          "if": {"properties": {"image_type": {"const": "volume"}}, "required": ["image_type"]},
+          "then": {"properties": {"normalization_statistics": {"properties": {"0": {
+            "not": {"required": ["section_statistics"]},
+            "properties": {"level_statistics": {"additionalProperties": {"not": {"required": ["section_statistics"]}}}}
+          }}}}}
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "Profile": {
+      "type": "object",
+      "description": "Declares that the image follows the cryoET profile.",
+      "required": ["name", "version", "url"],
+      "properties": {
+        "name": {"type": "string", "const": "cryoet"},
+        "version": {"type": "string", "const": "0.1"},
+        "url": {"type": "string", "format": "uri", "description": "JSON Schema URL of this profile version."}
+      },
+      "additionalProperties": false
+    },
+    "IntensityStatistics": {
+      "type": "object",
+      "description": "Summary statistics of the stored values (int16 codes for volumes, float32 values for tilt series) over one scope (whole array or one section) at one level.",
+      "required": ["p1", "p5", "p95", "p99", "mean", "std"],
+      "properties": {
+        "p1": {"type": "number", "description": "1st percentile."},
+        "p5": {"type": "number", "description": "5th percentile."},
+        "p95": {"type": "number", "description": "95th percentile."},
+        "p99": {"type": "number", "description": "99th percentile."},
+        "mean": {"type": "number", "description": "Arithmetic mean."},
+        "std": {"type": "number", "minimum": 0, "description": "Population standard deviation (ddof = 0)."},
+        "p95_p5": {"type": "number", "minimum": 0, "description": "95th percentile minus 5th percentile."},
+        "p99_p1": {"type": "number", "minimum": 0, "description": "99th percentile minus 1st percentile."},
+        "median": {"type": "number", "description": "Median (50th percentile)."},
+        "iqr": {"type": "number", "minimum": 0, "description": "75th percentile minus 25th percentile."}
+      },
+      "additionalProperties": false
+    },
+    "IndexedStatistics": {
+      "type": "object",
+      "description": "Statistics keyed by zero-based section index (as a string).",
+      "patternProperties": {
+        "^[0-9]+$": {"$ref": "#/$defs/IntensityStatistics"}
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "LevelNormalization": {
+      "type": "object",
+      "description": "Statistics of one downsampled level, computed from that level's array.",
+      "required": ["dataset_statistics"],
+      "properties": {
+        "dataset_statistics": {
+          "$ref": "#/$defs/IntensityStatistics",
+          "description": "Statistics over the whole array of this level."
+        },
+        "section_statistics": {
+          "$ref": "#/$defs/IndexedStatistics",
+          "description": "Tilt series only: per-section statistics of this level, one entry per section."
+        }
+      },
+      "additionalProperties": false
+    },
+    "ChannelNormalization": {
+      "type": "object",
+      "description": "Statistics of the volume or tilt series (key \"0\").",
+      "required": ["dataset_statistics", "level_statistics"],
+      "properties": {
+        "dataset_statistics": {
+          "$ref": "#/$defs/IntensityStatistics",
+          "description": "Statistics over the whole level-0 array."
+        },
+        "section_statistics": {
+          "$ref": "#/$defs/IndexedStatistics",
+          "description": "Tilt series only: per-section statistics at level 0, one entry per section."
+        },
+        "level_statistics": {
+          "type": "object",
+          "description": "Statistics of every level other than 0, keyed by the level's path in ome.multiscales[0].datasets.",
+          "patternProperties": {
+            "^[1-9][0-9]*$": {"$ref": "#/$defs/LevelNormalization"}
+          },
+          "additionalProperties": false,
+          "minProperties": 2
+        }
+      },
+      "additionalProperties": false
+    },
+    "NormalizationMetadata": {
+      "type": "object",
+      "description": "How the statistics were computed.",
+      "properties": {
+        "grid": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Stride of the subsample along each subsampled axis; 1 for every voxel."
+        }
+      }
+    },
+    "NormalizationStatistics": {
+      "type": "object",
+      "description": "Statistics under the single key \"0\", and optional metadata.",
+      "required": ["0"],
+      "properties": {
+        "0": {"$ref": "#/$defs/ChannelNormalization"},
+        "metadata": {"$ref": "#/$defs/NormalizationMetadata"}
+      },
+      "additionalProperties": false
+    }
+  }
+}
