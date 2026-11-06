@@ -10,9 +10,17 @@ OME-NGFF 0.5 format that ingestion now writes (see [s3_ingestion.md](s3_ingestio
 | Segmentation masks (semantic, instance) | same levels, dtypes and chunks in Zarr v3; instance label values under `ome["image-label"]` |
 
 Each image is rebuilt from level 0 of the source and verified before it is marked as migrated:
-- tomograms decode to within half a quantization step of the source (exactly for integer-valued sources);
+- tomograms decode to within half a quantization step of the source; integer-valued tomograms that fit in int16 around their mean (924 of 933 in the cryoet-int-quant sample) decode exactly;
 - tilt-series level 0 and all mask levels are identical to the source;
 - tomograms and tilt series pass `common.cryoet_profile.check_profile`.
+
+Tomograms with NaN/inf voxels or values beyond 1000 standard deviations are refused by the profile and reported as failed; they stay in Zarr v2 until cleaned. Portal tomogram 16248 (dataset 10438) is one; no valid tomogram of the Portal or AreTomo3 samples exceeds 189 standard deviations.
+
+Expected sizes, from a pilot on datasets 10429 and 10440:
+- continuous tomograms: about 0.5 of the v2 Zarr;
+- integer-valued tomograms: about 0.7;
+- masks: unchanged;
+- tilt series: 1.2–1.6 times **larger**, because the profile's 128 x 128 inner chunks compress worse than v2's 1024² chunks and Fourier-cropped levels have more entropy.
 
 The script also rewrites the sidecar files:
 - `tomogram_metadata.json` / `tiltseries_metadata.json` (`scales`, `size`; tilt-series levels change size with Fourier cropping);
