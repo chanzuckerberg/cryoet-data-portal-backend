@@ -35,6 +35,9 @@ class TestTomogram(HelperTestMRCZarrHeader):
         self.mrc_headers = tomo_mrc_header
         self.zarr_headers = tomo_zarr_header
         self.spacing = float(voxel_spacing)
+        # Tomograms ingested with --skip-mrc have no MRC (their metadata records none): skip the MRC checks
+        self.error_on_no_mrc_header = bool(tomo_mrc_header)
+        self.expected_mrc_files = None if tomo_mrc_header else set()
 
     @allure.title("Tomogram: sanity check tomogram metadata.")
     def test_metadata(self, tomogram_metadata: Dict):
@@ -106,6 +109,8 @@ class TestTomogram(HelperTestMRCZarrHeader):
         tomogram_metadata: Dict,
         tomo_mrc_header: Dict[str, MrcInterpreter],
     ):
+        if not tomo_mrc_header:
+            pytest.skip("No MRC file (OME-Zarr only, ingested with --skip-mrc)")
         assert len(tomo_mrc_header) == 1
         assert os.path.basename(tomogram_metadata["mrc_file"]) == os.path.basename(
             list(tomo_mrc_header.keys())[0],
