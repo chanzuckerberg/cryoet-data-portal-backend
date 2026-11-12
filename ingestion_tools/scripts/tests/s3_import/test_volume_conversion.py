@@ -10,7 +10,7 @@ from tenacity import stop_after_attempt, wait_none
 from common import cryoet_profile as cp
 from common.fs import FileSystemApi
 from common.image import make_pyramids
-from common.ome_zarr_writer import write_label_pyramid, write_region
+from common.ome_zarr_writer import write_label_pyramid, write_region, write_v2_pyramid
 from common.retry import is_s3_throttling
 
 # Test retry constants (shorter times for fast test execution)
@@ -82,11 +82,37 @@ def test_convert_zarr_to_mrc(s3_fs: FileSystemApi, test_output_bucket: str) -> N
 
 
 @pytest.mark.parametrize("input_name", ["input_mrc.mrc", "input_omezarr.zarr"])
-def test_convert_to_omezarr_without_profile(s3_fs: FileSystemApi, test_output_bucket: str, input_name: str) -> None:
-    """Volumes other than tomograms and tilt series (segmentation masks) keep their 3-level pyramid, written as
-    Zarr v3 / OME-NGFF 0.5."""
+def test_convert_mrc_to_omezarr(s3_fs: FileSystemApi, test_output_bucket: str, input_name: str) -> None:
+    """Default ingestion: Zarr v2 / OME-NGFF 0.4 as before (3 levels, scale-only transforms, '/' chunk keys).
+    test_zarr_v2_golden.py checks that the output is the same as that of the code before zarr-python 3."""
     output_path = f"{test_output_bucket}/output"
     make_pyramids(s3_fs, output_path, f"test-public-bucket/input_bucket/sample_tomos/{input_name}")
+
+    group = open_output(s3_fs, f"{output_path}.zarr")
+    assert group.metadata.zarr_format == 2
+    attrs = group.attrs
+    assert attrs["multiscales"][0]["axes"][0] == {"name": "z", "unit": "angstrom", "type": "space"}
+    assert len(attrs["multiscales"][0]["datasets"]) == 3
+    spacing = 14.08
+    for ds in attrs["multiscales"][0]["datasets"]:
+        assert ds["coordinateTransformations"][0]["scale"] == [spacing, spacing, spacing]
+        spacing *= 2
+    img_dim = 4
+    for level in ("0", "1", "2"):
+        assert group[level].shape == (img_dim, img_dim, img_dim)
+        assert group[level].dtype == np.float32
+        img_dim //= 2
+    assert s3_fs.exists(f"{output_path}.zarr/.zattrs")
+    assert not s3_fs.exists(f"{output_path}.zarr/zarr.json")
+    assert s3_fs.exists(f"{output_path}.zarr/0/0/0/0")
+
+
+@pytest.mark.parametrize("input_name", ["input_mrc.mrc", "input_omezarr.zarr"])
+def test_convert_to_omezarr_v3_without_profile(s3_fs: FileSystemApi, test_output_bucket: str, input_name: str) -> None:
+    """With --dca, volumes other than tomograms and tilt series (segmentation masks) keep their 3-level pyramid,
+    written as Zarr v3 / OME-NGFF 0.5."""
+    output_path = f"{test_output_bucket}/output"
+    make_pyramids(s3_fs, output_path, f"test-public-bucket/input_bucket/sample_tomos/{input_name}", zarr_format=3)
 
     group = open_output(s3_fs, f"{output_path}.zarr")
     assert group.metadata.zarr_format == 3
@@ -225,9 +251,16 @@ def fast_retries():
 
 TEST_PYRAMID = [np.ones((4, 4, 4), dtype=np.int8), np.ones((2, 2, 2), dtype=np.int8)]
 TEST_SPACING = [(14.08, 14.08, 14.08), (28.16, 28.16, 28.16)]
+PYRAMID_WRITERS = pytest.mark.parametrize("writer", [write_v2_pyramid, write_label_pyramid], ids=["zarr_v2", "zarr_v3"])
 
 
-def test_write_region_retries_on_s3_slowdown(s3_fs: FileSystemApi, test_output_bucket: str, fast_retries) -> None:
+@PYRAMID_WRITERS
+def test_write_region_retries_on_s3_slowdown(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    fast_retries,
+    writer,
+) -> None:
     """Writes retry on S3 SlowDown errors and eventually succeed."""
     call_count = 0
     max_failures = 2
@@ -242,26 +275,34 @@ def test_write_region_retries_on_s3_slowdown(s3_fs: FileSystemApi, test_output_b
 
     output_path = f"{test_output_bucket}/test_retry_output.zarr"
     with patch.object(zarr.Array, "__setitem__", flaky_setitem):
-        write_label_pyramid(s3_fs, TEST_PYRAMID, output_path, TEST_SPACING)
+        writer(s3_fs, TEST_PYRAMID, output_path, TEST_SPACING)
 
     # 2 failures + 1 success for the first level, 1 call for the second
     assert call_count == 4, f"Expected 4 calls (2 failures + 2 successes), got {call_count}"
     np.testing.assert_array_equal(open_output(s3_fs, output_path)["0"][:], TEST_PYRAMID[0])
 
 
-def test_write_region_raises_after_max_retries(s3_fs: FileSystemApi, test_output_bucket: str, fast_retries) -> None:
+@PYRAMID_WRITERS
+def test_write_region_raises_after_max_retries(
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    fast_retries,
+    writer,
+) -> None:
     def always_fails(self, *args, **kwargs):
         raise Exception("SlowDown: Please reduce your request rate")
 
     output_path = f"{test_output_bucket}/test_retry_fail_output.zarr"
     with patch.object(zarr.Array, "__setitem__", always_fails), pytest.raises(Exception, match="SlowDown"):
-        write_label_pyramid(s3_fs, TEST_PYRAMID, output_path, TEST_SPACING)
+        writer(s3_fs, TEST_PYRAMID, output_path, TEST_SPACING)
 
 
+@PYRAMID_WRITERS
 def test_write_region_does_not_retry_non_throttling_errors(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     fast_retries,
+    writer,
 ) -> None:
     call_count = 0
 
@@ -272,5 +313,5 @@ def test_write_region_does_not_retry_non_throttling_errors(
 
     output_path = f"{test_output_bucket}/test_no_retry_output.zarr"
     with patch.object(zarr.Array, "__setitem__", non_throttle_error), pytest.raises(ValueError, match="Some other"):
-        write_label_pyramid(s3_fs, TEST_PYRAMID, output_path, TEST_SPACING)
+        writer(s3_fs, TEST_PYRAMID, output_path, TEST_SPACING)
     assert call_count == 1, f"Expected 1 call (no retry for non-throttling error), got {call_count}"

@@ -98,7 +98,8 @@ class TomogramImporter(VolumeImporter):
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
-            image_type="volume",
+            # --dca: Zarr v3 under the cryoET storage profile; otherwise Zarr v2 as before
+            image_type="volume" if self.config.dca else None,
         )
 
     def get_identifier(self) -> int:

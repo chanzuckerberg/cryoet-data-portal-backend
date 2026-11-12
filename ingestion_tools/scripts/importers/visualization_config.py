@@ -98,12 +98,14 @@ class VisualizationConfigImporter(BaseImporter):
     ) -> dict[str, Any]:
         output_resolution = output_resolution or resolution
         zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
-        # Neuroglancer displays the stored values: for cryoET-profile tomograms these are int16 codes, so the 2D
+        # Neuroglancer displays the stored values: for cryoET-profile tomograms (--dca) these are int16 codes, so the 2D
         # contrast (mean +/- 3 rms) comes from the image statistics stored with the zarr, which are in code units.
-        # Tomograms without them (written before the switch to Zarr v3) use the MRC header.
+        # Zarr v2 tomograms have none and use the MRC header, as before.
         reader = ZarrReader(self.config.fs, f"{tomogram.get_output_path()}.zarr")
         stats = reader.dataset_statistics()
         mean, rms = (stats["mean"], stats["std"]) if stats else (volume_info.dmean, volume_info.rms)
+        # 5-D [t, c, z, y, x] volumes: map t and c to local layer dimensions (the source URL stays zarr://)
+        extra_axes = tuple(a for a in reader.axes if a in ("t", "c"))
         return state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
@@ -115,8 +117,7 @@ class VisualizationConfigImporter(BaseImporter):
             rms=rms,
             start={"x": 0, "y": 0, "z": 0},
             threedee_contrast_limits=contrast_limits,
-            # 5-D [t, c, z, y, x] volumes: map t and c to local layer dimensions (the source URL stays zarr://)
-            extra_axes=tuple(a for a in reader.axes if a in ("t", "c")),
+            **({"extra_axes": extra_axes} if extra_axes else {}),
         )
 
     def _to_segmentation_mask_layer(
