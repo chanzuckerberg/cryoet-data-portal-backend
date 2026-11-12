@@ -169,7 +169,8 @@ class OMEZarrReader(VolumeReader):
         return float(self.image.scale(0)[self.image.axes.index("x")])
 
     def get_volume_info(self) -> VolumeInfo:
-        # dmean/rms are not needed for zarr sources (they are only read from MRC headers).
+        # No dmean/rms: MRC headers hold them for MRC volumes, and cryoET-profile (--dca) outputs store image statistics
+        # in their dca attributes (ZarrReader.dataset_statistics), which the viewer config uses instead.
         z, y, x = self._shape
         return VolumeInfo(self.get_voxel_size(), x, y, z, 0.0, 0.0)
 

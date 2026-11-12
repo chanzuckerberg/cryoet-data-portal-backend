@@ -16,7 +16,7 @@ from mypy_boto3_s3 import S3Client
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from common.image import ZarrReader
+from common.image import VolumeInfo, ZarrReader, get_volume_info
 from tests.s3_import.util import create_config, get_children, get_data_from_s3, get_run_and_parents
 
 
@@ -31,6 +31,11 @@ def get_parents(config: DepositionImportConfig) -> dict[str, BaseImporter]:
     parents["tomogram"].import_metadata()
 
     return parents
+
+
+def read_mrc_volume_info(tomogram: TomogramImporter) -> VolumeInfo:
+    """The output MRC's header, read directly (not through get_output_volume_info, which reads the zarr with --dca)."""
+    return get_volume_info(tomogram.config.fs, f"{tomogram.get_output_path()}.mrc")
 
 
 def get_vs_path(parents: dict[str, BaseImporter]) -> str:
@@ -77,7 +82,15 @@ def validate_config(
     expected_tomogram_layer: dict[str, str],
     expected_config_json: dict[str, str],
 ) -> Callable[[str, dict[str, BaseImporter], list[dict]], None]:
-    def validate(vs_path: str, parents: dict[str, BaseImporter], anno_layers: list[dict] = None) -> None:
+    def validate(
+        vs_path: str,
+        parents: dict[str, BaseImporter],
+        anno_layers: list[dict] = None,
+        tomo_volume_info: VolumeInfo | None = None,
+    ) -> None:
+        """``tomo_volume_info``: the tomogram's MRC header, read here if not given. The expected generator call is built
+        from it, so with --dca (where the viewer config reads the zarr instead) this checks that both give the same
+        voxel size and dimensions."""
         key = os.path.join(vs_path, "NeuroglancerPrecompute", "100-neuroglancer_config.json")
         actual = json.loads(get_data_from_s3(s3_client, test_output_bucket, key).read())
         for key, val in expected_config_json.items():
@@ -85,7 +98,8 @@ def validate_config(
 
         layers = [expected_tomogram_layer] + (anno_layers or [])
         scale = (parents["voxel_spacing"].as_float() * 1e-10,) * 3
-        tomo_volume_info = parents["tomogram"].get_output_volume_info()
+        if tomo_volume_info is None:
+            tomo_volume_info = read_mrc_volume_info(parents["tomogram"])
         contrast_limits = parents["tomogram"].get_tomogram().get_contrast_limits()
         if parents["tomogram"].config.dca:
             # The tomogram zarr holds int16 codes (cryoET storage profile): the 2D contrast comes from its statistics,
@@ -155,6 +169,42 @@ def test_viz_config_with_only_tomogram(
     expected_file_name = "100-neuroglancer_config.json"
     assert expected_file_name in config_files
     validate_config(vs_path, parents)
+
+
+@pytest.fixture
+def dca_config(s3_fs: FileSystemApi, test_output_bucket: str, expected_url: str) -> DepositionImportConfig:
+    config = create_config(s3_fs, test_output_bucket, https_prefix=expected_url)
+    config.write_zarr = True
+    config.dca = True
+    return config
+
+
+def test_output_volume_info_from_zarr_matches_mrc(dca_config: DepositionImportConfig) -> None:
+    """With --dca the viewer config takes voxel size and dimensions from the zarr: the same as the MRC header gives."""
+    tomogram = get_parents(dca_config)["tomogram"]
+    from_zarr = tomogram.get_output_volume_info()
+    from_mrc = read_mrc_volume_info(tomogram)
+    assert from_zarr.get_dimensions() == from_mrc.get_dimensions()
+    assert round(from_zarr.voxel_size, 3) == round(from_mrc.voxel_size, 3)
+
+
+def test_viz_config_without_mrc(
+    test_output_bucket: str,
+    s3_client: S3Client,
+    dca_config: DepositionImportConfig,
+    validate_config: Callable[..., None],
+) -> None:
+    """A --dca tomogram's viewer config needs no MRC file, and is the same as with one."""
+    parents = get_parents(dca_config)
+    mrc_volume_info = read_mrc_volume_info(parents["tomogram"])
+    mrc_key = os.path.relpath(f"{parents['tomogram'].get_output_path()}.mrc", test_output_bucket)
+    s3_client.delete_object(Bucket=test_output_bucket, Key=mrc_key)
+    assert not dca_config.fs.exists(f"{parents['tomogram'].get_output_path()}.mrc")
+
+    for item in VisualizationConfigImporter.finder(dca_config, **parents):
+        item.import_item()
+
+    validate_config(get_vs_path(parents), parents, tomo_volume_info=mrc_volume_info)
 
 
 @pytest.fixture(

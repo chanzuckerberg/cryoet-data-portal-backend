@@ -265,8 +265,14 @@ class VolumeImporter(BaseImporter):
         return get_voxel_size(self.config.fs, self.volume_filename)
 
     def get_output_volume_info(self) -> VolumeInfo:
+        """Voxel size and dimensions of the output volume (used by the viewer config).
+
+        With --dca they come from the zarr (zarr.json), so that they don't depend on an MRC file; the image statistics
+        the viewer needs are stored with the zarr as well. Its dmean/rms are 0 here. Zarr v2 outputs have no
+        statistics, so they keep reading the MRC header, as before.
+        """
         output_prefix = self.get_output_path()
-        return get_volume_info(self.config.fs, f"{output_prefix}.mrc")
+        return get_volume_info(self.config.fs, f"{output_prefix}.zarr" if self.config.dca else f"{output_prefix}.mrc")
 
     def scale_mrcfile(
         self,
