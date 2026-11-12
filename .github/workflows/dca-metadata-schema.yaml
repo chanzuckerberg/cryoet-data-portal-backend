@@ -14,7 +14,7 @@ on:
       - schema/.version
       - schema/pyproject.toml
       - schema/poetry.lock
-      - ingestion_tools/scripts/common/codegen/**
+      - ingestion_tools/scripts/common/codegen/*
   pull_request:
     paths:
       - .github/workflows/dca-metadata-schema.yaml
@@ -23,7 +23,7 @@ on:
       - schema/.version
       - schema/pyproject.toml
       - schema/poetry.lock
-      - ingestion_tools/scripts/common/codegen/**
+      - ingestion_tools/scripts/common/codegen/*
   workflow_dispatch:
 
 jobs:
