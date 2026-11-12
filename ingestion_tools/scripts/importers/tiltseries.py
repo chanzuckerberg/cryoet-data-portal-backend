@@ -79,7 +79,7 @@ class TiltSeriesImporter(VolumeImporter):
         # chunks, Fourier-cropped levels in y and x only); otherwise Zarr v2 as before.
         _ = self.scale_mrcfile(
             scale_z_axis=False,
-            write_mrc=self.config.write_mrc,
+            write_mrc=self.config.write_mrc and not self.config.skip_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_pixel_spacing(),
             # since tiltseries is 2D stack of images, set z slice chunk size to 1

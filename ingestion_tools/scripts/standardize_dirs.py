@@ -12,6 +12,18 @@ DCA_OPTION_HELP = (
     "its dca metadata block (int16 codes and mean-binned levels for tomograms, Fourier-cropped levels for tilt series); "
     "segmentation masks in Zarr v3. Default (--no-dca): Zarr v2 / OME-NGFF 0.4 as before."
 )
+SKIP_MRC_OPTION_HELP = (
+    "Write no MRC files for tomograms, tilt series and segmentation masks, and record none in the metadata (OME-Zarr "
+    "only). Requires --dca. Default (--no-skip-mrc): write MRC files as before. Unlike --no-write-mrc, which only "
+    "skips rewriting MRC files that already exist, the outputs then have no MRC at all."
+)
+
+
+def check_skip_mrc(dca: bool, skip_mrc: bool) -> None:
+    """--skip-mrc needs --dca: without MRC, the viewer config takes the tomogram's statistics from its zarr, which
+    only cryoET-profile (--dca) images store."""
+    if skip_mrc and not dca:
+        raise click.UsageError("--skip-mrc requires --dca")
 
 
 @click.group()
@@ -95,6 +107,7 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
 @click.option("--write-mrc/--no-write-mrc", default=True)
 @click.option("--write-zarr/--no-write-zarr", default=True)
 @click.option("--dca/--no-dca", default=False, help=DCA_OPTION_HELP)
+@click.option("--skip-mrc/--no-skip-mrc", default=False, help=SKIP_MRC_OPTION_HELP)
 @click.option("--force-overwrite", is_flag=True, default=False)
 @click.option("--local-fs", type=bool, is_flag=True, default=False)
 @common_options
@@ -110,10 +123,12 @@ def convert(
     write_mrc: bool,
     write_zarr: bool,
     dca: bool,
+    skip_mrc: bool,
     force_overwrite: bool,
     local_fs: bool,
     **kwargs,
 ):
+    check_skip_mrc(dca, skip_mrc)
     fs_mode = "s3"
     if local_fs:
         fs_mode = "local"
@@ -124,6 +139,7 @@ def convert(
     config.write_mrc = write_mrc
     config.write_zarr = write_zarr
     config.dca = dca
+    config.skip_mrc = skip_mrc
     config.load_map_files()
 
     iteration_deps = flatten_dependency_tree(IMPORTER_DEP_TREE).items()

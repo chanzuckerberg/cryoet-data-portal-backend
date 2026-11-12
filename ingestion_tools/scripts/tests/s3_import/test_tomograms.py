@@ -141,13 +141,16 @@ def test_tomogram_import(
     assert "tomogram_metadata.json" in tomogram_files
 
 
-@pytest.mark.parametrize("dca", [False, True], ids=["zarr_v2", "dca"])
+@pytest.mark.parametrize(
+    "dca, skip_mrc", [(False, False), (True, False), (True, True)], ids=["zarr_v2", "dca", "dca_skip_mrc"],
+)
 def test_tomogram_import_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
     validate_metadata: Callable[[dict, str], None],
     dca: bool,
+    skip_mrc: bool,
 ) -> None:
     """
     To recreate the test mrc file with the dimensions and pixel spacing used in the test, use create_mrc method in
@@ -157,6 +160,7 @@ def test_tomogram_import_metadata(
     """
     config = create_config(s3_fs, test_output_bucket)
     config.dca = dca
+    config.skip_mrc = skip_mrc
     parents = get_parents(config)
     tomogram = list(TomogramImporter.finder(config, **parents))
     for item in tomogram:
@@ -169,13 +173,15 @@ def test_tomogram_import_metadata(
     prefix = f"{vs_path}/Tomograms/{id_prefix}"
     tomogram_files = get_children(s3_client, test_output_bucket,  f"output/{prefix}")
     assert "tomogram_metadata.json" in tomogram_files
+    # --skip-mrc writes no MRC
+    assert (f"{run_name}.mrc" in tomogram_files) != skip_mrc
     # --dca writes Zarr v3 (zarr.json), the default Zarr v2 (.zgroup), as before
     zarr_files = get_children(s3_client, test_output_bucket, f"output/{prefix}/{run_name}.zarr")
     assert ("zarr.json" in zarr_files) == dca and (".zgroup" in zarr_files) != dca
     image_path = f"{vs_path}/Images/{id_prefix}/key-photo-"
     expected = {
         "omezarr_dir": os.path.join(prefix, f"{run_name}.zarr"),
-        "mrc_file": os.path.join(prefix, f"{run_name}.mrc"),
+        **({} if skip_mrc else {"mrc_file": os.path.join(prefix, f"{run_name}.mrc")}),
         "voxel_spacing": 13.48,
         "scales": [{"x": 6, "y": 8, "z": 10}, {"x": 3, "y": 4, "z": 5}, {"x": 2, "y": 2, "z": 3}],
         "size": {"x": 6, "y": 8, "z": 10},
@@ -188,6 +194,8 @@ def test_tomogram_import_metadata(
         },
     }
     validate_metadata(expected, f"output/{prefix}")
+    metadata = json.loads(get_data_from_s3(s3_client, test_output_bucket, f"output/{prefix}/tomogram_metadata.json").read())
+    assert ("mrc_file" in metadata) != skip_mrc
 
 
 def test_tomogram_no_import(

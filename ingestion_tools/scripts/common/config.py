@@ -78,6 +78,10 @@ class DepositionImportConfig:
         # --dca: write Zarr v3 / OME-NGFF 0.5 (tomograms and tilt series under the cryoET storage profile of the DCA
         # spec, masks in Zarr v3). Off: Zarr v2 / OME-NGFF 0.4 as before.
         self.dca: bool = False
+        # --skip-mrc (requires --dca): write no MRC files for tomograms, tilt series and segmentation masks, and record
+        # none in the metadata. Unlike write_mrc=False (which only skips rewriting MRCs that already exist), the outputs
+        # then have no MRC at all.
+        self.skip_mrc: bool = False
 
         with open(config_path, "r") as conffile:
             confdata = conffile.read()

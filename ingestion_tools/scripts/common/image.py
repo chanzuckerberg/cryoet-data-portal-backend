@@ -458,12 +458,14 @@ def get_volume_metadata(config: DepositionImportConfig, output_prefix: str) -> d
         z, y, x = (int(n) for n in image.array(dataset["path"]).shape[-3:])
         scales.append({"z": z, "y": y, "x": x})
     size = scales[0] if scales else {}
-    return {
+    metadata = {
         "scales": scales,
         "size": size,
         "omezarr_dir": config.to_formatted_path(omezarr_dir),
-        "mrc_file": config.to_formatted_path(f"{output_prefix}.mrc"),
     }
+    if not config.skip_mrc:  # --skip-mrc writes no MRC, so none is recorded (mrc_file is optional in the schema)
+        metadata["mrc_file"] = config.to_formatted_path(f"{output_prefix}.mrc")
+    return metadata
 
 
 def get_voxel_size(fs: FileSystemApi, tomo_filename: str) -> float:

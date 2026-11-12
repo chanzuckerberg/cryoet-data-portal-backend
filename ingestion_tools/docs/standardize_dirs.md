@@ -69,3 +69,5 @@ python3 standardize_dirs.py convert dataset_configs/10000.yaml cryoetportal-rawd
 | --local-fs | False | Allows for the script to be run against a local filesystem instead of assuming S3 input/output paths. This is useful for dev/testing! |
 | --no-write-zarr | False | Skip writing zarr's if they don't need to be updated. |
 | --no-write-mrc | False | Skip writing mrc's if they don't need to be updated. |
+| --dca | False | Write Zarr v3 / OME-NGFF 0.5: tomograms and tilt series under the cryoET storage profile of the DCA spec, masks in Zarr v3 (see [s3_ingestion.md](s3_ingestion.md)). Off: Zarr v2 / OME-NGFF 0.4 as before. |
+| --skip-mrc | False | Write no MRC files for tomograms, tilt series and segmentation masks, and record none in the metadata (OME-Zarr only, e.g. for the private bucket). Requires `--dca`. Unlike `--no-write-mrc`, which only skips rewriting MRC files that already exist, the outputs then have no MRC at all. |

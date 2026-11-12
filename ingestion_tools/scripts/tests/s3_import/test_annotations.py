@@ -36,7 +36,8 @@ from tests.s3_import.util import list_dir
 
 
 def check_mask_zarr(fs: FileSystemApi, zarr_path: str, mrc_data: np.ndarray, dca: bool, labels: bool = False) -> None:
-    """The mask zarr holds the MRC's level 0 in Zarr v3 with --dca, in Zarr v2 (as before) without; instance masks
+    """The mask zarr holds the MRC's level 0 (or the expected volume with --skip-mrc) in Zarr v3 with --dca, in Zarr v2
+    (as before) without; instance masks
     keep their label values (ome["image-label"] in v3, multiscales[0].metadata["image-label"] in v2)."""
     reader = ZarrReader(fs, zarr_path)
     assert reader.image.zarr_format == (3 if dca else 2)
@@ -222,16 +223,18 @@ def test_import_annotation_metadata(
     )
 
 
+@pytest.mark.parametrize("skip_mrc", [False, True], ids=["with_mrc", "dca_skip_mrc"])
 def test_import_annotation_metadata_with_multiple_sources(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     voxel_spacing_importer_s3,
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
+    skip_mrc: bool,
 ) -> None:
     """Make sure that we can import multiple shape types for a single annotation.
     Specifically make sure we can support importing points files defined *AFTER*
-    non-points sources."""
+    non-points sources. With --skip-mrc (and --dca), the mask has no MRC file or entry."""
     anno_config = {
         "metadata": default_anno_metadata,
         "sources": [
@@ -253,6 +256,7 @@ def test_import_annotation_metadata_with_multiple_sources(
     }
 
     deposition_config_s3._set_object_configs("annotation", [anno_config])
+    deposition_config_s3.dca = deposition_config_s3.skip_mrc = skip_mrc
     anno1 = SegmentationMaskAnnotation(
         config=deposition_config_s3,
         metadata=default_anno_metadata,
@@ -284,15 +288,17 @@ def test_import_annotation_metadata_with_multiple_sources(
     anno_files = [basename(item) for item in list_dir(s3_client, test_output_bucket, prefix)]
     assert "some_protein-1.0.json" in anno_files
     assert "some_protein-1.0_point.ndjson" in anno_files
+    assert ("some_protein-1.0_segmentationmask.mrc" in anno_files) != skip_mrc
 
     # Sanity check the metadata
     with s3_fs.open(metadata_file, "r") as fh:
         metadata = json.load(fh)
     assert metadata["object_count"] == 3
     fileinfo = metadata["files"]
-    assert {item["format"] for item in fileinfo} == {"zarr", "ndjson", "mrc"}
+    expected_formats = {"zarr", "ndjson"} if skip_mrc else {"zarr", "ndjson", "mrc"}
+    assert {item["format"] for item in fileinfo} == expected_formats
     assert {item["shape"] for item in fileinfo} == {"Point", "SegmentationMask"}
-    assert len(fileinfo) == 3  # We should have ndjson, mrc and zarr files
+    assert len(fileinfo) == len(expected_formats)  # ndjson and zarr files, and mrc unless --skip-mrc
 
 
 def test_import_annotation_metadata_glob_strings(
@@ -1463,7 +1469,9 @@ ingest_mask_test_cases = [
 ]
 
 
-@pytest.mark.parametrize("dca", [False, True], ids=["zarr_v2", "dca"])
+@pytest.mark.parametrize(
+    "dca, skip_mrc", [(False, False), (True, False), (True, True)], ids=["zarr_v2", "dca", "dca_skip_mrc"],
+)
 @pytest.mark.parametrize("case", ingest_mask_test_cases)
 def test_ingest_segmentationmask(
     s3_fs: FileSystemApi,
@@ -1473,6 +1481,7 @@ def test_ingest_segmentationmask(
     s3_client: S3Client,
     case: Dict[str, Any],
     dca: bool,
+    skip_mrc: bool,
 ):
     # loop through test cases
     anno_config = {
@@ -1483,6 +1492,7 @@ def test_ingest_segmentationmask(
     }
     deposition_config_s3._set_object_configs("annotation", [anno_config])
     deposition_config_s3.dca = dca
+    deposition_config_s3.skip_mrc = skip_mrc
 
     anno = SemanticSegmentationMaskAnnotation(
         config=deposition_config_s3,
@@ -1501,13 +1511,16 @@ def test_ingest_segmentationmask(
 
     # Strip the bucket name and annotation name from the annotation's output path.
     anno_file = anno.get_output_path() + "_segmentationmask.mrc"
-
-    # Sanity check the mrc file
-    with s3_fs.open(anno_file, "rb") as fh:
-        mrc = MrcInterpreter(fh)
-        data = mrc.data
-
     exp_data = case["out_data"][0]["volume"]
+    if skip_mrc:
+        # no MRC: check the zarr against the expected volume
+        assert not s3_fs.exists(anno_file)
+        data = np.array(exp_data, dtype=np.int8)
+    else:
+        # Sanity check the mrc file
+        with s3_fs.open(anno_file, "rb") as fh:
+            mrc = MrcInterpreter(fh)
+            data = mrc.data
 
     # Mask shape
     assert data.shape == (4, 4, 4), f"Incorrect shape for {case['case']}"
@@ -1751,7 +1764,9 @@ ingest_instancemask_test_cases = [
 ]
 
 
-@pytest.mark.parametrize("dca", [False, True], ids=["zarr_v2", "dca"])
+@pytest.mark.parametrize(
+    "dca, skip_mrc", [(False, False), (True, False), (True, True)], ids=["zarr_v2", "dca", "dca_skip_mrc"],
+)
 @pytest.mark.parametrize("case", ingest_instancemask_test_cases)
 def test_ingest_instancesegmentationmask(
     s3_fs: FileSystemApi,
@@ -1761,6 +1776,7 @@ def test_ingest_instancesegmentationmask(
     s3_client: S3Client,
     case: Dict[str, Any],
     dca: bool,
+    skip_mrc: bool,
 ):
     # loop through test cases
     anno_config = {
@@ -1771,6 +1787,7 @@ def test_ingest_instancesegmentationmask(
     }
     deposition_config_s3._set_object_configs("annotation", [anno_config])
     deposition_config_s3.dca = dca
+    deposition_config_s3.skip_mrc = skip_mrc
 
     args = dict(
         config=deposition_config_s3,
@@ -1788,14 +1805,17 @@ def test_ingest_instancesegmentationmask(
 
     # Strip the bucket name and annotation name from the annotation's output path.
     anno_file = anno.get_output_path() + "_instancesegmentationmask.mrc"
-
-    # Sanity check the mrc file
-    with s3_fs.open(anno_file, "rb") as fh:
-        mrc = MrcInterpreter(fh)
-        data = mrc.data
-
     exp_data = case["out_data"][0]["volume"]
     shape = case["out_data"][0]["shape"]
+    if skip_mrc:
+        # no MRC: check the zarr against the expected volume
+        assert not s3_fs.exists(anno_file)
+        data = np.array(exp_data)
+    else:
+        # Sanity check the mrc file
+        with s3_fs.open(anno_file, "rb") as fh:
+            mrc = MrcInterpreter(fh)
+            data = mrc.data
 
     # Mask shape
     assert data.shape == shape, f"Incorrect shape for {case['case']}"

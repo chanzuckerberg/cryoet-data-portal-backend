@@ -107,8 +107,9 @@ def validate_config(
             tomogram_zarr = ZarrReader(parents["tomogram"].config.fs, f"{parents['tomogram'].get_output_path()}.zarr")
             stats = tomogram_zarr.dataset_statistics()
             layer_args = {"mean": stats["mean"], "rms": stats["std"], "extra_axes": ("t", "c")}
-            # for this integer-valued tomogram the codes are the values minus round(mean): same rms, shifted mean
-            assert stats["std"] == pytest.approx(tomo_volume_info.rms, rel=1e-6)
+            if not parents["tomogram"].config.skip_mrc:
+                # for this integer-valued tomogram the codes are the values minus round(mean): same rms as the MRC
+                assert stats["std"] == pytest.approx(tomo_volume_info.rms, rel=1e-6)
         else:
             # Zarr v2 (default): as before, the 2D contrast comes from the MRC header
             layer_args = {"mean": tomo_volume_info.dmean, "rms": tomo_volume_info.rms}
@@ -205,6 +206,24 @@ def test_viz_config_without_mrc(
         item.import_item()
 
     validate_config(get_vs_path(parents), parents, tomo_volume_info=mrc_volume_info)
+
+
+def test_viz_config_with_skip_mrc(
+    dca_config: DepositionImportConfig,
+    validate_config: Callable[..., None],
+) -> None:
+    """--dca --skip-mrc: the tomogram is ingested without MRC, and its viewer config builds from the zarr.
+    (test_output_volume_info_from_zarr_matches_mrc shows that the zarr gives what the MRC header would.)"""
+    dca_config.skip_mrc = True
+    parents = get_parents(dca_config)
+    tomogram = parents["tomogram"]
+    assert not dca_config.fs.exists(f"{tomogram.get_output_path()}.mrc")
+
+    for item in VisualizationConfigImporter.finder(dca_config, **parents):
+        item.import_item()
+
+    zarr_volume_info = get_volume_info(dca_config.fs, f"{tomogram.get_output_path()}.zarr")
+    validate_config(get_vs_path(parents), parents, tomo_volume_info=zarr_volume_info)
 
 
 @pytest.fixture(

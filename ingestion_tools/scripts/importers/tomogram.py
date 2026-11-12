@@ -95,7 +95,7 @@ class TomogramImporter(VolumeImporter):
             print(f"Skipping import of {self.name}")
             return
         self.scale_mrcfile(
-            write_mrc=self.config.write_mrc,
+            write_mrc=self.config.write_mrc and not self.config.skip_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
             # --dca: Zarr v3 under the cryoET storage profile; otherwise Zarr v2 as before

@@ -313,6 +313,8 @@ class VolumeAnnotationSource(BaseAnnotationSource):
         return None if src == target else target
 
     def get_metadata(self, output_prefix: str) -> list[dict[str, Any]]:
+        # --skip-mrc writes no mask MRC, so only the zarr is listed
+        formats = ["zarr"] if self.config.skip_mrc else ["zarr", "mrc"]
         metadata = [
             {
                 "format": fmt,
@@ -320,7 +322,7 @@ class VolumeAnnotationSource(BaseAnnotationSource):
                 "shape": self.shape,
                 "is_visualization_default": self.is_visualization_default,
             }
-            for fmt in ["zarr", "mrc"]
+            for fmt in formats
         ]
         return metadata
 
@@ -357,7 +359,7 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
             self.get_output_filename(output_prefix),
             self.path,
             label=self.mask_label,
-            write_mrc=self.config.write_mrc,
+            write_mrc=self.config.write_mrc and not self.config.skip_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
             scale_0_dims=output_dims,
@@ -390,7 +392,7 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
             self.config.fs,
             self.get_output_filename(output_prefix),
             self.path,
-            write_mrc=self.config.write_mrc,
+            write_mrc=self.config.write_mrc and not self.config.skip_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
             scale_0_dims=output_dims,
@@ -448,7 +450,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             self.get_output_filename(output_prefix),
             self.path,
             label=self.mask_label,
-            write_mrc=self.config.write_mrc,
+            write_mrc=self.config.write_mrc and not self.config.skip_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_voxel_spacing().as_float(),
             scale_0_dims=output_dims,
