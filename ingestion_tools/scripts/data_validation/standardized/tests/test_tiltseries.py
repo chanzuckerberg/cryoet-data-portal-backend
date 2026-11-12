@@ -35,6 +35,9 @@ class TestTiltseries(TiltSeriesHelper):
         self.zarr_headers = tiltseries_zarr_metadata
         self.spacing = tiltseries_metadata["pixel_spacing"]
         self.skip_z_axis_checks = True
+        # Tilt series ingested with --skip-mrc have no MRC (their metadata records none): skip the MRC checks
+        self.error_on_no_mrc_header = bool(tiltseries_mrc_header)
+        self.expected_mrc_files = None if tiltseries_mrc_header else set()
 
     ### BEGIN metadata self-consistency tests ###
     @allure.title("Tiltseries: sanity check tiltseries metadata.")
@@ -114,6 +117,8 @@ class TestTiltseries(TiltSeriesHelper):
         tiltseries_metadata: Dict,
         tiltseries_mrc_header: Dict[str, MrcInterpreter],
     ):
+        if not tiltseries_mrc_header:
+            pytest.skip("No MRC file (OME-Zarr only, ingested with --skip-mrc)")
         assert len(tiltseries_mrc_header) == 1
         assert os.path.basename(tiltseries_metadata["mrc_file"]) == os.path.basename(
             list(tiltseries_mrc_header.keys())[0],

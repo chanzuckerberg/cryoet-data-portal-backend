@@ -19,9 +19,14 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
         seg_mask_annotation_zarr_headers: Dict[str, Dict[str, Dict]],
         voxel_spacing: str,
         seg_mask_annotation_files_to_metadata: Dict,
+        seg_mask_annotation_mrc_files_to_metadata_files: Dict[str, str],
     ):
-        # unused for now, kept since this fixture determines whether these tests should be skipped or ran
+        # keyed by the masks' zarr files: determines whether these tests should be skipped or ran
         del seg_mask_annotation_files_to_metadata
+        # The MRC files the metadata lists (checked to exist, with no others present). Masks ingested with --skip-mrc
+        # list none: the MRC checks are skipped for them.
+        self.expected_mrc_files = set(seg_mask_annotation_mrc_files_to_metadata_files)
+        self.error_on_no_mrc_header = bool(self.expected_mrc_files)
         self.spacegroup = 1  # single 3D volume
         self.mrc_headers = seg_mask_annotation_mrc_headers
         self.zarr_headers = seg_mask_annotation_zarr_headers
@@ -31,6 +36,8 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
     ### BEGIN Tomogram-consistency tests ###
     @allure.title("Segmentation mask: volumes are contained within the tomogram dimensions.")
     def test_contained_in_tomo(self, seg_mask_annotation_files_to_metadata: Dict, all_vs_tomogram_metadata: Dict):
+        # Level 0 of the mask's zarr (every mask has one; the MRC is optional) must have the tomogram's size. The MRC,
+        # where there is one, has the zarr's level-0 size (test_zarr_mrc_volume_size).
         tomo_metadata = {}
         for filename, metadata in seg_mask_annotation_files_to_metadata.items():
             for tomo_data in all_vs_tomogram_metadata:
@@ -38,13 +45,13 @@ class TestSegmentationMask(HelperTestMRCZarrHeader):
                     tomo_metadata[filename] = tomo_data
                     break
 
-        def check_contained_in_tomo(header, _interpreter, _mrc_filename, tomogram_metadata):
-            this_tomo_metadata = tomo_metadata[_mrc_filename]
-            del _interpreter, _mrc_filename
-            assert header.nx == this_tomo_metadata["size"]["x"]
-            assert header.ny == this_tomo_metadata["size"]["y"]
-            assert header.nz == this_tomo_metadata["size"]["z"]
+        def check_contained_in_tomo(header_data, zarr_filename, tomogram_metadata):
+            this_tomo_metadata = tomogram_metadata[zarr_filename]
+            z, y, x = header_data["zarrays"][0]["shape"][-3:]
+            assert x == this_tomo_metadata["size"]["x"]
+            assert y == this_tomo_metadata["size"]["y"]
+            assert z == this_tomo_metadata["size"]["z"]
 
-        self.mrc_header_helper(check_contained_in_tomo, tomogram_metadata=tomo_metadata)
+        self.zarr_header_helper(check_contained_in_tomo, tomogram_metadata=tomo_metadata)
 
     ### END Tomogram-consistency tests ###

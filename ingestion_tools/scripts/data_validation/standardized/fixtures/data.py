@@ -4,7 +4,7 @@ Any fixtures involving loading data from the bucket.
 
 import json
 import os
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Union
 
 import data_validation.shared.util as helper_util
 import mdocfile
@@ -78,8 +78,10 @@ def gain_headers(
 
 
 @pytest.fixture(scope="session")
-def tiltseries_mrc_header(tiltseries_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
-    """Get the mrc file headers for a tilt series."""
+def tiltseries_mrc_header(tiltseries_mrc_file: Optional[str], filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+    """Get the mrc file headers for a tilt series ({} if it has no MRC: ingested with --skip-mrc)."""
+    if tiltseries_mrc_file is None:
+        return {}
     return {tiltseries_mrc_file: helper_util.get_mrc_header(tiltseries_mrc_file, filesystem)}
 
 
@@ -146,8 +148,10 @@ def alignment_tiltseries_raw_tilt(alignment_tiltseries_rawtilt_file: str, filesy
 
 
 @pytest.fixture(scope="session")
-def tomo_mrc_header(tomo_mrc_file: str, filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
-    """Get the mrc file headers for a tomogram."""
+def tomo_mrc_header(tomo_mrc_file: Optional[str], filesystem: FileSystemApi) -> Dict[str, MrcInterpreter]:
+    """Get the mrc file headers for a tomogram ({} if it has no MRC: ingested with --skip-mrc)."""
+    if tomo_mrc_file is None:
+        return {}
     return {tomo_mrc_file: helper_util.get_mrc_header(tomo_mrc_file, filesystem)}
 
 
@@ -232,14 +236,14 @@ def instance_seg_annotation_files_to_metadata(instance_seg_annotation_files_to_m
     return load_metadata_dict(instance_seg_annotation_files_to_metadata_files, filesystem)
 
 @pytest.fixture(scope="session")
-def seg_mask_annotation_files_to_metadata(seg_mask_annotation_mrc_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
-    """Load the annotation metadata, keyed by path."""
-    return load_metadata_dict(seg_mask_annotation_mrc_files_to_metadata_files, filesystem)
+def seg_mask_annotation_files_to_metadata(seg_mask_annotation_zarr_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by the mask's zarr path (every mask has a zarr; MRC files are optional)."""
+    return load_metadata_dict(seg_mask_annotation_zarr_files_to_metadata_files, filesystem)
 
 @pytest.fixture(scope="session")
-def instance_seg_mask_annotation_files_to_metadata(instance_seg_mask_annotation_mrc_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
-    """Load the annotation metadata, keyed by path."""
-    return load_metadata_dict(instance_seg_mask_annotation_mrc_files_to_metadata_files, filesystem)
+def instance_seg_mask_annotation_files_to_metadata(instance_seg_mask_annotation_zarr_files_to_metadata_files: Dict[str, str], filesystem: FileSystemApi) -> Dict:
+    """Load the annotation metadata, keyed by the mask's zarr path (every mask has a zarr; MRC files are optional)."""
+    return load_metadata_dict(instance_seg_mask_annotation_zarr_files_to_metadata_files, filesystem)
 
 
 def get_ndjson_annotations(

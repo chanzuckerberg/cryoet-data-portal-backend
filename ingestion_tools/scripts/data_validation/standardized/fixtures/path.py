@@ -170,19 +170,35 @@ def tiltseries_meta_file(
         pytest.fail(f"Tilt series metadata file not found: {dst}")
 
 
+def get_volume_mrc_file(
+    volume_dir: str,
+    bucket: str,
+    metadata: Dict,
+    filesystem: FileSystemApi,
+    name: str,
+) -> Optional[str]:
+    """The MRC file recorded in a tomogram's or tilt series' metadata (mrc_file), which must exist. None if the
+    metadata records no MRC (ingested with --skip-mrc, OME-Zarr only); then no MRC may be in the directory either."""
+    if not metadata.get("mrc_file"):
+        leftover = filesystem.glob(f"{volume_dir}/*.mrc")
+        if leftover:
+            pytest.fail(f"{name} mrc files not recorded in the metadata (no mrc_file): {leftover}")
+        return None
+    file = os.path.join(bucket, metadata["mrc_file"])
+    if not filesystem.exists(file):
+        pytest.fail(f"{name} mrc file not found: {file}")
+    return file
+
+
 @pytest.fixture(scope="session")
 def tiltseries_mrc_file(
     tiltseries_dir: str,
     bucket: str,
     tiltseries_metadata: Dict,
     filesystem: FileSystemApi,
-) -> str:
-    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].mrc"""
-
-    file = os.path.join(bucket, tiltseries_metadata["mrc_file"])
-    if not filesystem.exists(file):
-        pytest.fail(f"Tilt series mrc file not found: {file}")
-    return file
+) -> Optional[str]:
+    """[Dataset]/[ExperimentRun]/TiltSeries/[ts_dir]/[ts_name].mrc, or None if the metadata records no MRC."""
+    return get_volume_mrc_file(tiltseries_dir, bucket, tiltseries_metadata, filesystem, "Tilt series")
 
 
 @pytest.fixture(scope="session")
@@ -331,12 +347,10 @@ def tomo_mrc_file(
     bucket: str,
     tomogram_metadata: Dict,
     filesystem: FileSystemApi,
-) -> str:
-    """[Dataset]/[ExperimentRun]/Reconstructions/VoxelSpacing[voxel_spacing]/Tomograms/[tomodir]/[tomo_name].mrc"""
-    file = os.path.join(bucket, tomogram_metadata["mrc_file"])
-    if not filesystem.exists(file):
-        pytest.fail(f"Tomogram mrc file not found: {file}")
-    return file
+) -> Optional[str]:
+    """[Dataset]/[ExperimentRun]/Reconstructions/VoxelSpacing[voxel_spacing]/Tomograms/[tomodir]/[tomo_name].mrc,
+    or None if the metadata records no MRC."""
+    return get_volume_mrc_file(tomo_dir, bucket, tomogram_metadata, filesystem, "Tomogram")
 
 
 @pytest.fixture(scope="session")
@@ -421,11 +435,12 @@ def get_annotation_files_to_metadata_files(
     filesystem: FileSystemApi,
     name: str,
     format: Optional[str] = None,
+    skip_if_none: bool = True,
 ) -> Dict[str, str]:
     """[Dataset]/[ExperimentRun]/Reconstructions/VoxelSpacing[voxel_spacing]/Annotations/[annotation_name].*
     Helper function for retrieving annotation files and their corresponding metadata files.
     Fails the test if the annotation file is not found for a given metadata file OR if there are any remaining annotation files.
-    Skips the test if no annotation files are found.
+    Skips the test if no annotation files are found (returns {} instead with skip_if_none=False).
     Returns a dictionary of annotation files, annotation_filename -> metadata_filename.
     """
 
@@ -450,6 +465,8 @@ def get_annotation_files_to_metadata_files(
         )
 
     if count == 0:
+        if not skip_if_none:
+            return {}
         pytest.skip(f"No {name} annotation files found.")
 
     return corresponding_annotation_files
@@ -558,6 +575,8 @@ def seg_mask_annotation_mrc_files_to_metadata_files(
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
+    """Mask MRC files -> metadata files ({} if there are none: masks ingested with --skip-mrc only have the zarr).
+    Fails for MRC files that the metadata doesn't list, and for listed ones that don't exist."""
     return get_annotation_files_to_metadata_files(
         bucket,
         seg_mask_annotation_mrc_files,
@@ -565,6 +584,7 @@ def seg_mask_annotation_mrc_files_to_metadata_files(
         filesystem,
         "SegmentationMask",
         "mrc",
+        skip_if_none=False,
     )
 
 
@@ -616,6 +636,8 @@ def instance_seg_mask_annotation_mrc_files_to_metadata_files(
     annotation_metadata: Dict[str, Dict],
     filesystem: FileSystemApi,
 ) -> Dict[str, str]:
+    """Mask MRC files -> metadata files ({} if there are none: masks ingested with --skip-mrc only have the zarr).
+    Fails for MRC files that the metadata doesn't list, and for listed ones that don't exist."""
     return get_annotation_files_to_metadata_files(
         bucket,
         instance_seg_mask_annotation_mrc_files,
@@ -623,6 +645,7 @@ def instance_seg_mask_annotation_mrc_files_to_metadata_files(
         filesystem,
         "InstanceSegmentationMask",
         "mrc",
+        skip_if_none=False,
     )
 
 
