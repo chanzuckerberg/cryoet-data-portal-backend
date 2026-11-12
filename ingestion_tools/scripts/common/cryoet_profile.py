@@ -33,7 +33,9 @@ PROFILE = {
 }
 DCA_VERSION = "0.3"
 DCA_SCHEMA_URL = "https://raw.githubusercontent.com/chanzuckerberg/dynamic-cell-atlas-specs/main/docs/v0.3/schema.json"
-PROFILE_SCHEMA_PATH = Path(__file__).parent / "schemas" / "cryoet_profile_v0.1.schema.json"
+# JSON Schema of the dca block, generated from the LinkML schema in schema/dca_metadata (`make -C schema
+# build-dca-metadata`, which also writes this copy: the ingestor image only contains ingestion_tools/). Do not edit.
+DCA_SCHEMA_PATH = Path(__file__).parent / "codegen" / "dca_metadata.schema.json"
 
 INNER_CHUNK = 128
 MAX_LEVEL_EDGE = 2048
@@ -406,9 +408,11 @@ def check_profile(group_meta: dict[str, Any], array_metas: dict[str, dict[str, A
     ome, dca = attrs.get("ome", {}), attrs.get("dca", {})
     chk.expect(ome.get("version") == "0.5", "ome.version must be 0.5")
     try:
-        jsonschema.validate({"dca": dca}, json.loads(PROFILE_SCHEMA_PATH.read_text()))
+        jsonschema.validate(dca, json.loads(DCA_SCHEMA_PATH.read_text()))
     except jsonschema.ValidationError as e:
         chk.errors.append(f"dca block: {e.message}")
+    # The schema can't state which statistics keys must exist (they follow the arrays): checked below, together with
+    # tilt series having per-section statistics at every level and volumes having none.
     image_type = dca.get("image_type")
     if image_type not in AXES or len(ome.get("multiscales", [])) != 1:
         chk.errors.append("need dca.image_type 'volume' or 'tilt_series' and exactly one multiscales entry")
@@ -432,6 +436,19 @@ def check_profile(group_meta: dict[str, Any], array_metas: dict[str, dict[str, A
     p = datasets[0]["coordinateTransformations"][0].get("scale", [None])[-1]
     stats = dca.get("normalization_statistics", {}).get("0", {})
     level_stats = stats.get("level_statistics", {})
+    if isinstance(stats, dict) and isinstance(level_stats, dict):
+        expected_levels = {str(k) for k in range(1, len(datasets))}
+        chk.expect(
+            set(level_stats) == expected_levels,
+            f"level_statistics keys {sorted(level_stats)} must be the levels {sorted(expected_levels, key=int)}",
+        )
+        entries = [stats] + [v for v in level_stats.values() if isinstance(v, dict)]
+        chk.expect(
+            all(isinstance(v, dict) and "dataset_statistics" in v for v in level_stats.values()),
+            "every level_statistics entry needs dataset_statistics",
+        )
+        if image_type == "volume":
+            chk.expect(all("section_statistics" not in e for e in entries), "volumes have no section_statistics")
     attrs0 = array_metas["0"].get("attributes", {})
     expected_shape = list(zyx)
     for k, d in enumerate(datasets):
@@ -470,7 +487,10 @@ def check_profile(group_meta: dict[str, Any], array_metas: dict[str, dict[str, A
             shard = list(tilt_shard_shape(shape))
             inner = [1, INNER_CHUNK, INNER_CHUNK]
             sections = (stats if k == 0 else level_stats.get(str(k), {})).get("section_statistics", {})
-            chk.expect(len(sections) == zyx[0], f"{where}: need section statistics for all {zyx[0]} sections")
+            chk.expect(
+                set(sections) == {str(i) for i in range(zyx[0])},
+                f"{where}: need section statistics keyed 0..{zyx[0] - 1}, one per section",
+            )
         if len(transforms) == 2:
             chk.expect(_close(transforms[0].get("scale", []), scale), f"{where}: scale {transforms[0].get('scale')} != {scale}")
             chk.expect(
