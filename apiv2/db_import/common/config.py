@@ -75,7 +75,8 @@ class DBImportConfig:
         try:
             where_clauses = [
                 models.Tiltseries.run_id == run_id,
-                models.Tiltseries.s3_mrc_file.like(path),
+                # tilt series ingested without MRC (--skip-mrc) only have the zarr in the tilt series directory
+                sa.or_(models.Tiltseries.s3_mrc_file.like(path), models.Tiltseries.s3_omezarr_dir.like(path)),
             ]
             item = session.scalars(sa.select(models.Tiltseries).where(sa.and_(*where_clauses))).one()
             return item.id

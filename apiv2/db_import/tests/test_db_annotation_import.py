@@ -109,15 +109,6 @@ def expected_annotation_files(http_prefix: str) -> list[dict[str, Any]]:
         },
         {
             "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
-            "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_segmask.mrc",
-            "https_path": f"{http_prefix}/{path}100-foo-1.0_segmask.mrc",
-            "source": "community",
-            "format": "mrc",
-            "is_visualization_default": False,
-            "file_size": 0,
-        },
-        {
-            "tomogram_voxel_spacing_id": TOMOGRAM_VOXEL_ID1,
             "s3_path": f"s3://test-public-bucket/{path}100-foo-1.0_segmask.zarr",
             "https_path": f"{http_prefix}/{path}100-foo-1.0_segmask.zarr",
             "source": "community",

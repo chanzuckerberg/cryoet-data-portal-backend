@@ -29,7 +29,6 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "data_acquisition_software": "SerialEM",
             "deposition_id": 300,
             "https_angle_list": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/100/bar.rawtlt",
-            "https_mrc_file": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/100/ts_foo.mrc",
             "https_omezarr_dir": f"{http_prefix}/{DATASET_ID}/RUN1/TiltSeries/100/ts_foo.zarr",
             "id": TILTSERIES_ID,
             "is_aligned": True,
@@ -43,7 +42,6 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "related_empiar_entry": "EMPIAR-XYZ",
             "run_id": RUN1_ID,
             "s3_angle_list": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/100/bar.rawtlt",
-            "s3_mrc_file": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/100/ts_foo.mrc",
             "s3_omezarr_dir": f"s3://test-public-bucket/{DATASET_ID}/RUN1/TiltSeries/100/ts_foo.zarr",
             "spherical_aberration_constant": 2.7,
             "tilt_axis": 84.7,
@@ -58,7 +56,8 @@ def expected_tiltseries(http_prefix: str) -> list[dict[str, Any]]:
             "size_y": 3838,
             "size_x": 3708,
             "file_size_omezarr": 0,
-            "file_size_mrc": 0,
+            # RUN1's metadata has no mrc_file (ingested with --skip-mrc): the MRC fields must be None, although
+            # populate_tiltseries set them.
         },
         {
             "acceleration_voltage": 10000,
