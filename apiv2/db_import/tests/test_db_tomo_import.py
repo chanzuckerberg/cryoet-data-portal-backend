@@ -74,9 +74,8 @@ def expected_tomograms_by_run(http_prefix: str) -> dict[str, dict[float, list[di
         "s3_omezarr_dir": f"s3://test-public-bucket/{run1_vs_path}Tomograms/100/RUN1.zarr",
         "https_omezarr_dir": f"{http_prefix}/{run1_vs_path}Tomograms/100/RUN1.zarr",
         "file_size_omezarr": 0,
-        "s3_mrc_file": f"s3://test-public-bucket/{run1_vs_path}Tomograms/100/RUN1.mrc",
-        "https_mrc_file": f"{http_prefix}/{run1_vs_path}Tomograms/100/RUN1.mrc",
-        "file_size_mrc": 0,
+        # RUN1's metadata has no mrc_file (ingested with --skip-mrc): s3_mrc_file, https_mrc_file and file_size_mrc
+        # must be None (verify_model requires that of every column not listed), although populate_tomograms set them.
         "scale0_dimensions": "980,1016,500",
         "scale1_dimensions": "490,508,250",
         "scale2_dimensions": "245,254,125",
@@ -202,7 +201,8 @@ def test_import_voxel_spacings_and_tomograms(
                 assert len(tomogram.authors) == 0
 
 
-# Tests addition of new, and update of existing tomogram authors
+# Tests addition of new, and update of existing tomogram authors (RUN1's tomogram has no MRC: the authors are found
+# next to its zarr)
 def test_import_tomograms_authors(
     sync_db_session: Session,
     verify_dataset_import: Callable[[list[str]], models.Dataset],

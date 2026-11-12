@@ -81,9 +81,6 @@ class TomogramItem(ItemDBImporter):
             "s3_omezarr_dir": self.get_s3_url(self.input_data["omezarr_dir"]),
             "https_omezarr_dir": self.get_https_url(self.input_data["omezarr_dir"]),
             "file_size_omezarr": self.get_file_size(self.input_data["omezarr_dir"]),
-            "s3_mrc_file": self.get_s3_url(self.input_data["mrc_file"]),
-            "https_mrc_file": self.get_https_url(self.input_data["mrc_file"]),
-            "file_size_mrc": self.get_file_size(self.input_data["mrc_file"]),
             # TODO: Add alignment_id once we have an alignment importer.
             "alignment_id": self.config.get_alignment_by_path(
                 self.get_s3_url(self.input_data["alignment_metadata_path"]),
@@ -96,6 +93,12 @@ class TomogramItem(ItemDBImporter):
                 self.input_data["deposition_id"] == self.input_data["run"].dataset.deposition_id,
             ),
         }
+        # Tomograms ingested without MRC (--skip-mrc) have no mrc_file. Set the MRC fields explicitly, so that a
+        # re-import also clears the values of an earlier import that had an MRC.
+        mrc_file = self.input_data.get("mrc_file")
+        extra_data["s3_mrc_file"] = self.get_s3_url(mrc_file) if mrc_file else None
+        extra_data["https_mrc_file"] = self.get_https_url(mrc_file) if mrc_file else None
+        extra_data["file_size_mrc"] = self.get_file_size(mrc_file) if mrc_file else None
         if ng_config := self.input_data.get("neuroglancer_config_path"):
             extra_data["neuroglancer_config"] = self.generate_neuroglancer_data(ng_config)
         if key_photos := self.input_data.get("key_photo"):
@@ -164,7 +167,8 @@ class TomogramAuthorImporter(IntegratedDBImporter):
         return {"tomogram_id": self.tomogram.id}
 
     def get_finder_args(self) -> dict[str, Any]:
-        metadata_path = os.path.dirname(self.tomogram.s3_mrc_file)
+        # tomogram_metadata.json sits next to the zarr (and the MRC, which tomograms ingested with --skip-mrc lack)
+        metadata_path = os.path.dirname(self.tomogram.s3_omezarr_dir)
         return {
             "path": metadata_path,
             "file_glob": "tomogram_metadata.json",
