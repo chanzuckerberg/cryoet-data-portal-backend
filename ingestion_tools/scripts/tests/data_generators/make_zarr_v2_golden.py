@@ -132,9 +132,9 @@ def snapshot(out_prefix: Path) -> dict[str, Any]:
     return {"zarr": files, "mrc": mrc}
 
 
-def _input_path(spec: str, workdir: Path) -> Path:
+def _input_path(spec: str, workdir: Path, sample_dir: Path = SAMPLE_TOMOS) -> Path:
     if spec.startswith("sample:"):
-        src = SAMPLE_TOMOS / spec.split(":", 1)[1]
+        src = sample_dir / spec.split(":", 1)[1]
         dst = workdir / "inputs" / src.name
         if not dst.exists():
             dst.parent.mkdir(parents=True, exist_ok=True)
@@ -150,12 +150,19 @@ def _input_path(spec: str, workdir: Path) -> Path:
     return dst
 
 
-def run_case(make_pyramids: Callable[..., Any], fs: Any, workdir: Path, name: str) -> dict[str, Any]:
+def run_case(
+    make_pyramids: Callable[..., Any],
+    fs: Any,
+    workdir: Path,
+    name: str,
+    sample_dir: Path = SAMPLE_TOMOS,
+) -> dict[str, Any]:
+    """Run one case; ``sample_dir`` holds test_infra/test_files/input_bucket/sample_tomos (or a copy of it)."""
     spec, kwargs = CASES[name]
     kwargs = dict(kwargs)
     if name == "tiltseries":
         kwargs["header_mapper"] = tilt_header_mapper
-    src = _input_path(spec, workdir)
+    src = _input_path(spec, workdir, sample_dir)
     out = workdir / "out" / name / "output"
     out.parent.mkdir(parents=True, exist_ok=True)
     make_pyramids(fs, str(out), str(src), **kwargs)
