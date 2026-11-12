@@ -22,6 +22,9 @@ from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.utils import IMPORTERS
+from migrate_zarr_v3 import DEFAULT_DEST_ROOT as MIGRATION_DEST_ROOT
+from migrate_zarr_v3 import DEFAULT_SRC_ROOT as MIGRATION_SRC_ROOT
+from migrate_zarr_v3 import ENTITY_PATTERNS as MIGRATION_ENTITIES
 from standardize_dirs import DCA_OPTION_HELP
 from standardize_dirs import common_options as ingest_common_options
 
@@ -390,6 +393,71 @@ def db_import(
                         swipe_wdl_key=swipe_wdl_key,
                         **ctx.obj,
                     ),
+                ),
+            )
+        wait_for_futures(futures)
+
+
+@cli.command(name="migrate-zarr-v3")
+@click.option("--src-root", default=MIGRATION_SRC_ROOT, show_default=True, help="Root holding the Zarr v2 images")
+@click.option("--dest-root", default=MIGRATION_DEST_ROOT, show_default=True, help="Root for the Zarr v3 images")
+@click.option(
+    "--include-dataset",
+    type=str,
+    multiple=True,
+    help="Dataset id (repeatable; default: every dataset under --src-root)",
+)
+@click.option("--exclude-dataset", type=str, multiple=True, help="Dataset id to leave out (repeatable)")
+@click.option("--entity", "entities", multiple=True, type=click.Choice(sorted(MIGRATION_ENTITIES)))
+@click.option("--on-existing", type=click.Choice(["skip", "fail", "replace"]), default="skip", show_default=True)
+@click.option("--workers", type=int, default=1, show_default=True, help="Images converted in parallel within a job")
+@click.option(
+    "--swipe-wdl-key",
+    type=str,
+    required=True,
+    default="migrate_zarr_v3-v0.0.1.wdl",
+    help="Specify wdl key for custom workload",
+)
+@enqueue_common_options
+@environment_option
+@click.pass_context
+def migrate_zarr_v3(
+    ctx,
+    src_root: str,
+    dest_root: str,
+    include_dataset: list[str],
+    exclude_dataset: list[str],
+    entities: list[str],
+    on_existing: str,
+    workers: int,
+    swipe_wdl_key: str,
+    **kwargs,
+):
+    """Queue one Zarr v2 -> v3 migration job per dataset (see migrate_zarr_v3.py).
+
+    Tomograms are converted in memory (float32 level 0 and its int16 codes), so jobs default to 64 GB; use --memory
+    for datasets with very large tomograms."""
+    from migrate_zarr_v3 import Root
+
+    handle_common_options(ctx, kwargs)
+    if not ctx.obj.get("memory"):
+        ctx.obj["memory"] = 64000
+    datasets = list(include_dataset) or Root(src_root, anon=True).datasets()
+    datasets = [d for d in datasets if d not in set(exclude_dataset)]
+    flags = [f"--on-existing {on_existing}", f"--workers {workers}"] + [f"--entity {e}" for e in entities]
+
+    futures = []
+    with ProcessPoolExecutor(max_workers=ctx.obj["parallelism"]) as workerpool:
+        for dataset_id in datasets:
+            execution_name = f"{int(time.time())}-zarr3-ds{dataset_id}"[-80:]
+            wdl_args = {
+                "src_root": src_root,
+                "dest_root": dest_root,
+                "flags": " ".join([f"--dataset {dataset_id}", *flags]),
+            }
+            futures.append(
+                workerpool.submit(
+                    partial(run_job, execution_name, wdl_args, swipe_wdl_key=swipe_wdl_key, **ctx.obj),
                 ),
             )
         wait_for_futures(futures)
