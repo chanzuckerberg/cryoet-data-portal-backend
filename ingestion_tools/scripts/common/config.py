@@ -75,6 +75,9 @@ class DepositionImportConfig:
         # TODO these are controlled by CLI flags, which we should probably handle as a group.
         self.write_mrc: bool = True
         self.write_zarr: bool = True
+        # --dca: write Zarr v3 / OME-NGFF 0.5 (tomograms and tilt series under the cryoET storage profile of the DCA
+        # spec, masks in Zarr v3). Off: Zarr v2 / OME-NGFF 0.4 as before.
+        self.dca: bool = False
 
         with open(config_path, "r") as conffile:
             confdata = conffile.read()

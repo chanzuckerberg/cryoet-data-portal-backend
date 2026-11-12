@@ -16,6 +16,7 @@ from mypy_boto3_s3 import S3Client
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
+from common.image import ZarrReader
 from tests.s3_import.util import create_config, get_children, get_data_from_s3, get_run_and_parents
 
 
@@ -54,10 +55,16 @@ def expected_url() -> str:
     return "https://test.domain.com"
 
 
-@pytest.fixture
-def config(s3_fs: FileSystemApi, test_output_bucket: str, expected_url: str) -> DepositionImportConfig:
+@pytest.fixture(params=[False, True], ids=["zarr_v2", "dca"])
+def config(
+    request: pytest.FixtureRequest,
+    s3_fs: FileSystemApi,
+    test_output_bucket: str,
+    expected_url: str,
+) -> DepositionImportConfig:
     config = create_config(s3_fs, test_output_bucket, https_prefix=expected_url)
     config.write_zarr = True
+    config.dca = request.param
     return config
 
 
@@ -80,6 +87,17 @@ def validate_config(
         scale = (parents["voxel_spacing"].as_float() * 1e-10,) * 3
         tomo_volume_info = parents["tomogram"].get_output_volume_info()
         contrast_limits = parents["tomogram"].get_tomogram().get_contrast_limits()
+        if parents["tomogram"].config.dca:
+            # The tomogram zarr holds int16 codes (cryoET storage profile): the 2D contrast comes from its statistics,
+            # which are in code units, and the t and c axes are mapped to local layer dimensions.
+            tomogram_zarr = ZarrReader(parents["tomogram"].config.fs, f"{parents['tomogram'].get_output_path()}.zarr")
+            stats = tomogram_zarr.dataset_statistics()
+            layer_args = {"mean": stats["mean"], "rms": stats["std"], "extra_axes": ("t", "c")}
+            # for this integer-valued tomogram the codes are the values minus round(mean): same rms, shifted mean
+            assert stats["std"] == pytest.approx(tomo_volume_info.rms, rel=1e-6)
+        else:
+            # Zarr v2 (default): as before, the 2D contrast comes from the MRC header
+            layer_args = {"mean": tomo_volume_info.dmean, "rms": tomo_volume_info.rms}
         mock_state_generator.generate_image_layer.assert_called_once_with(
             os.path.relpath(os.path.join(vs_path, "Tomograms", "100", "TS_run1.zarr"), "output"),
             scale=scale,
@@ -88,9 +106,8 @@ def validate_config(
             name=parents["run"].name,
             start={"x": 0, "y": 0, "z": 0},
             size=tomo_volume_info.get_dimensions(),
-            mean=tomo_volume_info.dmean,
-            rms=tomo_volume_info.rms,
             threedee_contrast_limits=contrast_limits,
+            **layer_args,
         )
         mock_state_generator.combine_json_layers.assert_called_once_with(
             layers,

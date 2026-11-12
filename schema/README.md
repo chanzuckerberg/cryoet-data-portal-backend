@@ -37,13 +37,13 @@ Metadata file and directory layout specs:
 │   │   │           └── [tomogram_id]/
 │   │   │               ├── tomogram-metadata.json
 │   │   │               ├── [run_name].zarr/
-│   │   │               │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale
+│   │   │               │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/0.4/">OME-NGFF 0.4</a> (Zarr v2) at 100%, 50% and 25% scale; with --dca ingestion a Zarr v3 / <a href="https://ngff.openmicroscopy.org/0.5/">OME-NGFF 0.5</a> image (cryoET storage profile): int16 codes, levels 0..K
 │   │   │               └── [run_name].mrc
 │   │   ├── TiltSeries/
 │   │   │   └── [tiltseries_id]/
 │   │   │       ├── [run_name].mrc
 │   │   │       ├── [run_name].zarr/
-│   │   │       │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/latest/">OME-NGFF spec</a> at 100%, 50% and 25% scale
+│   │   │       │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/0.4/">OME-NGFF 0.4</a> (Zarr v2) at 100%, 50% and 25% scale; with --dca ingestion a Zarr v3 / <a href="https://ngff.openmicroscopy.org/0.5/">OME-NGFF 0.5</a> image (cryoET storage profile): float32, Fourier-cropped levels 0..K in y, x
 │   │   │       ├── tiltseries_metadata.json
 │   │   │       └── [name_in_source].rawtlt
 │   │   └── run_metadata.json
@@ -98,6 +98,18 @@ cd schema/
 make build-ingestion-config
 ```
 This will clean the existing codegen files for the current version of ingestion config and regenerate the files again.
+
+
+## Building the DCA metadata schema
+`dca_metadata/` defines, in LinkML, the `dca` block that `--dca` ingestion writes into the `attributes` of each image's `zarr.json` (tomograms and tilt series under the cryoET storage profile of the DCA spec): the DCA and profile versions, the image type and the image statistics. Unlike the other modules, it describes metadata stored inside the image data, not a metadata file.
+
+The generated JSON Schema is committed in `dca_metadata/<version>/codegen/`, and copied to `ingestion_tools/scripts/common/codegen/` because the ingestor image only contains `ingestion_tools/`. There, `check_profile` (`scripts/common/cryoet_profile.py`) validates the `dca` block against it, together with the profile's rules that the schema can't express (which levels and sections have statistics, and the image-type rules). After changing `dca_metadata/`, regenerate and commit both copies:
+
+```bash
+cd schema/
+make build-dca-metadata
+```
+The `DCA metadata schema` workflow fails if either copy is out of date.
 
 
 ## Building the api config schema

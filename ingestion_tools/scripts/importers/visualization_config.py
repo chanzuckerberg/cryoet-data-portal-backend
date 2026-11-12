@@ -98,6 +98,14 @@ class VisualizationConfigImporter(BaseImporter):
     ) -> dict[str, Any]:
         output_resolution = output_resolution or resolution
         zarr_dir_path = self.config.to_formatted_path(f"{tomogram.get_output_path()}.zarr")
+        # Neuroglancer displays the stored values: for cryoET-profile tomograms (--dca) these are int16 codes, so the 2D
+        # contrast (mean +/- 3 rms) comes from the image statistics stored with the zarr, which are in code units.
+        # Zarr v2 tomograms have none and use the MRC header, as before.
+        reader = ZarrReader(self.config.fs, f"{tomogram.get_output_path()}.zarr")
+        stats = reader.dataset_statistics()
+        mean, rms = (stats["mean"], stats["std"]) if stats else (volume_info.dmean, volume_info.rms)
+        # 5-D [t, c, z, y, x] volumes: map t and c to local layer dimensions (the source URL stays zarr://)
+        extra_axes = tuple(a for a in reader.axes if a in ("t", "c"))
         return state_generator.generate_image_layer(
             zarr_dir_path,
             scale=resolution,
@@ -105,10 +113,11 @@ class VisualizationConfigImporter(BaseImporter):
             url=self.config.https_prefix,
             size={k: float(v) for k, v in volume_info.get_dimensions().items()},
             name=self.get_run().name,
-            mean=volume_info.dmean,
-            rms=volume_info.rms,
+            mean=mean,
+            rms=rms,
             start={"x": 0, "y": 0, "z": 0},
             threedee_contrast_limits=contrast_limits,
+            **({"extra_axes": extra_axes} if extra_axes else {}),
         )
 
     def _to_segmentation_mask_layer(
@@ -336,10 +345,10 @@ class VisualizationConfigImporter(BaseImporter):
         segmentation_filename = os.path.join(self.config.output_prefix, path)
 
         reader = ZarrReader(self.config.fs, segmentation_filename)
-        try:
-            labels_info = reader.attrs["multiscales"][0]["metadata"]["image-label"]["colors"]
-            labels = [label["label-value"] for label in labels_info]
-        except Exception:
+        # Label values stored with the mask: ome["image-label"] (Zarr v3 / NGFF 0.5) or, for masks written before the
+        # switch, multiscales[0].metadata["image-label"].
+        labels = reader.label_values
+        if labels is None:
             # Get labels iterating by chunks over the tab
             # We lazy import dask and numpy
             import dask.array as da

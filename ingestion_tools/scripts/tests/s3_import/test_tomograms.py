@@ -141,11 +141,13 @@ def test_tomogram_import(
     assert "tomogram_metadata.json" in tomogram_files
 
 
+@pytest.mark.parametrize("dca", [False, True], ids=["zarr_v2", "dca"])
 def test_tomogram_import_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
     s3_client: S3Client,
     validate_metadata: Callable[[dict, str], None],
+    dca: bool,
 ) -> None:
     """
     To recreate the test mrc file with the dimensions and pixel spacing used in the test, use create_mrc method in
@@ -154,6 +156,7 @@ def test_tomogram_import_metadata(
     --size 10,8,6 --voxel-spacing 13.480
     """
     config = create_config(s3_fs, test_output_bucket)
+    config.dca = dca
     parents = get_parents(config)
     tomogram = list(TomogramImporter.finder(config, **parents))
     for item in tomogram:
@@ -166,6 +169,9 @@ def test_tomogram_import_metadata(
     prefix = f"{vs_path}/Tomograms/{id_prefix}"
     tomogram_files = get_children(s3_client, test_output_bucket,  f"output/{prefix}")
     assert "tomogram_metadata.json" in tomogram_files
+    # --dca writes Zarr v3 (zarr.json), the default Zarr v2 (.zgroup), as before
+    zarr_files = get_children(s3_client, test_output_bucket, f"output/{prefix}/{run_name}.zarr")
+    assert ("zarr.json" in zarr_files) == dca and (".zgroup" in zarr_files) != dca
     image_path = f"{vs_path}/Images/{id_prefix}/key-photo-"
     expected = {
         "omezarr_dir": os.path.join(prefix, f"{run_name}.zarr"),

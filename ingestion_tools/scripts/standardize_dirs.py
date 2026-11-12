@@ -7,6 +7,12 @@ from importers.utils import IMPORTER_DEP_TREE, IMPORTERS
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
 
+DCA_OPTION_HELP = (
+    "Write Zarr v3 / OME-NGFF 0.5: tomograms and tilt series under the cryoET storage profile of the DCA spec, with "
+    "its dca metadata block (int16 codes and mean-binned levels for tomograms, Fourier-cropped levels for tilt series); "
+    "segmentation masks in Zarr v3. Default (--no-dca): Zarr v2 / OME-NGFF 0.4 as before."
+)
+
 
 @click.group()
 @click.pass_context
@@ -88,6 +94,7 @@ def do_import(config, tree, to_import, metadata_import, to_iterate, kwargs, pare
 @click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
 @click.option("--write-mrc/--no-write-mrc", default=True)
 @click.option("--write-zarr/--no-write-zarr", default=True)
+@click.option("--dca/--no-dca", default=False, help=DCA_OPTION_HELP)
 @click.option("--force-overwrite", is_flag=True, default=False)
 @click.option("--local-fs", type=bool, is_flag=True, default=False)
 @common_options
@@ -102,6 +109,7 @@ def convert(
     import_all_metadata: bool,
     write_mrc: bool,
     write_zarr: bool,
+    dca: bool,
     force_overwrite: bool,
     local_fs: bool,
     **kwargs,
@@ -115,6 +123,7 @@ def convert(
     config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS, https_prefix=https_prefix)
     config.write_mrc = write_mrc
     config.write_zarr = write_zarr
+    config.dca = dca
     config.load_map_files()
 
     iteration_deps = flatten_dependency_tree(IMPORTER_DEP_TREE).items()

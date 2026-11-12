@@ -1,0 +1,2288 @@
+{
+ "instance_mask": {
+  "mrc": {
+   "data_sha256": "18ab214993367d011f19cb439f732ebe6cb02c9dde9438805868b9c83035a3ec",
+   "dtype": "uint16",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     400.0,
+     300.0,
+     200.0
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 40.0,
+    "dmean": 13.012499809265137,
+    "dmin": 0.0,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 1,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 6,
+    "mx": 40,
+    "my": 30,
+    "mz": 20,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 40,
+    "nxstart": 0,
+    "ny": 30,
+    "nystart": 0,
+    "nz": 20,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 11.114420890808105
+   },
+   "shape": [
+    20,
+    30,
+    40
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           10.0,
+           10.0,
+           10.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           20.0,
+           20.0,
+           20.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           40.0,
+           40.0,
+           40.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {
+       "image-label": {
+        "colors": [
+         {
+          "label-value": 1
+         },
+         {
+          "label-value": 2
+         },
+         {
+          "label-value": 3
+         },
+         {
+          "label-value": 4
+         },
+         {
+          "label-value": 5
+         },
+         {
+          "label-value": 6
+         },
+         {
+          "label-value": 7
+         },
+         {
+          "label-value": 8
+         },
+         {
+          "label-value": 9
+         },
+         {
+          "label-value": 10
+         },
+         {
+          "label-value": 11
+         },
+         {
+          "label-value": 12
+         },
+         {
+          "label-value": 13
+         },
+         {
+          "label-value": 14
+         },
+         {
+          "label-value": 15
+         },
+         {
+          "label-value": 16
+         },
+         {
+          "label-value": 17
+         },
+         {
+          "label-value": 18
+         },
+         {
+          "label-value": 19
+         },
+         {
+          "label-value": 20
+         },
+         {
+          "label-value": 21
+         },
+         {
+          "label-value": 22
+         },
+         {
+          "label-value": 23
+         },
+         {
+          "label-value": 24
+         },
+         {
+          "label-value": 25
+         },
+         {
+          "label-value": 26
+         },
+         {
+          "label-value": 27
+         },
+         {
+          "label-value": 28
+         },
+         {
+          "label-value": 29
+         },
+         {
+          "label-value": 30
+         },
+         {
+          "label-value": 31
+         },
+         {
+          "label-value": 32
+         },
+         {
+          "label-value": 33
+         },
+         {
+          "label-value": 34
+         },
+         {
+          "label-value": 35
+         },
+         {
+          "label-value": 36
+         },
+         {
+          "label-value": 37
+         },
+         {
+          "label-value": 38
+         },
+         {
+          "label-value": 39
+         },
+         {
+          "label-value": 40
+         }
+        ],
+        "version": "0.4"
+       }
+      },
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<u2",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     20,
+     30,
+     40
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 262144,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 142491,
+    "content_sha256": "11d6500293781302e45915e1d26ed1ecfc5f31ea3b8c972c8a78064e54cc6816",
+    "nbytes": 33554432,
+    "typesize": 2
+   },
+   "1/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<u2",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     10,
+     15,
+     20
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 262144,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 137307,
+    "content_sha256": "14f912bf34418c5e4a0717c9ad868b2d3d9eef1f5e3ff216aeac2282eb3f97d1",
+    "nbytes": 33554432,
+    "typesize": 2
+   },
+   "2/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<u2",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     5,
+     8,
+     10
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 262144,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 135696,
+    "content_sha256": "83ee47245398adee79bd9c0a8bc57b821e92aba10f5f9ade8a5d1fae4d8c4302",
+    "nbytes": 33554432,
+    "typesize": 2
+   }
+  }
+ },
+ "semantic_mask_label": {
+  "mrc": {
+   "data_sha256": "28211c6d2bf83379382f70b41f8a32595adf16689430934f41d52bf61e2b7ca6",
+   "dtype": "int8",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     400.0,
+     300.0,
+     200.0
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 1.0,
+    "dmean": 0.250083327293396,
+    "dmin": 0.0,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 1,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 0,
+    "mx": 40,
+    "my": 30,
+    "mz": 20,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 40,
+    "nxstart": 0,
+    "ny": 30,
+    "nystart": 0,
+    "nz": 20,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 0.43306079506874084
+   },
+   "shape": [
+    20,
+    30,
+    40
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           10.0,
+           10.0,
+           10.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           20.0,
+           20.0,
+           20.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           40.0,
+           40.0,
+           40.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {},
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     20,
+     30,
+     40
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 77996,
+    "content_sha256": "26ed7fb6076ef6c12f5b026cff440f369b95422b07b4b04fad11e14147d310fd",
+    "nbytes": 16777216,
+    "typesize": 1
+   },
+   "1/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     10,
+     15,
+     20
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 69562,
+    "content_sha256": "8b9cd210d550e499b22756ccca0240451ec6fb2aca4d311a5bbad73845ff8124",
+    "nbytes": 16777216,
+    "typesize": 1
+   },
+   "2/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     5,
+     8,
+     10
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 68181,
+    "content_sha256": "9db0b1ef38d1d2ce0c9c535cebdf0bd06b0bd641c8a610328946e364fda88d44",
+    "nbytes": 16777216,
+    "typesize": 1
+   }
+  }
+ },
+ "semantic_mask_rescaled": {
+  "mrc": {
+   "data_sha256": "bc7413821e01780183403a284d4719f2f59fab5d3c25af21170c5fe1d342b874",
+   "dtype": "int8",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     600.0,
+     450.0,
+     300.0
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 1.0,
+    "dmean": 0.3642716109752655,
+    "dmin": 0.0,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 1,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 0,
+    "mx": 60,
+    "my": 45,
+    "mz": 30,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 60,
+    "nxstart": 0,
+    "ny": 45,
+    "nystart": 0,
+    "nz": 30,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 0.48122531175613403
+   },
+   "shape": [
+    30,
+    45,
+    60
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           10.0,
+           10.0,
+           10.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           20.0,
+           20.0,
+           20.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           40.0,
+           40.0,
+           40.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {},
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     30,
+     45,
+     60
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 94080,
+    "content_sha256": "529947004c646097941dc71c81ca1525d5de54bc642969a3ebc1d3a550e45278",
+    "nbytes": 16777216,
+    "typesize": 1
+   },
+   "1/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     15,
+     23,
+     30
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 72962,
+    "content_sha256": "e100e7a0cdfee6f475d89c7a8b7675b7132f87c342d024d273d5351138a2d3ac",
+    "nbytes": 16777216,
+    "typesize": 1
+   },
+   "2/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     8,
+     12,
+     15
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 68628,
+    "content_sha256": "e4ee0e4c57c9cd8c537b0e7a58ac37064e264853d9ec2f774282d396c4b0b996",
+    "nbytes": 16777216,
+    "typesize": 1
+   }
+  }
+ },
+ "semantic_mask_threshold": {
+  "mrc": {
+   "data_sha256": "664b0b8e10b4a88aaae7d3d803d8120f7950051a26717509f21d64e6cfdb68c9",
+   "dtype": "int8",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     400.0,
+     300.0,
+     200.0
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 1.0,
+    "dmean": 0.5246666669845581,
+    "dmin": 0.0,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 1,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 0,
+    "mx": 40,
+    "my": 30,
+    "mz": 20,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 40,
+    "nxstart": 0,
+    "ny": 30,
+    "nystart": 0,
+    "nz": 20,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 0.49939119815826416
+   },
+   "shape": [
+    20,
+    30,
+    40
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           10.0,
+           10.0,
+           10.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           20.0,
+           20.0,
+           20.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           40.0,
+           40.0,
+           40.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {},
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     20,
+     30,
+     40
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 72893,
+    "content_sha256": "0779764766f23a7c15d009bd00dfc75dd092c2f80798c5a3bd4f742b587888c1",
+    "nbytes": 16777216,
+    "typesize": 1
+   },
+   "1/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     10,
+     15,
+     20
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 69056,
+    "content_sha256": "98eaaf6e9878f2058e30dc40cc4706adf9fddc8cfbfa40169d8ad2189519c824",
+    "nbytes": 16777216,
+    "typesize": 1
+   },
+   "2/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "|i1",
+    "fill_value": 0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     5,
+     8,
+     10
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 131072,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 68325,
+    "content_sha256": "3d8d42f5b5b75b15d3771aad29213e8de47c1b58f33fa09efd1d8ea24680f785",
+    "nbytes": 16777216,
+    "typesize": 1
+   }
+  }
+ },
+ "tiltseries": {
+  "mrc": {
+   "data_sha256": "f1118c492255666dad5605c220fa1f11723ccc9ec2fd328e1a9aead09fed0986",
+   "dtype": "float32",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     72.23999786376953,
+     110.87999725341797,
+     1.6799999475479126
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 126.20664978027344,
+    "dmean": 110.50059509277344,
+    "dmin": 97.96338653564453,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 0,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 2,
+    "mx": 43,
+    "my": 66,
+    "mz": 1,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 43,
+    "nxstart": 0,
+    "ny": 66,
+    "nystart": 0,
+    "nz": 3,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 7.180626392364502
+   },
+   "shape": [
+    3,
+    66,
+    43
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           1.68,
+           1.68,
+           1.68
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           1.68,
+           3.36,
+           3.36
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           1.68,
+           6.72,
+           6.72
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {},
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     1,
+     1024,
+     1024
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     3,
+     66,
+     43
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 25380,
+    "content_sha256": "23334f3a32c4e07728aa36038a055844578cc21274e1117b00d32b300ddece32",
+    "nbytes": 4194304,
+    "typesize": 4
+   },
+   "0/1/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 25489,
+    "content_sha256": "f82de9c515bdd95b0a5f37bd454851a66e5fdea7e2e7ac06a749128ae6b8ffc0",
+    "nbytes": 4194304,
+    "typesize": 4
+   },
+   "0/2/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 25473,
+    "content_sha256": "7d822c7a10ce22760b87dd2c54c537eece165fdcac8cc22d3b841c88fb2171b1",
+    "nbytes": 4194304,
+    "typesize": 4
+   },
+   "1/.zarray": {
+    "chunks": [
+     1,
+     1024,
+     1024
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     3,
+     33,
+     22
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 19551,
+    "content_sha256": "b36ea2ac522a1fd065fa15e067d19310da51435f86add3cbfa48aee881101f92",
+    "nbytes": 4194304,
+    "typesize": 4
+   },
+   "1/1/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 19586,
+    "content_sha256": "1ff2e21dd8d08b4e38ccf1dae6305c36ef2b731529369101ada43527e28b1e5e",
+    "nbytes": 4194304,
+    "typesize": 4
+   },
+   "1/2/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 19518,
+    "content_sha256": "f94e9f6931df1d24dba8f31af27b0034b2c00b7b986a4fecbeaa0925c73ca567",
+    "nbytes": 4194304,
+    "typesize": 4
+   },
+   "2/.zarray": {
+    "chunks": [
+     1,
+     1024,
+     1024
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     3,
+     17,
+     11
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 17826,
+    "content_sha256": "dd2aff2addc92e4438cbaed14c4260f6f699908d9053cf6732348f260e64a4d4",
+    "nbytes": 4194304,
+    "typesize": 4
+   },
+   "2/1/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 17825,
+    "content_sha256": "d00d01d1637a3c8381b76c86d123abdaf7dd381c50a1f5efcee41d433265bffa",
+    "nbytes": 4194304,
+    "typesize": 4
+   },
+   "2/2/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 17804,
+    "content_sha256": "8bcce35c980dfe22a0b81d507478bf22b5bbf2a1a0821ac40059e57c88208bff",
+    "nbytes": 4194304,
+    "typesize": 4
+   }
+  }
+ },
+ "tomogram_mrc": {
+  "mrc": {
+   "data_sha256": "51c9d9e6f0068417aeb093d8816fb33f1cfcd3e7c9b2ca2b1438d3e30ea51a7d",
+   "dtype": "float32",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     450.0,
+     700.0,
+     370.0
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 1.930768370628357,
+    "dmean": 0.2707267999649048,
+    "dmin": -1.3695412874221802,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 1,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 2,
+    "mx": 45,
+    "my": 70,
+    "mz": 37,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 45,
+    "nxstart": 0,
+    "ny": 70,
+    "nystart": 0,
+    "nz": 37,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 0.5947903394699097
+   },
+   "shape": [
+    37,
+    70,
+    45
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           10.0,
+           10.0,
+           10.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           20.0,
+           20.0,
+           20.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           40.0,
+           40.0,
+           40.0
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {},
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     37,
+     70,
+     45
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 737343,
+    "content_sha256": "fddbe4c15e55b30268557d9e4c2a5ba41be0549694c0f0a9d9a967bed4698669",
+    "nbytes": 67108864,
+    "typesize": 4
+   },
+   "1/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     19,
+     35,
+     23
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 338986,
+    "content_sha256": "6aaa41c59efcebacfe3c2c4da608ca51ba545e4401f744afbecf75f4bc41c039",
+    "nbytes": 67108864,
+    "typesize": 4
+   },
+   "2/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     10,
+     18,
+     12
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 281624,
+    "content_sha256": "7a90cbf3cc9717aafd7b4e8f4390fd16e06fb8f4f9fc67a6f4824d6ef9a092b9",
+    "nbytes": 67108864,
+    "typesize": 4
+   }
+  }
+ },
+ "tomogram_sample_mrc": {
+  "mrc": {
+   "data_sha256": "71642ca1d5bec5ee876abdbdfb77e2d689dc1da478b0eb5c634bcd44c2e24a4b",
+   "dtype": "float32",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     56.31999969482422,
+     56.31999969482422,
+     56.31999969482422
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 4.0,
+    "dmean": 2.5,
+    "dmin": 1.0,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 1,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 2,
+    "mx": 4,
+    "my": 4,
+    "mz": 4,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 4,
+    "nxstart": 0,
+    "ny": 4,
+    "nystart": 0,
+    "nz": 4,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 1.1180340051651
+   },
+   "shape": [
+    4,
+    4,
+    4
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           14.08,
+           14.08,
+           14.08
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           28.16,
+           28.16,
+           28.16
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           56.32,
+           56.32,
+           56.32
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {},
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     4,
+     4,
+     4
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 271018,
+    "content_sha256": "97c9e4a9bf10e4aa2055b08e639de39099472807255fb53eb20f4843548fa38b",
+    "nbytes": 67108864,
+    "typesize": 4
+   },
+   "1/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     2,
+     2,
+     2
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 270918,
+    "content_sha256": "ac0899970ac6fe87c4a4d41c5a37b3f104cfb3388528a528fb145c8ea9557b4f",
+    "nbytes": 67108864,
+    "typesize": 4
+   },
+   "2/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     1,
+     1,
+     1
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 270866,
+    "content_sha256": "a2bfeee24c99a1c181cecdda996afaf15101ca0e689db72826267cfba435536c",
+    "nbytes": 67108864,
+    "typesize": 4
+   }
+  }
+ },
+ "tomogram_v2_zarr_source": {
+  "mrc": {
+   "data_sha256": "71642ca1d5bec5ee876abdbdfb77e2d689dc1da478b0eb5c634bcd44c2e24a4b",
+   "dtype": "float32",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     56.31999969482422,
+     56.31999969482422,
+     56.31999969482422
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 4.0,
+    "dmean": 2.5,
+    "dmin": 1.0,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 1,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 2,
+    "mx": 4,
+    "my": 4,
+    "mz": 4,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 4,
+    "nxstart": 0,
+    "ny": 4,
+    "nystart": 0,
+    "nz": 4,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 1.1180340051651
+   },
+   "shape": [
+    4,
+    4,
+    4
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           14.08,
+           14.08,
+           14.08
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           28.16,
+           28.16,
+           28.16
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           56.32,
+           56.32,
+           56.32
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {},
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     4,
+     4,
+     4
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 271018,
+    "content_sha256": "97c9e4a9bf10e4aa2055b08e639de39099472807255fb53eb20f4843548fa38b",
+    "nbytes": 67108864,
+    "typesize": 4
+   },
+   "1/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     2,
+     2,
+     2
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 270918,
+    "content_sha256": "ac0899970ac6fe87c4a4d41c5a37b3f104cfb3388528a528fb145c8ea9557b4f",
+    "nbytes": 67108864,
+    "typesize": 4
+   },
+   "2/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     1,
+     1,
+     1
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 270866,
+    "content_sha256": "a2bfeee24c99a1c181cecdda996afaf15101ca0e689db72826267cfba435536c",
+    "nbytes": 67108864,
+    "typesize": 4
+   }
+  }
+ },
+ "unsigned_int8_mrc": {
+  "mrc": {
+   "data_sha256": "19d6b689286ee7198f61256db34ff76cc9783975ab5a4987a73f57729d439c1b",
+   "dtype": "float32",
+   "extended_header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "header": {
+    "cella": [
+     56.31999969482422,
+     56.31999969482422,
+     56.31999969482422
+    ],
+    "cellb": [
+     90.0,
+     90.0,
+     90.0
+    ],
+    "dmax": 127.0,
+    "dmean": -0.5,
+    "dmin": -128.0,
+    "extra1": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "extra2": "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+    "exttyp": "MRCO",
+    "ispg": 1,
+    "machst": [
+     68,
+     68,
+     0,
+     0
+    ],
+    "map": "MAP ",
+    "mapc": 1,
+    "mapr": 2,
+    "maps": 3,
+    "mode": 2,
+    "mx": 4,
+    "my": 4,
+    "mz": 4,
+    "nlabl": 1,
+    "nsymbt": 0,
+    "nversion": 20141,
+    "nx": 4,
+    "nxstart": 0,
+    "ny": 4,
+    "nystart": 0,
+    "nz": 4,
+    "nzstart": 0,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rms": 90.15680694580078
+   },
+   "shape": [
+    4,
+    4,
+    4
+   ]
+  },
+  "zarr": {
+   ".zattrs": {
+    "multiscales": [
+     {
+      "axes": [
+       {
+        "name": "z",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "y",
+        "type": "space",
+        "unit": "angstrom"
+       },
+       {
+        "name": "x",
+        "type": "space",
+        "unit": "angstrom"
+       }
+      ],
+      "datasets": [
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           14.08,
+           14.08,
+           14.08
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "0"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           28.16,
+           28.16,
+           28.16
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "1"
+       },
+       {
+        "coordinateTransformations": [
+         {
+          "scale": [
+           56.32,
+           56.32,
+           56.32
+          ],
+          "type": "scale"
+         }
+        ],
+        "path": "2"
+       }
+      ],
+      "metadata": {},
+      "name": "/",
+      "version": "0.4"
+     }
+    ]
+   },
+   ".zgroup": {
+    "zarr_format": 2
+   },
+   "0/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     4,
+     4,
+     4
+    ],
+    "zarr_format": 2
+   },
+   "0/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 271036,
+    "content_sha256": "22b892887f3ed527baac71727255f46fed8ddc9926e679e66b939ca48e301fd3",
+    "nbytes": 67108864,
+    "typesize": 4
+   },
+   "1/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     2,
+     2,
+     2
+    ],
+    "zarr_format": 2
+   },
+   "1/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 270918,
+    "content_sha256": "89249d3a68106ccec44d51c1dfc5dd4e8fa9d993a599496d6138290042bef8cc",
+    "nbytes": 67108864,
+    "typesize": 4
+   },
+   "2/.zarray": {
+    "chunks": [
+     256,
+     256,
+     256
+    ],
+    "compressor": {
+     "blocksize": 0,
+     "clevel": 5,
+     "cname": "lz4",
+     "id": "blosc",
+     "shuffle": 1
+    },
+    "dimension_separator": "/",
+    "dtype": "<f4",
+    "fill_value": 0.0,
+    "filters": null,
+    "order": "C",
+    "shape": [
+     1,
+     1,
+     1
+    ],
+    "zarr_format": 2
+   },
+   "2/0/0/0": {
+    "blocksize": 524288,
+    "blosc_flags": 33,
+    "blosc_version": 2,
+    "cbytes": 270865,
+    "content_sha256": "d8e9ebd9659825f6888344f7b20ce6137a7168fbf0fa3bd53f02459a9e69356d",
+    "nbytes": 67108864,
+    "typesize": 4
+   }
+  }
+ }
+}

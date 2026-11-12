@@ -88,6 +88,16 @@ def test_tiltseries_import(
     ],
     ids=["valid_pixel_spacing_in_metadata", "pixel_spacing_from_volume"],
 )
+@pytest.mark.parametrize(
+    "dca, expected_scales",
+    [
+        # default: Zarr v2, levels halved (rounding up) in y and x
+        (False, [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 5, "x": 10}, {"z": 4, "y": 3, "x": 5}]),
+        # --dca: Fourier-cropped levels (cryoET storage profile), m = 2 * round(n / 2s), rounding half to even
+        (True, [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 4, "x": 10}, {"z": 4, "y": 2, "x": 4}]),
+    ],
+    ids=["zarr_v2", "dca"],
+)
 def test_tiltseries_import_metadata(
     s3_fs: FileSystemApi,
     test_output_bucket: str,
@@ -98,6 +108,8 @@ def test_tiltseries_import_metadata(
     expected_frames_count: int,
     expected_ctf_path: str,
     expected_psp: list[dict],
+    dca: bool,
+    expected_scales: list[dict],
 ) -> None:
     """
     To recreate the test mrc file with the dimensions and pixel spacing used in the test, use create_mrc method in
@@ -106,6 +118,7 @@ def test_tiltseries_import_metadata(
     --size 4,10,20 --voxel-spacing 5.678
     """
     config = create_config(s3_fs, test_output_bucket, config_path=config_path)
+    config.dca = dca
     parents = get_run_and_parents(config)
 
     tilt_series = list(TiltSeriesImporter.finder(config, **parents))
@@ -123,7 +136,7 @@ def test_tiltseries_import_metadata(
         "omezarr_dir": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.zarr",
         "mrc_file": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.mrc",
         "pixel_spacing": expected_pixel_spacing,
-        "scales": [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 5, "x": 10}, {"z": 4, "y": 3, "x": 5}],
+        "scales": expected_scales,
         "size": {"z": 4, "y": 10, "x": 20},
         "raw_tlt_path": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/TS_run1.rawtlt",
         "ctf_path": expected_ctf_path,

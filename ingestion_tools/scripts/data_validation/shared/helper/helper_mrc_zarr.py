@@ -4,6 +4,19 @@ import allure
 from data_validation.shared.helper.helper_mrc import HelperTestMRCHeader
 from data_validation.shared.helper.helper_zarr import HelperTestZarrHeader
 
+from common.cryoet_profile import fourier_plan
+
+
+def expected_level_shape(header, level: int, image_type: str | None) -> list[int]:
+    """z, y, x size of a level of a volume whose level 0 has the MRC's size: mean binning (and the mask pyramids)
+    halve every axis, rounding up; tilt series are Fourier-cropped in y and x only (cryoET profile)."""
+    if image_type == "tilt_series":
+        if level == 0:
+            return [int(header.nz), int(header.ny), int(header.nx)]
+        s = 2**level
+        return [int(header.nz), fourier_plan(int(header.ny), s).m, fourier_plan(int(header.nx), s).m]
+    return [math.ceil(int(n) / 2**level) for n in (header.nz, header.ny, header.nx)]
+
 
 class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
     """
@@ -29,17 +42,11 @@ class HelperTestMRCZarrHeader(HelperTestMRCHeader, HelperTestZarrHeader):
 
             zarrays = header_data["zarrays"]
             for i, zarray in zarrays.items():
-                zarr_shape = zarray["shape"].copy()
+                zarr_shape = list(zarray["shape"][-3:])  # z, y, x (5-D volumes: [1, 1, z, y, x])
+                expected = expected_level_shape(header, int(i), header_data.get("image_type"))
                 if self.skip_z_axis_checks:
-                    zarr_shape[0] = "N/A"
-                binned_header_shape = [
-                    "N/A" if self.skip_z_axis_checks else math.ceil(header.nz / 2 ** int(i)),
-                    math.ceil(header.ny / 2 ** int(i)),
-                    math.ceil(header.nx / 2 ** int(i)),
-                ]
-                assert (
-                    zarr_shape == binned_header_shape
-                ), f"zarr shape: {zarr_shape}, binned mrc shape: {binned_header_shape}, binning factor: {i}"
+                    zarr_shape[0] = expected[0] = "N/A"
+                assert zarr_shape == expected, f"zarr shape: {zarr_shape}, expected from mrc: {expected}, level: {i}"
 
         self.zarr_header_helper(check_volume_size)
 
