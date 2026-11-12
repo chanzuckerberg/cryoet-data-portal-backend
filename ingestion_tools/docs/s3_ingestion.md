@@ -69,13 +69,21 @@ A standardized entity refers to the transformed version of the original entity f
 
 **Example**: A tomogram in the source may be in the MRC format. The standardized output would include both MRC and Zarr formats, with standardized headers.
 
-**Zarr format**: all Zarr output is Zarr v3 / [OME-NGFF 0.5](https://ngff.openmicroscopy.org/0.5/) (metadata in `zarr.json`; sources may still be Zarr v2 / OME-NGFF 0.4).
-- Tomograms and tilt series follow the cryoET storage profile v0.1 of the DCA spec (`docs/cryoet/v0.1` in [dynamic-cell-atlas-specs](https://github.com/chanzuckerberg/dynamic-cell-atlas-specs); implemented in `scripts/common/cryoet_profile.py`):
+**Zarr format**: two ingestion modes, selected with `--dca/--no-dca` on `standardize_dirs.py convert` and `enqueue_runs.py queue`. Sources may be Zarr v2 or v3 in either mode.
+
+**Default (`--no-dca`)**: Zarr v2 / OME-NGFF 0.4, unchanged from before.
+- Every volume is written as a 3-level pyramid (100 %, 50 % and 25 % scale) with scale-only transforms and Blosc lz4.
+- Tomograms and tilt series are `float32`. Chunks are 256³, or 1 × 1024 × 1024 for tilt series, and tilt series are not binned in z.
+- The viewer config takes its 2D contrast from the MRC header.
+
+**`--dca`**: Zarr v3 / [OME-NGFF 0.5](https://ngff.openmicroscopy.org/0.5/) (metadata in `zarr.json`).
+- Tomograms and tilt series follow the cryoET storage profile v0.1 of the DCA spec (`docs/cryoet/v0.1` in [dynamic-cell-atlas-specs](https://github.com/chanzuckerberg/dynamic-cell-atlas-specs); implemented in `scripts/common/cryoet_profile.py`). The `dca` block carries the profile's fields. DCA's channel metadata and experimental-metadata blocks are not written yet:
   - **Tomograms**: 5-D `[t, c, z, y, x]` arrays of `int16` codes centred on the mean; `value = add_offset + scale_factor * code` with the netCDF/CF attributes of each level array. Integer-valued sources whose values lie within ±32767 of their rounded mean are stored losslessly with `scale_factor = 1`; other volumes, including integer ones spanning more than that, are scaled to the int16 range (RMS error `scale_factor/√12`, about 1e-4 of the standard deviation), and volumes with NaN/inf or values beyond 1000 standard deviations are rejected. Levels `0..K` (`K >= 2`) are 2x mean-binned, with translations that place voxel centres exactly; 128³ chunks in shards of up to 2048 in y and x; zstd.
   - **Tilt series**: 3-D `float32` as acquired; levels Fourier-cropped by `2^k` in y and x; one shard of 128 x 128 chunks per tilt image; Blosc lz4.
   - Both carry a `dca` block with the profile declaration and image statistics (per level, and per tilt image for tilt series), in stored units. Neuroglancer displays the stored values, so viewer contrast limits for tomograms are in code units.
-- Segmentation masks keep their 3-level pyramids, data types and 256³ chunks; label values of instance masks are stored under `ome["image-label"]`.
-- The MRC files are unchanged: level 0 of the source as `float32` (masks: their integer type).
+- Segmentation masks keep their 3-level pyramids, data types and 256³ chunks in Zarr v3. Label values of instance masks are stored under `ome["image-label"]`.
+
+In both modes the MRC files are the same: level 0 of the source as `float32` (masks: their integer type).
 
 - **Multiple Outputs**: Some entities may produce multiple standardized outputs (e.g., different file formats), while others may only produce a single output.
 - **No Standardized Output**: Certain entities do not undergo standardization, as they serve primarily as containers for grouping other data. These entities do not have a transformed output, but are crucial for the organization of the data. Examples of such entities include: `Deposition`, `Dataset`, and `Run`
@@ -212,13 +220,13 @@ Metadata file and directory layout specs:
 │   │   │           └── [tomogram_id]/
 │   │   │               ├── tomogram-metadata.json
 │   │   │               ├── [run_name].zarr/
-│   │   │               │   └── Zarr v3 / <a href="https://ngff.openmicroscopy.org/0.5/">OME-NGFF 0.5</a> image (cryoET storage profile): int16 codes, levels 0..K at 100%, 50%, 25%, ...
+│   │   │               │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/0.4/">OME-NGFF 0.4</a> (Zarr v2) at 100%, 50% and 25% scale; with --dca a Zarr v3 / <a href="https://ngff.openmicroscopy.org/0.5/">OME-NGFF 0.5</a> image (cryoET storage profile): int16 codes, levels 0..K
 │   │   │               └── [run_name].mrc
 │   │   ├── TiltSeries/
 │   │   │   └── [tiltseries_id]/
 │   │   │       ├── [run_name].mrc
 │   │   │       ├── [run_name].zarr/
-│   │   │       │   └── Zarr v3 / <a href="https://ngff.openmicroscopy.org/0.5/">OME-NGFF 0.5</a> image (cryoET storage profile): float32, Fourier-cropped levels 0..K in y, x
+│   │   │       │   └── subdirectories according to <a href="https://ngff.openmicroscopy.org/0.4/">OME-NGFF 0.4</a> (Zarr v2) at 100%, 50% and 25% scale; with --dca a Zarr v3 / <a href="https://ngff.openmicroscopy.org/0.5/">OME-NGFF 0.5</a> image (cryoET storage profile): float32, Fourier-cropped levels 0..K in y, x
 │   │   │       ├── tiltseries_metadata.json
 │   │   │       └── [name_in_source].rawtlt
 │   │   └── run_metadata.json
