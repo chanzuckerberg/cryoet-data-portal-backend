@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := build
 
-# include $CORE_VERSION, $INGESTION_CONFIG_VERSION, $METADATA_FILES_VERSION
+# include $CORE_VERSION, $INGESTION_CONFIG_VERSION, $METADATA_FILES_VERSION, $DCA_METADATA_VERSION
 include .version
 
 COMMON_YAML = core/$(CORE_VERSION)/common.yaml
@@ -18,6 +18,13 @@ METADATA_FILES_MODELS_YAML = metadata_files/$(METADATA_FILES_VERSION)/metadata_f
 METADATA_FILES_MODELS_MATERIALIZED_YAML = metadata_files/$(METADATA_FILES_VERSION)/codegen/metadata_files_materialized.yaml
 METADATA_FILES_MODELS_PY = metadata_files/$(METADATA_FILES_VERSION)/codegen/metadata_files.py
 METADATA_FILES_JSON_SCHEMA = metadata_files/$(METADATA_FILES_VERSION)/codegen/metadata_files.schema.json
+
+# The dca block in the zarr.json of images ingested with --dca (cryoET storage profile). Its generated JSON Schema is
+# also copied into ingestion_tools, because the ingestor image only contains ingestion_tools/; check_profile validates
+# against that copy. Regenerate both with `make build-dca-metadata` and commit them.
+DCA_METADATA_YAML = dca_metadata/$(DCA_METADATA_VERSION)/dca_metadata.yaml
+DCA_METADATA_JSON_SCHEMA = dca_metadata/$(DCA_METADATA_VERSION)/codegen/dca_metadata.schema.json
+DCA_METADATA_INGESTION_COPY = ../ingestion_tools/scripts/common/codegen/dca_metadata.schema.json
 
 VALIDATE_CONFIGS = ingestion_config/$(INGESTION_CONFIG_VERSION)/ingestion_config_validate.py
 
@@ -39,6 +46,10 @@ clean-metadata-files:
 	rm -f $(METADATA_FILES_MODELS_PY)
 	rm -f $(METADATA_FILES_JSON_SCHEMA)
 
+.PHONY: clean-dca-metadata
+clean-dca-metadata:
+	rm -f $(DCA_METADATA_JSON_SCHEMA)
+
 .PHONY: clean-docs
 clean-docs:
 	rm -rf $(METADATA_DOCS)
@@ -48,16 +59,18 @@ clean:
 	make clean-core CORE_VERSION=$(CORE_VERSION)
 	make clean-ingestion-config INGESTION_CONFIG_VERSION=$(INGESTION_CONFIG_VERSION)
 	make clean-metadata-files METADATA_FILES_VERSION=$(METADATA_FILES_VERSION)
+	make clean-dca-metadata DCA_METADATA_VERSION=$(DCA_METADATA_VERSION)
 
 .PHONY: clean-all
 clean-all: CORE_VERSION=*
 clean-all: INGESTION_CONFIG_VERSION=*
 clean-all: METADATA_FILES_VERSION=*
+clean-all: DCA_METADATA_VERSION=*
 clean-all: clean
 	rm -rf ingestion_config/latest
 
 .PHONY: build
-build: build-ingestion-config build-metadata-files
+build: build-ingestion-config build-metadata-files build-dca-metadata
 
 # To build-ingestion-config for the non-default version, run `make build-ingestion-config INGESTION_CONFIG_VERSION=v2.0.0 CORE_VERSION=v2.0.0`
 .PHONY: build-ingestion-config
@@ -80,6 +93,12 @@ build-metadata-files:
 	linkml generate pydantic $(METADATA_FILES_MODELS_MATERIALIZED_YAML) > $(METADATA_FILES_MODELS_PY)
 	linkml generate json-schema $(METADATA_FILES_MODELS_MATERIALIZED_YAML) > $(METADATA_FILES_JSON_SCHEMA)
 	cd ingestion_config && ln -sf $(METADATA_FILES_VERSION) latest && cd ..
+
+.PHONY: build-dca-metadata
+build-dca-metadata: clean-dca-metadata
+	mkdir -p $(dir $(DCA_METADATA_JSON_SCHEMA)) $(dir $(DCA_METADATA_INGESTION_COPY))
+	linkml generate json-schema $(DCA_METADATA_YAML) > $(DCA_METADATA_JSON_SCHEMA)
+	cp $(DCA_METADATA_JSON_SCHEMA) $(DCA_METADATA_INGESTION_COPY)
 
 # `make build` must be run before `make build-docs`
 .PHONY: build-docs

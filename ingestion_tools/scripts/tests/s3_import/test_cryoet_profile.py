@@ -298,6 +298,90 @@ def test_check_profile_reports_violations(local_fs, tmp_path):
     assert any("level 1: need scale + translation" in e for e in errors)
 
 
+def _stats0(dca: dict) -> dict:
+    return dca["normalization_statistics"]["0"]
+
+
+# dca-block violations: the first group the schema generated from schema/dca_metadata (LinkML) rejects, the second
+# check_profile's checks against the arrays (statistics keys, image-type rules), which the schema can't state
+DCA_VIOLATIONS = {
+    "missing version": ("volume", lambda d: d.pop("version"), "dca block"),
+    "wrong version": ("volume", lambda d: d.update(version="0.2"), "dca block"),
+    "bad image_type": ("volume", lambda d: d.update(image_type="image"), "dca block"),
+    "profile name": ("volume", lambda d: d["profile"].update(name="other"), "dca block"),
+    "profile extra key": ("volume", lambda d: d["profile"].update(extra=1), "dca block"),
+    "missing key 0": ("volume", lambda d: d["normalization_statistics"].pop("0"), "dca block"),
+    "std < 0": ("volume", lambda d: _stats0(d)["dataset_statistics"].update(std=-1.0), "dca block"),
+    "missing p99": ("volume", lambda d: _stats0(d)["dataset_statistics"].pop("p99"), "dca block"),
+    "extra statistic": ("volume", lambda d: _stats0(d)["dataset_statistics"].update(p50=1.0), "dca block"),
+    "section std < 0": ("tilt", lambda d: _stats0(d)["section_statistics"]["0"].update(std=-2.0), "dca block"),
+    "level key 0": (
+        "volume",
+        lambda d: _stats0(d)["level_statistics"].update({"0": _stats0(d)["level_statistics"]["1"]}),
+        "level_statistics keys",
+    ),
+    "one level missing": ("volume", lambda d: _stats0(d)["level_statistics"].pop("2"), "level_statistics keys"),
+    "level as bare statistics": (
+        "volume",
+        lambda d: _stats0(d)["level_statistics"].update({"1": _stats0(d)["dataset_statistics"]}),
+        "needs dataset_statistics",
+    ),
+    "volume with sections": (
+        "volume",
+        lambda d: _stats0(d).update(section_statistics={"0": _stats0(d)["dataset_statistics"]}),
+        "volumes have no section_statistics",
+    ),
+    "tilt series without level-0 sections": (
+        "tilt",
+        lambda d: _stats0(d).pop("section_statistics"),
+        "level 0: need section statistics",
+    ),
+    "tilt series without level-1 sections": (
+        "tilt",
+        lambda d: _stats0(d)["level_statistics"]["1"].pop("section_statistics"),
+        "level 1: need section statistics",
+    ),
+    "tilt series section key 'x'": (
+        "tilt",
+        lambda d: _stats0(d)["section_statistics"].update({"x": _stats0(d)["section_statistics"]["0"]}),
+        "level 0: need section statistics",
+    ),
+}
+
+
+@pytest.fixture(scope="module")
+def profile_images(tmp_path_factory) -> dict[str, Path]:
+    fs = FileSystemApi.get_fs_api(mode="local", force_overwrite=False)
+    root = tmp_path_factory.mktemp("profile_images")
+    rng = np.random.default_rng(12)
+    write_volume(fs, rng.normal(size=(20, 30, 40)).astype(np.float32), str(root / "volume.zarr"), 5.0)
+    write_tilt_series(fs, rng.normal(size=(3, 66, 43)).astype(np.float32), str(root / "tilt.zarr"), 1.68)
+    return {"volume": root / "volume.zarr", "tilt": root / "tilt.zarr"}
+
+
+def test_dca_schema_is_the_generated_linkml_schema():
+    schema = json.loads(cp.DCA_SCHEMA_PATH.read_text())
+    assert schema["title"] == "cdp-dca-metadata"
+    assert schema["$id"].endswith("/schema/dca_metadata")
+
+
+@pytest.mark.parametrize("case", sorted(DCA_VIOLATIONS))
+def test_check_profile_rejects_dca_violations(profile_images, case):
+    image, mutate, message = DCA_VIOLATIONS[case]
+    group, arrays = read_metas(profile_images[image])
+    assert cp.check_profile(group, arrays) == []
+    mutate(group["attributes"]["dca"])
+    errors = cp.check_profile(group, arrays)
+    assert any(message in e for e in errors), errors
+
+
+def test_check_profile_allows_further_dca_fields(profile_images):
+    """DCA adds fields to the dca block (channels, experimental metadata): the profile doesn't forbid them."""
+    group, arrays = read_metas(profile_images["volume"])
+    group["attributes"]["dca"]["channels"] = []
+    assert cp.check_profile(group, arrays) == []
+
+
 def test_write_label_pyramid(local_fs, tmp_path):
     import zarr
     from cryoet_data_portal_neuroglancer.io import open_omezarr
