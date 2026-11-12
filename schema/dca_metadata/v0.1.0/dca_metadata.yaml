@@ -1,0 +1,187 @@
+id: https://github.com/chanzuckerberg/cryoet-data-portal-backend/schema/dca_metadata
+name: cdp-dca-metadata
+version: 0.1.0
+title: DCA metadata of Portal images (cryoET storage profile)
+description: >-
+  The ``dca`` block that ``--dca`` ingestion writes into the ``attributes`` of an image group's ``zarr.json``
+  (Zarr v3 / OME-NGFF 0.5): the DCA version (v0.3), the cryoET storage profile declaration (v0.1), the image type
+  and the image statistics, in stored units (int16 codes for volumes, float32 values for tilt series).
+
+  This is the cryoET profile's metadata as published in dynamic-cell-atlas-specs (``docs/cryoet/v0.1/schema.json``,
+  referenced by ``profile.url``). Rules that span the metadata and the arrays (one level entry per downsampled level,
+  one section entry per tilt image, statistics computed from the stored values) are checked by
+  ``ingestion_tools/scripts/common/cryoet_profile.py`` (``check_profile``).
+
+  DCA's channel metadata (``dca.channels``) and the experimental-metadata floor are not written by the Portal yet;
+  they belong in this module when they are.
+license: MIT
+prefixes:
+  linkml: https://w3id.org/linkml/
+  cdp-dca-metadata: https://github.com/chanzuckerberg/cryoet-data-portal-backend/schema/dca_metadata/
+imports:
+  - linkml:types
+default_range: string
+default_prefix: cdp-dca-metadata
+
+enums:
+  ImageType:
+    description: Which image type's rules of the cryoET profile apply.
+    permissible_values:
+      volume:
+        description: A reconstructed tomogram (5-D [t, c, z, y, x] int16 codes).
+      tilt_series:
+        description: A tilt series (3-D [z, y, x] float32, one section per tilt image).
+
+classes:
+  DcaMetadata:
+    tree_root: true
+    description: The ``dca`` block of an image group's ``zarr.json`` attributes.
+    attributes:
+      version:
+        description: Version of the DCA specification the profile builds on.
+        required: true
+        equals_string: "0.3"
+      url:
+        description: JSON Schema URL of that DCA version.
+        range: uri
+        required: true
+      profile:
+        description: Declares that the image follows the cryoET profile.
+        range: Profile
+        required: true
+        inlined: true
+      image_type:
+        range: ImageType
+        required: true
+      normalization_statistics:
+        range: NormalizationStatistics
+        required: true
+        inlined: true
+
+  Profile:
+    description: The cryoET profile declaration.
+    attributes:
+      name:
+        required: true
+        equals_string: cryoet
+      version:
+        required: true
+        equals_string: "0.1"
+      url:
+        description: JSON Schema URL of this profile version.
+        range: uri
+        required: true
+
+  NormalizationStatistics:
+    description: Statistics under the single key "0", and optional metadata on how they were computed.
+    attributes:
+      channel_0:
+        alias: "0"
+        description: Statistics of the volume or tilt series.
+        range: ChannelNormalization
+        required: true
+        inlined: true
+      metadata:
+        range: NormalizationMetadata
+        inlined: true
+
+  NormalizationMetadata:
+    description: How the statistics were computed.
+    attributes:
+      grid:
+        description: Stride of the subsample along each subsampled axis; 1 for every voxel.
+        range: integer
+        minimum_value: 1
+
+  ChannelNormalization:
+    description: Statistics of the volume or tilt series at level 0, and of every other level.
+    attributes:
+      dataset_statistics:
+        description: Statistics over the whole level-0 array.
+        range: IntensityStatistics
+        required: true
+        inlined: true
+      section_statistics:
+        description: Tilt series only, required there; per-section statistics at level 0, one entry per section.
+        range: SectionStatistics
+        multivalued: true
+        inlined: true
+      level_statistics:
+        description: Statistics of every level other than 0, keyed by the level's path in ome.multiscales[0].datasets.
+        range: LevelNormalization
+        multivalued: true
+        inlined: true
+        required: true
+
+  LevelNormalization:
+    description: Statistics of one downsampled level, computed from that level's array.
+    attributes:
+      level:
+        description: The level's path ("1", "2", ...).
+        identifier: true
+        pattern: "^[1-9][0-9]*$"
+      dataset_statistics:
+        description: Statistics over the whole array of this level.
+        range: IntensityStatistics
+        required: true
+        inlined: true
+      section_statistics:
+        description: Tilt series only, required there; per-section statistics of this level, one entry per section.
+        range: SectionStatistics
+        multivalued: true
+        inlined: true
+
+  SectionStatistics:
+    is_a: IntensityStatistics
+    description: Statistics of one section (tilt image), keyed by its zero-based index.
+    attributes:
+      section:
+        description: Zero-based section index ("0", "1", ...).
+        identifier: true
+        pattern: "^[0-9]+$"
+
+  IntensityStatistics:
+    description: >-
+      Summary statistics of the stored values (int16 codes for volumes, float32 values for tilt series) over one scope
+      (a whole array) at one level.
+    attributes:
+      p1:
+        description: 1st percentile.
+        range: float
+        required: true
+      p5:
+        description: 5th percentile.
+        range: float
+        required: true
+      p95:
+        description: 95th percentile.
+        range: float
+        required: true
+      p99:
+        description: 99th percentile.
+        range: float
+        required: true
+      mean:
+        description: Arithmetic mean.
+        range: float
+        required: true
+      std:
+        description: Population standard deviation (ddof = 0).
+        range: float
+        required: true
+        minimum_value: 0
+      p95_p5:
+        description: 95th percentile minus 5th percentile.
+        range: float
+        minimum_value: 0
+      p99_p1:
+        description: 99th percentile minus 1st percentile.
+        range: float
+        minimum_value: 0
+      median:
+        description: Median (50th percentile).
+        range: float
+      iqr:
+        description: 75th percentile minus 25th percentile.
+        range: float
+        minimum_value: 0
