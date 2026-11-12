@@ -1,0 +1,53 @@
+name: DCA metadata schema
+
+# schema/dca_metadata (LinkML) is the source of the JSON Schema that check_profile validates the dca block against.
+# The generated schema is committed in schema/dca_metadata/*/codegen and, because the ingestor image only contains
+# ingestion_tools/, copied to ingestion_tools/scripts/common/codegen. This fails if either is out of date.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/dca-metadata-schema.yaml
+      - schema/dca_metadata/**
+      - schema/Makefile
+      - schema/.version
+      - schema/pyproject.toml
+      - schema/poetry.lock
+      - ingestion_tools/scripts/common/codegen/**
+  pull_request:
+    paths:
+      - .github/workflows/dca-metadata-schema.yaml
+      - schema/dca_metadata/**
+      - schema/Makefile
+      - schema/.version
+      - schema/pyproject.toml
+      - schema/poetry.lock
+      - ingestion_tools/scripts/common/codegen/**
+  workflow_dispatch:
+
+jobs:
+  check-generated:
+    name: Generated DCA metadata schema is up to date
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --no-cache-dir poetry
+          poetry config virtualenvs.create false
+          poetry install
+        working-directory: schema/
+      - name: Regenerate
+        run: make build-dca-metadata
+        working-directory: schema/
+      - name: Compare with the committed files
+        run: |
+          git status --porcelain -- schema/dca_metadata ingestion_tools/scripts/common/codegen
+          git diff --exit-code -- schema/dca_metadata ingestion_tools/scripts/common/codegen
+          test -z "$(git status --porcelain -- schema/dca_metadata ingestion_tools/scripts/common/codegen)"
