@@ -26,6 +26,10 @@ on:
       - ingestion_tools/scripts/common/codegen/*
   workflow_dispatch:
 
+# only checks out the code and compares regenerated files
+permissions:
+  contents: read
+
 jobs:
   check-generated:
     name: Generated DCA metadata schema is up to date
