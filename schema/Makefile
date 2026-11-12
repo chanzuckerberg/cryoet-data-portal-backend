@@ -97,7 +97,9 @@ build-metadata-files:
 .PHONY: build-dca-metadata
 build-dca-metadata: clean-dca-metadata
 	mkdir -p $(dir $(DCA_METADATA_JSON_SCHEMA)) $(dir $(DCA_METADATA_INGESTION_COPY))
-	linkml generate json-schema $(DCA_METADATA_YAML) > $(DCA_METADATA_JSON_SCHEMA)
+	# end the file with a single newline, as pre-commit's end-of-file-fixer requires
+	linkml generate json-schema $(DCA_METADATA_YAML) \
+		| python3 -c "import sys; sys.stdout.write(sys.stdin.read().rstrip() + chr(10))" > $(DCA_METADATA_JSON_SCHEMA)
 	cp $(DCA_METADATA_JSON_SCHEMA) $(DCA_METADATA_INGESTION_COPY)
 
 # `make build` must be run before `make build-docs`
