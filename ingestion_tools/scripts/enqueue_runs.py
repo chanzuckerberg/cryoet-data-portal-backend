@@ -22,7 +22,7 @@ from importers.dataset import DatasetImporter
 from importers.deposition import DepositionImporter
 from importers.run import RunImporter
 from importers.utils import IMPORTERS
-from standardize_dirs import DCA_OPTION_HELP
+from standardize_dirs import DCA_OPTION_HELP, SKIP_MRC_OPTION_HELP, check_skip_mrc
 from standardize_dirs import common_options as ingest_common_options
 
 from common.config import PROD_URL, STAGING_URL, DepositionImportConfig
@@ -411,6 +411,7 @@ def db_import(
     help="Specify if zarr volumes should be written, defaults to True.",
 )
 @click.option("--dca/--no-dca", default=False, help=DCA_OPTION_HELP)
+@click.option("--skip-mrc/--no-skip-mrc", default=False, help=SKIP_MRC_OPTION_HELP)
 @click.option("--force-overwrite", is_flag=True, default=False)
 @click.option(
     "--swipe-wdl-key",
@@ -441,11 +442,13 @@ def queue(
     write_mrc: bool,
     write_zarr: bool,
     dca: bool,
+    skip_mrc: bool,
     force_overwrite: bool,
     swipe_wdl_key: str,
     skip_until_run_name: str,
     **kwargs,
 ):
+    check_skip_mrc(dca, skip_mrc)
     handle_common_options(ctx, kwargs)
     fs_mode = "s3"
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)
@@ -454,6 +457,7 @@ def queue(
         https_prefix = PROD_URL
     config = DepositionImportConfig(fs, config_file, output_path, input_bucket, IMPORTERS, https_prefix=https_prefix)
     config.dca = dca
+    config.skip_mrc = skip_mrc
     config.write_mrc = write_mrc
     config.write_zarr = write_zarr
     config.load_map_files()
@@ -513,6 +517,7 @@ def queue(
                         write_mrc=write_mrc,
                         write_zarr=write_zarr,
                         dca=dca,  # emits --dca only when set; standardize_dirs defaults to --no-dca
+                        skip_mrc=skip_mrc,  # likewise: emits --skip-mrc only when set
                         force_overwrite=force_overwrite,
                         **per_run_args,
                     )  # make a copy

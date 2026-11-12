@@ -85,6 +85,8 @@ A standardized entity refers to the transformed version of the original entity f
 
 In both modes the MRC files are the same: level 0 of the source as `float32` (masks: their integer type).
 
+**No MRC (`--skip-mrc`, requires `--dca`)**: tomograms, tilt series and segmentation masks are written as OME-Zarr only, with no MRC file. The metadata records none: tomogram and tilt-series metadata have no `mrc_file`, and the `files` of segmentation masks list only the zarr. The viewer config takes voxel size and dimensions from the zarr and its 2D contrast from the stored statistics, which is why `--dca` is required. `db_import` and the `data_validation` tests handle images without MRC. Gains and frames are copied as before. `--no-write-mrc` is different: it only skips rewriting MRC files that already exist, and still records them.
+
 - **Multiple Outputs**: Some entities may produce multiple standardized outputs (e.g., different file formats), while others may only produce a single output.
 - **No Standardized Output**: Certain entities do not undergo standardization, as they serve primarily as containers for grouping other data. These entities do not have a transformed output, but are crucial for the organization of the data. Examples of such entities include: `Deposition`, `Dataset`, and `Run`
 

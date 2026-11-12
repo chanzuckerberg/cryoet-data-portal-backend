@@ -89,14 +89,16 @@ def test_tiltseries_import(
     ids=["valid_pixel_spacing_in_metadata", "pixel_spacing_from_volume"],
 )
 @pytest.mark.parametrize(
-    "dca, expected_scales",
+    "dca, skip_mrc, expected_scales",
     [
         # default: Zarr v2, levels halved (rounding up) in y and x
-        (False, [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 5, "x": 10}, {"z": 4, "y": 3, "x": 5}]),
+        (False, False, [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 5, "x": 10}, {"z": 4, "y": 3, "x": 5}]),
         # --dca: Fourier-cropped levels (cryoET storage profile), m = 2 * round(n / 2s), rounding half to even
-        (True, [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 4, "x": 10}, {"z": 4, "y": 2, "x": 4}]),
+        (True, False, [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 4, "x": 10}, {"z": 4, "y": 2, "x": 4}]),
+        # --dca --skip-mrc: the same zarr, no MRC
+        (True, True, [{"z": 4, "y": 10, "x": 20}, {"z": 4, "y": 4, "x": 10}, {"z": 4, "y": 2, "x": 4}]),
     ],
-    ids=["zarr_v2", "dca"],
+    ids=["zarr_v2", "dca", "dca_skip_mrc"],
 )
 def test_tiltseries_import_metadata(
     s3_fs: FileSystemApi,
@@ -109,6 +111,7 @@ def test_tiltseries_import_metadata(
     expected_ctf_path: str,
     expected_psp: list[dict],
     dca: bool,
+    skip_mrc: bool,
     expected_scales: list[dict],
 ) -> None:
     """
@@ -119,6 +122,7 @@ def test_tiltseries_import_metadata(
     """
     config = create_config(s3_fs, test_output_bucket, config_path=config_path)
     config.dca = dca
+    config.skip_mrc = skip_mrc
     parents = get_run_and_parents(config)
 
     tilt_series = list(TiltSeriesImporter.finder(config, **parents))
@@ -131,10 +135,12 @@ def test_tiltseries_import_metadata(
     prefix = f"output/{parents['dataset'].name}/{run_name}/TiltSeries/100"
     tilt_series_files = get_children(s3_client, test_output_bucket, prefix)
     assert "tiltseries_metadata.json" in tilt_series_files
+    # --skip-mrc writes no MRC
+    assert (f"{run_name}.mrc" in tilt_series_files) != skip_mrc
     expected = {
         "frames_count": expected_frames_count,
         "omezarr_dir": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.zarr",
-        "mrc_file": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.mrc",
+        **({} if skip_mrc else {"mrc_file": f"{parents['dataset'].name}/{run_name}/TiltSeries/100/{run_name}.mrc"}),
         "pixel_spacing": expected_pixel_spacing,
         "scales": expected_scales,
         "size": {"z": 4, "y": 10, "x": 20},
@@ -143,6 +149,8 @@ def test_tiltseries_import_metadata(
         "per_section_parameter": expected_psp,
     }
     validate_metadata(expected, prefix)
+    metadata = json.loads(get_data_from_s3(s3_client, test_output_bucket, f"{prefix}/tiltseries_metadata.json").read())
+    assert ("mrc_file" in metadata) != skip_mrc
 
 def test_tiltseries_no_import(
     s3_fs: FileSystemApi,
