@@ -75,14 +75,16 @@ class TiltSeriesImporter(VolumeImporter):
         if not self.is_import_allowed():
             print(f"Skipping import of {self.name}")
             return
-        # The cryoET storage profile fixes the tilt-series layout: one shard per tilt image of [1, 128, 128] chunks and
-        # Fourier-cropped levels in y and x only.
+        # With --dca the cryoET storage profile fixes the tilt-series layout (one shard per tilt image of [1, 128, 128]
+        # chunks, Fourier-cropped levels in y and x only); otherwise Zarr v2 as before.
         _ = self.scale_mrcfile(
             scale_z_axis=False,
             write_mrc=self.config.write_mrc,
             write_zarr=self.config.write_zarr,
             voxel_spacing=self.get_pixel_spacing(),
-            image_type="tilt_series",
+            # since tiltseries is 2D stack of images, set z slice chunk size to 1
+            chunk_size=(1, 1024, 1024),
+            image_type="tilt_series" if self.config.dca else None,
         )
 
     def get_frames_count(self) -> int:

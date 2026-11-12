@@ -363,6 +363,7 @@ class SegmentationMaskAnnotation(VolumeAnnotationSource):
             scale_0_dims=output_dims,
             threshold=self.threshold,
             dtype="int8",
+            zarr_format=3 if self.config.dca else 2,
         )
 
 
@@ -394,6 +395,7 @@ class InstanceSegmentationMaskAnnotation(VolumeAnnotationSource):
             voxel_spacing=self.get_voxel_spacing().as_float(),
             scale_0_dims=output_dims,
             multilabels=True,
+            zarr_format=3 if self.config.dca else 2,
         )
 
     def get_object_count(self, output_prefix: str) -> int:
@@ -452,6 +454,7 @@ class SemanticSegmentationMaskAnnotation(VolumeAnnotationSource):
             scale_0_dims=output_dims,
             threshold=self.threshold,
             dtype="int8",
+            zarr_format=3 if self.config.dca else 2,
         )
 
     def is_valid(self) -> bool:

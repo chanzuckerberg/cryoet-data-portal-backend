@@ -1,12 +1,19 @@
-"""Zarr v3 / OME-NGFF 0.5 writers.
+"""OME-Zarr writers.
+
+Zarr v3 / OME-NGFF 0.5 (``--dca`` ingestion):
 
 * ``write_volume`` and ``write_tilt_series`` write tomograms and tilt series under the cryoET profile v0.1
   (``common.cryoet_profile``).
-* ``write_label_pyramid`` writes segmentation masks: a format-only port of the earlier Zarr v2 masks (same dtypes,
-  levels, chunks and scale-only transforms; label values under ``ome["image-label"]``).
+* ``write_label_pyramid`` writes segmentation masks: a format-only port of the Zarr v2 masks (same dtypes, levels,
+  chunks and scale-only transforms; label values under ``ome["image-label"]``).
 
-Every array is written in whole shards (or whole arrays for the unsharded masks): zarr-python reads back and rewrites
-a shard on a partial write.
+Every v3 array is written in whole shards (or whole arrays for the unsharded masks): zarr-python reads back and
+rewrites a shard on a partial write.
+
+Zarr v2 / OME-NGFF 0.4 (default ingestion):
+
+* ``write_v2_pyramid`` writes any pyramid exactly as the ingestion did with zarr-python 2 and ome-zarr 0.9 (checked
+  against recorded output by ``tests/s3_import/test_zarr_v2_golden.py``).
 """
 
 from __future__ import annotations
@@ -44,10 +51,10 @@ def write_region(array: zarr.Array, selection: tuple[slice, ...], data: np.ndarr
 
 
 @s3_retry_decorator
-def open_new_group(fs: FileSystemApi, zarr_dir: str) -> zarr.Group:
-    """An empty Zarr v3 group at ``zarr_dir``; anything already stored there (e.g. an earlier Zarr v2 version of the
-    same image) is removed first, so v2 and v3 metadata never coexist."""
-    return zarr.open_group(fs.zarr_store(zarr_dir, read_only=False), mode="w", zarr_format=3)
+def open_new_group(fs: FileSystemApi, zarr_dir: str, zarr_format: int = 3) -> zarr.Group:
+    """An empty group at ``zarr_dir``; anything already stored there (e.g. an earlier version of the same image in the
+    other Zarr format) is removed first, so v2 and v3 metadata never coexist."""
+    return zarr.open_group(fs.zarr_store(zarr_dir, read_only=False), mode="w", zarr_format=zarr_format)
 
 
 def _shard_slices(shape: Sequence[int], shard: Sequence[int]) -> list[tuple[slice, ...]]:
@@ -264,3 +271,57 @@ def write_label_pyramid(
     if label_values is not None:
         ome["image-label"] = {"colors": [{"label-value": int(v)} for v in label_values]}
     group.attrs.update({"ome": ome})
+
+
+def write_v2_pyramid(
+    fs: FileSystemApi,
+    pyramid: Sequence[np.ndarray],
+    zarr_dir: str,
+    voxel_spacing: Sequence[Sequence[float]],
+    chunk_size: Sequence[int] = (256, 256, 256),
+    label_values: Sequence[int] | None = None,
+) -> None:
+    """Write a pyramid (3-D ``z, y, x`` levels) as Zarr v2 / OME-NGFF 0.4, exactly as the ingestion did with
+    zarr-python 2 and ome-zarr 0.9: ``chunk_size`` chunks at every level, Blosc lz4 (level 5, byte shuffle), fill value
+    0, '/' chunk keys, empty chunks written, scale-only transforms, and ``multiscales[0].metadata`` holding the label
+    values of instance masks (``{}`` otherwise)."""
+    import numcodecs
+    from zarr.core.sync import sync
+
+    if len(pyramid) != len(voxel_spacing):
+        raise ValueError(f"Length of voxel_size ({len(voxel_spacing)}) must match length of data ({len(pyramid)})")
+    group = open_new_group(fs, zarr_dir, zarr_format=2)
+    datasets = []
+    zc, yc, xc = (int(c) for c in chunk_size)
+    for k, (arr, vs) in enumerate(zip(pyramid, voxel_spacing, strict=True)):
+        z = group.create_array(
+            str(k),
+            shape=arr.shape,
+            dtype=arr.dtype,
+            chunks=(zc, yc, xc),
+            # zarr-python 2's defaults, set explicitly: zarr-python 3 uses zstd and skips empty chunks
+            compressors=numcodecs.Blosc(cname="lz4", clevel=5, shuffle=numcodecs.Blosc.SHUFFLE, blocksize=0),
+            fill_value=0,
+            order="C",
+            chunk_key_encoding={"name": "v2", "separator": "/"},
+            config={"write_empty_chunks": True},
+            overwrite=True,
+        )
+        # zarr-python 3 also writes an empty .zattrs for each v2 array, which zarr-python 2 did not
+        sync(group.store.delete(f"{k}/.zattrs"))
+        nz, ny, nx = (int(n) for n in arr.shape)
+        for z0 in range(0, nz, zc):
+            for y0 in range(0, ny, yc):
+                for x0 in range(0, nx, xc):
+                    sel = (slice(z0, min(z0 + zc, nz)), slice(y0, min(y0 + yc, ny)), slice(x0, min(x0 + xc, nx)))
+                    write_region(z, sel, np.asarray(arr[sel], dtype=arr.dtype, order="C"))
+        datasets.append(
+            {"path": str(k), "coordinateTransformations": [{"scale": [vs[0], vs[1], vs[2]], "type": "scale"}]},
+        )
+    metadata: dict[str, Any] = {}
+    if label_values is not None:
+        metadata["image-label"] = {"version": "0.4", "colors": [{"label-value": int(v)} for v in label_values]}
+    # as ome_zarr.writer.write_multiscales_metadata (0.9) wrote it, with name "/"
+    group.attrs["multiscales"] = [
+        {"version": "0.4", "datasets": datasets, "name": "/", "metadata": metadata, "axes": MASK_AXES},
+    ]

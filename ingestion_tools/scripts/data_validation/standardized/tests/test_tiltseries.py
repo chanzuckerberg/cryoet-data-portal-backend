@@ -1,3 +1,4 @@
+import math
 import os
 from typing import Any, Dict
 
@@ -53,15 +54,21 @@ class TestTiltseries(TiltSeriesHelper):
         assert tiltseries_metadata["size"] == tiltseries_metadata["scales"][0]
 
     @allure.title("Tiltseries: metadata scales is self-consistent.")
-    def test_scales(self, tiltseries_metadata: Dict):
+    def test_scales(self, tiltseries_metadata: Dict, tiltseries_zarr_metadata: Dict[str, Dict[str, Dict]]):
         # z size is not scaled, stays consistent
         assert len({scale["z"] for scale in tiltseries_metadata["scales"]}) == 1
 
-        # levels are Fourier-cropped from level 0 by 2^k (cryoET storage profile)
         base = tiltseries_metadata["scales"][0]
+        profile = any(h and h.get("image_type") == "tilt_series" for h in tiltseries_zarr_metadata.values())
         for level, scale in enumerate(tiltseries_metadata["scales"][1:], start=1):
-            assert fourier_plan(base["y"], 2**level).m == scale["y"]
-            assert fourier_plan(base["x"], 2**level).m == scale["x"]
+            if profile:
+                # --dca: levels are Fourier-cropped from level 0 by 2^k (cryoET storage profile)
+                assert fourier_plan(base["y"], 2**level).m == scale["y"]
+                assert fourier_plan(base["x"], 2**level).m == scale["x"]
+            else:
+                # Zarr v2: each level halves y and x, rounding up
+                assert math.ceil(base["y"] / 2**level) == scale["y"]
+                assert math.ceil(base["x"] / 2**level) == scale["x"]
 
     ### END metadata self-consistency tests ###
 

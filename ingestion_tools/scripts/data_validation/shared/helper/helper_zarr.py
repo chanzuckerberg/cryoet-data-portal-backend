@@ -48,7 +48,10 @@ class HelperTestZarrHeader:
         def check_zattrs_path(header_data, _zarr_filename):
             del _zarr_filename
             datasets = header_data["zattrs"]["multiscales"][0]["datasets"]
-            assert len(datasets) >= MIN_LEVELS, f"Expected at least {MIN_LEVELS} levels, found {len(datasets)}"
+            if header_data.get("zarr_format", 2) == 2:  # default ingestion: always 3 levels (1x, 2x, 4x)
+                assert len(datasets) == MIN_LEVELS, f"Expected {MIN_LEVELS} levels, found {len(datasets)}"
+            else:  # --dca: K + 1 >= 3 levels
+                assert len(datasets) >= MIN_LEVELS, f"Expected at least {MIN_LEVELS} levels, found {len(datasets)}"
             for level, dataset in enumerate(datasets):  # 1x, 2x, 4x, ...
                 assert dataset["path"] == str(level), f"Path metadata is incorrect for level {level}"
             assert sorted(header_data["zarrays"]) == list(range(len(datasets))), "Levels and arrays do not match"
@@ -60,7 +63,8 @@ class HelperTestZarrHeader:
         def check_zattrs_axes(header_data, _zaar_filename):
             del _zaar_filename
             axes = header_data["zattrs"]["multiscales"][0]["axes"]
-            assert len(axes) in (3, 5), "Incorrect number of axes"
+            # Zarr v2 images are 3-D; --dca tomograms are 5-D [t, c, z, y, x]
+            assert len(axes) in ((3,) if header_data.get("zarr_format", 2) == 2 else (3, 5)), "Incorrect number of axes"
             if len(axes) == 5:  # cryoET-profile volumes: [t, c, z, y, x]
                 assert axes[:2] == LEADING_AXES, f"Leading axes {axes[:2]} are incorrect"
             for i, axis in enumerate(ZATTRS_AXIS_ORDER):
@@ -77,12 +81,14 @@ class HelperTestZarrHeader:
         def check_zarray(header_data, _zarr_filename):
             del _zarr_filename
             zarrays = header_data["zarrays"]
-            assert len(zarrays) >= MIN_LEVELS, "Incorrect number of zarrays"
+            zarr_format = header_data.get("zarr_format", 2)
+            assert len(zarrays) == MIN_LEVELS if zarr_format == 2 else len(zarrays) >= MIN_LEVELS, (
+                "Incorrect number of zarrays"
+            )
             for zarray in zarrays.values():
-                assert zarray.get("zarr_format") == 3, "Not a Zarr v3 array"
-                assert (
-                    np.dtype(zarray["data_type"]) in self.permitted_zarr_datatypes
-                ), f"Data type is {zarray['data_type']} is not permitted"
+                assert zarray.get("zarr_format") == zarr_format, f"Not a Zarr v{zarr_format} array"
+                dtype = zarray["dtype"] if zarr_format == 2 else zarray["data_type"]
+                assert np.dtype(dtype) in self.permitted_zarr_datatypes, f"Data type is {dtype} is not permitted"
 
         self.zarr_header_helper(check_zarray)
 
@@ -92,14 +98,19 @@ class HelperTestZarrHeader:
         "v0.1: layout, levels, transforms, codecs, encoding attributes and image statistics.",
     )
     def test_cryoet_profile(self):
+        checked = []
+
         def check(header_data, zarr_filename):
-            if header_data.get("image_type") is None:
-                pytest.skip(f"{zarr_filename} is not a cryoET-profile image")
+            if header_data.get("image_type") is None:  # Zarr v2 (default ingestion) or a mask
+                return
             arrays = {str(k): v for k, v in header_data["zarrays"].items()}
             errors = check_profile(header_data["group"], arrays)
             assert not errors, f"{zarr_filename}: " + "; ".join(errors)
+            checked.append(zarr_filename)
 
         self.zarr_header_helper(check)
+        if not checked:
+            pytest.skip("No cryoET-profile (--dca) images to check")
 
     ### END ZARR Self-consistency tests ###
 

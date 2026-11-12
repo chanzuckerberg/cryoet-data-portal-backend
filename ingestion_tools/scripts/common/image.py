@@ -16,7 +16,7 @@ from skimage.transform import resize_local_mean
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from common.ome_zarr_writer import write_label_pyramid, write_tilt_series, write_volume
+from common.ome_zarr_writer import write_label_pyramid, write_tilt_series, write_v2_pyramid, write_volume
 
 # Image types written under the cryoET storage profile (common.cryoet_profile); other volumes (segmentation masks)
 # keep their own conventions.
@@ -288,15 +288,18 @@ class TomoConverter:
         pyramid_voxel_spacing: List[Tuple[float, float, float]] = None,
         chunk_size: Tuple[int, int, int] = (256, 256, 256),
         store_labels_metadata: bool = False,
+        zarr_format: Literal[2, 3] = 2,
     ) -> str:
-        """Write a segmentation-mask pyramid as Zarr v3 / OME-NGFF 0.5 (tomograms and tilt series are written by
-        ``make_pyramids(image_type=...)`` under the cryoET profile instead)."""
+        """Write a pyramid as Zarr v2 / OME-NGFF 0.4 (``zarr_format=2``, the format written before the DCA profile)
+        or Zarr v3 / OME-NGFF 0.5 (``zarr_format=3``). Profile tomograms and tilt series are written by
+        ``make_pyramids(image_type=...)`` instead."""
         destination_zarrdir = fs.destformat(zarrdir)
         if write:
             label_values = None
             if store_labels_metadata:
                 label_values = [int(label) for label in np.unique(pyramid[0]) if label > 0]
-            write_label_pyramid(
+            writer = write_v2_pyramid if zarr_format == 2 else write_label_pyramid
+            writer(
                 fs,
                 pyramid,
                 destination_zarrdir,
@@ -509,14 +512,17 @@ def make_pyramids(
     multilabels: bool = False,
     dtype: str = None,
     image_type: ProfileImageType | None = None,
+    zarr_format: Literal[2, 3] = 2,
 ):
-    """Convert a volume to OME-Zarr (Zarr v3 / OME-NGFF 0.5) and MRC.
+    """Convert a volume to OME-Zarr and MRC.
 
-    With ``image_type`` ("volume" for tomograms, "tilt_series"), the Zarr follows the cryoET storage profile
-    (``common.cryoet_profile``: int16 codes and mean-binned levels for volumes, Fourier-cropped float32 levels for
-    tilt series); ``scale_z_axis``, ``chunk_size`` and ``dtype`` are then fixed by the profile. Without it (segmentation
-    masks), a 3-level pyramid of the converter is written with ``chunk_size`` chunks. The MRC is level 0 as float32
-    (or the mask dtype) in both cases.
+    With ``image_type`` ("volume" for tomograms, "tilt_series"), the Zarr is Zarr v3 / OME-NGFF 0.5 under the cryoET
+    storage profile of the DCA spec (``common.cryoet_profile``: int16 codes and mean-binned levels for volumes,
+    Fourier-cropped float32 levels for tilt series); ``scale_z_axis``, ``chunk_size``, ``dtype`` and ``zarr_format`` are
+    then fixed by the profile. Without it, the converter's 3-level pyramid is written with ``chunk_size`` chunks: as
+    Zarr v2 / OME-NGFF 0.4 (``zarr_format=2``, the default, the format written before the DCA profile) or as Zarr v3 /
+    OME-NGFF 0.5 (``zarr_format=3``, for segmentation masks in ``--dca`` ingestion). The MRC is level 0 as float32 (or
+    the mask dtype) in every case.
     """
     if image_type is not None:
         tc = TomoConverter(fs, tomo_filename, scale_0_dims=scale_0_dims)
@@ -545,6 +551,7 @@ def make_pyramids(
         pyramid_voxel_spacing=pyramid_voxel_spacing,
         chunk_size=chunk_size,
         store_labels_metadata=multilabels,
+        zarr_format=zarr_format,
     )
     _ = tc.pyramid_to_mrc(fs, pyramid, f"{output_prefix}.mrc", write_mrc, header_mapper, voxel_spacing)
 

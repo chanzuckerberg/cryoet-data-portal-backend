@@ -31,7 +31,21 @@ from mypy_boto3_s3 import S3Client
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
+from common.image import ZarrReader
 from tests.s3_import.util import list_dir
+
+
+def check_mask_zarr(fs: FileSystemApi, zarr_path: str, mrc_data: np.ndarray, dca: bool, labels: bool = False) -> None:
+    """The mask zarr holds the MRC's level 0 in Zarr v3 with --dca, in Zarr v2 (as before) without; instance masks
+    keep their label values (ome["image-label"] in v3, multiscales[0].metadata["image-label"] in v2)."""
+    reader = ZarrReader(fs, zarr_path)
+    assert reader.image.zarr_format == (3 if dca else 2)
+    assert len(reader.image.datasets) == 3
+    np.testing.assert_array_equal(reader.get_data().compute(), mrc_data)
+    if labels:
+        ome = reader.image.ome
+        meta = ome.get("image-label") if dca else ome["multiscales"][0]["metadata"].get("image-label")
+        assert meta is not None and reader.label_values == sorted(int(v) for v in np.unique(mrc_data) if v > 0)
 
 default_anno_metadata = {
     "annotation_object": {
@@ -1449,6 +1463,7 @@ ingest_mask_test_cases = [
 ]
 
 
+@pytest.mark.parametrize("dca", [False, True], ids=["zarr_v2", "dca"])
 @pytest.mark.parametrize("case", ingest_mask_test_cases)
 def test_ingest_segmentationmask(
     s3_fs: FileSystemApi,
@@ -1457,6 +1472,7 @@ def test_ingest_segmentationmask(
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
+    dca: bool,
 ):
     # loop through test cases
     anno_config = {
@@ -1466,6 +1482,7 @@ def test_ingest_segmentationmask(
         ],
     }
     deposition_config_s3._set_object_configs("annotation", [anno_config])
+    deposition_config_s3.dca = dca
 
     anno = SemanticSegmentationMaskAnnotation(
         config=deposition_config_s3,
@@ -1496,6 +1513,7 @@ def test_ingest_segmentationmask(
     assert data.shape == (4, 4, 4), f"Incorrect shape for {case['case']}"
     # Mask data
     assert np.all(data == np.array(exp_data, dtype=int)), f"Incorrect data for {case['case']}"
+    check_mask_zarr(s3_fs, anno.get_output_path() + "_segmentationmask.zarr", data, dca)
 
 
 @pytest.mark.parametrize(
@@ -1733,6 +1751,7 @@ ingest_instancemask_test_cases = [
 ]
 
 
+@pytest.mark.parametrize("dca", [False, True], ids=["zarr_v2", "dca"])
 @pytest.mark.parametrize("case", ingest_instancemask_test_cases)
 def test_ingest_instancesegmentationmask(
     s3_fs: FileSystemApi,
@@ -1741,6 +1760,7 @@ def test_ingest_instancesegmentationmask(
     deposition_config_s3: DepositionImportConfig,
     s3_client: S3Client,
     case: Dict[str, Any],
+    dca: bool,
 ):
     # loop through test cases
     anno_config = {
@@ -1750,6 +1770,7 @@ def test_ingest_instancesegmentationmask(
         ],
     }
     deposition_config_s3._set_object_configs("annotation", [anno_config])
+    deposition_config_s3.dca = dca
 
     args = dict(
         config=deposition_config_s3,
@@ -1780,6 +1801,7 @@ def test_ingest_instancesegmentationmask(
     assert data.shape == shape, f"Incorrect shape for {case['case']}"
     # Mask data
     assert np.all(data == np.array(exp_data, dtype=int)), f"Incorrect data for {case['case']}"
+    check_mask_zarr(s3_fs, anno.get_output_path() + "_instancesegmentationmask.zarr", data, dca, labels=True)
 
 
 def test_ingest_global_caption(
