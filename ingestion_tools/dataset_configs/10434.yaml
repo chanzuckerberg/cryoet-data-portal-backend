@@ -8,7 +8,9 @@ alignments:
       list_glob: reprocessed/{run_name}_*/{run_name}_*.aln
 annotations: []
 collection_metadata:
-- sources:
+- metadata:
+    acquisition_order_from_datetime: true
+  sources:
   - source_glob:
       list_glob: mdocs/{mdoc_name}
 ctfs:

@@ -159,7 +159,9 @@ rawtilts:
           list_glob: "{mapped_tilt_series_name}.rawtlt"
 
 collection_metadata:
-  - sources:
+  - metadata:
+      acquisition_order_from_datetime: true
+    sources:
       - source_glob:
           list_glob: "{mdoc_basename}.mdoc"
 
