@@ -94,8 +94,8 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | Option | Default | Explanation |
 | --- | --- |  --- |
 | --environment | staging | Whether to import data into the `staging` (default) or `prod` database/api |
-| --s3-bucket | `cryoet-data-portal-staging` in staging, or `cryoet-data-portal-public` in prod | Which S3 bucket to read files and metadata from |
-| --https-prefix | `https://files.cryoet.staging.si.czi.technology` in staging or `https://files.cryoetdataportal.cziscience.com` in prod | This is the https protocol and domain that will be prefixed to all file paths. It's used to generate the https url's for files referenced by the api |
+| --s3-bucket | `cryoet-data-portal-staging` in staging, or `cryoet-data-portal-public` in prod | Which S3 bucket to read files and metadata from. This can also be a prefix inside a bucket, e.g. `cryoet-data-portal-staging/example_prefix`, see [Importing from a prefix](#importing-from-a-prefix) |
+| --https-prefix | `https://files.cryoet.staging.si.czi.technology` in staging or `https://files.cryoetdataportal.cziscience.com` in prod, followed by the prefix of `--s3-bucket` if it has one | The URL that serves `--s3-bucket`. It is prefixed to all file paths to generate the https urls for files referenced by the api |
 | --ecr-tag | main | If you're experimenting with code/config changes, you may have pushed a docker image to the image registry with a different tag, such as `my_name_here`. Use this flag to tell the workers to use the image with this tag to process the dataset. |
 | --import-everything | | If this flag is passed in, the script will attempt to ingest all data specified in the dataset config, (datasets, runs, annotations, etc etc) |
 
@@ -105,7 +105,7 @@ python3 enqueue_runs.py db-import --environment prod --import-annotation-authors
 | --filter-datasets | null | Supply a regular expression to apply to the list of available dataset ID's, to only run import for certain datasets. This option can be specified multiple times with multiple regular expressions |
 | --include-dataset | null | Specify specific datasets to import. This option can be specified multiple times with multiple dataset id's                                                                                        |
 | --exclude-dataset | null | Supply a regular expression to exclude a list of dataset ID's the import. This option can be specified multiple times with multiple regular expressions.                                           |
-| --s3-prefix       | null | Only look for datasets in a particular subdirectory (this is faster than the filter/include filters) when importing a single dataset                                                               |
+| --s3-prefix       | null | Only look for datasets in a particular subdirectory of `--s3-bucket` (this is faster than the filter/include filters) when importing a single dataset                                              |
 | --import-depositions   | false | Whether to import deposition metadata. It's necessary to include this flag the first time we import data for a new deposition!                                                                                                            |
 | --deposition-id   | null | To be used with the --import-depositions flag to specify the depositions to be imported                                                                                                            |
 
@@ -251,3 +251,29 @@ python3 enqueue_runs.py validate --environment prod 10000 10001 10301
 # From the root of the repo
 make push-local-ingestor-build tag=my-test-tag-name
 ```
+
+### Importing from a prefix
+Standardized data doesn't have to live at the root of a bucket. `queue` / `standardize_dirs.py` can write to a prefix
+inside a bucket (their `OUTPUT_PATH`), and `db-import` can read from one with `--s3-bucket bucket/prefix`. The paths in
+the metadata files are relative to that prefix. db-import prepends `s3://bucket/prefix` and the https prefix to them, so
+the urls in the database point at the files inside the prefix.
+
+```bash
+# Standardize into a prefix. Set --https-prefix to the URL of the prefix so the neuroglancer configs load from it.
+python3 enqueue_runs.py queue ../dataset_configs/10000.yaml cryoetportal-rawdatasets-dev cryoet-data-portal-staging/example_prefix \
+  --https-prefix https://files.cryoet.staging.si.czi.technology/example_prefix --import-everything
+
+# Import from the prefix into the staging database. --https-prefix defaults to the staging URL followed by /example_prefix.
+python3 enqueue_runs.py db-import --s3-bucket cryoet-data-portal-staging/example_prefix --include-dataset 10000 --import-everything
+```
+
+Things to be aware of:
+- **The prefix must hold complete datasets.** db-import deletes the runs, tilt series and voxel spacings of a dataset
+  that it doesn't find in S3. Importing a prefix that holds only some of a dataset's runs removes the other runs of that
+  dataset from the database.
+- Until the dataset is imported again from the bucket root, its rows in the database point at the files in the prefix.
+- `--https-prefix` must be the URL of the prefix, not of the bucket root. db-import logs a warning if it doesn't end
+  with the prefix. Neuroglancer configs that point at the production or staging URL of the bucket root are rewritten to
+  point at `--https-prefix`.
+- `--s3-prefix` still selects datasets. It is relative to `--s3-bucket`, e.g. `--s3-prefix 10000` with
+  `--s3-bucket cryoet-data-portal-staging/example_prefix` looks in `example_prefix/10000`.

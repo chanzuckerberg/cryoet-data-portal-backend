@@ -287,9 +287,25 @@ def to_args(**kwargs) -> list[str]:
 
 
 @cli.command(name="db-import")
-@click.option("--s3-bucket", required=False, type=str, help="S3 bucket to read from")
-@click.option("--https-prefix", required=False, type=str, help="protocol + domain for where to fetch files via HTTP")
-@click.option("--s3-prefix", required=True, default="", type=str)
+@click.option(
+    "--s3-bucket",
+    required=False,
+    type=str,
+    help="S3 bucket to read from, or a prefix inside one (bucket/prefix). Defaults to the environment's bucket.",
+)
+@click.option(
+    "--https-prefix",
+    required=False,
+    type=str,
+    help="URL that serves --s3-bucket, including its prefix. Defaults to the environment's file URL plus the prefix.",
+)
+@click.option(
+    "--s3-prefix",
+    required=True,
+    default="",
+    type=str,
+    help="Only import datasets whose key, relative to --s3-bucket, starts with this.",
+)
 @click.option(
     "--debug/--no-debug",
     is_flag=True,
@@ -333,10 +349,15 @@ def db_import(
         s3_bucket = "cryoet-data-portal-staging"
         if env == "prod":
             s3_bucket = "cryoet-data-portal-public"
+    # --s3-bucket may name a prefix inside the bucket, e.g. cryoet-data-portal-staging/example_prefix
+    bucket, root_prefix = DBImportConfig.split_bucket_path(s3_bucket)
+    s3_bucket = f"{bucket}/{root_prefix}" if root_prefix else bucket
     if not https_prefix:
         https_prefix = STAGING_URL
         if env == "prod":
             https_prefix = PROD_URL
+        if root_prefix:
+            https_prefix = f"{https_prefix}/{root_prefix}"
 
     # Default to using a lot less memory than the ingestion job.
     if not ctx.obj.get("memory"):
@@ -443,6 +464,13 @@ def queue(
     skip_until_run_name: str,
     **kwargs,
 ):
+    """
+    Queue one standardization job per run, converting the datasets of CONFIG_FILE from INPUT_BUCKET into OUTPUT_PATH.
+
+    OUTPUT_PATH is a bucket ("cryoet-data-portal-staging") or a prefix inside one
+    ("cryoet-data-portal-staging/example_prefix"). Paths in the metadata are written relative to OUTPUT_PATH. Set
+    --https-prefix to the URL that serves OUTPUT_PATH if the viewer configs should load from there.
+    """
     handle_common_options(ctx, kwargs)
     fs_mode = "s3"
     fs = FileSystemApi.get_fs_api(mode=fs_mode, force_overwrite=force_overwrite)

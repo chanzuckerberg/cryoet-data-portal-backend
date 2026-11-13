@@ -106,6 +106,13 @@ def convert(
     local_fs: bool,
     **kwargs,
 ):
+    """
+    Convert the datasets of CONFIG_FILE from INPUT_BUCKET into OUTPUT_PATH.
+
+    OUTPUT_PATH is a bucket ("cryoet-data-portal-staging") or a prefix inside one
+    ("cryoet-data-portal-staging/example_prefix"). Paths in the metadata are written relative to OUTPUT_PATH. Set
+    --https-prefix to the URL that serves OUTPUT_PATH if the viewer configs should load from there.
+    """
     fs_mode = "s3"
     if local_fs:
         fs_mode = "local"
