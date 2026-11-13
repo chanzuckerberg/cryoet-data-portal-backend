@@ -1690,6 +1690,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity
@@ -1991,6 +1992,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity
@@ -2402,6 +2404,61 @@ classes:
         inlined: true
         inlined_as_list: true
         minimum_cardinality: 1
+      metadata:
+        name: metadata
+        description: Options for reading collection metadata (mdoc) files.
+        from_schema: cdp-ingestion-config
+        alias: metadata
+        owner: CollectionMetadataEntity
+        domain_of:
+        - AlignmentEntity
+        - AnnotationEntity
+        - CollectionMetadataEntity
+        - CtfEntity
+        - DatasetEntity
+        - DepositionEntity
+        - FrameEntity
+        - IdentifiedObjectEntity
+        - TiltSeriesEntity
+        - TomogramEntity
+        range: CollectionMetadataOptions
+        inlined: true
+        inlined_as_list: true
+  CollectionMetadataOptions:
+    name: CollectionMetadataOptions
+    description: Options for reading collection metadata (mdoc) files.
+    from_schema: cdp-ingestion-config
+    attributes:
+      acquisition_order_from_datetime:
+        name: acquisition_order_from_datetime
+        description: If true, each section's acquisition order (and the order in which
+          accumulated dose is summed) is the rank of its DateTime instead of its ZValue.
+          Use this for mdocs whose sections were re-sorted by tilt angle and renumbered
+          (e.g. by PACEtomo). Every section must then have a unique DateTime that
+          parses with datetime_format.
+        from_schema: cdp-ingestion-config
+        ifabsent: 'False'
+        alias: acquisition_order_from_datetime
+        owner: CollectionMetadataOptions
+        domain_of:
+        - CollectionMetadataOptions
+        range: boolean
+        inlined: true
+        inlined_as_list: true
+      datetime_format:
+        name: datetime_format
+        description: The strptime format of the mdoc DateTime values, applied after
+          collapsing runs of whitespace into single spaces. If unset, SerialEM's formats
+          are accepted, with a two- or four-digit year ("%d-%b-%y %H:%M:%S", e.g.
+          "06-Jun-22  16:54:02", or "%d-%b-%Y %H:%M:%S", e.g. "15-Oct-2024  20:39:16").
+        from_schema: cdp-ingestion-config
+        alias: datetime_format
+        owner: CollectionMetadataOptions
+        domain_of:
+        - CollectionMetadataOptions
+        range: string
+        inlined: true
+        inlined_as_list: true
   CollectionMetadataSource:
     name: CollectionMetadataSource
     description: A collection_metadata source.
@@ -2666,6 +2723,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity
@@ -2967,6 +3025,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity
@@ -3460,6 +3519,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity
@@ -3862,6 +3922,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity
@@ -4415,6 +4476,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity
@@ -5400,6 +5462,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity
@@ -5715,6 +5778,7 @@ classes:
         domain_of:
         - AlignmentEntity
         - AnnotationEntity
+        - CollectionMetadataEntity
         - CtfEntity
         - DatasetEntity
         - DepositionEntity

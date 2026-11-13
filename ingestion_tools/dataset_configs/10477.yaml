@@ -191,7 +191,9 @@ annotations:
           mask_label: 1
 
 collection_metadata:
-  - sources:
+  - metadata:
+      acquisition_order_from_datetime: true
+    sources:
       - source_glob:
           list_glob: frames/{date_folder}/metadata/{ts_name}_orig.mdoc
 
