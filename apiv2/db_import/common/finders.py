@@ -33,9 +33,8 @@ class ItemFinder(ABC):
         pass
 
     def strip_bucket_from_path(self, path):
-        if path.startswith(self.config.bucket_name):
-            return path[len(self.config.bucket_name) + 1 :]
-        return path
+        """Returns the path relative to the data root (bucket and root prefix stripped)."""
+        return self.config.relative(path)
 
     def recursive_glob(self, prefix: str, target_glob: str) -> list[str]:
         s3 = self.config.s3fs

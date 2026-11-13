@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from typing import Any
 
 from database import models
@@ -42,13 +43,22 @@ class TomogramItem(ItemDBImporter):
 
     def _update_ng_urls(self, ng_config_text: str) -> str:
         """
-        A simple function to find and replace all production URLs in the neuroglancer config with the staging URL when in the staging environment.
-        This is done to ensure that the URLs in the neuroglancer config are correct for the staging environment.
+        Points the file URLs in the neuroglancer config at the data this import reads from. Standardization writes
+        them against its --https-prefix, which defaults to the production URL.
+        - Import from a bucket root: in the staging environment, replace the production URL with the staging URL.
+        - Import from a prefix (bucket/prefix): replace portal URLs of a bucket root, or of that prefix, with the https
+          prefix of this import (the URL of the data root). URLs that already point at the prefix are not doubled.
         """
-        if self.config.https_prefix != STAGING_URL:
+        https_prefix = self.config.https_prefix
+        if root_prefix := self.config.root_prefix:
+            portal_urls = "|".join(re.escape(url) for url in (PROD_URL, STAGING_URL))
+            data_root_url = f"{https_prefix.rstrip('/')}/"
+            return re.sub(rf"(?:{portal_urls})/(?:{re.escape(root_prefix)}/)?", lambda _: data_root_url, ng_config_text)
+
+        if https_prefix != STAGING_URL:
             return ng_config_text
 
-        return ng_config_text.replace(PROD_URL, self.config.https_prefix)
+        return ng_config_text.replace(PROD_URL, https_prefix)
 
     def normalize_to_unknown_str(self, value: str) -> str:
         return value.replace(" ", "_") if value else "Unknown"

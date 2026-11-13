@@ -64,7 +64,9 @@ class DepositionImportConfig:
         object_classes: list[BaseImporter],
         https_prefix: str | None = None,
     ):
-        self.output_prefix = output_prefix
+        # The output may be a bucket or a prefix inside one ("bucket/prefix"). Paths globbed from S3 carry no scheme,
+        # and metadata paths are written relative to this prefix, so drop a "s3://" scheme and a trailing slash.
+        self.output_prefix = output_prefix.removeprefix("s3://").rstrip("/") or output_prefix
         self.https_prefix = https_prefix if https_prefix else PROD_URL
         self.fs = fs
         self.run_to_tomo_map = {}
