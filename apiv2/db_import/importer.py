@@ -82,7 +82,13 @@ def db_import_options(func):
 @click.argument("https_prefix", required=True, type=str)
 @click.option("--postgres_url", required=False, type=str)
 @click.option("--filter-dataset", type=str, default=None, multiple=True)
-@click.option("--s3-prefix", required=True, default="", type=str)
+@click.option(
+    "--s3-prefix",
+    required=True,
+    default="",
+    type=str,
+    help="Only import datasets whose key, relative to the data root, starts with this (e.g. a dataset id)",
+)
 @click.option("--endpoint-url", type=str, default=None)
 @click.option("--debug", is_flag=True, default=False)
 @db_import_options
@@ -114,6 +120,13 @@ def load(
     endpoint_url: str,
     debug: bool,  # Just included for compatibility with the old script.
 ):
+    """
+    Import standardized data from S3_BUCKET into the database.
+
+    S3_BUCKET is a bucket ("cryoet-data-portal-staging") or a prefix inside one
+    ("cryoet-data-portal-staging/example_prefix") that holds the standardized datasets. HTTPS_PREFIX is the URL that
+    serves that location (including the prefix).
+    """
     load_func(
         s3_bucket,
         https_prefix,

@@ -36,21 +36,15 @@ class ItemDBImporter:
         self.model_args = {}
 
     def get_https_url(self, *input_path: tuple[str]) -> str:
-        input_path = os.path.join(*input_path)
-        if input_path.startswith(self.config.bucket_name):
-            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        input_path = self.config.relative(os.path.join(*input_path))
         return os.path.join(self.config.https_prefix, input_path)
 
     def get_s3_url(self, *input_path: tuple[str]) -> str:
-        input_path = os.path.join(*input_path)
-        if input_path.startswith(self.config.bucket_name):
-            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        input_path = self.config.relative(os.path.join(*input_path))
         return os.path.join(self.config.s3_prefix, input_path)
 
     def get_file_size(self, *input_path: tuple[str]) -> str:
-        input_path = os.path.join(*input_path)
-        if input_path.startswith(self.config.bucket_name):
-            input_path = input_path[len(self.config.bucket_name) + 1 :]
+        input_path = self.config.key(self.config.relative(os.path.join(*input_path)))
 
         total_size = 0
         try:
@@ -135,11 +129,7 @@ class IntegratedDBImporter(ABC):
 
     def convert_to_finder_path(self, input_path: str) -> str:
         """Converts an S3 path in the DB to a path we can use in finders with s3fs"""
-        if input_path.startswith("s3://"):
-            input_path = input_path[5:]
-        if input_path.startswith(self.config.s3_prefix):
-            input_path = os.path.join(self.config.bucket_name, input_path[len(self.config.s3_prefix) + 1 :])
-        return input_path
+        return self.config.fs_path(self.config.relative(input_path))
 
     @abstractmethod
     def get_finder_args(self) -> dict[str, Any]:

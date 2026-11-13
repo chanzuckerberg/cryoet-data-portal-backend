@@ -5,6 +5,8 @@ S3 is the source of truth for all the data in the CryoET data portal, but we pro
 ## How to run this tool
 To run database ingestion in staging/prod, please see the [docs for launching db ingestion in our batch cluster](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/ingestion_tools/docs/enqueue_runs.md#database-ingestion-db-import-subcommand).
 
+The `s3_bucket` argument can also be a prefix inside a bucket (`bucket/prefix`); see [importing from a prefix](https://github.com/chanzuckerberg/cryoet-data-portal-backend/blob/main/ingestion_tools/docs/enqueue_runs.md#importing-from-a-prefix).
+
 To run database ingestion from production locally, for testing or demonstration purposes:
 
 ```
