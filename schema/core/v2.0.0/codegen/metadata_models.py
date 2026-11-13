@@ -1028,6 +1028,10 @@ class TiltseriesCameraModelGatanEnum(str, Enum):
     Camera model for Gatan cameras
     """
 
+    CELTIC = "CELTIC"
+    """
+    CELTIC
+    """
     K2 = "K2"
     """
     K2
@@ -2358,7 +2362,7 @@ class CameraDetails(ConfiguredBaseModel):
     @field_validator("model")
     def pattern_model(cls, v):
         pattern = re.compile(
-            r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|((^FALCON IV$)|(^FALCON 4i$))|((^K2$)|(^K2 SUMMIT$)|(^K3$)|(^K3 BIOQUANTUM$)|(^UltraCam$)|(^UltraScan$))|(^simulated$)"
+            r"(^[ ]*\{[a-zA-Z0-9_-]+\}[ ]*$)|((^FALCON IV$)|(^FALCON 4i$))|((^CELTIC$)|(^K2$)|(^K2 SUMMIT$)|(^K3$)|(^K3 BIOQUANTUM$)|(^UltraCam$)|(^UltraScan$))|(^simulated$)"
         )
         if isinstance(v, list):
             for element in v:
