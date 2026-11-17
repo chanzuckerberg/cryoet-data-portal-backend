@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.12.5"
+          python-version: "3.12"
       - name: Install action-validator with asdf
         uses: asdf-vm/actions/install@v4
         with:
