@@ -32,7 +32,7 @@ clean:
 
 .PHONY: ingestor-test-s3
 ingestor-test-s3:
-	docker compose exec ingestor pytest -vvv -s . -k "s3_import or reservation"
+	docker compose exec ingestor pytest -vvv -s . -k "s3_import or reservation or ingestion_pr"
 
 .PHONY: apiv2-test
 apiv2-test:  ## Run apiv2 tests
