@@ -1,7 +1,7 @@
 # CryoET Ingestion-PR Lambda
 
 Opens a Data Portal ingestion PR when a deposition upload finishes. An `ingest.ready` marker in
-`s3://cryoetportal-biohub-hpc-globus/CZII/<deposition>/<dataset>/` triggers it
+`s3://<uploads-bucket>/CZII/<deposition>/<dataset>/` triggers it
 (S3 → SQS → Lambda); it reads the uploaded `portal_dataset_config.yaml`, validates
 it, and opens a PR adding `ingestion_tools/dataset_configs/<dataset_id>.yaml`.
 Duplicate-PR protection is GitHub-side.
