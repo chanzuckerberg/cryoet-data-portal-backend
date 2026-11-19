@@ -1,0 +1,63 @@
+name: Build and upload ingestion-pr lambda
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ingestion_tools/scripts/ingestion_pr/lambda_function.py"
+      - "ingestion_tools/scripts/ingestion_pr/requirements.txt"
+      - ".github/workflows/ingestion-pr-build.yaml"
+  workflow_dispatch:
+
+# https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  upload-zip:
+    name: build and upload ingestion-pr lambda zip to S3
+    runs-on: ubuntu-latest
+    if: github.repository == 'chanzuckerberg/cryoet-data-portal-backend' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-west-2
+          role-to-assume: ${{ secrets.AWS_INGESTION_PROMOTER_ROLE }}
+          role-duration-seconds: 1200
+      - name: Package and upload lambda zip
+        working-directory: ingestion_tools/scripts/ingestion_pr
+        env:
+          S3_BUCKET: ${{ secrets.AWS_UPLOADS_BUCKET }}
+        run: |
+          python3 -m py_compile lambda_function.py
+          rm -rf build && mkdir build
+          # Bundle deps built for the Lambda platform (python3.12, x86_64).
+          # Two platform tags: recent cryptography ships manylinux_2_28, older deps 2014.
+          pip install \
+            --platform manylinux2014_x86_64 \
+            --platform manylinux_2_28_x86_64 \
+            --implementation cp \
+            --python-version 3.12 \
+            --only-binary=:all: \
+            --target build \
+            -r requirements.txt
+          cp lambda_function.py build/
+          (cd build && zip -rX ../ingestion_pr_lambda.zip .)
+          zip -T ingestion_pr_lambda.zip
+          key="LAMBDA/ingestion_pr_lambda-${GITHUB_SHA}.zip"
+          aws s3 cp ingestion_pr_lambda.zip "s3://${S3_BUCKET}/${key}"
+          {
+            echo "Uploaded ingestion-pr lambda zip. In cryoet-infra \`ingestion_promoter.tf\`, set and apply:"
+            echo '```'
+            echo "lambda_zip_key = \"${key}\""
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

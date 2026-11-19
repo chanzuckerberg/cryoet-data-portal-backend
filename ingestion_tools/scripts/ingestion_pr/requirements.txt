@@ -1,0 +1,6 @@
+# Runtime deps bundled into the Lambda zip by CI. Pinned so two builds of the
+# same commit are identical. boto3 is provided by the Lambda runtime, so it is
+# intentionally not listed here.
+requests==2.32.3
+pyyaml==6.0.2
+cryptography==44.0.1
