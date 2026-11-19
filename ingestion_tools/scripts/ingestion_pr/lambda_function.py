@@ -14,6 +14,7 @@ from urllib.parse import quote, unquote_plus
 import boto3
 import requests
 import yaml
+from botocore.exceptions import ClientError
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
@@ -97,6 +98,15 @@ def _validate(config, prefix):
     if standardization.get("source_prefix") not in (prefix, relative_prefix):
         raise ValidationError("Config source_prefix does not match the S3 upload location.")
 
+    depositions = config.get("depositions") or []
+    if not isinstance(depositions, list):
+        raise ValidationError("depositions must be a list.")
+    for entry in depositions:
+        if not isinstance(entry, dict) or not isinstance(entry.get("metadata", {}), dict):
+            raise ValidationError("depositions entries must be mappings with a metadata mapping.")
+        if entry.get("metadata", {}).get("deposition_identifier") != deposition_id:
+            raise ValidationError("Config deposition identifier does not match the upload location.")
+
     return deposition_id, dataset_id
 
 
@@ -107,8 +117,12 @@ def _check_datamap_exists(config, bucket, prefix):
         return
     try:
         s3.head_object(Bucket=bucket, Key=f"{prefix}/{datamap}")
-    except Exception as error:
-        raise ValidationError(f"run_data_map_file not found in S3: {datamap}") from error
+    except ClientError as error:
+        # Only a "not found" is a bad upload (drop). Throttling, 5xx, or a
+        # permissions problem must propagate so SQS retries -> DLQ
+        if error.response.get("Error", {}).get("Code") in ("404", "NoSuchKey", "NotFound"):
+            raise ValidationError(f"run_data_map_file not found in S3: {datamap}") from error
+        raise
 
 
 def _match_reservation(reservations, deposition_id, dataset_id):
@@ -126,6 +140,8 @@ def _match_reservation(reservations, deposition_id, dataset_id):
 def _check_reserved(deposition_id, dataset_id):
     """Match upload IDs against reservations.json; warn-only unless ENFORCE_RESERVATIONS."""
     if not RESERVATIONS_BUCKET:
+        if ENFORCE_RESERVATIONS:
+            raise ConfigError("Reservation store is not configured.")
         logger.info("RESERVATIONS_BUCKET unset; skipping reservation match.")
         return
     try:
@@ -133,7 +149,9 @@ def _check_reserved(deposition_id, dataset_id):
         reservations = json.loads(body)
         if not isinstance(reservations, dict):
             raise ValueError("reservations.json is not a JSON object.")
-    except s3.exceptions.NoSuchKey:
+    except s3.exceptions.NoSuchKey as error:
+        if ENFORCE_RESERVATIONS:
+            raise ConfigError("reservations.json not found.") from error
         logger.warning(
             "No reservations.json at s3://%s/%s; skipping reservation match.",
             RESERVATIONS_BUCKET,

@@ -12,6 +12,7 @@ from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
+from botocore.exceptions import ClientError
 
 _MODULE_PATH = Path(__file__).resolve().parents[2] / "ingestion_pr" / "lambda_function.py"
 _spec = importlib.util.spec_from_file_location("ingestion_pr_lambda_function", _MODULE_PATH)
@@ -173,6 +174,22 @@ def test_check_enforced_raises_config_error_on_access_denied(reservations_env):
         lf._check_reserved(700, 800)
 
 
+def test_check_enforced_raises_when_bucket_unset(monkeypatch):
+    # Enforcement must fail closed: no bucket configured is a misconfig, not a skip.
+    monkeypatch.setattr(lf, "RESERVATIONS_BUCKET", None)
+    monkeypatch.setattr(lf, "ENFORCE_RESERVATIONS", True)
+    with pytest.raises(lf.ConfigError):
+        lf._check_reserved(700, 800)
+
+
+def test_check_enforced_raises_when_file_missing(reservations_env):
+    _, monkeypatch = reservations_env
+    monkeypatch.setattr(lf, "ENFORCE_RESERVATIONS", True)
+    _install_s3(monkeypatch, {})  # no reservations.json present
+    with pytest.raises(lf.ConfigError):
+        lf._check_reserved(700, 800)
+
+
 # --- _validate ---------------------------------------------------------------
 
 
@@ -263,6 +280,26 @@ def test_validate_non_list_datasets_is_dropped_not_retried():
         lf._validate(config, PREFIX)
 
 
+def test_validate_deposition_identifier_mismatch():
+    config = _valid_config()
+    config["depositions"][0]["metadata"]["deposition_identifier"] = 999
+    with pytest.raises(lf.ValidationError):
+        lf._validate(config, PREFIX)
+
+
+def test_validate_non_list_depositions():
+    config = _valid_config()
+    config["depositions"] = 5
+    with pytest.raises(lf.ValidationError):
+        lf._validate(config, PREFIX)
+
+
+def test_validate_empty_depositions_list_ok():
+    config = _valid_config()
+    config["depositions"] = []
+    assert lf._validate(config, PREFIX) == (700, 800)
+
+
 # --- _check_datamap_exists ---------------------------------------------------
 
 
@@ -283,13 +320,29 @@ def test_datamap_present_passes(monkeypatch):
     s3.head_object.assert_called_once_with(Bucket="bucket", Key=f"{PREFIX}/map.tsv")
 
 
+def _client_error(code):
+    return ClientError({"Error": {"Code": code}}, "HeadObject")
+
+
 def test_datamap_missing_is_validation_error(monkeypatch):
     config = _valid_config()
     config["standardization_config"]["run_data_map_file"] = "map.tsv"
     s3 = MagicMock()
-    s3.head_object.side_effect = RuntimeError("404")
+    s3.head_object.side_effect = _client_error("404")  # genuine not-found -> drop
     monkeypatch.setattr(lf, "s3", s3)
     with pytest.raises(lf.ValidationError):
+        lf._check_datamap_exists(config, "bucket", PREFIX)
+
+
+def test_datamap_transient_error_propagates(monkeypatch):
+    # A 503/throttling/permission error must NOT be swallowed as a bad upload — it
+    # propagates so SQS retries -> DLQ instead of silently dropping the request.
+    config = _valid_config()
+    config["standardization_config"]["run_data_map_file"] = "map.tsv"
+    s3 = MagicMock()
+    s3.head_object.side_effect = _client_error("503")
+    monkeypatch.setattr(lf, "s3", s3)
+    with pytest.raises(ClientError):
         lf._check_datamap_exists(config, "bucket", PREFIX)
 
 

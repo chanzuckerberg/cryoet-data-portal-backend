@@ -14,8 +14,8 @@ Duplicate-PR protection is GitHub-side.
 | `GITHUB_REPOSITORY` | no | `chanzuckerberg/cryoet-data-portal-backend` (lets you test against a sandbox repo) |
 | `UPLOAD_PREFIX` | no | `CZII` — top-level S3 upload prefix (matches Embrella's `deposition_sync_destination`) |
 | `DRY_RUN` | no | `true` — validate + log, do **not** open a PR |
-| `RESERVATIONS_BUCKET` | no | unset — S3 bucket holding `reservations.json`. Unset ⇒ reservation match skipped |
-| `ENFORCE_RESERVATIONS` | no | `false` — warn-only; when `true`, reject IDs not present in `reservations.json` |
+| `RESERVATIONS_BUCKET` | no | unset — S3 bucket holding `reservations.json`. Unset ⇒ match skipped in warn-only mode; a hard error when `ENFORCE_RESERVATIONS=true` |
+| `ENFORCE_RESERVATIONS` | no | `false` — warn-only; when `true`, reject IDs not present in `reservations.json` (and fail if the bucket/file is missing) |
 
 (`GITHUB_BASE_BRANCH` = `main` and the `reservations.json` key are constants in the code.)
 
@@ -48,8 +48,9 @@ exact `pip` platform flags.
 ## Validation
 
 `_validate` ties the config to its upload location: required sections present,
-`deposition_id` and dataset identifier match the `CZII/<deposition>/<dataset>` path,
-and `source_prefix` matches. It also confirms `run_data_map_file` (if set) exists in
+`deposition_id`, dataset identifier, and each `depositions[].deposition_identifier`
+match the `CZII/<deposition>/<dataset>` path, and `source_prefix` matches. It also
+confirms `run_data_map_file` (if set) exists in
 S3 — Portal CI validates the schema but has no S3 access, so the Lambda is the only
 place that can catch a missing map file before ingestion. Broader schema completeness
 is left to Portal CI + the human PR review.
