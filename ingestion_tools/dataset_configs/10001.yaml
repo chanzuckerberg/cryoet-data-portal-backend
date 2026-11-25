@@ -367,6 +367,12 @@ collection_metadata:
 - sources:
   - source_glob:
       list_glob: metadata/mdocs_vali/{run_name}.mdoc
+ctfs:
+- metadata:
+    format: CTFFIND
+  sources:
+  - source_glob:
+      list_glob: ctf/{run_name}_CTFFIND_format_CTF.txt
 dataset_keyphotos:
 - sources:
   - literal:
@@ -422,7 +428,10 @@ datasets:
       pombe cryo-FIB lamellae with comprehensive annotations of structures and macromolecules
     dataset_identifier: 10001
     dataset_title: S. pombe cells from Volta Phase Plate
-    dates: *id002
+    dates:
+      deposition_date: '2023-04-01'
+      last_modified_date: '2026-11-24'
+      release_date: '2023-06-01'
     development_stage:
       id: unknown
       name: unknown
