@@ -135,5 +135,6 @@ def expected_dataset(http_prefix: str) -> dict[str, Any]:
         "key_photo_url": f"{http_prefix}/{DATASET_ID}/KeyPhoto/snapshot.png",
         "key_photo_thumbnail_url": f"{http_prefix}/{DATASET_ID}/KeyPhoto/thumbnail.png",
         "deposition_id": 300,
-        "file_size": 1375785.0,
+        # total size of test_infra/test_files/30001 (RUN1's tomogram, tilt series and semantic mask have no MRC entries)
+        "file_size": 1375435.0,
     }

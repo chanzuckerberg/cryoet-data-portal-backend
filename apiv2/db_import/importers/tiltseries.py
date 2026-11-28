@@ -131,6 +131,9 @@ class TiltSeriesDBImporter(BaseDBImporter):
             extra_data["s3_mrc_file"] = self.get_s3_url(mrc_path)
             extra_data["https_mrc_file"] = self.get_https_url(mrc_path)
             extra_data["file_size_mrc"] = self.get_file_size(mrc_path)
+        else:
+            # Tilt series ingested without MRC (--skip-mrc): clear the values of an earlier import that had an MRC.
+            extra_data["s3_mrc_file"] = extra_data["https_mrc_file"] = extra_data["file_size_mrc"] = None
 
         if omezarr_path := self.metadata.get("omezarr_dir"):
             extra_data["s3_omezarr_dir"] = self.get_s3_url(omezarr_path)

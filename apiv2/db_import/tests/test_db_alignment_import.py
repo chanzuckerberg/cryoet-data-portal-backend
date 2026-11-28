@@ -23,6 +23,7 @@ def expected_alignments(http_prefix: str) -> list[dict[str, Any]]:
         {
             "id": 801,
             "run_id": RUN1_ID,
+            # RUN1's tilt series has no MRC (--skip-mrc): it is found by its zarr
             "tiltseries_id": TILTSERIES_ID,
             "deposition_id": 300,
             "alignment_method": "patch_tracking",
