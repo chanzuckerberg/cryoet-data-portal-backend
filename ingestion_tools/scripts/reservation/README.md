@@ -2,7 +2,7 @@
 
 Reserves dataset and deposition IDs for in-progress data submissions.
 
-- State lives in `s3://cryoetportal-biohub-hpc-globus/SUBMISSION_METADATA/reservations.json`.
+- State lives in `s3://$RESERVATIONS_BUCKET/SUBMISSION_METADATA/reservations.json`.
 - Syncs with IDs already instantiated in [`dataset_configs`](../../dataset_configs).
 - Runs as an AWS Lambda behind a Function URL.
 

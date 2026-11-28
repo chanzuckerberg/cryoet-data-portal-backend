@@ -32,12 +32,12 @@ jobs:
         with:
           mask-aws-account-id: true
           aws-region: us-west-2
-          role-to-assume: arn:aws:iam::908710317728:role/cryoetportal-reservation-lambda-deploy
+          role-to-assume: ${{ secrets.AWS_RESERVATION_DEPLOY_ROLE }}
           role-duration-seconds: 1200
       - name: Package and upload lambda zip
         working-directory: ingestion_tools/scripts/reservation
         env:
-          S3_BUCKET: cryoetportal-biohub-hpc-globus
+          S3_BUCKET: ${{ secrets.AWS_UPLOADS_BUCKET }}
         run: |
           python3 -m py_compile lambda_function.py
           zip -X reservation_lambda.zip lambda_function.py
