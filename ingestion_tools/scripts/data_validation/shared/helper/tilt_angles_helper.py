@@ -1,5 +1,8 @@
+import warnings
+
 import allure
 import pandas as pd
+from data_validation.shared.helper.acquisition_order_helper import rawtlt_in_mdoc_zvalue_order_not_sorted
 from data_validation.shared.helper.angles_helper import helper_angles_injection_errors
 
 
@@ -39,3 +42,14 @@ class TiltAnglesHelper:
         )
         if len(errors) > 0:
             raise AssertionError("\n".join(errors))
+
+    @allure.title("Raw tilt: angles are not in mdoc ZValue order unless the stack is in acquisition order (warning).")
+    def test_raw_tilt_order(self, raw_tilt_data: pd.DataFrame, mdoc_data: pd.DataFrame):
+        # A warning, not a failure: stacks in acquisition order (e.g. Leginon) legitimately have such a rawtlt.
+        if rawtlt_in_mdoc_zvalue_order_not_sorted(raw_tilt_data["TiltAngle"].to_list(), mdoc_data):
+            warnings.warn(
+                "Raw tilt angles are in mdoc ZValue (acquisition) order, not sorted. Raw tilt line i describes stack "
+                "section i, so unless the tilt-series stack is also in acquisition order, the angles are attached to "
+                "the wrong sections.",
+                stacklevel=2,
+            )

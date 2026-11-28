@@ -5,6 +5,7 @@ import allure
 import pandas as pd
 import pytest
 import tifffile
+from data_validation.shared.helper.acquisition_order_helper import mdoc_datetime_order_differs_from_zvalue
 from mrcfile.mrcinterpreter import MrcInterpreter
 
 
@@ -22,6 +23,17 @@ class MdocTestHelper:
     def test_frames_mdoc_range(self, mdoc_data: pd.DataFrame):
         assert mdoc_data["TiltAngle"].min() >= -90, "Minimum tilt angle is less than -90"
         assert mdoc_data["TiltAngle"].max() <= 90, "Maximum tilt angle is greater than 90"
+
+    @allure.title("Mdoc: sections are in DateTime order (warning).")
+    def test_mdoc_datetime_order(self, mdoc_data: pd.DataFrame):
+        # A warning, not a failure: the ingestion config can derive the acquisition order from DateTime instead.
+        if mdoc_datetime_order_differs_from_zvalue(mdoc_data):
+            warnings.warn(
+                "The mdoc's ZValue order differs from its DateTime order (the mdoc may have been sorted by tilt "
+                "angle). Frame acquisition order and accumulated dose follow ZValue unless the collection_metadata "
+                "option acquisition_order_from_datetime is set.",
+                stacklevel=2,
+            )
 
     @allure.title("Mdoc: number of mdoc sections equal number of frames files")
     def test_mdoc_frames(self, mdoc_data: pd.DataFrame, frames_files: list[str]):

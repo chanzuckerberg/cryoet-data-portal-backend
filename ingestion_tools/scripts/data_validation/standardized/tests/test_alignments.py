@@ -1,4 +1,5 @@
 import re
+import warnings
 from typing import Dict, List
 
 import allure
@@ -111,5 +112,31 @@ class TestAlignments:
         for in_plane_rotation in in_plane_rotations:
             assert_angle_in_valid_range(in_plane_rotation, "Alignment in_plane_rotation angle")
         assert all(angular_difference(in_plane_rotation, mdoc_tilt_axis_angle) <= 10 for in_plane_rotation in in_plane_rotations), f"Mdoc tilt axis angle {mdoc_tilt_axis_angle} does not match all alignment metadata in_plane_rotation angles within +/- 10 degrees: {in_plane_rotations}"
+
+    @allure.title(
+        "Alignment: tilt angles differ from the tilt series' raw angles by a near-constant offset per section (warning).",
+    )
+    def test_tilt_angle_offset_consistent(self, alignment_metadata: Dict, alignment_tiltseries_metadata: Dict):
+        per_section_alignment_parameters = alignment_metadata.get("per_section_alignment_parameters") or []
+        per_section_parameters = alignment_tiltseries_metadata.get("per_section_parameter") or []
+        raw_angle_by_z = {
+            psp["z_index"]: psp["raw_angle"] for psp in per_section_parameters if psp.get("raw_angle") is not None
+        }
+        offsets = [
+            psap["tilt_angle"] - raw_angle_by_z[psap["z_index"]]
+            for psap in per_section_alignment_parameters
+            if psap.get("tilt_angle") is not None and psap["z_index"] in raw_angle_by_z
+        ]
+        if len(offsets) < 2:
+            pytest.skip("Not enough sections with both an alignment tilt angle and a raw angle.")
+        # Refinement and global offsets (e.g. AreTomo3's) move every section by about the same amount; a spread of
+        # tens of degrees means the alignment and the tilt series metadata pair angles with different sections.
+        spread = max(offsets) - min(offsets)
+        if spread > 5:
+            warnings.warn(
+                f"Alignment tilt_angle minus tilt series raw_angle varies by {spread:.1f} deg across sections "
+                f"({min(offsets):.2f} to {max(offsets):.2f}); the two may index the stack differently.",
+                stacklevel=2,
+            )
 
     ### END Tiltseries consistency tests ###

@@ -4370,6 +4370,7 @@ class AlignmentEntity(ConfiguredBaseModel):
 
     metadata: Optional[Alignment] = Field(default=None, description="""The metadata for the alignment.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -4631,6 +4632,7 @@ class AnnotationEntity(ConfiguredBaseModel):
 
     metadata: Annotation = Field(default=..., description="""Metadata describing an annotation.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -4854,6 +4856,26 @@ class CollectionMetadataEntity(ConfiguredBaseModel):
                        'TiltSeriesEntity',
                        'TomogramEntity',
                        'VoxelSpacingEntity']} })
+    metadata: Optional[CollectionMetadataOptions] = Field(default=None, description="""Options for reading collection metadata (mdoc) files.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
+                       'AnnotationEntity',
+                       'CollectionMetadataEntity',
+                       'CtfEntity',
+                       'DatasetEntity',
+                       'DepositionEntity',
+                       'FrameEntity',
+                       'IdentifiedObjectEntity',
+                       'TiltSeriesEntity',
+                       'TomogramEntity']} })
+
+
+class CollectionMetadataOptions(ConfiguredBaseModel):
+    """
+    Options for reading collection metadata (mdoc) files.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'cdp-ingestion-config'})
+
+    acquisition_order_from_datetime: Optional[bool] = Field(default=False, description="""If true, each section's acquisition order (and the order in which accumulated dose is summed) is the rank of its DateTime instead of its ZValue. Use this for mdocs whose sections were re-sorted by tilt angle and renumbered (e.g. by PACEtomo). Every section must then have a unique DateTime that parses with datetime_format.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CollectionMetadataOptions'], 'ifabsent': 'False'} })
+    datetime_format: Optional[str] = Field(default=None, description="""The strptime format of the mdoc DateTime values, applied after collapsing runs of whitespace into single spaces. If unset, SerialEM's formats are accepted, with a two- or four-digit year (\"%d-%b-%y %H:%M:%S\", e.g. \"06-Jun-22  16:54:02\", or \"%d-%b-%Y %H:%M:%S\", e.g. \"15-Oct-2024  20:39:16\").""", json_schema_extra = { "linkml_meta": {'domain_of': ['CollectionMetadataOptions']} })
 
 
 class CollectionMetadataSource(StandardSource):
@@ -5091,6 +5113,7 @@ class CtfEntity(ConfiguredBaseModel):
 
     metadata: Optional[Ctf] = Field(default=None, description="""A ctf entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -5352,6 +5375,7 @@ class DatasetEntity(ConfiguredBaseModel):
 
     metadata: Optional[Dataset] = Field(default=None, description="""High-level description of a cryoET dataset.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -5819,6 +5843,7 @@ class DepositionEntity(ConfiguredBaseModel):
 
     metadata: Optional[Deposition] = Field(default=None, description="""Metadata describing a deposition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -6208,6 +6233,7 @@ class FrameEntity(ConfiguredBaseModel):
                        'VoxelSpacingEntity']} })
     metadata: Optional[Frame] = Field(default=None, description="""A frame entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -6704,6 +6730,7 @@ class IdentifiedObjectEntity(ConfiguredBaseModel):
 
     metadata: Optional[IdentifiedObjectList] = Field(default=None, description="""Metadata for a list of identified objects.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -7502,6 +7529,7 @@ class TiltSeriesEntity(ConfiguredBaseModel):
 
     metadata: Optional[TiltSeries] = Field(default=None, description="""Metadata describing a tilt series.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -7764,6 +7792,7 @@ class TomogramEntity(ConfiguredBaseModel):
 
     metadata: Optional[Tomogram] = Field(default=None, description="""Metadata describing a tomogram.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlignmentEntity',
                        'AnnotationEntity',
+                       'CollectionMetadataEntity',
                        'CtfEntity',
                        'DatasetEntity',
                        'DepositionEntity',
@@ -8385,6 +8414,7 @@ AnnotationSource.model_rebuild()
 AnnotationParentFilters.model_rebuild()
 AnnotationParent.model_rebuild()
 CollectionMetadataEntity.model_rebuild()
+CollectionMetadataOptions.model_rebuild()
 CollectionMetadataSource.model_rebuild()
 CollectionMetadataParentFilters.model_rebuild()
 CollectionMetadataParent.model_rebuild()

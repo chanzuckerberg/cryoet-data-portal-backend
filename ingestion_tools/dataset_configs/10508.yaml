@@ -7,7 +7,9 @@ alignments:
             - default
 
 collection_metadata:
-  - sources:
+  - metadata:
+      acquisition_order_from_datetime: true
+    sources:
       - source_glob:
           list_glob: '{run_name}/{run_name}_Align.mrc.mdoc'
           match_regex: '.*_Align\.mrc\.mdoc$'

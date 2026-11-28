@@ -30,6 +30,23 @@ def create_config(s3_fs: FileSystemApi, test_output_bucket: str, config_path: st
     return DepositionImportConfig(s3_fs, import_config, output_path, input_bucket, IMPORTERS, https_prefix=https_prefix)
 
 
+def create_config_with_mdoc(
+    s3_fs: FileSystemApi, test_output_bucket: str, mdoc_prefix: str, options: dict | None = None,
+) -> DepositionImportConfig:
+    """The default test config, reading metadata/mdocs_modified/<mdoc_prefix>-<run>.mdoc with the given
+    collection_metadata options."""
+    config = create_config(s3_fs, test_output_bucket)
+    entry = {
+        "sources": [
+            {"source_multi_glob": {"list_globs": [f"metadata/mdocs_modified/{mdoc_prefix}-{{run_name}}.mdoc"]}},
+        ],
+    }
+    if options is not None:
+        entry["metadata"] = options
+    config._set_object_configs("collection_metadata", [entry])
+    return config
+
+
 def get_run_and_parents(
     config: DepositionImportConfig,
     deposition_index: int = 0,

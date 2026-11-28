@@ -353,6 +353,8 @@ rawtilts:
       list_glob: rawtlt/{run_name}/*
 
 collection_metadata:
-- sources:
+- metadata:
+    acquisition_order_from_datetime: true
+  sources:
   - source_glob:
       list_glob: collection_metadata/{run_name}/*

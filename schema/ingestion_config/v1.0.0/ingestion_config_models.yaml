@@ -358,6 +358,27 @@ classes:
         multivalued: true
         range: CollectionMetadataSource
         required: true
+      metadata:
+        description: Options for reading the collection metadata (mdoc) files.
+        range: CollectionMetadataOptions
+
+  CollectionMetadataOptions:
+    description: Options for reading collection metadata (mdoc) files.
+    attributes:
+      acquisition_order_from_datetime:
+        description: >-
+          If true, each section's acquisition order (and the order in which accumulated dose is summed) is the
+          rank of its DateTime instead of its ZValue. Use this for mdocs whose sections were re-sorted by tilt angle
+          and renumbered (e.g. by PACEtomo). Every section must then have a unique DateTime that parses with
+          datetime_format.
+        range: boolean
+        ifabsent: false
+      datetime_format:
+        description: >-
+          The strptime format of the mdoc DateTime values, applied after collapsing runs of whitespace into single
+          spaces. If unset, SerialEM's formats are accepted, with a two- or four-digit year ("%d-%b-%y %H:%M:%S", e.g.
+          "06-Jun-22  16:54:02", or "%d-%b-%Y %H:%M:%S", e.g. "15-Oct-2024  20:39:16").
+        range: string
 
   CollectionMetadataSource:
     description: A collection_metadata source.

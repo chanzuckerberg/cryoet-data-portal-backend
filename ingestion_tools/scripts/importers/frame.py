@@ -70,15 +70,19 @@ class FrameImporter(BaseFileImporter):
             self, dose_rate: float, collection_md: CollectionMetadataImporter, is_gain_corrected: bool | None,
     ) -> list[dict[str, Any]]:
         frame_path_by_name = self.get_frame_output_path_by_name()
-        mdoc = collection_md.get_output_data()
+        sections = collection_md.get_output_data().section_data
+        ordered_sections = list(zip(collection_md.get_acquisition_orders(sections), sections))
+        if collection_md.acquisition_order_from_datetime:
+            # The mdoc's file order isn't the acquisition order, so sum the dose in acquisition order.
+            ordered_sections.sort(key=lambda item: item[0])
         frames = []
         accumulated_dose = 0
-        for section in mdoc.section_data:
+        for acquisition_order, section in ordered_sections:
             exposure_time = section.ExposureTime
             exposure_dose = exposure_time * dose_rate
             frame_name = section.SubFramePath.name if section.SubFramePath else None
             entry = {
-                "acquisition_order": section.ZValue,
+                "acquisition_order": acquisition_order,
                 "accumulated_dose": accumulated_dose,
                 "exposure_dose": exposure_dose,
                 # Adding is_gain_corrected here redundantly to make it easier for the db import

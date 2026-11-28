@@ -8,7 +8,7 @@ from mypy_boto3_s3 import S3Client
 
 from common.config import DepositionImportConfig
 from common.fs import FileSystemApi
-from tests.s3_import.util import create_config, get_run_and_parents
+from tests.s3_import.util import create_config, create_config_with_mdoc, get_run_and_parents
 
 
 def expected_psp_output(has_ctf: bool) -> list[dict]:
@@ -137,3 +137,26 @@ def test_psp_no_ctf(
     expected_output = expected_psp_output(False)
     assert len(actual) == len(expected_output)
     assert actual == expected_output
+
+
+def test_psp_acquisition_order_from_datetime(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
+    """With acquisition_order_from_datetime, an angle-sorted mdoc (ZValue = angle rank) gives the time-rank
+    frame_acquisition_order, i.e. the same per-section parameters as the time-ordered mdoc."""
+    config = create_config_with_mdoc(
+        s3_fs, test_output_bucket, "anglesorted", {"acquisition_order_from_datetime": True},
+    )
+    parents = get_parents(config)
+    setup_psp_generator(config, parents)
+
+    actual = PerSectionParameterGenerator(config, parents).get_data()
+    assert actual == expected_psp_output(True)
+
+
+def test_psp_angle_sorted_mdoc_defaults_to_zvalue(s3_fs: FileSystemApi, test_output_bucket: str) -> None:
+    config = create_config_with_mdoc(s3_fs, test_output_bucket, "anglesorted")
+    parents = get_parents(config)
+    setup_psp_generator(config, parents)
+
+    actual = PerSectionParameterGenerator(config, parents).get_data()
+    assert [entry["frame_acquisition_order"] for entry in actual] == [0, 1, 2, 3]
+    assert [entry["raw_angle"] for entry in actual] == [entry["raw_angle"] for entry in expected_psp_output(True)]

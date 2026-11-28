@@ -126,9 +126,9 @@ class TiltSeriesImporter(VolumeImporter):
 
 class PerSectionParameter:
 
-    def __init__(self, index: int, mdoc_entry: MdocSectionData, ctf_entry: CTFInfo):
+    def __init__(self, index: int, mdoc_entry: MdocSectionData, frame_acquisition_order: int, ctf_entry: CTFInfo):
         self.z_index = index
-        self.frame_acquisition_order = mdoc_entry.ZValue
+        self.frame_acquisition_order = frame_acquisition_order
         self.raw_angle = mdoc_entry.TiltAngle
 
         self.astigmatic_angle = ctf_entry.azimuth if ctf_entry else None
@@ -154,12 +154,15 @@ class PerSectionParameterGenerator:
     def get_data(self) -> list[dict[str, str]]:
         psp = []
         rawtlt = self._get_raw_tlt()
-        mdoc_data = self._get_mdoc_data()
+        collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
+        mdoc_data = collection_md.get_output_data().section_data
+        # Same source of truth as the frames metadata, so that frame_acquisition_order matches Frame.acquisition_order
+        acquisition_orders = collection_md.get_acquisition_orders(mdoc_data)
         ctf_data = self._get_ctf_data()
         for index, raw_angle in rawtlt["raw_tlt_angle"].items():
-            mdoc_entry = self._get_mdoc_entry(round(raw_angle, self.TILT_ANGLE_DECIMAL_PLACES), mdoc_data)
+            mdoc_index = self._get_mdoc_index(round(raw_angle, self.TILT_ANGLE_DECIMAL_PLACES), mdoc_data)
             ctf_entry = self._get_ctf_entry(index, ctf_data)
-            psp_section = PerSectionParameter(index, mdoc_entry, ctf_entry)
+            psp_section = PerSectionParameter(index, mdoc_data[mdoc_index], acquisition_orders[mdoc_index], ctf_entry)
             psp.append(psp_section.to_json())
 
         return psp
@@ -200,13 +203,9 @@ class PerSectionParameterGenerator:
                 return entry
         return None
 
-    def _get_mdoc_data(self) -> list[MdocSectionData]:
-        collection_md = CollectionMetadataImporter.get_importer(self.config, **self.parents)
-        return collection_md.get_output_data().section_data
-
     @classmethod
-    def _get_mdoc_entry(cls, tilt_angle: float, mdoc_data: list[MdocSectionData]) -> MdocSectionData:
-        for entry in mdoc_data:
+    def _get_mdoc_index(cls, tilt_angle: float, mdoc_data: list[MdocSectionData]) -> int:
+        for index, entry in enumerate(mdoc_data):
             if round(entry.TiltAngle, cls.TILT_ANGLE_DECIMAL_PLACES) == tilt_angle:
-                return entry
+                return index
         raise KeyError(f"No match for tiltangle {tilt_angle} in mdoc_data")
